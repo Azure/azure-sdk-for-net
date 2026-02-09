@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ElasticSan.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableElasticSanResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableElasticSanResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableElasticSanResourceGroupResource for mocking. </summary>
         protected MockableElasticSanResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableElasticSanResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableElasticSanResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableElasticSanResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ElasticSanResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ElasticSanResources and their operations over a ElasticSanResource. </returns>
+        /// <summary> Gets a collection of ElasticSans in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ElasticSans and their operations over a ElasticSanResource. </returns>
         public virtual ElasticSanCollection GetElasticSans()
         {
             return GetCachedClient(client => new ElasticSanCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// Get a ElasticSan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanResource>> GetElasticSanAsync(string elasticSanName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+
             return await GetElasticSans().GetAsync(elasticSanName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// Get a ElasticSan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         [ForwardsClientCalls]
         public virtual Response<ElasticSanResource> GetElasticSan(string elasticSanName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+
             return GetElasticSans().Get(elasticSanName, cancellationToken);
         }
     }

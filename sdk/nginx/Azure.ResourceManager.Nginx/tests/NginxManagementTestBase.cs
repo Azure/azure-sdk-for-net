@@ -240,9 +240,8 @@ namespace Azure.ResourceManager.Nginx.Tests
                 FrontEndIPConfiguration = frontEndIPConfiguration,
                 NetworkInterfaceSubnetId = subnetId
             };
-
-            NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, new List<NginxScaleProfile>(), null);
-
+            NginxDeploymentAutoScaleSettings autoScaleSettings = new NginxDeploymentAutoScaleSettings(new List<NginxScaleProfile>());
+            NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, autoScaleSettings, null);
             AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile
             {
                 UpgradeChannel = "preview"
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Nginx.Tests
 
             if (protectedFileVirtualPath != null)
             {
-                NginxConfigurationProtectedFileContent protectedFile = new NginxConfigurationProtectedFileContent
+                NginxConfigurationContentProtectedFile protectedFile = new NginxConfigurationContentProtectedFile
                 {
                     Content = NginxConfigurationContent,
                     VirtualPath = protectedFileVirtualPath

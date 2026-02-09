@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Describes the name of the column which values will be returned. </summary>
+        [WirePath("filterName")]
         public string FilterName { get; set; }
     }
 }

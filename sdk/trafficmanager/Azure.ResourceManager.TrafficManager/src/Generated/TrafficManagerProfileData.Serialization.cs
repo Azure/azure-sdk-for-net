@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.TrafficManager
                     writer.WriteNull("maxReturn");
                 }
             }
+            if (Optional.IsDefined(RecordType))
+            {
+                writer.WritePropertyName("recordType"u8);
+                writer.WriteStringValue(RecordType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.TrafficManager
             TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default;
             IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
             long? maxReturn = default;
+            TrafficManagerProfileRecordType? recordType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,6 +279,15 @@ namespace Azure.ResourceManager.TrafficManager
                             maxReturn = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("recordType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            recordType = new TrafficManagerProfileRecordType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -296,7 +311,8 @@ namespace Azure.ResourceManager.TrafficManager
                 endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(),
                 trafficViewEnrollmentStatus,
                 allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
-                maxReturn);
+                maxReturn,
+                recordType);
         }
 
         BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options)

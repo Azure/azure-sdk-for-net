@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.StoragePool</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.StoragePool.</Description>
     <PackageTags>azure;management;arm;resource manager;storagepool</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

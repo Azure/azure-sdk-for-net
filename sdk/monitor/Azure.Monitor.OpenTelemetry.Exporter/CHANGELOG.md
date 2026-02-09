@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,107 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-01-28)
+
+### Other Changes
+
+* The customer-facing SDK stats feature 
+  metric names have been updated to match the stable specification.
+  - **Metric names changed**: `preview.item.success.count` → `Item_Success_Count`,
+    `preview.item.dropped.count` → `Item_Dropped_Count`,
+    `preview.item.retry.count` → `Item_Retry_Count`.
+  - **New environment variable**: To enable, set environment variable
+    `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false`.
+  - The old environment variable `APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW`
+    is no longer recognized.
+
+## 1.6.0-beta.2 (2026-01-12)
+
+### Breaking Changes
+* **Default Sampler Changed** ([#54942](https://github.com/Azure/azure-sdk-for-net/pull/54942)): The default sampling behavior has been changed from
+  `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
+  `RateLimitedSampler` with 5.0 traces per second. This change significantly
+  reduces telemetry volume for high-traffic applications and provides better
+  cost optimization out of the box.
+  **Impact**: Applications with more than 5 requests per second will see fewer
+  traces exported by default.
+  **Migration**: To maintain the previous behavior (100% sampling), explicitly
+  configure the sampler:
+  ```csharp
+  // Option 1: Set SamplingRatio and clear TracesPerSecond
+  builder.Services.AddOpenTelemetry()
+      .UseAzureMonitorExporter(options =>
+      {
+          options.SamplingRatio = 1.0f;
+          options.TracesPerSecond = null;
+      });
+  // Option 2: Use environment variables
+  // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+  // OTEL_TRACES_SAMPLER_ARG=1.0
+  ```
+
+### Bugs Fixed
+
+* Fixed performance counter metrics not using configured resource attributes
+  (cloud_RoleName and cloud_RoleInstance), which previously showed
+  "unknown_service:appName" instead of the configured values.
+  ([#54944](https://github.com/Azure/azure-sdk-for-net/pull/54944))
+
+## 1.6.0-beta.1 (2025-12-03)
+
+### Features Added
+* Added Microsoft override attributes to preserve exact Application Insights
+  semantics when exporting telemetry data.
+  ([#54023](https://github.com/Azure/azure-sdk-for-net/pull/54023))
+  * Request: `microsoft.request.name`, `microsoft.request.url`,
+    `microsoft.request.source`, `microsoft.request.resultCode`
+  * Dependency: `microsoft.dependency.type`, `microsoft.dependency.target`,
+    `microsoft.dependency.name`, `microsoft.dependency.data`,
+    `microsoft.dependency.resultCode`
+  * Operation: `microsoft.operation.name`
+
+### Other Changes
+* Added distinct SDK version labels for all Application Insights shim packages
+  to enable accurate attribution and visibility of exporter, distro, and shim
+  telemetry during migration and analysis.
+  ([#54011](https://github.com/Azure/azure-sdk-for-net/pull/54011))
+
+## 1.5.0 (2025-11-14)
+
+### Features Added
+
+* Enabled resource metrics export by default.
+  ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
+
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorExporterOptions`
+  to enable filtering logs based on trace sampling decisions, reducing log
+  volume while maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
+* Update OpenTelemetry dependencies
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
+  - OpenTelemetry 1.14.0
+
+## 1.5.0-beta.1 (2025-10-16)
+
+### Features Added
+
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`). This now applies to both
+  `UseAzureMonitorExporter` and the direct
+  `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
 
 ## 1.4.0 (2025-05-08)
 

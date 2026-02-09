@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionBackups_GetByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Samples
             AzureLocation locationName = new AzureLocation("japaneast");
             string longTermRetentionServerName = "testserver";
             string longTermRetentionDatabaseName = "testDatabase";
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
             ResourceIdentifier resourceGroupLongTermRetentionBackupResourceId = ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupDelete.json
             // this example is just showing the usage of "LongTermRetentionBackups_DeleteByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Samples
             AzureLocation locationName = new AzureLocation("japaneast");
             string longTermRetentionServerName = "testserver";
             string longTermRetentionDatabaseName = "testDatabase";
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
             ResourceIdentifier resourceGroupLongTermRetentionBackupResourceId = ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ChangeAccessTierByResourceGroup_ChangeTheLongTermRetentionBackupStorageAccessTierForAResourceGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedChangeLongTermRetentionBackupAccessTier.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedChangeLongTermRetentionBackupAccessTier.json
             // this example is just showing the usage of "LongTermRetentionBackups_ChangeAccessTierByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CopyByResourceGroup_CopyTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupCopy.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupCopy.json
             // this example is just showing the usage of "LongTermRetentionBackups_CopyByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,9 +151,145 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task LockTimeBasedImmutabilityByResourceGroup_LockTimeBasedImmutabilityOfTheLongTermRetentionBackup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLockTimeBasedImmutabilityLongTermRetentionBackup.json
+            // this example is just showing the usage of "LongTermRetentionBackups_LockTimeBasedImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupLongTermRetentionBackupResource created on azure
+            // for more information of creating ResourceGroupLongTermRetentionBackupResource, please refer to the document of ResourceGroupLongTermRetentionBackupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "resourceGroupName";
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            string longTermRetentionDatabaseName = "testDatabase";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
+            ResourceIdentifier resourceGroupLongTermRetentionBackupResourceId = ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+            ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
+
+            // invoke the operation
+            ArmOperation<ResourceGroupLongTermRetentionBackupResource> lro = await resourceGroupLongTermRetentionBackup.LockTimeBasedImmutabilityByResourceGroupAsync(WaitUntil.Completed);
+            ResourceGroupLongTermRetentionBackupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LongTermRetentionBackupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RemoveLegalHoldImmutabilityByResourceGroup_RemoveLegalHoldImmutabilityOfTheLongTermRetentionBackup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedRemoveLegalHoldImmutabilityLongTermRetentionBackup.json
+            // this example is just showing the usage of "LongTermRetentionBackups_RemoveLegalHoldImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupLongTermRetentionBackupResource created on azure
+            // for more information of creating ResourceGroupLongTermRetentionBackupResource, please refer to the document of ResourceGroupLongTermRetentionBackupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "resourceGroupName";
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            string longTermRetentionDatabaseName = "testDatabase";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
+            ResourceIdentifier resourceGroupLongTermRetentionBackupResourceId = ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+            ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
+
+            // invoke the operation
+            ArmOperation<ResourceGroupLongTermRetentionBackupResource> lro = await resourceGroupLongTermRetentionBackup.RemoveLegalHoldImmutabilityByResourceGroupAsync(WaitUntil.Completed);
+            ResourceGroupLongTermRetentionBackupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LongTermRetentionBackupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RemoveTimeBasedImmutabilityByResourceGroup_RemoveTimeBasedImmutabilityOfTheLongTermRetentionBackup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedRemoveTimeBasedImmutabilityLongTermRetentionBackup.json
+            // this example is just showing the usage of "LongTermRetentionBackups_RemoveTimeBasedImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupLongTermRetentionBackupResource created on azure
+            // for more information of creating ResourceGroupLongTermRetentionBackupResource, please refer to the document of ResourceGroupLongTermRetentionBackupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "resourceGroupName";
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            string longTermRetentionDatabaseName = "testDatabase";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
+            ResourceIdentifier resourceGroupLongTermRetentionBackupResourceId = ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+            ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
+
+            // invoke the operation
+            ArmOperation<ResourceGroupLongTermRetentionBackupResource> lro = await resourceGroupLongTermRetentionBackup.RemoveTimeBasedImmutabilityByResourceGroupAsync(WaitUntil.Completed);
+            ResourceGroupLongTermRetentionBackupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LongTermRetentionBackupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task SetLegalHoldImmutabilityByResourceGroup_SetLegalHoldImmutabilityOfTheLongTermRetentionBackup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedSetLegalHoldImmutabilityLongTermRetentionBackup.json
+            // this example is just showing the usage of "LongTermRetentionBackups_SetLegalHoldImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupLongTermRetentionBackupResource created on azure
+            // for more information of creating ResourceGroupLongTermRetentionBackupResource, please refer to the document of ResourceGroupLongTermRetentionBackupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "resourceGroupName";
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            string longTermRetentionDatabaseName = "testDatabase";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
+            ResourceIdentifier resourceGroupLongTermRetentionBackupResourceId = ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
+            ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
+
+            // invoke the operation
+            ArmOperation<ResourceGroupLongTermRetentionBackupResource> lro = await resourceGroupLongTermRetentionBackup.SetLegalHoldImmutabilityByResourceGroupAsync(WaitUntil.Completed);
+            ResourceGroupLongTermRetentionBackupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LongTermRetentionBackupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateByResourceGroup_UpdateTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupUpdate.json
             // this example is just showing the usage of "LongTermRetentionBackups_UpdateByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

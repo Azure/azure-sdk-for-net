@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetJobAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterJob> response = await client.GetJobAsync("8780b28c-7079-4de1-9143-4d369289e958");
+]]></code></example>
+    </member>
+    <member name="GetJob(string,CancellationToken)">
+      <example>
+This sample shows how to call GetJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterJob> response = client.GetJob("8780b28c-7079-4de1-9143-4d369289e958");
+]]></code></example>
+    </member>
+    <member name="GetJobAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetJobAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.GetJobAsync("8780b28c-7079-4de1-9143-4d369289e958", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetJob(string,RequestContext)">
+      <example>
+This sample shows how to call GetJob and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.GetJob("8780b28c-7079-4de1-9143-4d369289e958", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteJobAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.DeleteJobAsync("8780b28c-7079-4de1-9143-4d369289e958");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteJob(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.DeleteJob("8780b28c-7079-4de1-9143-4d369289e958");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetQueuePositionAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueuePositionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("8780b28c-7079-4de1-9143-4d369289e958");
+]]></code></example>
+    </member>
+    <member name="GetQueuePosition(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueuePosition.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterJobPositionDetails> response = client.GetQueuePosition("8780b28c-7079-4de1-9143-4d369289e958");
+]]></code></example>
+    </member>
+    <member name="GetQueuePositionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueuePositionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.GetQueuePositionAsync("8780b28c-7079-4de1-9143-4d369289e958", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code></example>
+    </member>
+    <member name="GetQueuePosition(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueuePosition and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.GetQueuePosition("8780b28c-7079-4de1-9143-4d369289e958", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code></example>
+    </member>
+    <member name="AcceptJobOfferAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call AcceptJobOfferAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("DefaultWorker", "1d5896f3-8b54-40be-82d3-910323f5e2af");
+]]></code></example>
+    </member>
+    <member name="AcceptJobOffer(string,string,CancellationToken)">
+      <example>
+This sample shows how to call AcceptJobOffer.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<AcceptJobOfferResult> response = client.AcceptJobOffer("DefaultWorker", "1d5896f3-8b54-40be-82d3-910323f5e2af");
+]]></code></example>
+    </member>
+    <member name="AcceptJobOfferAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call AcceptJobOfferAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.AcceptJobOfferAsync("DefaultWorker", "1d5896f3-8b54-40be-82d3-910323f5e2af", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code></example>
+    </member>
+    <member name="AcceptJobOffer(string,string,RequestContext)">
+      <example>
+This sample shows how to call AcceptJobOffer and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.AcceptJobOffer("DefaultWorker", "1d5896f3-8b54-40be-82d3-910323f5e2af", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetQueueStatisticsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueueStatisticsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("MainQueue");
+]]></code></example>
+    </member>
+    <member name="GetQueueStatistics(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueueStatistics.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterQueueStatistics> response = client.GetQueueStatistics("MainQueue");
+]]></code></example>
+    </member>
+    <member name="GetQueueStatisticsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueueStatisticsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.GetQueueStatisticsAsync("MainQueue", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+]]></code></example>
+    </member>
+    <member name="GetQueueStatistics(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueueStatistics and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.GetQueueStatistics("MainQueue", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWorkerAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetWorkerAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterWorker> response = await client.GetWorkerAsync("DefaultWorker");
+]]></code></example>
+    </member>
+    <member name="GetWorker(string,CancellationToken)">
+      <example>
+This sample shows how to call GetWorker.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response<RouterWorker> response = client.GetWorker("DefaultWorker");
+]]></code></example>
+    </member>
+    <member name="GetWorkerAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetWorkerAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.GetWorkerAsync("DefaultWorker", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWorker(string,RequestContext)">
+      <example>
+This sample shows how to call GetWorker and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.GetWorker("DefaultWorker", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteWorkerAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteWorkerAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = await client.DeleteWorkerAsync("DefaultWorker");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteWorker(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteWorker.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+JobRouterClient client = new JobRouterClient(endpoint, credential);
+
+Response response = client.DeleteWorker("DefaultWorker");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

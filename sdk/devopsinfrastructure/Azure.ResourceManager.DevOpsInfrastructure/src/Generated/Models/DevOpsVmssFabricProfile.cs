@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -15,64 +16,61 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsVmssFabricProfile : DevOpsFabricProfile
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsVmssFabricProfile"/>. </summary>
-        /// <param name="sku"> The Azure SKU of the machines in the pool. </param>
+        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
         /// <param name="images"> The VM images of the machines in the pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="images"/> is null. </exception>
-        public DevOpsVmssFabricProfile(DevOpsAzureSku sku, IEnumerable<DevOpsPoolVmImage> images)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> or <paramref name="images"/> is null. </exception>
+        public DevOpsVmssFabricProfile(string skuName, IEnumerable<DevOpsPoolVmImage> images) : base("Vmss")
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(skuName, nameof(skuName));
             Argument.AssertNotNull(images, nameof(images));
 
-            Sku = sku;
+            Sku = new DevOpsAzureSku(skuName);
             Images = images.ToList();
-            Kind = "Vmss";
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsVmssFabricProfile"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsFabricProfile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The Azure SKU of the machines in the pool. </param>
         /// <param name="images"> The VM images of the machines in the pool. </param>
         /// <param name="osProfile"> The OS profile of the machines in the pool. </param>
         /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
         /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
-        internal DevOpsVmssFabricProfile(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DevOpsAzureSku sku, IList<DevOpsPoolVmImage> images, DevOpsOSProfile osProfile, DevOpsStorageProfile storageProfile, DevOpsNetworkProfile networkProfile) : base(kind, serializedAdditionalRawData)
+        internal DevOpsVmssFabricProfile(string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevOpsAzureSku sku, IList<DevOpsPoolVmImage> images, DevOpsOSProfile osProfile, DevOpsStorageProfile storageProfile, DevOpsNetworkProfile networkProfile) : base(kind, additionalBinaryDataProperties)
         {
             Sku = sku;
             Images = images;
             OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
-            Kind = kind ?? "Vmss";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsVmssFabricProfile"/> for deserialization. </summary>
-        internal DevOpsVmssFabricProfile()
-        {
         }
 
         /// <summary> The Azure SKU of the machines in the pool. </summary>
         internal DevOpsAzureSku Sku { get; set; }
-        /// <summary> The Azure SKU name of the machines in the pool. </summary>
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new DevOpsAzureSku(value);
-        }
 
         /// <summary> The VM images of the machines in the pool. </summary>
         public IList<DevOpsPoolVmImage> Images { get; }
+
         /// <summary> The OS profile of the machines in the pool. </summary>
         public DevOpsOSProfile OSProfile { get; set; }
+
         /// <summary> The storage profile of the machines in the pool. </summary>
         public DevOpsStorageProfile StorageProfile { get; set; }
+
         /// <summary> The network profile of the machines in the pool. </summary>
-        internal DevOpsNetworkProfile NetworkProfile { get; set; }
-        /// <summary> The subnet id on which to put all machines created in the pool. </summary>
-        public string NetworkSubnetId
+        public DevOpsNetworkProfile NetworkProfile { get; set; }
+
+        /// <summary> The Azure SKU name of the machines in the pool. </summary>
+        public string SkuName
         {
-            get => NetworkProfile is null ? default : NetworkProfile.SubnetId;
-            set => NetworkProfile = new DevOpsNetworkProfile(value);
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new DevOpsAzureSku(value);
+            }
         }
     }
 }

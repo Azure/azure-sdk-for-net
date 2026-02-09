@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -81,8 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
                 observedImpact?.ToList(),
                 timeSeries?.ToList(),
                 linkedObjects?.ToList(),
-                additionalDetails.ToDictionary(kvp => kvp.Key,
-                    kvp => BinaryData.FromString(kvp.Value)),
+                additionalDetails,
                 serializedAdditionalRawData: null);
         }
     }

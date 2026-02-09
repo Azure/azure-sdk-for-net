@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("serviceState"u8);
                 writer.WriteStringValue(ServiceState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(LatestOperationStatus))
+            {
+                writer.WritePropertyName("latestOperationStatus"u8);
+                writer.WriteStringValue(LatestOperationStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastStatusChangedOn))
+            {
+                writer.WritePropertyName("lastStatusChangeTime"u8);
+                writer.WriteStringValue(LastStatusChangedOn.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +93,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             OrchestrationServiceName? serviceName = default;
             OrchestrationServiceState? serviceState = default;
+            OrchestrationServiceOperationStatus? latestOperationStatus = default;
+            DateTimeOffset? lastStatusChangeTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +117,31 @@ namespace Azure.ResourceManager.Compute.Models
                     serviceState = new OrchestrationServiceState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("latestOperationStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    latestOperationStatus = new OrchestrationServiceOperationStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("lastStatusChangeTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastStatusChangeTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrchestrationServiceSummary(serviceName, serviceState, serializedAdditionalRawData);
+            return new OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus, lastStatusChangeTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrchestrationServiceSummary>.Write(ModelReaderWriterOptions options)

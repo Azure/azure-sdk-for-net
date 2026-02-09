@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Initializes a new instance of <see cref="RunStepBingGroundingToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingGrounding"> Reserved for future use. </param>
+        /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="bingGrounding"/> is null. </exception>
         internal RunStepBingGroundingToolCall(string id, IReadOnlyDictionary<string, string> bingGrounding) : base(id)
         {
@@ -33,7 +33,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingGrounding"> Reserved for future use. </param>
+        /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         internal RunStepBingGroundingToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> bingGrounding) : base(type, id, serializedAdditionalRawData)
         {
             BingGrounding = bingGrounding;
@@ -44,7 +44,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> Reserved for future use. </summary>
+        /// <summary> The dictionary with request and response from Bing Grounding search tool. </summary>
         public IReadOnlyDictionary<string, string> BingGrounding { get; }
     }
 }

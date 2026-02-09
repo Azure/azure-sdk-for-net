@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.4 (Unreleased)
+## 2.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.5 (2025-11-25)
+
+This version of the client library defaults to the service API version `2025-11-15-preview`.
+
+### Features Added
+
+- Added new PII categories: DriversLicenseNumber, PassportNumber, PersonType, Organization, ABARoutingNumber, BankAccountNumber, DateOfBirth, InternationalBankingAccountNumber, SWIFTCode, VehicleIdentificationNumber, Age, Date, ZipCode, GovernmentIssuedId, CVV, HealthCardNumber, CASocialInsuranceNumber, USMedicareBeneficiaryId, GithubAccount, Location, and GPE.
+
+## 2.0.0-beta.4 (2025-09-18)
+
+### Breaking Changes
+
+- removed `AIConversation` and `ConversationalAIItem`, and reuse `TextConversation` and `TextConversationItem` for AI Conversation Analyze feature.
 
 ## 2.0.0-beta.3 (2025-06-23)
 

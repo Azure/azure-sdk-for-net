@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteEnvironmentByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironments_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_Delete.json
             // this example is just showing the usage of "ManagedEnvironments_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchManagedEnvironment()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironments_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_Patch.json
             // this example is just showing the usage of "ManagedEnvironments_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAuthToken_GetManagedEnvironmentAuthToken()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironments_GetAuthToken.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_GetAuthToken.json
             // this example is just showing the usage of "ManagedEnvironments_GetAuthToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetWorkloadProfileStates_ListEnvironmentsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironments_ListWorkloadProfileStates.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_ListWorkloadProfileStates.json
             // this example is just showing the usage of "ManagedEnvironments_ListWorkloadProfileStates" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckContainerAppNameAvailability_CertificatesCheckNameAvailability()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificates_CheckNameAvailability.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificates_CheckNameAvailability.json
             // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckContainerAppNameAvailability_ContainerAppsCheckNameAvailability()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_CheckNameAvailability.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ContainerApps_CheckNameAvailability.json
             // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -230,9 +230,38 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetManagedEnvironmentPrivateLinkResources_ListPrivateLinkResourcesByManagedEnvironment()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentPrivateLinkResources_List.json
+            // this example is just showing the usage of "ManagedEnvironmentPrivateLinkResources_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
+            // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
+            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string resourceGroupName = "examplerg";
+            string environmentName = "managedEnv";
+            ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
+            ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ContainerAppPrivateLink item in containerAppManagedEnvironment.GetManagedEnvironmentPrivateLinkResourcesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedEnvironmentUsages_ListManagedEnvironmentUsages()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ManagedEnvironmentUsages_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentUsages_List.json
             // this example is just showing the usage of "ManagedEnvironmentUsages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

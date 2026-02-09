@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    public partial class SecretsManagementSettings : IUtf8JsonSerializable, IJsonModel<SecretsManagementSettings>
+    /// <summary> The secret management settings of the machines in the pool. </summary>
+    public partial class SecretsManagementSettings : IJsonModel<SecretsManagementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretsManagementSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SecretsManagementSettings"/> for deserialization. </summary>
+        internal SecretsManagementSettings()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecretsManagementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,20 +34,24 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretsManagementSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CertificateStoreLocation))
             {
                 writer.WritePropertyName("certificateStoreLocation"u8);
                 writer.WriteStringValue(CertificateStoreLocation);
             }
+            if (Optional.IsDefined(CertificateStoreName))
+            {
+                writer.WritePropertyName("certificateStoreName"u8);
+                writer.WriteStringValue(CertificateStoreName.Value.ToString());
+            }
             writer.WritePropertyName("observedCertificates"u8);
             writer.WriteStartArray();
-            foreach (var item in ObservedCertificates)
+            foreach (Uri item in ObservedCertificates)
             {
                 if (item == null)
                 {
@@ -53,15 +63,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteEndArray();
             writer.WritePropertyName("keyExportable"u8);
             writer.WriteBooleanValue(KeyExportable);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -70,42 +80,56 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        SecretsManagementSettings IJsonModel<SecretsManagementSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretsManagementSettings IJsonModel<SecretsManagementSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecretsManagementSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretsManagementSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecretsManagementSettings(document.RootElement, options);
         }
 
-        internal static SecretsManagementSettings DeserializeSecretsManagementSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecretsManagementSettings DeserializeSecretsManagementSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string certificateStoreLocation = default;
+            CertificateStoreNameOption? certificateStoreName = default;
             IList<Uri> observedCertificates = default;
             bool keyExportable = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateStoreLocation"u8))
+                if (prop.NameEquals("certificateStoreLocation"u8))
                 {
-                    certificateStoreLocation = property.Value.GetString();
+                    certificateStoreLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("observedCertificates"u8))
+                if (prop.NameEquals("certificateStoreName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateStoreName = new CertificateStoreNameOption(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("observedCertificates"u8))
                 {
                     List<Uri> array = new List<Uri>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -113,30 +137,32 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                         }
                         else
                         {
-                            array.Add(new Uri(item.GetString()));
+                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString()));
                         }
                     }
                     observedCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("keyExportable"u8))
+                if (prop.NameEquals("keyExportable"u8))
                 {
-                    keyExportable = property.Value.GetBoolean();
+                    keyExportable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SecretsManagementSettings(certificateStoreLocation, observedCertificates, keyExportable, serializedAdditionalRawData);
+            return new SecretsManagementSettings(certificateStoreLocation, certificateStoreName, observedCertificates, keyExportable, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SecretsManagementSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecretsManagementSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -146,15 +172,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        SecretsManagementSettings IPersistableModel<SecretsManagementSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretsManagementSettings IPersistableModel<SecretsManagementSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecretsManagementSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecretsManagementSettings(document.RootElement, options);
                     }
                 default:
@@ -162,6 +193,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SecretsManagementSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,15 +12,18 @@ using BenchmarkDotNet.Jobs;
 
 namespace Azure.Core.Perf
 {
-    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
-    [SimpleJob(RuntimeMoniker.Net462)]
-    [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net80)]
+    [MemoryDiagnoser]
     public class DynamicObjectBenchmark
     {
-        private static string _fileName = Path.Combine(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", "JsonFormattedString.json"));
         private JsonDocument _jsonDocument;
         private ModelWithBinaryData _modelWithBinaryData;
         private ModelWithObject _modelWithObject;
+
+        private static readonly string _fileName = Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "TestData",
+            "JsonFormattedString.json");
 
         [GlobalSetup]
         public void SetUp()
@@ -65,8 +68,8 @@ namespace Azure.Core.Perf
         {
             var model = ModelWithObject.DeserializeModelWithObject(_jsonDocument.RootElement);
             var properties = model.Properties as Dictionary<string, object>;
-            var innerProperties = properties["innerProperties"] as Dictionary<string, object>;
-            var innerA = innerProperties["a"] as string;
+            var innerProperties = properties!["innerProperties"] as Dictionary<string, object>;
+            var innerA = innerProperties!["a"] as string;
         }
 
         [Benchmark]
@@ -87,9 +90,22 @@ namespace Azure.Core.Perf
         public void DeserializeWithBinaryDataAndAccess()
         {
             var model = ModelWithBinaryData.DeserializeModelWithBinaryData(_jsonDocument.RootElement);
-            var properties = model.Properties.ToObjectFromJson() as Dictionary<string, object>;
-            var innerProperties = properties["innerProperties"] as Dictionary<string, object>;
-            var innerA = innerProperties["a"] as string;
+            var properties = model.Properties.ToObjectFromJson<Dictionary<string, object>>();
+            if (properties == null)
+            {
+                throw new InvalidOperationException("Deserialized properties are null.");
+            }
+            if (properties.TryGetValue("innerProperties", out var innerPropertiesObj) &&
+                innerPropertiesObj is JsonElement innerElement &&
+               innerElement.ValueKind == JsonValueKind.Object)
+            {
+                var innerProperties = JsonSerializer.Deserialize<Dictionary<string, object>>(innerElement.GetRawText());
+                if (innerProperties != null && innerProperties.TryGetValue("a", out var innerAObj))
+                {
+                    var innerA = innerAObj as string;
+                    // Use innerA as needed
+                }
+            }
         }
 
         [Benchmark]
@@ -98,6 +114,12 @@ namespace Azure.Core.Perf
             using var ms = new MemoryStream();
             using var writer = new Utf8JsonWriter(ms);
             _modelWithBinaryData.Write(writer);
+        }
+
+        [GlobalCleanup]
+        public void CleanUp()
+        {
+            _jsonDocument?.Dispose();
         }
     }
 }

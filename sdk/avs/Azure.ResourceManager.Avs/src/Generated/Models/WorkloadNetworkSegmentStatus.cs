@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct WorkloadNetworkSegmentStatus : IEquatable<WorkloadNetworkSegmentStatus>
     {
         private readonly string _value;
+        /// <summary> is success. </summary>
+        private const string SuccessValue = "SUCCESS";
+        /// <summary> is failure. </summary>
+        private const string FailureValue = "FAILURE";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadNetworkSegmentStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuccessValue = "SUCCESS";
-        private const string FailureValue = "FAILURE";
+            _value = value;
+        }
 
         /// <summary> is success. </summary>
         public static WorkloadNetworkSegmentStatus Success { get; } = new WorkloadNetworkSegmentStatus(SuccessValue);
+
         /// <summary> is failure. </summary>
         public static WorkloadNetworkSegmentStatus Failure { get; } = new WorkloadNetworkSegmentStatus(FailureValue);
+
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadNetworkSegmentStatus(string value) => new WorkloadNetworkSegmentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadNetworkSegmentStatus?(string value) => value == null ? null : new WorkloadNetworkSegmentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadNetworkSegmentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadNetworkSegmentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

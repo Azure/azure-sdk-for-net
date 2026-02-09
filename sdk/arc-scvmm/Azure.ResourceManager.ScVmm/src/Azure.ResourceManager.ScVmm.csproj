@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.ScVmm</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Arc.ScVmm.</Description>
     <PackageTags>azure;management;arm;resource manager;scvmm</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ID of the target VM. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
     }
 }

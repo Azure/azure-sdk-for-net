@@ -44,6 +44,16 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             CSharpParseOptions? parseOptions = null,
             string contextName = "LocalContext",
             HashSet<string>? additionalSuppress = null)
+            => CreateCompilation([source], additionalReferences, assemblyName, includeSTJ, parseOptions, contextName, additionalSuppress);
+
+        public static Compilation CreateCompilation(
+            IEnumerable<string> sources,
+            MetadataReference[]? additionalReferences = null,
+            string assemblyName = "TestAssembly",
+            bool includeSTJ = true,
+            CSharpParseOptions? parseOptions = null,
+            string contextName = "LocalContext",
+            HashSet<string>? additionalSuppress = null)
         {
             List<MetadataReference> references =
             [
@@ -70,11 +80,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                 }
             }
 
-            parseOptions ??= s_defaultParseOptions;
-            SyntaxTree[] syntaxTrees =
-            [
-                CSharpSyntaxTree.ParseText(source, parseOptions),
-            ];
+            SyntaxTree[] syntaxTrees = sources.Select(source => CSharpSyntaxTree.ParseText(source, parseOptions)).ToArray();
 
             var compilation = CSharpCompilation.Create(
                 assemblyName,

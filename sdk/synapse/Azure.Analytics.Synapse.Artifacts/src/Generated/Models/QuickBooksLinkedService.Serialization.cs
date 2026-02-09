@@ -77,10 +77,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue<object>(ConsumerKey);
             writer.WritePropertyName("consumerSecret"u8);
             writer.WriteObjectValue(ConsumerSecret);
-            writer.WritePropertyName("accessToken"u8);
-            writer.WriteObjectValue(AccessToken);
-            writer.WritePropertyName("accessTokenSecret"u8);
-            writer.WriteObjectValue(AccessTokenSecret);
+            if (Optional.IsDefined(AccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteObjectValue(AccessToken);
+            }
+            if (Optional.IsDefined(AccessTokenSecret))
+            {
+                writer.WritePropertyName("accessTokenSecret"u8);
+                writer.WriteObjectValue(AccessTokenSecret);
+            }
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                writer.WriteObjectValue(RefreshToken);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -119,6 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SecretBase consumerSecret = default;
             SecretBase accessToken = default;
             SecretBase accessTokenSecret = default;
+            SecretBase refreshToken = default;
             object useEncryptedEndpoints = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -224,12 +236,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("accessToken"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             accessToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             accessTokenSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("refreshToken"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -271,6 +300,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 consumerSecret,
                 accessToken,
                 accessTokenSecret,
+                refreshToken,
                 useEncryptedEndpoints,
                 encryptedCredential);
         }

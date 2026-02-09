@@ -1,0 +1,31 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/tools/Azure.SdkAnalyzers/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - release/*
+    - hotfix/*
+  paths:
+    include:
+    - sdk/tools/Azure.SdkAnalyzers/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: tools/Azure.SdkAnalyzers
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.SdkAnalyzers
+      safeName: AzureSdkAnalyzers

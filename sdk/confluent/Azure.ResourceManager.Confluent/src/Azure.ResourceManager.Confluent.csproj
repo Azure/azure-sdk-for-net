@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Confluent</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Confluent.</Description>
     <PackageTags>azure;management;arm;resource manager;confluent</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

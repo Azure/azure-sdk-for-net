@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Log Settings for Firewall. </summary>
     public partial class FirewallLogSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FirewallLogSettings"/>. </summary>
         public FirewallLogSettings()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="trafficLogDestination"> Traffic destination configurations. </param>
         /// <param name="threatLogDestination"> Threat destination configurations. </param>
         /// <param name="decryptLogDestination"> Decrypt destination configurations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallLogSettings(FirewallLogType? logType, FirewallLogOption? logOption, FirewallApplicationInsights applicationInsights, FirewallLogDestination commonDestination, FirewallLogDestination trafficLogDestination, FirewallLogDestination threatLogDestination, FirewallLogDestination decryptLogDestination, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallLogSettings(FirewallLogType? logType, FirewallLogOption? logOption, FirewallApplicationInsights applicationInsights, FirewallLogDestination commonDestination, FirewallLogDestination trafficLogDestination, FirewallLogDestination threatLogDestination, FirewallLogDestination decryptLogDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogType = logType;
             LogOption = logOption;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             TrafficLogDestination = trafficLogDestination;
             ThreatLogDestination = threatLogDestination;
             DecryptLogDestination = decryptLogDestination;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> One of possible log type. </summary>
         public FirewallLogType? LogType { get; set; }
+
         /// <summary> Log option SAME/INDIVIDUAL. </summary>
         public FirewallLogOption? LogOption { get; set; }
+
         /// <summary> Application Insight details. </summary>
         public FirewallApplicationInsights ApplicationInsights { get; set; }
+
         /// <summary> Common destination configurations. </summary>
         public FirewallLogDestination CommonDestination { get; set; }
+
         /// <summary> Traffic destination configurations. </summary>
         public FirewallLogDestination TrafficLogDestination { get; set; }
+
         /// <summary> Threat destination configurations. </summary>
         public FirewallLogDestination ThreatLogDestination { get; set; }
+
         /// <summary> Decrypt destination configurations. </summary>
         public FirewallLogDestination DecryptLogDestination { get; set; }
     }

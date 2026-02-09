@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Returned sas url of the blob to which the p2s vpn connection detailed health will be written. </summary>
+        [WirePath("sasUrl")]
         public Uri SasUri { get; }
     }
 }

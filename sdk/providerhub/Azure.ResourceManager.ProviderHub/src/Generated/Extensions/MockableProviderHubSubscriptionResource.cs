@@ -8,13 +8,18 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ProviderHub.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableProviderHubSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _providerMonitorSettingClientDiagnostics;
+        private ProviderMonitorSettingsRestOperations _providerMonitorSettingRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableProviderHubSubscriptionResource"/> class for mocking. </summary>
         protected MockableProviderHubSubscriptionResource()
         {
@@ -26,6 +31,9 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         internal MockableProviderHubSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ProviderMonitorSettingClientDiagnostics => _providerMonitorSettingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderMonitorSettingResource.ResourceType.Namespace, Diagnostics);
+        private ProviderMonitorSettingsRestOperations ProviderMonitorSettingRestClient => _providerMonitorSettingRestClient ??= new ProviderMonitorSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProviderMonitorSettingResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -53,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +92,7 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,6 +108,66 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         public virtual Response<ProviderRegistrationResource> GetProviderRegistration(string providerNamespace, CancellationToken cancellationToken = default)
         {
             return GetProviderRegistrations().Get(providerNamespace, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of the provider monitor settings in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerMonitorSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderMonitorSettings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderMonitorSettingResource> GetProviderMonitorSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderMonitorSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderMonitorSettingRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderMonitorSettingResource(Client, ProviderMonitorSettingData.DeserializeProviderMonitorSettingData(e)), ProviderMonitorSettingClientDiagnostics, Pipeline, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of the provider monitor settings in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerMonitorSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderMonitorSettings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderMonitorSettingResource> GetProviderMonitorSettings(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderMonitorSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderMonitorSettingRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderMonitorSettingResource(Client, ProviderMonitorSettingData.DeserializeProviderMonitorSettingData(e)), ProviderMonitorSettingClientDiagnostics, Pipeline, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings", "value", "nextLink", cancellationToken);
         }
     }
 }

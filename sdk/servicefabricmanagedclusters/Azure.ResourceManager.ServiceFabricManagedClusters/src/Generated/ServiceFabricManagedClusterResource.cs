@@ -7,54 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
-    /// A Class representing a ServiceFabricManagedCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedClusterResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricManagedClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceFabricManagedCluster method.
+    /// A class representing a ServiceFabricManagedCluster along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedClusterResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceFabricManagedClusters method.
     /// </summary>
     public partial class ServiceFabricManagedClusterResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceFabricManagedClusterResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _serviceFabricManagedClusterManagedClustersClientDiagnostics;
-        private readonly ManagedClustersRestOperations _serviceFabricManagedClusterManagedClustersRestClient;
-        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
-        private readonly ManagedAzResiliencyStatusRestOperations _managedAzResiliencyStatusRestClient;
+        private readonly ClientDiagnostics _managedClustersClientDiagnostics;
+        private readonly ManagedClusters _managedClustersRestClient;
         private readonly ClientDiagnostics _managedApplyMaintenanceWindowClientDiagnostics;
-        private readonly ManagedApplyMaintenanceWindowRestOperations _managedApplyMaintenanceWindowRestClient;
+        private readonly ManagedApplyMaintenanceWindow _managedApplyMaintenanceWindowRestClient;
+        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
+        private readonly ManagedAzResiliencyStatus _managedAzResiliencyStatusRestClient;
         private readonly ClientDiagnostics _managedMaintenanceWindowStatusClientDiagnostics;
-        private readonly ManagedMaintenanceWindowStatusRestOperations _managedMaintenanceWindowStatusRestClient;
+        private readonly ManagedMaintenanceWindowStatus _managedMaintenanceWindowStatusRestClient;
         private readonly ServiceFabricManagedClusterData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedClusters";
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedClusterResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricManagedClusterResource for mocking. </summary>
         protected ServiceFabricManagedClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricManagedClusterResource(ArmClient client, ServiceFabricManagedClusterData data) : this(client, data.Id)
@@ -63,284 +52,98 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceFabricManagedClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceFabricManagedClusterManagedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceFabricManagedClusterManagedClustersApiVersion);
-            _serviceFabricManagedClusterManagedClustersRestClient = new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterManagedClustersApiVersion);
-            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _managedApplyMaintenanceWindowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managedApplyMaintenanceWindowRestClient = new ManagedApplyMaintenanceWindowRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _managedMaintenanceWindowStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managedMaintenanceWindowStatusRestClient = new ManagedMaintenanceWindowStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string serviceFabricManagedClusterApiVersion);
+            _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
+            _managedApplyMaintenanceWindowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
+            _managedApplyMaintenanceWindowRestClient = new ManagedApplyMaintenanceWindow(_managedApplyMaintenanceWindowClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
+            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
+            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatus(_managedAzResiliencyStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
+            _managedMaintenanceWindowStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
+            _managedMaintenanceWindowStatusRestClient = new ManagedMaintenanceWindowStatus(_managedMaintenanceWindowStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ServiceFabricManagedClusterData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ServiceFabricManagedApplicationResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedApplicationResources and their operations over a ServiceFabricManagedApplicationResource. </returns>
-        public virtual ServiceFabricManagedApplicationCollection GetServiceFabricManagedApplications()
-        {
-            return GetCachedClient(client => new ServiceFabricManagedApplicationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedApplicationResource>> GetServiceFabricManagedApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceFabricManagedApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedApplicationResource> GetServiceFabricManagedApplication(string applicationName, CancellationToken cancellationToken = default)
-        {
-            return GetServiceFabricManagedApplications().Get(applicationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServiceFabricManagedApplicationTypeResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedApplicationTypeResources and their operations over a ServiceFabricManagedApplicationTypeResource. </returns>
-        public virtual ServiceFabricManagedApplicationTypeCollection GetServiceFabricManagedApplicationTypes()
-        {
-            return GetCachedClient(client => new ServiceFabricManagedApplicationTypeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric managed cluster resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationTypeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationTypeName"> The name of the application type name resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> GetServiceFabricManagedApplicationTypeAsync(string applicationTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceFabricManagedApplicationTypes().GetAsync(applicationTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric managed cluster resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationTypeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationTypeName"> The name of the application type name resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedApplicationTypeResource> GetServiceFabricManagedApplicationType(string applicationTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetServiceFabricManagedApplicationTypes().Get(applicationTypeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServiceFabricManagedNodeTypeResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedNodeTypeResources and their operations over a ServiceFabricManagedNodeTypeResource. </returns>
-        public virtual ServiceFabricManagedNodeTypeCollection GetServiceFabricManagedNodeTypes()
-        {
-            return GetCachedClient(client => new ServiceFabricManagedNodeTypeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Service Fabric node type of a given managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NodeType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetServiceFabricManagedNodeTypeAsync(string nodeTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceFabricManagedNodeTypes().GetAsync(nodeTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Service Fabric node type of a given managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NodeType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedNodeTypeResource> GetServiceFabricManagedNodeType(string nodeTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetServiceFabricManagedNodeTypes().Get(nodeTypeName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Get");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedClusterManagedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,34 +157,160 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceFabricManagedClusterResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Get");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedClusterManagedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the tags of of a Service Fabric managed cluster resource with the specified name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The managed cluster resource updated tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceFabricManagedClusterResource>> UpdateAsync(WaitUntil waitUntil, ServiceFabricManagedClusterPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServiceFabricManagedClusterPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource>(
+                    new ServiceFabricManagedClusterOperationSource(Client),
+                    _managedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the tags of of a Service Fabric managed cluster resource with the specified name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The managed cluster resource updated tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ServiceFabricManagedClusterResource> Update(WaitUntil waitUntil, ServiceFabricManagedClusterPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServiceFabricManagedClusterPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource>(
+                    new ServiceFabricManagedClusterOperationSource(Client),
+                    _managedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -394,20 +323,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Delete a Service Fabric managed cluster resource with the specified name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,14 +344,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Delete");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedClusterManagedClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, _serviceFabricManagedClusterManagedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -436,20 +372,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Delete a Service Fabric managed cluster resource with the specified name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,14 +393,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Delete");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedClusterManagedClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, _serviceFabricManagedClusterManagedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -475,39 +418,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Update the tags of of a Service Fabric managed cluster resource with the specified name.
+        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The managed cluster resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ServiceFabricManagedClusterResource>> UpdateAsync(ServiceFabricManagedClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Update");
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedClusterManagedClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -517,39 +461,136 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Update the tags of of a Service Fabric managed cluster resource with the specified name.
+        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The managed cluster resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ServiceFabricManagedClusterResource> Update(ServiceFabricManagedClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Update");
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedClusterManagedClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedAzResiliencyStatus_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Models.ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedAzResiliencyStatusRestClient.CreateGetManagedAzResiliencyStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Models.ManagedAzResiliencyStatus> response = Response.FromValue(Models.ManagedAzResiliencyStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedAzResiliencyStatus_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Models.ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedAzResiliencyStatusRestClient.CreateGetManagedAzResiliencyStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Models.ManagedAzResiliencyStatus> response = Response.FromValue(Models.ManagedAzResiliencyStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -562,20 +603,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Gets a fault simulation by the simulationId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_GetFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -586,11 +627,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetFaultSimulation");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetFaultSimulation");
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedClusterManagedClustersRestClient.GetFaultSimulationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateGetFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FaultSimulationIdContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FaultSimulation> response = Response.FromValue(FaultSimulation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -604,20 +655,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Gets a fault simulation by the simulationId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_GetFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,11 +679,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetFaultSimulation");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetFaultSimulation");
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedClusterManagedClustersRestClient.GetFaultSimulation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateGetFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FaultSimulationIdContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FaultSimulation> response = Response.FromValue(FaultSimulation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -646,50 +707,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Gets the list of recent fault simulations for the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/listFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/listFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ListFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_ListFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FaultSimulation> GetFaultSimulationAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagedClustersGetFaultSimulationAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// Gets the list of recent fault simulations for the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/listFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/listFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ListFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_ListFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -697,29 +760,31 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FaultSimulation> GetFaultSimulation(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagedClustersGetFaultSimulationCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// Starts a fault simulation on the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/startFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/startFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_StartFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_StartFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -731,14 +796,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(faultSimulationContentWrapper, nameof(faultSimulationContentWrapper));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StartFaultSimulation");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StartFaultSimulation");
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedClusterManagedClustersRestClient.StartFaultSimulationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, faultSimulationContentWrapper, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, _serviceFabricManagedClusterManagedClustersRestClient.CreateStartFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, faultSimulationContentWrapper).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateStartFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FaultSimulationContentWrapper.ToRequestContent(faultSimulationContentWrapper), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ServiceFabricManagedClustersArmOperation<FaultSimulation> operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(
+                    new FaultSimulationOperationSource(),
+                    _managedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -752,20 +830,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Starts a fault simulation on the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/startFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/startFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_StartFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_StartFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -777,14 +855,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(faultSimulationContentWrapper, nameof(faultSimulationContentWrapper));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StartFaultSimulation");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StartFaultSimulation");
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedClusterManagedClustersRestClient.StartFaultSimulation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, faultSimulationContentWrapper, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, _serviceFabricManagedClusterManagedClustersRestClient.CreateStartFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, faultSimulationContentWrapper).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateStartFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FaultSimulationContentWrapper.ToRequestContent(faultSimulationContentWrapper), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ServiceFabricManagedClustersArmOperation<FaultSimulation> operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(
+                    new FaultSimulationOperationSource(),
+                    _managedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -798,20 +889,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Stops a fault simulation on the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/stopFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/stopFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_StopFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_StopFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,14 +914,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StopFaultSimulation");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StopFaultSimulation");
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedClusterManagedClustersRestClient.StopFaultSimulationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, _serviceFabricManagedClusterManagedClustersRestClient.CreateStopFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateStopFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FaultSimulationIdContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ServiceFabricManagedClustersArmOperation<FaultSimulation> operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(
+                    new FaultSimulationOperationSource(),
+                    _managedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -844,20 +948,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Stops a fault simulation on the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/stopFaultSimulation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/stopFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_StopFaultSimulation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusters_StopFaultSimulation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -869,14 +973,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StopFaultSimulation");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.StopFaultSimulation");
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedClusterManagedClustersRestClient.StopFaultSimulation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, _serviceFabricManagedClusterManagedClustersRestClient.CreateStopFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedClustersRestClient.CreateStopFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FaultSimulationIdContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ServiceFabricManagedClustersArmOperation<FaultSimulation> operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(
+                    new FaultSimulationOperationSource(),
+                    _managedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -887,132 +1004,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getMaintenanceWindowStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedAzResiliencyStatus_GetManagedAzResiliencyStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedMaintenanceWindowStatus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.ManagedMaintenanceWindowStatus>> GetManagedMaintenanceWindowStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            using DiagnosticScope scope = _managedMaintenanceWindowStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedMaintenanceWindowStatus");
             scope.Start();
             try
             {
-                var response = await _managedAzResiliencyStatusRestClient.GetManagedAzResiliencyStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedAzResiliencyStatus_GetManagedAzResiliencyStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
-            scope.Start();
-            try
-            {
-                var response = _managedAzResiliencyStatusRestClient.GetManagedAzResiliencyStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedApplyMaintenanceWindow_Post</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
-            scope.Start();
-            try
-            {
-                var response = await _managedApplyMaintenanceWindowRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Action to Apply Maintenance window on the Service Fabric Managed Clusters, right now. Any pending update will be applied.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applyMaintenanceWindow</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedApplyMaintenanceWindow_Post</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
-            scope.Start();
-            try
-            {
-                var response = _managedApplyMaintenanceWindowRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedMaintenanceWindowStatusRestClient.CreateGetManagedMaintenanceWindowStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Models.ManagedMaintenanceWindowStatus> response = Response.FromValue(Models.ManagedMaintenanceWindowStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1026,27 +1055,41 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getMaintenanceWindowStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getMaintenanceWindowStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedMaintenanceWindowStatus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedMaintenanceWindowStatus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceFabricManagedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedMaintenanceWindowStatus>> GetManagedMaintenanceWindowStatuAsync(CancellationToken cancellationToken = default)
+        public virtual Response<Models.ManagedMaintenanceWindowStatus> GetManagedMaintenanceWindowStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedMaintenanceWindowStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedMaintenanceWindowStatu");
+            using DiagnosticScope scope = _managedMaintenanceWindowStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedMaintenanceWindowStatus");
             scope.Start();
             try
             {
-                var response = await _managedMaintenanceWindowStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedMaintenanceWindowStatusRestClient.CreateGetManagedMaintenanceWindowStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Models.ManagedMaintenanceWindowStatus> response = Response.FromValue(Models.ManagedMaintenanceWindowStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1056,61 +1099,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary>
-        /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getMaintenanceWindowStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedMaintenanceWindowStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedMaintenanceWindowStatus> GetManagedMaintenanceWindowStatu(CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedMaintenanceWindowStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedMaintenanceWindowStatu");
-            scope.Start();
-            try
-            {
-                var response = _managedMaintenanceWindowStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1120,29 +1109,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.AddTag");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _serviceFabricManagedClusterManagedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
+                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ServiceFabricManagedClusterPatch();
-                    foreach (var tag in current.Tags)
+                    ServiceFabricManagedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ServiceFabricManagedClusterPatch patch = new ServiceFabricManagedClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    ArmOperation<ServiceFabricManagedClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1152,27 +1147,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1182,29 +1157,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.AddTag");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _serviceFabricManagedClusterManagedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
+                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ServiceFabricManagedClusterPatch();
-                    foreach (var tag in current.Tags)
+                    ServiceFabricManagedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ServiceFabricManagedClusterPatch patch = new ServiceFabricManagedClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    ArmOperation<ServiceFabricManagedClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1214,54 +1195,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.SetTags");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _serviceFabricManagedClusterManagedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
+                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ServiceFabricManagedClusterPatch();
+                    ServiceFabricManagedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ServiceFabricManagedClusterPatch patch = new ServiceFabricManagedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    ArmOperation<ServiceFabricManagedClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1271,54 +1238,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.SetTags");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _serviceFabricManagedClusterManagedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
+                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ServiceFabricManagedClusterPatch();
+                    ServiceFabricManagedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ServiceFabricManagedClusterPatch patch = new ServiceFabricManagedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    ArmOperation<ServiceFabricManagedClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1328,27 +1281,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1356,29 +1289,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.RemoveTag");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _serviceFabricManagedClusterManagedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
+                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ServiceFabricManagedClusterPatch();
-                    foreach (var tag in current.Tags)
+                    ServiceFabricManagedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ServiceFabricManagedClusterPatch patch = new ServiceFabricManagedClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    ArmOperation<ServiceFabricManagedClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1388,27 +1327,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1416,29 +1335,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.RemoveTag");
+            using DiagnosticScope scope = _managedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _serviceFabricManagedClusterManagedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ServiceFabricManagedClusterData> response = Response.FromValue(ServiceFabricManagedClusterData.FromResponse(result), result);
+                    return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ServiceFabricManagedClusterPatch();
-                    foreach (var tag in current.Tags)
+                    ServiceFabricManagedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ServiceFabricManagedClusterPatch patch = new ServiceFabricManagedClusterPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    ArmOperation<ServiceFabricManagedClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1446,6 +1371,105 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ServiceFabricManagedApplications in the <see cref="ServiceFabricManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedApplications and their operations over a ServiceFabricManagedApplicationResource. </returns>
+        public virtual ServiceFabricManagedApplicationCollection GetServiceFabricManagedApplications()
+        {
+            return GetCachedClient(client => new ServiceFabricManagedApplicationCollection(client, Id));
+        }
+
+        /// <summary> Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceFabricManagedApplicationResource>> GetServiceFabricManagedApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            return await GetServiceFabricManagedApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceFabricManagedApplicationResource> GetServiceFabricManagedApplication(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            return GetServiceFabricManagedApplications().Get(applicationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceFabricManagedApplicationTypes in the <see cref="ServiceFabricManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedApplicationTypes and their operations over a ServiceFabricManagedApplicationTypeResource. </returns>
+        public virtual ServiceFabricManagedApplicationTypeCollection GetServiceFabricManagedApplicationTypes()
+        {
+            return GetCachedClient(client => new ServiceFabricManagedApplicationTypeCollection(client, Id));
+        }
+
+        /// <summary> Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric managed cluster resource. </summary>
+        /// <param name="applicationTypeName"> The name of the application type name resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> GetServiceFabricManagedApplicationTypeAsync(string applicationTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+
+            return await GetServiceFabricManagedApplicationTypes().GetAsync(applicationTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric managed cluster resource. </summary>
+        /// <param name="applicationTypeName"> The name of the application type name resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceFabricManagedApplicationTypeResource> GetServiceFabricManagedApplicationType(string applicationTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+
+            return GetServiceFabricManagedApplicationTypes().Get(applicationTypeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceFabricManagedNodeTypes in the <see cref="ServiceFabricManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedNodeTypes and their operations over a ServiceFabricManagedNodeTypeResource. </returns>
+        public virtual ServiceFabricManagedNodeTypeCollection GetServiceFabricManagedNodeTypes()
+        {
+            return GetCachedClient(client => new ServiceFabricManagedNodeTypeCollection(client, Id));
+        }
+
+        /// <summary> Get a Service Fabric node type of a given managed cluster. </summary>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetServiceFabricManagedNodeTypeAsync(string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
+
+            return await GetServiceFabricManagedNodeTypes().GetAsync(nodeTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Service Fabric node type of a given managed cluster. </summary>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceFabricManagedNodeTypeResource> GetServiceFabricManagedNodeType(string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
+
+            return GetServiceFabricManagedNodeTypes().Get(nodeTypeName, cancellationToken);
         }
     }
 }

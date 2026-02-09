@@ -11,12 +11,6 @@ parameters:
   - name: SDKType
     type: string
     default: all
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: BuildSnippets
     type: boolean
     default: true
@@ -43,9 +37,6 @@ jobs:
       matrix: $[ ${{ parameters.Matrix }} ]
 
     variables:
-    - template: /eng/pipelines/templates/variables/codeql.yml
-    - name: Codeql.BuildIdentifier
-      value: ${{ parameters.ServiceDirectory }}
     - name: SDKType
       value: ${{ parameters.SDKType }}
 
@@ -69,8 +60,6 @@ jobs:
           TestPipeline: ${{ parameters.TestPipeline }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
-          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
   - job:
     displayName: "Analyze"

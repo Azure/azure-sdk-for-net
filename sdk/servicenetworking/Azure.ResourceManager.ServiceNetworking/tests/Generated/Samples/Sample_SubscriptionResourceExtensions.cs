@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetTrafficControllers_GetTrafficControllersList()
         {
-            // Generated from example definition: 2025-01-01/TrafficControllersGetList.json
+            // Generated from example definition: 2025-03-01-preview/TrafficControllersGetList.json
             // this example is just showing the usage of "TrafficController_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

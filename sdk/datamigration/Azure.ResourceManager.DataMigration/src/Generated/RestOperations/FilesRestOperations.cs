@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-15-preview";
+            _apiVersion = apiVersion ?? "2025-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

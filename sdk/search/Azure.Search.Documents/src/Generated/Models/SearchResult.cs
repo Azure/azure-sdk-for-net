@@ -41,6 +41,11 @@ namespace Azure.Search.Documents.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/> for deserialization. </summary>
+        internal SearchResult()
+        {
+        }
+
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>
         public double Score { get; }
         /// <summary> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type 'semantic'. </summary>

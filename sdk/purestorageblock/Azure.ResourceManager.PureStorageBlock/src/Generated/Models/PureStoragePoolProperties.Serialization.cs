@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class PureStoragePoolProperties : IUtf8JsonSerializable, IJsonModel<PureStoragePoolProperties>
+    /// <summary> Properties of a storage pool. </summary>
+    public partial class PureStoragePoolProperties : IJsonModel<PureStoragePoolProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStoragePoolProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PureStoragePoolProperties"/> for deserialization. </summary>
+        internal PureStoragePoolProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStoragePoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStoragePoolProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(StoragePoolInternalId))
             {
                 writer.WritePropertyName("storagePoolInternalId"u8);
@@ -67,15 +73,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             writer.WritePropertyName("reservationResourceId"u8);
             writer.WriteStringValue(ReservationResourceId);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -84,22 +90,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStoragePoolProperties IJsonModel<PureStoragePoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStoragePoolProperties IJsonModel<PureStoragePoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStoragePoolProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStoragePoolProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStoragePoolProperties(document.RootElement, options);
         }
 
-        internal static PureStoragePoolProperties DeserializePureStoragePoolProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PureStoragePoolProperties DeserializePureStoragePoolProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,77 +124,75 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             PureStorageAvs avs = default;
             PureStorageProvisioningState? provisioningState = default;
             ResourceIdentifier reservationResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("storagePoolInternalId"u8))
+                if (prop.NameEquals("storagePoolInternalId"u8))
                 {
-                    storagePoolInternalId = property.Value.GetString();
+                    storagePoolInternalId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availabilityZone"u8))
+                if (prop.NameEquals("availabilityZone"u8))
                 {
-                    availabilityZone = property.Value.GetString();
+                    availabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vnetInjection"u8))
+                if (prop.NameEquals("vnetInjection"u8))
                 {
-                    vnetInjection = PureStoragePoolVnetInjection.DeserializePureStoragePoolVnetInjection(property.Value, options);
+                    vnetInjection = PureStoragePoolVnetInjection.DeserializePureStoragePoolVnetInjection(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataRetentionPeriod"u8))
+                if (prop.NameEquals("dataRetentionPeriod"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataRetentionPeriod = property.Value.GetInt64();
+                    dataRetentionPeriod = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("provisionedBandwidthMbPerSec"u8))
+                if (prop.NameEquals("provisionedBandwidthMbPerSec"u8))
                 {
-                    provisionedBandwidthMbPerSec = property.Value.GetInt64();
+                    provisionedBandwidthMbPerSec = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("provisionedIops"u8))
+                if (prop.NameEquals("provisionedIops"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisionedIops = property.Value.GetInt64();
+                    provisionedIops = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("avs"u8))
+                if (prop.NameEquals("avs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    avs = PureStorageAvs.DeserializePureStorageAvs(property.Value, options);
+                    avs = PureStorageAvs.DeserializePureStorageAvs(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
+                    provisioningState = new PureStorageProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reservationResourceId"u8))
+                if (prop.NameEquals("reservationResourceId"u8))
                 {
-                    reservationResourceId = new ResourceIdentifier(property.Value.GetString());
+                    reservationResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PureStoragePoolProperties(
                 storagePoolInternalId,
                 availabilityZone,
@@ -194,13 +203,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 avs,
                 provisioningState,
                 reservationResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PureStoragePoolProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PureStoragePoolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -210,15 +222,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStoragePoolProperties IPersistableModel<PureStoragePoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStoragePoolProperties IPersistableModel<PureStoragePoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStoragePoolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStoragePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePureStoragePoolProperties(document.RootElement, options);
                     }
                 default:
@@ -226,6 +243,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PureStoragePoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

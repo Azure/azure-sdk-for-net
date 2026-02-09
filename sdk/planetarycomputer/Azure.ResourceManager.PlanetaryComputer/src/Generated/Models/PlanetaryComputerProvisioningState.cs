@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PlanetaryComputer;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
     public readonly partial struct PlanetaryComputerProvisioningState : IEquatable<PlanetaryComputerProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The catalog is being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The catalog is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The catalog is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The catalog request has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="PlanetaryComputerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlanetaryComputerProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static PlanetaryComputerProvisioningState Succeeded { get; } = new PlanetaryComputerProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static PlanetaryComputerProvisioningState Failed { get; } = new PlanetaryComputerProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static PlanetaryComputerProvisioningState Canceled { get; } = new PlanetaryComputerProvisioningState(CanceledValue);
+
         /// <summary> The catalog is being provisioned. </summary>
         public static PlanetaryComputerProvisioningState Provisioning { get; } = new PlanetaryComputerProvisioningState(ProvisioningValue);
+
         /// <summary> The catalog is being updated. </summary>
         public static PlanetaryComputerProvisioningState Updating { get; } = new PlanetaryComputerProvisioningState(UpdatingValue);
+
         /// <summary> The catalog is being deleted. </summary>
         public static PlanetaryComputerProvisioningState Deleting { get; } = new PlanetaryComputerProvisioningState(DeletingValue);
+
         /// <summary> The catalog request has been accepted. </summary>
         public static PlanetaryComputerProvisioningState Accepted { get; } = new PlanetaryComputerProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="PlanetaryComputerProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlanetaryComputerProvisioningState left, PlanetaryComputerProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlanetaryComputerProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlanetaryComputerProvisioningState left, PlanetaryComputerProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlanetaryComputerProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlanetaryComputerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlanetaryComputerProvisioningState(string value) => new PlanetaryComputerProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlanetaryComputerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlanetaryComputerProvisioningState?(string value) => value == null ? null : new PlanetaryComputerProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlanetaryComputerProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlanetaryComputerProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

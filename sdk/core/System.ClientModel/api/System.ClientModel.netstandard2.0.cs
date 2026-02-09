@@ -63,6 +63,14 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public static partial class ConfigurationExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+    }
     public partial class ContinuationToken
     {
         protected ContinuationToken() { }
@@ -96,6 +104,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         protected AuthenticationPolicy() { }
+        public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientSettings settings) { throw null; }
     }
     public partial class AuthenticationToken
     {
@@ -124,6 +133,7 @@ namespace System.ClientModel.Primitives
         private readonly int _dummyPrimitive;
         public ClientConnection(string id, string locator) { throw null; }
         public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
+        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
@@ -141,7 +151,6 @@ namespace System.ClientModel.Primitives
     public abstract partial class ClientConnectionProvider
     {
         protected ClientConnectionProvider(int maxCacheSize) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
         public abstract System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId);
@@ -178,6 +187,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
@@ -206,6 +216,15 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public abstract partial class ClientSettings
+    {
+        protected ClientSettings() { }
+        public System.ClientModel.Primitives.CredentialSettings? Credential { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? CredentialProvider { get { throw null; } set { } }
+        public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
+        public void PostConfigure(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configure) { }
+    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -217,6 +236,13 @@ namespace System.ClientModel.Primitives
         None = 0,
         ApiKeyString = 1,
         TokenCredential = 2,
+    }
+    public sealed partial class CredentialSettings
+    {
+        public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
+        public string? CredentialSource { get { throw null; } set { } }
+        public string? Key { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {
@@ -241,6 +267,10 @@ namespace System.ClientModel.Primitives
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
+    public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
+    {
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
+    }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
         T? Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
@@ -261,6 +291,123 @@ namespace System.ClientModel.Primitives
         public override System.ClientModel.Primitives.IJsonModel<object>? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
+    public abstract partial class JsonModel<T> : System.ClientModel.Primitives.IJsonModel<T>, System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        protected JsonModel() { }
+        public T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        protected abstract T CreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        T System.ClientModel.Primitives.IJsonModel<T>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<T>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        string System.ClientModel.Primitives.IPersistableModel<T>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<T>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected abstract void WriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct JsonPatch
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public JsonPatch(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, System.BinaryData utf8Json) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, bool value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, byte value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, byte[] utf8Json) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, System.DateTime value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, System.DateTimeOffset value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, decimal value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, double value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, System.Guid value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, short value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, int value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, long value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, System.ReadOnlySpan<byte> utf8Json) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, sbyte value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, float value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, string value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, ushort value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, uint value) { }
+        public void Append(System.ReadOnlySpan<byte> arrayPath, ulong value) { }
+        public void AppendNull(System.ReadOnlySpan<byte> arrayPath) { }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public bool Contains(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
+        public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public byte GetByte(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public System.DateTime GetDateTime(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        public System.DateTimeOffset GetDateTimeOffset(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        public decimal GetDecimal(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public double GetDouble(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public float GetFloat(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public System.Guid GetGuid(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public short GetInt16(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public int GetInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public long GetInt64(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public sbyte GetInt8(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public System.BinaryData GetJson(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public T? GetNullableValue<T>(System.ReadOnlySpan<byte> jsonPath) where T : struct { throw null; }
+        public string? GetString(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public System.TimeSpan GetTimeSpan(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        public ushort GetUInt16(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public uint GetUInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public ulong GetUInt64(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public bool IsRemoved(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public void Remove(System.ReadOnlySpan<byte> jsonPath) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.BinaryData utf8Json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, bool value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, byte value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, byte[] utf8Json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.DateTime value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.DateTimeOffset value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, decimal value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, double value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.Guid value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, short value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, int value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, long value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, sbyte value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, float value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, ushort value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, uint value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
+        public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
+        public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
+        public override string ToString() { throw null; }
+        public string ToString(string format) { throw null; }
+        public bool TryGetEncodedValue(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value) { throw null; }
+        public bool TryGetJson(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value) { throw null; }
+        public bool TryGetNullableValue<T>(System.ReadOnlySpan<byte> jsonPath, out T? value) where T : struct { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out bool value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out byte value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out System.DateTime value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out System.DateTimeOffset value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out decimal value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out double value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out System.Guid value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out short value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out int value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out long value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out sbyte value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out float value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out string? value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ushort value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out uint value) { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ulong value) { throw null; }
+        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
+        public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct EncodedValue
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+        }
+        public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value);
+        public delegate bool PropagatorSetter(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value);
+    }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public MessageLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions? options = null) { }
@@ -272,11 +419,11 @@ namespace System.ClientModel.Primitives
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
-        public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
-        public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
@@ -292,7 +439,6 @@ namespace System.ClientModel.Primitives
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public sealed partial class ModelReaderWriterContextTypeAttribute : System.Attribute
     {
         public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
@@ -374,6 +520,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
+        public virtual string ClientRequestId { get { throw null; } }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
@@ -449,7 +596,7 @@ namespace System.ClientModel.Primitives
         public UserAgentPolicy(System.Reflection.Assembly callerAssembly, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Reflection.Assembly Assembly { get { throw null; } }
-        public static string GenerateUserAgentString(System.Reflection.Assembly callerAssembly, string? applicationId = null) { throw null; }
+        public string UserAgentValue { get { throw null; } }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }

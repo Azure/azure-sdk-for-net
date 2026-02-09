@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/bf90cab9d5f6060ce1f7775ffac88ed8eda785ca/specification/netapp/resource-manager/readme.md
-tag: package-2025-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/fc2f9170853d49a99881dcc18377f47c2599a9fc//specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+tag: package-preview-2025-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +20,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -76,6 +76,7 @@ override-operation-name:
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
   - Backup
@@ -109,6 +110,22 @@ prepend-rp-prefix:
   - KeyVaultPrivateEndpoint
   - ReplicationType
   - VolumeLanguage
+  - Bucket
+  - BucketCredentialsExpiry
+  - BucketGenerateCredentials
+  - BucketPatch
+  - BucketList
+  - BucketServerProperties
+  - BucketServerPatchProperties
+  - BucketPermissions
+  - BucketPatchPermissions
+  - BucketCredentialStatus
+  - BucketFileSystemUser
+  - BucketNfsUser
+  - Cache
+  - CacheList
+  - CacheUpdateProperties
+  - CacheProperties
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -223,6 +240,8 @@ rename-mapping:
   PoolChangeRequest: NetAppVolumePoolChangeContent
   ReestablishReplicationRequest: NetAppVolumeReestablishReplicationContent
   ReplicationStatus: NetAppVolumeReplicationStatus
+  ReplicationStatus.relationshipStatus: VolumeReplicationRelationshipStatus
+  ReplicationStatus.RelationshipStatus: VolumeReplicationRelationshipStatus
   SecurityStyle: NetAppVolumeSecurityStyle
   SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
   SubvolumeModel: NetAppSubvolumeMetadata
@@ -258,6 +277,19 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
+  QuotaItem: NetAppSubscriptionQuotaItem
+  NfsUser: NetAppBucketNfsUser
+  FileSystemUser: NetAppBucketFileSystemUser
+  CredentialsStatus: NetAppBucketCredentialStatus
+  CapacityPool.properties.customThroughputMibps: CustomThroughputMibpsInt
+  CapacityPoolPatch.properties.customThroughputMibps: CustomThroughputMibpsInt
+  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
+  RestoreStatus.relationshipStatus: VolumeRestoreRelationshipStatus
+  BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
+  ListReplicationsRequest.exclude: ExcludeReplicationsFilter
+  Exclude: ExcludeReplicationsFilter
+  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResult
+
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -269,4 +301,13 @@ directive:
   # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
+  # # assigning formats
+  # # Fix ProvisioningState
+  - from: netapp.json
+    where: $.definitions
+    transform: >
+        $.replicationStatus.properties.relationshipStatus['x-ms-enum'] = {
+            "name": "VolumeReplicationRelationshipStatus",
+            "modelAsString": true
+          }
 ```

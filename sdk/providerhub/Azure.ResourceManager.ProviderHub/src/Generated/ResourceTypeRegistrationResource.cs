@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -497,9 +497,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _resourceTypeRegistrationRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _resourceTypeRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation(response, rehydrationToken);
+                var operation = new ProviderHubArmOperation(_resourceTypeRegistrationClientDiagnostics, Pipeline, _resourceTypeRegistrationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -524,7 +522,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -541,9 +539,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _resourceTypeRegistrationRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _resourceTypeRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation(response, rehydrationToken);
+                var operation = new ProviderHubArmOperation(_resourceTypeRegistrationClientDiagnostics, Pipeline, _resourceTypeRegistrationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -568,7 +564,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +610,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

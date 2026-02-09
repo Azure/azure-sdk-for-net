@@ -20,8 +20,7 @@ namespace Azure.Identity.Broker.Tests
         public void TryCreateDevelopmentBrokerOptionsFromCredentialFactory()
         {
             var factory = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions());
-            DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var options);
-            var cred = factory.CreateBrokerAuthenticationCredential(options);
+            var cred = factory.CreateBrokerCredential();
             try
             {
                 cred.GetToken(new TokenRequestContext(new[] { "https://management.azure.com/.default" }), default);

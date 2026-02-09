@@ -47,10 +47,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         protected DataProtectionBackupInstanceCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string backupInstanceName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string backupInstanceName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string backupInstanceName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string backupInstanceName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string backupInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -86,11 +84,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken) instead.", false)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResult> FindRestorableTimeRange(Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResult>> FindRestorableTimeRangeAsync(Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -108,16 +104,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation StopProtection(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.StopProtectionContent content = null, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation StopProtection(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopProtectionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.StopProtectionContent content = null, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopProtectionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SuspendBackups(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.SuspendBackupContent content = null, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation SuspendBackups(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SuspendBackupsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.SuspendBackupContent content = null, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SuspendBackupsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SyncBackupInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SyncBackupInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -131,17 +123,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public virtual Azure.ResourceManager.ArmOperation TriggerRehydration(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerRehydrationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo> TriggerRestore(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent content, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo> TriggerRestore(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo>> TriggerRestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent content, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo>> TriggerRestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ValidateForModifyBackup(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ValidateForModifyBackupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo> ValidateRestore(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidateRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo>> ValidateRestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidateRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -278,10 +268,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         protected DataProtectionBackupVaultCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultData data, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vaultName, Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -347,17 +335,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation TriggerExportJob(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerExportJobAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default) instead.", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultPatch patch, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default) instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultPatch patch, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo> ValidateAdhocBackup(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.AdhocBackupValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo>> ValidateAdhocBackupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.Models.AdhocBackupValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -426,7 +410,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         public ResourceGuardData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProperties Properties { get { throw null; } set { } }
@@ -454,10 +437,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteResult> UnlockDelete(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteContent content, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteResult> UnlockDelete(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteContent content, string xMsAuthorizationAuxiliary = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -536,11 +517,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         Azure.ResourceManager.DataProtectionBackup.ResourceGuardData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.ResourceGuardData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.ResourceGuardData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.ResourceGuardData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use Update(ResourceGuardPatch patch, CancellationToken cancellationToken = default) instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource> Update(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource> Update(Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use UpdateAsync(ResourceGuardPatch patch, CancellationToken cancellationToken = default) instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource>> UpdateAsync(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataProtectionBackup.ResourceGuardResource>> UpdateAsync(Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -642,6 +621,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdhocBasedBackupTriggerContext>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdhocBasedBackupTriggerContext>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AdlsBlobBackupDataSourceSettings : Azure.ResourceManager.DataProtectionBackup.Models.BlobBackupDataSourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>
+    {
+        public AdlsBlobBackupDataSourceSettings(System.Collections.Generic.IEnumerable<string> containersList) : base (default(System.Collections.Generic.IEnumerable<string>)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdlsBlobBackupDataSourceSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class ArmDataProtectionBackupModelFactory
     {
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResult BackupFeatureValidationResult(Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType? featureType = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeature> features = null) { throw null; }
@@ -650,35 +639,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo BackupInstanceDeletionInfo(System.DateTimeOffset? deleteOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), string deleteActivityId = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo BackupInstancePolicyInfo(Azure.Core.ResourceIdentifier policyId = null, string policyVersion = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicySettings policyParameters = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(Azure.ResponseError errorDetails = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus? status = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo BackupJobExtendedInfo(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails sourceRecoverPoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask> subTasks, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails targetRecoverPoint) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo BackupJobExtendedInfo(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = default(double?), string recoveryDestination = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails sourceRecoverPoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask> subTasks = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails targetRecoverPoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.UserFacingWarningDetail> warningDetails = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupJobSubTask BackupJobSubTask(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalDetails = null, int taskId = 0, string taskName = null, string taskProgress = null, string taskStatus = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType, Azure.Core.ResourceIdentifier sourceResourceId, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails, string recoveryPointId) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType = default(Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType), Azure.Core.ResourceIdentifier sourceResourceId = null, System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType, Azure.Core.ResourceIdentifier sourceResourceId, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails, System.DateTimeOffset recoverOn) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType = default(Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType), Azure.Core.ResourceIdentifier sourceResourceId = null, System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails = null, System.DateTimeOffset recoverOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationContent BackupRehydrationContent(string recoveryPointId = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority? rehydrationPriority = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority?), System.TimeSpan rehydrationRetentionDuration = default(System.TimeSpan)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent BackupRestoreContent(string objectType, Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType, Azure.Core.ResourceIdentifier sourceResourceId, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent BackupRestoreContent(string objectType = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType = default(Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType), Azure.Core.ResourceIdentifier sourceResourceId = null, System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType, Azure.Core.ResourceIdentifier sourceResourceId, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails, string recoveryPointId, Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority rehydrationPriority, System.TimeSpan rehydrationRetentionDuration) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetInfoBase restoreTargetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType sourceDataStoreType = default(Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType), Azure.Core.ResourceIdentifier sourceResourceId = null, System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority rehydrationPriority = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority), System.TimeSpan rehydrationRetentionDuration = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeature BackupSupportedFeature(string featureName = null, Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus? supportStatus = default(Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus?), System.Collections.Generic.IEnumerable<string> exposureControlledFeatures = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveDetails BackupVaultResourceMoveDetails(string operationId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? completeOn = default(System.DateTimeOffset?), string sourceResourcePath = null, string targetResourcePath = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, System.DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, System.DateTimeOffset? expireOn) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = null, System.DateTimeOffset recoverOn = default(System.DateTimeOffset), string policyName = null, string policyVersion = null, string recoveryPointId = null, string recoveryPointType = null, string retentionTagName = null, string retentionTagVersion = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData DataProtectionBackupInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState, Azure.ResponseError protectionErrorDetails, string provisioningState, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails, string objectType) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus = null, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState = default(Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState?), Azure.ResponseError protectionErrorDetails = null, string provisioningState = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType?), string objectType = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo = null, System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus = null, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState = default(Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState?), Azure.ResponseError protectionErrorDetails = null, string provisioningState = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails = null, string objectType = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupJobData DataProtectionBackupJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupJobProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, Azure.Core.ResourceIdentifier backupInstanceId, Azure.Core.ResourceIdentifier dataSourceId, Azure.Core.AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, System.TimeSpan? duration, System.DateTimeOffset? endOn, System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails, Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, Azure.Core.ResourceIdentifier policyId, string policyName, bool isProgressEnabled, System.Uri progressUri, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, System.DateTimeOffset startOn, string status, string subscriptionId, System.Collections.Generic.IEnumerable<string> supportedActions, string vaultName, Azure.ETag? eTag, string sourceDataStoreName, string destinationDataStoreName) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = null, string backupInstanceFriendlyName = null, Azure.Core.ResourceIdentifier backupInstanceId = null, Azure.Core.ResourceIdentifier dataSourceId = null, Azure.Core.AzureLocation dataSourceLocation = default(Azure.Core.AzureLocation), string dataSourceName = null, string dataSourceSetName = null, string dataSourceType = null, System.TimeSpan? duration = default(System.TimeSpan?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo extendedInfo = null, bool isUserTriggered = false, string operation = null, string operationCategory = null, Azure.Core.ResourceIdentifier policyId = null, string policyName = null, bool isProgressEnabled = false, System.Uri progressUri = null, string rehydrationPriority = null, string restoreType = null, string sourceResourceGroup = null, string sourceSubscriptionId = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), string status = null, string subscriptionId = null, System.Collections.Generic.IEnumerable<string> supportedActions = null, string vaultName = null, Azure.ETag? eTag = default(Azure.ETag?), string sourceDataStoreName = null, string destinationDataStoreName = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupNameAvailabilityResult DataProtectionBackupNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), string reason = null) { throw null; }
@@ -686,9 +667,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupRecoveryPointData DataProtectionBackupRecoveryPointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRetentionTag DataProtectionBackupRetentionTag(Azure.ETag? eTag = default(Azure.ETag?), string id = null, string tagName = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupVaultData DataProtectionBackupVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState? alertSettingsForAllJobFailures = default(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState? provisioningState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState? resourceMoveState = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveDetails resourceMoveDetails = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings securitySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = default(bool?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultFeatureSettings featureSettings = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel? secureScore = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState? alertSettingsForAllJobFailures, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState? provisioningState, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState? resourceMoveState, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveDetails resourceMoveDetails, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings securitySettings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultFeatureSettings featureSettings, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel? secureScore, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> replicatedRegions) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState? alertSettingsForAllJobFailures = default(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState? provisioningState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState? resourceMoveState = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveDetails resourceMoveDetails = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings securitySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = default(bool?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultFeatureSettings featureSettings = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel? secureScore = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel?), Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel? bcdrSecurityLevel = default(Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel?), System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> replicatedRegions = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState? alertSettingsForAllJobFailures = default(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState? provisioningState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState? resourceMoveState = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveDetails resourceMoveDetails = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings securitySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = default(bool?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState? crossSubscriptionRestoreState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState?)) { throw null; }
@@ -696,13 +675,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(string jobIdentifier = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionUnlockDeleteResult DataProtectionUnlockDeleteResult(string unlockDeleteExpiryTime = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.DeletedDataProtectionBackupInstanceData DeletedDataProtectionBackupInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.DeletedDataProtectionBackupInstanceProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState, Azure.ResponseError protectionErrorDetails, string provisioningState, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails, string objectType, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo deletionInfo) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState, Azure.ResponseError protectionErrorDetails, string provisioningState, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType, string objectType, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo deletionInfo) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo = null, System.Collections.Generic.IEnumerable<string> resourceGuardOperationRequests = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus = null, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState = default(Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState?), Azure.ResponseError protectionErrorDetails = null, string provisioningState = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails = null, string objectType = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo deletionInfo = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreTargetInfo ItemLevelRestoreTargetInfo(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting recoverySetting = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting), Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreCriteria> restoreCriteria = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo datasourceInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo datasourceSetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials datasourceAuthCredentials = null) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath = null, bool isPathRelativeToBackupItem = false, System.Collections.Generic.IEnumerable<string> subItemPathPrefix = null) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem, System.Collections.Generic.IEnumerable<string> subItemPathPrefix) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath = null, bool isPathRelativeToBackupItem = false, System.Collections.Generic.IEnumerable<string> subItemPathPrefix = null, string renameTo = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreCriteria KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded = false, System.Collections.Generic.IEnumerable<string> includedNamespaces = null, System.Collections.Generic.IEnumerable<string> excludedNamespaces = null, System.Collections.Generic.IEnumerable<string> includedResourceTypes = null, System.Collections.Generic.IEnumerable<string> excludedResourceTypes = null, System.Collections.Generic.IEnumerable<string> labelSelectors = null, Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode? persistentVolumeRestoreMode = default(Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode?), Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = default(Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy?), System.Collections.Generic.IDictionary<string, string> namespaceMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName> restoreHookReferences = null, Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName resourceModifierReference = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterVaultTierRestoreCriteria KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources = false, System.Collections.Generic.IEnumerable<string> includedNamespaces = null, System.Collections.Generic.IEnumerable<string> excludedNamespaces = null, System.Collections.Generic.IEnumerable<string> includedResourceTypes = null, System.Collections.Generic.IEnumerable<string> excludedResourceTypes = null, System.Collections.Generic.IEnumerable<string> labelSelectors = null, Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode? persistentVolumeRestoreMode = default(Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode?), Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = default(Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy?), System.Collections.Generic.IDictionary<string, string> namespaceMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName> restoreHookReferences = null, Azure.Core.ResourceIdentifier stagingResourceGroupId = null, Azure.Core.ResourceIdentifier stagingStorageAccountId = null, Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName resourceModifierReference = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail RecoveryPointDataStoreDetail(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Guid? recoveryPointDataStoreId = default(System.Guid?), string metadata = null, string state = null, string recoveryPointDataStoreType = null, bool? isVisible = default(bool?), System.DateTimeOffset? rehydrationExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus?)) { throw null; }
@@ -727,9 +705,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState left, Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState (string value) { throw null; }
@@ -748,9 +724,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker FirstOfWeek { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker FirstOfYear { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker left, Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupAbsoluteMarker (string value) { throw null; }
@@ -864,7 +838,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class BackupInstancePolicyInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo>
     {
         public BackupInstancePolicyInfo(Azure.Core.ResourceIdentifier policyId) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DataStoreParametersList is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataStoreSettings> DataStoreParametersList { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicyId { get { throw null; } set { } }
@@ -902,9 +875,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus SoftDeleted { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus SoftDeleting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus left, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatus (string value) { throw null; }
@@ -943,9 +914,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncType Default { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncType ForceResync { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceSyncType (string value) { throw null; }
@@ -1030,9 +999,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority Invalid { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority left, Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupRehydrationPriority (string value) { throw null; }
@@ -1088,9 +1055,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType DataSourceType { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeatureType (string value) { throw null; }
@@ -1117,9 +1082,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType DeepValidation { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType ShallowValidation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType (string value) { throw null; }
@@ -1147,9 +1110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentityType (string value) { throw null; }
@@ -1180,9 +1141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState Enabled { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState Inconsistent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState (string value) { throw null; }
@@ -1211,9 +1170,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState Locked { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState Unlocked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState (string value) { throw null; }
@@ -1229,9 +1186,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState (string value) { throw null; }
@@ -1270,9 +1225,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState PrepareTimedOut { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveState (string value) { throw null; }
@@ -1291,9 +1244,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel None { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel NotSupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecureScoreLevel (string value) { throw null; }
@@ -1335,9 +1286,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState Off { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState left, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState (string value) { throw null; }
@@ -1366,9 +1315,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel NotSupported { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel Poor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel left, Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel (string value) { throw null; }
@@ -1454,9 +1401,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState left, Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState (string value) { throw null; }
@@ -1482,9 +1427,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState SoftDeleting { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState UpdatingProtection { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState left, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState (string value) { throw null; }
@@ -1501,6 +1444,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         Azure.ResourceManager.DataProtectionBackup.Models.CustomCopySetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.CustomCopySetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.CustomCopySetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.CustomCopySetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataProtectionAksVolumeType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataProtectionAksVolumeType(string value) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType AzureDisk { get { throw null; } }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType AzureFileShareSMB { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DataProtectionBackupAbsoluteDeleteSetting : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDeleteSetting, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAbsoluteDeleteSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAbsoluteDeleteSetting>
     {
@@ -1552,9 +1511,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState Enabled { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState PermanentlyDisabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState (string value) { throw null; }
@@ -1587,9 +1544,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDayOfWeek (string value) { throw null; }
@@ -1711,9 +1666,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth October { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth September { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupMonth (string value) { throw null; }
@@ -1745,7 +1698,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("DataProtectionBackupPatch is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
     public partial class DataProtectionBackupPatch
     {
@@ -1777,9 +1729,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupProvisioningState (string value) { throw null; }
@@ -1795,9 +1745,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState Completed { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState Partial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState (string value) { throw null; }
@@ -1926,7 +1874,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         public DataProtectionBackupVaultPatchProperties() { }
         public Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState? AlertSettingsForAllJobFailures { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultFeatureSettings FeatureSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ResourceGuardOperationRequests { get { throw null; } }
@@ -1943,7 +1890,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public DataProtectionBackupVaultProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupStorageSetting> storageSettings) { }
         public Azure.ResourceManager.DataProtectionBackup.Models.AzureMonitorAlertsState? AlertSettingsForAllJobFailures { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BcdrSecurityLevel? BcdrSecurityLevel { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultFeatureSettings FeatureSettings { get { throw null; } set { } }
         public bool? IsVaultProtectedByResourceGuard { get { throw null; } set { } }
@@ -1974,9 +1920,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber Second { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber Third { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber left, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupWeekNumber (string value) { throw null; }
@@ -1997,7 +1941,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class DataProtectionIdentityDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails>
     {
         public DataProtectionIdentityDetails() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by UserAssignedIdentityId", false)]
         public System.Uri UserAssignedIdentityArmUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityId { get { throw null; } set { } }
@@ -2022,7 +1965,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class DataProtectionOperationJobExtendedInfo : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationExtendedInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionOperationJobExtendedInfo>
     {
         internal DataProtectionOperationJobExtendedInfo() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Guid? JobId { get { throw null; } }
         public string JobIdentifier { get { throw null; } }
@@ -2080,7 +2022,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string ResourceName { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BaseResourceProperties ResourceProperties { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri ResourceUri { get { throw null; } set { } }
         public string ResourceUriString { get { throw null; } set { } }
@@ -2101,7 +2042,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string ResourceName { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BaseResourceProperties ResourceProperties { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri ResourceUri { get { throw null; } set { } }
         public string ResourceUriString { get { throw null; } set { } }
@@ -2145,9 +2085,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType OperationalStore { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType VaultStore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType left, Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType (string value) { throw null; }
@@ -2188,9 +2126,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus PrivatePreview { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus PublicPreview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus left, Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.FeatureSupportStatus (string value) { throw null; }
@@ -2248,6 +2184,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem) { }
         public bool IsPathRelativeToBackupItem { get { throw null; } }
         public string ItemPath { get { throw null; } }
+        public string RenameTo { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SubItemPathPrefix { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2264,6 +2201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public System.Collections.Generic.IList<string> ExcludedResourceTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedNamespaces { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedResourceTypes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionAksVolumeType> IncludedVolumeTypes { get { throw null; } }
         public bool IsClusterScopeResourcesIncluded { get { throw null; } set { } }
         public bool IsSnapshotVolumesEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LabelSelectors { get { throw null; } }
@@ -2304,9 +2242,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy Patch { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy Skip { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy left, Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy (string value) { throw null; }
@@ -2392,9 +2328,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode RestoreWithoutVolumeData { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode RestoreWithVolumeData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode left, Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode (string value) { throw null; }
@@ -2444,9 +2378,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus DeleteInProgress { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus Failed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus left, Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus (string value) { throw null; }
@@ -2461,9 +2393,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public RecoverySetting(string value) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting FailIfExists { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting left, Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting (string value) { throw null; }
@@ -2604,9 +2534,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreSourceDataStoreType OperationalStore { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreSourceDataStoreType VaultStore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.RestoreSourceDataStoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.RestoreSourceDataStoreType left, Azure.ResourceManager.DataProtectionBackup.Models.RestoreSourceDataStoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.RestoreSourceDataStoreType (string value) { throw null; }
@@ -2648,9 +2576,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType AzureFiles { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType left, Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType (string value) { throw null; }
@@ -2729,9 +2655,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType AzureKeyVault { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType left, Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType (string value) { throw null; }
@@ -2749,9 +2673,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType SnapshotStore { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType VaultStore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType left, Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.SourceDataStoreType (string value) { throw null; }
@@ -2790,14 +2712,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public StorageSettingStoreType(string value) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType ArchiveStore { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType OperationalStore { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
         public static Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType SnapshotStore { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType VaultStore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType left, Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingStoreType (string value) { throw null; }
@@ -2814,9 +2733,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingType LocallyRedundant { get { throw null; } }
         public static Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingType ZoneRedundant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingType left, Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.StorageSettingType (string value) { throw null; }
@@ -2869,5 +2786,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         Azure.ResourceManager.DataProtectionBackup.Models.ValidateCrossRegionRestoreRequestObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateCrossRegionRestoreRequestObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateCrossRegionRestoreRequestObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateCrossRegionRestoreRequestObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ValidateForModifyBackupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>
+    {
+        public ValidateForModifyBackupContent(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties backupInstance) { }
+        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties BackupInstance { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ValidateForModifyBackupContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

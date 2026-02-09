@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("billedAzureSubscriptionId"u8);
                 writer.WriteStringValue(BilledAzureSubscriptionId);
             }
+            if (Optional.IsDefined(PublisherId))
+            {
+                writer.WritePropertyName("publisherId"u8);
+                writer.WriteStringValue(PublisherId);
+            }
+            if (Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,6 +112,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string marketplaceResourceId = default;
             string marketplaceStatus = default;
             string billedAzureSubscriptionId = default;
+            string publisherId = default;
+            string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,6 +143,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     billedAzureSubscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("publisherId"u8))
+                {
+                    publisherId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("offerId"u8))
+                {
+                    offerId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -143,6 +165,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 marketplaceResourceId,
                 marketplaceStatus,
                 billedAzureSubscriptionId,
+                publisherId,
+                offerId,
                 serializedAdditionalRawData);
         }
 
@@ -268,6 +292,52 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     else
                     {
                         builder.AppendLine($"'{BilledAzureSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublisherId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publisherId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublisherId))
+                {
+                    builder.Append("  publisherId: ");
+                    if (PublisherId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublisherId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublisherId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OfferId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  offerId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OfferId))
+                {
+                    builder.Append("  offerId: ");
+                    if (OfferId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OfferId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OfferId}'");
                     }
                 }
             }

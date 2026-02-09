@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct StorageSyncServerProvisioningStatus : IEquatable<StorageSyncServerProvisioningStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageSyncServerProvisioningStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageSyncServerProvisioningStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotStartedValue = "NotStarted";
         private const string InProgressValue = "InProgress";
         private const string ReadySyncNotFunctionalValue = "Ready_SyncNotFunctional";
         private const string ReadySyncFunctionalValue = "Ready_SyncFunctional";
         private const string ErrorValue = "Error";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageSyncServerProvisioningStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotStarted. </summary>
         public static StorageSyncServerProvisioningStatus NotStarted { get; } = new StorageSyncServerProvisioningStatus(NotStartedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> Gets the InProgress. </summary>
         public static StorageSyncServerProvisioningStatus InProgress { get; } = new StorageSyncServerProvisioningStatus(InProgressValue);
-        /// <summary> Ready_SyncNotFunctional. </summary>
+
+        /// <summary> Gets the ReadySyncNotFunctional. </summary>
         public static StorageSyncServerProvisioningStatus ReadySyncNotFunctional { get; } = new StorageSyncServerProvisioningStatus(ReadySyncNotFunctionalValue);
-        /// <summary> Ready_SyncFunctional. </summary>
+
+        /// <summary> Gets the ReadySyncFunctional. </summary>
         public static StorageSyncServerProvisioningStatus ReadySyncFunctional { get; } = new StorageSyncServerProvisioningStatus(ReadySyncFunctionalValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> Gets the Error. </summary>
         public static StorageSyncServerProvisioningStatus Error { get; } = new StorageSyncServerProvisioningStatus(ErrorValue);
+
         /// <summary> Determines if two <see cref="StorageSyncServerProvisioningStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageSyncServerProvisioningStatus left, StorageSyncServerProvisioningStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageSyncServerProvisioningStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageSyncServerProvisioningStatus left, StorageSyncServerProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSyncServerProvisioningStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageSyncServerProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageSyncServerProvisioningStatus(string value) => new StorageSyncServerProvisioningStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageSyncServerProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageSyncServerProvisioningStatus?(string value) => value == null ? null : new StorageSyncServerProvisioningStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageSyncServerProvisioningStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageSyncServerProvisioningStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

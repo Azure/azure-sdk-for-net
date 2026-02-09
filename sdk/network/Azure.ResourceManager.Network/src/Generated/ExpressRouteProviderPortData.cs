@@ -93,22 +93,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The name of the port pair. </summary>
+        [WirePath("properties.portPairDescriptor")]
         public string PortPairDescriptor { get; }
         /// <summary> The name of the primary port. </summary>
+        [WirePath("properties.primaryAzurePort")]
         public string PrimaryAzurePort { get; }
         /// <summary> The name of the secondary port. </summary>
+        [WirePath("properties.secondaryAzurePort")]
         public string SecondaryAzurePort { get; }
         /// <summary> The peering location of the port pair. </summary>
+        [WirePath("properties.peeringLocation")]
         public string PeeringLocation { get; set; }
         /// <summary> Overprovisioning factor for the port pair. </summary>
+        [WirePath("properties.overprovisionFactor")]
         public int? OverprovisionFactor { get; set; }
         /// <summary> Bandwidth of the port in Mbps. </summary>
+        [WirePath("properties.portBandwidthInMbps")]
         public int? PortBandwidthInMbps { get; set; }
         /// <summary> Used Bandwidth of the port in Mbps. </summary>
+        [WirePath("properties.usedBandwidthInMbps")]
         public int? UsedBandwidthInMbps { get; set; }
         /// <summary> Remaining Bandwidth of the port in Mbps. </summary>
+        [WirePath("properties.remainingBandwidthInMbps")]
         public int? RemainingBandwidthInMbps { get; set; }
     }
 }

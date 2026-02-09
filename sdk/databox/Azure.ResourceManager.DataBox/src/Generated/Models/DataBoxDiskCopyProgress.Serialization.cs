@@ -10,14 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskCopyProgress : IUtf8JsonSerializable, IJsonModel<DataBoxDiskCopyProgress>
+    /// <summary> DataBox Disk Copy Progress. </summary>
+    public partial class DataBoxDiskCopyProgress : IJsonModel<DataBoxDiskCopyProgress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskCopyProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxDiskCopyProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +31,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxDiskCopyProgress)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
@@ -64,21 +65,21 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Actions)
+                foreach (CustomerResolutionCode item in Actions)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +88,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxDiskCopyProgress IJsonModel<DataBoxDiskCopyProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxDiskCopyProgress IJsonModel<DataBoxDiskCopyProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxDiskCopyProgress JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxDiskCopyProgress)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxDiskCopyProgress(document.RootElement, options);
         }
 
-        internal static DataBoxDiskCopyProgress DeserializeDataBoxDiskCopyProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxDiskCopyProgress DeserializeDataBoxDiskCopyProgress(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,59 +119,58 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxCopyStatus? status = default;
             ResponseError error = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serialNumber"u8))
+                if (prop.NameEquals("serialNumber"u8))
                 {
-                    serialNumber = property.Value.GetString();
+                    serialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bytesCopied"u8))
+                if (prop.NameEquals("bytesCopied"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bytesCopied = property.Value.GetInt64();
+                    bytesCopied = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("percentComplete"u8))
+                if (prop.NameEquals("percentComplete"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentComplete = property.Value.GetInt32();
+                    percentComplete = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new DataBoxCopyStatus(property.Value.GetString());
+                    status = new DataBoxCopyStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxContext.Default);
                     continue;
                 }
-                if (property.NameEquals("actions"u8))
+                if (prop.NameEquals("actions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CustomerResolutionCode> array = new List<CustomerResolutionCode>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToCustomerResolutionCode());
                     }
@@ -174,10 +179,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxDiskCopyProgress(
                 serialNumber,
                 bytesCopied,
@@ -185,13 +189,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 status,
                 error,
                 actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxDiskCopyProgress>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxDiskCopyProgress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -201,15 +208,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxDiskCopyProgress IPersistableModel<DataBoxDiskCopyProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxDiskCopyProgress IPersistableModel<DataBoxDiskCopyProgress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxDiskCopyProgress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxDiskCopyProgress(document.RootElement, options);
                     }
                 default:
@@ -217,6 +229,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxDiskCopyProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryLimitsMB))
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemorySizesInGB))
             {
-                writer.WritePropertyName("supportedMemoryLimitsMB"u8);
-                writer.WriteObjectValue(SupportedMemoryLimitsMB, options);
+                writer.WritePropertyName("supportedMemorySizesInGB"u8);
+                writer.WriteObjectValue(SupportedMemorySizesInGB, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             int? value = default;
-            MaxLimitRangeCapability supportedMemoryLimitsMB = default;
+            MaxLimitRangeCapability supportedMemorySizesInGB = default;
             MaxSizeCapability includedMaxSize = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes = default;
             long? includedStorageIOps = default;
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.Sql.Models
                     value = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("supportedMemoryLimitsMB"u8))
+                if (property.NameEquals("supportedMemorySizesInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    supportedMemoryLimitsMB = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    supportedMemorySizesInGB = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("includedMaxSize"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(
                 name,
                 value,
-                supportedMemoryLimitsMB,
+                supportedMemorySizesInGB,
                 includedMaxSize,
                 supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
                 includedStorageIOps,
@@ -436,18 +436,18 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryLimitsMB), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemorySizesInGB), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  supportedMemoryLimitsMB: ");
+                builder.Append("  supportedMemorySizesInGB: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(SupportedMemoryLimitsMB))
+                if (Optional.IsDefined(SupportedMemorySizesInGB))
                 {
-                    builder.Append("  supportedMemoryLimitsMB: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SupportedMemoryLimitsMB, options, 2, false, "  supportedMemoryLimitsMB: ");
+                    builder.Append("  supportedMemorySizesInGB: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedMemorySizesInGB, options, 2, false, "  supportedMemorySizesInGB: ");
                 }
             }
 

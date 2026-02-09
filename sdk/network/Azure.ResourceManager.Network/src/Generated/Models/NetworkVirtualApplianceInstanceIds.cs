@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The network virtual appliance instance ids. Omitting the network virtual appliance instance ids will result in the operation being performed on all virtual machines belonging to the network virtual appliance. </summary>
+        [WirePath("instanceIds")]
         public IList<string> InstanceIds { get; }
     }
 }

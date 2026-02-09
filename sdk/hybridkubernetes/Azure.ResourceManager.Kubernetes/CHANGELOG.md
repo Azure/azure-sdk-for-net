@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Disabled client flatten on `ConnectedClusterData` since client flatten feature is now marked as deprecated.
+
 ### Bugs Fixed
 
 ### Other Changes

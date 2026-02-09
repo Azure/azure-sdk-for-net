@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2025-04-01")
+        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2025-06-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -192,7 +192,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage, PhoneNumberType? phoneNumberType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -215,6 +215,10 @@ namespace Azure.Communication.PhoneNumbers
                 uri.AppendQuery("administrativeDivision", administrativeDivision, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (phoneNumberType != null)
+            {
+                uri.AppendQuery("phoneNumberType", phoneNumberType.Value.ToString(), true);
+            }
             request.Uri = uri;
             if (acceptLanguage != null)
             {
@@ -1069,7 +1073,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage, PhoneNumberType? phoneNumberType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

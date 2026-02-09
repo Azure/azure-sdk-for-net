@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -285,6 +286,275 @@ namespace Azure.ResourceManager.Cdn
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    profileName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProfileName))
+                {
+                    builder.Append("    profileName: ");
+                    if (ProfileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProfileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProfileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TlsSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tlsSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TlsSettings))
+                {
+                    builder.Append("    tlsSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TlsSettings, options, 4, false, "    tlsSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DnsZoneId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureDnsZone: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      azureDnsZone: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsZone))
+                {
+                    builder.Append("    azureDnsZone: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DnsZone, options, 4, false, "    azureDnsZone: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PreValidatedCustomDomainResourceId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    preValidatedCustomDomainResourceId: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      preValidatedCustomDomainResourceId: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PreValidatedCustomDomainResource))
+                {
+                    builder.Append("    preValidatedCustomDomainResourceId: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PreValidatedCustomDomainResource, options, 4, false, "    preValidatedCustomDomainResourceId: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deploymentStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentStatus))
+                {
+                    builder.Append("    deploymentStatus: ");
+                    builder.AppendLine($"'{DeploymentStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainValidationState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    domainValidationState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainValidationState))
+                {
+                    builder.Append("    domainValidationState: ");
+                    builder.AppendLine($"'{DomainValidationState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hostName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostName))
+                {
+                    builder.Append("    hostName: ");
+                    if (HostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    extendedProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExtendedProperties))
+                {
+                    if (ExtendedProperties.Any())
+                    {
+                        builder.Append("    extendedProperties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in ExtendedProperties)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validationProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidationProperties))
+                {
+                    builder.Append("    validationProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ValidationProperties, options, 4, false, "    validationProperties: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FrontDoorCustomDomainData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainData>)this).GetFormatFromOptions(options) : options.Format;
@@ -293,6 +563,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainData)} does not support writing '{options.Format}' format.");
             }

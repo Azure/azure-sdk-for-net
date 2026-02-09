@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the PostRulestackRule data model.
-    /// PostRulestack rule list
-    /// </summary>
+    /// <summary> PostRulestack rule list. </summary>
     public partial class PostRulestackRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostRulestackRuleData"/>. </summary>
         /// <param name="ruleName"> rule name. </param>
@@ -58,107 +27,335 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(ruleName, nameof(ruleName));
 
-            RuleName = ruleName;
-            Applications = new ChangeTrackingList<string>();
-            ProtocolPortList = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingList<RulestackTagInfo>();
+            Properties = new RuleEntry(ruleName);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostRulestackRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> etag info. </param>
-        /// <param name="ruleName"> rule name. </param>
-        /// <param name="priority"></param>
-        /// <param name="description"> rule description. </param>
-        /// <param name="ruleState"> state of this rule. </param>
-        /// <param name="source"> source address. </param>
-        /// <param name="negateSource"> cidr should not be 'any'. </param>
-        /// <param name="destination"> destination address. </param>
-        /// <param name="negateDestination"> cidr should not be 'any'. </param>
-        /// <param name="applications"> array of rule applications. </param>
-        /// <param name="category"> rule category. </param>
-        /// <param name="protocol"> any, application-default, TCP:number, UDP:number. </param>
-        /// <param name="protocolPortList"> prot port list. </param>
-        /// <param name="inboundInspectionCertificate"> inbound Inspection Certificate. </param>
-        /// <param name="auditComment"> rule comment. </param>
-        /// <param name="actionType"> rule action. </param>
-        /// <param name="enableLogging"> enable or disable logging. </param>
-        /// <param name="decryptionRuleType"> enable or disable decryption. </param>
-        /// <param name="tags"> tag for rule. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal PostRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RuleEntry properties) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            RuleName = ruleName;
-            Priority = priority;
-            Description = description;
-            RuleState = ruleState;
-            Source = source;
-            NegateSource = negateSource;
-            Destination = destination;
-            NegateDestination = negateDestination;
-            Applications = applications;
-            Category = category;
-            Protocol = protocol;
-            ProtocolPortList = protocolPortList;
-            InboundInspectionCertificate = inboundInspectionCertificate;
-            AuditComment = auditComment;
-            ActionType = actionType;
-            EnableLogging = enableLogging;
-            DecryptionRuleType = decryptionRuleType;
-            Tags = tags;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostRulestackRuleData"/> for deserialization. </summary>
-        internal PostRulestackRuleData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal RuleEntry Properties { get; set; }
 
         /// <summary> etag info. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.ETag = value.Value;
+            }
+        }
+
         /// <summary> rule name. </summary>
-        public string RuleName { get; set; }
-        /// <summary> Gets the priority. </summary>
-        public int? Priority { get; }
+        public string RuleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.RuleName = value;
+            }
+        }
+
+        /// <summary> Gets the Priority. </summary>
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+        }
+
         /// <summary> rule description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> state of this rule. </summary>
-        public RulestackStateType? RuleState { get; set; }
+        public RulestackStateType? RuleState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.RuleState = value.Value;
+            }
+        }
+
         /// <summary> source address. </summary>
-        public SourceAddressInfo Source { get; set; }
+        public SourceAddressInfo Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> cidr should not be 'any'. </summary>
-        public FirewallBooleanType? NegateSource { get; set; }
+        public FirewallBooleanType? NegateSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NegateSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.NegateSource = value.Value;
+            }
+        }
+
         /// <summary> destination address. </summary>
-        public DestinationAddressInfo Destination { get; set; }
+        public DestinationAddressInfo Destination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Destination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.Destination = value;
+            }
+        }
+
         /// <summary> cidr should not be 'any'. </summary>
-        public FirewallBooleanType? NegateDestination { get; set; }
+        public FirewallBooleanType? NegateDestination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NegateDestination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.NegateDestination = value.Value;
+            }
+        }
+
         /// <summary> array of rule applications. </summary>
-        public IList<string> Applications { get; }
+        public IList<string> Applications
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                return Properties.Applications;
+            }
+        }
+
         /// <summary> rule category. </summary>
-        public EdlMatchCategory Category { get; set; }
+        public EdlMatchCategory Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.Category = value;
+            }
+        }
+
         /// <summary> any, application-default, TCP:number, UDP:number. </summary>
-        public string Protocol { get; set; }
+        public string Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.Protocol = value;
+            }
+        }
+
         /// <summary> prot port list. </summary>
-        public IList<string> ProtocolPortList { get; }
+        public IList<string> ProtocolPortList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                return Properties.ProtocolPortList;
+            }
+        }
+
         /// <summary> inbound Inspection Certificate. </summary>
-        public string InboundInspectionCertificate { get; set; }
+        public string InboundInspectionCertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InboundInspectionCertificate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.InboundInspectionCertificate = value;
+            }
+        }
+
         /// <summary> rule comment. </summary>
-        public string AuditComment { get; set; }
+        public string AuditComment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuditComment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.AuditComment = value;
+            }
+        }
+
         /// <summary> rule action. </summary>
-        public RulestackActionType? ActionType { get; set; }
+        public RulestackActionType? ActionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.ActionType = value.Value;
+            }
+        }
+
         /// <summary> enable or disable logging. </summary>
-        public RulestackStateType? EnableLogging { get; set; }
+        public RulestackStateType? EnableLogging
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableLogging;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.EnableLogging = value.Value;
+            }
+        }
+
         /// <summary> enable or disable decryption. </summary>
-        public DecryptionRuleType? DecryptionRuleType { get; set; }
+        public DecryptionRuleType? DecryptionRuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DecryptionRuleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                Properties.DecryptionRuleType = value.Value;
+            }
+        }
+
         /// <summary> tag for rule. </summary>
-        public IList<RulestackTagInfo> Tags { get; }
+        public IList<RulestackTagInfo> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RuleEntry();
+                }
+                return Properties.Tags;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningState? ProvisioningState { get; }
+        public FirewallProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

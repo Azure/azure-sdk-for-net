@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
         /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
         /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
-        /// <param name="sharedKey"> SharedKey for the vpn connection. </param>
+        /// <param name="sharedKey"> SharedKey for the vpn link connection. We will no longer return sharedKey in any Create/Update/Get/List/UpdateTags VpnGateway/VpnConnection/VpnLinkConnection APIs response. Please use 'Vpn Link Connections - List Default Shared Key' API to fetch Vpn link connection sharedKey. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="vpnGatewayCustomBgpAddresses"> vpnGatewayCustomBgpAddresses used by this connection. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
@@ -78,10 +78,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Id of the connected vpn site link. </summary>
         internal WritableSubResource VpnSiteLink { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.vpnSiteLink.id")]
         public ResourceIdentifier VpnSiteLinkId
         {
             get => VpnSiteLink is null ? default : VpnSiteLink.Id;
@@ -94,40 +96,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Routing weight for vpn connection. </summary>
+        [WirePath("properties.routingWeight")]
         public int? RoutingWeight { get; set; }
         /// <summary> Vpn link connection mode. </summary>
+        [WirePath("properties.vpnLinkConnectionMode")]
         public VpnLinkConnectionMode? VpnLinkConnectionMode { get; set; }
         /// <summary> The connection status. </summary>
+        [WirePath("properties.connectionStatus")]
         public VpnConnectionStatus? ConnectionStatus { get; }
         /// <summary> Connection protocol used for this connection. </summary>
+        [WirePath("properties.vpnConnectionProtocolType")]
         public VirtualNetworkGatewayConnectionProtocol? VpnConnectionProtocolType { get; set; }
         /// <summary> Ingress bytes transferred. </summary>
+        [WirePath("properties.ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; }
         /// <summary> Egress bytes transferred. </summary>
+        [WirePath("properties.egressBytesTransferred")]
         public long? EgressBytesTransferred { get; }
         /// <summary> Expected bandwidth in MBPS. </summary>
+        [WirePath("properties.connectionBandwidth")]
         public int? ConnectionBandwidth { get; set; }
-        /// <summary> SharedKey for the vpn connection. </summary>
+        /// <summary> SharedKey for the vpn link connection. We will no longer return sharedKey in any Create/Update/Get/List/UpdateTags VpnGateway/VpnConnection/VpnLinkConnection APIs response. Please use 'Vpn Link Connections - List Default Shared Key' API to fetch Vpn link connection sharedKey. </summary>
+        [WirePath("properties.sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> EnableBgp flag. </summary>
+        [WirePath("properties.enableBgp")]
         public bool? EnableBgp { get; set; }
         /// <summary> vpnGatewayCustomBgpAddresses used by this connection. </summary>
+        [WirePath("properties.vpnGatewayCustomBgpAddresses")]
         public IList<GatewayCustomBgpIPAddressIPConfiguration> VpnGatewayCustomBgpAddresses { get; }
         /// <summary> Enable policy-based traffic selectors. </summary>
+        [WirePath("properties.usePolicyBasedTrafficSelectors")]
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
+        [WirePath("properties.ipsecPolicies")]
         public IList<IPsecPolicy> IPsecPolicies { get; }
         /// <summary> EnableBgp flag. </summary>
+        [WirePath("properties.enableRateLimiting")]
         public bool? EnableRateLimiting { get; set; }
         /// <summary> Use local azure ip to initiate connection. </summary>
+        [WirePath("properties.useLocalAzureIpAddress")]
         public bool? UseLocalAzureIPAddress { get; set; }
         /// <summary> The provisioning state of the VPN site link connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> List of ingress NatRules. </summary>
+        [WirePath("properties.ingressNatRules")]
         public IList<WritableSubResource> IngressNatRules { get; }
         /// <summary> List of egress NatRules. </summary>
+        [WirePath("properties.egressNatRules")]
         public IList<WritableSubResource> EgressNatRules { get; }
         /// <summary> Dead Peer Detection timeout in seconds for VpnLink connection. </summary>
+        [WirePath("properties.dpdTimeoutSeconds")]
         public int? DpdTimeoutSeconds { get; set; }
     }
 }

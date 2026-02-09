@@ -18,6 +18,8 @@ internal partial class AzureRealtimeClient : RealtimeClient
 {
     private readonly Uri _baseEndpoint;
     private readonly string _apiVersion;
+    private readonly IDictionary<string, string> _defaultHeaders;
+    private readonly IDictionary<string, string> _defaultQueryParameters;
     private readonly ApiKeyCredential _credential;
     private readonly TokenCredential _tokenCredential;
     private readonly List<string> _tokenAuthorizationScopes;
@@ -29,6 +31,8 @@ internal partial class AzureRealtimeClient : RealtimeClient
         options ??= new();
         _baseEndpoint = GetEndpoint(endpoint);
         _apiVersion = options.GetRawServiceApiValueForClient(this);
+        _defaultHeaders = options.DefaultHeaders;
+        _defaultQueryParameters = options.DefaultQueryParameters;
         _credential = credential;
         Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options.UserAgentApplicationId);
         _userAgent = telemetryDetails.ToString();
@@ -40,6 +44,8 @@ internal partial class AzureRealtimeClient : RealtimeClient
         options ??= new();
         _baseEndpoint = GetEndpoint(endpoint);
         _apiVersion = options.GetRawServiceApiValueForClient(this);
+        _defaultHeaders = options.DefaultHeaders;
+        _defaultQueryParameters = options.DefaultQueryParameters;
         _tokenCredential = credential;
         _tokenAuthorizationScopes = [options?.Audience?.ToString() ?? AzureOpenAIAudience.AzurePublicCloud.ToString()];
         Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);

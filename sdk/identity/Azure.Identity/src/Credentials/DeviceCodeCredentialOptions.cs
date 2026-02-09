@@ -11,7 +11,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
-    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
 

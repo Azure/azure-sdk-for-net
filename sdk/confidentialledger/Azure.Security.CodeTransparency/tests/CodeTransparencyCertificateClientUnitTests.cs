@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
 {
-    public class CodeTransparencyCertificateClientUnitTests: ClientTestBase
+    public class CodeTransparencyCertificateClientUnitTests : ClientTestBase
     {
         public CodeTransparencyCertificateClientUnitTests(bool isAsync) : base(isAsync)
         {

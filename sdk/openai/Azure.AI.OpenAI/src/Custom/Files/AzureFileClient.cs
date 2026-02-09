@@ -127,7 +127,7 @@ internal partial class AzureFileClient : OpenAIFileClient
 
         if (expirationOptions is not null)
         {
-            multipartFormDataBinaryContent.Add(ModelReaderWriter.Write(expirationOptions), "expires_after");
+            multipartFormDataBinaryContent.Add(ModelReaderWriter.Write(expirationOptions, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default), "expires_after");
         }
 
         return multipartFormDataBinaryContent;

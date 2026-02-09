@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
@@ -18,7 +15,7 @@ namespace System.ClientModel.Primitives;
 public class UserAgentPolicy : PipelinePolicy
 {
     private const int MaxApplicationIdLength = 24;
-    private readonly string _defaultHeader;
+    private readonly string _userAgent;
 
     /// <summary>
     /// The package type represented by this <see cref="UserAgentPolicy"/> instance.
@@ -29,6 +26,11 @@ public class UserAgentPolicy : PipelinePolicy
     /// The value of the applicationId used to initialize this <see cref="UserAgentPolicy"/> instance.
     /// </summary>
     public string? ApplicationId { get; }
+
+    /// <summary>
+    /// The formatted user agent string that will be added to HTTP requests by this policy.
+    /// </summary>
+    public string UserAgentValue => _userAgent;
 
     /// <summary>
     /// Initialize an instance of <see cref="UserAgentPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="callerAssembly"/>.
@@ -45,7 +47,7 @@ public class UserAgentPolicy : PipelinePolicy
 
         Assembly = callerAssembly;
         ApplicationId = applicationId;
-        _defaultHeader = GenerateUserAgentString(callerAssembly, applicationId);
+        _userAgent = GenerateUserAgentString(callerAssembly, applicationId, new RuntimeInformationWrapper());
     }
 
     /// <summary>
@@ -75,16 +77,18 @@ public class UserAgentPolicy : PipelinePolicy
 
     private void AddUserAgentHeader(PipelineMessage message)
     {
-        message.Request.Headers.Add("User-Agent", _defaultHeader);
+        message.Request.Headers.Add("User-Agent", _userAgent);
     }
 
     /// <summary>
-    /// Generates a user agent string from the provided assembly and optional application ID.
+    /// Generates a user agent string from the provided assembly and optional application ID using custom runtime information.
+    /// This method is intended for testing scenarios that need to mock runtime information.
     /// </summary>
     /// <param name="callerAssembly">The caller assembly to extract name and version information from.</param>
     /// <param name="applicationId">An optional application ID to prepend to the user agent string.</param>
+    /// <param name="runtimeInformation">Custom runtime information for testing scenarios.</param>
     /// <returns>A formatted user agent string.</returns>
-    public static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId = null)
+    internal static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId, RuntimeInformationWrapper runtimeInformation)
     {
         AssemblyInformationalVersionAttribute? versionAttribute = callerAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
         if (versionAttribute == null)
@@ -107,14 +111,14 @@ public class UserAgentPolicy : PipelinePolicy
         // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
         // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
         // This was added to support operating systems with non-ascii characters in their release names.
-        string osDescription;
+        string osDescription = runtimeInformation.OSDescription;
 #if NET8_0_OR_GREATER
-        osDescription = System.Text.Ascii.IsValid(RuntimeInformation.OSDescription) ? RuntimeInformation.OSDescription : WebUtility.UrlEncode(RuntimeInformation.OSDescription);
+        osDescription = System.Text.Ascii.IsValid(osDescription) ? osDescription : WebUtility.UrlEncode(osDescription);
 #else
-        osDescription = ContainsNonAscii(RuntimeInformation.OSDescription) ? WebUtility.UrlEncode(RuntimeInformation.OSDescription) : RuntimeInformation.OSDescription;
+        osDescription = ContainsNonAscii(osDescription) ? WebUtility.UrlEncode(osDescription) : osDescription;
 #endif
 
-        var platformInformation = EscapeProductInformation($"({RuntimeInformation.FrameworkDescription}; {osDescription})");
+        var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {osDescription})");
 
         return applicationId != null
             ? $"{applicationId} {assemblyName}/{version} {platformInformation}"

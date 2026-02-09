@@ -39,9 +39,6 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
     [RecordedTest]
     public async Task CreateUpdateGetPatchDeleteTest()
     {
-        // At the moment we only support the Dedicated SKU
-        const string skuType = "Dedicated";
-
         SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
         ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.NorthCentralUS);
         await TestContext.Error.WriteLineAsync(
@@ -53,24 +50,24 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         {
             Properties = new DurableTaskSchedulerProperties(
                 ipAllowlist: [IpRange1, IpRange2, IpRange3],
-                sku: new DurableTaskSchedulerSku() { Name = skuType, Capacity = 1 }
+                sku: new DurableTaskSchedulerSku() { Name = DurableTaskSchedulerSkuName.Dedicated, Capacity = 1 }
             )
         };
 
         ArmOperation<DurableTaskSchedulerResource> longRunningOperation =
             await rg.GetDurableTaskSchedulers().CreateOrUpdateAsync(WaitUntil.Started, resourceName, createSchedulerData);
 
-        // While provisioning is in progress the resource is in provisioning state
+        // While provisioning is in progress the resource is in first in accepted, then provisioning state
         DurableTaskSchedulerResource resource = await rg.GetDurableTaskSchedulerAsync(resourceName);
         Assert.NotNull(resource);
-        Assert.AreEqual(DurableTaskProvisioningState.Provisioning, resource.Data.Properties.ProvisioningState);
+        Assert.Contains(resource.Data.Properties.ProvisioningState, new[] { DurableTaskProvisioningState.Provisioning, DurableTaskProvisioningState.Accepted });
 
         // Keep track of the resource id to delete it later
         string resourceId = resource.Id;
 
         resource = await longRunningOperation.WaitForCompletionAsync();
         Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
+        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
         Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
         Assert.Contains(IpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange2, resource.Data.Properties.IPAllowlist as IList);
@@ -81,7 +78,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         resource = await rg.GetDurableTaskSchedulerAsync(resourceName);
         Assert.NotNull(resource);
         Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
+        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
         Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
         Assert.Contains(IpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange2, resource.Data.Properties.IPAllowlist as IList);
@@ -92,7 +89,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         {
             Properties = new DurableTaskSchedulerProperties(
                 ipAllowlist: [UpdatedIpRange1, UpdatedIpRange2, IpRange3],
-                sku: new DurableTaskSchedulerSku() { Name = skuType, Capacity = 1 }
+                sku: new DurableTaskSchedulerSku() { Name = DurableTaskSchedulerSkuName.Dedicated, Capacity = 1 }
             ),
             Tags = { { TagKeyOrg, TagValueOrg }, { TagKeyEnv, TagValueEnv } }
         };
@@ -106,7 +103,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         // Wait for the update to complete
         resource = await longRunningOperation.WaitForCompletionAsync();
         Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
+        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
         Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
         Assert.Contains(UpdatedIpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(UpdatedIpRange2, resource.Data.Properties.IPAllowlist as IList);
@@ -124,7 +121,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         resource = schedulers.FirstOrDefault(s => s.Data.Id == resourceId);
         Assert.NotNull(resource);
         Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
+        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
         Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
         Assert.Contains(UpdatedIpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(UpdatedIpRange2, resource.Data.Properties.IPAllowlist as IList);
@@ -142,10 +139,10 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
             Properties = new DurableTaskSchedulerPatchProperties
             {
                 IPAllowlist = { PatchIpRange },
-                Sku= new DurableTaskSchedulerSkuUpdate
+                Sku = new DurableTaskSchedulerSkuUpdate
                 {
-                    Name = skuType,
-                } // capacity can optionally be changed
+                    Capacity = 1
+                }
             },
             Tags = { { TagKeyEnv, TagValueEnv } }
         };
@@ -155,7 +152,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         resource = longRunningOperation.Value;
 
         Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(skuType, resource.Data.Properties.Sku.Name);
+        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
         Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
         Assert.AreEqual(1, resource.Data.Properties.IPAllowlist.Count);
         Assert.Contains(PatchIpRange, resource.Data.Properties.IPAllowlist as IList);

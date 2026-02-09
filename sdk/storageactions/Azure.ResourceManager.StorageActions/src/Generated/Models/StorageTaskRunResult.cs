@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.StorageActions.Models
     public readonly partial struct StorageTaskRunResult : IEquatable<StorageTaskRunResult>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskRunResult"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageTaskRunResult(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskRunResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageTaskRunResult(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static StorageTaskRunResult Succeeded { get; } = new StorageTaskRunResult(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static StorageTaskRunResult Failed { get; } = new StorageTaskRunResult(FailedValue);
+
         /// <summary> Determines if two <see cref="StorageTaskRunResult"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageTaskRunResult left, StorageTaskRunResult right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageTaskRunResult"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageTaskRunResult left, StorageTaskRunResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTaskRunResult"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageTaskRunResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageTaskRunResult(string value) => new StorageTaskRunResult(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageTaskRunResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageTaskRunResult?(string value) => value == null ? null : new StorageTaskRunResult(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageTaskRunResult other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageTaskRunResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

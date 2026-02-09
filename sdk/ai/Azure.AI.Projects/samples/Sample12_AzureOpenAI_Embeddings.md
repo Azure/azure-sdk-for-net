@@ -17,8 +17,19 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+var credential = new DefaultAzureCredential();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+{
+    throw new InvalidOperationException("Invalid URI.");
+}
+uri = new Uri($"https://{uri.Host}");
+
+AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
+EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Generate an embedding");
 OpenAIEmbedding result = embeddingsClient.GenerateEmbedding("List all the rainbow colors");
@@ -31,8 +42,19 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+var credential = new DefaultAzureCredential();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+{
+    throw new InvalidOperationException("Invalid URI.");
+}
+uri = new Uri($"https://{uri.Host}");
+
+AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
+EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Generate an embedding");
 OpenAIEmbedding result = await embeddingsClient.GenerateEmbeddingAsync("List all the rainbow colors");

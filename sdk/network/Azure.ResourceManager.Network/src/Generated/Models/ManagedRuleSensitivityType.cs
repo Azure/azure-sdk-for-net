@@ -22,13 +22,10 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NoneValue = "None";
         private const string LowValue = "Low";
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> None. </summary>
-        public static ManagedRuleSensitivityType None { get; } = new ManagedRuleSensitivityType(NoneValue);
         /// <summary> Low. </summary>
         public static ManagedRuleSensitivityType Low { get; } = new ManagedRuleSensitivityType(LowValue);
         /// <summary> Medium. </summary>

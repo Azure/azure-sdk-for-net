@@ -51,14 +51,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The number of outbound ports to be used for NAT. </summary>
+        [WirePath("properties.allocatedOutboundPorts")]
         public int? AllocatedOutboundPorts { get; set; }
         /// <summary> The Frontend IP addresses of the load balancer. </summary>
+        [WirePath("properties.frontendIPConfigurations")]
         public IList<WritableSubResource> FrontendIPConfigurations { get; }
         /// <summary> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -71,12 +75,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the outbound rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The protocol for the outbound rule in load balancer. </summary>
+        [WirePath("properties.protocol")]
         public LoadBalancerOutboundRuleProtocol? Protocol { get; set; }
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("properties.enableTcpReset")]
         public bool? EnableTcpReset { get; set; }
         /// <summary> The timeout for the TCP idle connection. </summary>
+        [WirePath("properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
     }
 }

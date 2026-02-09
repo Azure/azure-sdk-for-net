@@ -4,14 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -45,6 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, null, null, cancellationToken).ConfigureAwait(false);
 
@@ -71,7 +68,62 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, metricsConfigurationName, data, null, null, cancellationToken);
+
+        /// <summary>
+        /// Get a list of metrics configurations for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/metricsConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricsConfigurations_ListByCluster</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterMetricsConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetworkCloudClusterMetricsConfigurationResource> GetAllAsync(CancellationToken cancellationToken)
+			=> GetAllAsync(null, null, cancellationToken);
+
+        /// <summary>
+        /// Get a list of metrics configurations for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/metricsConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricsConfigurations_ListByCluster</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterMetricsConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetworkCloudClusterMetricsConfigurationResource> GetAll(CancellationToken cancellationToken)
+			=> GetAll(null, null, cancellationToken);
     }
 }

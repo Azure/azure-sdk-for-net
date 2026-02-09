@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Specifies slot info on a cloud service. </summary>
+        [WirePath("slotType")]
         public SwapSlotType? SlotType { get; set; }
     }
 }

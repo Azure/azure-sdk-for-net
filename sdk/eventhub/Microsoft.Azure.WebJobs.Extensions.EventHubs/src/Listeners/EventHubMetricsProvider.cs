@@ -56,26 +56,95 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 
             // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
+
+            // Limit number of concurrent requests to eventhub client
+            int ConcurrencyLimit = Environment.ProcessorCount * 2;
+            const int CheckpointWaitTimeoutMs = 10000;
+            const int PartitionPropertiesWaitTimeoutMs = 30000;
+            using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
+            using var cts = new CancellationTokenSource();
+
+            // Get partition properties
             var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
-            var checkpointTasks = new Task<EventProcessorCheckpoint>[partitionPropertiesTasks.Length];
-
-            for (int i = 0; i < partitions.Length; i++)
-            {
-                partitionPropertiesTasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
-
-                checkpointTasks[i] = _checkpointStore.GetCheckpointAsync(
-                        _client.FullyQualifiedNamespace,
-                        _client.EventHubName,
-                        _client.ConsumerGroup,
-                        partitions[i],
-                        CancellationToken.None);
-            }
-
-            await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
-            EventProcessorCheckpoint[] checkpoints = null;
-
             try
             {
+                partitionPropertiesTasks = partitions.Select(async partition =>
+                {
+                    bool acquired = false;
+                    try
+                    {
+                        acquired = await semaphore.WaitAsync(PartitionPropertiesWaitTimeoutMs, cts.Token).ConfigureAwait(false);
+                        if (!acquired)
+                        {
+                            throw new TimeoutException(
+                                $"Failed to acquire EH client concurrency slot within {PartitionPropertiesWaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
+                        }
+                        return await _client.GetPartitionPropertiesAsync(partition).ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        if (!cts.Token.IsCancellationRequested)
+                        {
+                            _logger.LogDebug($"Requesting cancellation of other partition info tasks. Error while getting partition info for eventhub '{_client.EventHubName}', partition '{partition}': {e.Message}");
+                            cts.Cancel();
+                        }
+                        throw;
+                    }
+                    finally
+                    {
+                        if (acquired)
+                        {
+                            semaphore.Release();
+                        }
+                    }
+                }).ToArray();
+                await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Encountered an exception while getting partition information for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
+            }
+
+            // Get checkpoints
+            EventProcessorCheckpoint[] checkpoints = null;
+            try
+            {
+                var checkpointTasks = partitions.Select(async partition =>
+                {
+                    bool acquired = false;
+                    try
+                    {
+                        acquired = await semaphore.WaitAsync(CheckpointWaitTimeoutMs, cts.Token).ConfigureAwait(false);
+                        if (!acquired)
+                        {
+                            throw new TimeoutException(
+                                $"Failed to acquire checkpoint concurrency slot within {CheckpointWaitTimeoutMs}ms for Event Hub '{_client.EventHubName}', partition '{partition}'.");
+                        }
+
+                        return await _checkpointStore.GetCheckpointAsync(
+                            _client.FullyQualifiedNamespace,
+                            _client.EventHubName,
+                            _client.ConsumerGroup,
+                            partition,
+                            cts.Token).ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        if (!cts.Token.IsCancellationRequested)
+                        {
+                            _logger.LogDebug($"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_client.EventHubName}', partition '{partition}': {e.Message}");
+                            cts.Cancel();
+                        }
+                        throw;
+                    }
+                    finally
+                    {
+                        if (acquired)
+                        {
+                            semaphore.Release();
+                        }
+                    }
+                });
                 checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
             catch (Exception e)

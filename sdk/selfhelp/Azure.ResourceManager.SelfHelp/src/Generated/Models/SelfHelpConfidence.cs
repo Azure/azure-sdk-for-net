@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpConfidence : IEquatable<SelfHelpConfidence>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SelfHelpConfidence"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SelfHelpConfidence(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string LowValue = "Low";
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> Low. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpConfidence"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SelfHelpConfidence(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Low. </summary>
         public static SelfHelpConfidence Low { get; } = new SelfHelpConfidence(LowValue);
-        /// <summary> Medium. </summary>
+
+        /// <summary> Gets the Medium. </summary>
         public static SelfHelpConfidence Medium { get; } = new SelfHelpConfidence(MediumValue);
-        /// <summary> High. </summary>
+
+        /// <summary> Gets the High. </summary>
         public static SelfHelpConfidence High { get; } = new SelfHelpConfidence(HighValue);
+
         /// <summary> Determines if two <see cref="SelfHelpConfidence"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpConfidence left, SelfHelpConfidence right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHelpConfidence"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpConfidence left, SelfHelpConfidence right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpConfidence"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHelpConfidence"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHelpConfidence(string value) => new SelfHelpConfidence(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHelpConfidence"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHelpConfidence?(string value) => value == null ? null : new SelfHelpConfidence(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpConfidence other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHelpConfidence other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

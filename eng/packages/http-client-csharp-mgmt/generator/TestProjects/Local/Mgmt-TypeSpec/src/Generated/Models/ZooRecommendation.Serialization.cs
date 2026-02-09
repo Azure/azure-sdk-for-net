@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The ZooRecommendation. </summary>
     public partial class ZooRecommendation : IJsonModel<ZooRecommendation>
@@ -119,7 +119,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ZooRecommendation)} does not support writing '{options.Format}' format.");
             }
@@ -137,7 +137,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeZooRecommendation(document.RootElement, options);
                     }
@@ -149,11 +149,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ZooRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ZooRecommendation"/> from. </param>
-        internal static ZooRecommendation FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ZooRecommendation"/> from. </param>
+        internal static ZooRecommendation FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeZooRecommendation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

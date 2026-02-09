@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarProperties. </summary>
     public partial class BarProperties : IJsonModel<BarProperties>
@@ -115,7 +115,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    serviceUri = new Uri(prop.Value.GetString());
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("something"u8))
@@ -174,7 +174,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BarProperties)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +192,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBarProperties(document.RootElement, options);
                     }

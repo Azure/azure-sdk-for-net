@@ -316,7 +316,13 @@ namespace Azure.Communication.Email.Tests.Samples
 #else
             string attachmentName = "InlineImage.jpg";
             string contentType = MediaTypeNames.Image.Jpeg;
-            var content = new BinaryData("This is image file content.");
+
+            string base64String = "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAFAAUDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAb/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCfAAf/2Q==";
+
+            // Convert Base64 to byte array
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+
+            var content = new BinaryData(imageBytes);
             var contentId = "myInlineAttachmentContentId";
 #endif
             var emailAttachment = new EmailAttachment(attachmentName, contentType, content);

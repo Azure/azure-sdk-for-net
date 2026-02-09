@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains the parameters specific to the HNSW algorithm. </summary>
     public partial class HnswParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>
         public HnswParameters()
         {
@@ -20,12 +55,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="efConstruction"> The size of the dynamic list containing the nearest neighbors, which is used during index time. Increasing this parameter may improve index quality, at the expense of increased indexing time. At a certain point, increasing this parameter leads to diminishing returns. </param>
         /// <param name="efSearch"> The size of the dynamic list containing the nearest neighbors, which is used during search time. Increasing this parameter may improve search results, at the expense of slower search. At a certain point, increasing this parameter leads to diminishing returns. </param>
         /// <param name="metric"> The similarity metric to use for vector comparisons. </param>
-        internal HnswParameters(int? m, int? efConstruction, int? efSearch, VectorSearchAlgorithmMetric? metric)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HnswParameters(int? m, int? efConstruction, int? efSearch, VectorSearchAlgorithmMetric? metric, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             M = m;
             EfConstruction = efConstruction;
             EfSearch = efSearch;
             Metric = metric;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of bi-directional links created for every new element during construction. Increasing this parameter value may improve recall and reduce retrieval times for datasets with high intrinsic dimensionality at the expense of increased memory consumption and longer indexing time. </summary>

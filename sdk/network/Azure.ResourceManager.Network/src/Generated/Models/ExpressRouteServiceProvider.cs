@@ -39,10 +39,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of peering locations. </summary>
+        [WirePath("properties.peeringLocations")]
         public IList<string> PeeringLocations { get; }
         /// <summary> A list of bandwidths offered. </summary>
+        [WirePath("properties.bandwidthsOffered")]
         public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; }
         /// <summary> The provisioning state of the express route service provider resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

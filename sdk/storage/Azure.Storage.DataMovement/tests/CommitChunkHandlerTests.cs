@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
             int expectedCompleteFileCount,
             int maxWaitTimeInSec = 6)
         {
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
             CancellationToken cancellationToken = cancellationSource.Token;
             int currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
             int currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;
@@ -183,6 +183,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -235,6 +238,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -273,6 +279,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -322,6 +331,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: taskSize,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -374,6 +386,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 1,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -412,6 +427,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -450,6 +468,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 1,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
@@ -487,10 +508,13 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
 
         [Test]
-        public async Task DisposeAsync()
+        public async Task CleanUpAsync()
         {
             // Arrange - Create CommitChunkHandler then Dispose it so the event handler is disposed
             MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
@@ -512,7 +536,7 @@ namespace Azure.Storage.DataMovement.Tests
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.DisposeAsync();
+            await commitBlockHandler.CleanUpAsync();
 
             Assert.ThrowsAsync<ChannelClosedException>(async () =>
                 await commitBlockHandler.QueueChunkAsync(default));
@@ -580,6 +604,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             mockCommitChunkBehaviors.QueueCommitBlockTask.Verify(b => b(properties));
+
+            // Cleanup
+            await commitBlockHandler.CleanUpAsync();
         }
     }
 }

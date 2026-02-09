@@ -27,17 +27,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="PatternAnalyzer"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
         /// <param name="flagsInternal"> Regular expression flags. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        internal PatternAnalyzer(string oDataType, string name, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(oDataType, name)
+        internal PatternAnalyzer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? lowerCaseTerms, string pattern, string flagsInternal, IList<string> stopwords) : base(oDataType, name, serializedAdditionalRawData)
         {
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;
             FlagsInternal = flagsInternal;
             Stopwords = stopwords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternAnalyzer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PatternAnalyzer"/> for deserialization. </summary>
+        internal PatternAnalyzer()
+        {
         }
 
         /// <summary> A value indicating whether terms should be lower-cased. Default is true. </summary>

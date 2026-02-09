@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ID of the recommended action. </summary>
+        [WirePath("actionId")]
         public string ActionId { get; }
         /// <summary> Description of recommended actions. </summary>
+        [WirePath("actionText")]
         public string ActionText { get; }
         /// <summary> The uri linking to a documentation for the recommended troubleshooting actions. </summary>
+        [WirePath("actionUri")]
         public Uri ActionUri { get; }
         /// <summary> The information from the URI for the recommended troubleshooting actions. </summary>
+        [WirePath("actionUriText")]
         public string ActionUriText { get; }
     }
 }

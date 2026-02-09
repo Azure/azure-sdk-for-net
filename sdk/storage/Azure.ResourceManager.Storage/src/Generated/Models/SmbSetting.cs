@@ -56,14 +56,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="authenticationMethods"> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter ';'. </param>
         /// <param name="kerberosTicketEncryption"> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter ';'. </param>
         /// <param name="channelEncryption"> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'. </param>
+        /// <param name="encryptionInTransit"> Encryption in transit setting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SmbSetting(Multichannel multichannel, string versions, string authenticationMethods, string kerberosTicketEncryption, string channelEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SmbSetting(Multichannel multichannel, string versions, string authenticationMethods, string kerberosTicketEncryption, string channelEncryption, EncryptionInTransit encryptionInTransit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Multichannel = multichannel;
             Versions = versions;
             AuthenticationMethods = authenticationMethods;
             KerberosTicketEncryption = kerberosTicketEncryption;
             ChannelEncryption = channelEncryption;
+            EncryptionInTransit = encryptionInTransit;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,5 +96,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'. </summary>
         [WirePath("channelEncryption")]
         public string ChannelEncryption { get; set; }
+        /// <summary> Encryption in transit setting. </summary>
+        internal EncryptionInTransit EncryptionInTransit { get; set; }
+        /// <summary> Indicates whether encryption in transit is required. </summary>
+        [WirePath("encryptionInTransit.required")]
+        public bool? IsRequired
+        {
+            get => EncryptionInTransit is null ? default : EncryptionInTransit.IsRequired;
+            set
+            {
+                if (EncryptionInTransit is null)
+                    EncryptionInTransit = new EncryptionInTransit();
+                EncryptionInTransit.IsRequired = value;
+            }
+        }
     }
 }

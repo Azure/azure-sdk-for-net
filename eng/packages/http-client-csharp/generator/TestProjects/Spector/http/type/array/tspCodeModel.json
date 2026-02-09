@@ -462,6 +462,11 @@
       "usage": "Input,Output,Json",
       "doc": "Array inner model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InnerModel"
+        }
+      },
       "properties": [
         {
           "$id": "58",
@@ -486,7 +491,8 @@
             "json": {
               "name": "property"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "60",
@@ -513,7 +519,8 @@
             "json": {
               "name": "children"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -529,8 +536,9 @@
       "parameters": [
         {
           "$id": "63",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "64",
@@ -538,14 +546,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "65",
@@ -555,9 +559,13 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Array.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Array",
       "apiVersions": [],
@@ -583,20 +591,38 @@
                 "parameters": [
                   {
                     "$id": "69",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "1"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.Int32Value.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "70",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.Int32Value.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -605,11 +631,11 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "70",
+                      "$id": "71",
                       "kind": "array",
                       "name": "Array",
                       "valueType": {
-                        "$id": "71",
+                        "$id": "72",
                         "kind": "int32",
                         "name": "int32",
                         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -632,30 +658,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "72",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "70"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "70"
+                  "$ref": "71"
                 }
               },
               "isOverride": false,
@@ -677,38 +690,78 @@
                 "parameters": [
                   {
                     "$id": "75",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "3"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.Int32Value.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "76",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.Int32Value.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "76",
+                    "$id": "77",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "70"
+                      "$ref": "71"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.Int32Value.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "78",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "71"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.Int32Value.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -730,43 +783,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "77",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "70"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "78"
                 },
                 {
-                  "$id": "78",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "3"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "76"
                 }
               ],
               "response": {},
@@ -779,8 +804,9 @@
           "parameters": [
             {
               "$id": "79",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "80",
@@ -788,14 +814,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "81",
@@ -805,15 +827,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.Int32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.Int32Value",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "82",
@@ -836,20 +863,38 @@
                 "parameters": [
                   {
                     "$id": "85",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "5"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.Int64Value.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "86",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "5"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.Int64Value.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -858,11 +903,11 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "86",
+                      "$id": "87",
                       "kind": "array",
                       "name": "Array1",
                       "valueType": {
-                        "$id": "87",
+                        "$id": "88",
                         "kind": "int64",
                         "name": "int64",
                         "crossLanguageDefinitionId": "TypeSpec.int64",
@@ -885,30 +930,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int64Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "88",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "5"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "86"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "86"
+                  "$ref": "87"
                 }
               },
               "isOverride": false,
@@ -930,38 +962,78 @@
                 "parameters": [
                   {
                     "$id": "91",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "7"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.Int64Value.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "92",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "7"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.Int64Value.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "92",
+                    "$id": "93",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "86"
+                      "$ref": "87"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.Int64Value.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "94",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "87"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.Int64Value.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -983,43 +1055,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int64Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "93",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "86"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "94"
                 },
                 {
-                  "$id": "94",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "7"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "92"
                 }
               ],
               "response": {},
@@ -1032,8 +1076,9 @@
           "parameters": [
             {
               "$id": "95",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "96",
@@ -1041,14 +1086,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "97",
@@ -1058,15 +1099,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.Int64Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.Int64Value",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "98",
@@ -1089,20 +1135,38 @@
                 "parameters": [
                   {
                     "$id": "101",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "9"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.BooleanValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "102",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.BooleanValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1111,11 +1175,11 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "102",
+                      "$id": "103",
                       "kind": "array",
                       "name": "Array2",
                       "valueType": {
-                        "$id": "103",
+                        "$id": "104",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -1138,30 +1202,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.BooleanValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "104",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "102"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "102"
+                  "$ref": "103"
                 }
               },
               "isOverride": false,
@@ -1183,38 +1234,78 @@
                 "parameters": [
                   {
                     "$id": "107",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "11"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.BooleanValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "108",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.BooleanValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "108",
+                    "$id": "109",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "102"
+                      "$ref": "103"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.BooleanValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "110",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "103"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.BooleanValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1236,43 +1327,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.BooleanValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "109",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "102"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "110"
                 },
                 {
-                  "$id": "110",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "11"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "108"
                 }
               ],
               "response": {},
@@ -1285,8 +1348,9 @@
           "parameters": [
             {
               "$id": "111",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "112",
@@ -1294,14 +1358,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "113",
@@ -1311,15 +1371,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.BooleanValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.BooleanValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "114",
@@ -1342,20 +1407,38 @@
                 "parameters": [
                   {
                     "$id": "117",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "13"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.StringValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "118",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "13"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.StringValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1364,11 +1447,11 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "118",
+                      "$id": "119",
                       "kind": "array",
                       "name": "Array3",
                       "valueType": {
-                        "$id": "119",
+                        "$id": "120",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1391,30 +1474,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.StringValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "120",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "13"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "118"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "118"
+                  "$ref": "119"
                 }
               },
               "isOverride": false,
@@ -1436,38 +1506,78 @@
                 "parameters": [
                   {
                     "$id": "123",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "15"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.StringValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "124",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.StringValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "124",
+                    "$id": "125",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "118"
+                      "$ref": "119"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.StringValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "126",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "119"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.StringValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1489,43 +1599,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.StringValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "125",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "118"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "126"
                 },
                 {
-                  "$id": "126",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "15"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "124"
                 }
               ],
               "response": {},
@@ -1538,8 +1620,9 @@
           "parameters": [
             {
               "$id": "127",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "128",
@@ -1547,14 +1630,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "129",
@@ -1564,15 +1643,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.StringValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.StringValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "130",
@@ -1595,20 +1679,38 @@
                 "parameters": [
                   {
                     "$id": "133",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "17"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.Float32Value.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "134",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "17"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.Float32Value.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1617,11 +1719,11 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "134",
+                      "$id": "135",
                       "kind": "array",
                       "name": "Array4",
                       "valueType": {
-                        "$id": "135",
+                        "$id": "136",
                         "kind": "float32",
                         "name": "float32",
                         "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -1644,30 +1746,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Float32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "136",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "17"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "134"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "134"
+                  "$ref": "135"
                 }
               },
               "isOverride": false,
@@ -1689,38 +1778,78 @@
                 "parameters": [
                   {
                     "$id": "139",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "19"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.Float32Value.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "140",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.Float32Value.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "140",
+                    "$id": "141",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "134"
+                      "$ref": "135"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.Float32Value.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "142",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "135"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.Float32Value.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1742,43 +1871,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Float32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "141",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "134"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "142"
                 },
                 {
-                  "$id": "142",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "19"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "140"
                 }
               ],
               "response": {},
@@ -1791,8 +1892,9 @@
           "parameters": [
             {
               "$id": "143",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "144",
@@ -1800,14 +1902,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "145",
@@ -1817,15 +1915,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.Float32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.Float32Value",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "146",
@@ -1848,20 +1951,38 @@
                 "parameters": [
                   {
                     "$id": "149",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "21"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.DatetimeValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "150",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "21"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.DatetimeValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1870,16 +1991,16 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "150",
+                      "$id": "151",
                       "kind": "array",
                       "name": "Array5",
                       "valueType": {
-                        "$id": "151",
+                        "$id": "152",
                         "kind": "utcDateTime",
                         "name": "utcDateTime",
                         "encode": "rfc3339",
                         "wireType": {
-                          "$id": "152",
+                          "$id": "153",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1905,30 +2026,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DatetimeValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "153",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "21"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "150"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "150"
+                  "$ref": "151"
                 }
               },
               "isOverride": false,
@@ -1950,38 +2058,78 @@
                 "parameters": [
                   {
                     "$id": "156",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "23"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.DatetimeValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "157",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "23"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.DatetimeValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "157",
+                    "$id": "158",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "150"
+                      "$ref": "151"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.DatetimeValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "159",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "151"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.DatetimeValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2003,43 +2151,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DatetimeValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "158",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "150"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "159"
                 },
                 {
-                  "$id": "159",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "23"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "157"
                 }
               ],
               "response": {},
@@ -2052,8 +2172,9 @@
           "parameters": [
             {
               "$id": "160",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "161",
@@ -2061,14 +2182,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "162",
@@ -2078,15 +2195,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.DatetimeValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.DatetimeValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "163",
@@ -2109,20 +2231,38 @@
                 "parameters": [
                   {
                     "$id": "166",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "25"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.DurationValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "167",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "25"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.DurationValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2131,16 +2271,16 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "167",
+                      "$id": "168",
                       "kind": "array",
                       "name": "Array6",
                       "valueType": {
-                        "$id": "168",
+                        "$id": "169",
                         "kind": "duration",
                         "name": "duration",
                         "encode": "ISO8601",
                         "wireType": {
-                          "$id": "169",
+                          "$id": "170",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2166,30 +2306,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DurationValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "170",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "25"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "167"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "167"
+                  "$ref": "168"
                 }
               },
               "isOverride": false,
@@ -2211,38 +2338,78 @@
                 "parameters": [
                   {
                     "$id": "173",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "27"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.DurationValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "174",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "27"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.DurationValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "174",
+                    "$id": "175",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "167"
+                      "$ref": "168"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.DurationValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "176",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "168"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.DurationValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2264,43 +2431,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DurationValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "175",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "167"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "176"
                 },
                 {
-                  "$id": "176",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "27"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "174"
                 }
               ],
               "response": {},
@@ -2313,8 +2452,9 @@
           "parameters": [
             {
               "$id": "177",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "178",
@@ -2322,14 +2462,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "179",
@@ -2339,15 +2475,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.DurationValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.DurationValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "180",
@@ -2370,20 +2511,38 @@
                 "parameters": [
                   {
                     "$id": "183",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "29"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.UnknownValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "184",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "29"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.UnknownValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2392,11 +2551,11 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "184",
+                      "$id": "185",
                       "kind": "array",
                       "name": "Array7",
                       "valueType": {
-                        "$id": "185",
+                        "$id": "186",
                         "kind": "unknown",
                         "name": "unknown",
                         "crossLanguageDefinitionId": "",
@@ -2419,30 +2578,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.UnknownValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "186",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "29"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "184"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "184"
+                  "$ref": "185"
                 }
               },
               "isOverride": false,
@@ -2464,38 +2610,78 @@
                 "parameters": [
                   {
                     "$id": "189",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "31"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.UnknownValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "190",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "31"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.UnknownValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "190",
+                    "$id": "191",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "184"
+                      "$ref": "185"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.UnknownValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "192",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "185"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.UnknownValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2517,43 +2703,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.UnknownValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "191",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "184"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "192"
                 },
                 {
-                  "$id": "192",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "31"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "190"
                 }
               ],
               "response": {},
@@ -2566,8 +2724,9 @@
           "parameters": [
             {
               "$id": "193",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "194",
@@ -2575,14 +2734,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "195",
@@ -2592,15 +2747,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.UnknownValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.UnknownValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "196",
@@ -2623,20 +2783,38 @@
                 "parameters": [
                   {
                     "$id": "199",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "33"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.ModelValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "200",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "33"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.ModelValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2661,25 +2839,12 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.ModelValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "200",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "33"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "200"
                 }
               ],
               "response": {
@@ -2706,38 +2871,78 @@
                 "parameters": [
                   {
                     "$id": "203",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "35"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.ModelValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "204",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "35"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.ModelValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "204",
+                    "$id": "205",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "61"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.ModelValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "206",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "61"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.ModelValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2759,43 +2964,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.ModelValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "205",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "61"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "206"
                 },
                 {
-                  "$id": "206",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "35"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "204"
                 }
               ],
               "response": {},
@@ -2808,8 +2985,9 @@
           "parameters": [
             {
               "$id": "207",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "208",
@@ -2817,14 +2995,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "209",
@@ -2834,15 +3008,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.ModelValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.ModelValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "210",
@@ -2865,20 +3044,38 @@
                 "parameters": [
                   {
                     "$id": "213",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "37"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "214",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "37"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2887,20 +3084,20 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "214",
+                      "$id": "215",
                       "kind": "array",
                       "name": "Array8",
                       "valueType": {
-                        "$id": "215",
+                        "$id": "216",
                         "kind": "nullable",
                         "type": {
-                          "$id": "216",
+                          "$id": "217",
                           "kind": "float32",
                           "name": "float32",
                           "crossLanguageDefinitionId": "TypeSpec.float32",
                           "decorators": []
                         },
-                        "namespace": ""
+                        "namespace": "Type.Array"
                       },
                       "crossLanguageDefinitionId": "TypeSpec.Array",
                       "decorators": []
@@ -2919,30 +3116,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "217",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "37"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "214"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "214"
+                  "$ref": "215"
                 }
               },
               "isOverride": false,
@@ -2964,38 +3148,78 @@
                 "parameters": [
                   {
                     "$id": "220",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "39"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "221",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "39"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "221",
+                    "$id": "222",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "214"
+                      "$ref": "215"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "223",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "215"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3017,43 +3241,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "222",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "214"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "223"
                 },
                 {
-                  "$id": "223",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "39"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "221"
                 }
               ],
               "response": {},
@@ -3066,8 +3262,9 @@
           "parameters": [
             {
               "$id": "224",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "225",
@@ -3075,14 +3272,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "226",
@@ -3092,15 +3285,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableFloatValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "227",
@@ -3123,20 +3321,38 @@
                 "parameters": [
                   {
                     "$id": "230",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "41"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "231",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "41"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3145,20 +3361,20 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "231",
+                      "$id": "232",
                       "kind": "array",
                       "name": "Array9",
                       "valueType": {
-                        "$id": "232",
+                        "$id": "233",
                         "kind": "nullable",
                         "type": {
-                          "$id": "233",
+                          "$id": "234",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
                           "decorators": []
                         },
-                        "namespace": ""
+                        "namespace": "Type.Array"
                       },
                       "crossLanguageDefinitionId": "TypeSpec.Array",
                       "decorators": []
@@ -3177,30 +3393,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "234",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "41"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "231"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "231"
+                  "$ref": "232"
                 }
               },
               "isOverride": false,
@@ -3222,38 +3425,78 @@
                 "parameters": [
                   {
                     "$id": "237",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "43"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "238",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "43"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "238",
+                    "$id": "239",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "231"
+                      "$ref": "232"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "240",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "232"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3275,43 +3518,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "239",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "231"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "240"
                 },
                 {
-                  "$id": "240",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "43"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "238"
                 }
               ],
               "response": {},
@@ -3324,8 +3539,9 @@
           "parameters": [
             {
               "$id": "241",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "242",
@@ -3333,14 +3549,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "243",
@@ -3350,15 +3562,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableInt32Value",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "244",
@@ -3381,20 +3598,38 @@
                 "parameters": [
                   {
                     "$id": "247",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "45"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "248",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "45"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3403,20 +3638,20 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "248",
+                      "$id": "249",
                       "kind": "array",
                       "name": "Array10",
                       "valueType": {
-                        "$id": "249",
+                        "$id": "250",
                         "kind": "nullable",
                         "type": {
-                          "$id": "250",
+                          "$id": "251",
                           "kind": "boolean",
                           "name": "boolean",
                           "crossLanguageDefinitionId": "TypeSpec.boolean",
                           "decorators": []
                         },
-                        "namespace": ""
+                        "namespace": "Type.Array"
                       },
                       "crossLanguageDefinitionId": "TypeSpec.Array",
                       "decorators": []
@@ -3435,30 +3670,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "251",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "45"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "248"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "248"
+                  "$ref": "249"
                 }
               },
               "isOverride": false,
@@ -3480,38 +3702,78 @@
                 "parameters": [
                   {
                     "$id": "254",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "47"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "255",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "47"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "255",
+                    "$id": "256",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "248"
+                      "$ref": "249"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "257",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "249"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3533,43 +3795,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "256",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "248"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "257"
                 },
                 {
-                  "$id": "257",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "47"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "255"
                 }
               ],
               "response": {},
@@ -3582,8 +3816,9 @@
           "parameters": [
             {
               "$id": "258",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "259",
@@ -3591,14 +3826,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "260",
@@ -3608,15 +3839,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "261",
@@ -3639,20 +3875,38 @@
                 "parameters": [
                   {
                     "$id": "264",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "49"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableStringValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "265",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "49"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableStringValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3661,20 +3915,20 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "265",
+                      "$id": "266",
                       "kind": "array",
                       "name": "Array11",
                       "valueType": {
-                        "$id": "266",
+                        "$id": "267",
                         "kind": "nullable",
                         "type": {
-                          "$id": "267",
+                          "$id": "268",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
                           "decorators": []
                         },
-                        "namespace": ""
+                        "namespace": "Type.Array"
                       },
                       "crossLanguageDefinitionId": "TypeSpec.Array",
                       "decorators": []
@@ -3693,30 +3947,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableStringValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "268",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "49"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "265"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "265"
+                  "$ref": "266"
                 }
               },
               "isOverride": false,
@@ -3738,38 +3979,78 @@
                 "parameters": [
                   {
                     "$id": "271",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "51"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableStringValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "272",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "51"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableStringValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "272",
+                    "$id": "273",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "265"
+                      "$ref": "266"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.NullableStringValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "274",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "266"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.NullableStringValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3791,43 +4072,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableStringValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "273",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "265"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "274"
                 },
                 {
-                  "$id": "274",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "51"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "272"
                 }
               ],
               "response": {},
@@ -3840,8 +4093,9 @@
           "parameters": [
             {
               "$id": "275",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "276",
@@ -3849,14 +4103,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "277",
@@ -3866,15 +4116,20 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.NullableStringValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableStringValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "278",
@@ -3897,20 +4152,38 @@
                 "parameters": [
                   {
                     "$id": "281",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "53"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableModelValue.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "282",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "53"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableModelValue.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3919,16 +4192,16 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "282",
+                      "$id": "283",
                       "kind": "array",
                       "name": "Array12",
                       "valueType": {
-                        "$id": "283",
+                        "$id": "284",
                         "kind": "nullable",
                         "type": {
                           "$ref": "57"
                         },
-                        "namespace": ""
+                        "namespace": "Type.Array"
                       },
                       "crossLanguageDefinitionId": "TypeSpec.Array",
                       "decorators": []
@@ -3947,30 +4220,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableModelValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "284",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "53"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "282"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "282"
+                  "$ref": "283"
                 }
               },
               "isOverride": false,
@@ -3992,38 +4252,78 @@
                 "parameters": [
                   {
                     "$id": "287",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "55"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Array.NullableModelValue.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "288",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "55"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Array.NullableModelValue.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "288",
+                    "$id": "289",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
-                      "$ref": "282"
+                      "$ref": "283"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Array.NullableModelValue.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "290",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "283"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Array.NullableModelValue.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4045,43 +4345,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableModelValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
-                  "$id": "289",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "type": {
-                    "$ref": "282"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "290"
                 },
                 {
-                  "$id": "290",
-                  "name": "contentType",
-                  "nameInRequest": "contentType",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "55"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "288"
                 }
               ],
               "response": {},
@@ -4094,8 +4366,9 @@
           "parameters": [
             {
               "$id": "291",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "292",
@@ -4103,14 +4376,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "293",
@@ -4120,17 +4389,23 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Array.NullableModelValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Array.NullableModelValue",
           "apiVersions": [],
           "parent": {
             "$ref": "62"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

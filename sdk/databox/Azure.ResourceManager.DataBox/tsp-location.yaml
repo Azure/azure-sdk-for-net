@@ -1,0 +1,4 @@
+directory: specification/databox/resource-manager/Microsoft.DataBox/DataBox
+commit: ec167d5a4b36d3c0c063fcd9b21486c87ad1adc3
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

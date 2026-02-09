@@ -15,11 +15,9 @@ namespace Client.AlternateApiVersion.Service.Path
 {
     public partial class PathClient
     {
-        protected PathClient() => throw null;
+        public PathClient() : this(new Uri("http://localhost:3000"), new PathClientOptions()) => throw null;
 
-        public PathClient(string version) : this(new Uri("http://localhost:3000"), version, new PathClientOptions()) => throw null;
-
-        public PathClient(Uri endpoint, string version, PathClientOptions options) => throw null;
+        public PathClient(Uri endpoint, PathClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

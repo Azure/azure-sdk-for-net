@@ -45,7 +45,7 @@ namespace Azure.Identity.Tests.Mock
             return mockWorkloadIdentityCredential.Object;
         }
 
-        public override TokenCredential CreateManagedIdentityCredential()
+        public override TokenCredential CreateManagedIdentityCredential(bool isProbeEnabled = true)
         {
             OnCreateManagedIdentityCredential?.Invoke(mockManagedIdentityCredential);
             return mockManagedIdentityCredential.Object;

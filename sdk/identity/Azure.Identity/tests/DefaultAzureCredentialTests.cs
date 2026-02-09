@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(8, sources.Length);
+            Assert.AreEqual(9, sources.Length);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(includeInteractive ? 9 : 8, sources.Length);
+            Assert.AreEqual(includeInteractive ? 10 : 9, sources.Length);
 
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
@@ -515,6 +515,7 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = availableCredential != typeof(AzureCliCredential),
                 ExcludeAzurePowerShellCredential = availableCredential != typeof(AzurePowerShellCredential),
                 ExcludeInteractiveBrowserCredential = availableCredential != typeof(InteractiveBrowserCredential),
+                ExcludeBrokerCredential = availableCredential != typeof(BrokerCredential),
                 DisableInstanceDiscovery = disableInstanceDiscovery,
             };
             if (tenantId != null)
@@ -586,6 +587,155 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
 
             return credFactory;
+        }
+
+        [Test]
+        public void ValidateDefaultEnvironmentVariableName()
+        {
+            Assert.AreEqual("AZURE_TOKEN_CREDENTIALS", DefaultAzureCredential.DefaultEnvironmentVariableName);
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithNullVariableName()
+        {
+            string nullString = null;
+            Assert.Throws<ArgumentNullException>(() => new DefaultAzureCredential(nullString));
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithEmptyVariableName()
+        {
+            Assert.Throws<ArgumentException>(() => new DefaultAzureCredential(string.Empty));
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithInvalidVariableName()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new DefaultAzureCredential("INVALID-VAR-NAME"));
+            Assert.True(ex.Message.Contains("Invalid environment variable name: 'INVALID-VAR-NAME'. Only letters, digits, and underscores are allowed."));
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithValidVariableName()
+        {
+            using (new TestEnvVar("VALID_VAR_NAME_123", "dev"))
+            {
+                // This should not throw and create a valid credential
+                var cred = new DefaultAzureCredential("VALID_VAR_NAME_123");
+                Assert.IsNotNull(cred);
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithUnsetVariable()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", null))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS"));
+                Assert.True(ex.Message.Contains("Environment variable 'CUSTOM_TOKEN_CREDENTIALS' is not set or is empty"));
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithEmptyVariable()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", ""))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS"));
+                Assert.True(ex.Message.Contains("Environment variable 'CUSTOM_TOKEN_CREDENTIALS' is not set or is empty"));
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithInvalidValue()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", "invalid_credential_type"))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS"));
+                Assert.True(ex.Message.Contains("Invalid value for environment variable CUSTOM_TOKEN_CREDENTIALS: invalid_credential_type"));
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithValidDevCredentials()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", "dev"))
+            {
+                var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS");
+                TokenCredential[] sources = cred._sources();
+
+                Assert.NotNull(sources);
+                Assert.AreEqual(6, sources.Length);
+                Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[0]);
+                Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[1]);
+                Assert.IsInstanceOf(typeof(AzureCliCredential), sources[2]);
+                Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[3]);
+                Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[4]);
+                Assert.IsInstanceOf(typeof(BrokerCredential), sources[5]);
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithValidProdCredentials()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", "prod"))
+            {
+                var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS");
+                TokenCredential[] sources = cred._sources();
+
+                Assert.NotNull(sources);
+                Assert.AreEqual(3, sources.Length);
+                Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
+                Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
+                Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithSpecificCredential()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", "azureclicredential"))
+            {
+                var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS");
+                TokenCredential[] sources = cred._sources();
+
+                Assert.NotNull(sources);
+                Assert.AreEqual(1, sources.Length);
+                Assert.IsInstanceOf(typeof(AzureCliCredential), sources[0]);
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithOptions()
+        {
+            using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", "environmentcredential"))
+            {
+                var options = new DefaultAzureCredentialOptions
+                {
+                    TenantId = "test-tenant-id"
+                };
+
+                var cred = new DefaultAzureCredential("CUSTOM_TOKEN_CREDENTIALS", options);
+                TokenCredential[] sources = cred._sources();
+
+                Assert.NotNull(sources);
+                Assert.AreEqual(1, sources.Length);
+                Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
+            }
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithDefaultVariableName()
+        {
+            using (new TestEnvVar("AZURE_TOKEN_CREDENTIALS", "azureclicredential"))
+            {
+                var cred = new DefaultAzureCredential(DefaultAzureCredential.DefaultEnvironmentVariableName);
+                TokenCredential[] sources = cred._sources();
+
+                Assert.NotNull(sources);
+                Assert.AreEqual(1, sources.Length);
+                Assert.IsInstanceOf(typeof(AzureCliCredential), sources[0]);
+            }
         }
     }
 }

@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("toBeDetached"u8);
                 writer.WriteBooleanValue(ToBeDetached.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskIopsReadWrite))
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskMBpsReadWrite))
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);

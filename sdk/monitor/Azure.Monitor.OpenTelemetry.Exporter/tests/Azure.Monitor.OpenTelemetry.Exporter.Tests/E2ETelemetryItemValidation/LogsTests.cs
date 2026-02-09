@@ -164,5 +164,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTypeName: "System.Exception",
                 expectedProperties: new Dictionary<string, string> { { "EventId", "1" } });
         }
+
+        [Fact]
+        public void VerifyLogWithClientIPMapsToAiLocationIp()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation("Client IP: {microsoft.client.ip}", "1.2.3.4");
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Message").Single();
+
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
+                telemetryItem: telemetryItem!,
+                expectedSeverityLevel: "Information",
+                expectedMessage: "Client IP: {microsoft.client.ip}",
+                expectedMessageProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
+                expectedSpanId: null,
+                expectedTraceId: null,
+                expectedClientIp: "1.2.3.4");
+        }
     }
 }

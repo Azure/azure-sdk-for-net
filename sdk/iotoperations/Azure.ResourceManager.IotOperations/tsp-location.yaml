@@ -1,3 +1,4 @@
 directory: specification/iotoperations/IoTOperations.Management
-commit: 81f881effe41b9bdad29bc449dbf8a99ca894f2d
+commit: c26378fdafe89239d78a5f1841ab58be91956652
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

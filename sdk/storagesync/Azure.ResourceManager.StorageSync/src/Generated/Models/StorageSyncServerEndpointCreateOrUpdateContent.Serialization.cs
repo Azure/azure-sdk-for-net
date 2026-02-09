@@ -12,13 +12,15 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class StorageSyncServerEndpointCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<StorageSyncServerEndpointCreateOrUpdateContent>
+    /// <summary> The parameters used when creating a server endpoint. </summary>
+    public partial class StorageSyncServerEndpointCreateOrUpdateContent : ResourceData, IJsonModel<StorageSyncServerEndpointCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageSyncServerEndpointCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,264 +32,114 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageSyncServerEndpointCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ServerLocalPath))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("serverLocalPath"u8);
-                writer.WriteStringValue(ServerLocalPath);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(CloudTiering))
-            {
-                writer.WritePropertyName("cloudTiering"u8);
-                writer.WriteStringValue(CloudTiering.Value.ToString());
-            }
-            if (Optional.IsDefined(VolumeFreeSpacePercent))
-            {
-                writer.WritePropertyName("volumeFreeSpacePercent"u8);
-                writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
-            }
-            if (Optional.IsDefined(TierFilesOlderThanDays))
-            {
-                writer.WritePropertyName("tierFilesOlderThanDays"u8);
-                writer.WriteNumberValue(TierFilesOlderThanDays.Value);
-            }
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(ServerResourceId))
-            {
-                writer.WritePropertyName("serverResourceId"u8);
-                writer.WriteStringValue(ServerResourceId);
-            }
-            if (Optional.IsDefined(OfflineDataTransfer))
-            {
-                writer.WritePropertyName("offlineDataTransfer"u8);
-                writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
-            }
-            if (Optional.IsDefined(OfflineDataTransferShareName))
-            {
-                writer.WritePropertyName("offlineDataTransferShareName"u8);
-                writer.WriteStringValue(OfflineDataTransferShareName);
-            }
-            if (Optional.IsDefined(InitialDownloadPolicy))
-            {
-                writer.WritePropertyName("initialDownloadPolicy"u8);
-                writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(LocalCacheMode))
-            {
-                writer.WritePropertyName("localCacheMode"u8);
-                writer.WriteStringValue(LocalCacheMode.Value.ToString());
-            }
-            if (Optional.IsDefined(InitialUploadPolicy))
-            {
-                writer.WritePropertyName("initialUploadPolicy"u8);
-                writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        StorageSyncServerEndpointCreateOrUpdateContent IJsonModel<StorageSyncServerEndpointCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageSyncServerEndpointCreateOrUpdateContent IJsonModel<StorageSyncServerEndpointCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageSyncServerEndpointCreateOrUpdateContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageSyncServerEndpointCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageSyncServerEndpointCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static StorageSyncServerEndpointCreateOrUpdateContent DeserializeStorageSyncServerEndpointCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageSyncServerEndpointCreateOrUpdateContent DeserializeStorageSyncServerEndpointCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string serverLocalPath = default;
-            StorageSyncFeatureStatus? cloudTiering = default;
-            int? volumeFreeSpacePercent = default;
-            int? tierFilesOlderThanDays = default;
-            string friendlyName = default;
-            ResourceIdentifier serverResourceId = default;
-            StorageSyncFeatureStatus? offlineDataTransfer = default;
-            string offlineDataTransferShareName = default;
-            InitialDownloadPolicy? initialDownloadPolicy = default;
-            LocalCacheMode? localCacheMode = default;
-            InitialUploadPolicy? initialUploadPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ServerEndpointCreateParametersProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageSyncContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("serverLocalPath"u8))
-                        {
-                            serverLocalPath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cloudTiering"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cloudTiering = new StorageSyncFeatureStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("volumeFreeSpacePercent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            volumeFreeSpacePercent = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("tierFilesOlderThanDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tierFilesOlderThanDays = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serverResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serverResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("offlineDataTransfer"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            offlineDataTransfer = new StorageSyncFeatureStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("offlineDataTransferShareName"u8))
-                        {
-                            offlineDataTransferShareName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("initialDownloadPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            initialDownloadPolicy = new InitialDownloadPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("localCacheMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            localCacheMode = new LocalCacheMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("initialUploadPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            initialUploadPolicy = new InitialUploadPolicy(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageSyncContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ServerEndpointCreateParametersProperties.DeserializeServerEndpointCreateParametersProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageSyncServerEndpointCreateOrUpdateContent(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                serverLocalPath,
-                cloudTiering,
-                volumeFreeSpacePercent,
-                tierFilesOlderThanDays,
-                friendlyName,
-                serverResourceId,
-                offlineDataTransfer,
-                offlineDataTransferShareName,
-                initialDownloadPolicy,
-                localCacheMode,
-                initialUploadPolicy,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -297,15 +149,20 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        StorageSyncServerEndpointCreateOrUpdateContent IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageSyncServerEndpointCreateOrUpdateContent IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageSyncServerEndpointCreateOrUpdateContent)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageSyncServerEndpointCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
@@ -313,6 +170,19 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="storageSyncServerEndpointCreateOrUpdateContent"> The <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageSyncServerEndpointCreateOrUpdateContent storageSyncServerEndpointCreateOrUpdateContent)
+        {
+            if (storageSyncServerEndpointCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(storageSyncServerEndpointCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

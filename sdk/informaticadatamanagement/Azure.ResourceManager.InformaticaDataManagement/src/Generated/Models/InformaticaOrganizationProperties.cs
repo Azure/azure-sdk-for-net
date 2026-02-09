@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Properties specific to the Informatica DataManagement Organization resource. </summary>
     public partial class InformaticaOrganizationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InformaticaOrganizationProperties"/>. </summary>
         public InformaticaOrganizationProperties()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="userDetails"> User details. </param>
         /// <param name="companyDetails"> Company details. </param>
         /// <param name="linkOrganization"> Link Organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaOrganizationProperties(InformaticaProvisioningState? provisioningState, InformaticaProperties informaticaProperties, InformaticaMarketplaceDetails marketplaceDetails, InformaticaUserDetails userDetails, InformaticaCompanyDetails companyDetails, LinkOrganization linkOrganization, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InformaticaOrganizationProperties(InformaticaProvisioningState? provisioningState, InformaticaProperties informaticaProperties, InformaticaMarketplaceDetails marketplaceDetails, InformaticaUserDetails userDetails, InformaticaCompanyDetails companyDetails, LinkOrganization linkOrganization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             InformaticaProperties = informaticaProperties;
@@ -66,29 +37,40 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             UserDetails = userDetails;
             CompanyDetails = companyDetails;
             LinkOrganization = linkOrganization;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning State of the resource. </summary>
         public InformaticaProvisioningState? ProvisioningState { get; }
+
         /// <summary> Informatica Organization properties. </summary>
         public InformaticaProperties InformaticaProperties { get; set; }
+
         /// <summary> Marketplace details. </summary>
         public InformaticaMarketplaceDetails MarketplaceDetails { get; set; }
+
         /// <summary> User details. </summary>
         public InformaticaUserDetails UserDetails { get; set; }
+
         /// <summary> Company details. </summary>
         public InformaticaCompanyDetails CompanyDetails { get; set; }
+
         /// <summary> Link Organization. </summary>
         internal LinkOrganization LinkOrganization { get; set; }
+
         /// <summary> Link organization token. </summary>
         public string LinkOrganizationToken
         {
-            get => LinkOrganization is null ? default : LinkOrganization.Token;
+            get
+            {
+                return LinkOrganization is null ? default : LinkOrganization.Token;
+            }
             set
             {
                 if (LinkOrganization is null)
+                {
                     LinkOrganization = new LinkOrganization();
+                }
                 LinkOrganization.Token = value;
             }
         }

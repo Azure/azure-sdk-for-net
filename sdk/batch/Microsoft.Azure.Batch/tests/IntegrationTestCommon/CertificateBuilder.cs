@@ -72,7 +72,11 @@ namespace IntegrationTestCommon
             var stream = new MemoryStream();
             store.Save(stream, password.ToCharArray(), random);
 
+#if NET9_0_OR_GREATER
+            var convertedCertificate = X509CertificateLoader.LoadPkcs12(stream.ToArray(), password, X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
+#else
             var convertedCertificate = new X509Certificate2(stream.ToArray(), password, X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
+#endif
 
             //If password is not empty, generate a PKCS#12 formatted file
             if (!string.IsNullOrEmpty(password))

@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
     /// <summary>
-    /// A Class representing a DatabaseWatcherAlertRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseWatcherAlertRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseWatcherAlertRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseWatcherResource"/> using the GetDatabaseWatcherAlertRule method.
+    /// A class representing a DatabaseWatcherAlertRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseWatcherAlertRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DatabaseWatcherResource"/> using the GetDatabaseWatcherAlertRules method.
     /// </summary>
     public partial class DatabaseWatcherAlertRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatabaseWatcherAlertRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="watcherName"> The watcherName. </param>
-        /// <param name="alertRuleResourceName"> The alertRuleResourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics;
-        private readonly AlertRuleResourcesRestOperations _databaseWatcherAlertRuleAlertRuleResourcesRestClient;
+        private readonly ClientDiagnostics _alertRuleResourcesClientDiagnostics;
+        private readonly AlertRuleResources _alertRuleResourcesRestClient;
         private readonly DatabaseWatcherAlertRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DatabaseWatcher/watchers/alertRuleResources";
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherAlertRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DatabaseWatcherAlertRuleResource for mocking. </summary>
         protected DatabaseWatcherAlertRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherAlertRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherAlertRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseWatcherAlertRuleResource(ArmClient client, DatabaseWatcherAlertRuleData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.DatabaseWatcher
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherAlertRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherAlertRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseWatcherAlertRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string databaseWatcherAlertRuleAlertRuleResourcesApiVersion);
-            _databaseWatcherAlertRuleAlertRuleResourcesRestClient = new AlertRuleResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherAlertRuleAlertRuleResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string databaseWatcherAlertRuleApiVersion);
+            _alertRuleResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
+            _alertRuleResourcesRestClient = new AlertRuleResources(_alertRuleResourcesClientDiagnostics, Pipeline, Endpoint, databaseWatcherAlertRuleApiVersion ?? "2025-01-02");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DatabaseWatcherAlertRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="watcherName"> The watcherName. </param>
+        /// <param name="alertRuleResourceName"> The alertRuleResourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string watcherName, string alertRuleResourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a AlertRuleResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherAlertRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherAlertRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DatabaseWatcherAlertRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Get");
+            using DiagnosticScope scope = _alertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _databaseWatcherAlertRuleAlertRuleResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatabaseWatcherAlertRuleData> response = Response.FromValue(DatabaseWatcherAlertRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatabaseWatcherAlertRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Get a AlertRuleResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherAlertRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherAlertRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseWatcherAlertRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Get");
+            using DiagnosticScope scope = _alertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatabaseWatcherAlertRuleData> response = Response.FromValue(DatabaseWatcherAlertRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatabaseWatcherAlertRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Delete a AlertRuleResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherAlertRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherAlertRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +212,23 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Delete");
+            using DiagnosticScope scope = _alertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _databaseWatcherAlertRuleAlertRuleResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DatabaseWatcherArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DatabaseWatcherArmOperation operation = new DatabaseWatcherArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +242,20 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Delete a AlertRuleResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherAlertRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherAlertRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,16 +263,23 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Delete");
+            using DiagnosticScope scope = _alertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DatabaseWatcherArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DatabaseWatcherArmOperation operation = new DatabaseWatcherArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,23 +290,23 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Create a AlertRuleResource
+        /// Update a DatabaseWatcherAlertRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherAlertRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherAlertRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,16 +318,24 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Update");
+            using DiagnosticScope scope = _alertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _databaseWatcherAlertRuleAlertRuleResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherAlertRuleResource>(Response.FromValue(new DatabaseWatcherAlertRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseWatcherAlertRuleData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatabaseWatcherAlertRuleData> response = Response.FromValue(DatabaseWatcherAlertRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DatabaseWatcherArmOperation<DatabaseWatcherAlertRuleResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherAlertRuleResource>(Response.FromValue(new DatabaseWatcherAlertRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,23 +346,23 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Create a AlertRuleResource
+        /// Update a DatabaseWatcherAlertRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/alertRuleResources/{alertRuleResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherAlertRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherAlertRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,16 +374,24 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _databaseWatcherAlertRuleAlertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Update");
+            using DiagnosticScope scope = _alertRuleResourcesClientDiagnostics.CreateScope("DatabaseWatcherAlertRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _databaseWatcherAlertRuleAlertRuleResourcesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherAlertRuleResource>(Response.FromValue(new DatabaseWatcherAlertRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseWatcherAlertRuleData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatabaseWatcherAlertRuleData> response = Response.FromValue(DatabaseWatcherAlertRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DatabaseWatcherArmOperation<DatabaseWatcherAlertRuleResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherAlertRuleResource>(Response.FromValue(new DatabaseWatcherAlertRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -85,9 +85,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="confidentialComputeProperties"> The properties for confidential container group. </param>
         /// <param name="priority"> The priority of the container group. </param>
         /// <param name="identityAcls"> The access control levels of the identities. </param>
+        /// <param name="containerGroupProfile"> The reference container group profile properties. </param>
+        /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
+        /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupProvisioningState? containerGroupProvisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupProvisioningState? containerGroupProvisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ContainerGroupProvisioningState = containerGroupProvisioningState;
@@ -109,6 +112,9 @@ namespace Azure.ResourceManager.ContainerInstance
             ConfidentialComputeProperties = confidentialComputeProperties;
             Priority = priority;
             IdentityAcls = identityAcls;
+            ContainerGroupProfile = containerGroupProfile;
+            StandbyPoolProfile = standbyPoolProfile;
+            IsCreatedFromStandbyPool = isCreatedFromStandbyPool;
             Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The IP address type of the container group. </summary>
         public ContainerGroupIPAddress IPAddress { get; set; }
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType ContainerGroupOSType { get; set; }
+        public ContainerInstanceOperatingSystemType? ContainerGroupOSType { get; set; }
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerVolume> Volumes { get; }
         /// <summary> The instance view of the container group. Only valid in response. </summary>
@@ -188,6 +194,12 @@ namespace Azure.ResourceManager.ContainerInstance
         public ContainerGroupPriority? Priority { get; set; }
         /// <summary> The access control levels of the identities. </summary>
         public ContainerGroupIdentityAccessControlLevels IdentityAcls { get; set; }
+        /// <summary> The reference container group profile properties. </summary>
+        public ContainerGroupProfileReferenceDefinition ContainerGroupProfile { get; set; }
+        /// <summary> The reference standby pool profile properties. </summary>
+        public StandbyPoolProfileDefinition StandbyPoolProfile { get; set; }
+        /// <summary> The flag to determine whether the container group is created from standby pool. </summary>
+        public bool? IsCreatedFromStandbyPool { get; }
         /// <summary> The zones for the container group. </summary>
         public IList<string> Zones { get; }
     }

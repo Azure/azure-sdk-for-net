@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WeightsAndBiases;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableWeightsAndBiasesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableWeightsAndBiasesResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableWeightsAndBiasesResourceGroupResource for mocking. </summary>
         protected MockableWeightsAndBiasesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWeightsAndBiasesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableWeightsAndBiasesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWeightsAndBiasesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of WeightsAndBiasesInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WeightsAndBiasesInstanceResources and their operations over a WeightsAndBiasesInstanceResource. </returns>
+        /// <summary> Gets a collection of WeightsAndBiasesInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of WeightsAndBiasesInstances and their operations over a WeightsAndBiasesInstanceResource. </returns>
         public virtual WeightsAndBiasesInstanceCollection GetWeightsAndBiasesInstances()
         {
             return GetCachedClient(client => new WeightsAndBiasesInstanceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<WeightsAndBiasesInstanceResource>> GetWeightsAndBiasesInstanceAsync(string instancename, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
+
             return await GetWeightsAndBiasesInstances().GetAsync(instancename, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         [ForwardsClientCalls]
         public virtual Response<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstance(string instancename, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
+
             return GetWeightsAndBiasesInstances().Get(instancename, cancellationToken);
         }
     }

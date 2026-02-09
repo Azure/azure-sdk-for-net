@@ -14,6 +14,7 @@ using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -73,10 +74,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 {
                     return new TestAsyncPageable<BlobItem>(_blobItems);
                 });
+            _blobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    return new TestAsyncPageable<BlobItem>(_blobItems);
+                });
             _secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                  .Returns(() =>
                  {
                      return new TestAsyncPageable<BlobItem>(_secondBlobItems);
+                 });
+            _secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(_secondBlobItems);
+                 });
+            _logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(new List<BlobItem>());
                  });
             _logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                  .Returns(() =>
@@ -291,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // delay slightly so we guarantee a later timestamp
             await Task.Delay(10);
 
-            await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
+            await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTimeOffset.UtcNow);
             await product.RegisterAsync(_blobClientMock.Object, container, executor, CancellationToken.None);
 
             // delay slightly so we guarantee a later timestamp
@@ -301,6 +317,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems));
 
             RunExecuterWithExpectedBlobs(expectedNames, product, executor);
+        }
+
+        [Test]
+        public async Task RegisterAsync_HandlesPermissionErrors()
+        {
+            List<BlobErrorCode> permissionErrors = new List<BlobErrorCode>
+            {
+                BlobErrorCode.AuthorizationPermissionMismatch,
+                BlobErrorCode.InsufficientAccountPermissions,
+                BlobErrorCode.AuthorizationFailure
+            };
+
+            LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
+            string accountName = "fakeaccount";
+            foreach (BlobErrorCode errorCode in permissionErrors)
+            {
+                Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/");
+                Mock<BlobServiceClient> mockServiceClient = new Mock<BlobServiceClient>(uri, null);
+
+                TestBlobScanInfoManager scanInfoManager = new TestBlobScanInfoManager();
+                IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(scanInfoManager, _exceptionHandler, _logger);
+
+                // Setup GetPropertiesAsync to succeed
+                mockServiceClient.Setup(x => x.Uri).Returns(uri);
+                mockServiceClient.Setup(x => x.AccountName).Returns(accountName);
+                mockServiceClient.Setup(x => x.GetBlobContainerClient("fakecontainer")).Returns(_blobContainerMock.Object);
+                mockServiceClient.Setup(x => x.GetBlobContainerClient("fakecontainer2")).Returns(_secondBlobContainerMock.Object);
+                mockServiceClient.Setup(x => x.GetBlobContainerClient("$logs")).Returns(_logsContainerMock.Object);
+                mockServiceClient
+                    .Setup(x => x.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(_serviceProperties, default));
+
+                // Setup SetPropertiesAsync to throw a RequestFailedException with your error code
+                mockServiceClient
+                    .Setup(x => x.SetPropertiesAsync(
+                        It.IsAny<BlobServiceProperties>(),
+                        It.IsAny<CancellationToken>()))
+                    .ThrowsAsync(new RequestFailedException(status: 403, message: "This request is not authorized to perform this operation using this permission.", errorCode: errorCode.ToString(), default));
+
+                // Create a few blobs.
+                for (int i = 0; i < 5; i++)
+                {
+                    CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems);
+                }
+
+                await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
+                await product.RegisterAsync(mockServiceClient.Object, _blobContainerMock.Object, executor, CancellationToken.None);
+
+                var logMessages = _loggerProvider.GetAllLogMessages();
+                Assert.IsTrue(logMessages.Any(m => m.EventId.Name == "LoggingNotEnabledOnTargetAccount"
+                    || m.FormattedMessage.Contains("LoggingNotEnabledOnTargetAccount")));
+            }
         }
 
         [Test]
@@ -355,7 +423,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             int testScanBlobLimitPerPoll = 6;
 
             // we'll introduce multiple errors to make sure we take the earliest timestamp
-            DateTime earliestErrorTime = DateTime.UtcNow;
+            DateTimeOffset earliestErrorTime = DateTimeOffset.UtcNow.AddHours(-1);
 
             var container = _blobContainerMock.Object;
 
@@ -388,11 +456,96 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             RunExecuteWithMultiPollingInterval(expectedNames, product, executor, testScanBlobLimitPerPoll);
 
-            DateTime? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
+            DateTimeOffset? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
             Assert.True(storedTime < earliestErrorTime);
             Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
             _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
+        }
+
+        [Test]
+        public async Task ExecuteAsync_PollNewBlobsAsync_ContinuationTokenUpdatedBlobs()
+        {
+            // Arrange
+            int testScanBlobLimitPerPoll = 3;
+            IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
+            LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
+            typeof(ScanBlobScanLogHybridPollingStrategy)
+                   .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
+                   .SetValue(product, testScanBlobLimitPerPoll);
+
+            // Setup container to have multiple GetBlobsAsync calls to simulate continuation tokens
+            Uri uri = new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer2");
+            Mock<BlobContainerClient> containerMock = new Mock<BlobContainerClient>(uri, null);
+            containerMock.Setup(x => x.Uri).Returns(uri);
+            containerMock.Setup(x => x.Name).Returns(ContainerName);
+            containerMock.Setup(x => x.AccountName).Returns(AccountName);
+
+            // Create first page of blobs to list from
+            List<BlobItem> blobItems = new List<BlobItem>();
+            List<string> expectedNames = new List<string>();
+            for (int i = 0; i < 5; i++)
+            {
+                DateTimeOffset lastModified = DateTimeOffset.UtcNow.AddMinutes(-10 * i);
+                expectedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItems, lastModified: lastModified));
+            }
+            // Create second page
+            List<BlobItem> blobItemsPage2 = new List<BlobItem>();
+            for (int i = 0; i < 3; i++)
+            {
+                DateTimeOffset lastModified = DateTimeOffset.UtcNow.AddMinutes(-5 * i);
+                expectedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItemsPage2, lastModified: lastModified));
+            }
+
+            // Add at least one blob that has a LastModifiedTime that goes beyond the start time of polling
+            DateTimeOffset lastModifiedAfterStartPolling = DateTimeOffset.UtcNow.AddSeconds(5);
+            string blobNameWithLmtAfterStartedPolling = CreateBlobAndUploadToContainer(containerMock, blobItemsPage2, lastModified: lastModifiedAfterStartPolling);
+
+            // Update all the blobs in the second listing, that way they get detected again in the second polling
+            List<BlobItem> blobItemsUpdated = new List<BlobItem>();
+            List<string> secondSetExpectedNames = new List<string>();
+            for (int i = 0; i < 4; i++)
+            {
+                // Create LastModified to be after the LMT of the blob that was beyond the start of the polling time to test if blobs created after that time will also be detected
+                secondSetExpectedNames.Add(CreateBlobAndUploadToContainer(containerMock, blobItemsUpdated, lastModified: lastModifiedAfterStartPolling.AddSeconds(-2)));
+            }
+            // Add blob with LMT after polling started to the second polling expected names.
+            secondSetExpectedNames.Add(blobNameWithLmtAfterStartedPolling);
+
+            // Set up GetBlobsAsync to return pages with continuation token for each page, but not at the end of each polling
+            containerMock.SetupSequence(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                // First polling
+                .Returns(() =>
+                {
+                    return new TestAsyncPageableWithContinuationToken(blobItems, true);
+                })
+                .Returns(() =>
+                {
+                    return new TestAsyncPageableWithContinuationToken(blobItemsPage2, false);
+                })
+                // Second polling
+                .Returns(() =>
+                {
+                    return new TestAsyncPageableWithContinuationToken(blobItemsUpdated, true);
+                })
+                .Returns(() =>
+                {
+                    return new TestAsyncPageableWithContinuationToken(blobItemsPage2, false);
+                });
+
+            // Register the container to initialize _scanInfo
+            await product.RegisterAsync(_blobClientMock.Object, containerMock.Object, executor, CancellationToken.None);
+
+            // Act / Assert - First Polling
+            RunExecuteWithMultiPollingInterval(expectedNames, product, executor, blobItems.Count);
+
+            // Wait 5 seconds to ensure that the blob with LMT after polling started is detected as a new blob.
+            await Task.Delay(TimeSpan.FromSeconds(5));
+
+            // Act / Assert - Second Polling
+            // We expect all the blobs we updated above to be detected and the blob that was created after the first polling started that wasn't detected
+            // to be now detected in this polling.
+            RunExecuteWithMultiPollingInterval(secondSetExpectedNames, product, executor, blobItemsUpdated.Count);
         }
 
         private void RunExecuterWithExpectedBlobsInternal(IDictionary<string, int> blobNameMap, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor, int expectedCount)
@@ -518,23 +671,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         private class TestBlobScanInfoManager : IBlobScanInfoManager
         {
-            private IDictionary<string, IDictionary<string, DateTime>> _latestScans;
+            private IDictionary<string, IDictionary<string, DateTimeOffset>> _latestScans;
 
             public TestBlobScanInfoManager()
             {
-                _latestScans = new Dictionary<string, IDictionary<string, DateTime>>();
+                _latestScans = new Dictionary<string, IDictionary<string, DateTimeOffset>>();
                 UpdateCounts = new Dictionary<string, IDictionary<string, int>>();
             }
 
             public IDictionary<string, IDictionary<string, int>> UpdateCounts { get; private set; }
 
-            public Task<DateTime?> LoadLatestScanAsync(string storageAccountName, string containerName)
+            public Task<DateTimeOffset?> LoadLatestScanAsync(string storageAccountName, string containerName)
             {
-                DateTime? value = null;
-                IDictionary<string, DateTime> accounts;
+                DateTimeOffset? value = null;
+                IDictionary<string, DateTimeOffset> accounts;
                 if (_latestScans.TryGetValue(storageAccountName, out accounts))
                 {
-                    DateTime latestScan;
+                    DateTimeOffset latestScan;
                     if (accounts.TryGetValue(containerName, out latestScan))
                     {
                         value = latestScan;
@@ -544,20 +697,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 return Task.FromResult(value);
             }
 
-            public Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTime latestScan)
+            public Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTimeOffset latestScan)
             {
                 SetScanInfo(storageAccountName, containerName, latestScan);
                 IncrementCount(storageAccountName, containerName);
                 return Task.FromResult(0);
             }
 
-            public void SetScanInfo(string storageAccountName, string containerName, DateTime latestScan)
+            public void SetScanInfo(string storageAccountName, string containerName, DateTimeOffset latestScan)
             {
-                IDictionary<string, DateTime> containers;
+                IDictionary<string, DateTimeOffset> containers;
 
                 if (!_latestScans.TryGetValue(storageAccountName, out containers))
                 {
-                    _latestScans[storageAccountName] = new Dictionary<string, DateTime>();
+                    _latestScans[storageAccountName] = new Dictionary<string, DateTimeOffset>();
                     containers = _latestScans[storageAccountName];
                 }
 

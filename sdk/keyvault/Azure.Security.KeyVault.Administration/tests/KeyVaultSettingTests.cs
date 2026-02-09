@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [Test]
         public void AsBooleanInvalidTypeThrows()
         {
-            KeyVaultSetting setting = new("test", new KeyVaultSettingType("invalid"), "false", new Dictionary<string, BinaryData>());
+            KeyVaultSetting setting = new("test", "false", new KeyVaultSettingType("invalid"), new Dictionary<string, BinaryData>());
             Assert.That(setting.Name, Is.EqualTo("test"));
             Assert.That(setting.SettingType.ToString(), Is.EqualTo("invalid"));
             Assert.That(setting.Value.ToString(), Is.EqualTo("false"));
@@ -57,14 +57,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [Test]
         public void AsBooleanInvalidValueThrows()
         {
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => new KeyVaultSetting("test", KeyVaultSettingType.Boolean, "invalid", new Dictionary<string, BinaryData>()).Value.AsBoolean());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => new KeyVaultSetting("test", "invalid", KeyVaultSettingType.Boolean, new Dictionary<string, BinaryData>()).Value.AsBoolean());
             Assert.That(ex.Message, Is.EqualTo("Cannot normalize the setting as boolean. Use 'KeyVaultSetting.Value.ToString()' for a textual representation of the setting."));
         }
 
         [Test]
         public void NewStringNullThrows()
         {
-            Assert.Throws<ArgumentNullException>(() => new KeyVaultSetting("test", new KeyVaultSettingType("string"), null, new Dictionary<string, BinaryData>()));
+            Assert.Throws<ArgumentNullException>(() => new KeyVaultSetting("test", null, new KeyVaultSettingType("string"), new Dictionary<string, BinaryData>()));
         }
     }
 }

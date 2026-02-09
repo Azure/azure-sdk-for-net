@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A Class representing an ElasticSanPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanPrivateEndpointConnectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource"/> using the GetElasticSanPrivateEndpointConnection method.
+    /// A class representing a ElasticSanPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ElasticSanPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource"/> using the GetElasticSanPrivateEndpointConnections method.
     /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ElasticSanPrivateEndpointConnectionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="elasticSanName"> The elasticSanName. </param>
-        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string privateEndpointConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
         private readonly ElasticSanPrivateEndpointConnectionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticSanPrivateEndpointConnectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionResource for mocking. </summary>
         protected ElasticSanPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticSanPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanPrivateEndpointConnectionResource(ArmClient client, ElasticSanPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.ElasticSan
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticSanPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticSanPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-            _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string elasticSanPrivateEndpointConnectionApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, elasticSanPrivateEndpointConnectionApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ElasticSanPrivateEndpointConnectionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string privateEndpointConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the specified private endpoint connection associated with the Elastic San
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSanPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticSanPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticSanPrivateEndpointConnectionData> response = Response.FromValue(ElasticSanPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticSanPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.ElasticSan
         /// Gets the specified private endpoint connection associated with the Elastic San
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSanPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticSanPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticSanPrivateEndpointConnectionData> response = Response.FromValue(ElasticSanPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticSanPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// Deletes the specified private endpoint connection associated with the Elastic San
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSanPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation(_elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticSanArmOperation operation = new ElasticSanArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// Deletes the specified private endpoint connection associated with the Elastic San
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSanPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticSanArmOperation(_elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticSanArmOperation operation = new ElasticSanArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary>
-        /// Update the state of specified private endpoint connection associated with the Elastic San
+        /// Update a ElasticSanPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSanPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource>(new ElasticSanPrivateEndpointConnectionOperationSource(Client), _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource> operation = new ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource>(
+                    new ElasticSanPrivateEndpointConnectionOperationSource(Client),
+                    _privateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary>
-        /// Update the state of specified private endpoint connection associated with the Elastic San
+        /// Update a ElasticSanPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSanPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSanPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("ElasticSanPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource>(new ElasticSanPrivateEndpointConnectionOperationSource(Client), _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource> operation = new ElasticSanArmOperation<ElasticSanPrivateEndpointConnectionResource>(
+                    new ElasticSanPrivateEndpointConnectionOperationSource(Client),
+                    _privateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

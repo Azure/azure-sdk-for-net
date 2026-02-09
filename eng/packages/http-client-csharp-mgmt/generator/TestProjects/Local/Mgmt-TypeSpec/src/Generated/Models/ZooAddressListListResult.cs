@@ -8,12 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Resources.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    internal partial class ZooAddressListListResult
+    public partial class ZooAddressListListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -37,9 +38,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The ZooAddress items on this page. </summary>
+        [WirePath("value")]
         public IList<SubResource> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

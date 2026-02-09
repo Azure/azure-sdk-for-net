@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PineconeVectorDB
 {
+    /// <summary></summary>
     public partial class PineconeVectorDBOrganizationResource : IJsonModel<PineconeVectorDBOrganizationData>
     {
-        private static PineconeVectorDBOrganizationData s_dataDeserializationInstance;
-        private static PineconeVectorDBOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PineconeVectorDBOrganizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PineconeVectorDBOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PineconeVectorDBOrganizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PineconeVectorDBOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PineconeVectorDBOrganizationData>)Data).Write(writer, options);
 
-        PineconeVectorDBOrganizationData IJsonModel<PineconeVectorDBOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PineconeVectorDBOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PineconeVectorDBOrganizationData IJsonModel<PineconeVectorDBOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PineconeVectorDBOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PineconeVectorDBOrganizationData>(Data, options, AzureResourceManagerPineconeVectorDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PineconeVectorDBOrganizationData IPersistableModel<PineconeVectorDBOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(data, options, AzureResourceManagerPineconeVectorDBContext.Default);
 
-        string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PineconeVectorDBOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

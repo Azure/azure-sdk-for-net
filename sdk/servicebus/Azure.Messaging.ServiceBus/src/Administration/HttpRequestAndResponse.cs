@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         internal void ThrowIfRequestFailed(Request request, Response response)
         {
-            if ((response.Status >= 200) && (response.Status < 400))
+            if (response.Status is >= 200 and < 400)
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 scope = Constants.DefaultScope;
             }
-            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
+            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext([scope]), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 

@@ -77,18 +77,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the application rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Description of the rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> List of source IP addresses for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> Array of ApplicationRuleProtocols. </summary>
+        [WirePath("protocols")]
         public IList<AzureFirewallApplicationRuleProtocol> Protocols { get; }
         /// <summary> List of FQDNs for this rule. </summary>
+        [WirePath("targetFqdns")]
         public IList<string> TargetFqdns { get; }
         /// <summary> List of FQDN Tags for this rule. </summary>
+        [WirePath("fqdnTags")]
         public IList<string> FqdnTags { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
     }
 }

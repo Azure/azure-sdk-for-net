@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -35,23 +36,27 @@ namespace Samples
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
                 if ((response is null))
                 {
                     yield break;
                 }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in responseWithType.Cats)
+                foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
-                nextPage = (responseWithType.NextCat != null) ? new global::System.Uri(responseWithType.NextCat) : null;
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                string nextPageString = result.NextCat;
+                if (string.IsNullOrEmpty(nextPageString))
+                {
+                    yield break;
+                }
+                nextPage = new global::System.Uri(nextPageString);
             }
-            while ((nextPage != null));
         }
 
         /// <summary> Get next page. </summary>

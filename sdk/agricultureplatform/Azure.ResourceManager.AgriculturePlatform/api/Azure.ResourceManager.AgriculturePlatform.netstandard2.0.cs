@@ -32,7 +32,10 @@ namespace Azure.ResourceManager.AgriculturePlatform
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.AgricultureServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.AgricultureServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.AgricultureServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.AgricultureServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.AgricultureServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -110,12 +113,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public static Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState left, Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState left, Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -127,7 +129,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSkuTier? Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -151,7 +156,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public Azure.Core.ResourceIdentifier RedisCacheResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -165,7 +173,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -178,7 +189,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig Config { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap> DataConnectorCredentials { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap> InstalledSolutions { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -193,7 +207,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap> InstalledSolutions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -209,7 +226,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public string PlanId { get { throw null; } set { } }
         public string SaasSubscriptionId { get { throw null; } set { } }
         public string SaasSubscriptionName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -220,6 +240,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
     {
         public static Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig AgricultureServiceConfig(string instanceUri = null, string version = null, Azure.Core.ResourceIdentifier appServiceResourceId = null, Azure.Core.ResourceIdentifier cosmosDBResourceId = null, Azure.Core.ResourceIdentifier storageAccountResourceId = null, Azure.Core.ResourceIdentifier keyVaultResourceId = null, Azure.Core.ResourceIdentifier redisCacheResourceId = null) { throw null; }
         public static Azure.ResourceManager.AgriculturePlatform.AgricultureServiceData AgricultureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku sku = null) { throw null; }
+        public static Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch AgricultureServicePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatchProperties AgricultureServicePatchProperties(Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig config = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap> dataConnectorCredentials = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap> installedSolutions = null) { throw null; }
         public static Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceProperties AgricultureServiceProperties(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState? provisioningState = default(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState?), Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServiceConfig config = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> managedOnBehalfOfMoboBrokerResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap> dataConnectorCredentials = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap> installedSolutions = null) { throw null; }
         public static Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult AvailableAgriSolutionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution> solutions = null) { throw null; }
         public static Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution DataManagerForAgricultureSolution(string partnerId = null, string solutionId = null, string partnerTenantId = null, System.Collections.Generic.IEnumerable<string> dataAccessScopes = null, Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails marketPlaceOfferDetails = null, string saasApplicationId = null, string accessAzureDataManagerForAgricultureApplicationId = null, string accessAzureDataManagerForAgricultureApplicationName = null, bool isValidateInput = false) { throw null; }
@@ -234,20 +256,22 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public static Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind ApiKeyAuthCredentials { get { throw null; } }
         public static Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind OAuthClientCredentials { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind left, Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind left, Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AvailableAgriSolutionListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult>
     {
         internal AvailableAgriSolutionListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution> Solutions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution> Solutions { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.AvailableAgriSolutionListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -259,7 +283,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public DataConnectorCredentialMap(string key, Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials value) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentialMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -274,7 +301,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public string KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind? Kind { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.DataConnectorCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -286,14 +316,17 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         internal DataManagerForAgricultureSolution() { }
         public string AccessAzureDataManagerForAgricultureApplicationId { get { throw null; } }
         public string AccessAzureDataManagerForAgricultureApplicationName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DataAccessScopes { get { throw null; } }
+        public System.Collections.Generic.IList<string> DataAccessScopes { get { throw null; } }
         public bool IsValidateInput { get { throw null; } }
         public Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails MarketPlaceOfferDetails { get { throw null; } }
         public string PartnerId { get { throw null; } }
         public string PartnerTenantId { get { throw null; } }
         public string SaasApplicationId { get { throw null; } }
         public string SolutionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.DataManagerForAgricultureSolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -305,7 +338,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public InstalledSolutionMap(string key, Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution value) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.AgriculturePlatform.Models.AgricultureSolution Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.InstalledSolutionMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -317,7 +353,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         internal MarketPlaceOfferDetails() { }
         public string PublisherId { get { throw null; } }
         public string SaasOfferId { get { throw null; } }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgriculturePlatform.Models.MarketPlaceOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -135,7 +135,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = GetJob(jobName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetJob(jobName, cancellationToken.ToRequestContext());
             return Response.FromValue((DeidentificationJob)result, result);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = await GetJobAsync(jobName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DeidentificationJob)result, result);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Health.Deidentification
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Operation<BinaryData> result = DeidentifyDocuments(waitUntil, jobName, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Operation<BinaryData> result = DeidentifyDocuments(waitUntil, jobName, resource, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (DeidentificationJob)response, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments");
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Health.Deidentification
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Operation<BinaryData> result = await DeidentifyDocumentsAsync(waitUntil, jobName, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Operation<BinaryData> result = await DeidentifyDocumentsAsync(waitUntil, jobName, resource, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (DeidentificationJob)response, ClientDiagnostics, "DeidentificationClient.DeidentifyDocumentsAsync");
         }
 
@@ -254,17 +254,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobsInternal(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
         }
 
         /// <summary>
@@ -282,17 +272,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobsInternalAsync(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -302,7 +282,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationJob> GetJobsInternal(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -312,7 +292,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalAsync(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -331,17 +311,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobDocumentsInternal(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
         }
 
         /// <summary>
@@ -360,17 +330,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -381,7 +341,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -392,14 +352,12 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
         /// [Protocol Method] Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// <list type="bullet">
         /// <item>
@@ -433,9 +391,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// [Protocol Method] Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// <list type="bullet">
         /// <item>
@@ -469,9 +425,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
@@ -483,15 +437,13 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = CancelJob(jobName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CancelJob(jobName, cancellationToken.ToRequestContext());
             return Response.FromValue((DeidentificationJob)result, result);
         }
 
         /// <summary>
         /// Cancels a job that is in progress. 
-        /// 
         /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
-        /// 
         /// If the job is already complete, this will have no effect. 
         /// </summary>
         /// <param name="jobName"> The name of a job. </param>
@@ -503,7 +455,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            Response result = await CancelJobAsync(jobName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CancelJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DeidentificationJob)result, result);
         }
 
@@ -581,7 +533,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return DeleteJob(jobName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteJob(jobName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Removes the record of the job from the service. Does not delete any documents. </summary>
@@ -594,7 +546,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return await DeleteJobAsync(jobName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteJobAsync(jobName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -668,7 +620,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Response result = DeidentifyText(content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = DeidentifyText(content, cancellationToken.ToRequestContext());
             return Response.FromValue((DeidentificationResult)result, result);
         }
 
@@ -681,7 +633,7 @@ namespace Azure.Health.Deidentification
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Response result = await DeidentifyTextAsync(content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await DeidentifyTextAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DeidentificationResult)result, result);
         }
     }

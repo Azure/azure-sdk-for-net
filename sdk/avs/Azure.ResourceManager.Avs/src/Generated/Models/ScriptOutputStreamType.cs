@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct ScriptOutputStreamType : IEquatable<ScriptOutputStreamType>
     {
         private readonly string _value;
+        /// <summary> is information. </summary>
+        private const string InformationValue = "Information";
+        /// <summary> is warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> is output. </summary>
+        private const string OutputValue = "Output";
+        /// <summary> is error. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="ScriptOutputStreamType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptOutputStreamType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InformationValue = "Information";
-        private const string WarningValue = "Warning";
-        private const string OutputValue = "Output";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> is information. </summary>
         public static ScriptOutputStreamType Information { get; } = new ScriptOutputStreamType(InformationValue);
+
         /// <summary> is warning. </summary>
         public static ScriptOutputStreamType Warning { get; } = new ScriptOutputStreamType(WarningValue);
+
         /// <summary> is output. </summary>
         public static ScriptOutputStreamType Output { get; } = new ScriptOutputStreamType(OutputValue);
+
         /// <summary> is error. </summary>
         public static ScriptOutputStreamType Error { get; } = new ScriptOutputStreamType(ErrorValue);
+
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScriptOutputStreamType left, ScriptOutputStreamType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScriptOutputStreamType left, ScriptOutputStreamType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptOutputStreamType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScriptOutputStreamType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScriptOutputStreamType(string value) => new ScriptOutputStreamType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScriptOutputStreamType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScriptOutputStreamType?(string value) => value == null ? null : new ScriptOutputStreamType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScriptOutputStreamType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScriptOutputStreamType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

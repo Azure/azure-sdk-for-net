@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     public readonly partial struct DellFileSystemEncryptionIdentityType : IEquatable<DellFileSystemEncryptionIdentityType>
     {
         private readonly string _value;
+        /// <summary> System Assigned Managed identity. </summary>
+        private const string SystemAssignedValue = "SystemAssigned";
+        /// <summary> User Assigned managed identity. </summary>
+        private const string UserAssignedValue = "UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DellFileSystemEncryptionIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedValue = "SystemAssigned";
-        private const string UserAssignedValue = "UserAssigned";
+            _value = value;
+        }
 
         /// <summary> System Assigned Managed identity. </summary>
         public static DellFileSystemEncryptionIdentityType SystemAssigned { get; } = new DellFileSystemEncryptionIdentityType(SystemAssignedValue);
+
         /// <summary> User Assigned managed identity. </summary>
         public static DellFileSystemEncryptionIdentityType UserAssigned { get; } = new DellFileSystemEncryptionIdentityType(UserAssignedValue);
+
         /// <summary> Determines if two <see cref="DellFileSystemEncryptionIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DellFileSystemEncryptionIdentityType left, DellFileSystemEncryptionIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DellFileSystemEncryptionIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DellFileSystemEncryptionIdentityType left, DellFileSystemEncryptionIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DellFileSystemEncryptionIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DellFileSystemEncryptionIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DellFileSystemEncryptionIdentityType(string value) => new DellFileSystemEncryptionIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DellFileSystemEncryptionIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DellFileSystemEncryptionIdentityType?(string value) => value == null ? null : new DellFileSystemEncryptionIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DellFileSystemEncryptionIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DellFileSystemEncryptionIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

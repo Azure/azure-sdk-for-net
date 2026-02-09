@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -176,6 +178,143 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RulesEngineMatchVariable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rulesEngineMatchVariable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  rulesEngineMatchVariable: ");
+                builder.AppendLine($"'{RulesEngineMatchVariable.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Selector), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  selector: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Selector))
+                {
+                    builder.Append("  selector: ");
+                    if (Selector.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Selector}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Selector}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RulesEngineOperator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rulesEngineOperator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  rulesEngineOperator: ");
+                builder.AppendLine($"'{RulesEngineOperator.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNegateCondition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  negateCondition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsNegateCondition))
+                {
+                    builder.Append("  negateCondition: ");
+                    var boolValue = IsNegateCondition.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RulesEngineMatchValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rulesEngineMatchValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RulesEngineMatchValue))
+                {
+                    if (RulesEngineMatchValue.Any())
+                    {
+                        builder.Append("  rulesEngineMatchValue: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RulesEngineMatchValue)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Transforms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transforms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Transforms))
+                {
+                    if (Transforms.Any())
+                    {
+                        builder.Append("  transforms: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Transforms)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RulesEngineMatchCondition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
@@ -184,6 +323,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support writing '{options.Format}' format.");
             }

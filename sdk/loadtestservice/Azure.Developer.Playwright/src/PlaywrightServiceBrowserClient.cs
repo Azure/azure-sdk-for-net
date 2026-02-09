@@ -10,13 +10,14 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Developer.Playwright;
 
 /// <summary>
-/// Sets up and manages the Playwright service browser client.
+/// Sets up and manages the Playwright Workspaces browser client.
 /// </summary>
 public class PlaywrightServiceBrowserClient : IDisposable
 {
@@ -27,6 +28,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     internal readonly ClientUtilities _clientUtility;
     internal readonly ILogger? _logger;
     internal readonly IPlaywrightVersion _playwrightVersion;
+    internal readonly CIProvider _ciProvider;
+    internal TestRunUpdateClient? _testRunUpdateClient;
+
     internal Timer? RotationTimer { get; set; }
 
     /// <summary>
@@ -56,6 +60,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         jsonWebTokenHandler: null,
         logger: null,
         clientUtility: null,
+        ciProvider: null,
         options: options
     )
     {
@@ -73,6 +78,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         jsonWebTokenHandler: null,
         logger: null,
         clientUtility: null,
+        ciProvider: null,
         options: options,
         tokenCredential: credential
     )
@@ -80,15 +86,17 @@ public class PlaywrightServiceBrowserClient : IDisposable
         // No-op
     }
 
-    internal PlaywrightServiceBrowserClient(IEnvironment? environment = null, IEntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, ILogger? logger = null, ClientUtilities? clientUtility = null, PlaywrightServiceBrowserClientOptions? options = null, TokenCredential? tokenCredential = null, IPlaywrightVersion? playwrightVersion = null)
+    internal PlaywrightServiceBrowserClient(IEnvironment? environment = null, IEntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, CIProvider? ciProvider = null, ILogger? logger = null, ClientUtilities? clientUtility = null, PlaywrightServiceBrowserClientOptions? options = null, TokenCredential? tokenCredential = null, IPlaywrightVersion? playwrightVersion = null, TestRunUpdateClient? testRunUpdateClient = null)
     {
         _environment = environment ?? new EnvironmentHandler();
-        _clientUtility = clientUtility ?? new ClientUtilities(_environment);
-        _options = options ?? new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview, environment: _environment, clientUtility: _clientUtility);
+        _playwrightVersion = playwrightVersion ?? new PlaywrightVersion();
+        _clientUtility = clientUtility ?? new ClientUtilities(_environment, playwrightVersion: _playwrightVersion);
+        _ciProvider = ciProvider ?? new CIProvider(_environment);
+        _options = options ?? new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01, environment: _environment, clientUtility: _clientUtility);
         _logger = logger ?? _options.Logger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(jsonWebTokenHandler: _jsonWebTokenHandler, logger: _logger, environment: _environment, tokenCredential: tokenCredential);
-        _playwrightVersion = playwrightVersion ?? new PlaywrightVersion();
+        _testRunUpdateClient = testRunUpdateClient;
         _playwrightVersion.ValidatePlaywrightVersion();
         // Call getters to set default environment variables if not already set before
         _ = _options.OS;
@@ -96,11 +104,10 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _ = _options.RunName;
         _ = _options.ExposeNetwork;
         _ = _options.ServiceAuth;
-        _ = _options.UseCloudHostedBrowsers;
     }
 
     /// <summary>
-    /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
+    /// Gets the connect options for connecting to Playwright Workspaces's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
     /// <param name="os">The operating system.</param>
@@ -112,14 +119,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-        if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
-        {
-            if (!useCloudHostedBrowsers)
-            {
-                throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
-            }
-        }
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
         string _serviceOs = Uri.EscapeDataString(ClientUtilities.GetServiceCompatibleOs(os) ?? ClientUtilities.GetServiceCompatibleOs(_options.OS)!);
@@ -154,7 +153,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
-    /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
+    /// Gets the connect options for connecting to Playwright Workspaces's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
     /// <param name="os">The operating system.</param>
@@ -166,14 +165,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual ConnectOptions<T> GetConnectOptions<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-        if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
-        {
-            if (!useCloudHostedBrowsers)
-            {
-                throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
-            }
-        }
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
         string _serviceOs = Uri.EscapeDataString(ClientUtilities.GetServiceCompatibleOs(os) ?? ClientUtilities.GetServiceCompatibleOs(_options.OS)!);
@@ -219,24 +210,19 @@ public class PlaywrightServiceBrowserClient : IDisposable
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
-        if (!_options.UseCloudHostedBrowsers)
-        {
-            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
-            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
-            return;
-        }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (_options.ServiceAuth == ServiceAuthType.AccessToken)
         {
             _logger?.LogInformation("Auth mechanism is Access Token.");
             _clientUtility.ValidateMptPAT(_options.AuthToken, _options.ServiceEndpoint!);
+            await CreateTestRunPatchCallAsync(_options.AuthToken, cancellationToken).ConfigureAwait(false);
             return;
         }
         _logger?.LogInformation("Auth mechanism is Entra Id.");
         await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
+        string? entraIdToken = _entraLifecycle.GetEntraIdAccessToken();
+        await CreateTestRunPatchCallAsync(entraIdToken, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -251,24 +237,26 @@ public class PlaywrightServiceBrowserClient : IDisposable
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
-        if (!_options.UseCloudHostedBrowsers)
-        {
-            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
-            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
-            return;
-        }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (_options.ServiceAuth == ServiceAuthType.AccessToken)
         {
             _logger?.LogInformation("Auth mechanism is Access Token.");
             _clientUtility.ValidateMptPAT(_options.AuthToken, _options.ServiceEndpoint!);
+            if (!string.IsNullOrEmpty(_options.AuthToken))
+            {
+                CreateTestRunPatchCall(_options.AuthToken);
+            }
+            else
+            {
+                _logger?.LogError("Access token is null or empty");
+            }
             return;
         }
         _logger?.LogInformation("Auth mechanism is Entra Id.");
         _entraLifecycle!.FetchEntraIdAccessToken(cancellationToken);
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
+        string? entraIdToken = _entraLifecycle.GetEntraIdAccessToken();
+        CreateTestRunPatchCall(entraIdToken);
     }
 
     /// <summary>
@@ -289,7 +277,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual void Dispose()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        _logger?.LogInformation("Cleaning up Playwright service resources.");
+        _logger?.LogInformation("Cleaning up Playwright Workspaces resources.");
         RotationTimer?.Dispose();
         GC.SuppressFinalize(this);
     }
@@ -300,6 +288,122 @@ public class PlaywrightServiceBrowserClient : IDisposable
         {
             _logger?.LogInformation("Rotating Entra Id access token.");
             await _entraLifecycle.FetchEntraIdAccessTokenAsync(default).ConfigureAwait(false);
+        }
+    }
+
+      /// <summary>
+    /// Creates a TestRunUpdateClient with configured retry policy
+    /// </summary>
+    /// <param name="endpoint">API endpoint URI</param>
+    /// <returns>Configured TestRunUpdateClient</returns>
+    private static TestRunUpdateClient CreateTestRunUpdateClientWithRetry(Uri endpoint)
+    {
+        var clientOptions = new TestRunUpdateClientOptions();
+        clientOptions.Diagnostics.IsLoggingEnabled = true;
+        clientOptions.Diagnostics.IsTelemetryEnabled = true;
+        clientOptions.Retry.MaxRetries = ServiceClientConstants.s_mAX_RETRIES;
+        clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(ServiceClientConstants.s_iNITIAL_DELAY_MS);
+        clientOptions.Retry.MaxDelay = TimeSpan.FromMilliseconds(ServiceClientConstants.s_mAX_DELAY_MS);
+        return new TestRunUpdateClient(endpoint, clientOptions);
+    }
+
+    /// <summary>
+    /// Sets up the TestRunUpdateClient and performs the PATCH operation to create test run
+    /// </summary>
+    /// <param name="authToken">The authentication token to use</param>
+    /// <param name="cancellationToken">Optional cancellation token</param>
+    /// <returns>A task representing the asynchronous operation</returns>
+    private async Task CreateTestRunPatchCallAsync(string? authToken, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrEmpty(authToken))
+        {
+            _logger?.LogError("Cannot create test run: Auth token is null or empty");
+            return;
+        }
+        string apiUrl = _clientUtility.GetTestRunApiUrl();
+        Uri endpoint = new(apiUrl);
+        _testRunUpdateClient ??= CreateTestRunUpdateClientWithRetry(endpoint);
+        Model.CIInfo cIInfo = _ciProvider.GetCIInfo();
+        Model.RunConfig runConfig = _clientUtility.GetTestRunConfig();
+        var patchBody = new
+        {
+            displayName = _options.RunName,
+            ciConfig = cIInfo,
+            config = runConfig
+        };
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+        };
+        var json = JsonSerializer.Serialize(patchBody, options);
+        var content = RequestContent.Create(BinaryData.FromString(json));
+        try
+        {
+            var workspaceId = _clientUtility.ExtractWorkspaceIdFromEndpoint(_options.ServiceEndpoint!);
+            var testRunId = _options.RunId;
+            Response response = await _testRunUpdateClient.TestRunsAsync(
+                 workspaceId: workspaceId,
+                testRunId: testRunId,
+                content: content,
+                authorization: $"Bearer {authToken}",
+                xCorrelationId: Guid.NewGuid().ToString()
+            ).ConfigureAwait(false);
+            _logger?.LogInformation("Test run created successfully.");
+        }
+        catch (RequestFailedException ex)
+        {
+            _logger?.LogError($"Failed to create the test run in the Playwright Workspaces: {ex.Message}. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.");
+            throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
+        }
+    }
+
+    /// <summary>
+    /// Sets up the TestRunUpdateClient and performs the PATCH operation to create test run (synchronous version)
+    /// </summary>
+    /// <param name="authToken">The authentication token to use</param>
+    private void CreateTestRunPatchCall(string? authToken)
+    {
+        if (string.IsNullOrEmpty(authToken))
+        {
+            _logger?.LogError("Cannot create test run: Auth token is null or empty");
+            return;
+        }
+        string apiUrl = _clientUtility.GetTestRunApiUrl();
+        Uri endpoint = new(apiUrl);
+        _testRunUpdateClient ??= CreateTestRunUpdateClientWithRetry(endpoint);
+        Model.CIInfo cIInfo = _ciProvider.GetCIInfo();
+        Model.RunConfig runConfig = _clientUtility.GetTestRunConfig();
+        var patchBody = new
+        {
+            displayName = _options.RunName,
+            ciConfig = cIInfo,
+            config = runConfig
+        };
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+        };
+        var json = JsonSerializer.Serialize(patchBody, options);
+        var content = RequestContent.Create(BinaryData.FromString(json));
+        try
+        {
+            var workspaceId = _clientUtility.ExtractWorkspaceIdFromEndpoint(_options.ServiceEndpoint!);
+            var testRunId = _options.RunId;
+            Response response = _testRunUpdateClient.TestRuns(
+                workspaceId: workspaceId,
+                testRunId: testRunId,
+                content: content,
+                authorization: $"Bearer {authToken}",
+                xCorrelationId: Guid.NewGuid().ToString()
+            );
+            _logger?.LogInformation("Test run created successfully.");
+        }
+        catch (RequestFailedException ex)
+        {
+            _logger?.LogError($"Failed to create the test run in the Playwright Workspaces: {ex.Message}");
+            throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
 }

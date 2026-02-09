@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.3 (2025-08-07)
+
+### Bugs Fixed
+
+- Added missing long running operation header for Grafana Update operation.
+
+## 1.2.0-beta.2 (2025-08-04)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Grafana` AOT-compatible
 
 ## 1.2.0-beta.1 (2025-06-24)
 

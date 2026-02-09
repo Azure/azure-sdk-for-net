@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.3 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.MachineLearning` AOT-compatible
+
 ## 1.2.2 (2025-03-11)
 
 ### Features Added

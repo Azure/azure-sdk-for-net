@@ -67,6 +67,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddShareServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

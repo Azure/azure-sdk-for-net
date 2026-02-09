@@ -176,6 +176,7 @@ namespace Azure.ResourceManager.TrafficManager
         public long? MaxReturn { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig MonitorConfig { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus? ProfileStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType? RecordType { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -295,9 +296,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType IPv4Address { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType IPv6Address { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType left, Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType (string value) { throw null; }
@@ -343,9 +342,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointAlwaysServeStatus (string value) { throw null; }
@@ -378,9 +375,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus Stopped { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus Unmonitored { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointMonitorStatus (string value) { throw null; }
@@ -396,9 +391,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointStatus (string value) { throw null; }
@@ -465,9 +458,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public TrafficManagerHeatMapType(string value) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType (string value) { throw null; }
@@ -515,9 +506,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol Https { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol Tcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol (string value) { throw null; }
@@ -551,13 +540,28 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus Inactive { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus Online { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficManagerProfileRecordType : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficManagerProfileRecordType(string value) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType A { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType Aaaa { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType Cname { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -569,9 +573,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus (string value) { throw null; }
@@ -651,9 +653,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod Subnet { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod Weighted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod left, Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod (string value) { throw null; }
@@ -669,9 +669,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus (string value) { throw null; }

@@ -897,7 +897,6 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendPath("/multivariate/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

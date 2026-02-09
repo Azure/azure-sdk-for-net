@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Quota
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class GroupQuotaEntityCollection : ArmCollection, IEnumerable<GroupQuotaEntityResource>, IAsyncEnumerable<GroupQuotaEntityResource>
     {
-        private readonly ClientDiagnostics _groupQuotaEntityGroupQuotasClientDiagnostics;
-        private readonly GroupQuotasRestOperations _groupQuotaEntityGroupQuotasRestClient;
+        private readonly ClientDiagnostics _groupQuotasEntitiesClientDiagnostics;
+        private readonly GroupQuotasEntities _groupQuotasEntitiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GroupQuotaEntityCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GroupQuotaEntityCollection for mocking. </summary>
         protected GroupQuotaEntityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GroupQuotaEntityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaEntityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GroupQuotaEntityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaEntityGroupQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaEntityResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GroupQuotaEntityResource.ResourceType, out string groupQuotaEntityGroupQuotasApiVersion);
-            _groupQuotaEntityGroupQuotasRestClient = new GroupQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityGroupQuotasApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(GroupQuotaEntityResource.ResourceType, out string groupQuotaEntityApiVersion);
+            _groupQuotasEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaEntityResource.ResourceType.Namespace, Diagnostics);
+            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagementGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a new GroupQuota for the name passed. A RequestId will be returned by the Service. The status can be polled periodically. The status Async polling is using standards defined at - https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/async-api-reference.md#asynchronous-operations. Use the OperationsStatus URI provided in Azure-AsyncOperation header, the duration will be specified in retry-after header. Once the operation gets to terminal state - Succeeded | Failed, then the URI will change to Get URI and full details can be checked.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,33 @@ namespace Azure.ResourceManager.Quota
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _groupQuotaEntityGroupQuotasRestClient.CreateOrUpdateAsync(Id.Name, groupQuotaName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<GroupQuotaEntityResource>(new GroupQuotaEntityOperationSource(Client), _groupQuotaEntityGroupQuotasClientDiagnostics, Pipeline, _groupQuotaEntityGroupQuotasRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
+                    new GroupQuotaEntityOperationSource(Client),
+                    _groupQuotasEntitiesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +116,16 @@ namespace Azure.ResourceManager.Quota
         /// Creates a new GroupQuota for the name passed. A RequestId will be returned by the Service. The status can be polled periodically. The status Async polling is using standards defined at - https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/async-api-reference.md#asynchronous-operations. Use the OperationsStatus URI provided in Azure-AsyncOperation header, the duration will be specified in retry-after header. Once the operation gets to terminal state - Succeeded | Failed, then the URI will change to Get URI and full details can be checked.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +133,33 @@ namespace Azure.ResourceManager.Quota
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GroupQuotaEntityResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaEntityResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _groupQuotaEntityGroupQuotasRestClient.CreateOrUpdate(Id.Name, groupQuotaName, data, cancellationToken);
-                var operation = new QuotaArmOperation<GroupQuotaEntityResource>(new GroupQuotaEntityOperationSource(Client), _groupQuotaEntityGroupQuotasClientDiagnostics, Pipeline, _groupQuotaEntityGroupQuotasRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
+                    new GroupQuotaEntityOperationSource(Client),
+                    _groupQuotasEntitiesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +173,42 @@ namespace Azure.ResourceManager.Quota
         /// Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<GroupQuotaEntityResource>> GetAsync(string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Get");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaEntityGroupQuotasRestClient.GetAsync(Id.Name, groupQuotaName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GroupQuotaEntityData> response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GroupQuotaEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +222,42 @@ namespace Azure.ResourceManager.Quota
         /// Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<GroupQuotaEntityResource> Get(string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Get");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaEntityGroupQuotasRestClient.Get(Id.Name, groupQuotaName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GroupQuotaEntityData> response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GroupQuotaEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +271,44 @@ namespace Azure.ResourceManager.Quota
         /// Lists GroupQuotas for the scope passed. It will return the GroupQuotas QuotaEntity properties only.The details on group quota can be access from the group quota APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GroupQuotaEntityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GroupQuotaEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GroupQuotaEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaEntityResource(Client, GroupQuotaEntityData.DeserializeGroupQuotaEntityData(e)), _groupQuotaEntityGroupQuotasClientDiagnostics, Pipeline, "GroupQuotaEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
         }
 
         /// <summary>
         /// Lists GroupQuotas for the scope passed. It will return the GroupQuotas QuotaEntity properties only.The details on group quota can be access from the group quota APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +316,61 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="GroupQuotaEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GroupQuotaEntityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaEntityResource(Client, GroupQuotaEntityData.DeserializeGroupQuotaEntityData(e)), _groupQuotaEntityGroupQuotasClientDiagnostics, Pipeline, "GroupQuotaEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Exists");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _groupQuotaEntityGroupQuotasRestClient.GetAsync(Id.Name, groupQuotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GroupQuotaEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GroupQuotaEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +384,50 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Exists");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = _groupQuotaEntityGroupQuotasRestClient.Get(Id.Name, groupQuotaName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GroupQuotaEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GroupQuotaEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +441,54 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<GroupQuotaEntityResource>> GetIfExistsAsync(string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.GetIfExists");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _groupQuotaEntityGroupQuotasRestClient.GetAsync(Id.Name, groupQuotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GroupQuotaEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GroupQuotaEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GroupQuotaEntityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GroupQuotaEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +502,54 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<GroupQuotaEntityResource> GetIfExists(string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
-            using var scope = _groupQuotaEntityGroupQuotasClientDiagnostics.CreateScope("GroupQuotaEntityCollection.GetIfExists");
+            using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _groupQuotaEntityGroupQuotasRestClient.Get(Id.Name, groupQuotaName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GroupQuotaEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GroupQuotaEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GroupQuotaEntityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GroupQuotaEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +569,7 @@ namespace Azure.ResourceManager.Quota
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<GroupQuotaEntityResource> IAsyncEnumerable<GroupQuotaEntityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

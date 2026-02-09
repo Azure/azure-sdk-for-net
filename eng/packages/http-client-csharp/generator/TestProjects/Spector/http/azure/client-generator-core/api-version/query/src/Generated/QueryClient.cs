@@ -15,11 +15,9 @@ namespace Client.AlternateApiVersion.Service.Query
 {
     public partial class QueryClient
     {
-        protected QueryClient() => throw null;
+        public QueryClient() : this(new Uri("http://localhost:3000"), new QueryClientOptions()) => throw null;
 
-        public QueryClient(string version) : this(new Uri("http://localhost:3000"), version, new QueryClientOptions()) => throw null;
-
-        public QueryClient(Uri endpoint, string version, QueryClientOptions options) => throw null;
+        public QueryClient(Uri endpoint, QueryClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

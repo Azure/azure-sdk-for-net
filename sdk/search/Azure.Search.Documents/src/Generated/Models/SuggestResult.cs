@@ -29,6 +29,11 @@ namespace Azure.Search.Documents.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SuggestResult"/> for deserialization. </summary>
+        internal SuggestResult()
+        {
+        }
+
         /// <summary> The text of the suggestion result. </summary>
         public string Text { get; }
         /// <summary> Additional Properties. </summary>

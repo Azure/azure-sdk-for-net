@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -12,6 +13,38 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines parameters for a search index that influence semantic capabilities. </summary>
     public partial class SemanticSearch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SemanticSearch"/>. </summary>
         public SemanticSearch()
         {
@@ -21,10 +54,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SemanticSearch"/>. </summary>
         /// <param name="defaultConfigurationName"> Allows you to set the name of a default semantic configuration in your index, making it optional to pass it on as a query parameter every time. </param>
         /// <param name="configurations"> The semantic configurations for the index. </param>
-        internal SemanticSearch(string defaultConfigurationName, IList<SemanticConfiguration> configurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SemanticSearch(string defaultConfigurationName, IList<SemanticConfiguration> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultConfigurationName = defaultConfigurationName;
             Configurations = configurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allows you to set the name of a default semantic configuration in your index, making it optional to pass it on as a query parameter every time. </summary>

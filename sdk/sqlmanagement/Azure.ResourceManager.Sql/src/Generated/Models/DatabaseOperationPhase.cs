@@ -21,12 +21,10 @@ namespace Azure.ResourceManager.Sql.Models
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
-
         private const string CopyingValue = "Copying";
         private const string CatchupValue = "Catchup";
         private const string WaitingForCutoverValue = "WaitingForCutover";
         private const string CutoverInProgressValue = "CutoverInProgress";
-
         /// <summary> Copying. </summary>
         public static DatabaseOperationPhase Copying { get; } = new DatabaseOperationPhase(CopyingValue);
         /// <summary> Catchup. </summary>

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The group ID for current private link connection. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> The required member name for current private link connection. </summary>
+        [WirePath("requiredMemberName")]
         public string RequiredMemberName { get; }
         /// <summary> List of FQDNs for current private link connection. </summary>
+        [WirePath("fqdns")]
         public IReadOnlyList<string> Fqdns { get; }
     }
 }

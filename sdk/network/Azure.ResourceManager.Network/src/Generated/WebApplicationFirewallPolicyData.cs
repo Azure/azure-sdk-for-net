@@ -61,24 +61,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The PolicySettings for policy. </summary>
+        [WirePath("properties.policySettings")]
         public PolicySettings PolicySettings { get; set; }
         /// <summary> The custom rules inside the policy. </summary>
+        [WirePath("properties.customRules")]
         public IList<WebApplicationFirewallCustomRule> CustomRules { get; }
         /// <summary> A collection of references to application gateways. </summary>
+        [WirePath("properties.applicationGateways")]
         public IReadOnlyList<ApplicationGatewayData> ApplicationGateways { get; }
         /// <summary> The provisioning state of the web application firewall policy resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>
+        [WirePath("properties.resourceState")]
         public WebApplicationFirewallPolicyResourceState? ResourceState { get; }
         /// <summary> Describes the managedRules structure. </summary>
+        [WirePath("properties.managedRules")]
         public ManagedRulesDefinition ManagedRules { get; set; }
         /// <summary> A collection of references to application gateway http listeners. </summary>
+        [WirePath("properties.httpListeners")]
         public IReadOnlyList<WritableSubResource> HttpListeners { get; }
         /// <summary> A collection of references to application gateway path rules. </summary>
+        [WirePath("properties.pathBasedRules")]
         public IReadOnlyList<WritableSubResource> PathBasedRules { get; }
         /// <summary> A collection of references to application gateway for containers. </summary>
+        [WirePath("properties.applicationGatewayForContainers")]
         public IReadOnlyList<SubResource> ApplicationGatewayForContainers { get; }
     }
 }

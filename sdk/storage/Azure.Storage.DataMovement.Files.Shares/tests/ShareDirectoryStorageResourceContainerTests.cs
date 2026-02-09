@@ -98,59 +98,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public async Task CreateIfNotExists()
-        {
-            // Arrange
-            Mock<ShareDirectoryClient> mock = new(new Uri("https://myaccount.file.core.windows.net/myshare/mydir"), new ShareClientOptions());
-            mock.Setup(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    SharesModelFactory.StorageDirectoryInfo(
-                        eTag: new ETag("etag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        filePermissionKey: default,
-                        fileAttributes: default,
-                        fileCreationTime: DateTimeOffset.MinValue,
-                        fileLastWriteTime: DateTimeOffset.MinValue,
-                        fileChangeTime: DateTimeOffset.MinValue,
-                        fileId: default,
-                        fileParentId: default),
-                    new MockResponse(200))));
-
-            ShareDirectoryStorageResourceContainer resourceContainer = new(mock.Object, default);
-
-            // Act
-            await resourceContainer.CreateIfNotExistsInternalAsync();
-
-            // Assert
-            mock.Verify(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
-                Times.Once());
-            mock.VerifyNoOtherCalls();
-        }
-
-        [Test]
-        public async Task CreateIfNotExists_Error()
-        {
-            // Arrange
-            Mock<ShareDirectoryClient> mock = new(new Uri("https://myaccount.file.core.windows.net/myshare/mydir"), new ShareClientOptions());
-            mock.Setup(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Throws(new RequestFailedException(status: 404, message: "The parent path does not exist.", errorCode: "ResourceNotFound", default));
-
-            ShareDirectoryStorageResourceContainer resourceContainer = new(mock.Object, default);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                resourceContainer.CreateIfNotExistsInternalAsync(),
-                e =>
-                {
-                    Assert.AreEqual("ResourceNotFound", e.ErrorCode);
-                });
-
-            mock.Verify(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
-                Times.Once());
-            mock.VerifyNoOtherCalls();
-        }
-
-        [Test]
         public void GetChildStorageResourceContainer()
         {
             // Arrange
@@ -176,6 +123,37 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             UriBuilder builder = new UriBuilder(containerResource.Uri);
             builder.Path = string.Join("/", builder.Path, childPath);
             Assert.AreEqual(builder.Uri, childContainer.Uri);
+        }
+
+        [Test]
+        public void GetStorageResourceReference_Encoding()
+        {
+            string[] dirs = ["prefix", "pre=fix", "prefix with space"];
+            string[] tests =
+            [
+                "path=true@&#%",
+                "path%3Dtest%26",
+                "with space",
+                "sub=dir/path=true@&#%",
+                "sub%3Ddir/path=true@&#%",
+                "sub dir/path=true@&#%"
+            ];
+
+            string sharePath = "https://account.file.core.windows.net/myshare";
+            ShareClient shareClient = new(new Uri(sharePath));
+
+            foreach (string dir in dirs)
+            {
+                ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(dir);
+                ShareDirectoryStorageResourceContainer containerResource = new(directoryClient, default);
+                foreach (string test in tests)
+                {
+                    StorageResourceItem resource = containerResource.GetStorageResourceReference(test, default);
+
+                    string combined = string.Join("/", sharePath, Uri.EscapeDataString(dir), Uri.EscapeDataString(test).Replace("%2F", "/"));
+                    Assert.That(resource.Uri.AbsoluteUri, Is.EqualTo(combined));
+                }
+            }
         }
     }
 }

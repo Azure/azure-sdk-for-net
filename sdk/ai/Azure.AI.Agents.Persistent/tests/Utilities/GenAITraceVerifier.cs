@@ -41,7 +41,11 @@ namespace Azure.AI.Agents.Persistent.Tests.Utilities
         public bool CheckSpanEvents(Activity span, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents)
         {
             var spanEvents = span.Events.ToList();
+            return CheckSpanEvents(spanEvents, expectedEvents);
+        }
 
+        public bool CheckSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents=false)
+        {
             foreach (var expectedEvent in expectedEvents)
             {
                 var matchingEvent = spanEvents.FirstOrDefault(e => e.Name == expectedEvent.Name);
@@ -66,7 +70,7 @@ namespace Azure.AI.Agents.Persistent.Tests.Utilities
                 spanEvents.Remove(matchingEvent);
             }
 
-            if (spanEvents.Any())
+            if (spanEvents.Any() && !allowAdditionalEvents)
             {
                 Console.WriteLine("Unexpected additional events found in span.");
                 return false;
@@ -204,7 +208,8 @@ namespace Azure.AI.Agents.Persistent.Tests.Utilities
                             return false;
                     }
                     return true;
-
+                case JsonValueKind.Number:
+                    return expected.GetInt64() == actual.GetInt64();
                 default:
                     return CheckAttributeValue(expected.GetString(), actual.GetString());
             }

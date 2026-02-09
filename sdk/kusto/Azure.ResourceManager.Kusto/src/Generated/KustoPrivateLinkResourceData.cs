@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource required zone names. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

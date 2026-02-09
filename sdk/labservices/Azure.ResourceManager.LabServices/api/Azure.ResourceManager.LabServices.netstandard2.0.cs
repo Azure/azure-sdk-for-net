@@ -521,9 +521,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier left, Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier (string value) { throw null; }
@@ -744,9 +742,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType left, Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType (string value) { throw null; }
@@ -762,9 +758,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode NotAvailableForSubscription { get { throw null; } }
         public static Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode QuotaId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode left, Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode (string value) { throw null; }
@@ -779,9 +773,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabServicesSkuRestrictionType(string value) { throw null; }
         public static Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType Location { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType left, Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType (string value) { throw null; }
@@ -831,9 +823,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabServicesUsageUnit(string value) { throw null; }
         public static Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit Count { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit left, Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit (string value) { throw null; }

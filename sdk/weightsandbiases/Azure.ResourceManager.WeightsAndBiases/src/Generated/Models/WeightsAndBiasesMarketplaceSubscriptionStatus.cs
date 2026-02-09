@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WeightsAndBiases;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     public readonly partial struct WeightsAndBiasesMarketplaceSubscriptionStatus : IEquatable<WeightsAndBiasesMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Purchased but not yet activated. </summary>
+        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
+        /// <summary> Marketplace subscription is activated. </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Customer has cancelled the subscription. </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WeightsAndBiasesMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary> Purchased but not yet activated. </summary>
         public static WeightsAndBiasesMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new WeightsAndBiasesMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+
         /// <summary> Marketplace subscription is activated. </summary>
         public static WeightsAndBiasesMarketplaceSubscriptionStatus Subscribed { get; } = new WeightsAndBiasesMarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
         public static WeightsAndBiasesMarketplaceSubscriptionStatus Suspended { get; } = new WeightsAndBiasesMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Customer has cancelled the subscription. </summary>
         public static WeightsAndBiasesMarketplaceSubscriptionStatus Unsubscribed { get; } = new WeightsAndBiasesMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="WeightsAndBiasesMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WeightsAndBiasesMarketplaceSubscriptionStatus left, WeightsAndBiasesMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WeightsAndBiasesMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WeightsAndBiasesMarketplaceSubscriptionStatus left, WeightsAndBiasesMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WeightsAndBiasesMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WeightsAndBiasesMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WeightsAndBiasesMarketplaceSubscriptionStatus(string value) => new WeightsAndBiasesMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WeightsAndBiasesMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WeightsAndBiasesMarketplaceSubscriptionStatus?(string value) => value == null ? null : new WeightsAndBiasesMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WeightsAndBiasesMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WeightsAndBiasesMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

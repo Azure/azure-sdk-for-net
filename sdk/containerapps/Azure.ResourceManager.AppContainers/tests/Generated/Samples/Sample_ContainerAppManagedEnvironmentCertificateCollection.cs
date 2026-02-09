@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificate_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificate_CreateOrUpdate.json
             // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateCertificateUsingManagedIdentity()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificate_CreateOrUpdate_FromKeyVault.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificate_CreateOrUpdate_FromKeyVault.json
             // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificate_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificate_Get.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCertificatesByManagedEnvironment()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificates_ListByManagedEnvironment.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificates_ListByManagedEnvironment.json
             // this example is just showing the usage of "Certificates_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificate_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificate_Get.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/Certificate_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Certificate_Get.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

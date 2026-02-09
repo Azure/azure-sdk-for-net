@@ -362,7 +362,7 @@ public partial class AppServicePlan : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlan.</param>
     public AppServicePlan(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/serverfarms", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/serverfarms", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -371,6 +371,7 @@ public partial class AppServicePlan : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
@@ -410,6 +411,11 @@ public partial class AppServicePlan : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

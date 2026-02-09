@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct ContainerOrchestratorProvisioningState : IEquatable<ContainerOrchestratorProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Initial provisioning in progress. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Update in progress. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deletion in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Change accepted for processing. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerOrchestratorProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static ContainerOrchestratorProvisioningState Succeeded { get; } = new ContainerOrchestratorProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static ContainerOrchestratorProvisioningState Failed { get; } = new ContainerOrchestratorProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static ContainerOrchestratorProvisioningState Canceled { get; } = new ContainerOrchestratorProvisioningState(CanceledValue);
+
         /// <summary> Initial provisioning in progress. </summary>
         public static ContainerOrchestratorProvisioningState Provisioning { get; } = new ContainerOrchestratorProvisioningState(ProvisioningValue);
+
         /// <summary> Update in progress. </summary>
         public static ContainerOrchestratorProvisioningState Updating { get; } = new ContainerOrchestratorProvisioningState(UpdatingValue);
+
         /// <summary> Deletion in progress. </summary>
         public static ContainerOrchestratorProvisioningState Deleting { get; } = new ContainerOrchestratorProvisioningState(DeletingValue);
+
         /// <summary> Change accepted for processing. </summary>
         public static ContainerOrchestratorProvisioningState Accepted { get; } = new ContainerOrchestratorProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="ContainerOrchestratorProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerOrchestratorProvisioningState left, ContainerOrchestratorProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerOrchestratorProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerOrchestratorProvisioningState left, ContainerOrchestratorProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerOrchestratorProvisioningState(string value) => new ContainerOrchestratorProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerOrchestratorProvisioningState?(string value) => value == null ? null : new ContainerOrchestratorProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerOrchestratorProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerOrchestratorProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

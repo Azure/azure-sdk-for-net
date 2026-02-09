@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,11 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AsciiFoldingTokenFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preserveOriginal"> A value indicating whether the original token will be kept. Default is false. </param>
-        internal AsciiFoldingTokenFilter(string oDataType, string name, bool? preserveOriginal) : base(oDataType, name)
+        internal AsciiFoldingTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? preserveOriginal) : base(oDataType, name, serializedAdditionalRawData)
         {
             PreserveOriginal = preserveOriginal;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.AsciiFoldingTokenFilter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AsciiFoldingTokenFilter"/> for deserialization. </summary>
+        internal AsciiFoldingTokenFilter()
+        {
         }
 
         /// <summary> A value indicating whether the original token will be kept. Default is false. </summary>

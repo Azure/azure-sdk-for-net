@@ -41,7 +41,7 @@ stages:
   - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - ${{if ne(artifact.skipReleaseStage, 'true')}}:
-        - stage:
+        - stage: Release_${{artifact.safeName}}
           variables:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
@@ -193,6 +193,11 @@ stages:
                         MarkPackageAsShipped: true
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
+                        SourceRootPath: $(sdk-repo-path)
+                    - template: /eng/common/pipelines/templates/steps/mark-release-completion.yml
+                      parameters:
+                        ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
+                        PackageArtifactName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:

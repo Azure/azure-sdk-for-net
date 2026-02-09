@@ -4,7 +4,6 @@
       "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/deployments/deployment1?api-version=2025-05-15-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Content-Length": "30",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",

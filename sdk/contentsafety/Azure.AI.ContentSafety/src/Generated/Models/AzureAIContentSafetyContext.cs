@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AddOrUpdateTextBlocklistItemsOptions))]
     [ModelReaderWriterBuildable(typeof(AddOrUpdateTextBlocklistItemsResult))]
@@ -20,13 +21,22 @@ namespace Azure.AI.ContentSafety
     [ModelReaderWriterBuildable(typeof(AnalyzeTextOptions))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextResult))]
     [ModelReaderWriterBuildable(typeof(ContentSafetyImageData))]
+    [ModelReaderWriterBuildable(typeof(DetectTextProtectedMaterialOptions))]
+    [ModelReaderWriterBuildable(typeof(DetectTextProtectedMaterialResult))]
+    [ModelReaderWriterBuildable(typeof(DocumentInjectionAnalysisResult))]
     [ModelReaderWriterBuildable(typeof(ImageCategoriesAnalysis))]
+    [ModelReaderWriterBuildable(typeof(PagedTextBlocklist))]
+    [ModelReaderWriterBuildable(typeof(PagedTextBlocklistItem))]
     [ModelReaderWriterBuildable(typeof(RemoveTextBlocklistItemsOptions))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ShieldPromptOptions))]
+    [ModelReaderWriterBuildable(typeof(ShieldPromptResult))]
     [ModelReaderWriterBuildable(typeof(TextBlocklist))]
     [ModelReaderWriterBuildable(typeof(TextBlocklistItem))]
     [ModelReaderWriterBuildable(typeof(TextBlocklistMatch))]
     [ModelReaderWriterBuildable(typeof(TextCategoriesAnalysis))]
+    [ModelReaderWriterBuildable(typeof(TextProtectedMaterialAnalysisResult))]
+    [ModelReaderWriterBuildable(typeof(UserPromptInjectionAnalysisResult))]
     public partial class AzureAIContentSafetyContext : ModelReaderWriterContext
     {
     }

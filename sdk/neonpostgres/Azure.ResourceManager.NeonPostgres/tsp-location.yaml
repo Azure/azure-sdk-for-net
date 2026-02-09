@@ -1,3 +1,4 @@
 directory: specification/liftrneon/Neon.Postgres.Management
-commit: b15e6baad78142745642047f29e7391ea37ab155
+commit: 5c34af0a4c18ba0a80a70748537388692fd31a5c
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

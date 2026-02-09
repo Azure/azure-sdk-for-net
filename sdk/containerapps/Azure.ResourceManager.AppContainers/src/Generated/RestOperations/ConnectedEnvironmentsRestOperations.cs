@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -504,6 +504,10 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -512,16 +516,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerAppConnectedEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppConnectedEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -541,16 +547,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerAppConnectedEnvironmentData> Update(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public Response<ContainerAppConnectedEnvironmentData> Update(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

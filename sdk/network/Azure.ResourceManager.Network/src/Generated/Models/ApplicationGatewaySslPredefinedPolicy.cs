@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Ssl cipher suites to be enabled in the specified order for application gateway. </summary>
+        [WirePath("properties.cipherSuites")]
         public IList<ApplicationGatewaySslCipherSuite> CipherSuites { get; }
         /// <summary> Minimum version of Ssl protocol to be supported on application gateway. </summary>
+        [WirePath("properties.minProtocolVersion")]
         public ApplicationGatewaySslProtocol? MinProtocolVersion { get; set; }
     }
 }

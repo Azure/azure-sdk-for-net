@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class WorkloadNetworkVmGroupResource : IJsonModel<WorkloadNetworkVmGroupData>
     {
-        private static WorkloadNetworkVmGroupData s_dataDeserializationInstance;
-        private static WorkloadNetworkVmGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkloadNetworkVmGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkloadNetworkVmGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkloadNetworkVmGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadNetworkVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVmGroupData>)Data).Write(writer, options);
 
-        WorkloadNetworkVmGroupData IJsonModel<WorkloadNetworkVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVmGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadNetworkVmGroupData IJsonModel<WorkloadNetworkVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkVmGroupData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkloadNetworkVmGroupData IPersistableModel<WorkloadNetworkVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkVmGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadNetworkVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

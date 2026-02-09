@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +133,105 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteCircuitArpTable(age, @interface, ipAddress, macAddress, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Age), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  age: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Age))
+                {
+                    builder.Append("  age: ");
+                    builder.AppendLine($"{Age.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Interface), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  interface: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Interface))
+                {
+                    builder.Append("  interface: ");
+                    if (Interface.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Interface}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Interface}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPAddress))
+                {
+                    builder.Append("  ipAddress: ");
+                    if (IPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  macAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MacAddress))
+                {
+                    builder.Append("  macAddress: ");
+                    if (MacAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MacAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MacAddress}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteCircuitArpTable>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitArpTable>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +240,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitArpTable)} does not support writing '{options.Format}' format.");
             }

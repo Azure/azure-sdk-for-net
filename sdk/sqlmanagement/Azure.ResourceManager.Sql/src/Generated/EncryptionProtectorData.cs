@@ -69,8 +69,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        /// <param name="keyVersion"> The version of the server key being used as encryption protector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Sql
             Uri = uri;
             Thumbprint = thumbprint;
             IsAutoRotationEnabled = isAutoRotationEnabled;
+            KeyVersion = keyVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,5 +109,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("properties.autoRotationEnabled")]
         public bool? IsAutoRotationEnabled { get; set; }
+        /// <summary> The version of the server key being used as encryption protector. </summary>
+        [WirePath("properties.keyVersion")]
+        public string KeyVersion { get; }
     }
 }

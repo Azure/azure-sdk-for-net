@@ -111,12 +111,14 @@ namespace Azure.Developer.LoadTesting.Tests
 
         internal LoadTestAdministrationClient CreateAdministrationClient()
         {
-            return InstrumentClient(new LoadTestAdministrationClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
+            // TODO remove service version pinning and re-record tests with latest service version https://github.com/Azure/azure-sdk-for-net/issues/53204
+            return InstrumentClient(new LoadTestAdministrationClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions(LoadTestingClientOptions.ServiceVersion.V2024_12_01_Preview))));
         }
 
         internal LoadTestRunClient CreateRunClient()
         {
-            return InstrumentClient(new LoadTestRunClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
+            // TODO remove service version pinning and re-record tests with latest service version https://github.com/Azure/azure-sdk-for-net/issues/53204
+            return InstrumentClient(new LoadTestRunClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions(LoadTestingClientOptions.ServiceVersion.V2024_12_01_Preview))));
         }
     }
 }

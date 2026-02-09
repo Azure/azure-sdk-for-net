@@ -33,6 +33,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             yield return new object[] { new SubjectAlternativeNames { DnsNames = { "www.example.com" }, Emails = { } }, @"{""dns_names"":[""www.example.com""]}" };
             yield return new object[] { new SubjectAlternativeNames { DnsNames = { }, Emails = { "webmaster@example.com" } }, @"{""emails"":[""webmaster@example.com""]}" };
             yield return new object[] { new SubjectAlternativeNames { DnsNames = { }, UserPrincipalNames = { "webmaster@example.com" } }, @"{""upns"":[""webmaster@example.com""]}" };
+            yield return new object[] { new SubjectAlternativeNames { DnsNames = { }, UniformResourceIdentifiers = { "www.example.com" } }, @"{""uris"":[""www.example.com""]}" };
+            yield return new object[] { new SubjectAlternativeNames { DnsNames = { }, IpAddresses = { "127.0.0.1", "1:db8:4006:812::e" } }, @"{""ipAddresses"":[""127.0.0.1"",""1:db8:4006:812::e""]}" };
             yield return new object[] {
                 new SubjectAlternativeNames
                 {
@@ -51,9 +53,20 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     {
                         "webmaster@example.com",
                     },
+
+                    UniformResourceIdentifiers =
+                    {
+                        "www.example.com",
+                    },
+
+                    IpAddresses =
+                    {
+                        "127.0.0.1",
+                        "1:db8:4006:812::e"
+                    },
                 },
 
-                @"{""dns_names"":[""example.com"",""www.example.com""],""emails"":[""webmaster@example.com""],""upns"":[""webmaster@example.com""]}",
+                @"{""dns_names"":[""example.com"",""www.example.com""],""emails"":[""webmaster@example.com""],""upns"":[""webmaster@example.com""],""uris"":[""www.example.com""],""ipAddresses"":[""127.0.0.1"",""1:db8:4006:812::e""]}"
             };
 
             SubjectAlternativeNames san1 = new SubjectAlternativeNames

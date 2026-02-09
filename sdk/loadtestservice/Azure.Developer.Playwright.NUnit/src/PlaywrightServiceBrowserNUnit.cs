@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Developer.Playwright.NUnit;
 
 /// <summary>
-/// NUnit setup fixture to initialize Playwright Service.
+/// NUnit setup fixture to initialize Playwright Workspaces.
 /// </summary>
 [SetUpFixture]
 public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
@@ -76,9 +76,7 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
     [OneTimeSetUp]
     public async Task InitializeAsync()
     {
-        if (!_options.UseCloudHostedBrowsers)
-            return;
-        nunitLogger.LogInformation("\nRunning tests using Azure Playwright service.\n");
+        nunitLogger.LogInformation("\nRunning tests using Playwright Workspaces.\n");
 
         await base.InitializeAsync().ConfigureAwait(false);
     }
@@ -89,7 +87,8 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
     [OneTimeTearDown]
     public override async Task DisposeAsync()
     {
-        await base.DisposeAsync().ConfigureAwait(false);
+        // no-op - cleanup is handled by IDisposable pattern
+        await Task.CompletedTask.ConfigureAwait(false);
     }
 
     private static PlaywrightServiceBrowserClientOptions InjectNUnitLogger(PlaywrightServiceBrowserClientOptions options)

@@ -9,10 +9,8 @@ namespace Azure.ResourceManager.NotificationHubs
     public partial class NotificationHubAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>, System.Collections.IEnumerable
     {
         protected NotificationHubAuthorizationRuleCollection() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -38,10 +36,8 @@ namespace Azure.ResourceManager.NotificationHubs
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string PrimaryKey { get { throw null; } set { } }
         public int? Revision { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRight> Rights { get { throw null; } }
         public string SecondaryKey { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -76,30 +72,24 @@ namespace Azure.ResourceManager.NotificationHubs
         Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NotificationHubCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubResource>, System.Collections.IEnumerable
     {
         protected NotificationHubCollection() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string notificationHubName, Azure.ResourceManager.NotificationHubs.Models.NotificationHubCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string notificationHubName, Azure.ResourceManager.NotificationHubs.NotificationHubData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string notificationHubName, Azure.ResourceManager.NotificationHubs.Models.NotificationHubCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string notificationHubName, Azure.ResourceManager.NotificationHubs.NotificationHubData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string notificationHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string notificationHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource> Get(string notificationHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubResource> GetAll(string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubResource> GetAllAsync(string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> GetAsync(string notificationHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.NotificationHubs.NotificationHubResource> GetIfExists(string notificationHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -135,10 +125,8 @@ namespace Azure.ResourceManager.NotificationHubs
     public partial class NotificationHubNamespaceAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource>, System.Collections.IEnumerable
     {
         protected NotificationHubNamespaceAuthorizationRuleCollection() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string authorizationRuleName, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -179,30 +167,24 @@ namespace Azure.ResourceManager.NotificationHubs
         Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NotificationHubNamespaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource>, System.Collections.IEnumerable
     {
         protected NotificationHubNamespaceCollection() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string namespaceName, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string namespaceName, Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string namespaceName, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string namespaceName, Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> Get(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetAll(string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetAllAsync(string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource>> GetAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetIfExists(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -223,13 +205,11 @@ namespace Azure.ResourceManager.NotificationHubs
         public string MetricId { get { throw null; } }
         public string NamespaceName { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus? NamespaceStatus { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceType? NamespaceType { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubNetworkAcls NetworkAcls { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState? OperationProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.PnsCredentials PnsCredentials { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NotificationHubs.NotificationHubPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
@@ -237,7 +217,6 @@ namespace Azure.ResourceManager.NotificationHubs
         public string ScaleUnit { get { throw null; } set { } }
         public System.Uri ServiceBusEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Status { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } set { } }
@@ -346,10 +325,8 @@ namespace Azure.ResourceManager.NotificationHubs
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult> DebugSend(System.BinaryData anyObject, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult> DebugSend(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult>> DebugSendAsync(System.BinaryData anyObject, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult>> DebugSendAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -370,10 +347,8 @@ namespace Azure.ResourceManager.NotificationHubs
         Azure.ResourceManager.NotificationHubs.NotificationHubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource> Update(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource> Update(Azure.ResourceManager.NotificationHubs.Models.NotificationHubUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> UpdateAsync(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> UpdateAsync(Azure.ResourceManager.NotificationHubs.Models.NotificationHubUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -388,10 +363,8 @@ namespace Azure.ResourceManager.NotificationHubs
         public static Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource GetNotificationHubNamespaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceCollection GetNotificationHubNamespaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubPrivateEndpointConnectionResource GetNotificationHubPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubResource GetNotificationHubResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -464,10 +437,8 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespaces(string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespaces(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
@@ -488,9 +459,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion SouthEastAsia { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion WestUS2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion left, Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion (string value) { throw null; }
@@ -500,24 +469,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public static partial class ArmNotificationHubsModelFactory
     {
         public static Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData NotificationHubAuthorizationRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt> accessRights = null, string primaryKey = null, string secondaryKey = null, string keyName = null, System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string claimType = null, string claimValue = null, int? revision = default(int?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData NotificationHubAuthorizationRuleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, System.DateTimeOffset? modifiedOn, System.DateTimeOffset? createdOn, int? revision, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityContent NotificationHubAvailabilityContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isAvailiable = default(bool?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityResult NotificationHubAvailabilityResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isAvailiable = default(bool?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubCreateOrUpdateContent NotificationHubCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string notificationHubName = null, System.TimeSpan? registrationTtl = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> authorizationRules = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential apnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential wnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential gcmCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential mpnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential admCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential baiduCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubData NotificationHubData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null, string notificationHubName = null, System.TimeSpan? registrationTtl = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> authorizationRules = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential apnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential wnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential gcmCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential mpnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential admCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential baiduCredential = null, Azure.ResourceManager.NotificationHubs.Models.BrowserCredential browserCredential = null, Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential xiaomiCredential = null, Azure.ResourceManager.NotificationHubs.Models.FcmV1Credential fcmV1Credential = null, long? dailyMaxActiveDevices = default(long?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.NotificationHubData NotificationHubData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string notificationHubName, System.TimeSpan? registrationTtl, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> authorizationRules, Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential apnsCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential wnsCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential gcmCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential mpnsCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential admCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential baiduCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceCreateOrUpdateContent NotificationHubNamespaceCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string namespaceName = null, string provisioningState = null, string region = null, string metricId = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.Uri serviceBusEndpoint = null, string subscriptionId = null, string scaleUnit = null, bool? isEnabled = default(bool?), bool? isCritical = default(bool?), string dataCenter = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceType? namespaceType = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceType?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceData NotificationHubNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null, string namespaceName = null, Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState? operationProvisioningState = default(Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus? namespaceStatus = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus?), bool? isEnabled = default(bool?), bool? isCritical = default(bool?), string subscriptionId = null, string region = null, string metricId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt? hubNamespaceType = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt?), Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion? replicationRegion = default(Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion?), Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference? zoneRedundancy = default(Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubNetworkAcls networkAcls = null, Azure.ResourceManager.NotificationHubs.Models.PnsCredentials pnsCredentials = null, System.Uri serviceBusEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceData NotificationHubNamespaceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string namespaceName, string provisioningState, string region, string metricId, string status, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, System.Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceType? namespaceType, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceProperties NotificationHubNamespaceProperties(string namespaceName = null, Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState? provisioningState = default(Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus? status = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus?), bool? isEnabled = default(bool?), bool? isCritical = default(bool?), string subscriptionId = null, string region = null, string metricId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt? namespaceType = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt?), Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion? replicationRegion = default(Azure.ResourceManager.NotificationHubs.Models.AllowedReplicationRegion?), Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference? zoneRedundancy = default(Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference?), Azure.ResourceManager.NotificationHubs.Models.NotificationHubNetworkAcls networkAcls = null, Azure.ResourceManager.NotificationHubs.Models.PnsCredentials pnsCredentials = null, System.Uri serviceBusEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess?)) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPatch NotificationHubPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string notificationHubName = null, System.TimeSpan? registrationTtl = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> authorizationRules = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential apnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential wnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential gcmCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential mpnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential admCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential baiduCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPnsCredentials NotificationHubPnsCredentials(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential admCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential apnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential baiduCredential = null, Azure.ResourceManager.NotificationHubs.Models.BrowserCredential browserCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential gcmCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential mpnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential wnsCredential = null, Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential xiaomiCredential = null, Azure.ResourceManager.NotificationHubs.Models.FcmV1Credential fcmV1Credential = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPnsCredentials NotificationHubPnsCredentials(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential apnsCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential wnsCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential gcmCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential mpnsCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential admCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential baiduCredential, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubPrivateEndpointConnectionData NotificationHubPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateEndpointConnectionProperties NotificationHubPrivateEndpointConnectionProperties(Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.NotificationHubs.Models.RemotePrivateLinkServiceConnectionState connectionState = null) { throw null; }
@@ -525,15 +488,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubResourceKeys NotificationHubResourceKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.NotificationHubsPrivateLinkResourceData NotificationHubsPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateLinkResourceProperties NotificationHubsPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult NotificationHubTestSendResult(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, int? success, int? failure, System.BinaryData results, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku sku) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult NotificationHubTestSendResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? success = default(int?), int? failure = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult> failureDescription = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.RemotePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus? status = default(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt> accessRights = null, string primaryKey = null, string secondaryKey = null, string keyName = null, System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string claimType = null, string claimValue = null, int? revision = default(int?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, System.DateTimeOffset? modifiedOn, System.DateTimeOffset? createdOn, int? revision) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum AuthorizationRuleAccessRight
     {
         Manage = 0,
@@ -550,9 +510,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt Manage { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt Send { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt left, Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRightExt (string value) { throw null; }
@@ -587,7 +545,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubAdmCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NotificationHubAdmCredential() { }
         public NotificationHubAdmCredential(string clientId, string clientSecret, System.Uri authTokenUri) { }
         public System.Uri AuthTokenUri { get { throw null; } set { } }
@@ -602,7 +559,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubApnsCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NotificationHubApnsCredential() { }
         public NotificationHubApnsCredential(System.Uri endpoint) { }
         public string ApnsCertificate { get { throw null; } set { } }
@@ -611,7 +567,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public string CertificateKey { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public string KeyId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
@@ -649,7 +604,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubBaiduCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NotificationHubBaiduCredential() { }
         public NotificationHubBaiduCredential(string baiduApiKey, System.Uri baiduEndpoint, string baiduSecretKey) { }
         public string BaiduApiKey { get { throw null; } set { } }
@@ -662,7 +616,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NotificationHubCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubCreateOrUpdateContent>
     {
         public NotificationHubCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
@@ -684,7 +637,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubGcmCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NotificationHubGcmCredential() { }
         public NotificationHubGcmCredential(string gcmApiKey) { }
         public string GcmApiKey { get { throw null; } set { } }
@@ -710,12 +662,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubMpnsCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NotificationHubMpnsCredential() { }
         public NotificationHubMpnsCredential(string mpnsCertificate, string certificateKey, string thumbprintString) { }
         public string CertificateKey { get { throw null; } set { } }
         public string MpnsCertificate { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
@@ -726,7 +676,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class NotificationHubNamespaceCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceCreateOrUpdateContent>
     {
         public NotificationHubNamespaceCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
@@ -805,16 +754,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus Deleting { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum NotificationHubNamespaceType
     {
         Messaging = 0,
@@ -829,9 +775,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt Messaging { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt NotificationHub { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceTypeExt (string value) { throw null; }
@@ -879,7 +823,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public Azure.ResourceManager.NotificationHubs.Models.FcmV1Credential FcmV1Credential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential GcmCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential MpnsCredential { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential WnsCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential XiaomiCredential { get { throw null; } set { } }
@@ -892,7 +835,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubPolicyKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPolicyKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPolicyKey>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NotificationHubPolicyKey() { }
         public NotificationHubPolicyKey(string policyKey) { }
         public string PolicyKey { get { throw null; } set { } }
@@ -928,9 +870,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateLinkConnectionStatus (string value) { throw null; }
@@ -946,9 +886,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.NotificationHubPublicNetworkAccess (string value) { throw null; }
@@ -1009,9 +947,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubSkuName Free { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.NotificationHubSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.NotificationHubSkuName left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.NotificationHubSkuName (string value) { throw null; }
@@ -1033,9 +969,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState UpdatingByProxy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -1060,7 +994,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public NotificationHubTestSendResult(Azure.Core.AzureLocation location) { }
         public int? Failure { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult> FailureDescription { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Results { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
         public int? Success { get { throw null; } set { } }
@@ -1124,9 +1057,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState left, Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.OperationProvisioningState (string value) { throw null; }
@@ -1165,7 +1096,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.RemotePrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.RemotePrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent>
     {
         public SharedAccessAuthorizationRuleCreateOrUpdateContent(Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties properties) { }
@@ -1188,7 +1118,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string PrimaryKey { get { throw null; } set { } }
         public int? Revision { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.NotificationHubs.Models.AuthorizationRuleAccessRight> Rights { get { throw null; } }
         public string SecondaryKey { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1219,9 +1148,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference Disabled { get { throw null; } }
         public static Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference left, Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference right) { throw null; }
         public static implicit operator Azure.ResourceManager.NotificationHubs.Models.ZoneRedundancyPreference (string value) { throw null; }

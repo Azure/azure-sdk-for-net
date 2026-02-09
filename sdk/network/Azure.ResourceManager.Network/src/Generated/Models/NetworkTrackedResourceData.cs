@@ -70,14 +70,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

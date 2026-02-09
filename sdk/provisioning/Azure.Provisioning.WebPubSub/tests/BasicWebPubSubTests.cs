@@ -2,23 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.WebPubSub.Tests;
 
-public class BasicWebPubSubTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicWebPubSubTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/azure-web-pubsub/main.bicep")]
-    public async Task CreateSimpleWebPubSub()
+    internal static Trycep CreateSimpleWebPubSubTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:WebPubSubBasic
@@ -76,8 +70,15 @@ public class BasicWebPubSubTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/azure-web-pubsub/main.bicep")]
+    public async Task CreateSimpleWebPubSub()
+    {
+        await using Trycep test = CreateSimpleWebPubSubTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -138,8 +139,6 @@ public class BasicWebPubSubTests(bool async)
                 capacity: 1
               }
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

@@ -134,14 +134,14 @@ namespace Azure.Storage
                 switch (expectContinue.Mode)
                 {
                     case Request100ContinueMode.Auto:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinueOnThrottlePolicy()
                         {
                             ThrottleInterval = expectContinue.AutoInterval,
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });
                         break;
                     case Request100ContinueMode.Always:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinuePolicy()
                         {
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });

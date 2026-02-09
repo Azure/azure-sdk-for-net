@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of inbound NAT rule. </summary>
+        [WirePath("inboundNatRuleName")]
         public string InboundNatRuleName { get; }
         /// <summary> Frontend port. </summary>
+        [WirePath("frontendPort")]
         public int? FrontendPort { get; }
         /// <summary> Backend port. </summary>
+        [WirePath("backendPort")]
         public int? BackendPort { get; }
     }
 }

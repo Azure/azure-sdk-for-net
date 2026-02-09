@@ -131,7 +131,7 @@ public partial class CognitiveServicesAccount : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccount.</param>
     public CognitiveServicesAccount(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2024-10-01")
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -140,6 +140,7 @@ public partial class CognitiveServicesAccount : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
@@ -157,6 +158,16 @@ public partial class CognitiveServicesAccount : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-10-01.
         /// </summary>

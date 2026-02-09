@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             DateTimeOffset lastDeployedDateTime = default;
             DateTimeOffset deploymentExpirationDate = default;
             string modelTrainingConfigVersion = default;
-            IReadOnlyList<ConversationAuthoringDeploymentResource> assignedResources = default;
+            IReadOnlyList<ConversationAuthoringAssignedProjectResource> assignedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +136,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("assignedResources"u8))
                 {
-                    List<ConversationAuthoringDeploymentResource> array = new List<ConversationAuthoringDeploymentResource>();
+                    List<ConversationAuthoringAssignedProjectResource> array = new List<ConversationAuthoringAssignedProjectResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConversationAuthoringDeploymentResource.DeserializeConversationAuthoringDeploymentResource(item, options));
+                        array.Add(ConversationAuthoringAssignedProjectResource.DeserializeConversationAuthoringAssignedProjectResource(item, options));
                     }
                     assignedResources = array;
                     continue;

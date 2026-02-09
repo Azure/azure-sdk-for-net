@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LinkedOperation. </summary>
+    /// <summary> The linked operation. </summary>
     public readonly partial struct LinkedOperation : IEquatable<LinkedOperation>
     {
         private readonly string _value;

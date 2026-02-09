@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing an AvsProvisionedNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsProvisionedNetworkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAvsProvisionedNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsProvisionedNetwork method.
+    /// A class representing a AvsProvisionedNetwork along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AvsProvisionedNetworkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsProvisionedNetworks method.
     /// </summary>
     public partial class AvsProvisionedNetworkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AvsProvisionedNetworkResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="provisionedNetworkName"> The provisionedNetworkName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string provisionedNetworkName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _avsProvisionedNetworkProvisionedNetworksClientDiagnostics;
-        private readonly ProvisionedNetworksRestOperations _avsProvisionedNetworkProvisionedNetworksRestClient;
+        private readonly ClientDiagnostics _provisionedNetworksClientDiagnostics;
+        private readonly ProvisionedNetworks _provisionedNetworksRestClient;
         private readonly AvsProvisionedNetworkData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/provisionedNetworks";
 
-        /// <summary> Initializes a new instance of the <see cref="AvsProvisionedNetworkResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AvsProvisionedNetworkResource for mocking. </summary>
         protected AvsProvisionedNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvsProvisionedNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsProvisionedNetworkResource(ArmClient client, AvsProvisionedNetworkData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvsProvisionedNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AvsProvisionedNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _avsProvisionedNetworkProvisionedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string avsProvisionedNetworkProvisionedNetworksApiVersion);
-            _avsProvisionedNetworkProvisionedNetworksRestClient = new ProvisionedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, avsProvisionedNetworkProvisionedNetworksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string avsProvisionedNetworkApiVersion);
+            _provisionedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AvsProvisionedNetworkData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="provisionedNetworkName"> The provisionedNetworkName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string provisionedNetworkName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a ProvisionedNetwork
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedNetwork_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsProvisionedNetworkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsProvisionedNetworkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AvsProvisionedNetworkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsProvisionedNetworkProvisionedNetworksClientDiagnostics.CreateScope("AvsProvisionedNetworkResource.Get");
+            using DiagnosticScope scope = _provisionedNetworksClientDiagnostics.CreateScope("AvsProvisionedNetworkResource.Get");
             scope.Start();
             try
             {
-                var response = await _avsProvisionedNetworkProvisionedNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsProvisionedNetworkData> response = Response.FromValue(AvsProvisionedNetworkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AvsProvisionedNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Avs
         /// Get a ProvisionedNetwork
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedNetwork_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsProvisionedNetworkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsProvisionedNetworkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AvsProvisionedNetworkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsProvisionedNetworkProvisionedNetworksClientDiagnostics.CreateScope("AvsProvisionedNetworkResource.Get");
+            using DiagnosticScope scope = _provisionedNetworksClientDiagnostics.CreateScope("AvsProvisionedNetworkResource.Get");
             scope.Start();
             try
             {
-                var response = _avsProvisionedNetworkProvisionedNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsProvisionedNetworkData> response = Response.FromValue(AvsProvisionedNetworkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AvsProvisionedNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

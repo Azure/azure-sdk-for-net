@@ -6,7 +6,7 @@ param(
 )
 $run = Read-Host "The resources needed to run the live tests could not be located.`nWould you like to run the resource creation script? [y/n]"
 if ($run -eq 'y'){
-    & "$PSScriptRoot\..\common\TestResources\New-TestResources.ps1" $ServiceDirectory -UserAuth true
+    & "$PSScriptRoot\..\common\TestResources\New-TestResources.ps1" $ServiceDirectory
 
     Read-Host "Press enter to close this window and resume your test run."
 }

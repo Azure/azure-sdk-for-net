@@ -13,66 +13,24 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Output of the address validation api. </summary>
     public partial class AddressValidationOutput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AddressValidationOutput"/>. </summary>
         internal AddressValidationOutput()
         {
-            AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressValidationOutput"/>. </summary>
-        /// <param name="validationType"> Identifies the type of validation response. </param>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="validationStatus"> The address validation status. </param>
-        /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddressValidationOutput(DataBoxValidationInputDiscriminator? validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The address validation properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AddressValidationOutput(AddressValidationResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ValidationType = validationType;
-            Error = error;
-            ValidationStatus = validationStatus;
-            AlternateAddresses = alternateAddresses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Identifies the type of validation response. </summary>
-        internal DataBoxValidationInputDiscriminator? ValidationType { get; set; }
-        /// <summary> Error code and message of validation response. </summary>
-        public ResponseError Error { get; }
-        /// <summary> The address validation status. </summary>
-        public AddressValidationStatus? ValidationStatus { get; }
-        /// <summary> List of alternate addresses. </summary>
-        public IReadOnlyList<DataBoxShippingAddress> AlternateAddresses { get; }
+        /// <summary> The address validation properties. </summary>
+        public AddressValidationResult Properties { get; }
     }
 }

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionOptions"/>. </summary>
-        /// <param name="request"></param>
-        /// <param name="response"></param>
+        /// <param name="request"> The request. </param>
+        /// <param name="response"> The response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtensionOptions(IList<ExtensionOptionType> request, IList<ExtensionOptionType> response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the request. </summary>
+        /// <summary> The request. </summary>
         public IList<ExtensionOptionType> Request { get; }
-        /// <summary> Gets the response. </summary>
+        /// <summary> The response. </summary>
         public IList<ExtensionOptionType> Response { get; }
     }
 }

@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A description of the network group. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The type of the group member. </summary>
+        [WirePath("properties.memberType")]
         public NetworkGroupMemberType? MemberType { get; set; }
         /// <summary> The provisioning state of the scope assignment resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

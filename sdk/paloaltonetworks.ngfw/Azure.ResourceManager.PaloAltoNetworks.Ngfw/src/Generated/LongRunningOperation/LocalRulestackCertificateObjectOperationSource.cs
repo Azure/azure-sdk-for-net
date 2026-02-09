@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class LocalRulestackCertificateObjectOperationSource : IOperationSource<LocalRulestackCertificateObjectResource>
+    /// <summary></summary>
+    internal partial class LocalRulestackCertificateObjectOperationSource : IOperationSource<LocalRulestackCertificateObjectResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal LocalRulestackCertificateObjectOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         LocalRulestackCertificateObjectResource IOperationSource<LocalRulestackCertificateObjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LocalRulestackCertificateObjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            LocalRulestackCertificateObjectData data = LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new LocalRulestackCertificateObjectResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<LocalRulestackCertificateObjectResource> IOperationSource<LocalRulestackCertificateObjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LocalRulestackCertificateObjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-            return await Task.FromResult(new LocalRulestackCertificateObjectResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            LocalRulestackCertificateObjectData data = LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new LocalRulestackCertificateObjectResource(_client, data);
         }
     }
 }

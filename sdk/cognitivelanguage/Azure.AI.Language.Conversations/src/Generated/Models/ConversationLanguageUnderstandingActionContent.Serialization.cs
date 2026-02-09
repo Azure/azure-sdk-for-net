@@ -9,14 +9,37 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class ConversationLanguageUnderstandingActionContent : IUtf8JsonSerializable, IJsonModel<ConversationLanguageUnderstandingActionContent>
+    /// <summary> Input parameters necessary for a Conversation task. </summary>
+    public partial class ConversationLanguageUnderstandingActionContent : IJsonModel<ConversationLanguageUnderstandingActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationLanguageUnderstandingActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingActionContent"/> for deserialization. </summary>
+        internal ConversationLanguageUnderstandingActionContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConversationLanguageUnderstandingActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConversationLanguageUnderstandingActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +51,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
@@ -69,15 +91,15 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +108,27 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        ConversationLanguageUnderstandingActionContent IJsonModel<ConversationLanguageUnderstandingActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationLanguageUnderstandingActionContent IJsonModel<ConversationLanguageUnderstandingActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConversationLanguageUnderstandingActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement, options);
         }
 
-        internal static ConversationLanguageUnderstandingActionContent DeserializeConversationLanguageUnderstandingActionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConversationLanguageUnderstandingActionContent DeserializeConversationLanguageUnderstandingActionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,72 +140,70 @@ namespace Azure.AI.Language.Conversations.Models
             StringIndexType? stringIndexType = default;
             string directTarget = default;
             IDictionary<string, AnalysisConfig> targetProjectParameters = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("projectName"u8))
+                if (prop.NameEquals("projectName"u8))
                 {
-                    projectName = property.Value.GetString();
+                    projectName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentName"u8))
+                if (prop.NameEquals("deploymentName"u8))
                 {
-                    deploymentName = property.Value.GetString();
+                    deploymentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("verbose"u8))
+                if (prop.NameEquals("verbose"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    verbose = property.Value.GetBoolean();
+                    verbose = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isLoggingEnabled"u8))
+                if (prop.NameEquals("isLoggingEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLoggingEnabled = property.Value.GetBoolean();
+                    isLoggingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"u8))
+                if (prop.NameEquals("stringIndexType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    stringIndexType = new StringIndexType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("directTarget"u8))
+                if (prop.NameEquals("directTarget"u8))
                 {
-                    directTarget = property.Value.GetString();
+                    directTarget = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetProjectParameters"u8))
+                if (prop.NameEquals("targetProjectParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, AnalysisConfig> dictionary = new Dictionary<string, AnalysisConfig>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AnalysisConfig.DeserializeAnalysisConfig(property0.Value, options));
+                        dictionary.Add(prop0.Name, AnalysisConfig.DeserializeAnalysisConfig(prop0.Value, options));
                     }
                     targetProjectParameters = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConversationLanguageUnderstandingActionContent(
                 projectName,
                 deploymentName,
@@ -187,13 +212,16 @@ namespace Azure.AI.Language.Conversations.Models
                 stringIndexType,
                 directTarget,
                 targetProjectParameters ?? new ChangeTrackingDictionary<string, AnalysisConfig>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ConversationLanguageUnderstandingActionContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConversationLanguageUnderstandingActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -203,38 +231,11 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        ConversationLanguageUnderstandingActionContent IPersistableModel<ConversationLanguageUnderstandingActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingActionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationLanguageUnderstandingActionContent IPersistableModel<ConversationLanguageUnderstandingActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingActionContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConversationLanguageUnderstandingActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConversationLanguageUnderstandingActionContent FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConversationLanguageUnderstandingActionContent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

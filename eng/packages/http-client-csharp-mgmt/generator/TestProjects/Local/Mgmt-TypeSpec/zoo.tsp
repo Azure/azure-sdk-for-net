@@ -32,10 +32,12 @@ interface Zoos {
 
   list is ArmResourceListByParent<Zoo>;
 
+  listBySubscription is ArmListBySubscription<Zoo>;
+
   @get
   @action("recommend")
   recommend is ArmResourceActionSync<
-    Zoo, 
+    Zoo,
     void,
     ArmResponse<ZooRecommendation>>;
 
@@ -69,10 +71,3 @@ model ZooRecommendation {
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
 }
-
-// We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource via alternateType
-namespace Azure.ResourceManager.Models {
-  model SubResource { }
-}
-
-@@alternateType(MgmtTypeSpec.ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");

@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.MigrationDiscoverySap</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider MigrationDiscoverySap.</Description>
     <PackageTags>azure;management;arm;resource manager;migrationdiscoverysap</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

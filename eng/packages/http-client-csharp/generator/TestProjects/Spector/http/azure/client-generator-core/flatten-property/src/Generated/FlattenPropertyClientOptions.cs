@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
+namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
 {
     public partial class FlattenPropertyClientOptions : ClientOptions
     {

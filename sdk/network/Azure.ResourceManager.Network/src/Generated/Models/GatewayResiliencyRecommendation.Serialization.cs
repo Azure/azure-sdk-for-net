@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -157,6 +158,159 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendationTitle), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  recommendationTitle: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecommendationTitle))
+                {
+                    builder.Append("  recommendationTitle: ");
+                    if (RecommendationTitle.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecommendationTitle}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecommendationTitle}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  recommendationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecommendationId))
+                {
+                    builder.Append("  recommendationId: ");
+                    if (RecommendationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecommendationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecommendationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  severity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    builder.Append("  severity: ");
+                    if (Severity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Severity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Severity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendationText), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  recommendationText: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecommendationText))
+                {
+                    builder.Append("  recommendationText: ");
+                    if (RecommendationText.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecommendationText}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecommendationText}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallToActionText), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callToActionText: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallToActionText))
+                {
+                    builder.Append("  callToActionText: ");
+                    if (CallToActionText.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CallToActionText}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CallToActionText}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallToActionLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callToActionLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallToActionLink))
+                {
+                    builder.Append("  callToActionLink: ");
+                    if (CallToActionLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CallToActionLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CallToActionLink}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GatewayResiliencyRecommendation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyRecommendation>)this).GetFormatFromOptions(options) : options.Format;
@@ -165,6 +319,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GatewayResiliencyRecommendation)} does not support writing '{options.Format}' format.");
             }

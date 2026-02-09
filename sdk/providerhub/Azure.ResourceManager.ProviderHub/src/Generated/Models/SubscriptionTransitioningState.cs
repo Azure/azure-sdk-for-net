@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SubscriptionTransitioningState. </summary>
+    /// <summary> The state. </summary>
     public readonly partial struct SubscriptionTransitioningState : IEquatable<SubscriptionTransitioningState>
     {
         private readonly string _value;

@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class ZooRecommendation
     {
@@ -43,9 +43,6 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateRecommendRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -56,7 +53,10 @@ namespace MgmtTypeSpec
             uri.AppendPath(zooName, true);
             uri.AppendPath("/recommend", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

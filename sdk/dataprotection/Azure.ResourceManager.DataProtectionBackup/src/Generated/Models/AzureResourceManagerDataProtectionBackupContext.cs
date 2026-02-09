@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(AdhocBackupValidateContent))]
     [ModelReaderWriterBuildable(typeof(AdhocBasedBackupTaggingCriteria))]
     [ModelReaderWriterBuildable(typeof(AdhocBasedBackupTriggerContext))]
+    [ModelReaderWriterBuildable(typeof(AdlsBlobBackupDataSourceSettings))]
     [ModelReaderWriterBuildable(typeof(AzureBackupJobResourceList))]
     [ModelReaderWriterBuildable(typeof(AzureBackupRecoveryPointResourceList))]
     [ModelReaderWriterBuildable(typeof(AzureMonitorAlertSettings))]
@@ -185,6 +186,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserFacingWarningDetail))]
     [ModelReaderWriterBuildable(typeof(ValidateCrossRegionRestoreRequestObject))]
+    [ModelReaderWriterBuildable(typeof(ValidateForModifyBackupContent))]
     public partial class AzureResourceManagerDataProtectionBackupContext : ModelReaderWriterContext
     {
     }

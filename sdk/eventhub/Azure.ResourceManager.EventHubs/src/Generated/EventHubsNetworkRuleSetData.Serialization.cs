@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 trustedServiceAccessEnabled,
                 defaultAction,
                 virtualNetworkRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>(),
                 ipRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>(),
                 publicNetworkAccess,
-                location,
                 serializedAdditionalRawData);
         }
 

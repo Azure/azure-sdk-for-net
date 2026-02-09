@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-15";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
@@ -257,8 +257,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Create or update policy with specified rule set name within a resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="data"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -285,8 +285,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Create or update policy with specified rule set name within a resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="data"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -351,8 +351,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Update an existing CdnWebApplicationFirewallPolicy with the specified policy name under the specified subscription and resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="patch"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,8 +378,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Update an existing CdnWebApplicationFirewallPolicy with the specified policy name under the specified subscription and resource group. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="patch"> CdnWebApplicationFirewallPolicy parameters to be patched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -439,8 +439,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes Policy. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
@@ -464,8 +464,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes Policy. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyName"/> is null. </exception>
@@ -512,8 +512,8 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -541,8 +541,8 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>

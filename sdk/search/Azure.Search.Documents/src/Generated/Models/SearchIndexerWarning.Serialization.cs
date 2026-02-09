@@ -5,14 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerWarning
+    public partial class SearchIndexerWarning : IUtf8JsonSerializable, IJsonModel<SearchIndexerWarning>
     {
-        internal static SearchIndexerWarning DeserializeSearchIndexerWarning(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexerWarning>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SearchIndexerWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerWarning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchIndexerWarning)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(Key))
+            {
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStringValue(Details);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DocumentationLink))
+            {
+                writer.WritePropertyName("documentationLink"u8);
+                writer.WriteStringValue(DocumentationLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        SearchIndexerWarning IJsonModel<SearchIndexerWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerWarning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchIndexerWarning)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchIndexerWarning(document.RootElement, options);
+        }
+
+        internal static SearchIndexerWarning DeserializeSearchIndexerWarning(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +101,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string details = default;
             string documentationLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -49,9 +130,51 @@ namespace Azure.Search.Documents.Indexes.Models
                     documentationLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchIndexerWarning(key, message, name, details, documentationLink);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SearchIndexerWarning(
+                key,
+                message,
+                name,
+                details,
+                documentationLink,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SearchIndexerWarning>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerWarning>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerWarning)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchIndexerWarning IPersistableModel<SearchIndexerWarning>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerWarning>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchIndexerWarning(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerWarning)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchIndexerWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -59,6 +182,14 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchIndexerWarning(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

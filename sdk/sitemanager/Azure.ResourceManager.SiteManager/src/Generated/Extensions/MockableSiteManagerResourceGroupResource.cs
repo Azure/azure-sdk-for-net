@@ -8,98 +8,92 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SiteManager;
 
 namespace Azure.ResourceManager.SiteManager.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSiteManagerResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSiteManagerResourceGroupResource for mocking. </summary>
         protected MockableSiteManagerResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSiteManagerResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSiteManagerResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of ResourceGroupEdgeSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceGroupEdgeSites and their operations over a ResourceGroupEdgeSiteResource. </returns>
+        public virtual ResourceGroupEdgeSiteCollection GetResourceGroupEdgeSites()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of EdgeSiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EdgeSiteResources and their operations over a EdgeSiteResource. </returns>
-        public virtual EdgeSiteCollection GetEdgeSites()
-        {
-            return GetCachedClient(client => new EdgeSiteCollection(client, Id));
+            return GetCachedClient(client => new ResourceGroupEdgeSiteCollection(client, Id));
         }
 
         /// <summary>
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeSiteResource>> GetEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupEdgeSiteResource>> GetResourceGroupEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            return await GetEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return await GetResourceGroupEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="siteName"> Name of Site resource. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EdgeSiteResource> GetEdgeSite(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSite(string siteName, CancellationToken cancellationToken = default)
         {
-            return GetEdgeSites().Get(siteName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return GetResourceGroupEdgeSites().Get(siteName, cancellationToken);
         }
     }
 }

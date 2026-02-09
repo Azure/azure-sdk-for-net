@@ -83,7 +83,7 @@ namespace Azure.Communication.Email.Tests
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         [TestCaseSource(nameof(SetRecipientAddressState))]
         public void SendEmailAndWaitForStatusWithAutomaticPolling(

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> One and only one of the schedule types should be specified. Choose either 'daily', 'weekly', 'absoluteMonthly' or 'relativeMonthly' for your maintenance schedule. </summary>
+    /// <summary>
+    /// One and only one of the schedule types should be specified. Choose either 'daily', 'weekly', 'absoluteMonthly' or 'relativeMonthly' for your maintenance schedule.
+    /// Serialized Name: Schedule
+    /// </summary>
     public partial class ContainerServiceMaintenanceSchedule
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceSchedule"/>. </summary>
-        /// <param name="daily"> For schedules like: 'recur every day' or 'recur every 3 days'. </param>
-        /// <param name="weekly"> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </param>
-        /// <param name="absoluteMonthly"> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </param>
-        /// <param name="relativeMonthly"> For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'. </param>
+        /// <param name="daily">
+        /// For schedules like: 'recur every day' or 'recur every 3 days'.
+        /// Serialized Name: Schedule.daily
+        /// </param>
+        /// <param name="weekly">
+        /// For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'.
+        /// Serialized Name: Schedule.weekly
+        /// </param>
+        /// <param name="absoluteMonthly">
+        /// For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'.
+        /// Serialized Name: Schedule.absoluteMonthly
+        /// </param>
+        /// <param name="relativeMonthly">
+        /// For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'.
+        /// Serialized Name: Schedule.relativeMonthly
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMaintenanceSchedule(DailySchedule daily, ContainerServiceMaintenanceWeeklySchedule weekly, ContainerServiceMaintenanceAbsoluteMonthlySchedule absoluteMonthly, ContainerServiceMaintenanceRelativeMonthlySchedule relativeMonthly, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,9 +80,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> For schedules like: 'recur every day' or 'recur every 3 days'. </summary>
+        /// <summary>
+        /// For schedules like: 'recur every day' or 'recur every 3 days'.
+        /// Serialized Name: Schedule.daily
+        /// </summary>
         internal DailySchedule Daily { get; set; }
-        /// <summary> Specifies the number of days between each set of occurrences. </summary>
+        /// <summary>
+        /// Specifies the number of days between each set of occurrences.
+        /// Serialized Name: DailySchedule.intervalDays
+        /// </summary>
         [WirePath("daily.intervalDays")]
         public int? DailyIntervalDays
         {
@@ -78,13 +99,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </summary>
+        /// <summary>
+        /// For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'.
+        /// Serialized Name: Schedule.weekly
+        /// </summary>
         [WirePath("weekly")]
         public ContainerServiceMaintenanceWeeklySchedule Weekly { get; set; }
-        /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
+        /// <summary>
+        /// For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'.
+        /// Serialized Name: Schedule.absoluteMonthly
+        /// </summary>
         [WirePath("absoluteMonthly")]
         public ContainerServiceMaintenanceAbsoluteMonthlySchedule AbsoluteMonthly { get; set; }
-        /// <summary> For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'. </summary>
+        /// <summary>
+        /// For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'.
+        /// Serialized Name: Schedule.relativeMonthly
+        /// </summary>
         [WirePath("relativeMonthly")]
         public ContainerServiceMaintenanceRelativeMonthlySchedule RelativeMonthly { get; set; }
     }

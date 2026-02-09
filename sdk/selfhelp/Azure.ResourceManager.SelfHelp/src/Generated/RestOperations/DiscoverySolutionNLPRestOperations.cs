@@ -6,192 +6,60 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    internal partial class DiscoverySolutionNLPRestOperations
+    internal partial class DiscoverySolutionNLP
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DiscoverySolutionNLPRestOperations. </summary>
+        /// <summary> Initializes a new instance of DiscoverySolutionNLP for mocking. </summary>
+        protected DiscoverySolutionNLP()
+        {
+        }
+
+        /// <summary> Initializes a new instance of DiscoverySolutionNLP. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DiscoverySolutionNLPRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal DiscoverySolutionNLP(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateDiscoverSolutionsRequestUri(DiscoveryNlpContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        internal HttpMessage CreateDiscoverSolutionsRequest(DiscoveryNlpContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (content != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-                request.Content = content0;
-            }
-            _userAgent.Apply(message);
-            return message;
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDiscoverSolutionsNlpRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
-            using var message = CreateDiscoverSolutionsRequest(content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DiscoveryNlpResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DiscoveryNlpResult> DiscoverSolutions(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDiscoverSolutionsRequest(content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DiscoveryNlpResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDiscoverSolutionsBySubscriptionRequestUri(string subscriptionId, DiscoveryNlpContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDiscoverSolutionsBySubscriptionRequest(string subscriptionId, DiscoveryNlpContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, false);
-            uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (content != null)
+            request.Method = RequestMethod.Post;
+            if ("application/json" != null)
             {
-                request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-                request.Content = content0;
+                request.Headers.SetValue("Content-Type", "application/json");
             }
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
-        }
-
-        /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsBySubscriptionAsync(string subscriptionId, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateDiscoverSolutionsBySubscriptionRequest(subscriptionId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DiscoveryNlpResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<DiscoveryNlpResult> DiscoverSolutionsBySubscription(string subscriptionId, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateDiscoverSolutionsBySubscriptionRequest(subscriptionId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DiscoveryNlpResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

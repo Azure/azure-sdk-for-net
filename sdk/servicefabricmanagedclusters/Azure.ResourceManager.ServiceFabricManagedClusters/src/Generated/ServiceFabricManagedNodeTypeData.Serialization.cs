@@ -10,16 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedNodeTypeData>
+    /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
+    public partial class ServiceFabricManagedNodeTypeData : ResourceData, IJsonModel<ServiceFabricManagedNodeTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedNodeTypeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedNodeTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +33,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -45,6 +51,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -54,1038 +65,137 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(IsPrimary))
-            {
-                writer.WritePropertyName("isPrimary"u8);
-                writer.WriteBooleanValue(IsPrimary.Value);
-            }
-            if (Optional.IsDefined(VmInstanceCount))
-            {
-                writer.WritePropertyName("vmInstanceCount"u8);
-                writer.WriteNumberValue(VmInstanceCount.Value);
-            }
-            if (Optional.IsDefined(DataDiskSizeInGB))
-            {
-                writer.WritePropertyName("dataDiskSizeGB"u8);
-                writer.WriteNumberValue(DataDiskSizeInGB.Value);
-            }
-            if (Optional.IsDefined(DataDiskType))
-            {
-                writer.WritePropertyName("dataDiskType"u8);
-                writer.WriteStringValue(DataDiskType.Value.ToString());
-            }
-            if (Optional.IsDefined(DataDiskLetter))
-            {
-                writer.WritePropertyName("dataDiskLetter"u8);
-                writer.WriteStringValue(DataDiskLetter);
-            }
-            if (Optional.IsCollectionDefined(PlacementProperties))
-            {
-                writer.WritePropertyName("placementProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in PlacementProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Capacities))
-            {
-                writer.WritePropertyName("capacities"u8);
-                writer.WriteStartObject();
-                foreach (var item in Capacities)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(ApplicationPorts))
-            {
-                writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue(ApplicationPorts, options);
-            }
-            if (Optional.IsDefined(EphemeralPorts))
-            {
-                writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue(EphemeralPorts, options);
-            }
-            if (Optional.IsDefined(VmSize))
-            {
-                writer.WritePropertyName("vmSize"u8);
-                writer.WriteStringValue(VmSize);
-            }
-            if (Optional.IsDefined(VmImagePublisher))
-            {
-                writer.WritePropertyName("vmImagePublisher"u8);
-                writer.WriteStringValue(VmImagePublisher);
-            }
-            if (Optional.IsDefined(VmImageOffer))
-            {
-                writer.WritePropertyName("vmImageOffer"u8);
-                writer.WriteStringValue(VmImageOffer);
-            }
-            if (Optional.IsDefined(VmImageSku))
-            {
-                writer.WritePropertyName("vmImageSku"u8);
-                writer.WriteStringValue(VmImageSku);
-            }
-            if (Optional.IsDefined(VmImageVersion))
-            {
-                writer.WritePropertyName("vmImageVersion"u8);
-                writer.WriteStringValue(VmImageVersion);
-            }
-            if (Optional.IsCollectionDefined(VmSecrets))
-            {
-                writer.WritePropertyName("vmSecrets"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmSecrets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(VmExtensions))
-            {
-                writer.WritePropertyName("vmExtensions"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmExtensions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VmManagedIdentity))
-            {
-                writer.WritePropertyName("vmManagedIdentity"u8);
-                writer.WriteObjectValue(VmManagedIdentity, options);
-            }
-            if (Optional.IsDefined(IsStateless))
-            {
-                writer.WritePropertyName("isStateless"u8);
-                writer.WriteBooleanValue(IsStateless.Value);
-            }
-            if (Optional.IsDefined(HasMultiplePlacementGroups))
-            {
-                writer.WritePropertyName("multiplePlacementGroups"u8);
-                writer.WriteBooleanValue(HasMultiplePlacementGroups.Value);
-            }
-            if (Optional.IsCollectionDefined(FrontendConfigurations))
-            {
-                writer.WritePropertyName("frontendConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in FrontendConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(NetworkSecurityRules))
-            {
-                writer.WritePropertyName("networkSecurityRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in NetworkSecurityRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(AdditionalDataDisks))
-            {
-                writer.WritePropertyName("additionalDataDisks"u8);
-                writer.WriteStartArray();
-                foreach (var item in AdditionalDataDisks)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
-            {
-                writer.WritePropertyName("enableEncryptionAtHost"u8);
-                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(IsAcceleratedNetworkingEnabled))
-            {
-                writer.WritePropertyName("enableAcceleratedNetworking"u8);
-                writer.WriteBooleanValue(IsAcceleratedNetworkingEnabled.Value);
-            }
-            if (Optional.IsDefined(UseDefaultPublicLoadBalancer))
-            {
-                writer.WritePropertyName("useDefaultPublicLoadBalancer"u8);
-                writer.WriteBooleanValue(UseDefaultPublicLoadBalancer.Value);
-            }
-            if (Optional.IsDefined(UseTempDataDisk))
-            {
-                writer.WritePropertyName("useTempDataDisk"u8);
-                writer.WriteBooleanValue(UseTempDataDisk.Value);
-            }
-            if (Optional.IsDefined(IsOverProvisioningEnabled))
-            {
-                writer.WritePropertyName("enableOverProvisioning"u8);
-                writer.WriteBooleanValue(IsOverProvisioningEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(Zones))
-            {
-                writer.WritePropertyName("zones"u8);
-                writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsSpotVm))
-            {
-                writer.WritePropertyName("isSpotVM"u8);
-                writer.WriteBooleanValue(IsSpotVm.Value);
-            }
-            if (Optional.IsDefined(HostGroupId))
-            {
-                writer.WritePropertyName("hostGroupId"u8);
-                writer.WriteStringValue(HostGroupId);
-            }
-            if (Optional.IsDefined(UseEphemeralOSDisk))
-            {
-                writer.WritePropertyName("useEphemeralOSDisk"u8);
-                writer.WriteBooleanValue(UseEphemeralOSDisk.Value);
-            }
-            if (Optional.IsDefined(SpotRestoreTimeout))
-            {
-                writer.WritePropertyName("spotRestoreTimeout"u8);
-                writer.WriteStringValue(SpotRestoreTimeout);
-            }
-            if (Optional.IsDefined(EvictionPolicy))
-            {
-                writer.WritePropertyName("evictionPolicy"u8);
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(VmImageResourceId))
-            {
-                writer.WritePropertyName("vmImageResourceId"u8);
-                writer.WriteStringValue(VmImageResourceId);
-            }
-            if (Optional.IsDefined(SubnetId))
-            {
-                writer.WritePropertyName("subnetId"u8);
-                writer.WriteStringValue(SubnetId);
-            }
-            if (Optional.IsCollectionDefined(VmSetupActions))
-            {
-                writer.WritePropertyName("vmSetupActions"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmSetupActions)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SecurityType))
-            {
-                writer.WritePropertyName("securityType"u8);
-                writer.WriteStringValue(SecurityType.Value.ToString());
-            }
-            if (Optional.IsDefined(SecurityEncryptionType))
-            {
-                writer.WritePropertyName("securityEncryptionType"u8);
-                writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
-            }
-            if (Optional.IsDefined(IsSecureBootEnabled))
-            {
-                writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
-            }
-            if (Optional.IsDefined(IsNodePublicIPEnabled))
-            {
-                writer.WritePropertyName("enableNodePublicIP"u8);
-                writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
-            }
-            if (Optional.IsDefined(IsNodePublicIPv6Enabled))
-            {
-                writer.WritePropertyName("enableNodePublicIPv6"u8);
-                writer.WriteBooleanValue(IsNodePublicIPv6Enabled.Value);
-            }
-            if (Optional.IsDefined(VmSharedGalleryImageId))
-            {
-                writer.WritePropertyName("vmSharedGalleryImageId"u8);
-                writer.WriteStringValue(VmSharedGalleryImageId);
-            }
-            if (Optional.IsDefined(NatGatewayId))
-            {
-                writer.WritePropertyName("natGatewayId"u8);
-                writer.WriteStringValue(NatGatewayId);
-            }
-            if (Optional.IsCollectionDefined(NatConfigurations))
-            {
-                writer.WritePropertyName("natConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in NatConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VmImagePlan))
-            {
-                writer.WritePropertyName("vmImagePlan"u8);
-                writer.WriteObjectValue(VmImagePlan, options);
-            }
-            if (Optional.IsDefined(ServiceArtifactReferenceId))
-            {
-                writer.WritePropertyName("serviceArtifactReferenceId"u8);
-                writer.WriteStringValue(ServiceArtifactReferenceId);
-            }
-            if (Optional.IsDefined(DscpConfigurationId))
-            {
-                writer.WritePropertyName("dscpConfigurationId"u8);
-                writer.WriteStringValue(DscpConfigurationId);
-            }
-            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
-            {
-                writer.WritePropertyName("additionalNetworkInterfaceConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in AdditionalNetworkInterfaceConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ComputerNamePrefix))
-            {
-                writer.WritePropertyName("computerNamePrefix"u8);
-                writer.WriteStringValue(ComputerNamePrefix);
-            }
-            if (Optional.IsCollectionDefined(VmApplications))
-            {
-                writer.WritePropertyName("vmApplications"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmApplications)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsZoneBalanceEnabled))
-            {
-                writer.WritePropertyName("zoneBalance"u8);
-                writer.WriteBooleanValue(IsZoneBalanceEnabled.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        ServiceFabricManagedNodeTypeData IJsonModel<ServiceFabricManagedNodeTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedNodeTypeData IJsonModel<ServiceFabricManagedNodeTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceFabricManagedNodeTypeData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
         }
 
-        internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            NodeTypeSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            bool? isPrimary = default;
-            int? vmInstanceCount = default;
-            int? dataDiskSizeGB = default;
-            ServiceFabricManagedDataDiskType? dataDiskType = default;
-            string dataDiskLetter = default;
-            IDictionary<string, string> placementProperties = default;
-            IDictionary<string, string> capacities = default;
-            EndpointRangeDescription applicationPorts = default;
-            EndpointRangeDescription ephemeralPorts = default;
-            string vmSize = default;
-            string vmImagePublisher = default;
-            string vmImageOffer = default;
-            string vmImageSku = default;
-            string vmImageVersion = default;
-            IList<NodeTypeVaultSecretGroup> vmSecrets = default;
-            IList<NodeTypeVmssExtension> vmExtensions = default;
-            VmManagedIdentity vmManagedIdentity = default;
-            bool? isStateless = default;
-            bool? multiplePlacementGroups = default;
-            IList<NodeTypeFrontendConfiguration> frontendConfigurations = default;
-            IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = default;
-            IList<NodeTypeVmssDataDisk> additionalDataDisks = default;
-            bool? enableEncryptionAtHost = default;
-            ServiceFabricManagedResourceProvisioningState? provisioningState = default;
-            bool? enableAcceleratedNetworking = default;
-            bool? useDefaultPublicLoadBalancer = default;
-            bool? useTempDataDisk = default;
-            bool? enableOverProvisioning = default;
-            IList<string> zones = default;
-            bool? isSpotVm = default;
-            string hostGroupId = default;
-            bool? useEphemeralOSDisk = default;
-            string spotRestoreTimeout = default;
-            SpotNodeVmEvictionPolicyType? evictionPolicy = default;
-            ResourceIdentifier vmImageResourceId = default;
-            ResourceIdentifier subnetId = default;
-            IList<VmSetupAction> vmSetupActions = default;
-            ServiceFabricManagedClusterSecurityType? securityType = default;
-            NodeTypeSecurityEncryptionType? securityEncryptionType = default;
-            bool? secureBootEnabled = default;
-            bool? enableNodePublicIP = default;
-            bool? enableNodePublicIPv6 = default;
-            ResourceIdentifier vmSharedGalleryImageId = default;
-            ResourceIdentifier natGatewayId = default;
-            IList<NodeTypeNatConfig> natConfigurations = default;
-            VmImagePlan vmImagePlan = default;
-            ResourceIdentifier serviceArtifactReferenceId = default;
-            ResourceIdentifier dscpConfigurationId = default;
-            IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
-            string computerNamePrefix = default;
-            IList<ServiceFabricManagedVmApplication> vmApplications = default;
-            bool? zoneBalance = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ServiceFabricManagedNodeTypeProperties properties = default;
+            IDictionary<string, string> tags = default;
+            NodeTypeSku sku = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ServiceFabricManagedNodeTypeProperties.DeserializeServiceFabricManagedNodeTypeProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("isPrimary"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isPrimary = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmInstanceCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmInstanceCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataDiskSizeGB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataDiskSizeGB = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataDiskType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataDiskType = new ServiceFabricManagedDataDiskType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataDiskLetter"u8))
-                        {
-                            dataDiskLetter = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("placementProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            placementProperties = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("capacities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            capacities = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("applicationPorts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            applicationPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("ephemeralPorts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ephemeralPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("vmSize"u8))
-                        {
-                            vmSize = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmImagePublisher"u8))
-                        {
-                            vmImagePublisher = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmImageOffer"u8))
-                        {
-                            vmImageOffer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmImageSku"u8))
-                        {
-                            vmImageSku = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmImageVersion"u8))
-                        {
-                            vmImageVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmSecrets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NodeTypeVaultSecretGroup> array = new List<NodeTypeVaultSecretGroup>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NodeTypeVaultSecretGroup.DeserializeNodeTypeVaultSecretGroup(item, options));
-                            }
-                            vmSecrets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("vmExtensions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NodeTypeVmssExtension> array = new List<NodeTypeVmssExtension>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NodeTypeVmssExtension.DeserializeNodeTypeVmssExtension(item, options));
-                            }
-                            vmExtensions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("vmManagedIdentity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmManagedIdentity = VmManagedIdentity.DeserializeVmManagedIdentity(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("isStateless"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isStateless = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("multiplePlacementGroups"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            multiplePlacementGroups = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("frontendConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NodeTypeFrontendConfiguration> array = new List<NodeTypeFrontendConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NodeTypeFrontendConfiguration.DeserializeNodeTypeFrontendConfiguration(item, options));
-                            }
-                            frontendConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("networkSecurityRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item, options));
-                            }
-                            networkSecurityRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalDataDisks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NodeTypeVmssDataDisk> array = new List<NodeTypeVmssDataDisk>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NodeTypeVmssDataDisk.DeserializeNodeTypeVmssDataDisk(item, options));
-                            }
-                            additionalDataDisks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableEncryptionAtHost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableEncryptionAtHost = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ServiceFabricManagedResourceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enableAcceleratedNetworking"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableAcceleratedNetworking = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("useDefaultPublicLoadBalancer"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useDefaultPublicLoadBalancer = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("useTempDataDisk"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useTempDataDisk = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableOverProvisioning"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableOverProvisioning = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("zones"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            zones = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("isSpotVM"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isSpotVm = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("hostGroupId"u8))
-                        {
-                            hostGroupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("useEphemeralOSDisk"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useEphemeralOSDisk = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("spotRestoreTimeout"u8))
-                        {
-                            spotRestoreTimeout = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("evictionPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            evictionPolicy = new SpotNodeVmEvictionPolicyType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vmImageResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmImageResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subnetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vmSetupActions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VmSetupAction> array = new List<VmSetupAction>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new VmSetupAction(item.GetString()));
-                            }
-                            vmSetupActions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("securityType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            securityType = new ServiceFabricManagedClusterSecurityType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("securityEncryptionType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            securityEncryptionType = new NodeTypeSecurityEncryptionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("secureBootEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            secureBootEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableNodePublicIP"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableNodePublicIP = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableNodePublicIPv6"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableNodePublicIPv6 = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmSharedGalleryImageId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmSharedGalleryImageId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("natGatewayId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            natGatewayId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("natConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NodeTypeNatConfig> array = new List<NodeTypeNatConfig>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NodeTypeNatConfig.DeserializeNodeTypeNatConfig(item, options));
-                            }
-                            natConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("vmImagePlan"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceArtifactReferenceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceArtifactReferenceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dscpConfigurationId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dscpConfigurationId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalNetworkInterfaceConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AdditionalNetworkInterfaceConfiguration> array = new List<AdditionalNetworkInterfaceConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item, options));
-                            }
-                            additionalNetworkInterfaceConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("computerNamePrefix"u8))
-                        {
-                            computerNamePrefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmApplications"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ServiceFabricManagedVmApplication> array = new List<ServiceFabricManagedVmApplication>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ServiceFabricManagedVmApplication.DeserializeServiceFabricManagedVmApplication(item, options));
-                            }
-                            vmApplications = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("zoneBalance"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zoneBalance = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
+                    sku = NodeTypeSku.DeserializeNodeTypeSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricManagedNodeTypeData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                isPrimary,
-                vmInstanceCount,
-                dataDiskSizeGB,
-                dataDiskType,
-                dataDiskLetter,
-                placementProperties ?? new ChangeTrackingDictionary<string, string>(),
-                capacities ?? new ChangeTrackingDictionary<string, string>(),
-                applicationPorts,
-                ephemeralPorts,
-                vmSize,
-                vmImagePublisher,
-                vmImageOffer,
-                vmImageSku,
-                vmImageVersion,
-                vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>(),
-                vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>(),
-                vmManagedIdentity,
-                isStateless,
-                multiplePlacementGroups,
-                frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>(),
-                networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>(),
-                additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>(),
-                enableEncryptionAtHost,
-                provisioningState,
-                enableAcceleratedNetworking,
-                useDefaultPublicLoadBalancer,
-                useTempDataDisk,
-                enableOverProvisioning,
-                zones ?? new ChangeTrackingList<string>(),
-                isSpotVm,
-                hostGroupId,
-                useEphemeralOSDisk,
-                spotRestoreTimeout,
-                evictionPolicy,
-                vmImageResourceId,
-                subnetId,
-                vmSetupActions ?? new ChangeTrackingList<VmSetupAction>(),
-                securityType,
-                securityEncryptionType,
-                secureBootEnabled,
-                enableNodePublicIP,
-                enableNodePublicIPv6,
-                vmSharedGalleryImageId,
-                natGatewayId,
-                natConfigurations ?? new ChangeTrackingList<NodeTypeNatConfig>(),
-                vmImagePlan,
-                serviceArtifactReferenceId,
-                dscpConfigurationId,
-                additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
-                computerNamePrefix,
-                vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
-                zoneBalance,
+                additionalBinaryDataProperties,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku,
-                serializedAdditionalRawData);
+                sku);
         }
 
-        BinaryData IPersistableModel<ServiceFabricManagedNodeTypeData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricManagedNodeTypeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -1095,15 +205,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        ServiceFabricManagedNodeTypeData IPersistableModel<ServiceFabricManagedNodeTypeData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedNodeTypeData IPersistableModel<ServiceFabricManagedNodeTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedNodeTypeData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
                     }
                 default:
@@ -1111,6 +226,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceFabricManagedNodeTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceFabricManagedNodeTypeData"> The <see cref="ServiceFabricManagedNodeTypeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricManagedNodeTypeData serviceFabricManagedNodeTypeData)
+        {
+            if (serviceFabricManagedNodeTypeData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(serviceFabricManagedNodeTypeData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedNodeTypeData"/> from. </param>
+        internal static ServiceFabricManagedNodeTypeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

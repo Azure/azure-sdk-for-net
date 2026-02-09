@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Collection of inbound NAT rule port mappings. </summary>
+        [WirePath("inboundNatRulePortMappings")]
         public IReadOnlyList<InboundNatRulePortMapping> InboundNatRulePortMappings { get; }
     }
 }

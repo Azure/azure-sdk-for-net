@@ -68,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network security group ID. </summary>
+        [WirePath("networkSecurityGroupId")]
         public ResourceIdentifier NetworkSecurityGroupId { get; }
         /// <summary> Resource ID of nic or subnet to which network security group is applied. </summary>
+        [WirePath("appliedTo")]
         public string AppliedTo { get; }
         /// <summary> Matched network security rule. </summary>
+        [WirePath("matchedRule")]
         public MatchedRule MatchedRule { get; }
         /// <summary> List of network security rules evaluation results. </summary>
+        [WirePath("rulesEvaluationResult")]
         public IReadOnlyList<NetworkSecurityRulesEvaluationResult> RulesEvaluationResult { get; }
     }
 }

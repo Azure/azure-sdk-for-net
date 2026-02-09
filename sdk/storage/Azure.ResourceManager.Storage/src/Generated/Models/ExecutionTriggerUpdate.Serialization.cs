@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(ExecutionTriggerUpdate)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(TriggerType))
+            if (Optional.IsDefined(TaskExecutionTriggerType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TriggerType.Value.ToSerialString());
+                writer.WriteStringValue(TaskExecutionTriggerType.Value.ToString());
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ExecutionTriggerType? type = default;
+            TaskExecutionTriggerType? type = default;
             ExecutionTriggerParametersUpdate parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    type = property.Value.GetString().ToExecutionTriggerType();
+                    type = new TaskExecutionTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceFromAzureBlobUsingManagedIdentity()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiCreateOrUpdateDatabaseMigrationBlobManagedIdentity.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiCreateOrUpdateDatabaseMigrationBlobManagedIdentity.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiCreateOrUpdateDatabaseMigrationMAX.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiCreateOrUpdateDatabaseMigrationMAX.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiCreateOrUpdateDatabaseMigrationMIN.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiCreateOrUpdateDatabaseMigrationMIN.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlMIDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlMIDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlMIDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlMIDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlMIDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlMIDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlMiGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/stable/2025-06-30/examples/SqlMiGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlMi_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

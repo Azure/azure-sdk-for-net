@@ -5,22 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents parameters for indexer execution. </summary>
     public partial class IndexingParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IndexingParameters"/>. </summary>
         /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>
         /// <param name="maxFailedItems"> The maximum number of items that can fail indexing for indexer execution to still be considered successful. -1 means no limit. Default is 0. </param>
         /// <param name="maxFailedItemsPerBatch"> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </param>
         /// <param name="indexingParametersConfiguration"> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
-        internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IndexingParametersConfiguration indexingParametersConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IndexingParametersConfiguration indexingParametersConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BatchSize = batchSize;
             MaxFailedItems = maxFailedItems;
             MaxFailedItemsPerBatch = maxFailedItemsPerBatch;
             IndexingParametersConfiguration = indexingParametersConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </summary>

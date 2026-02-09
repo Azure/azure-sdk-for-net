@@ -30,6 +30,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public static ListFilesAsync GetLocalFileLister(string directoryPath)
         {
+            directoryPath = directoryPath.TrimEnd(Path.DirectorySeparatorChar);
             Task<List<IResourceEnumerationItem>> ListFiles(CancellationToken cancellationToken)
             {
                 List<IResourceEnumerationItem> result = new();

@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VmPlacementPolicyProperties : IUtf8JsonSerializable, IJsonModel<VmPlacementPolicyProperties>
+    /// <summary> VM-VM placement policy properties. </summary>
+    public partial class VmPlacementPolicyProperties : PlacementPolicyProperties, IJsonModel<VmPlacementPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmPlacementPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/> for deserialization. </summary>
+        internal VmPlacementPolicyProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VmPlacementPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,16 +35,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vmMembers"u8);
             writer.WriteStartArray();
-            foreach (var item in VmMembers)
+            foreach (ResourceIdentifier item in VmMembers)
             {
                 if (item == null)
                 {
@@ -51,40 +57,72 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(AffinityType.ToString());
         }
 
-        VmPlacementPolicyProperties IJsonModel<VmPlacementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmPlacementPolicyProperties IJsonModel<VmPlacementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmPlacementPolicyProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PlacementPolicyProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVmPlacementPolicyProperties(document.RootElement, options);
         }
 
-        internal static VmPlacementPolicyProperties DeserializeVmPlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VmPlacementPolicyProperties DeserializeVmPlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ResourceIdentifier> vmMembers = default;
-            AvsPlacementPolicyAffinityType affinityType = default;
-            PlacementPolicyType type = default;
+            PlacementPolicyType @type = default;
             PlacementPolicyState? state = default;
             string displayName = default;
             PlacementPolicyProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<ResourceIdentifier> vmMembers = default;
+            AvsPlacementPolicyAffinityType affinityType = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmMembers"u8))
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new PlacementPolicyType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new PlacementPolicyState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new PlacementPolicyProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("vmMembers"u8))
                 {
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -98,59 +136,33 @@ namespace Azure.ResourceManager.Avs.Models
                     vmMembers = array;
                     continue;
                 }
-                if (property.NameEquals("affinityType"u8))
+                if (prop.NameEquals("affinityType"u8))
                 {
-                    affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new PlacementPolicyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PlacementPolicyState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new PlacementPolicyProvisioningState(property.Value.GetString());
+                    affinityType = new AvsPlacementPolicyAffinityType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VmPlacementPolicyProperties(
-                type,
+                @type,
                 state,
                 displayName,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 vmMembers,
                 affinityType);
         }
 
-        BinaryData IPersistableModel<VmPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VmPlacementPolicyProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -160,15 +172,20 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        VmPlacementPolicyProperties IPersistableModel<VmPlacementPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmPlacementPolicyProperties IPersistableModel<VmPlacementPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmPlacementPolicyProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PlacementPolicyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVmPlacementPolicyProperties(document.RootElement, options);
                     }
                 default:
@@ -176,6 +193,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VmPlacementPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

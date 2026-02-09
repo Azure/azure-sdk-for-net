@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
-    /// A record of a call to a bing custom search tool, issued by the model in evaluation of a defined tool, that represents
-    /// executed search with bing custom search.
+    /// A record of a call to a Bing Custom Search tool, issued by the model in evaluation of a defined tool, that represents
+    /// executed search with Bing Custom Search.
     /// </summary>
     public partial class RunStepBingCustomSearchToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepBingCustomSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingCustomSearch"> Reserved for future use. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="bingCustomSearch"/> is null. </exception>
         internal RunStepBingCustomSearchToolCall(string id, IReadOnlyDictionary<string, string> bingCustomSearch) : base(id)
         {
@@ -33,7 +33,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingCustomSearch"> Reserved for future use. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
         internal RunStepBingCustomSearchToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> bingCustomSearch) : base(type, id, serializedAdditionalRawData)
         {
             BingCustomSearch = bingCustomSearch;
@@ -44,7 +44,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> Reserved for future use. </summary>
+        /// <summary> The dictionary with request and response from Bing Custom Search tool. </summary>
         public IReadOnlyDictionary<string, string> BingCustomSearch { get; }
     }
 }

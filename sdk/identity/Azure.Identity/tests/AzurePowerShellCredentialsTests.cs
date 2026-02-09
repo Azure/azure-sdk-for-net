@@ -269,6 +269,52 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void AzurePowerShellCredential_ClaimsChallenge_NoTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain("Azure PowerShell authentication requires multi-factor authentication or additional claims."));
+            Assert.That(ex.Message, Does.Contain($"Connect-AzAccount -ClaimsChallenge '{claims}'"));
+            Assert.That(ex.Message, Does.Not.Contain("-Tenant "));
+        }
+
+        [Test]
+        public void AzurePowerShellCredential_ClaimsChallenge_WithTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var tenant = TenantId;
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { TenantId = tenant }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain($"Connect-AzAccount -Tenant {tenant} -ClaimsChallenge '{claims}'"));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task AzurePowerShellCredential_EmptyOrWhitespaceClaims_DoesNotTriggerGuidance(string claims)
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+        }
+
+        [Test]
         public void AuthenticateWithAzurePowerShellCredential_CanceledByUser()
         {
             var cts = new CancellationTokenSource();

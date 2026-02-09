@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -149,6 +150,128 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
+                {
+                    builder.Append("  protocol: ");
+                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  localIPAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalIPAddress))
+                {
+                    builder.Append("  localIPAddress: ");
+                    if (LocalIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocalIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocalIPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remoteIPAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteIPAddress))
+                {
+                    builder.Append("  remoteIPAddress: ");
+                    if (RemoteIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RemoteIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RemoteIPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  localPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalPort))
+                {
+                    builder.Append("  localPort: ");
+                    if (LocalPort.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocalPort}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocalPort}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemotePort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remotePort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemotePort))
+                {
+                    builder.Append("  remotePort: ");
+                    if (RemotePort.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RemotePort}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RemotePort}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PacketCaptureFilter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -157,6 +280,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PacketCaptureFilter)} does not support writing '{options.Format}' format.");
             }

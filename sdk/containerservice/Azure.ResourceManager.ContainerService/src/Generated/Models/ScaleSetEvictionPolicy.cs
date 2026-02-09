@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms). </summary>
+    /// <summary>
+    /// The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
+    /// Serialized Name: ScaleSetEvictionPolicy
+    /// </summary>
     public readonly partial struct ScaleSetEvictionPolicy : IEquatable<ScaleSetEvictionPolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string DeleteValue = "Delete";
         private const string DeallocateValue = "Deallocate";
 
-        /// <summary> Nodes in the underlying Scale Set of the node pool are deleted when they're evicted. </summary>
+        /// <summary>
+        /// Nodes in the underlying Scale Set of the node pool are deleted when they're evicted.
+        /// Serialized Name: ScaleSetEvictionPolicy.Delete
+        /// </summary>
         public static ScaleSetEvictionPolicy Delete { get; } = new ScaleSetEvictionPolicy(DeleteValue);
-        /// <summary> Nodes in the underlying Scale Set of the node pool are set to the stopped-deallocated state upon eviction. Nodes in the stopped-deallocated state count against your compute quota and can cause issues with cluster scaling or upgrading. </summary>
+        /// <summary>
+        /// Nodes in the underlying Scale Set of the node pool are set to the stopped-deallocated state upon eviction. Nodes in the stopped-deallocated state count against your compute quota and can cause issues with cluster scaling or upgrading.
+        /// Serialized Name: ScaleSetEvictionPolicy.Deallocate
+        /// </summary>
         public static ScaleSetEvictionPolicy Deallocate { get; } = new ScaleSetEvictionPolicy(DeallocateValue);
         /// <summary> Determines if two <see cref="ScaleSetEvictionPolicy"/> values are the same. </summary>
         public static bool operator ==(ScaleSetEvictionPolicy left, ScaleSetEvictionPolicy right) => left.Equals(right);

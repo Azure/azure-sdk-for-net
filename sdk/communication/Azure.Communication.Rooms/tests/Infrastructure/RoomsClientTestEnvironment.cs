@@ -10,6 +10,8 @@ namespace Azure.Communication.Rooms.Tests
     public class RoomsClientTestEnvironment : CommunicationTestEnvironment
     {
         public const string CommunicationConnectionStringRoomsVariableName = "COMMUNICATION_CONNECTION_STRING_ROOMS";
+        private const string TrafficManagerUrl = "https://flighting-api.scheduler.teams.microsoft.com";
+
         public string CommunicationConnectionStringRooms => GetRecordedVariable(
             CommunicationConnectionStringRoomsVariableName,
             options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
@@ -17,5 +19,7 @@ namespace Azure.Communication.Rooms.Tests
         public Uri CommunicationRoomsEndpoint => new(Core.ConnectionString.Parse(CommunicationConnectionStringRooms).GetRequired("endpoint"));
 
         public string CommunicationRoomsAccessKey => Core.ConnectionString.Parse(CommunicationConnectionStringRooms).GetRequired("accesskey");
+
+        public Uri CommunicationRoomsTrafficManagerUrl => new(TrafficManagerUrl);
     }
 }

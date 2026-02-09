@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
 {
@@ -21,6 +22,26 @@ namespace Azure.Identity
         public TokenCredentialOptions()
             : base(diagnostics: new TokenCredentialDiagnosticsOptions())
         {
+        }
+
+        [Experimental("SCME0002")]
+        private protected TokenCredentialOptions(IConfigurationSection section)
+            : base(section, new TokenCredentialDiagnosticsOptions(section?.GetSection("Diagnostics")))
+        {
+            if (section is null)
+            {
+                return;
+            }
+
+            if (Uri.TryCreate(section[nameof(AuthorityHost)], UriKind.Absolute, out Uri authorityHost))
+            {
+                AuthorityHost = authorityHost;
+            }
+
+            if (bool.TryParse(section[nameof(IsUnsafeSupportLoggingEnabled)], out bool isUnsafeSupportLoggingEnabled))
+            {
+                IsUnsafeSupportLoggingEnabled = isUnsafeSupportLoggingEnabled;
+            }
         }
 
         /// <summary>
@@ -68,6 +89,9 @@ namespace Azure.Identity
 
             // copy ISupportsAdditionallyAllowedTenants
             CloneIfImplemented<ISupportsAdditionallyAllowedTenants>(this, clone, (o, c) => CloneListItems(o.AdditionallyAllowedTenants, c.AdditionallyAllowedTenants));
+
+            // copy ISupportsTenantId
+            CloneIfImplemented<ISupportsTenantId>(this, clone, (o, c) => c.TenantId = o.TenantId);
 
             // copy base ClientOptions properties, this would be replaced by a similar method on the base class
 

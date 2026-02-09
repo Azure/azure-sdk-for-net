@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WeightsAndBiases;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     public readonly partial struct WeightsAndBiasesSingleSignOnState : IEquatable<WeightsAndBiasesSingleSignOnState>
     {
         private readonly string _value;
+        /// <summary> Initial state of the SSO resource. </summary>
+        private const string InitialValue = "Initial";
+        /// <summary> State of the SSO resource when it is enabled. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> State of the SSO resource when it is disabled. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WeightsAndBiasesSingleSignOnState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitialValue = "Initial";
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
+            _value = value;
+        }
 
         /// <summary> Initial state of the SSO resource. </summary>
         public static WeightsAndBiasesSingleSignOnState Initial { get; } = new WeightsAndBiasesSingleSignOnState(InitialValue);
+
         /// <summary> State of the SSO resource when it is enabled. </summary>
         public static WeightsAndBiasesSingleSignOnState Enable { get; } = new WeightsAndBiasesSingleSignOnState(EnableValue);
+
         /// <summary> State of the SSO resource when it is disabled. </summary>
         public static WeightsAndBiasesSingleSignOnState Disable { get; } = new WeightsAndBiasesSingleSignOnState(DisableValue);
+
         /// <summary> Determines if two <see cref="WeightsAndBiasesSingleSignOnState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WeightsAndBiasesSingleSignOnState left, WeightsAndBiasesSingleSignOnState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WeightsAndBiasesSingleSignOnState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WeightsAndBiasesSingleSignOnState left, WeightsAndBiasesSingleSignOnState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WeightsAndBiasesSingleSignOnState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WeightsAndBiasesSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WeightsAndBiasesSingleSignOnState(string value) => new WeightsAndBiasesSingleSignOnState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WeightsAndBiasesSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WeightsAndBiasesSingleSignOnState?(string value) => value == null ? null : new WeightsAndBiasesSingleSignOnState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WeightsAndBiasesSingleSignOnState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WeightsAndBiasesSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Support
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
-        internal SupportAzureServiceData()
+        public SupportAzureServiceData()
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            ArmResourceTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.Support
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of the Azure service. </param>
-        /// <param name="resourceTypes"> ARM Resource types. </param>
+        /// <param name="armResourceTypes"> ARM Resource types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> armResourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
-            ResourceTypes = resourceTypes;
+            ArmResourceTypes = armResourceTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Localized name of the Azure service. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
         /// <summary> ARM Resource types. </summary>
-        public IReadOnlyList<string> ResourceTypes { get; }
+        public IList<string> ArmResourceTypes { get; }
     }
 }

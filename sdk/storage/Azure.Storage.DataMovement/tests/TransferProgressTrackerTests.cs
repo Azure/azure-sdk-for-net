@@ -51,14 +51,13 @@ namespace Azure.Storage.DataMovement.Tests
         {
             public ProcessAsync<Args> Process { get; set; }
 
-            public async ValueTask QueueAsync(Args item, CancellationToken cancellationToken = default)
+            public async ValueTask QueueAsync(Args item, CancellationToken cancellationToken)
             {
                 // Just call the process method immediately so it can be tested
-                await Process(item, cancellationToken);
+                await Process(item);
             }
 
-            public bool TryComplete() => true;
-            public ValueTask DisposeAsync() => new();
+            public Task CleanUpAsync() => Task.CompletedTask;
         }
 
         private static void AssertProgressUpdates(List<TransferProgress> expected,  List<TransferProgress> actual)
@@ -103,21 +102,18 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Mock<IProcessor<Args>> progressProcessor = new();
 
-            await using (TransferProgressTracker progressTracker = new(progressProcessor.Object, default))
-            {
-                progressProcessor.VerifySet(p => p.Process = It.IsNotNull<ProcessAsync<Args>>(), Times.Once());
+            TransferProgressTracker progressTracker = new(progressProcessor.Object, default);
+            progressProcessor.VerifySet(p => p.Process = It.IsNotNull<ProcessAsync<Args>>(), Times.Once());
 
-                await RunSampleUpdates(progressTracker);
+            await RunSampleUpdates(progressTracker);
 
-                // BytesTransferred events are not queued if not enabled in options
-                progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _queuedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(5));
-                progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _inProgressArgs)), It.IsAny<CancellationToken>()), Times.Exactly(5));
-                progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _CompletedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(3));
-                progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _FailedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(1));
-                progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _SkippedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(1));
-            }
+            // BytesTransferred events are not queued if not enabled in options
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _queuedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(5));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _inProgressArgs)), It.IsAny<CancellationToken>()), Times.Exactly(5));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _CompletedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(3));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _FailedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(1));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _SkippedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
-            progressProcessor.VerifyAsyncDisposal();
             progressProcessor.VerifyNoOtherCalls();
         }
 
@@ -125,10 +121,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ProgressFlow_NoOptions()
         {
             IProcessor<Args> progressProcessor = new PassthroughProcessor();
-            await using (TransferProgressTracker progressTracker = new(progressProcessor, default))
-            {
-                await RunSampleUpdates(progressTracker);
-            }
+            TransferProgressTracker progressTracker = new(progressProcessor, default);
+            await RunSampleUpdates(progressTracker);
             // Nothing to assert since there is no IProgress but just make sure it doesn't throw an exception
         }
 
@@ -138,14 +132,12 @@ namespace Azure.Storage.DataMovement.Tests
             IProcessor<Args> progressProcessor = new PassthroughProcessor();
             TestProgressHandler progressHandler = new();
 
-            await using (TransferProgressTracker progressTracker = new(progressProcessor, new TransferProgressHandlerOptions()
+            TransferProgressTracker progressTracker = new(progressProcessor, new TransferProgressHandlerOptions()
             {
                 ProgressHandler = progressHandler,
                 TrackBytesTransferred = false
-            }))
-            {
-                await RunSampleUpdates(progressTracker);
-            }
+            });
+            await RunSampleUpdates(progressTracker);
 
             List<TransferProgress> expectedProgressUpdates = [
                 new() { QueuedCount = 1, InProgressCount = 0, CompletedCount = 0, FailedCount = 0, SkippedCount = 0, BytesTransferred = null },
@@ -174,14 +166,12 @@ namespace Azure.Storage.DataMovement.Tests
             IProcessor<Args> progressProcessor = new PassthroughProcessor();
             TestProgressHandler progressHandler = new();
 
-            await using (TransferProgressTracker progressTracker = new(progressProcessor, new TransferProgressHandlerOptions()
+            TransferProgressTracker progressTracker = new(progressProcessor, new TransferProgressHandlerOptions()
             {
                 ProgressHandler = progressHandler,
                 TrackBytesTransferred = true
-            }))
-            {
-                await RunSampleUpdates(progressTracker);
-            }
+            });
+            await RunSampleUpdates(progressTracker);
 
             List<TransferProgress> expectedProgressUpdates = [
                 new() { QueuedCount = 1, InProgressCount = 0, CompletedCount = 0, FailedCount = 0, SkippedCount = 0, BytesTransferred = 0 },

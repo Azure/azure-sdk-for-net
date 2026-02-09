@@ -142,6 +142,109 @@ namespace Azure.AI.Agents.Persistent
                 scope);
         }
 
+        internal virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingWithRequestContextAsync(
+            string threadId,
+            string agentId,
+            CreateRunStreamingOptions options,
+            RequestContext requestContext)
+        {
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(threadId, agentId, _endpoint);
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(requestContext, nameof(requestContext));
+
+            CancellationToken cancellationToken = requestContext.CancellationToken;
+
+            CreateRunRequest createRunRequest = new(
+                agentId,
+                overrideModelName: options.OverrideModelName,
+                overrideInstructions: options.OverrideInstructions,
+                additionalInstructions: options.AdditionalInstructions,
+                additionalMessages: options.AdditionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                overrideTools: options.OverrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources: options.ToolResources,
+                stream: true,
+                temperature: options.Temperature,
+                topP: options.TopP,
+                maxPromptTokens: options.MaxPromptTokens,
+                maxCompletionTokens: options.MaxCompletionTokens,
+                truncationStrategy: options.TruncationStrategy,
+                toolChoice: options.ToolChoice,
+                responseFormat: options.ResponseFormat,
+                parallelToolCalls: options.ParallelToolCalls,
+                metadata: options.Metadata ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData: null);
+
+            async Task<Response> sendRequestAsync() =>
+                await CreateRunStreamingAsync(threadId, createRunRequest.ToRequestContent(), requestContext, include: options?.Include).ConfigureAwait(false);
+
+            AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
+                this.SubmitToolOutputsToStreamWithRequestContextAsync(run, toolOutputs, toolApprovals, requestContext, currRetry, options?.AutoFunctionCallOptions);
+
+            async Task<Response<ThreadRun>> cancelRunAsync(string runId)
+            {
+                Response response = await this.CancelRunAsync(threadId, runId, requestContext).ConfigureAwait(false);
+                return Response.FromValue(ThreadRun.FromResponse(response), response);
+            }
+
+            return new AsyncStreamingUpdateCollection(
+                cancellationToken,
+                options?.AutoFunctionCallOptions!,
+                0,
+                sendRequestAsync,
+                cancelRunAsync,
+                submitToolOutputsToStreamAsync,
+                scope);
+        }
+
+        internal virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamWithRequestContextAsync(
+            ThreadRun run,
+            IEnumerable<ToolOutput> toolOutputs,
+            IEnumerable<ToolApproval> toolApprovals,
+            RequestContext requestContext,
+            int currentRetry,
+            AutoFunctionCallOptions autoFunctionCallOptions = null)
+        {
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(run.Id, run.AssistantId, _endpoint);
+            Argument.AssertNotNull(run, nameof(run));
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+            Argument.AssertNotNull(requestContext, nameof(requestContext));
+
+            CancellationToken cancellationToken = requestContext.CancellationToken;
+
+            if (toolOutputs != null && !toolOutputs.Any())
+                toolOutputs = null;
+            if (toolApprovals != null && !toolApprovals.Any())
+                toolApprovals = null;
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
+                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
+                toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
+                stream: true,
+                serializedAdditionalRawData: null);
+
+            async Task<Response> sendRequestAsync() =>
+                await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
+
+            AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun innerRun, IEnumerable<ToolOutput> innerToolOutputs, IEnumerable<ToolApproval> innerToolApprovals, int currRetry) =>
+                SubmitToolOutputsToStreamWithRequestContextAsync(innerRun, innerToolOutputs, innerToolApprovals, requestContext, currRetry, autoFunctionCallOptions);
+
+            async Task<Response<ThreadRun>> cancelRunAsync(string runId)
+            {
+                Response response = await this.CancelRunAsync(run.ThreadId, runId, requestContext).ConfigureAwait(false);
+                return Response.FromValue(ThreadRun.FromResponse(response), response);
+            }
+
+            return new AsyncStreamingUpdateCollection(
+                cancellationToken,
+                autoFunctionCallOptions!,
+                currentRetry,
+                sendRequestAsync,
+                cancelRunAsync,
+                submitToolOutputsToStreamAsync,
+                scope);
+        }
+
         /// <summary>
         /// Begins a new streaming <see cref="ThreadRun"/> that evaluates a <see cref="PersistentAgentThread"/> using a specified
         /// <see cref="PersistentAgent"/>.
@@ -320,7 +423,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals = null;
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
-                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(),
+                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 true,
                 null);
@@ -393,7 +496,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals = null;
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
-                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(),
+                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 stream: true,
                 serializedAdditionalRawData: null);

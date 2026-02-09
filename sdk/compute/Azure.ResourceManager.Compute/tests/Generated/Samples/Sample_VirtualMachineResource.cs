@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithDiskControllerTypeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ForceDeleteAVM()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Delete_Force.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Delete_Force.json
             // this example is just showing the usage of "VirtualMachines_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAVMByDetachingDataDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Update_DetachDataDiskUsingToBeDetachedProperty.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Update_DetachDataDiskUsingToBeDetachedProperty.json
             // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +250,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAVMByForceDetachingDataDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Update_ForceDetachDataDisk.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Update_ForceDetachDataDisk.json
             // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -331,7 +331,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task AssessPatches_AssessPatchStateOfAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_AssessPatches.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_AssessPatches.json
             // this example is just showing the usage of "VirtualMachines_AssessPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,7 +358,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_AttachDetachDataDisks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,7 +410,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_AttachDetachDataDisks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -442,7 +442,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Capture_VirtualMachineCaptureMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Capture_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Capture_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -470,7 +470,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Capture_VirtualMachineCaptureMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Capture_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Capture_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -498,7 +498,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task ConvertToManagedDisks_VirtualMachineConvertToManagedDisksMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_ConvertToManagedDisks_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_ConvertToManagedDisks_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_ConvertToManagedDisks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -524,7 +524,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task ConvertToManagedDisks_VirtualMachineConvertToManagedDisksMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_ConvertToManagedDisks_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_ConvertToManagedDisks_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_ConvertToManagedDisks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -550,7 +550,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_VirtualMachineDeallocateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Deallocate_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Deallocate_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -577,7 +577,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_VirtualMachineDeallocateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Deallocate_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Deallocate_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -603,7 +603,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Generalize_GeneralizeAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Generalize.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Generalize.json
             // this example is just showing the usage of "VirtualMachines_Generalize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -629,7 +629,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task InstallPatches_InstallPatchStateOfAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_InstallPatches.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_InstallPatches.json
             // this example is just showing the usage of "VirtualMachines_InstallPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -653,6 +653,8 @@ DetachOption = DiskDetachOptionType.ForceDetach,
                 {
                     ClassificationsToInclude = { VmGuestPatchClassificationForWindows.Critical, VmGuestPatchClassificationForWindows.Security },
                     MaxPatchPublishOn = DateTimeOffset.Parse("2020-11-19T02:36:43.0539904+00:00"),
+                    PatchNameMasksToInclude = { "*SQL*" },
+                    PatchNameMasksToExclude = { "*Windows*" },
                 },
             };
             ArmOperation<VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);
@@ -665,7 +667,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task InstanceView_GetVirtualMachineInstanceView()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceView.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceView.json
             // this example is just showing the usage of "VirtualMachines_InstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -691,7 +693,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task InstanceView_GetInstanceViewOfAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceViewAutoPlacedOnDedicatedHostGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceViewAutoPlacedOnDedicatedHostGroup.json
             // this example is just showing the usage of "VirtualMachines_InstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -717,7 +719,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task MigrateToVirtualMachineScaleSet_MigrateAVirtualMachineToFlexibleVirtualMachineScaleSer()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_MigrateToVirtualMachineScaleSet.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_MigrateToVirtualMachineScaleSet.json
             // this example is just showing the usage of "VirtualMachines_MigrateToVmScaleSet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -748,7 +750,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -774,7 +776,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -800,7 +802,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_VirtualMachinePowerOffMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_PowerOff_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_PowerOff_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -827,7 +829,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_VirtualMachinePowerOffMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_PowerOff_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_PowerOff_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -853,7 +855,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Reapply_ReapplyTheStateOfAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Reapply.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Reapply.json
             // this example is just showing the usage of "VirtualMachines_Reapply" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -879,7 +881,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_VirtualMachineRedeployMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Redeploy_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Redeploy_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -905,7 +907,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_VirtualMachineRedeployMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Redeploy_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Redeploy_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -931,7 +933,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageANonEphemeralVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Reimage_NonEphemeralVMs.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Reimage_NonEphemeralVMs.json
             // this example is just showing the usage of "VirtualMachines_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -967,7 +969,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Reimage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Reimage.json
             // this example is just showing the usage of "VirtualMachines_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -997,7 +999,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_VirtualMachineRestartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Restart_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Restart_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1023,7 +1025,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_VirtualMachineRestartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Restart_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Restart_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1049,7 +1051,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task RetrieveBootDiagnosticsData_RetrieveBootDiagnosticsDataOfAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_RetrieveBootDiagnosticsData.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_RetrieveBootDiagnosticsData.json
             // this example is just showing the usage of "VirtualMachines_RetrieveBootDiagnosticsData" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1076,7 +1078,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task RunCommand_VirtualMachineRunCommand()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/runCommandExamples/VirtualMachineRunCommand.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/runCommandExamples/VirtualMachineRunCommand.json
             // this example is just showing the usage of "VirtualMachines_RunCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1104,7 +1106,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task SimulateEviction_SimulateEvictionAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_SimulateEviction.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_SimulateEviction.json
             // this example is just showing the usage of "VirtualMachines_SimulateEviction" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1130,7 +1132,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOn_VirtualMachineStartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Start_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Start_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1156,7 +1158,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOn_VirtualMachineStartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_Start_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_Start_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1182,7 +1184,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSizes_ListsAllAvailableVirtualMachineSizesToWhichTheSpecifiedVirtualMachineCanBeResized()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineExamples/VirtualMachine_ListAvailableVmSizes.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/virtualMachineExamples/VirtualMachine_ListAvailableVmSizes.json
             // this example is just showing the usage of "VirtualMachines_ListAvailableSizes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

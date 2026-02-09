@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
@@ -17,35 +18,13 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
     - sdk/provisioning/Azure.Provisioning.Deployment
+    - sdk/provisioning/Azure.Provisioning.Dns
     - sdk/provisioning/Azure.Provisioning.EventGrid
     - sdk/provisioning/Azure.Provisioning.Kubernetes
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
+    - sdk/provisioning/Azure.Provisioning.Network
     - sdk/provisioning/Azure.Provisioning.OperationalInsights
-    exclude:
-    - sdk/provisioning/Generator/
-
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/provisioning/ci.compute.yml
-    - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.AppContainers
-    - sdk/provisioning/Azure.Provisioning.ApplicationInsights
-    - sdk/provisioning/Azure.Provisioning.AppService
-    - sdk/provisioning/Azure.Provisioning.Communication
-    - sdk/provisioning/Azure.Provisioning.ContainerRegistry
-    - sdk/provisioning/Azure.Provisioning.ContainerService
-    - sdk/provisioning/Azure.Provisioning.Deployment
-    - sdk/provisioning/Azure.Provisioning.EventGrid
-    - sdk/provisioning/Azure.Provisioning.Kubernetes
-    - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
-    - sdk/provisioning/Azure.Provisioning.OperationalInsights
+    - sdk/provisioning/Azure.Provisioning.PrivateDns
     exclude:
     - sdk/provisioning/Generator/
 
@@ -72,11 +51,17 @@ extends:
       safeName: AzureProvisioningContainerService
     - name: Azure.Provisioning.Deployment
       safeName: AzureProvisioningDeployment
+    - name: Azure.Provisioning.Dns
+      safeName: AzureProvisioningDns
     - name: Azure.Provisioning.EventGrid
       safeName: AzureProvisioningEventGrid
     - name: Azure.Provisioning.Kubernetes
       safeName: AzureProvisioningKubernetes
     - name: Azure.Provisioning.KubernetesConfiguration
       safeName: AzureProvisioningKubernetesConfiguration
+    - name: Azure.Provisioning.Network
+      safeName: AzureProvisioningNetwork
     - name: Azure.Provisioning.OperationalInsights
       safeName: AzureProvisioningOperationalInsights
+    - name: Azure.Provisioning.PrivateDns
+      safeName: AzureProvisioningPrivateDns

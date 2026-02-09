@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;

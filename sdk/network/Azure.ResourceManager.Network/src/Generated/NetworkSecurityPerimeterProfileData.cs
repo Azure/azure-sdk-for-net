@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Version number that increases with every update to access rules within the profile. </summary>
+        [WirePath("properties.accessRulesVersion")]
         public string AccessRulesVersion { get; }
         /// <summary> Version number that increases with every update to diagnostic settings within the profile. </summary>
+        [WirePath("properties.diagnosticSettingsVersion")]
         public string DiagnosticSettingsVersion { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager
 {
@@ -13,6 +14,22 @@ namespace Azure.ResourceManager
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArmPlan))]
+    [ModelReaderWriterBuildable(typeof(ArmSku))]
+#pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof(EncryptionProperties))]
+#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceData))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+#pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof(SystemAssignedServiceIdentity))]
+#pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TrackedResourceData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerContext : ModelReaderWriterContext
     {
     }

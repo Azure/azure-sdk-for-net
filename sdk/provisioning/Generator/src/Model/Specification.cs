@@ -26,6 +26,8 @@ public abstract partial class Specification : ModelBase
     // because it's merged with another spec that'll handle that for us
     public bool SkipCleaning { get; protected set; } = false;
 
+    public bool ShouldGenerateSchema { get; set; } = true;
+
     public IList<Resource> Resources { get; private set; } = [];
 
     public IList<Role> Roles { get; private set; } = [];
@@ -35,7 +37,9 @@ public abstract partial class Specification : ModelBase
     public Dictionary<string, ModelBase> ModelNameMapping { get; } = [];
     public Dictionary<Type, ModelBase> ModelArmTypeMapping { get; } = [];
 
-    public Specification(string name, Type armEntryPoint)
+    internal bool IgnorePropertiesWithoutPath { get; }
+
+    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false)
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
@@ -44,6 +48,7 @@ public abstract partial class Specification : ModelBase
         Spec = this;
         DocComments = new XmlDocCommentReader(armEntryPoint.Assembly);
         TypeRegistry.Register(this);
+        IgnorePropertiesWithoutPath = ignorePropertiesWithoutPath;
     }
 
     public override string ToString() => $"<Specification {Name}>";
@@ -77,6 +82,11 @@ public abstract partial class Specification : ModelBase
                 if (Roles.Count > 0)
                 {
                     GenerateBuiltInRoles();
+                }
+
+                if (ShouldGenerateSchema)
+                {
+                    GenerateSchema();
                 }
             });
     }

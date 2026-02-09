@@ -20,6 +20,7 @@ namespace Azure.Identity
         internal Lazy<ManagedIdentitySource> _identitySource;
         private MsalConfidentialClient _msalConfidentialClient;
         private MsalManagedIdentityClient _msalManagedIdentityClient;
+        private ManagedIdentitySource _tokenExchangeManagedIdentitySource;
         private bool _isChainedCredential;
         private ManagedIdentityClientOptions _options;
         private bool _probeRequestSent;
@@ -81,10 +82,10 @@ namespace Azure.Identity
             }
 
             // First try the TokenExchangeManagedIdentitySource, if it is not available, fall back to MSAL directly.
-            var tokenExchangeManagedIdentitySource = TokenExchangeManagedIdentitySource.TryCreate(_options);
-            if (default != tokenExchangeManagedIdentitySource)
+            _tokenExchangeManagedIdentitySource ??= TokenExchangeManagedIdentitySource.TryCreate(_options);
+            if (default != _tokenExchangeManagedIdentitySource)
             {
-                return await tokenExchangeManagedIdentitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+                return await _tokenExchangeManagedIdentitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
             }
 
             try

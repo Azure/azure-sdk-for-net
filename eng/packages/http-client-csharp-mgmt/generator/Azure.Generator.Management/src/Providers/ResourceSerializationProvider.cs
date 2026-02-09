@@ -63,7 +63,7 @@ namespace Azure.Generator.Management.Providers
             var jsonModelCreatemethod = new MethodProvider(
                 new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [reader, options], ExplicitInterface: _jsonModelInterfaceType),
                 // => DataDeserializationInstance.Create(reader, options);
-                new MemberExpression(null, "DataDeserializationInstance").Invoke(nameof(IJsonModel<object>.Create), reader, options),
+                new MemberExpression(null, "DataDeserializationInstance").Invoke(nameof(IJsonModel<object>.Create), reader.AsArgument(), options),
                 this);
 
             // BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options)

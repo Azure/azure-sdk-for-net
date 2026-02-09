@@ -129,6 +129,46 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
+        public void VerifyCustomEventWithClientIP()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation("{microsoft.custom_event.name} {microsoft.client.ip}", "MyCustomEventName", "1.2.3.4");
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Event").Single();
+
+            TelemetryItemValidationHelper.AssertCustomEventTelemetry(
+                telemetryItem: telemetryItem!,
+                expectedName: "MyCustomEventName",
+                expectedProperties: new Dictionary<string, string>(),
+                expectedSpanId: null,
+                expectedTraceId: null,
+                expectedClientIp: "1.2.3.4");
+        }
+
+        [Fact]
         public void VerifyCustomEventNotExporterViaScopes()
         {
             // SETUP
@@ -234,6 +274,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedProperties: new Dictionary<string, string> (),
                 expectedSpanId: null,
                 expectedTraceId: null);
+        }
+
+        [Fact]
+        public void VerifyCustomEventWithClientAddressSourceGenerated()
+        {
+            // This method is testing Compile-time logging source generation for custom event with client.address.
+            // https://learn.microsoft.com/dotnet/core/extensions/logger-message-generator
+
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.WriteCustomEventWithClientAddress("MyCustomEventName", "1.2.3.4");
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Event").Single();
+
+            TelemetryItemValidationHelper.AssertCustomEventTelemetry(
+                telemetryItem: telemetryItem!,
+                expectedName: "MyCustomEventName",
+                expectedProperties: new Dictionary<string, string>(),
+                expectedSpanId: null,
+                expectedTraceId: null,
+                expectedClientIp: "1.2.3.4");
         }
 
         [Fact]

@@ -82,10 +82,13 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public NetworkExperimentResourceState? ResourceState { get; }
         /// <summary> The state of the Experiment. </summary>
+        [WirePath("properties.enabledState")]
         public FrontDoorExperimentState? EnabledState { get; set; }
     }
 }

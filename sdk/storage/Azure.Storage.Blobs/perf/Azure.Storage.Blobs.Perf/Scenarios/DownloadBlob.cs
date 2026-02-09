@@ -4,6 +4,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Perf.Scenarios
 {
@@ -20,12 +21,18 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
 
         public override void Run(CancellationToken cancellationToken)
         {
-            BlobClient.DownloadTo(Stream.Null, transferOptions: Options.StorageTransferOptions, cancellationToken: cancellationToken);
+            BlobClient.DownloadTo(Stream.Null, new BlobDownloadToOptions()
+            {
+                TransferOptions = Options.StorageTransferOptions,
+            }, cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await BlobClient.DownloadToAsync(Stream.Null, transferOptions: Options.StorageTransferOptions, cancellationToken: cancellationToken);
+            await BlobClient.DownloadToAsync(Stream.Null, new BlobDownloadToOptions()
+            {
+                TransferOptions = Options.StorageTransferOptions,
+            }, cancellationToken);
         }
     }
 }

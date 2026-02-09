@@ -15,21 +15,19 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataCenterAddressInstructionResult : DataCenterAddressResult
     {
         /// <summary> Initializes a new instance of <see cref="DataCenterAddressInstructionResult"/>. </summary>
-        internal DataCenterAddressInstructionResult()
+        internal DataCenterAddressInstructionResult() : base(DatacenterAddressType.DatacenterAddressInstruction)
         {
-            DataCenterAddressType = DataCenterAddressType.DataCenterAddressInstruction;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCenterAddressInstructionResult"/>. </summary>
-        /// <param name="dataCenterAddressType"> Data center address type. </param>
+        /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communicationInstruction"> Data center communication instruction. </param>
-        internal DataCenterAddressInstructionResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, string communicationInstruction) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
+        internal DataCenterAddressInstructionResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string communicationInstruction) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, additionalBinaryDataProperties)
         {
             CommunicationInstruction = communicationInstruction;
-            DataCenterAddressType = dataCenterAddressType;
         }
 
         /// <summary> Data center communication instruction. </summary>

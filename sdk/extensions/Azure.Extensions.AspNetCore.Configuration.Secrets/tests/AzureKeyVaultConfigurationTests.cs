@@ -39,8 +39,8 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 foreach (var secret in page)
                 {
-                    mock.Setup(client => client.GetSecretAsync(secret.Name, null, default))
-                        .Returns(async (string name, string label, CancellationToken token) =>
+                    mock.Setup(client => client.GetSecretAsync(secret.Name, null, null, default))
+                        .Returns(async (string name, string label, SecretContentType? contentType, CancellationToken token) =>
                         {
                             await getSecretCallback(name);
                             return Response.FromValue(secret, Mock.Of<Response>());

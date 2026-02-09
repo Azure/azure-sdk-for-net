@@ -42,12 +42,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </summary>
+        [WirePath("properties.ruleType")]
         public InboundSecurityRuleType? RuleType { get; set; }
         /// <summary> List of allowed rules. </summary>
+        [WirePath("properties.rules")]
         public IList<InboundSecurityRules> Rules { get; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

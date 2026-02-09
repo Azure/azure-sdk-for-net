@@ -51,18 +51,25 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The system metadata related to this resource. </summary>
+        [WirePath("systemData")]
         public SystemData SystemData { get; }
         /// <summary> A description of the network manager. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Scope of Network Manager. </summary>
+        [WirePath("properties.networkManagerScopes")]
         public NetworkManagerPropertiesNetworkManagerScopes NetworkManagerScopes { get; set; }
         /// <summary> Scope Access. </summary>
+        [WirePath("properties.networkManagerScopeAccesses")]
         public IList<NetworkConfigurationDeploymentType> NetworkManagerScopeAccesses { get; }
         /// <summary> The provisioning state of the network manager resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
     }
 }

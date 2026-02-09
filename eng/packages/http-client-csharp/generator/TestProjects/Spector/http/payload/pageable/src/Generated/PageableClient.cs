@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Payload.Pageable._PageSize;
 using Payload.Pageable._ServerDrivenPagination;
 
 namespace Payload.Pageable
@@ -20,5 +21,7 @@ namespace Payload.Pageable
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual ServerDrivenPagination GetServerDrivenPaginationClient() => throw null;
+
+        public virtual PageSize GetPageSizeClient() => throw null;
     }
 }

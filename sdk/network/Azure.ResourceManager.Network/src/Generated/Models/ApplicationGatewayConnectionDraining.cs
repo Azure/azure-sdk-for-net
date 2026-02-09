@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Whether connection draining is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool Enabled { get; set; }
         /// <summary> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </summary>
+        [WirePath("drainTimeoutInSec")]
         public int DrainTimeoutInSeconds { get; set; }
     }
 }

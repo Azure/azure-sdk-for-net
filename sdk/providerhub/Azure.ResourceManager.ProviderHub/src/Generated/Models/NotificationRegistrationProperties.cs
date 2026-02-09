@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationRegistrationProperties"/>. </summary>
-        /// <param name="notificationMode"></param>
-        /// <param name="messageScope"></param>
-        /// <param name="includedEvents"></param>
-        /// <param name="notificationEndpoints"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="notificationMode"> The notification mode. </param>
+        /// <param name="messageScope"> The message scope. </param>
+        /// <param name="includedEvents"> The included events. </param>
+        /// <param name="notificationEndpoints"> The notification endpoints. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationRegistrationProperties(NotificationMode? notificationMode, MessageScope? messageScope, IList<string> includedEvents, IList<NotificationEndpoint> notificationEndpoints, ProviderHubProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,15 +69,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the notification mode. </summary>
+        /// <summary> The notification mode. </summary>
         public NotificationMode? NotificationMode { get; set; }
-        /// <summary> Gets or sets the message scope. </summary>
+        /// <summary> The message scope. </summary>
         public MessageScope? MessageScope { get; set; }
-        /// <summary> Gets the included events. </summary>
+        /// <summary> The included events. </summary>
         public IList<string> IncludedEvents { get; }
-        /// <summary> Gets the notification endpoints. </summary>
+        /// <summary> The notification endpoints. </summary>
         public IList<NotificationEndpoint> NotificationEndpoints { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProviderHubProvisioningState? ProvisioningState { get; set; }
     }
 }

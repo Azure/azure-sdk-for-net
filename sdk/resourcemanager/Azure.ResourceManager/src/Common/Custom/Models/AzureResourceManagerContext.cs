@@ -34,22 +34,8 @@ namespace Azure.ResourceManager
     [ModelReaderWriterBuildable(typeof(ManagementGroupPatch))]
     [ModelReaderWriterBuildable(typeof(ManagementGroupPathElement))]
     [ModelReaderWriterBuildable(typeof(ParentManagementGroupInfo))]
-    [ModelReaderWriterBuildable(typeof(ArmPlan))]
-    [ModelReaderWriterBuildable(typeof(ArmSku))]
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(EncryptionProperties))]
-#pragma warning restore CS0618 // Type or member is obsolete
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
-#pragma warning restore CS0618 // Type or member is obsolete
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(SystemAssignedServiceIdentity))]
-#pragma warning restore CS0618 // Type or member is obsolete
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(TenantResource))]
     [ModelReaderWriterBuildable(typeof(FeatureResource))]
     [ModelReaderWriterBuildable(typeof(GenericResourceData))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentData))]

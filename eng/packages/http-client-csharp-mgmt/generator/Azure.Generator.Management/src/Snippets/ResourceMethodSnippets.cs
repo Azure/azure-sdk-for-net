@@ -3,8 +3,8 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Snippets
@@ -38,7 +39,7 @@ namespace Azure.Generator.Management.Snippets
         public static List<MethodBodyStatement> CreateDiagnosticScopeStatements(
             TypeProvider enclosingType,
             ValueExpression clientDiagnostics,
-            string operationName,
+            string scopeName,
             out VariableExpression scopeVariable)
         {
             var statements = new List<MethodBodyStatement>();
@@ -47,7 +48,7 @@ namespace Azure.Generator.Management.Snippets
             var scopeDeclaration = UsingDeclare(
                 "scope",
                 typeof(DiagnosticScope),
-                clientDiagnostics.Invoke("CreateScope", [Literal($"{enclosingType.Name}.{operationName}")]),
+                clientDiagnostics.Invoke("CreateScope", [Literal($"{enclosingType.Name}.{scopeName}")]),
                 out scopeVariable);
             statements.Add(scopeDeclaration);
 
@@ -57,7 +58,6 @@ namespace Azure.Generator.Management.Snippets
             return statements;
         }
 
-        // TODO: The generated code has format issue https://github.com/microsoft/typespec/issues/7283
         public static MethodBodyStatement CreateRequestContext(
             ParameterProvider cancellationTokenParam,
             out VariableExpression contextVariable)
@@ -67,11 +67,6 @@ namespace Azure.Generator.Management.Snippets
                 { Identifier(nameof(RequestContext.CancellationToken)), cancellationTokenParam }
             };
 
-            //        RequestContext context = new RequestContext
-            //        {
-            //            CancellationToken = cancellationToken
-            //        }
-            //        ;
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
@@ -104,7 +99,7 @@ namespace Azure.Generator.Management.Snippets
             VariableExpression contextVariable,
             CSharpType responseGenericType,
             bool isAsync,
-            out VariableExpression responseVariable)
+            out ScopedApi<Response> responseVariable)
         {
             var statements = new List<MethodBodyStatement>();
             var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
@@ -117,14 +112,19 @@ namespace Azure.Generator.Management.Snippets
                 out var resultVariable);
             statements.Add(resultDeclaration);
 
-            // Response<T> response = Response.FromValue((T)result, result);
+            // For enum/extensible enum types: Response<T> response = Response.FromValue(new T(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
+            // For model types: Response<T> response = Response.FromValue(T.FromResponse(result), result);
+            ValueExpression deserializedValue = responseGenericType.IsEnum
+                ? New.Instance(responseGenericType, Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString)))
+                : Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]);
             var responseDeclaration = Declare(
                 "response",
                 new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
-                out responseVariable);
+                    [deserializedValue, resultVariable]),
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
             statements.Add(responseDeclaration);
 
             return statements;
@@ -134,7 +134,7 @@ namespace Azure.Generator.Management.Snippets
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             bool isAsync,
-            out VariableExpression responseVariable)
+            out ScopedApi<Response> responseVariable)
         {
             var statements = new List<MethodBodyStatement>();
             var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
@@ -144,7 +144,8 @@ namespace Azure.Generator.Management.Snippets
                 "response",
                 typeof(Response),
                 This.Property("Pipeline").Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
-                out responseVariable);
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
             statements.Add(responseDeclaration);
 
             return statements;

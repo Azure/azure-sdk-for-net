@@ -574,7 +574,13 @@ namespace Azure.Storage.Blobs.Samples
                 string delimiter = "/";
 
                 #region Snippet:SampleSnippetsBlobMigration_ListHierarchy
-                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
+
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Prefix = blobPrefix,
+                    Delimiter = delimiter
+                };
+                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(options);
                 await foreach (BlobHierarchyItem item in results)
                 {
                     MyConsumeBlobItemFunc(item);
@@ -866,9 +872,9 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // setup blob
@@ -914,9 +920,9 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // setup blob
@@ -953,9 +959,9 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             BlobServiceClient client = new BlobServiceClient(ConnectionString);
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await client.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                options: options);
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // setup blob
@@ -1188,7 +1194,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 #region Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
                 cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
                 Stream targetStream = new MemoryStream();
                 await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public readonly partial struct CarbonEmissionQueryOrderByColumn : IEquatable<CarbonEmissionQueryOrderByColumn>
     {
         private readonly string _value;
+        /// <summary> The itemName filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
+        private const string ItemNameValue = "ItemName";
+        /// <summary> The latestMonthEmissions filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
+        private const string LatestMonthEmissionsValue = "LatestMonthEmissions";
+        /// <summary> The previousMonthEmissions filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
+        private const string PreviousMonthEmissionsValue = "PreviousMonthEmissions";
+        /// <summary> The monthOverMonthEmissionsChangeRatio filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
+        private const string MonthOverMonthEmissionsChangeRatioValue = "MonthOverMonthEmissionsChangeRatio";
+        /// <summary> The monthlyEmissionsChangeValue filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
+        private const string MonthlyEmissionsChangeValueValue = "MonthlyEmissionsChangeValue";
+        /// <summary> The resourceGroup filed in ResourceCarbonEmissionItemDetailData result, see ResourceCarbonEmissionItemDetailData for more information. </summary>
+        private const string ResourceGroupValue = "ResourceGroup";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryOrderByColumn"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionQueryOrderByColumn(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ItemNameValue = "ItemName";
-        private const string LatestMonthEmissionsValue = "LatestMonthEmissions";
-        private const string PreviousMonthEmissionsValue = "PreviousMonthEmissions";
-        private const string MonthOverMonthEmissionsChangeRatioValue = "MonthOverMonthEmissionsChangeRatio";
-        private const string MonthlyEmissionsChangeValueValue = "MonthlyEmissionsChangeValue";
-        private const string ResourceGroupValue = "ResourceGroup";
+            _value = value;
+        }
 
         /// <summary> The itemName filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
         public static CarbonEmissionQueryOrderByColumn ItemName { get; } = new CarbonEmissionQueryOrderByColumn(ItemNameValue);
+
         /// <summary> The latestMonthEmissions filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
         public static CarbonEmissionQueryOrderByColumn LatestMonthEmissions { get; } = new CarbonEmissionQueryOrderByColumn(LatestMonthEmissionsValue);
+
         /// <summary> The previousMonthEmissions filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
         public static CarbonEmissionQueryOrderByColumn PreviousMonthEmissions { get; } = new CarbonEmissionQueryOrderByColumn(PreviousMonthEmissionsValue);
+
         /// <summary> The monthOverMonthEmissionsChangeRatio filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
         public static CarbonEmissionQueryOrderByColumn MonthOverMonthEmissionsChangeRatio { get; } = new CarbonEmissionQueryOrderByColumn(MonthOverMonthEmissionsChangeRatioValue);
+
         /// <summary> The monthlyEmissionsChangeValue filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
         public static CarbonEmissionQueryOrderByColumn MonthlyEmissionsChangeValue { get; } = new CarbonEmissionQueryOrderByColumn(MonthlyEmissionsChangeValueValue);
+
         /// <summary> The resourceGroup filed in ResourceCarbonEmissionItemDetailData result, see ResourceCarbonEmissionItemDetailData for more information. </summary>
         public static CarbonEmissionQueryOrderByColumn ResourceGroup { get; } = new CarbonEmissionQueryOrderByColumn(ResourceGroupValue);
+
         /// <summary> Determines if two <see cref="CarbonEmissionQueryOrderByColumn"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionQueryOrderByColumn left, CarbonEmissionQueryOrderByColumn right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CarbonEmissionQueryOrderByColumn"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionQueryOrderByColumn left, CarbonEmissionQueryOrderByColumn right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionQueryOrderByColumn"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CarbonEmissionQueryOrderByColumn"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CarbonEmissionQueryOrderByColumn(string value) => new CarbonEmissionQueryOrderByColumn(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CarbonEmissionQueryOrderByColumn"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CarbonEmissionQueryOrderByColumn?(string value) => value == null ? null : new CarbonEmissionQueryOrderByColumn(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionQueryOrderByColumn other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CarbonEmissionQueryOrderByColumn other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

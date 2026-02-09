@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct EntitySignalRefreshInterval : IEquatable<EntitySignalRefreshInterval>
     {
         private readonly string _value;
+        /// <summary> One Minute. </summary>
+        private const string PT1MValue = "PT1M";
+        /// <summary> Five Minutes. </summary>
+        private const string PT5MValue = "PT5M";
+        /// <summary> Ten Minutes. </summary>
+        private const string PT10MValue = "PT10M";
+        /// <summary> Thirty Minutes. </summary>
+        private const string PT30MValue = "PT30M";
+        /// <summary> One Hour. </summary>
+        private const string PT1HValue = "PT1H";
+        /// <summary> Two Hours. </summary>
+        private const string PT2HValue = "PT2H";
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalRefreshInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntitySignalRefreshInterval(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PT1MValue = "PT1M";
-        private const string PT5MValue = "PT5M";
-        private const string PT10MValue = "PT10M";
-        private const string PT30MValue = "PT30M";
-        private const string PT1HValue = "PT1H";
-        private const string PT2HValue = "PT2H";
+            _value = value;
+        }
 
         /// <summary> One Minute. </summary>
         public static EntitySignalRefreshInterval PT1M { get; } = new EntitySignalRefreshInterval(PT1MValue);
+
         /// <summary> Five Minutes. </summary>
         public static EntitySignalRefreshInterval PT5M { get; } = new EntitySignalRefreshInterval(PT5MValue);
+
         /// <summary> Ten Minutes. </summary>
         public static EntitySignalRefreshInterval PT10M { get; } = new EntitySignalRefreshInterval(PT10MValue);
+
         /// <summary> Thirty Minutes. </summary>
         public static EntitySignalRefreshInterval PT30M { get; } = new EntitySignalRefreshInterval(PT30MValue);
+
         /// <summary> One Hour. </summary>
         public static EntitySignalRefreshInterval PT1H { get; } = new EntitySignalRefreshInterval(PT1HValue);
+
         /// <summary> Two Hours. </summary>
         public static EntitySignalRefreshInterval PT2H { get; } = new EntitySignalRefreshInterval(PT2HValue);
+
         /// <summary> Determines if two <see cref="EntitySignalRefreshInterval"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntitySignalRefreshInterval left, EntitySignalRefreshInterval right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntitySignalRefreshInterval"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntitySignalRefreshInterval left, EntitySignalRefreshInterval right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntitySignalRefreshInterval"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntitySignalRefreshInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntitySignalRefreshInterval(string value) => new EntitySignalRefreshInterval(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntitySignalRefreshInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntitySignalRefreshInterval?(string value) => value == null ? null : new EntitySignalRefreshInterval(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntitySignalRefreshInterval other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntitySignalRefreshInterval other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

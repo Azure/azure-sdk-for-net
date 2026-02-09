@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,53 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2026-01-27)
+
+### Features Added
+
+- Added core support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Added `JsonModel<T>` abstract base class that provides a simplified way to implement `IJsonModel<T>` for JSON serialization and deserialization.
+
+### Bugs Fixed
+
+- Fixed an issue with `ClientRetryPolicy` where delays were being calculated using the retry count instead of the attempt count, causing the initial retry to occur without delay and subsequent retries to be performed more quickly than intended.
+
+## 1.8.1 (2025-11-10)
+
+### Bugs Fixed
+
+- Fixed an issue with JsonPatch.TryGetValue throwing instead of returning false in some cases.
+- Fixed an issue with JsonPatch decoding special characters in json when using GetString.
+
+## 1.8.0 (2025-10-31)
+
+### Features Added
+
+- Added `ClientRequestId` property to `PipelineRequest` which exposes the value that is used in logging and distributed tracing.
+
+## 1.7.0 (2025-09-22)
+
+### Features Added
+
+- Added `ClientConnection` constructor, accepting credentials and metadata.
+
+- Added `JsonPatch` which allows for applying JSON Patch operations to JSON documents.
+## 1.6.1 (2025-08-20)
+
+### Features Added
+
+- Fix the behavior of Roslyn not properly handling partial classes with attributes in different files
+
+## 1.6.0 (2025-08-11)
+
+### Features Added
+
+- Added `UserAgentPolicy` pipeline policy to allow adding the user agent to the request headers.
+
+### Other Changes
+
+- Various updates to the `System.ClientModel.SourceGeneration` package to support `ModelReaderWriterBuildableAttribute`.
 
 ## 1.5.1 (2025-07-14)
 

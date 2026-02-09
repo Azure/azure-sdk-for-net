@@ -84,8 +84,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>
+        /// <param name="totalImageScansSucceeded"> Total image scans charged by the API. </param>
+        /// <param name="totalImageScansFailed"> Total image scans failed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged, int? totalImageScansSucceeded, int? totalImageScansFailed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TranslatedDocumentUri = translatedDocumentUri;
             SourceDocumentUri = sourceDocumentUri;
@@ -97,6 +99,8 @@ namespace Azure.AI.Translation.Document
             Progress = progress;
             Id = id;
             CharactersCharged = charactersCharged;
+            TotalImageScansSucceeded = totalImageScansSucceeded;
+            TotalImageScansFailed = totalImageScansFailed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,5 +108,9 @@ namespace Azure.AI.Translation.Document
         internal DocumentStatusResult()
         {
         }
+        /// <summary> Total image scans charged by the API. </summary>
+        public int? TotalImageScansSucceeded { get; }
+        /// <summary> Total image scans failed. </summary>
+        public int? TotalImageScansFailed { get; }
     }
 }

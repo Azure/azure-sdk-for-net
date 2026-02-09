@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The resource name to validate. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of the resource whose name is to be validated. </summary>
+        [WirePath("type")]
         public FrontDoorResourceType ResourceType { get; }
     }
 }

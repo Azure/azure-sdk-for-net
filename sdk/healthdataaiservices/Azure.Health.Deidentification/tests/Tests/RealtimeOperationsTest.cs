@@ -46,7 +46,7 @@ namespace Azure.Health.Deidentification.Tests
             DeidentificationClient client = GetDeidClient();
 
             string input = "Hello, my name is John Smith.";
-            DeidentificationContent content = new(input, DeidentificationOperationType.Tag, null, null);
+            DeidentificationContent content = new(input, DeidentificationOperationType.Tag, null, null, null);
 
             DeidentificationResult result = await client.DeidentifyTextAsync(content);
 
@@ -58,6 +58,42 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsTrue(result.TaggerResult.Entities[0].Text == "John Smith", "Expected first tag to be 'John Smith'.");
             Assert.IsTrue(result.TaggerResult.Entities[0].Offset.Utf16 == 18, "Expected first tag to start at index 18.");
             Assert.IsTrue(result.TaggerResult.Entities[0].Length.Utf16 == 10, "Expected first tag to be 10 characters long.");
+        }
+
+        [Test]
+        public async Task Realtime_Redact_ReturnsExcepted()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string input = "Hello, my name is John Smith.";
+            DeidentificationContent content = new(input, DeidentificationOperationType.Redact, null, null, null);
+
+            DeidentificationResult result = await client.DeidentifyTextAsync(content);
+
+            Assert.IsNull(result.TaggerResult, "On Redact Operation, expect TaggerResult to be null.");
+            Assert.IsNotNull(result.OutputText, "On Redact Operation, expect OutputText to be not null.");
+            Assert.AreEqual(result.OutputText, "Hello, my name is [patient].", "Expect output text to be redacted.");
+        }
+
+        [Test]
+        public async Task Realtime_SurrogateOnly_ReturnsExcepted()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string input = "Hello, my name is John Smith.";
+            DeidentificationContent content = new(input);
+            content.OperationType = DeidentificationOperationType.SurrogateOnly;
+            content.TaggedEntities = new TaggedPhiEntities(
+                new SimplePhiEntity[]
+                {
+                    new SimplePhiEntity(PhiCategory.Patient, 18, 10)
+                });
+
+            DeidentificationResult result = await client.DeidentifyTextAsync(content);
+
+            Assert.IsNull(result.TaggerResult, "On SurrogateOnly Operation, expect TaggerResult to be null.");
+            Assert.IsNotNull(result.OutputText, "On SurrogateOnly Operation, expect OutputText to be not null.");
+            Assert.AreNotEqual(input, result.OutputText, "Expected output text to be different from input text.");
         }
     }
 }

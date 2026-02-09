@@ -14,7 +14,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class TransferJobInternal : IAsyncDisposable
+    internal class TransferJobInternal
     {
         internal delegate Task<JobPartInternal> CreateJobPartAsync(
             TransferJobInternal job,
@@ -198,16 +198,6 @@ namespace Azure.Storage.DataMovement
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
-        public async ValueTask DisposeAsync()
-        {
-            if (JobPartStatusEvents != default)
-            {
-                JobPartStatusEvents -= JobPartStatusEventAsync;
-            }
-            // This will block until all pending progress reports have gone out
-            await _progressTracker.DisposeAsync().ConfigureAwait(false);
-        }
-
         /// <summary>
         /// Processes the job to job parts
         /// </summary>
@@ -329,13 +319,7 @@ namespace Azure.Storage.DataMovement
 
                 if (current.IsContainer)
                 {
-                    // Create sub-container
-                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
-                    string subContainerPath = string.IsNullOrEmpty(containerUriPath)
-                        ? current.Uri.GetPath()
-                        : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-                    // Decode the container name as it was pulled from encoded Uri and will be re-encoded on destination.
-                    subContainerPath = WebUtility.UrlDecode(subContainerPath);
+                    string subContainerPath = GetChildResourcePath(_sourceResourceContainer, current);
                     StorageResourceContainer subContainer =
                         _destinationResourceContainer.GetChildStorageResourceContainer(subContainerPath);
 
@@ -344,7 +328,8 @@ namespace Azure.Storage.DataMovement
                         StorageResourceContainer sourceContainer = (StorageResourceContainer)current;
                         StorageResourceContainerProperties sourceProperties =
                             await sourceContainer.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                        await subContainer.CreateIfNotExistsAsync(sourceProperties, _cancellationToken).ConfigureAwait(false);
+                        bool overwrite = _creationPreference == StorageResourceCreationMode.OverwriteIfExists;
+                        await subContainer.CreateAsync(overwrite, sourceProperties, _cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -369,10 +354,7 @@ namespace Azure.Storage.DataMovement
                             // Real container trasnfer
                             else
                             {
-                                string containerUriPath = _sourceResourceContainer.Uri.GetPath();
-                                sourceName = current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-                                // Decode the resource name as it was pulled from encoded Uri and will be re-encoded on destination.
-                                sourceName = WebUtility.UrlDecode(sourceName);
+                                sourceName = GetChildResourcePath(_sourceResourceContainer, current);
                             }
 
                             StorageResourceItem sourceItem = (StorageResourceItem)current;
@@ -405,7 +387,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task to wait until the cancellation has been triggered.</returns>
         public async Task TriggerJobCancellationAsync()
         {
-            if (!_transferOperation._state.CancellationTokenSource.IsCancellationRequested)
+            if (_transferOperation._state.CancellationTokenSource?.IsCancellationRequested == false)
             {
                 await OnJobStateChangedAsync(TransferState.Stopping).ConfigureAwait(false);
                 _transferOperation._state.TriggerCancellation();
@@ -439,18 +421,39 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
                 _transferOperation.Status.SetFailedItem();
+
+                try
+                {
+                    await TriggerJobCancellationAsync().ConfigureAwait(false);
+                }
+                catch (Exception cancellationException)
+                {
+                    if (TransferFailedEventHandler != null)
+                    {
+                        await TransferFailedEventHandler.RaiseAsync(
+                            new TransferItemFailedEventArgs(
+                                _transferOperation.Id,
+                                _sourceResourceContainer,
+                                _destinationResourceContainer,
+                                cancellationException,
+                                false,
+                                _cancellationToken),
+                            nameof(TransferJobInternal),
+                            nameof(TransferFailedEventHandler),
+                            ClientDiagnostics)
+                            .ConfigureAwait(false);
+                    }
+                }
             }
 
             try
             {
-                await TriggerJobCancellationAsync().ConfigureAwait(false);
-
                 // If we're failing from a Transfer Job point, it means we have aborted the job
                 // at the listing phase. However it's possible that some job parts may be in flight
                 // and we have to check if they're finished cleaning up yet.
                 await CheckAndUpdateStatusAsync().ConfigureAwait(false);
             }
-            catch (Exception cancellationException)
+            catch (Exception statusUpdateException)
             {
                 if (TransferFailedEventHandler != null)
                 {
@@ -459,7 +462,7 @@ namespace Azure.Storage.DataMovement
                             _transferOperation.Id,
                             _sourceResourceContainer,
                             _destinationResourceContainer,
-                            cancellationException,
+                            statusUpdateException,
                             false,
                             _cancellationToken),
                         nameof(TransferJobInternal),
@@ -534,11 +537,16 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferOperation._state.SetTransferState(state))
             {
-                // If we are in a final state, dispose the JobPartEvent handlers
+                // If we are in a final state, dispose the JobPartEvent handlers and complete the progress tracker.
                 if (state == TransferState.Completed ||
                     state == TransferState.Paused)
                 {
-                    await DisposeAsync().ConfigureAwait(false);
+                    if (JobPartStatusEvents != default)
+                    {
+                        JobPartStatusEvents -= JobPartStatusEventAsync;
+                    }
+                    // This will block until all pending progress reports have gone out
+                    await _progressTracker.CleanUpAsync().ConfigureAwait(false);
                 }
 
                 await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -652,6 +660,17 @@ namespace Azure.Storage.DataMovement
         internal async ValueTask IncrementJobParts()
         {
             await _progressTracker.IncrementQueuedFilesAsync(_cancellationToken).ConfigureAwait(false);
+        }
+
+        private static string GetChildResourcePath(StorageResourceContainer parent, StorageResource child)
+        {
+            string parentPath = parent.Uri.GetPath();
+            string childPath = child.Uri.GetPath().Substring(parentPath.Length);
+            // If container path does not contain a '/' (normal case), then childPath will have one after substring.
+            // Safe to use / here as we are using AbsolutePath which normalizes to /.
+            childPath = childPath.TrimStart('/');
+            // Decode the resource name as it was pulled from encoded Uri and will be re-encoded on destination.
+            return Uri.UnescapeDataString(childPath);
         }
     }
 }

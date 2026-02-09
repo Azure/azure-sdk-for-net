@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// State of the log scrubbing config. Default value is Enabled.
-    /// Serialized Name: ProfileScrubbingState
-    /// </summary>
+    /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
     public readonly partial struct ProfileScrubbingState : IEquatable<ProfileScrubbingState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ProfileScrubbingState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static ProfileScrubbingState Enabled { get; } = new ProfileScrubbingState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ProfileScrubbingState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static ProfileScrubbingState Disabled { get; } = new ProfileScrubbingState(DisabledValue);
         /// <summary> Determines if two <see cref="ProfileScrubbingState"/> values are the same. </summary>
         public static bool operator ==(ProfileScrubbingState left, ProfileScrubbingState right) => left.Equals(right);

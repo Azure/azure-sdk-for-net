@@ -43,20 +43,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
+        /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
+        /// <param name="enableServerCertificateValidation"> Specify whether to enable server SSL certificate validation when you connect.Always use System Trust Store (for V2 only). The default value is true. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ImpalaLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object port, ImpalaAuthenticationType authenticationType, object username, SecretBase password, object enableSsl, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        internal ImpalaLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object port, ImpalaAuthenticationType authenticationType, object username, SecretBase password, ImpalaThriftTransportProtocol? thriftTransportProtocol, object enableSsl, object enableServerCertificateValidation, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
             AuthenticationType = authenticationType;
             Username = username;
             Password = password;
+            ThriftTransportProtocol = thriftTransportProtocol;
             EnableSsl = enableSsl;
+            EnableServerCertificateValidation = enableServerCertificateValidation;
             TrustedCertPath = trustedCertPath;
             UseSystemTrustStore = useSystemTrustStore;
             AllowHostNameCNMismatch = allowHostNameCNMismatch;
@@ -79,8 +83,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase Password { get; set; }
+        /// <summary> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </summary>
+        public ImpalaThriftTransportProtocol? ThriftTransportProtocol { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
         public object EnableSsl { get; set; }
+        /// <summary> Specify whether to enable server SSL certificate validation when you connect.Always use System Trust Store (for V2 only). The default value is true. </summary>
+        public object EnableServerCertificateValidation { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
         public object TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the resource. This name can be used to access the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Sub Resource type. </summary>
+        [WirePath("type")]
         public string ContainerNetworkInterfaceIpConfigurationType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the container network interface IP configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

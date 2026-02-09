@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -231,6 +233,151 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Markings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  markings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Markings))
+                {
+                    if (Markings.Any())
+                    {
+                        builder.Append("  markings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Markings)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceIPRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceIpRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SourceIPRanges))
+                {
+                    if (SourceIPRanges.Any())
+                    {
+                        builder.Append("  sourceIpRanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SourceIPRanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sourceIpRanges: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationIPRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  destinationIpRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DestinationIPRanges))
+                {
+                    if (DestinationIPRanges.Any())
+                    {
+                        builder.Append("  destinationIpRanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DestinationIPRanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  destinationIpRanges: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePortRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourcePortRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SourcePortRanges))
+                {
+                    if (SourcePortRanges.Any())
+                    {
+                        builder.Append("  sourcePortRanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SourcePortRanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sourcePortRanges: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationPortRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  destinationPortRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DestinationPortRanges))
+                {
+                    if (DestinationPortRanges.Any())
+                    {
+                        builder.Append("  destinationPortRanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DestinationPortRanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  destinationPortRanges: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
+                {
+                    builder.Append("  protocol: ");
+                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DscpQosDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DscpQosDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +386,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DscpQosDefinition)} does not support writing '{options.Format}' format.");
             }

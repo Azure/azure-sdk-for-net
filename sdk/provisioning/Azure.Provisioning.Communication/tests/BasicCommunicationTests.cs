@@ -2,22 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Communication.Tests;
 
-public class BasicCommunicationTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicCommunicationTests
 {
-    [Test]
-    public async Task CreateCommunicationServices()
+    internal static Trycep CreateCommunicationServicesTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:CommunicationBasic
@@ -40,8 +34,14 @@ public class BasicCommunicationTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    public async Task CreateCommunicationServices()
+    {
+        await using Trycep test = CreateCommunicationServicesTest();
+        test.Compare(
             """
             param location string = 'global'
 
@@ -52,8 +52,6 @@ public class BasicCommunicationTests(bool async)
                 dataLocation: 'unitedstates'
               }
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

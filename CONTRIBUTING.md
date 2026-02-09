@@ -5,7 +5,7 @@
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Install the **.NET desktop development** workload in VisualStudio
   - Need at least .NET Framework 4.6.2 and 4.7.1 development tools 
-- Install **.NET 9.0.102 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 9.0.*** band)  
+- Install **.NET 9.0.306 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 9.0.*** band)  
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (22.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -305,6 +305,32 @@ You can add the dev feed to your NuGet.Config file, which can be at the Solution
 ```
 
 > You can place a NuGet.Config file in the root of your solution. Projects within the solution will use the feed defined in that file.
+
+##### Unauthorized access to the feed
+
+If you are getting a 401 error, similar to `401 (Unauthorized - No local versions of package "xyz"; please provide authentication to access versions from upstream that have not yet been saved to your feed.)` it means you are trying 
+to access a package version that is not on the feed but is on the upstream feed `nuget.org` and you don't have permissions to pull that version into the feed. There are two possible solutions to this issue:
+
+1. If you are a member of the team with access and want to update a version of the package in the feed you will need to authenticate to the feed. For local authentication you will want to use [Azure Artifacts Credential Provider](https://github.com/microsoft/artifacts-credprovider#azure-artifacts-credential-provider).
+   If you need to authenticate a pipeline in our teams DevOps org you will want login via the [NuGetAuthenticate](https://learn.microsoft.com/azure/devops/pipelines/tasks/package/nuget-authenticate?view=azure-devops#dotnet) task.
+1. If you are external user and just want to consume packages in the feed you can scope the packages for the feed to just the ones you want by using [packageSourceMapping](https://learn.microsoft.com/nuget/reference/nuget-config-file#packagesource) similar to:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="Azure SDK for .NET Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" />
+  </packageSources>
+  <disabledPackageSources>
+    <clear />
+  </disabledPackageSources>
+  <packageSourceMapping>
+    <packageSource key="Azure SDK for .NET Dev Feed">
+      <package pattern="Azure.*" />
+    </packageSource>
+</packageSourceMapping>
+</configuration>
+```
 
 ### 2. Find NuGet Package
 

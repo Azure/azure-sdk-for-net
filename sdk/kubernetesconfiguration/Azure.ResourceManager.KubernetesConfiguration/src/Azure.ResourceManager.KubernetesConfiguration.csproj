@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.KubernetesConfiguration</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.KubernetesConfiguration.</Description>
     <PackageTags>azure;management;arm;resource manager;kubernetesconfiguration</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

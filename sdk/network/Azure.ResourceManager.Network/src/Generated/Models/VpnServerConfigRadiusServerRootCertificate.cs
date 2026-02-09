@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The certificate name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// The certificate public data.
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Network.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("publicCertData")]
         public BinaryData PublicCertData { get; set; }
     }
 }

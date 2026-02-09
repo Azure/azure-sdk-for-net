@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -118,6 +119,82 @@ namespace Azure.ResourceManager.Network.Models
             return new RadiusServer(radiusServerAddress, radiusServerScore, radiusServerSecret, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RadiusServerAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  radiusServerAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RadiusServerAddress))
+                {
+                    builder.Append("  radiusServerAddress: ");
+                    if (RadiusServerAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RadiusServerAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RadiusServerAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RadiusServerScore), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  radiusServerScore: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RadiusServerScore))
+                {
+                    builder.Append("  radiusServerScore: ");
+                    builder.AppendLine($"'{RadiusServerScore.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RadiusServerSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  radiusServerSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RadiusServerSecret))
+                {
+                    builder.Append("  radiusServerSecret: ");
+                    if (RadiusServerSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RadiusServerSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RadiusServerSecret}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RadiusServer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RadiusServer>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +203,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RadiusServer)} does not support writing '{options.Format}' format.");
             }

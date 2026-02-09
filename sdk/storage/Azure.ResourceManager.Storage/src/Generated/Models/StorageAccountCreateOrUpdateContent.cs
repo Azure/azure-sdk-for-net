@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
             Sku = sku;
             Kind = kind;
             Location = location;
+            Zones = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -68,6 +69,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
         /// <param name="extendedLocation"> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </param>
+        /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
+        /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
@@ -86,6 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
         /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
+        /// <param name="dualStackEndpointPreference"> Maintains information about the Internet protocol opted by the user. </param>
         /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
         /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
         /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
@@ -94,13 +98,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
+        /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Kind = kind;
             Location = location;
             ExtendedLocation = extendedLocation;
+            Zones = zones;
+            Placement = placement;
             Tags = tags;
             Identity = identity;
             AllowedCopyScope = allowedCopyScope;
@@ -119,6 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
             IsHnsEnabled = isHnsEnabled;
             LargeFileSharesState = largeFileSharesState;
             RoutingPreference = routingPreference;
+            DualStackEndpointPreference = dualStackEndpointPreference;
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
             AllowSharedKeyAccess = allowSharedKeyAccess;
@@ -127,6 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
             IsDefaultToOAuthAuthentication = isDefaultToOAuthAuthentication;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             DnsEndpointType = dnsEndpointType;
+            GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -147,6 +156,24 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
+        [WirePath("zones")]
+        public IList<string> Zones { get; }
+        /// <summary> Optional. Gets or sets the zonal placement details for the storage account. </summary>
+        internal Placement Placement { get; set; }
+        /// <summary> The availability zone pinning policy for the storage account. </summary>
+        [WirePath("placement.zonePlacementPolicy")]
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
+        {
+            get => Placement is null ? default : Placement.ZonePlacementPolicy;
+            set
+            {
+                if (Placement is null)
+                    Placement = new Placement();
+                Placement.ZonePlacementPolicy = value;
+            }
+        }
+
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
@@ -211,6 +238,21 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         [WirePath("properties.routingPreference")]
         public StorageRoutingPreference RoutingPreference { get; set; }
+        /// <summary> Maintains information about the Internet protocol opted by the user. </summary>
+        internal DualStackEndpointPreference DualStackEndpointPreference { get; set; }
+        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
+        public bool? IsIPv6EndpointToBePublished
+        {
+            get => DualStackEndpointPreference is null ? default : DualStackEndpointPreference.IsIPv6EndpointToBePublished;
+            set
+            {
+                if (DualStackEndpointPreference is null)
+                    DualStackEndpointPreference = new DualStackEndpointPreference();
+                DualStackEndpointPreference.IsIPv6EndpointToBePublished = value;
+            }
+        }
+
         /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </summary>
         [WirePath("properties.allowBlobPublicAccess")]
         public bool? AllowBlobPublicAccess { get; set; }
@@ -235,5 +277,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
         [WirePath("properties.dnsEndpointType")]
         public StorageDnsEndpointType? DnsEndpointType { get; set; }
+        /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
+        internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
+        /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
+        [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
+        public bool? IsBlobEnabled
+        {
+            get => GeoPriorityReplicationStatus is null ? default : GeoPriorityReplicationStatus.IsBlobEnabled;
+            set
+            {
+                if (GeoPriorityReplicationStatus is null)
+                    GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus();
+                GeoPriorityReplicationStatus.IsBlobEnabled = value;
+            }
+        }
     }
 }

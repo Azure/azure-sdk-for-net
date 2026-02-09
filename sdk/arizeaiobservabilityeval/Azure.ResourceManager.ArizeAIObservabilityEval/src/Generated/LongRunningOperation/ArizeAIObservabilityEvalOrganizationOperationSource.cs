@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
-    internal class ArizeAIObservabilityEvalOrganizationOperationSource : IOperationSource<ArizeAIObservabilityEvalOrganizationResource>
+    /// <summary></summary>
+    internal partial class ArizeAIObservabilityEvalOrganizationOperationSource : IOperationSource<ArizeAIObservabilityEvalOrganizationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ArizeAIObservabilityEvalOrganizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ArizeAIObservabilityEvalOrganizationResource IOperationSource<ArizeAIObservabilityEvalOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ArizeAIObservabilityEvalOrganizationData data = ArizeAIObservabilityEvalOrganizationData.DeserializeArizeAIObservabilityEvalOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ArizeAIObservabilityEvalOrganizationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ArizeAIObservabilityEvalOrganizationResource> IOperationSource<ArizeAIObservabilityEvalOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
-            return await Task.FromResult(new ArizeAIObservabilityEvalOrganizationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ArizeAIObservabilityEvalOrganizationData data = ArizeAIObservabilityEvalOrganizationData.DeserializeArizeAIObservabilityEvalOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArizeAIObservabilityEvalOrganizationResource(_client, data);
         }
     }
 }

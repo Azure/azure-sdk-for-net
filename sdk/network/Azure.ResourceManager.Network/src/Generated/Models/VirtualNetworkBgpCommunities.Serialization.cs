@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -103,6 +104,67 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkCommunity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  virtualNetworkCommunity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualNetworkCommunity))
+                {
+                    builder.Append("  virtualNetworkCommunity: ");
+                    if (VirtualNetworkCommunity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VirtualNetworkCommunity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VirtualNetworkCommunity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionalCommunity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  regionalCommunity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegionalCommunity))
+                {
+                    builder.Append("  regionalCommunity: ");
+                    if (RegionalCommunity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegionalCommunity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegionalCommunity}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VirtualNetworkBgpCommunities>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkBgpCommunities>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +173,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support writing '{options.Format}' format.");
             }

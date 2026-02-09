@@ -4,12 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 
@@ -44,6 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudRackResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudRackPatch patch, CancellationToken cancellationToken)
             => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
 
@@ -68,6 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudRackResource> Update(WaitUntil waitUntil, NetworkCloudRackPatch patch, CancellationToken cancellationToken)
             => Update(waitUntil, patch, null, null, cancellationToken);
     }

@@ -8,8 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
@@ -20,42 +22,38 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpSolutionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _selfHelpSolutionSolutionClientDiagnostics;
-        private readonly SolutionRestOperations _selfHelpSolutionSolutionRestClient;
+        private readonly ClientDiagnostics _solutionResourcesClientDiagnostics;
+        private readonly SolutionResources _solutionResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SelfHelpSolutionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SelfHelpSolutionCollection for mocking. </summary>
         protected SelfHelpSolutionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SelfHelpSolutionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SelfHelpSolutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _selfHelpSolutionSolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSolutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SelfHelpSolutionResource.ResourceType, out string selfHelpSolutionSolutionApiVersion);
-            _selfHelpSolutionSolutionRestClient = new SolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSolutionSolutionApiVersion);
+            TryGetApiVersion(SelfHelpSolutionResource.ResourceType, out string selfHelpSolutionApiVersion);
+            _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSolutionResource.ResourceType.Namespace, Diagnostics);
+            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpSolutionApiVersion ?? "2024-03-01-preview");
         }
 
         /// <summary>
         /// Creates a solution for the specific Azure resource or subscription using the inputs ‘solutionId and requiredInputs’ from discovery solutions. &lt;br/&gt; Azure solutions comprise a comprehensive library of self-help resources that have been thoughtfully curated by Azure engineers to aid customers in resolving typical troubleshooting issues. These solutions encompass: &lt;br/&gt; (1.) Dynamic and context-aware diagnostics, guided troubleshooting wizards, and data visualizations. &lt;br/&gt; (2.) Rich instructional video tutorials and illustrative diagrams and images. &lt;br/&gt; (3.) Thoughtfully assembled textual troubleshooting instructions. &lt;br/&gt; All these components are seamlessly converged into unified solutions tailored to address a specific support problem area.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,21 +61,33 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="data"> The required request body for this solution resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.CreateAsync(Id, solutionResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(new SelfHelpSolutionOperationSource(Client), _selfHelpSolutionSolutionClientDiagnostics, Pipeline, _selfHelpSolutionSolutionRestClient.CreateCreateRequest(Id, solutionResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id, solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
+                    new SelfHelpSolutionOperationSource(Client),
+                    _solutionResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -91,20 +101,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// Creates a solution for the specific Azure resource or subscription using the inputs ‘solutionId and requiredInputs’ from discovery solutions. &lt;br/&gt; Azure solutions comprise a comprehensive library of self-help resources that have been thoughtfully curated by Azure engineers to aid customers in resolving typical troubleshooting issues. These solutions encompass: &lt;br/&gt; (1.) Dynamic and context-aware diagnostics, guided troubleshooting wizards, and data visualizations. &lt;br/&gt; (2.) Rich instructional video tutorials and illustrative diagrams and images. &lt;br/&gt; (3.) Thoughtfully assembled textual troubleshooting instructions. &lt;br/&gt; All these components are seamlessly converged into unified solutions tailored to address a specific support problem area.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,21 +118,33 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="data"> The required request body for this solution resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SelfHelpSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Create(Id, solutionResourceName, data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(new SelfHelpSolutionOperationSource(Client), _selfHelpSolutionSolutionClientDiagnostics, Pipeline, _selfHelpSolutionSolutionRestClient.CreateCreateRequest(Id, solutionResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id, solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
+                    new SelfHelpSolutionOperationSource(Client),
+                    _solutionResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -140,38 +158,42 @@ namespace Azure.ResourceManager.SelfHelp
         /// Get the solution using the applicable solutionResourceName while creating the solution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SelfHelpSolutionResource>> GetAsync(string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,38 +207,42 @@ namespace Azure.ResourceManager.SelfHelp
         /// Get the solution using the applicable solutionResourceName while creating the solution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SelfHelpSolutionResource> Get(string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Get(Id, solutionResourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,36 +256,50 @@ namespace Azure.ResourceManager.SelfHelp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SelfHelpSolutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpSolutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,36 +313,50 @@ namespace Azure.ResourceManager.SelfHelp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SelfHelpSolutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpSolutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,38 +370,54 @@ namespace Azure.ResourceManager.SelfHelp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SelfHelpSolutionResource>> GetIfExistsAsync(string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SelfHelpSolutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpSolutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SelfHelpSolutionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,38 +431,54 @@ namespace Azure.ResourceManager.SelfHelp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SelfHelpSolutionResource> GetIfExists(string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
+            using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id, solutionResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SelfHelpSolutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SelfHelpSolutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SelfHelpSolutionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

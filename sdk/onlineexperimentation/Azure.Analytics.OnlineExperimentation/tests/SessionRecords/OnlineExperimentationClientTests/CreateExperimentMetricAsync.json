@@ -4,7 +4,6 @@
       "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metri?api-version=2025-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-1cf6c74c67434dadaaa89d0d062466df-c544745edeea6c4a-00",
         "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",

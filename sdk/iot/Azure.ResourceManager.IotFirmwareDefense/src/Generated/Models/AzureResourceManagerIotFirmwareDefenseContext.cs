@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     [ModelReaderWriterBuildable(typeof(CryptoKeyResult))]
     [ModelReaderWriterBuildable(typeof(CryptoKeySummary))]
     [ModelReaderWriterBuildable(typeof(CryptoPairedKey))]
+    [ModelReaderWriterBuildable(typeof(CveComponent))]
     [ModelReaderWriterBuildable(typeof(CveLink))]
     [ModelReaderWriterBuildable(typeof(CveResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CveResult))]

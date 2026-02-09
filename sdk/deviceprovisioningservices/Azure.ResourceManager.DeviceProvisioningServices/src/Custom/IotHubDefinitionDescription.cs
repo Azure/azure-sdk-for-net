@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    /// <summary> Description of the IoT hub. </summary>
     public partial class IotHubDefinitionDescription
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
@@ -19,6 +18,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public IotHubDefinitionDescription(string connectionString, AzureLocation location) : this(location)
         {
             ConnectionString = connectionString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
+        /// <param name="location"> ARM region of the IoT hub. </param>
+        public IotHubDefinitionDescription(AzureLocation location)
+        {
+            Location = location;
         }
     }
 }

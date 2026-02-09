@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : TrackedResourceData
@@ -22,11 +23,17 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public FooData(string location) : base(location)
+        /// <param name="something"> something. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
+            Argument.AssertNotNull(something, nameof(something));
+            Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
+            Properties = new FooProperties(something, prop1, nestedPropertyProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -39,17 +46,249 @@ namespace MgmtTypeSpec
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            Identity = identity;
+            Plan = plan;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FooProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal FooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Details of the resource plan. </summary>
+        [WirePath("plan")]
+        public ArmPlan Plan { get; set; }
+
+        /// <summary> the service url. </summary>
+        [WirePath("properties.serviceUrl")]
+        public Uri ServiceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ServiceUri = value;
+            }
+        }
+
+        /// <summary> something. </summary>
+        [WirePath("properties.something")]
+        public ManagedServiceIdentity Something
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Something;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.Something = value;
+            }
+        }
+
+        /// <summary> boolean value. </summary>
+        [WirePath("properties.boolValue")]
+        public bool? BoolValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BoolValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.BoolValue = value.Value;
+            }
+        }
+
+        /// <summary> float value. </summary>
+        [WirePath("properties.floatValue")]
+        public float? FloatValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FloatValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.FloatValue = value.Value;
+            }
+        }
+
+        /// <summary> double value. </summary>
+        [WirePath("properties.doubleValue")]
+        public double? DoubleValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DoubleValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.DoubleValue = value.Value;
+            }
+        }
+
+        /// <summary> Gets the Prop1. </summary>
+        [WirePath("properties.prop1")]
+        public IList<string> Prop1
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.Prop1;
+            }
+        }
+
+        /// <summary> Gets the Prop2. </summary>
+        [WirePath("properties.prop2")]
+        public IList<int> Prop2
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.Prop2;
+            }
+        }
+
+        /// <summary> ETag property for testing etag parameter name generation. </summary>
+        [WirePath("properties.etag")]
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ETag = value.Value;
+            }
+        }
+
+        /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
+        [WirePath("properties.writableSubResourceProp")]
+        public WritableSubResource WritableSubResourceProp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WritableSubResourceProp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.WritableSubResourceProp = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties.nestedProperty.properties")]
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NestedPropertyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.NestedPropertyProperties = value;
+            }
+        }
+
+        /// <summary> Gets the FlattenedProperty. </summary>
+        [WirePath("properties.optionalProperty.flattenedProperty")]
+        public IList<string> FlattenedProperty
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.FlattenedProperty;
+            }
+        }
+
+        /// <summary> Specifies the gallery applications that should be made available. </summary>
+        [WirePath("properties.vmProfile.applicationProfile.galleryApplications")]
+        public IList<string> VmGalleryApplications
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.VmGalleryApplications;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        [WirePath("properties.computeFleetVmProfile.capacityReservation.capacityReservationGroup.id")]
+        public ResourceIdentifier ComputeFleetVmCapacityReservationGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeFleetVmCapacityReservationGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ComputeFleetVmCapacityReservationGroupId = value;
+            }
+        }
     }
 }

@@ -48,7 +48,10 @@ public static class BicepFunction
     /// </remarks>
     public static BicepValue<string> GetUniqueString(params BicepValue<string>[] values)
     {
-        if (values.Length < 1) { throw new ArgumentException($"{nameof(GetUniqueString)} requires at least one value.", nameof(values)); }
+        if (values.Length < 1)
+        {
+            throw new ArgumentException($"{nameof(GetUniqueString)} requires at least one value.", nameof(values));
+        }
         return BicepSyntax.Call("uniqueString", values.Select(v => v.Compile()).ToArray());
     }
 
@@ -109,7 +112,10 @@ public static class BicepFunction
     /// </remarks>
     public static BicepValue<string> CreateGuid(params BicepValue<string>[] values)
     {
-        if (values.Length < 1) { throw new ArgumentException($"{nameof(CreateGuid)} requires at least one value.", nameof(values)); }
+        if (values.Length < 1)
+        {
+            throw new ArgumentException($"{nameof(CreateGuid)} requires at least one value.", nameof(values));
+        }
         return BicepSyntax.Call("guid", values.Select(v => v.Compile()).ToArray());
     }
 
@@ -142,11 +148,95 @@ public static class BicepFunction
     /// Bicep Functions Reference</see> for more.
     /// </para>
     /// </remarks>
+    /// <exception cref="ArgumentException">When <paramref name="values"/> is empty or contains fewer than two elements.</exception>
     public static BicepValue<ResourceIdentifier> GetSubscriptionResourceId(params BicepValue<string>[] values)
     {
-        if (values.Length < 2) { throw new ArgumentException($"{nameof(GetSubscriptionResourceId)} requires at least two values.", nameof(values)); }
+        if (values.Length < 2)
+        {
+            throw new ArgumentException($"{nameof(GetSubscriptionResourceId)} requires at least two values.", nameof(values));
+        }
         return BicepSyntax.Call("subscriptionResourceId", values.Select(v => v.Compile()).ToArray());
     }
+
+    /*
+     * temporarily commented out for the new stable version release
+    /// <summary>
+    /// Returns the unique identifier of a resource. This represents the <c>resourceId</c>
+    /// Bicep function.
+    /// </summary>
+    /// <param name="values">
+    /// Optional subscription id, resource group name, resource types, and resource names used to
+    /// construct the resource ID.  At least two values are required.
+    /// </param>
+    /// <returns>
+    /// The unique identifier of the resource.
+    /// </returns>
+    /// <remarks>
+    /// <para>
+    /// You use this function when the resource name is ambiguous or not provisioned within the same Bicep file.
+    /// The format of the returned identifier varies based on whether the deployment happens at the scope of
+    /// a resource group, subscription, management group, or tenant.
+    /// </para>
+    /// <para>
+    /// See the
+    /// <see href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-resource#resourceid">
+    /// Bicep Functions Reference</see> for more.
+    /// </para>
+    /// </remarks>
+    /// <exception cref="ArgumentException">When <paramref name="values"/> is empty or contains fewer than two elements.</exception>
+    public static BicepValue<ResourceIdentifier> GetResourceId(params BicepValue<string>[] values)
+    {
+        if (values.Length < 2)
+        {
+            throw new ArgumentException($"{nameof(GetResourceId)} requires at least two values.", nameof(values));
+        }
+        return BicepSyntax.Call("resourceId", values.Select(v => v.Compile()).ToArray());
+    }
+
+    /// <summary>
+    /// Returns the resource ID for an extension resource. An extension resource is a resource type
+    /// that is applied to another resource to add to its capabilities.
+    /// This represents the <c>extensionResourceId</c> Bicep function.
+    /// </summary>
+    /// <param name="resourceId">The resource ID to be extended on.</param>
+    /// <param name="resourceType">The resource type.</param>
+    /// <param name="resourceNames">The resource names.</param>
+    /// <returns>
+    /// The resource ID for an extension resource.
+    /// </returns>
+    /// <remarks>
+    /// <para>
+    /// The basic format of the resource ID returned by this function is:
+    /// <c>{scope}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
+    /// The scope segment varies by the resource being extended.
+    /// When the extension resource is applied to a resource, the resource ID is returned in the following format:
+    /// <c>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseResourceProviderNamespace}/{baseResourceType}/{baseResourceName}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
+    /// When the extension resource is applied to a resource group, the format is:
+    /// <c>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
+    /// When the extension resource is applied to a subscription, the format is:
+    /// <c>/subscriptions/{subscriptionId}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
+    /// When the extension resource is applied to a management group, the format is:
+    /// <c>/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
+    /// </para>
+    /// <para>
+    /// See the
+    /// <see href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-resource#extensionresourceid">
+    /// Bicep Functions Reference</see> for more.
+    /// </para>
+    /// </remarks>
+    /// <exception cref="ArgumentException">When <paramref name="resourceNames"/> is empty.</exception>
+    public static BicepValue<ResourceIdentifier> GetExtensionResourceId(
+        BicepValue<ResourceIdentifier> resourceId,
+        BicepValue<string> resourceType,
+        params BicepValue<string>[] resourceNames)
+    {
+        if (resourceNames.Length < 1)
+        {
+            throw new ArgumentException($"{nameof(GetExtensionResourceId)} requires at least one element for resourceNames parameter.", nameof(resourceNames));
+        }
+        return BicepSyntax.Call("extensionResourceId", [resourceId.Compile(), resourceType.Compile(), .. resourceNames.Select(v => v.Compile())]);
+    }
+    */
 
     /// <summary>
     /// Returns information about the current deployment operation.  This
@@ -293,8 +383,7 @@ public static class BicepFunction
     /// Combines multiple string values <paramref name="values"/> and returns
     /// the concatenated string.  This represents the <c>concat</c> Bicep
     /// function.  To improve readability, prefer
-    /// <see cref="BicepFunction.Interpolate"/> instead of
-    /// <see cref="Concat"/>.
+    /// <see cref="Interpolate"/> instead of <see cref="Concat"/>.
     /// </summary>
     /// <param name="values">Strings in sequential order for concatenation.</param>
     /// <returns>A string or array of concatenated values.</returns>
@@ -305,16 +394,25 @@ public static class BicepFunction
     /// </remarks>
     public static BicepValue<string> Concat(params BicepValue<string>[] values)
     {
-        if (values.Length < 1) { throw new ArgumentException($"{nameof(Concat)} requires at least one value.", nameof(values)); }
+        if (values.Length < 1)
+        {
+            throw new ArgumentException($"{nameof(Concat)} requires at least one value.", nameof(values));
+        }
         return BicepSyntax.Call("concat", values.Select(v => v.Compile()).ToArray());
     }
 
     /// <summary>
-    /// Convert a formattable string with literal text, C# expressions, and
-    /// Bicep expressions into an interpolated Bicep string.
+    /// Builds a Bicep interpolated string expression from C# interpolated string syntax
+    /// or a <see cref="FormattableString"/> instance.
+    /// Use this method to combine literal text, C# expressions and Bicep expressions
+    /// into a single Bicep string value.
     /// </summary>
-    /// <param name="handler">A bicep interpolated string handler.</param>
-    /// <returns>An interpolated string.</returns>
+    /// <param name="handler">
+    /// The <see cref="BicepInterpolatedStringHandler"/> that collects literal and formatted segments from the interpolated string.
+    /// </param>
+    /// <returns>
+    /// A <see cref="BicepValue{String}"/> representing the constructed Bicep interpolated string expression of type <c>string</c>.
+    /// </returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
 }

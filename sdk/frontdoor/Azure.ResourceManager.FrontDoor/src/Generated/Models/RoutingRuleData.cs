@@ -53,22 +53,28 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Frontend endpoints associated with this rule. </summary>
+        [WirePath("properties.frontendEndpoints")]
         public IList<WritableSubResource> FrontendEndpoints { get; }
         /// <summary> Protocol schemes to match for this rule. </summary>
+        [WirePath("properties.acceptedProtocols")]
         public IList<FrontDoorProtocol> AcceptedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
+        [WirePath("properties.patternsToMatch")]
         public IList<string> PatternsToMatch { get; }
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.enabledState")]
         public RoutingRuleEnabledState? EnabledState { get; set; }
         /// <summary>
         /// A reference to the routing configuration.
         /// Please note <see cref="Models.RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
         /// </summary>
+        [WirePath("properties.routeConfiguration")]
         public RouteConfiguration RouteConfiguration { get; set; }
         /// <summary> A reference to a specific Rules Engine Configuration to apply to this route. </summary>
         internal WritableSubResource RulesEngine { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.rulesEngine.id")]
         public ResourceIdentifier RulesEngineId
         {
             get => RulesEngine is null ? default : RulesEngine.Id;
@@ -83,6 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Defines the Web Application Firewall policy for each routing rule (if applicable). </summary>
         internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.webApplicationFirewallPolicyLink.id")]
         public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
     }
 }

@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
+        protected static readonly string subscriptionId = "07aed47b-60ad-4d6e-a07a-89b602418441"; // https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/07aed47b-60ad-4d6e-a07a-89b602418441/overview
+        protected static readonly string rgName = "sdk-tests-rg";
+        protected static readonly string workspaceName = "default";
+        protected static readonly string firmwareId = "94a6c8fd-42a3-a209-a374-92e68b14e5b4";
+
         protected IotFirmwareDefenseManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -29,6 +34,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            var subscription = Client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(subscriptionId));
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 

@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     /// <summary>
-    /// A Class representing a ConnectedClusterService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterServiceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetConnectedClusterServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterService method.
+    /// A class representing a ConnectedClusterService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterServiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterServices method.
     /// </summary>
     public partial class ConnectedClusterServiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ConnectedClusterServiceResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string serviceName)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _connectedClusterServiceServicesClientDiagnostics;
-        private readonly ServicesRestOperations _connectedClusterServiceServicesRestClient;
+        private readonly ClientDiagnostics _servicesClientDiagnostics;
+        private readonly Services _servicesRestClient;
         private readonly ConnectedClusterServiceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesRuntime/services";
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterServiceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ConnectedClusterServiceResource for mocking. </summary>
         protected ConnectedClusterServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectedClusterServiceResource(ArmClient client, ConnectedClusterServiceData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectedClusterServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _connectedClusterServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string connectedClusterServiceServicesApiVersion);
-            _connectedClusterServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterServiceServicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string connectedClusterServiceApiVersion);
+            _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, connectedClusterServiceApiVersion ?? "2024-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ConnectedClusterServiceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string serviceName)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConnectedClusterServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Get a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConnectedClusterServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Delete a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Delete");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _connectedClusterServiceServicesRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Delete a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +261,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Delete");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _connectedClusterServiceServicesRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a ServiceResource
+        /// Update a ConnectedClusterService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,16 +316,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Update");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _connectedClusterServiceServicesRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterServiceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -303,23 +344,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a ServiceResource
+        /// Update a ConnectedClusterService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,16 +372,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Update");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var uri = _connectedClusterServiceServicesRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterServiceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Create or update an import job. Import jobs are automatically deleted 72 hours after completion. </summary>
+        /// <summary> Create or update an import job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Create or update an import job. Import jobs are automatically deleted 72 hours after completion. </summary>
+        /// <summary> Create or update an import job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>

@@ -8,170 +8,154 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServices.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableRecoveryServicesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _recoveryServicesClientDiagnostics;
-        private RecoveryServicesRestOperations _recoveryServicesRestClient;
-        private ClientDiagnostics _recoveryServicesVaultVaultsClientDiagnostics;
-        private VaultsRestOperations _recoveryServicesVaultVaultsRestClient;
+        private ClientDiagnostics _vaultsClientDiagnostics;
+        private Vaults _vaultsRestClient;
+        private ClientDiagnostics _recoveryServicesOperationGroupClientDiagnostics;
+        private RecoveryServicesOperationGroup _recoveryServicesOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRecoveryServicesSubscriptionResource for mocking. </summary>
         protected MockableRecoveryServicesSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRecoveryServicesSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRecoveryServicesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics RecoveryServicesClientDiagnostics => _recoveryServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private RecoveryServicesRestOperations RecoveryServicesRestClient => _recoveryServicesRestClient ??= new RecoveryServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics RecoveryServicesVaultVaultsClientDiagnostics => _recoveryServicesVaultVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
-        private VaultsRestOperations RecoveryServicesVaultVaultsRestClient => _recoveryServicesVaultVaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RecoveryServicesVaultResource.ResourceType));
+        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+
+        private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+
+        /// <summary> Gets a collection of RecoveryServicesDeletedVaults in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of RecoveryServicesDeletedVaults and their operations over a RecoveryServicesDeletedVaultResource. </returns>
+        public virtual RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults(AzureLocation location)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new RecoveryServicesDeletedVaultCollection(client, Id, location));
         }
 
         /// <summary>
-        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// Get a specific deleted vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryServices_Capabilities</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoveryServicesDeletedVaultResource>> GetRecoveryServicesDeletedVaultAsync(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities");
-            scope.Start();
-            try
-            {
-                var response = await RecoveryServicesRestClient.CapabilitiesAsync(Id.SubscriptionId, location, input, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetRecoveryServicesDeletedVaults(location).GetAsync(deletedVaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// Get a specific deleted vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryServices_Capabilities</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual Response<CapabilitiesResult> GetRecoveryServiceCapabilities(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVault(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities");
-            scope.Start();
-            try
-            {
-                var response = RecoveryServicesRestClient.Capabilities(Id.SubscriptionId, location, input, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetRecoveryServicesDeletedVaults(location).Get(deletedVaultName, cancellationToken);
         }
 
         /// <summary>
         /// Fetches all the resources of the specified type in the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscriptionId</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_ListBySubscriptionId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), RecoveryServicesVaultVaultsClientDiagnostics, Pipeline, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>
         /// Fetches all the resources of the specified type in the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscriptionId</description>
+        /// <term> Operation Id. </term>
+        /// <description> Vaults_ListBySubscriptionId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,9 +163,109 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> A collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), RecoveryServicesVaultVaultsClientDiagnostics, Pipeline, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new RecoveryServicesVaultResource(Client, data));
+        }
+
+        /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryServicesOperationGroup_Capabilities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="input"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            using DiagnosticScope scope = RecoveryServicesOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateGetRecoveryServiceCapabilitiesRequest(Id.SubscriptionId, location, ResourceCapabilities.ToRequestContent(input), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CapabilitiesResult> response = Response.FromValue(CapabilitiesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryServicesOperationGroup_Capabilities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="input"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual Response<CapabilitiesResult> GetRecoveryServiceCapabilities(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            using DiagnosticScope scope = RecoveryServicesOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateGetRecoveryServiceCapabilitiesRequest(Id.SubscriptionId, location, ResourceCapabilities.ToRequestContent(input), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CapabilitiesResult> response = Response.FromValue(CapabilitiesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

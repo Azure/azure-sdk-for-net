@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </summary>
+    /// <summary>
+    /// The expander to use when scaling up. If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information.
+    /// Serialized Name: Expander
+    /// </summary>
     public readonly partial struct AutoScaleExpander : IEquatable<AutoScaleExpander>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string PriorityValue = "priority";
         private const string RandomValue = "random";
 
-        /// <summary> Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources. </summary>
+        /// <summary>
+        /// Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources.
+        /// Serialized Name: Expander.least-waste
+        /// </summary>
         public static AutoScaleExpander LeastWaste { get; } = new AutoScaleExpander(LeastWasteValue);
-        /// <summary> Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won't cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once. </summary>
+        /// <summary>
+        /// Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won't cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once.
+        /// Serialized Name: Expander.most-pods
+        /// </summary>
         public static AutoScaleExpander MostPods { get; } = new AutoScaleExpander(MostPodsValue);
-        /// <summary> Selects the node group that has the highest priority assigned by the user. It's configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md). </summary>
+        /// <summary>
+        /// Selects the node group that has the highest priority assigned by the user. It's configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md).
+        /// Serialized Name: Expander.priority
+        /// </summary>
         public static AutoScaleExpander Priority { get; } = new AutoScaleExpander(PriorityValue);
-        /// <summary> Used when you don't have a particular need for the node groups to scale differently. </summary>
+        /// <summary>
+        /// Used when you don't have a particular need for the node groups to scale differently.
+        /// Serialized Name: Expander.random
+        /// </summary>
         public static AutoScaleExpander Random { get; } = new AutoScaleExpander(RandomValue);
         /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are the same. </summary>
         public static bool operator ==(AutoScaleExpander left, AutoScaleExpander right) => left.Equals(right);

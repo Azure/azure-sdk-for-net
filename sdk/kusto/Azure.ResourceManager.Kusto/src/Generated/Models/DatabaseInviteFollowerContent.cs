@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The email of the invited user for which the follower invitation is generated. </summary>
+        [WirePath("inviteeEmail")]
         public string InviteeEmail { get; }
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
     }
 }

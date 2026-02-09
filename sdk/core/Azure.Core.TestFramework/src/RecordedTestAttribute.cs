@@ -100,31 +100,49 @@ namespace Azure.Core.TestFramework
 
                     if (resultMessage.Contains(typeof(TestTimeoutException).FullName))
                     {
-                        // retry once
-                        context.CurrentResult = context.CurrentTest.MakeTestResult();
-                        context.CurrentResult = innerCommand.Execute(context);
-
-                        if (IsTestFailed(context))
-                        {
-                            context.CurrentResult.SetResult(
-                                ResultState.Error,
-                                "The test timed out twice:" + Environment.NewLine +
-                                $"First attempt: {originalResult.Message}" + Environment.NewLine +
-                                $"Second attempt: {context.CurrentResult.Message}");
-                        }
-                        else
-                        {
-                            context.CurrentResult.SetResult(
-                                context.CurrentResult.ResultState,
-                                "Test timed out in initial run, but was retried successfully.");
-                        }
-
-                        return context.CurrentResult;
+                        return HandleTestTimeout(context, originalResult);
                     }
                 }
 
                 CheckForIgnoredServiceErrors(context);
                 return context.CurrentResult;
+            }
+
+            private TestResult HandleTestTimeout(TestExecutionContext context, TestResult originalResult)
+            {
+                var results = new List<TestResult> { originalResult };
+
+                for (int retryCount = 0; retryCount < 2; retryCount++)
+                {
+                    // Create a new TestResult instance
+                    context.CurrentResult = context.CurrentTest.MakeTestResult();
+                    // Run the test again
+                    context.CurrentResult = innerCommand.Execute(context);
+                    results.Add(context.CurrentResult);
+
+                    if (!IsTestFailed(context))
+                    {
+                        context.CurrentResult.SetResult(
+                            ResultState.Success,
+                            ConstructRetryMessage("Test timed out initially, but passed on retry", results));
+                        return context.CurrentResult;
+                    }
+                }
+
+                context.CurrentResult.SetResult(
+                    ResultState.Error,
+                    ConstructRetryMessage("The test timed out on all attempts", results));
+
+                return context.CurrentResult;
+            }
+
+            private static string ConstructRetryMessage(string header, IEnumerable<TestResult> results)
+            {
+                var attemptDetails = string.Join(Environment.NewLine,
+                    results.Select((r, i) =>
+                        $"Attempt {i + 1}: {r.Message ?? "Passed"}"));
+
+                return header + ":" + Environment.NewLine + attemptDetails + Environment.NewLine;
             }
 
             private void CheckForIgnoredServiceErrors(TestExecutionContext context)

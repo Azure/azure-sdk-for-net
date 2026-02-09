@@ -10,17 +10,6 @@ trigger:
     include:
     - sdk/identity/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/identity/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -31,9 +20,3 @@ extends:
       safeName: AzureIdentity
     - name: Azure.Identity.Broker
       safeName: AzureIdentityBroker
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Identity
-      ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.Identity.Broker
-      ExpectedWarningsFilepath: "Azure.Identity.Broker/tests/compatibility/ExpectedWarnings.txt"

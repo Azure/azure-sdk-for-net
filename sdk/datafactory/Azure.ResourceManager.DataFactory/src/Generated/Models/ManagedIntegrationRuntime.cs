@@ -29,13 +29,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <param name="customerVirtualNetwork"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork) : base(integrationRuntimeType, description, additionalProperties)
+        /// <param name="interactiveQuery"> Interactive authoring capability reference. </param>
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork, InteractiveQueryProperties interactiveQuery) : base(integrationRuntimeType, description, additionalProperties)
         {
             State = state;
             ManagedVirtualNetwork = managedVirtualNetwork;
             ComputeProperties = computeProperties;
             SsisProperties = ssisProperties;
             CustomerVirtualNetwork = customerVirtualNetwork;
+            InteractiveQuery = interactiveQuery;
             IntegrationRuntimeType = integrationRuntimeType;
         }
 
@@ -60,5 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 CustomerVirtualNetwork.SubnetId = value;
             }
         }
+
+        /// <summary> Interactive authoring capability reference. </summary>
+        public InteractiveQueryProperties InteractiveQuery { get; set; }
     }
 }

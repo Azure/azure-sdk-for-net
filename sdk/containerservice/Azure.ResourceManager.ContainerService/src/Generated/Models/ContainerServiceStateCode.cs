@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Tells whether the cluster is Running or Stopped. </summary>
+    /// <summary>
+    /// Tells whether the cluster is Running or Stopped
+    /// Serialized Name: Code
+    /// </summary>
     public readonly partial struct ContainerServiceStateCode : IEquatable<ContainerServiceStateCode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string RunningValue = "Running";
         private const string StoppedValue = "Stopped";
 
-        /// <summary> The cluster is running. </summary>
+        /// <summary>
+        /// The cluster is running.
+        /// Serialized Name: Code.Running
+        /// </summary>
         public static ContainerServiceStateCode Running { get; } = new ContainerServiceStateCode(RunningValue);
-        /// <summary> The cluster is stopped. </summary>
+        /// <summary>
+        /// The cluster is stopped.
+        /// Serialized Name: Code.Stopped
+        /// </summary>
         public static ContainerServiceStateCode Stopped { get; } = new ContainerServiceStateCode(StoppedValue);
         /// <summary> Determines if two <see cref="ContainerServiceStateCode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceStateCode left, ContainerServiceStateCode right) => left.Equals(right);

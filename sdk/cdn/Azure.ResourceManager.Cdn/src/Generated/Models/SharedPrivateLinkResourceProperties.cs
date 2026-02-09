@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes the properties of an existing Shared Private Link Resource to use when connecting to a private origin.
-    /// Serialized Name: SharedPrivateLinkResourceProperties
-    /// </summary>
+    /// <summary> Describes the properties of an existing Shared Private Link Resource to use when connecting to a private origin. </summary>
     public partial class SharedPrivateLinkResourceProperties
     {
         /// <summary>
@@ -56,26 +53,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="privateLink">
-        /// The resource id of the resource the shared private link resource is for.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.privateLink
-        /// </param>
-        /// <param name="privateLinkLocation">
-        /// The location of the shared private link resource
-        /// Serialized Name: SharedPrivateLinkResourceProperties.privateLinkLocation
-        /// </param>
-        /// <param name="groupId">
-        /// The group id from the provider of resource the shared private link resource is for.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.groupId
-        /// </param>
-        /// <param name="requestMessage">
-        /// The request message for requesting approval of the shared private link resource.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.requestMessage
-        /// </param>
-        /// <param name="status">
-        /// Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.status
-        /// </param>
+        /// <param name="privateLink"> The resource id of the resource the shared private link resource is for. </param>
+        /// <param name="privateLinkLocation"> The location of the shared private link resource. </param>
+        /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
+        /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
+        /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SharedPrivateLinkResourceProperties(WritableSubResource privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,12 +69,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource id of the resource the shared private link resource is for.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.privateLink
-        /// </summary>
+        /// <summary> The resource id of the resource the shared private link resource is for. </summary>
         internal WritableSubResource PrivateLink { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("privateLink.id")]
         public ResourceIdentifier PrivateLinkId
         {
             get => PrivateLink is null ? default : PrivateLink.Id;
@@ -104,25 +84,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary>
-        /// The location of the shared private link resource
-        /// Serialized Name: SharedPrivateLinkResourceProperties.privateLinkLocation
-        /// </summary>
+        /// <summary> The location of the shared private link resource. </summary>
+        [WirePath("privateLinkLocation")]
         public string PrivateLinkLocation { get; set; }
-        /// <summary>
-        /// The group id from the provider of resource the shared private link resource is for.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.groupId
-        /// </summary>
+        /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
-        /// <summary>
-        /// The request message for requesting approval of the shared private link resource.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.requestMessage
-        /// </summary>
+        /// <summary> The request message for requesting approval of the shared private link resource. </summary>
+        [WirePath("requestMessage")]
         public string RequestMessage { get; set; }
-        /// <summary>
-        /// Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout.
-        /// Serialized Name: SharedPrivateLinkResourceProperties.status
-        /// </summary>
+        /// <summary> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </summary>
+        [WirePath("status")]
         public SharedPrivateLinkResourceStatus? Status { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.LargeInstance.Models
     public readonly partial struct LargeInstancePowerState : IEquatable<LargeInstancePowerState>
     {
         private readonly string _value;
+        /// <summary> Starting means that the Azure Large Instance resource is turning on. </summary>
+        private const string StartingValue = "starting";
+        /// <summary> Started means that the Azure Large Instance resource has been powered on. </summary>
+        private const string StartedValue = "started";
+        /// <summary> Stopping means that the Azure Large Instance resource is shutting down. </summary>
+        private const string StoppingValue = "stopping";
+        /// <summary> Stopped means that the Azure Large Instance resource has shut down. </summary>
+        private const string StoppedValue = "stopped";
+        /// <summary> Restarting means that the Azure Large Instance resource is restarting. </summary>
+        private const string RestartingValue = "restarting";
+        /// <summary> Unknown means that the state of the Azure Large Instance is unknown. </summary>
+        private const string UnknownValue = "unknown";
 
         /// <summary> Initializes a new instance of <see cref="LargeInstancePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LargeInstancePowerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartingValue = "starting";
-        private const string StartedValue = "started";
-        private const string StoppingValue = "stopping";
-        private const string StoppedValue = "stopped";
-        private const string RestartingValue = "restarting";
-        private const string UnknownValue = "unknown";
+            _value = value;
+        }
 
         /// <summary> Starting means that the Azure Large Instance resource is turning on. </summary>
         public static LargeInstancePowerState Starting { get; } = new LargeInstancePowerState(StartingValue);
+
         /// <summary> Started means that the Azure Large Instance resource has been powered on. </summary>
         public static LargeInstancePowerState Started { get; } = new LargeInstancePowerState(StartedValue);
+
         /// <summary> Stopping means that the Azure Large Instance resource is shutting down. </summary>
         public static LargeInstancePowerState Stopping { get; } = new LargeInstancePowerState(StoppingValue);
+
         /// <summary> Stopped means that the Azure Large Instance resource has shut down. </summary>
         public static LargeInstancePowerState Stopped { get; } = new LargeInstancePowerState(StoppedValue);
+
         /// <summary> Restarting means that the Azure Large Instance resource is restarting. </summary>
         public static LargeInstancePowerState Restarting { get; } = new LargeInstancePowerState(RestartingValue);
+
         /// <summary> Unknown means that the state of the Azure Large Instance is unknown. </summary>
         public static LargeInstancePowerState Unknown { get; } = new LargeInstancePowerState(UnknownValue);
+
         /// <summary> Determines if two <see cref="LargeInstancePowerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LargeInstancePowerState left, LargeInstancePowerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LargeInstancePowerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LargeInstancePowerState left, LargeInstancePowerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstancePowerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LargeInstancePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LargeInstancePowerState(string value) => new LargeInstancePowerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LargeInstancePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LargeInstancePowerState?(string value) => value == null ? null : new LargeInstancePowerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LargeInstancePowerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LargeInstancePowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

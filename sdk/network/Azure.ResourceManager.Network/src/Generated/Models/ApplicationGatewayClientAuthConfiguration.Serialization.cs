@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -43,6 +44,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("verifyClientRevocation"u8);
                 writer.WriteStringValue(VerifyClientRevocation.Value.ToString());
+            }
+            if (Optional.IsDefined(VerifyClientAuthMode))
+            {
+                writer.WritePropertyName("verifyClientAuthMode"u8);
+                writer.WriteStringValue(VerifyClientAuthMode.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,6 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             bool? verifyClientCertIssuerDN = default;
             ApplicationGatewayClientRevocationOption? verifyClientRevocation = default;
+            ApplicationGatewayClientAuthVerificationMode? verifyClientAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +112,83 @@ namespace Azure.ResourceManager.Network.Models
                     verifyClientRevocation = new ApplicationGatewayClientRevocationOption(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("verifyClientAuthMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    verifyClientAuthMode = new ApplicationGatewayClientAuthVerificationMode(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationGatewayClientAuthConfiguration(verifyClientCertIssuerDN, verifyClientRevocation, serializedAdditionalRawData);
+            return new ApplicationGatewayClientAuthConfiguration(verifyClientCertIssuerDN, verifyClientRevocation, verifyClientAuthMode, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VerifyClientCertIssuerDN), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  verifyClientCertIssuerDN: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VerifyClientCertIssuerDN))
+                {
+                    builder.Append("  verifyClientCertIssuerDN: ");
+                    var boolValue = VerifyClientCertIssuerDN.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VerifyClientRevocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  verifyClientRevocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VerifyClientRevocation))
+                {
+                    builder.Append("  verifyClientRevocation: ");
+                    builder.AppendLine($"'{VerifyClientRevocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VerifyClientAuthMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  verifyClientAuthMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VerifyClientAuthMode))
+                {
+                    builder.Append("  verifyClientAuthMode: ");
+                    builder.AppendLine($"'{VerifyClientAuthMode.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayClientAuthConfiguration>.Write(ModelReaderWriterOptions options)
@@ -122,6 +199,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support writing '{options.Format}' format.");
             }

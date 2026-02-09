@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -17,33 +18,68 @@ namespace Azure.Generator.Management.Visitors;
 internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
+    private static readonly HashSet<string> _knownTypes = new HashSet<string>()
+        {
+            "Sku",
+            "SkuName",
+            "SkuTier",
+            "SkuFamily",
+            "SkuInformation",
+            "Plan",
+            "Usage",
+            "Kind",
+            // Private endpoint definitions which are defined in swagger common-types/privatelinks.json and are used by RPs
+            "PrivateEndpointConnection",
+            "PrivateLinkResource",
+            "PrivateLinkServiceConnectionState",
+            "PrivateEndpointServiceConnectionStatus",
+            "PrivateEndpointConnectionProvisioningState",
+            // not defined in common-types, but common in various RP
+            "PrivateLinkResourceProperties",
+            "PrivateLinkServiceConnectionStateProperty",
+            // internal, but could be public in the future, also make the names more consistent
+            "PrivateEndpointConnectionListResult",
+            "PrivateLinkResourceListResult"
+        };
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
+    protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
+    {
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (_knownTypes.Contains(enumType.Name))
+        {
+            var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
+            type.Update(name: newName);
+        }
+        return base.PreVisitEnum(enumType, type);
+    }
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
-        if (type is not null && TryTransformUrlToUri(model.Name, out var newName))
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (TryTransformUrlToUri(model.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
-        if (type is not null)
+        if (_knownTypes.Contains(model.Name))
         {
-            if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
-            {
-                var newModelName = $"{enclosingResourceName}Patch";
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            type.Update(name: newName);
+        }
 
-                _resourceUpdateModelTypes.Add(type.Type);
-
-                type.Update(name: newModelName);
-
-                foreach (var serializationProvider in type.SerializationProviders)
-                {
-                    serializationProvider.Update(name: newModelName);
-                    _resourceUpdateModelTypes.Add(serializationProvider.Type);
-                }
-            }
+        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+        {
+            newName = $"{enclosingResourceName}Patch";
+            type.Update(name: newName);
         }
         return base.PreVisitModel(model, type);
     }
@@ -52,6 +88,8 @@ internal class NameVisitor : ScmLibraryVisitor
     {
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
+        DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
+        DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -85,24 +123,65 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
-    protected override MethodProvider? VisitMethod(MethodProvider method)
-    {
-        var parameterUpdated = false;
-        foreach (var parameter in method.Signature.Parameters)
+    // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
+    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
         {
-            if (_resourceUpdateModelTypes.Contains(parameter.Type))
+            {"Creation", "Created"},
+            {"Deletion", "Deleted"},
+            {"Expiration", "Expire"},
+            {"Modification", "Modified"},
+        };
+    private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && propertyProvider.Type.Equals(typeof(DateTimeOffset)))
+        {
+            var propertyName = propertyProvider.Name;
+            // Skip properties that are not following the pattern we want to change
+            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
+                propertyName.StartsWith("To", StringComparison.Ordinal) ||
+                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
             {
-                parameter.Update(name: "patch");
-                parameterUpdated = true;
+                return;
+            }
+
+            var lengthToCut = 0;
+            if (propertyName.Length > 8 &&
+                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
+            {
+                lengthToCut = 8;
+            }
+            else if (propertyName.Length > 4 &&
+                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
+                propertyName.EndsWith("Date", StringComparison.Ordinal)))
+            {
+                lengthToCut = 4;
+            }
+            else if (propertyName.Length > 2 &&
+                propertyName.EndsWith("At", StringComparison.Ordinal))
+            {
+                lengthToCut = 2;
+            }
+            if (lengthToCut > 0)
+            {
+                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
+                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
+                propertyProvider.Update(name: newPropertyName);
             }
         }
+    }
 
-        if (parameterUpdated)
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
         {
-            // This is required as a workaround to update documentation for the method signature
-            method.Update(signature: method.Signature);
+            {"Etag", "ETag"}
+        };
+
+    private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && _propertyNameRenamingMap.TryGetValue(propertyProvider.Name, out var newPropertyName))
+        {
+            propertyProvider.Update(name: newPropertyName);
         }
-        return base.VisitMethod(method);
     }
 
     private bool TryTransformUrlToUri(string name, [MaybeNullWhen(false)] out string newName)

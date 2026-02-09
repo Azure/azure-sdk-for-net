@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Generates an update run for a given auto upgrade profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Generates an update run for a given auto upgrade profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

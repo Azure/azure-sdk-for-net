@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP address of the neighbor. </summary>
+        [WirePath("neighbor")]
         public string Neighbor { get; }
         /// <summary> BGP version number spoken to the neighbor. </summary>
+        [WirePath("v")]
         public int? V { get; }
         /// <summary> Autonomous system number. </summary>
+        [WirePath("as")]
         public int? As { get; }
         /// <summary> The length of time that the BGP session has been in the Established state, or the current status if not in the Established state. </summary>
+        [WirePath("upDown")]
         public string UpDown { get; }
         /// <summary> Current state of the BGP session, and the number of prefixes that have been received from a neighbor or peer group. </summary>
+        [WirePath("statePfxRcd")]
         public string StatePfxRcd { get; }
     }
 }

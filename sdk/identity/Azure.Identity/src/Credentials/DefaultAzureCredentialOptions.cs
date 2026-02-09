@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private struct UpdateTracker<T>
         {
@@ -38,11 +41,116 @@ namespace Azure.Identity
             public bool Updated => _updated;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultAzureCredentialOptions"/> class.
+        /// </summary>
+        public DefaultAzureCredentialOptions()
+        {
+        }
+
+        [Experimental("SCME0002")]
+        internal DefaultAzureCredentialOptions(CredentialSettings settings, IConfigurationSection section)
+            : base(section)
+        {
+            if (settings is null)
+            {
+                return;
+            }
+
+            CredentialSource = settings.CredentialSource;
+            ApiKey = settings.Key;
+
+            if (section is null)
+            {
+                return;
+            }
+
+            if (section[nameof(TenantId)] is string tenantId)
+            {
+                TenantId = tenantId;
+            }
+
+            IConfigurationSection additionallyAllowedTenantsSection = section.GetSection(nameof(AdditionallyAllowedTenants));
+            if (additionallyAllowedTenantsSection.Exists())
+            {
+                AdditionallyAllowedTenants = additionallyAllowedTenantsSection
+                    .GetChildren()
+                    .Where(c => c.Value is not null)
+                    .Select(c => c.Value!)
+                    .ToList();
+            }
+
+            if (section[nameof(InteractiveBrowserCredentialClientId)] is string interactiveBrowserCredentialClientId)
+            {
+                InteractiveBrowserCredentialClientId = interactiveBrowserCredentialClientId;
+            }
+
+            if (section[nameof(WorkloadIdentityClientId)] is string workloadIdentityClientId)
+            {
+                WorkloadIdentityClientId = workloadIdentityClientId;
+            }
+
+            if (section[nameof(ManagedIdentityClientId)] is string managedIdentityClientId)
+            {
+                ManagedIdentityClientId = managedIdentityClientId;
+            }
+
+            if (section[nameof(ManagedIdentityResourceId)] is string managedIdentityResourceId)
+            {
+                ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
+            }
+
+            if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
+            {
+                CredentialProcessTimeout = credentialProcessTimeout;
+            }
+
+            if (bool.TryParse(section[nameof(DisableInstanceDiscovery)], out bool disableInstanceDiscovery))
+            {
+                DisableInstanceDiscovery = disableInstanceDiscovery;
+            }
+
+            if (section[nameof(AzureCliCredentialOptions.Subscription)] is string subscription)
+            {
+                Subscription = subscription;
+            }
+        }
+
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _interactiveBrowserTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _sharedTokenCacheTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
+
+        /// <summary>
+        /// Gets or sets the kind of credential to use.
+        /// </summary>
+        internal string CredentialSource
+        {
+            get => field;
+            set
+            {
+                field = ConvertCredentialSource(value);
+            }
+        }
+
+        internal string ApiKey { get; private set; }
+
+        private static string ConvertCredentialSource(string value) => value switch
+        {
+            "VisualStudio" => Constants.VisualStudioCredential,
+            "VisualStudioCode" => Constants.VisualStudioCodeCredential,
+            "AzureCli" => Constants.AzureCliCredential,
+            "AzurePowerShell" => Constants.AzurePowerShellCredential,
+            "AzureDeveloperCli" => Constants.AzureDeveloperCliCredential,
+            "Environment" => Constants.EnvironmentCredential,
+            "WorkloadIdentity" => Constants.WorkloadIdentityCredential,
+            "ManagedIdentity" => Constants.ManagedIdentityCredential,
+            "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
+            "Broker" => Constants.BrokerCredential,
+            "ApiKey" => Constants.ApiKeyCredential,
+            _ => value,
+        };
 
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
@@ -150,6 +258,7 @@ namespace Azure.Identity
         /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string VisualStudioCodeTenantId
         {
             get => _visualStudioCodeTenantId.Value;
@@ -183,6 +292,8 @@ namespace Azure.Identity
         /// the cache, the SharedTokenCacheCredential won't be used for authentication.
         /// Defaults to the value of environment variable <c>AZURE_USERNAME</c>.
         /// </remarks>
+        [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
@@ -248,6 +359,8 @@ namespace Azure.Identity
         /// Setting to <c>true</c> disables single sign-on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
         /// </summary>
+        [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ExcludeSharedTokenCacheCredential { get; set; } = true;
 
         /// <summary>
@@ -257,13 +370,11 @@ namespace Azure.Identity
         /// </summary>
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 
-#if PREVIEW_FEATURE_FLAG
         /// <summary>
         /// Specifies whether broker authentication, via <see cref="InteractiveBrowserCredential"/>, will be attempted as part of the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Note that the broker authentication flow will only be attempted if the application has a reference to the Azure.Identity.Broker package.
         /// </summary>
         public bool ExcludeBrokerCredential { get; set; }
-#endif
 
         /// <summary>
         /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -289,6 +400,23 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
+        /// <summary>
+        /// The subscription name or Id to use for authentication. This equates to the --subscription parameter in the Azure CLI.
+        /// </summary>
+        internal string Subscription
+        {
+            get => field;
+            set
+            {
+                if (!Validations.IsValidateSubscriptionNameOrId(value))
+                {
+                    throw new ArgumentException("The provided subscription contains invalid characters. If this is the name of a subscription, use its ID instead.");
+                }
+
+                field = value;
+            }
+        }
+
         internal bool IsForceRefreshEnabled { get; set; }
 
         internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
@@ -302,7 +430,9 @@ namespace Azure.Identity
                 dacClone._sharedTokenCacheTenantId = _sharedTokenCacheTenantId;
                 dacClone._visualStudioTenantId = _visualStudioTenantId;
                 dacClone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
+#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.SharedTokenCacheUsername = SharedTokenCacheUsername;
+#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
@@ -312,18 +442,22 @@ namespace Azure.Identity
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
                 dacClone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
                 dacClone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
+#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
+#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
                 dacClone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
-#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
-#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
-#if PREVIEW_FEATURE_FLAG
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
-#endif
+                dacClone.CredentialSource = CredentialSource;
+                dacClone.ApiKey = ApiKey;
+                if (!string.IsNullOrEmpty(Subscription))
+                {
+                    dacClone.Subscription = Subscription;
+                }
             }
 
             return clone;

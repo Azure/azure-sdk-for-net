@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Bandwidth descriptive name. </summary>
+        [WirePath("offerName")]
         public string OfferName { get; }
         /// <summary> Bandwidth value in Gbps. </summary>
+        [WirePath("valueInGbps")]
         public int? ValueInGbps { get; }
     }
 }

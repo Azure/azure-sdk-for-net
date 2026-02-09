@@ -104,12 +104,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = null, long? usageThreshold = null, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, float? throughputMibps = null, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, float? throughputMibps, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
         {
-            tags ??= new Dictionary<string, string>();
-            exportRules ??= new List<NetAppVolumeExportPolicyRule>();
-
-            return new NetAppVolumePatch(
+            return NetAppVolumePatch(
                 id,
                 name,
                 resourceType,
@@ -118,10 +115,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 location,
                 serviceLevel,
                 usageThreshold,
-                exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                exportRules,
                 null, //protocolTypes
                 throughputMibps,
-                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(null, new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() {SnapshotPolicyId = snapshotPolicyId } } : null,
                 isDefaultQuotaEnabled,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
@@ -132,8 +129,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 null,
                 isSnapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
-                smbNonBrowsable,
-                serializedAdditionalRawData: null);
+                smbNonBrowsable);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupData"/>. </summary>
@@ -181,16 +177,178 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
         /// <returns> A new <see cref="Models.NetAppKeyVaultProperties"/> instance for mocking. </returns>
-        public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId = null, Uri keyVaultUri = null, string keyName = null, string keyVaultResourceId = null, NetAppKeyVaultStatus? status = null)
+        public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status = null)
         {
-            ResourceIdentifier _keyVaultResourceId = new ResourceIdentifier(keyVaultResourceId);
-            return new NetAppKeyVaultProperties(
+            return NetAppKeyVaultProperties(
                 keyVaultId,
                 keyVaultUri,
                 keyName,
-                _keyVaultResourceId,
-                status,
-                serializedAdditionalRawData: null);
+                keyVaultResourceId != null ? new ResourceIdentifier(keyVaultResourceId) : null,
+                status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="current"> The current quota value. </param>
+        /// <param name="default"> The default quota value. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
+        {
+            return NetAppSubscriptionQuotaItem(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
+        /// <param name="isHealthy"> Replication health check. </param>
+        /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="totalProgress"> The progress of the replication. </param>
+        /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        {
+            return NetAppVolumeReplicationStatus(
+                isHealthy,
+                relationshipStatus != null ? new VolumeReplicationRelationshipStatus(relationshipStatus.ToString()) : null,
+                mirrorState,
+                totalProgress,
+                errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
+        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
+        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
+        /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, float? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return ArmNetAppModelFactory.CapacityPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                poolId,
+                size,
+                serviceLevel,
+                provisioningState,
+                totalThroughputMibps,
+                utilizedThroughputMibps,
+                customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null,
+                qosType,
+                isCoolAccessEnabled,
+                encryptionType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
+        /// <returns> A new <see cref="Models.CapacityPoolPatch"/> instance for mocking. </returns>
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? size = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, float? customThroughputMibps = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return CapacityPoolPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                size,
+                qosType,
+                isCoolAccessEnabled,
+                customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupStatus"/>. </summary>
+        /// <param name="isHealthy"> Backup health status. </param>
+        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a backup. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
+        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
+        /// <param name="lastTransferType"> Displays the last transfer type. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
+        {
+            VolumeBackupRelationshipStatus VolumeBackupRelationshipStatus = relationshipStatus.Value != null ? new VolumeBackupRelationshipStatus(relationshipStatus.ToString()) : null;
+            return ArmNetAppModelFactory.NetAppVolumeBackupStatus(
+                isHealthy,
+                VolumeBackupRelationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                lastTransferSize,
+                lastTransferType,
+                totalTransferBytes,
+                transferProgressBytes);
+        }
+
+        /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
+        /// <param name="isHealthy"> Backup health status. </param>
+        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
+        /// <param name="mirrorState"> The status of the backup. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
+        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
+        /// <param name="lastTransferType"> Displays the last transfer type. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes)
+        {
+            return NetAppVolumeBackupStatus(isHealthy: isHealthy, relationshipStatus: relationshipStatus, mirrorState: mirrorState, unhealthyReason: unhealthyReason, errorMessage: errorMessage, lastTransferSize: lastTransferSize, lastTransferType: lastTransferType, totalTransferBytes: totalTransferBytes, transferProgressBytes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppRestoreStatus"/>. </summary>
+        /// <param name="isHealthy"> Restore health status. </param>
+        /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
+        {
+            return ArmNetAppModelFactory.NetAppRestoreStatus(
+                isHealthy,
+                relationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                totalTransferBytes);
         }
     }
 }

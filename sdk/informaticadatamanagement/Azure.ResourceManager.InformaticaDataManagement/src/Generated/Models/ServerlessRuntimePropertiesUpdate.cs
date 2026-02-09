@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
     /// <summary> Patchable Properties of the Informatica Serverless Runtime resource. </summary>
     public partial class ServerlessRuntimePropertiesUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerlessRuntimePropertiesUpdate"/>. </summary>
         public ServerlessRuntimePropertiesUpdate()
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="serverlessRuntimeUserContextProperties"> Serverless runtime user context properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessRuntimePropertiesUpdate(string description, InformaticaPlatformType? platform, InformaticaApplicationType? applicationType, string computeUnits, string executionTimeout, string serverlessAccountLocation, ServerlessRuntimeNetworkProfileUpdate serverlessRuntimeNetworkProfile, IList<AdvancedCustomProperties> advancedCustomProperties, string supplementaryFileLocation, ServerlessRuntimeConfigPropertiesUpdate serverlessRuntimeConfig, IList<ServerlessRuntimeTag> serverlessRuntimeTags, ServerlessRuntimeUserContextPropertiesUpdate serverlessRuntimeUserContextProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessRuntimePropertiesUpdate(string description, InformaticaPlatformType? platform, InformaticaApplicationType? applicationType, string computeUnits, string executionTimeout, string serverlessAccountLocation, ServerlessRuntimeNetworkProfileUpdate serverlessRuntimeNetworkProfile, IList<AdvancedCustomProperties> advancedCustomProperties, string supplementaryFileLocation, ServerlessRuntimeConfigPropertiesUpdate serverlessRuntimeConfig, IList<ServerlessRuntimeTag> serverlessRuntimeTags, ServerlessRuntimeUserContextPropertiesUpdate serverlessRuntimeUserContextProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Platform = platform;
@@ -80,48 +52,71 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             ServerlessRuntimeConfig = serverlessRuntimeConfig;
             ServerlessRuntimeTags = serverlessRuntimeTags;
             ServerlessRuntimeUserContextProperties = serverlessRuntimeUserContextProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> description of the serverless runtime. </summary>
         public string Description { get; set; }
+
         /// <summary> Platform type of the Serverless Runtime. </summary>
         public InformaticaPlatformType? Platform { get; set; }
+
         /// <summary> Application type of the Serverless Runtime environment. </summary>
         public InformaticaApplicationType? ApplicationType { get; set; }
+
         /// <summary> Compute units of the serverless runtime. </summary>
         public string ComputeUnits { get; set; }
+
         /// <summary> Serverless Execution timeout. </summary>
         public string ExecutionTimeout { get; set; }
+
         /// <summary> Serverless account creation location. </summary>
         public string ServerlessAccountLocation { get; set; }
+
         /// <summary> Informatica Serverless Network profile properties. </summary>
         internal ServerlessRuntimeNetworkProfileUpdate ServerlessRuntimeNetworkProfile { get; set; }
-        /// <summary> Network Interface Configuration Profile Update. </summary>
-        public InformaticaNetworkInterfaceConfigurationUpdate NetworkInterfaceConfiguration
-        {
-            get => ServerlessRuntimeNetworkProfile is null ? default : ServerlessRuntimeNetworkProfile.NetworkInterfaceConfiguration;
-            set => ServerlessRuntimeNetworkProfile = new ServerlessRuntimeNetworkProfileUpdate(value);
-        }
 
         /// <summary> String KV pairs indicating Advanced custom properties. </summary>
         public IList<AdvancedCustomProperties> AdvancedCustomProperties { get; }
+
         /// <summary> Supplementary file location. </summary>
         public string SupplementaryFileLocation { get; set; }
+
         /// <summary> Serverless config properties. </summary>
         public ServerlessRuntimeConfigPropertiesUpdate ServerlessRuntimeConfig { get; set; }
+
         /// <summary> Serverless Runtime Tags. </summary>
         public IList<ServerlessRuntimeTag> ServerlessRuntimeTags { get; }
+
         /// <summary> Serverless runtime user context properties. </summary>
         internal ServerlessRuntimeUserContextPropertiesUpdate ServerlessRuntimeUserContextProperties { get; set; }
+
+        /// <summary> Network Interface Configuration Profile Update. </summary>
+        public InformaticaNetworkInterfaceConfigurationUpdate NetworkInterfaceConfiguration
+        {
+            get
+            {
+                return ServerlessRuntimeNetworkProfile is null ? default : ServerlessRuntimeNetworkProfile.NetworkInterfaceConfiguration;
+            }
+            set
+            {
+                ServerlessRuntimeNetworkProfile = new ServerlessRuntimeNetworkProfileUpdate(value);
+            }
+        }
+
         /// <summary> User context token for OBO flow. </summary>
         public string UserContextToken
         {
-            get => ServerlessRuntimeUserContextProperties is null ? default : ServerlessRuntimeUserContextProperties.UserContextToken;
+            get
+            {
+                return ServerlessRuntimeUserContextProperties is null ? default : ServerlessRuntimeUserContextProperties.UserContextToken;
+            }
             set
             {
                 if (ServerlessRuntimeUserContextProperties is null)
+                {
                     ServerlessRuntimeUserContextProperties = new ServerlessRuntimeUserContextPropertiesUpdate();
+                }
                 ServerlessRuntimeUserContextProperties.UserContextToken = value;
             }
         }

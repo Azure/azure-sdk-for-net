@@ -5,11 +5,6 @@ extends:
   parameters:
     TimeoutInMinutes: 120
     PersistOidcToken: true
-    AdditionalMatrixConfigs:
-      - Name: identity_msi
-        Path: sdk/identity/platform-matrix.json
-        Selection: sparse
-        GenerateVMJobs: true
     ServiceDirectory: identity
     CloudConfig:
       Public:

@@ -87,10 +87,12 @@ namespace Azure.Communication.Identity.Tests
                     "https://auth.msft.communication.azure.com/Teams.ManageChats"
                 };
 
+#pragma warning disable CS0618 // Suppress obsolete warning for test-only usage
                 AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     TestEnvironment.CommunicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+#pragma warning restore CS0618
                 options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
             return options;

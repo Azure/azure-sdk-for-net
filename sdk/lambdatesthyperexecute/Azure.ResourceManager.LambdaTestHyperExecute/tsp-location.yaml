@@ -1,4 +1,4 @@
 directory: specification/liftrhyperexecute/LambdaTest.HyperExecute.Management
-commit: 86c6306649b02e542117adb46c61e8019dbd78e9
+commit: 07282a70742f39c9a6410a63630ec81599e2c147
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

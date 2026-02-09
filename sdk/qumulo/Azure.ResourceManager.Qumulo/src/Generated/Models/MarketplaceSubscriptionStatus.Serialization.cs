@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 {
     internal static partial class MarketplaceSubscriptionStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MarketplaceSubscriptionStatus value) => value switch
         {
             MarketplaceSubscriptionStatus.PendingFulfillmentStart => "PendingFulfillmentStart",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Qumulo.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MarketplaceSubscriptionStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MarketplaceSubscriptionStatus ToMarketplaceSubscriptionStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingFulfillmentStart")) return MarketplaceSubscriptionStatus.PendingFulfillmentStart;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Subscribed")) return MarketplaceSubscriptionStatus.Subscribed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Suspended")) return MarketplaceSubscriptionStatus.Suspended;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unsubscribed")) return MarketplaceSubscriptionStatus.Unsubscribed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingFulfillmentStart"))
+            {
+                return MarketplaceSubscriptionStatus.PendingFulfillmentStart;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Subscribed"))
+            {
+                return MarketplaceSubscriptionStatus.Subscribed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Suspended"))
+            {
+                return MarketplaceSubscriptionStatus.Suspended;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unsubscribed"))
+            {
+                return MarketplaceSubscriptionStatus.Unsubscribed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MarketplaceSubscriptionStatus value.");
         }
     }

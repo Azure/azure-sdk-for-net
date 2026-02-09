@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultMonitoringSummary : IUtf8JsonSerializable, IJsonModel<VaultMonitoringSummary>
+    /// <summary> Summary of the replication monitoring data for this vault. </summary>
+    public partial class VaultMonitoringSummary : IJsonModel<VaultMonitoringSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultMonitoringSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VaultMonitoringSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UnHealthyVmCount))
             {
                 writer.WritePropertyName("unHealthyVmCount"u8);
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("unsupportedProviderCount"u8);
                 writer.WriteNumberValue(UnsupportedProviderCount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +81,27 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultMonitoringSummary IJsonModel<VaultMonitoringSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VaultMonitoringSummary IJsonModel<VaultMonitoringSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultMonitoringSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVaultMonitoringSummary(document.RootElement, options);
         }
 
-        internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,70 +112,68 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             int? deprecatedProviderCount = default;
             int? supportedProviderCount = default;
             int? unsupportedProviderCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("unHealthyVmCount"u8))
+                if (prop.NameEquals("unHealthyVmCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unHealthyVmCount = property.Value.GetInt32();
+                    unHealthyVmCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unHealthyProviderCount"u8))
+                if (prop.NameEquals("unHealthyProviderCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unHealthyProviderCount = property.Value.GetInt32();
+                    unHealthyProviderCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("eventsCount"u8))
+                if (prop.NameEquals("eventsCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventsCount = property.Value.GetInt32();
+                    eventsCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("deprecatedProviderCount"u8))
+                if (prop.NameEquals("deprecatedProviderCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deprecatedProviderCount = property.Value.GetInt32();
+                    deprecatedProviderCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("supportedProviderCount"u8))
+                if (prop.NameEquals("supportedProviderCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    supportedProviderCount = property.Value.GetInt32();
+                    supportedProviderCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unsupportedProviderCount"u8))
+                if (prop.NameEquals("unsupportedProviderCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unsupportedProviderCount = property.Value.GetInt32();
+                    unsupportedProviderCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VaultMonitoringSummary(
                 unHealthyVmCount,
                 unHealthyProviderCount,
@@ -178,13 +181,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 deprecatedProviderCount,
                 supportedProviderCount,
                 unsupportedProviderCount,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VaultMonitoringSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VaultMonitoringSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -194,15 +200,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultMonitoringSummary IPersistableModel<VaultMonitoringSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VaultMonitoringSummary IPersistableModel<VaultMonitoringSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VaultMonitoringSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVaultMonitoringSummary(document.RootElement, options);
                     }
                 default:
@@ -210,6 +221,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VaultMonitoringSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

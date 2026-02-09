@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        [Ignore("Flaky test, see:#51941")]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange

@@ -73,12 +73,16 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> The endpoints that the Kusto Service Environment reaches the service at. </summary>
+        [WirePath("properties.endpoints")]
         public IList<EndpointDependency> Endpoints { get; }
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

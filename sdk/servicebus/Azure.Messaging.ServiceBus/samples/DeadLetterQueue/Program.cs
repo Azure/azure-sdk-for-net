@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Invocation;
+using System.CommandLine.Parsing;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -17,21 +17,48 @@ namespace DeadLetterQueue
 
         public static async Task Main(string[] args)
         {
+            var namespaceOption = new Option<string>(
+                name: "--namespace")
+            {
+                Description = "Fully qualified Service Bus Queue namespace to use"
+            };
+
+            var queueOption = new Option<string>(
+                name: "--queue")
+            {
+                Description = "Service Bus Queue Name to use",
+                Required = true
+            };
+
+            var connectionOption = new Option<string>(
+                name: "--connection-variable")
+            {
+                Description = "The name of an environment variable containing the connection string to use."
+            };
+
             var command = new RootCommand("Demonstrates the DeadLetter feature of Azure Service Bus.")
             {
-                new Option<string>(
-                    alias: "--namespace",
-                    description: "Fully qualified Service Bus Queue namespace to use") { Name = "FullyQualifiedNamespace" },
-                new Option<string>(
-                    alias: "--queue",
-                    description: "Service Bus Queue Name to use") { IsRequired = true, Name = "QueueName"},
-                new Option<string>(
-                    alias: "--connection-variable",
-                    description: "The name of an environment variable containing the connection string to use.") { Name = "Connection"},
+                namespaceOption,
+                queueOption,
+                connectionOption
             };
-            command.Handler = CommandHandler.Create<string, string, string>(RunAsync);
-            await command.InvokeAsync(args);
+
+            ParseResult parseResult = command.Parse(args);
+            if (parseResult.Errors.Count > 0)
+            {
+                foreach (var error in parseResult.Errors)
+                {
+                    Console.Error.WriteLine(error.Message);
+                }
+                return;
+            }
+
+            await RunAsync(
+                parseResult.GetValue<string>(namespaceOption),
+                parseResult.GetValue<string>(queueOption),
+                parseResult.GetValue<string>(connectionOption));
         }
+
 
         private static async Task RunAsync(string fullyQualifiedNamespace, string queueName, string connection)
         {

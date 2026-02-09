@@ -180,7 +180,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The file system attributes for this file/directory. This is intended to be set on the destination Share.
+        /// The file system attributes for this file/directory. This is intended to be set on the destination SMB Share.
         ///
         /// By default preserves the Attributes from the source for copy transfers. If explicitly set, the Attributes of the destination will be set to this value.
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// which is a operation called on the Destination Share, which requires Share level permissions.
         ///
         /// By default the permissions will not be preserved from the source Share to the destination Share. If explicitly set to null, the permissions will not be preserved.
-        /// Applies only to copy transfers.
+        /// Applies only to SMB -> SMB or NFS -> NFS copy transfers.
         /// </summary>
         public bool? FilePermissions { get; set; }
 
@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The change time of the file/directory. This is intended to be set on the destination Share.
+        /// The change time of the file/directory. This is intended to be set on the destination SMB Share.
         ///
         /// By default preserves the Changed On Time from the source for copy transfers. If explicitly set, the Changed On Time of the destination will be set to this value.
         /// </summary>

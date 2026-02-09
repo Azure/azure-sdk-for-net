@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ManifestResourceDeletionPolicy. </summary>
+    /// <summary> The resource deletion policy. </summary>
     public readonly partial struct ManifestResourceDeletionPolicy : IEquatable<ManifestResourceDeletionPolicy>
     {
         private readonly string _value;

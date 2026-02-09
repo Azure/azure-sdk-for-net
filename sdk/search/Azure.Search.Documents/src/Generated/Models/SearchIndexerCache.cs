@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The SearchIndexerCache. </summary>
     public partial class SearchIndexerCache
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         public SearchIndexerCache()
         {
@@ -24,12 +59,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal SearchIndexerCache(string id, string storageConnectionString, bool? enableReprocessing, SearchIndexerDataIdentity identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerCache(string id, string storageConnectionString, bool? enableReprocessing, SearchIndexerDataIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             StorageConnectionString = storageConnectionString;
             EnableReprocessing = enableReprocessing;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A guid for the SearchIndexerCache. </summary>

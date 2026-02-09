@@ -231,8 +231,9 @@
       "parameters": [
         {
           "$id": "23",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "24",
@@ -240,14 +241,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "25",
@@ -257,9 +254,13 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Enum.Fixed",
       "apiVersions": [],
@@ -286,20 +287,38 @@
                 "parameters": [
                   {
                     "$id": "29",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "10"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "30",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "10"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -332,25 +351,12 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
-                  "$id": "30",
-                  "name": "accept",
-                  "nameInRequest": "accept",
-                  "type": {
-                    "$ref": "10"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "30"
                 }
               ],
               "response": {
@@ -379,38 +385,78 @@
                 "parameters": [
                   {
                     "$id": "33",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "type": {
                       "$ref": "14"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "34",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "14"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "34",
+                    "$id": "35",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "doc": "_",
                     "type": {
                       "$ref": "1"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "36",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "_",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -432,43 +478,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
-                  "$id": "35",
-                  "name": "contentType",
-                  "nameInRequest": "content-type",
-                  "type": {
-                    "$ref": "16"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "34"
                 },
                 {
-                  "$id": "36",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "doc": "_",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "36"
                 }
               ],
               "response": {},
@@ -493,38 +511,78 @@
                 "parameters": [
                   {
                     "$id": "39",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "type": {
                       "$ref": "18"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "40",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "18"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "40",
+                    "$id": "41",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "doc": "_",
                     "type": {
                       "$ref": "1"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "42",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "_",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -546,43 +604,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
-                  "$id": "41",
-                  "name": "contentType",
-                  "nameInRequest": "content-type",
-                  "type": {
-                    "$ref": "20"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "40"
                 },
                 {
-                  "$id": "42",
-                  "name": "body",
-                  "nameInRequest": "body",
-                  "doc": "_",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "$ref": "42"
                 }
               ],
               "response": {},
@@ -595,8 +625,9 @@
           "parameters": [
             {
               "$id": "43",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "44",
@@ -604,14 +635,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "45",
@@ -621,17 +648,23 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Enum.Fixed.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Enum.Fixed.String",
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

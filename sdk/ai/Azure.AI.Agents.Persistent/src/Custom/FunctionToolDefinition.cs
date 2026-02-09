@@ -6,10 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent;
 
+// This type of this object is marked as unknown in typespec. Here we create the
+// possible implementation just to serialize it into BinaryObject in AOT
+// compatible way.
+internal class FunctionParameters
+{
+    public string type;
+    public Dictionary<string, string> properties;
+    public FunctionParameters()
+    {
+        type = "object";
+        properties = new Dictionary<string, string>();
+    }
+}
+
+[JsonSerializable(typeof(FunctionParameters))]
+internal partial class FunctionParametersContext : JsonSerializerContext
+{
+}
 /*
  * CUSTOM CODE DESCRIPTION:
  *
@@ -52,7 +73,7 @@ public partial class FunctionToolDefinition
     /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="description"/> is null. </exception>
     public FunctionToolDefinition(string name, string description)
-        : this(name, description, BinaryData.FromObjectAsJson(new { type = "object", properties = new { } }))
+        : this(name, description, BinaryData.FromString(JsonSerializer.Serialize(new FunctionParameters(), FunctionParametersContext.Default.FunctionParameters)))
     { }
 
     /*
@@ -92,5 +113,5 @@ public partial class FunctionToolDefinition
             || (obj is RequiredFunctionToolCall requiredToolCall && Name == requiredToolCall.Name);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => InternalFunction.GetHashCode();
+    public override int GetHashCode() => Name.GetHashCode();
 }
