@@ -20,7 +20,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             var groupParameters = client.GetGroupParametersClient();
 
             // Test convenience method with flattened parameters
-            var options = new GroupParametersOptions("param1Value", "param2Value");
+            var options = new GroupParametersOptions("param1", "param2");
             var response = await groupParameters.GroupAsync(options);
             Assert.AreEqual(204, response.Status);
 
@@ -40,7 +40,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             var removeOptionalParameter = client.GetRemoveOptionalParameterClient();
 
             // Test convenience method using only the minimum required parameter, omitting optional parameters
-            var response = await removeOptionalParameter.RemoveOptionalAsync("param1Value");
+            var response = await removeOptionalParameter.RemoveOptionalAsync("param1", "param2");
             Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with required param1, optional param2, and without protocol-only parameters (param3, param4)
@@ -59,7 +59,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             var reorderParameters = client.GetReorderParametersClient();
 
             // Test convenience method with reordered parameters
-            var response = await reorderParameters.ReorderAsync("param1Value", "param2Value");
+            var response = await reorderParameters.ReorderAsync("param1", "param2");
             Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with reordered parameters (param1, param2)
@@ -78,7 +78,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             var requireOptionalParameter = client.GetRequireOptionalParameterClient();
 
             // Test convenience method with required parameter that was optional
-            var response = await requireOptionalParameter.RequireOptionalAsync("param1Value", "param2Value", CancellationToken.None);
+            var response = await requireOptionalParameter.RequireOptionalAsync("param1", "param2", CancellationToken.None);
             Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with both parameters required
