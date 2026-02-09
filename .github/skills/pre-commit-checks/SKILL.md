@@ -36,6 +36,9 @@ Identify affected csproj files by looking at the full changed file list: include
 - Any file matching `sdk/{service}/{package}/src/Generated/**`
 - `sdk/{service}/{package}/tsp-location.yaml`
 - `sdk/{service}/{package}/src/autorest.md`
+- Any `.cs` file under `sdk/{service}/{package}/src/` where a `CodeGen*` attribute was added, removed, or modified (e.g., `CodeGenType`, `CodeGenModel`, `CodeGenClient`, `CodeGenMember`, `CodeGenSuppress`, `CodeGenSerialization`, `CodeGenVisibility`). These attributes in custom (non-generated) code influence the generated output.
+
+**Important:** Do not manually edit files under `src/Generated/`. Changes to generated code should only come from running the `GenerateCode` target.
 
 **Command:**
 
