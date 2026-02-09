@@ -246,13 +246,14 @@ function New-MarkdownReport {
     $report += "## Data Plane Libraries (DPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
     $report += "**Migration Status**: $dataMigrated / $dataTypeSpecTotal ($dataPercentage%)`n"
-    $report += "| Service | Library | New Emitter |"
-    $report += "| ------- | ------- | ----------- |"
+    $report += "| Service | Library | New Emitter | Using SCM |"
+    $report += "| ------- | ------- | ----------- | --------- |"
     # Only include non-provisioning libraries that have tsp-location.yaml or are Azure.AI.OpenAI (special case with hardcoded handling)
     $sortedDataLibs = $dataPlaneNonProvisioning | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" } | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
         $newEmitter = if ($lib.generator -notin $excludedGenerators) { "✅" } else { "" }
-        $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
+        $usingSCM = if ($lib.generator -eq "@typespec/http-client-csharp") { "✅" } else { "" }
+        $report += "| $($lib.service) | $($lib.library) | $newEmitter | $usingSCM |"
     }
     $report += "`n"
 
