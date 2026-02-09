@@ -21,6 +21,23 @@ namespace Azure.Search.Documents.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override VectorThreshold PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VectorSimilarityThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVectorSimilarityThreshold(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorSimilarityThreshold)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VectorSimilarityThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -111,23 +128,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VectorSimilarityThreshold IPersistableModel<VectorSimilarityThreshold>.Create(BinaryData data, ModelReaderWriterOptions options) => (VectorSimilarityThreshold)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VectorThreshold PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSimilarityThreshold>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVectorSimilarityThreshold(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VectorSimilarityThreshold)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VectorSimilarityThreshold>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

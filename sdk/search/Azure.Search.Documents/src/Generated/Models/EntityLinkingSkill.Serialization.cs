@@ -21,6 +21,23 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEntityLinkingSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EntityLinkingSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EntityLinkingSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -200,23 +217,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EntityLinkingSkill IPersistableModel<EntityLinkingSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntityLinkingSkill)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEntityLinkingSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EntityLinkingSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EntityLinkingSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

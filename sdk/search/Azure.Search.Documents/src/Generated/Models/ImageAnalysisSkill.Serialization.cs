@@ -21,6 +21,23 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeImageAnalysisSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageAnalysisSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -218,23 +235,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ImageAnalysisSkill IPersistableModel<ImageAnalysisSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImageAnalysisSkill)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeImageAnalysisSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ImageAnalysisSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

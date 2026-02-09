@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Domain allow/block configuration for web knowledge source. </summary>
     public partial class WebKnowledgeSourceDomains : IJsonModel<WebKnowledgeSourceDomains>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebKnowledgeSourceDomains PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSourceDomains>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebKnowledgeSourceDomains(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebKnowledgeSourceDomains)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebKnowledgeSourceDomains>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,23 +173,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WebKnowledgeSourceDomains IPersistableModel<WebKnowledgeSourceDomains>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebKnowledgeSourceDomains PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebKnowledgeSourceDomains>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebKnowledgeSourceDomains(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebKnowledgeSourceDomains)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebKnowledgeSourceDomains>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

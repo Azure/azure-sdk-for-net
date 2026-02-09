@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
     public partial class BM25Similarity : SimilarityAlgorithm, IJsonModel<BM25Similarity>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SimilarityAlgorithm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBM25Similarity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BM25Similarity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -130,23 +147,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BM25Similarity IPersistableModel<BM25Similarity>.Create(BinaryData data, ModelReaderWriterOptions options) => (BM25Similarity)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SimilarityAlgorithm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BM25Similarity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBM25Similarity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BM25Similarity)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BM25Similarity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

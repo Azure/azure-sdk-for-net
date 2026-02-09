@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents parameters for indexer execution. </summary>
     public partial class IndexingParameters : IJsonModel<IndexingParameters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexingParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIndexingParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IndexingParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IndexingParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -169,23 +186,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         IndexingParameters IPersistableModel<IndexingParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IndexingParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexingParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIndexingParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IndexingParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexingParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Information about the sensitivity label applied to a SharePoint document. </summary>
     public partial class SharePointSensitivityLabelInfo : IJsonModel<SharePointSensitivityLabelInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SharePointSensitivityLabelInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharePointSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSharePointSensitivityLabelInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharePointSensitivityLabelInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SharePointSensitivityLabelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -187,23 +204,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SharePointSensitivityLabelInfo IPersistableModel<SharePointSensitivityLabelInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SharePointSensitivityLabelInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SharePointSensitivityLabelInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSharePointSensitivityLabelInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SharePointSensitivityLabelInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SharePointSensitivityLabelInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

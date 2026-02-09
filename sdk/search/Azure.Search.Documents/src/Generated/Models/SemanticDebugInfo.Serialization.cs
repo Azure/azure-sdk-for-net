@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> Contains debugging information specific to semantic ranking requests. </summary>
     public partial class SemanticDebugInfo : IJsonModel<SemanticDebugInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SemanticDebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSemanticDebugInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SemanticDebugInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SemanticDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -186,23 +203,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SemanticDebugInfo IPersistableModel<SemanticDebugInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SemanticDebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSemanticDebugInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SemanticDebugInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SemanticDebugInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

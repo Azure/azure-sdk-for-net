@@ -22,6 +22,23 @@ namespace Azure.Search.Documents.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizerV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLuceneStandardTokenizerV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LuceneStandardTokenizerV2)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LuceneStandardTokenizerV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,23 +142,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LuceneStandardTokenizerV2 IPersistableModel<LuceneStandardTokenizerV2>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuceneStandardTokenizerV2)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizerV2>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLuceneStandardTokenizerV2(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LuceneStandardTokenizerV2)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LuceneStandardTokenizerV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

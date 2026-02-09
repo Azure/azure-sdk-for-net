@@ -24,6 +24,30 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBase"/> from. </param>
+        public static explicit operator KnowledgeBase(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBase(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -267,23 +291,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeBase IPersistableModel<KnowledgeBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBase>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeBase(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBase)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -297,13 +304,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(knowledgeBase, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBase"/> from. </param>
-        public static explicit operator KnowledgeBase(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBase(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

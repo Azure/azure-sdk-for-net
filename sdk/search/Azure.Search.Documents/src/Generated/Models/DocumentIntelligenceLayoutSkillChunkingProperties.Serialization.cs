@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Controls the cardinality for chunking the content. </summary>
     public partial class DocumentIntelligenceLayoutSkillChunkingProperties : IJsonModel<DocumentIntelligenceLayoutSkillChunkingProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DocumentIntelligenceLayoutSkillChunkingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkillChunkingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkillChunkingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentIntelligenceLayoutSkillChunkingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +171,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DocumentIntelligenceLayoutSkillChunkingProperties IPersistableModel<DocumentIntelligenceLayoutSkillChunkingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentIntelligenceLayoutSkillChunkingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkillChunkingProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkillChunkingProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DocumentIntelligenceLayoutSkillChunkingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

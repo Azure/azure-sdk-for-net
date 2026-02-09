@@ -17,6 +17,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Consolidates all general ingestion settings for knowledge sources. </summary>
     public partial class KnowledgeSourceIngestionParameters : IJsonModel<KnowledgeSourceIngestionParameters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeSourceIngestionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeSourceIngestionParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeSourceIngestionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -252,23 +269,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeSourceIngestionParameters IPersistableModel<KnowledgeSourceIngestionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeSourceIngestionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceIngestionParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeSourceIngestionParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeSourceIngestionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

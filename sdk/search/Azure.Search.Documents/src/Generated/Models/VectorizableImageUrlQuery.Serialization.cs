@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when an url that represents an image value that needs to be vectorized is provided. </summary>
     public partial class VectorizableImageUrlQuery : VectorQuery, IJsonModel<VectorizableImageUrlQuery>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override VectorQuery PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VectorizableImageUrlQuery>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVectorizableImageUrlQuery(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorizableImageUrlQuery)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VectorizableImageUrlQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -192,23 +209,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VectorizableImageUrlQuery IPersistableModel<VectorizableImageUrlQuery>.Create(BinaryData data, ModelReaderWriterOptions options) => (VectorizableImageUrlQuery)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VectorQuery PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorizableImageUrlQuery>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVectorizableImageUrlQuery(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VectorizableImageUrlQuery)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VectorizableImageUrlQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

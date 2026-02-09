@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a data deletion detection policy that implements a soft-deletion strategy. It determines whether an item should be deleted based on the value of a designated 'soft delete' column. </summary>
     public partial class SoftDeleteColumnDeletionDetectionPolicy : DataDeletionDetectionPolicy, IJsonModel<SoftDeleteColumnDeletionDetectionPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataDeletionDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SoftDeleteColumnDeletionDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSoftDeleteColumnDeletionDetectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SoftDeleteColumnDeletionDetectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SoftDeleteColumnDeletionDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,23 +137,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SoftDeleteColumnDeletionDetectionPolicy IPersistableModel<SoftDeleteColumnDeletionDetectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (SoftDeleteColumnDeletionDetectionPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataDeletionDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SoftDeleteColumnDeletionDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSoftDeleteColumnDeletionDetectionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SoftDeleteColumnDeletionDetectionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SoftDeleteColumnDeletionDetectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -21,6 +21,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeBaseActivityRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseModelQueryPlanningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeBaseModelQueryPlanningActivityRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseModelQueryPlanningActivityRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseModelQueryPlanningActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -166,23 +183,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeBaseModelQueryPlanningActivityRecord IPersistableModel<KnowledgeBaseModelQueryPlanningActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseModelQueryPlanningActivityRecord)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeBaseActivityRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseModelQueryPlanningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeBaseModelQueryPlanningActivityRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseModelQueryPlanningActivityRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseModelQueryPlanningActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

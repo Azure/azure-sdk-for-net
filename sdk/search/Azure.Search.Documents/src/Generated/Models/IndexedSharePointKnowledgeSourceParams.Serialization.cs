@@ -22,6 +22,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSourceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIndexedSharePointKnowledgeSourceParams(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IndexedSharePointKnowledgeSourceParams)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IndexedSharePointKnowledgeSourceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,23 +174,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         IndexedSharePointKnowledgeSourceParams IPersistableModel<IndexedSharePointKnowledgeSourceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => (IndexedSharePointKnowledgeSourceParams)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeSourceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexedSharePointKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIndexedSharePointKnowledgeSourceParams(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IndexedSharePointKnowledgeSourceParams)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexedSharePointKnowledgeSourceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

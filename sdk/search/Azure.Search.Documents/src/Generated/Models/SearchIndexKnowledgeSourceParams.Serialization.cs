@@ -22,6 +22,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSourceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSearchIndexKnowledgeSourceParams(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParams)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexKnowledgeSourceParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -169,23 +186,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SearchIndexKnowledgeSourceParams IPersistableModel<SearchIndexKnowledgeSourceParams>.Create(BinaryData data, ModelReaderWriterOptions options) => (SearchIndexKnowledgeSourceParams)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeSourceParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParams>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchIndexKnowledgeSourceParams(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParams)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchIndexKnowledgeSourceParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

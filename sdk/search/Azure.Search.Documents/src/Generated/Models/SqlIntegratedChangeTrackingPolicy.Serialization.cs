@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a data change detection policy that captures changes using the Integrated Change Tracking feature of Azure SQL Database. </summary>
     public partial class SqlIntegratedChangeTrackingPolicy : DataChangeDetectionPolicy, IJsonModel<SqlIntegratedChangeTrackingPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataChangeDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlIntegratedChangeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlIntegratedChangeTrackingPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlIntegratedChangeTrackingPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlIntegratedChangeTrackingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -98,23 +115,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SqlIntegratedChangeTrackingPolicy IPersistableModel<SqlIntegratedChangeTrackingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlIntegratedChangeTrackingPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataChangeDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlIntegratedChangeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlIntegratedChangeTrackingPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlIntegratedChangeTrackingPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlIntegratedChangeTrackingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

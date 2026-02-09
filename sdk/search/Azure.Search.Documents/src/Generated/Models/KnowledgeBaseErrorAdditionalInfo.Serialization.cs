@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> The resource management error additional info. </summary>
     public partial class KnowledgeBaseErrorAdditionalInfo : IJsonModel<KnowledgeBaseErrorAdditionalInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBaseErrorAdditionalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeBaseErrorAdditionalInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseErrorAdditionalInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseErrorAdditionalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,23 +179,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeBaseErrorAdditionalInfo IPersistableModel<KnowledgeBaseErrorAdditionalInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeBaseErrorAdditionalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeBaseErrorAdditionalInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseErrorAdditionalInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseErrorAdditionalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

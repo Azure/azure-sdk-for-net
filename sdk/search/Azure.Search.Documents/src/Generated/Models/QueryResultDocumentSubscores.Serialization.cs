@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> The breakdown of subscores between the text and vector query components of the search query for this document. Each vector query is shown as a separate object in the same order they were received. </summary>
     public partial class QueryResultDocumentSubscores : IJsonModel<QueryResultDocumentSubscores>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueryResultDocumentSubscores PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQueryResultDocumentSubscores(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryResultDocumentSubscores)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueryResultDocumentSubscores>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -184,23 +201,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QueryResultDocumentSubscores IPersistableModel<QueryResultDocumentSubscores>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryResultDocumentSubscores PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSubscores>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQueryResultDocumentSubscores(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QueryResultDocumentSubscores)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QueryResultDocumentSubscores>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

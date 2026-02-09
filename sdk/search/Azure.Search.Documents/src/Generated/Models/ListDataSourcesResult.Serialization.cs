@@ -16,6 +16,30 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListDataSourcesResult : IJsonModel<ListDataSourcesResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ListDataSourcesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListDataSourcesResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeListDataSourcesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListDataSourcesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListDataSourcesResult"/> from. </param>
+        public static explicit operator ListDataSourcesResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeListDataSourcesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ListDataSourcesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,31 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ListDataSourcesResult IPersistableModel<ListDataSourcesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListDataSourcesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ListDataSourcesResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeListDataSourcesResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ListDataSourcesResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListDataSourcesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListDataSourcesResult"/> from. </param>
-        public static explicit operator ListDataSourcesResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListDataSourcesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

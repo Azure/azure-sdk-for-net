@@ -17,6 +17,30 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> The output contract for the retrieval response. </summary>
     public partial class KnowledgeBaseRetrievalResponse : IJsonModel<KnowledgeBaseRetrievalResponse>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KnowledgeBaseRetrievalResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="KnowledgeBaseRetrievalResponse"/> from. </param>
+        public static explicit operator KnowledgeBaseRetrievalResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseRetrievalResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -183,31 +207,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeBaseRetrievalResponse IPersistableModel<KnowledgeBaseRetrievalResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeBaseRetrievalResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseRetrievalResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="KnowledgeBaseRetrievalResponse"/> from. </param>
-        public static explicit operator KnowledgeBaseRetrievalResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBaseRetrievalResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

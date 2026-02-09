@@ -17,6 +17,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
     public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer, IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeSourceVectorizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeSourceAzureOpenAIVectorizer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeSourceAzureOpenAIVectorizer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,23 +131,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeSourceAzureOpenAIVectorizer IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeSourceAzureOpenAIVectorizer)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeSourceVectorizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeSourceAzureOpenAIVectorizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeSourceAzureOpenAIVectorizer)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeSourceAzureOpenAIVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -15,6 +15,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class KeywordTokenizer : LexicalTokenizer, IJsonModel<KeywordTokenizer>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeywordTokenizer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeywordTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,23 +77,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KeywordTokenizer IPersistableModel<KeywordTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeywordTokenizer)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKeywordTokenizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeywordTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> Description of fields that were sent to the semantic enrichment process, as well as how they were used. </summary>
     public partial class QueryResultDocumentSemanticField : IJsonModel<QueryResultDocumentSemanticField>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueryResultDocumentSemanticField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSemanticField>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQueryResultDocumentSemanticField(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryResultDocumentSemanticField)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueryResultDocumentSemanticField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,23 +149,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QueryResultDocumentSemanticField IPersistableModel<QueryResultDocumentSemanticField>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryResultDocumentSemanticField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentSemanticField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQueryResultDocumentSemanticField(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QueryResultDocumentSemanticField)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QueryResultDocumentSemanticField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

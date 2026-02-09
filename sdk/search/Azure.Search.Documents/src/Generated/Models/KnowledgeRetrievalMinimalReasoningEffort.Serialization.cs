@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Run knowledge retrieval with minimal reasoning effort. </summary>
     public partial class KnowledgeRetrievalMinimalReasoningEffort : KnowledgeRetrievalReasoningEffort, IJsonModel<KnowledgeRetrievalMinimalReasoningEffort>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeRetrievalReasoningEffort PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalMinimalReasoningEffort>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeRetrievalMinimalReasoningEffort(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeRetrievalMinimalReasoningEffort)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeRetrievalMinimalReasoningEffort>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -98,23 +115,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeRetrievalMinimalReasoningEffort IPersistableModel<KnowledgeRetrievalMinimalReasoningEffort>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeRetrievalMinimalReasoningEffort)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeRetrievalReasoningEffort PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalMinimalReasoningEffort>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKnowledgeRetrievalMinimalReasoningEffort(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeRetrievalMinimalReasoningEffort)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeRetrievalMinimalReasoningEffort>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

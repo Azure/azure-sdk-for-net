@@ -17,6 +17,30 @@ namespace Azure.Search.Documents.Models
     /// <summary> The result of Autocomplete query. </summary>
     public partial class AutocompleteResults : IJsonModel<AutocompleteResults>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutocompleteResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutocompleteResults>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutocompleteResults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutocompleteResults)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutocompleteResults"/> from. </param>
+        public static explicit operator AutocompleteResults(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAutocompleteResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutocompleteResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,31 +168,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         AutocompleteResults IPersistableModel<AutocompleteResults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutocompleteResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutocompleteResults>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutocompleteResults(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutocompleteResults)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutocompleteResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutocompleteResults"/> from. </param>
-        public static explicit operator AutocompleteResults(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAutocompleteResults(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

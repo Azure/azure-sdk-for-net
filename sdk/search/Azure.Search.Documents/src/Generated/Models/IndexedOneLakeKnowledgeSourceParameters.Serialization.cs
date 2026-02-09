@@ -22,6 +22,23 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexedOneLakeKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexedOneLakeKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIndexedOneLakeKnowledgeSourceParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IndexedOneLakeKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IndexedOneLakeKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -180,23 +197,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         IndexedOneLakeKnowledgeSourceParameters IPersistableModel<IndexedOneLakeKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IndexedOneLakeKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexedOneLakeKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIndexedOneLakeKnowledgeSourceParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IndexedOneLakeKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexedOneLakeKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -29,29 +29,6 @@ namespace Azure.Search.Documents
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
         private readonly string _indexName;
-        private readonly string _name;
-
-        /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="indexName"> The name of the index. </param>
-        /// <param name="name"> The name of the index. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public SearchClient(Uri endpoint, string indexName, string name, AzureKeyCredential credential) : this(endpoint, indexName, name, credential, new SearchClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="indexName"> The name of the index. </param>
-        /// <param name="name"> The name of the index. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public SearchClient(Uri endpoint, string indexName, string name, TokenCredential credential) : this(endpoint, indexName, name, credential, new SearchClientOptions())
-        {
-        }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }

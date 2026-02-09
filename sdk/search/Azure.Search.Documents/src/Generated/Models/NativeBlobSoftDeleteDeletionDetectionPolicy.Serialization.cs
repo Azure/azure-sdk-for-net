@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a data deletion detection policy utilizing Azure Blob Storage's native soft delete feature for deletion detection. </summary>
     public partial class NativeBlobSoftDeleteDeletionDetectionPolicy : DataDeletionDetectionPolicy, IJsonModel<NativeBlobSoftDeleteDeletionDetectionPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataDeletionDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NativeBlobSoftDeleteDeletionDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNativeBlobSoftDeleteDeletionDetectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NativeBlobSoftDeleteDeletionDetectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NativeBlobSoftDeleteDeletionDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -98,23 +115,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NativeBlobSoftDeleteDeletionDetectionPolicy IPersistableModel<NativeBlobSoftDeleteDeletionDetectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (NativeBlobSoftDeleteDeletionDetectionPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataDeletionDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NativeBlobSoftDeleteDeletionDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNativeBlobSoftDeleteDeletionDetectionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NativeBlobSoftDeleteDeletionDetectionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NativeBlobSoftDeleteDeletionDetectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> Contains debugging information specific to query rewrites. </summary>
     public partial class QueryRewritesDebugInfo : IJsonModel<QueryRewritesDebugInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueryRewritesDebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryRewritesDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQueryRewritesDebugInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryRewritesDebugInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueryRewritesDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -146,23 +163,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QueryRewritesDebugInfo IPersistableModel<QueryRewritesDebugInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryRewritesDebugInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryRewritesDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQueryRewritesDebugInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QueryRewritesDebugInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QueryRewritesDebugInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

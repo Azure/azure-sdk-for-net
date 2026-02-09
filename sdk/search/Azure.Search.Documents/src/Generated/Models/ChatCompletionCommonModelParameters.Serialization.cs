@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Common language model parameters for Chat Completions. If omitted, default values are used. </summary>
     public partial class ChatCompletionCommonModelParameters : IJsonModel<ChatCompletionCommonModelParameters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ChatCompletionCommonModelParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionCommonModelParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeChatCompletionCommonModelParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChatCompletionCommonModelParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChatCompletionCommonModelParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -247,23 +264,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ChatCompletionCommonModelParameters IPersistableModel<ChatCompletionCommonModelParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChatCompletionCommonModelParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionCommonModelParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeChatCompletionCommonModelParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChatCompletionCommonModelParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ChatCompletionCommonModelParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class SearchIndexerKnowledgeStoreParameters : IJsonModel<SearchIndexerKnowledgeStoreParameters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchIndexerKnowledgeStoreParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerKnowledgeStoreParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSearchIndexerKnowledgeStoreParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerKnowledgeStoreParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexerKnowledgeStoreParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,23 +132,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SearchIndexerKnowledgeStoreParameters IPersistableModel<SearchIndexerKnowledgeStoreParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchIndexerKnowledgeStoreParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerKnowledgeStoreParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchIndexerKnowledgeStoreParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexerKnowledgeStoreParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchIndexerKnowledgeStoreParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

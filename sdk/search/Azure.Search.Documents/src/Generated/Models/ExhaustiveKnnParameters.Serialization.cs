@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to exhaustive KNN algorithm. </summary>
     public partial class ExhaustiveKnnParameters : IJsonModel<ExhaustiveKnnParameters>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExhaustiveKnnParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExhaustiveKnnParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExhaustiveKnnParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExhaustiveKnnParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExhaustiveKnnParameters IPersistableModel<ExhaustiveKnnParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExhaustiveKnnParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExhaustiveKnnParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExhaustiveKnnParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExhaustiveKnnParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

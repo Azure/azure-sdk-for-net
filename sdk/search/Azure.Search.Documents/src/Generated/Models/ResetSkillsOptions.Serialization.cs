@@ -17,6 +17,23 @@ namespace Azure.Search.Documents.Models
     /// <summary> The type of the skill names. </summary>
     public partial class ResetSkillsOptions : IJsonModel<ResetSkillsOptions>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResetSkillsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResetSkillsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResetSkillsOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResetSkillsOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResetSkillsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,23 +161,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResetSkillsOptions IPersistableModel<ResetSkillsOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResetSkillsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResetSkillsOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResetSkillsOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResetSkillsOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResetSkillsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

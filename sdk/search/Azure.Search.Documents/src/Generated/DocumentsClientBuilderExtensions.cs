@@ -41,29 +41,6 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        /// <param name="indexName"></param>
-        /// <param name="name"></param>
-        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, string name)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>((options, credential) => new SearchClient(endpoint, indexName, name, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        /// <param name="indexName"></param>
-        /// <param name="name"></param>
-        /// <param name="credential"></param>
-        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName, string name, AzureKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(options => new SearchClient(endpoint, indexName, name, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

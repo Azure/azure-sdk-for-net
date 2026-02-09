@@ -17,6 +17,30 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
     public partial class ListIndexStatsSummary : IJsonModel<ListIndexStatsSummary>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ListIndexStatsSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListIndexStatsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeListIndexStatsSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListIndexStatsSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListIndexStatsSummary"/> from. </param>
+        public static explicit operator ListIndexStatsSummary(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeListIndexStatsSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ListIndexStatsSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,31 +153,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ListIndexStatsSummary IPersistableModel<ListIndexStatsSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListIndexStatsSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIndexStatsSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeListIndexStatsSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ListIndexStatsSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListIndexStatsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListIndexStatsSummary"/> from. </param>
-        public static explicit operator ListIndexStatsSummary(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListIndexStatsSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

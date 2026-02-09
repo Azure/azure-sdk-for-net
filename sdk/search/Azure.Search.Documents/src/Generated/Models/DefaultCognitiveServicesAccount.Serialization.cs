@@ -16,6 +16,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> An empty object that represents the default Azure AI service resource for a skillset. </summary>
     public partial class DefaultCognitiveServicesAccount : CognitiveServicesAccount, IJsonModel<DefaultCognitiveServicesAccount>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CognitiveServicesAccount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DefaultCognitiveServicesAccount>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDefaultCognitiveServicesAccount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefaultCognitiveServicesAccount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DefaultCognitiveServicesAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,23 +121,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DefaultCognitiveServicesAccount IPersistableModel<DefaultCognitiveServicesAccount>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefaultCognitiveServicesAccount)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CognitiveServicesAccount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultCognitiveServicesAccount>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDefaultCognitiveServicesAccount(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DefaultCognitiveServicesAccount)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DefaultCognitiveServicesAccount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

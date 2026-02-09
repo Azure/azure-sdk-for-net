@@ -17,6 +17,30 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing the status of operations for all documents in the indexing request. </summary>
     public partial class IndexDocumentsResult : IJsonModel<IndexDocumentsResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IndexDocumentsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIndexDocumentsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IndexDocumentsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IndexDocumentsResult"/> from. </param>
+        public static explicit operator IndexDocumentsResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIndexDocumentsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IndexDocumentsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,31 +153,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         IndexDocumentsResult IPersistableModel<IndexDocumentsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IndexDocumentsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexDocumentsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIndexDocumentsResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IndexDocumentsResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexDocumentsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IndexDocumentsResult"/> from. </param>
-        public static explicit operator IndexDocumentsResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIndexDocumentsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

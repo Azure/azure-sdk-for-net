@@ -21,6 +21,23 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOpenAIEmbeddingSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -239,23 +256,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AzureOpenAIEmbeddingSkill IPersistableModel<AzureOpenAIEmbeddingSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOpenAIEmbeddingSkill)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureOpenAIEmbeddingSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
