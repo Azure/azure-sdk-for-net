@@ -16,7 +16,7 @@ using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 
-namespace Azure.Azure.Search.Documents.Documents.Indexes
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary> The SearchIndexerClient. </summary>
     public partial class SearchIndexerClient

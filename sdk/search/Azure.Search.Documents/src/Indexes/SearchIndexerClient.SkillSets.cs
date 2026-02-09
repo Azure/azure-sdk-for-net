@@ -7,12 +7,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 // TODO: Fix this in generator
 // namespace Azure.Search.Documents.Indexes
-namespace Azure.Azure.Search.Documents.Documents.Indexes
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Customizations for the generated <see cref="SearchIndexerClient"/> - Skillset operations.

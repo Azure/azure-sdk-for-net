@@ -8,7 +8,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
-using Azure.Azure.Search.Documents.Documents.Indexes;
 using Azure.Core.Extensions;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;

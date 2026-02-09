@@ -27,6 +27,12 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
     }
+
+    /// <summary> SearchIndexerClient namespace customization. </summary>
+    [CodeGenType("SearchIndexerClient")]
+    public partial class SearchIndexerClient
+    {
+    }
 }
 
 namespace Azure.Search.Documents.KnowledgeBases

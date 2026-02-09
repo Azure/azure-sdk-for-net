@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
 
-namespace Azure.Azure.Search.Documents.Documents.Indexes
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary></summary>
     public partial class SearchIndexerClient
@@ -41,7 +41,7 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             uri.AppendQuery("api-version", _apiVersion, true);
             if (skipIndexerResetRequirementForCache != null)
             {
-                uri.AppendQuery("ignoreResetRequirements", global::Azure.Search.Documents.TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
+                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -172,7 +172,7 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             uri.AppendQuery("api-version", _apiVersion, true);
             if (overwrite != null)
             {
-                uri.AppendQuery("overwrite", global::Azure.Search.Documents.TypeFormatters.ConvertToString(overwrite), true);
+                uri.AppendQuery("overwrite", TypeFormatters.ConvertToString(overwrite), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -213,11 +213,11 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             uri.AppendQuery("api-version", _apiVersion, true);
             if (skipIndexerResetRequirementForCache != null)
             {
-                uri.AppendQuery("ignoreResetRequirements", global::Azure.Search.Documents.TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
+                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
             }
             if (disableCacheReprocessingChangeDetection != null)
             {
-                uri.AppendQuery("disableCacheReprocessingChangeDetection", global::Azure.Search.Documents.TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -330,11 +330,11 @@ namespace Azure.Azure.Search.Documents.Documents.Indexes
             uri.AppendQuery("api-version", _apiVersion, true);
             if (skipIndexerResetRequirementForCache != null)
             {
-                uri.AppendQuery("ignoreResetRequirements", global::Azure.Search.Documents.TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
+                uri.AppendQuery("ignoreResetRequirements", TypeFormatters.ConvertToString(skipIndexerResetRequirementForCache), true);
             }
             if (disableCacheReprocessingChangeDetection != null)
             {
-                uri.AppendQuery("disableCacheReprocessingChangeDetection", global::Azure.Search.Documents.TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", TypeFormatters.ConvertToString(disableCacheReprocessingChangeDetection), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
