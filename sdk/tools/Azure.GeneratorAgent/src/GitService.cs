@@ -115,7 +115,7 @@ public sealed class GitService
     private static string? FindRepositoryRoot(string startPath)
     {
         var currentPath = Path.GetFullPath(startPath);
-        
+
         while (currentPath != null)
         {
             var gitDir = Path.Combine(currentPath, ".git");

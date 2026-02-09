@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <IsTestSupportProject>true</IsTestSupportProject>
     <IsPackable>true</IsPackable>
+    <PackAsTool>true</PackAsTool>
     <Version>1.0.0</Version>
     <PackageVersion>1.0.0</PackageVersion>
     <PackageDescription>Azure SDK Code Generation CLI tool for automated SDK workflows</PackageDescription>

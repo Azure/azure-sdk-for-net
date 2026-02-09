@@ -25,7 +25,7 @@ public class GitServiceTests
             var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
                 gitService.GetLatestCommitAsync(tempPath));
 
-            Assert.That(ex!.Message, Does.Contain("Not a git repository"));
+            Assert.That(ex!.Message, Does.Contain("Not within a git repository"));
         }
         finally
         {
