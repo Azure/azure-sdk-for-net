@@ -1360,17 +1360,35 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of identifiers for the Event Hub partitions.</returns>
         ///
-        protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
+        protected virtual Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
                                                                      CancellationToken cancellationToken)
         {
-            // If EventHubProperties hasn't been initialized (processor not yet started),
-            // fall back to querying the service directly to preserve pre-5.12.0 behavior.
+            // If EventHubProperties has been initialized, return the cached partition IDs
+            // synchronously to avoid async state machine allocation on the common path.
 
             if (EventHubProperties != null)
             {
-                return EventHubProperties.PartitionIds;
+                return Task.FromResult(EventHubProperties.PartitionIds);
             }
 
+            // If EventHubProperties hasn't been initialized (processor not yet started),
+            // fall back to querying the service directly to preserve pre-5.12.0 behavior.
+
+            return ListPartitionIdsFromServiceAsync(connection, cancellationToken);
+        }
+
+        /// <summary>
+        ///   Queries the Event Hub service for the set of partition identifiers.
+        /// </summary>
+        ///
+        /// <param name="connection">The connection to the Event Hubs namespace to be used for service communication.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of identifiers for the Event Hub partitions.</returns>
+        ///
+        private async Task<string[]> ListPartitionIdsFromServiceAsync(EventHubConnection connection,
+                                                                      CancellationToken cancellationToken)
+        {
             var properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
             return properties.PartitionIds;
         }
