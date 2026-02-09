@@ -99,11 +99,11 @@ This runs `snippet-generator` to sync code snippets into markdown files. May mod
 
 ## Execution order
 
-For each affected package, the steps must run in this order:
+Run the following steps in this order, respecting their scope (per package vs per ServiceDirectory):
 
-1. **`dotnet format`** first — run on all changed csproj files (src, tests, etc.).
-2. **`GenerateCode`** second — per src csproj, regenerates from specs (may override format changes in Generated/).
-3. **`Export-API`** third — per ServiceDirectory, captures the final public API surface after generation.
-4. **`Update-Snippets`** fourth — per ServiceDirectory, captures any snippet changes from all prior steps.
+1. **`dotnet format`** first — run on all changed csproj files (src, tests, etc.) for each affected package.
+2. **`GenerateCode`** second — per src csproj, regenerates from specs (may override format changes in Generated/) for each affected package.
+3. **`Export-API`** third — run once per affected ServiceDirectory, after all GenerateCode runs for packages in that ServiceDirectory are complete; captures the final public API surface after generation.
+4. **`Update-Snippets`** fourth — run once per affected ServiceDirectory, after Export-API; captures any snippet changes from all prior steps.
 
-When multiple packages/ServiceDirectories are affected, complete the full sequence for each. Step 6 (verify) runs once at the end.
+When multiple packages/ServiceDirectories are affected, run steps 1–2 for each affected package, then steps 3–4 once per affected ServiceDirectory. Step 6 (verify) runs once at the end.
