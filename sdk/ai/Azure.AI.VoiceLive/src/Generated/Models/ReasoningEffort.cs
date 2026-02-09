@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> High reasoning effort - more thorough reasoning, may take longer. </summary>
         private const string HighValue = "high";
         /// <summary> Extra high reasoning effort - maximum reasoning depth. </summary>
-        private const string ExtraHighValue = "extrahigh";
+        private const string XhighValue = "xhigh";
 
         /// <summary> Initializes a new instance of <see cref="ReasoningEffort"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
         public static ReasoningEffort High { get; } = new ReasoningEffort(HighValue);
 
         /// <summary> Extra high reasoning effort - maximum reasoning depth. </summary>
-        public static ReasoningEffort ExtraHigh { get; } = new ReasoningEffort(ExtraHighValue);
+        public static ReasoningEffort Xhigh { get; } = new ReasoningEffort(XhighValue);
 
         /// <summary> Determines if two <see cref="ReasoningEffort"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
