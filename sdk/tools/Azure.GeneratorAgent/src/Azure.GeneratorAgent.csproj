@@ -5,9 +5,6 @@
     <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!-- This is a production CLI tool that requires IsTestSupportProject=true to access 
-         centralized package management for Microsoft.Extensions packages in Packages.Data.props.
-         This is the standard pattern for .NET tools in the Azure SDK repository. -->
     <IsTestSupportProject>true</IsTestSupportProject>
     <IsPackable>true</IsPackable>
     <PackageDescription>Azure SDK Code Generation CLI tool for automated SDK workflows</PackageDescription>
