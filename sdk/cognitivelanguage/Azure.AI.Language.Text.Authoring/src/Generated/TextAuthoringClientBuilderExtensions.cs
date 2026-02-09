@@ -13,35 +13,38 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="TextAnalysisAuthoringClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class TextAuthoringClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="TextAnalysisAuthoringClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TextAnalysisAuthoringClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions>((options) => new TextAnalysisAuthoringClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="TextAnalysisAuthoringClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions>((options, cred) => new TextAnalysisAuthoringClient(endpoint, cred, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions>((options, credential) => new TextAnalysisAuthoringClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="TextAnalysisAuthoringClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TextAnalysisAuthoringClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions>(options => new TextAnalysisAuthoringClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="TextAnalysisAuthoringClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<TextAnalysisAuthoringClient, TextAnalysisAuthoringClientOptions>(configuration);
         }

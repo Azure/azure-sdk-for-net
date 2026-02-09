@@ -15,6 +15,23 @@ namespace Azure.AI.VoiceLive
     /// <summary> Input image content part. </summary>
     public partial class RequestImageContentPart : VoiceLiveContentPart, IJsonModel<RequestImageContentPart>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RequestImageContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRequestImageContentPart(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RequestImageContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,23 +140,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RequestImageContentPart IPersistableModel<RequestImageContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestImageContentPart)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestImageContentPart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRequestImageContentPart(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RequestImageContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

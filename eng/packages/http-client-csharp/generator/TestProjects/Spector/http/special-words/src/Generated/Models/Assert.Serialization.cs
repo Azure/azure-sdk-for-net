@@ -16,6 +16,8 @@ namespace SpecialWords._Models
     {
         internal Assert() => throw null;
 
+        protected virtual Assert PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Assert>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace SpecialWords._Models
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Assert IPersistableModel<Assert>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Assert PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Assert>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 

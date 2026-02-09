@@ -15,6 +15,23 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> PurviewObjectId. </summary>
     public partial class PurviewObjectId : IJsonModel<PurviewObjectId>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PurviewObjectId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PurviewObjectId>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePurviewObjectId(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PurviewObjectId)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewObjectId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -270,23 +287,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PurviewObjectId IPersistableModel<PurviewObjectId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PurviewObjectId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewObjectId>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePurviewObjectId(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PurviewObjectId)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PurviewObjectId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

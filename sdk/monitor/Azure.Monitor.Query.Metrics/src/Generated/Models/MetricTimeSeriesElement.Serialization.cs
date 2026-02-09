@@ -19,6 +19,23 @@ namespace Azure.Monitor.Query.Metrics.Models
     /// </summary>
     public partial class MetricTimeSeriesElement : IJsonModel<MetricTimeSeriesElement>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricTimeSeriesElement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricTimeSeriesElement(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricTimeSeriesElement)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricTimeSeriesElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -159,23 +176,6 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MetricTimeSeriesElement IPersistableModel<MetricTimeSeriesElement>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MetricTimeSeriesElement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMetricTimeSeriesElement(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MetricTimeSeriesElement)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MetricTimeSeriesElement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

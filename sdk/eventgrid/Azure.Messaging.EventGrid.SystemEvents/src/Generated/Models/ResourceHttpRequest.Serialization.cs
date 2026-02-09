@@ -15,6 +15,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the HTTP request. </summary>
     public partial class ResourceHttpRequest : IJsonModel<ResourceHttpRequest>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceHttpRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceHttpRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceHttpRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,23 +166,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResourceHttpRequest IPersistableModel<ResourceHttpRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceHttpRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHttpRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceHttpRequest(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceHttpRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

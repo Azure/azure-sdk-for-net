@@ -8,142 +8,133 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPowerBIDedicatedModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PowerBIDedicated.DedicatedCapacityData"/>. </summary>
-        /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
-        /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
-        /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
-        /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
-        /// <param name="administrationMembers"> A collection of Dedicated capacity administrators. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="administration"> A collection of Dedicated capacity administrators. </param>
         /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
         /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
         /// <param name="friendlyName"> Capacity name. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <returns> A new <see cref="PowerBIDedicated.DedicatedCapacityData"/> instance for mocking. </returns>
-        public static DedicatedCapacityData DedicatedCapacityData(string id = null, string name = null, string resourceType = null, AzureLocation location = default, IDictionary<string, string> tags = null, SystemData systemData = null, CapacitySku sku = null, IEnumerable<string> administrationMembers = null, Mode? mode = null, Guid? tenantId = null, string friendlyName = null, State? state = null, CapacityProvisioningState? provisioningState = null)
+        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DedicatedCapacityAdministrators administration = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
         {
-            tags ??= new Dictionary<string, string>();
-            administrationMembers ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DedicatedCapacityData(
                 id,
                 name,
                 resourceType,
-                location,
-                tags,
                 systemData,
-                serializedAdditionalRawData: null,
-                sku,
-                administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
-                mode,
-                tenantId,
-                friendlyName,
-                state,
-                provisioningState);
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                administration is null && mode is null && tenantId is null && friendlyName is null && state is null && provisioningState is null ? default : new DedicatedCapacityProperties(
+                    administration,
+                    mode,
+                    tenantId,
+                    friendlyName,
+                    null,
+                    state,
+                    provisioningState),
+                sku);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PowerBIDedicatedResourceData"/>. </summary>
-        /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
-        /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
-        /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
-        /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Models.PowerBIDedicatedResourceData"/> instance for mocking. </returns>
-        public static PowerBIDedicatedResourceData PowerBIDedicatedResourceData(string id = null, string name = null, string resourceType = null, AzureLocation location = default, IDictionary<string, string> tags = null, SystemData systemData = null)
+        /// <summary> An array of administrator user identities. </summary>
+        /// <param name="members"> An array of administrator user identities. </param>
+        /// <returns> A new <see cref="Models.DedicatedCapacityAdministrators"/> instance for mocking. </returns>
+        public static DedicatedCapacityAdministrators DedicatedCapacityAdministrators(IEnumerable<string> members = default)
         {
-            tags ??= new Dictionary<string, string>();
+            members ??= new ChangeTrackingList<string>();
 
-            return new PowerBIDedicatedResourceData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                systemData,
-                serializedAdditionalRawData: null);
+            return new DedicatedCapacityAdministrators(members.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DedicatedCapacityPatch"/>. </summary>
         /// <param name="sku"> The SKU of the Dedicated capacity resource. </param>
         /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
-        /// <param name="administrationMembers"> A collection of Dedicated capacity administrators. </param>
         /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
         /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
         /// <param name="friendlyName"> Capacity name. </param>
+        /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.DedicatedCapacityPatch"/> instance for mocking. </returns>
-        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = null, IDictionary<string, string> tags = null, IEnumerable<string> administrationMembers = null, Mode? mode = null, Guid? tenantId = null, string friendlyName = null)
+        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = default, IDictionary<string, string> tags = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default)
         {
-            tags ??= new Dictionary<string, string>();
-            administrationMembers ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DedicatedCapacityPatch(
-                sku,
-                tags,
-                administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
-                mode,
-                tenantId,
-                friendlyName,
-                serializedAdditionalRawData: null);
+            return new DedicatedCapacityPatch(sku, tags, mode is null && tenantId is null && friendlyName is null && administrationMembers is null ? default : new DedicatedCapacityMutableProperties(new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), mode, tenantId, friendlyName, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuDetails"/>. </summary>
+        /// <summary> An object that represents SKU details for existing resources. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
-        public static SkuDetails SkuDetails(string resourceType = null, CapacitySku sku = null)
+        public static SkuDetails SkuDetails(string resourceType = default, CapacitySku sku = default)
         {
-            return new SkuDetails(resourceType, sku, serializedAdditionalRawData: null);
+            return new SkuDetails(resourceType, sku, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckCapacityNameAvailabilityResult"/>. </summary>
+        /// <summary> The checking result of capacity name availability. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the capacity name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>
         /// <returns> A new <see cref="Models.CheckCapacityNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckCapacityNameAvailabilityResult CheckCapacityNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        public static CheckCapacityNameAvailabilityResult CheckCapacityNameAvailabilityResult(bool? nameAvailable = default, string reason = default, string message = default)
         {
-            return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PowerBIDedicated.AutoScaleVCoreData"/>. </summary>
-        /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
-        /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
-        /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
-        /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
-        /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
         /// <param name="capacityObjectId"> The object ID of the capacity resource associated with the auto scale v-core resource. </param>
         /// <param name="provisioningState"> The current deployment state of an auto scale v-core resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
         /// <returns> A new <see cref="PowerBIDedicated.AutoScaleVCoreData"/> instance for mocking. </returns>
-        public static AutoScaleVCoreData AutoScaleVCoreData(string id = null, string name = null, string resourceType = null, AzureLocation location = default, IDictionary<string, string> tags = null, SystemData systemData = null, AutoScaleVCoreSku sku = null, int? capacityLimit = null, string capacityObjectId = null, VCoreProvisioningState? provisioningState = null)
+        public static AutoScaleVCoreData AutoScaleVCoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? capacityLimit = default, string capacityObjectId = default, VCoreProvisioningState? provisioningState = default, AutoScaleVCoreSku sku = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AutoScaleVCoreData(
                 id,
                 name,
                 resourceType,
-                location,
-                tags,
                 systemData,
-                serializedAdditionalRawData: null,
-                sku,
-                capacityLimit,
-                capacityObjectId,
-                provisioningState);
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                capacityLimit is null && capacityObjectId is null && provisioningState is null ? default : new AutoScaleVCoreProperties(capacityLimit, null, capacityObjectId, provisioningState),
+                sku);
+        }
+
+        /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
+        /// <returns> A new <see cref="Models.AutoScaleVCorePatch"/> instance for mocking. </returns>
+        public static AutoScaleVCorePatch AutoScaleVCorePatch(AutoScaleVCoreSku sku = default, IDictionary<string, string> tags = default, int? capacityLimit = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AutoScaleVCorePatch(sku, tags, capacityLimit is null ? default : new AutoScaleVCoreMutableProperties(capacityLimit, null), additionalBinaryDataProperties: null);
         }
     }
 }

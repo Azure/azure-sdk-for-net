@@ -107,7 +107,7 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
     public ContainerAppSourceControl(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -116,6 +116,7 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _branch = DefineProperty<string>("Branch", ["properties", "branch"]);
         _gitHubActionConfiguration = DefineModelProperty<ContainerAppGitHubActionConfiguration>("GitHubActionConfiguration", ["properties", "githubActionConfiguration"]);
@@ -131,6 +132,16 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

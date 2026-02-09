@@ -19,6 +19,31 @@ namespace Azure.Core
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PagedIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedIndex>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePagedIndex(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedIndex)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedIndex"/> from. </param>
+        public static explicit operator PagedIndex(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PagedIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,32 +168,7 @@ namespace Azure.Core
         /// <param name="options"> The client options for reading and writing models. </param>
         PagedIndex IPersistableModel<PagedIndex>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedIndex>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePagedIndex(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PagedIndex)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedIndex"/> from. </param>
-        public static explicit operator PagedIndex(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

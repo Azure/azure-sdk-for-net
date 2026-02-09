@@ -485,7 +485,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     PrefetchCount = 5
                 };
 
-                await using ServiceBusSessionProcessor processor = CreateNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
+                await using var noRetryClient = CreateNoRetryClient();
+                await using ServiceBusSessionProcessor processor = noRetryClient.CreateSessionProcessor(scope.QueueName, options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += SessionErrorHandler;
@@ -531,7 +532,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 if (!autoComplete)
                 {
                     Assert.That(async () =>
-                        await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
+                        {
+                            await using var noRetryClient2 = CreateNoRetryClient();
+                            await noRetryClient2.AcceptNextSessionAsync(scope.QueueName);
+                        },
                         Throws.Exception);
                 }
             }
@@ -957,7 +961,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 Assert.That(
-                    async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
+                    async () =>
+                    {
+                        await using var noRetryClient = CreateNoRetryClient();
+                        await noRetryClient.AcceptNextSessionAsync(scope.QueueName);
+                    },
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
             }
         }
@@ -1031,7 +1039,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     try
                     {
-                        await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName);
+                        await using var noRetryClient = CreateNoRetryClient();
+                        await noRetryClient.AcceptNextSessionAsync(scope.QueueName);
                     }
                     catch (ServiceBusException ex)
                     when (ex.Reason == ServiceBusFailureReason.ServiceTimeout ||
@@ -1811,9 +1820,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.IsFalse(processor.IsProcessing);
 
                 Assert.That(
-                    async () => await CreateNoRetryClient().AcceptSessionAsync(
-                        scope.QueueName,
-                        "sessionId"),
+                    async () =>
+                    {
+                        await using var noRetryClient = CreateNoRetryClient();
+                        await noRetryClient.AcceptSessionAsync(
+                            scope.QueueName,
+                            "sessionId");
+                    },
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).
                     EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
 
@@ -2425,7 +2438,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.CloseAsync();
 
                 // verify all messages were completed
-                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName));
+                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () =>
+                {
+                    await using var noRetryClient = CreateNoRetryClient();
+                    await noRetryClient.AcceptNextSessionAsync(scope.QueueName);
+                });
             }
         }
 
@@ -2501,7 +2518,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.CloseAsync();
 
                 // verify all messages were completed
-                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName));
+                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () =>
+                {
+                    await using var noRetryClient = CreateNoRetryClient();
+                    await noRetryClient.AcceptNextSessionAsync(scope.QueueName);
+                });
             }
         }
 

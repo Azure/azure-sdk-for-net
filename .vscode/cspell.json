@@ -996,18 +996,6 @@
       ]
     },
     {
-      "filename": "**/sdk/mediaservices/**/*.cs",
-      "words": [
-        "cabac",
-        "cavlc",
-        "cbcs",
-        "cenc",
-        "deinterlace",
-        "rtmp",
-        "scms"
-      ]
-    },
-    {
       "filename": "**/sdk/monitor/**/*",
       "words": [
         "ampm",

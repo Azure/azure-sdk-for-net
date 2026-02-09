@@ -15,6 +15,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> Prompt for an answer. </summary>
     public partial class QnaPrompt : IJsonModel<QnaPrompt>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QnaPrompt PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QnaPrompt>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQnaPrompt(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QnaPrompt)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QnaPrompt>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -161,23 +178,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QnaPrompt IPersistableModel<QnaPrompt>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QnaPrompt PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QnaPrompt>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQnaPrompt(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QnaPrompt)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QnaPrompt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

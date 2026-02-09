@@ -17,6 +17,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal IsFloatAdditionalProperties() => throw null;
 
+        protected virtual IsFloatAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator IsFloatAdditionalProperties(Response response) => throw null;
+
         void IJsonModel<IsFloatAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Property.AdditionalProperties
 
         IsFloatAdditionalProperties IPersistableModel<IsFloatAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual IsFloatAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<IsFloatAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="isFloatAdditionalProperties"> The <see cref="IsFloatAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsFloatAdditionalProperties isFloatAdditionalProperties) => throw null;
-
-        public static explicit operator IsFloatAdditionalProperties(Response response) => throw null;
     }
 }
