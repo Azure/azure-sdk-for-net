@@ -30761,7 +30761,7 @@
             {
               "$id": "2640",
               "kind": "paging",
-              "name": "list",
+              "name": "listRpUnbilledPrefixes",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -30769,7 +30769,7 @@
               "doc": "Lists all of the RP unbilled prefixes for the specified peering",
               "operation": {
                 "$id": "2641",
-                "name": "list",
+                "name": "listRpUnbilledPrefixes",
                 "resourceName": "Peerings",
                 "doc": "Lists all of the RP unbilled prefixes for the specified peering",
                 "accessibility": "public",

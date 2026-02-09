@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class RpUnbilledPrefixesGetAllCollectionResultOfT : Pageable<RoutingPreferenceUnbilledPrefix>
+    internal partial class RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT : AsyncPageable<RoutingPreferenceUnbilledPrefix>
     {
         private readonly RpUnbilledPrefixes _client;
         private readonly string _subscriptionId;
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Peering
         private readonly bool? _consolidate;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of RpUnbilledPrefixesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RpUnbilledPrefixes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RpUnbilledPrefixesGetAllCollectionResultOfT(RpUnbilledPrefixes client, string subscriptionId, string resourceGroupName, string peeringName, bool? consolidate, RequestContext context) : base(context?.CancellationToken ?? default)
+        public RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(RpUnbilledPrefixes client, string subscriptionId, string resourceGroupName, string peeringName, bool? consolidate, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,16 +41,16 @@ namespace Azure.ResourceManager.Peering
             _context = context;
         }
 
-        /// <summary> Gets the pages of RpUnbilledPrefixesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RpUnbilledPrefixesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RoutingPreferenceUnbilledPrefix>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<RoutingPreferenceUnbilledPrefix>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -67,14 +68,14 @@ namespace Azure.ResourceManager.Peering
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringName, _consolidate, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _peeringName, _consolidate, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PeeringResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRpUnbilledPrefixesRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringName, _consolidate, _context) : _client.CreateGetRpUnbilledPrefixesRequest(_subscriptionId, _resourceGroupName, _peeringName, _consolidate, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

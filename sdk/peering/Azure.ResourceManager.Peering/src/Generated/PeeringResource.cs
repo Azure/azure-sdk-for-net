@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.Peering
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetAllAsync(bool? consolidate = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetAllAsyncCollectionResultOfT(
+            return new RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -466,13 +466,13 @@ namespace Azure.ResourceManager.Peering
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetAll(bool? consolidate = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetAllCollectionResultOfT(
+            return new RpUnbilledPrefixesGetRpUnbilledPrefixesCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
