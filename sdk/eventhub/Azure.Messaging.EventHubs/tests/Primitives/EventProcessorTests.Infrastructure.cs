@@ -304,8 +304,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockConnection
-                .Setup(conn => conn.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new EventHubProperties("eventHub", DateTime.UtcNow, expectedPartitionIds, false));
+                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedPartitionIds);
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -319,7 +319,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(partitionIds, Is.EqualTo(expectedPartitionIds), "The partition IDs should match those returned by the service.");
 
             mockConnection
-                .Verify(conn => conn.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()), Times.Once, "The service should have been queried for partition IDs.");
+                .Verify(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()), Times.Once, "The service should have been queried for partition IDs.");
         }
     }
 }
