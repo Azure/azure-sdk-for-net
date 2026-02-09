@@ -47,10 +47,10 @@ This regenerates code from TypeSpec/AutoRest specs. It may modify files under `s
 
 ## 4. Conditionally run `Export-API.ps1` (per ServiceDirectory)
 
-**Trigger condition — for each affected package:** Run this if ANY of the following are true:
+**Trigger condition — per ServiceDirectory:** Run this if ANY of the following are true for ANY affected package within this ServiceDirectory:
 
-- Step 3 above ran for this package (generated code may affect public API).
-- Changed `.cs` files under `sdk/{service}/{package}/src/` contain public API surface changes. To determine this, inspect the diffs for:
+- Step 3 above ran for any package in this ServiceDirectory (generated code may affect public API).
+- Changed `.cs` files under `sdk/{service}/{package}/src/` for any package in this ServiceDirectory contain public API surface changes. To determine this, inspect the diffs for:
   - New, removed, or renamed `public` or `protected` types (`class`, `interface`, `struct`, `enum`, `record`).
   - New, removed, or changed signatures of `public` or `protected` members (methods, properties, constructors, events, fields).
   - Visibility changes (e.g., `internal` → `public`).
