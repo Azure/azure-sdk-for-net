@@ -36061,7 +36061,7 @@
             {
               "$id": "3059",
               "kind": "paging",
-              "name": "list",
+              "name": "listCdnPeeringPrefixes",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -36069,7 +36069,7 @@
               "doc": "Lists all of the advertised prefixes for the specified peering location",
               "operation": {
                 "$id": "3060",
-                "name": "list",
+                "name": "listCdnPeeringPrefixes",
                 "resourceName": "CdnPeeringPrefixesOperationGroup",
                 "doc": "Lists all of the advertised prefixes for the specified peering location",
                 "accessibility": "public",
@@ -36497,7 +36497,7 @@
             {
               "$id": "3093",
               "kind": "paging",
-              "name": "list",
+              "name": "listPeeringsByLegacyPeering",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -36505,7 +36505,7 @@
               "doc": "Lists all of the legacy peerings under the given subscription matching the specified kind and location.",
               "operation": {
                 "$id": "3094",
-                "name": "list",
+                "name": "listPeeringsByLegacyPeering",
                 "resourceName": "LegacyPeeringsOperationGroup",
                 "doc": "Lists all of the legacy peerings under the given subscription matching the specified kind and location.",
                 "accessibility": "public",
@@ -37909,7 +37909,7 @@
             {
               "$id": "3215",
               "kind": "paging",
-              "name": "list",
+              "name": "listPeeringLocations",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -37917,7 +37917,7 @@
               "doc": "Lists all of the available peering locations for the specified kind of peering.",
               "operation": {
                 "$id": "3216",
-                "name": "list",
+                "name": "listPeeringLocations",
                 "resourceName": "PeeringLocationsOperationGroup",
                 "doc": "Lists all of the available peering locations for the specified kind of peering.",
                 "accessibility": "public",

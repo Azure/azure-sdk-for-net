@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string peeringLocation, RequestContext context)
+        internal HttpMessage CreateGetCdnPeeringPrefixesRequest(string subscriptionId, string peeringLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string peeringLocation, RequestContext context)
+        internal HttpMessage CreateNextGetCdnPeeringPrefixesRequest(Uri nextPage, string subscriptionId, string peeringLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

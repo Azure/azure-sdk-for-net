@@ -14,19 +14,19 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class CdnPeeringPrefixesGetAllCollectionResultOfT : Pageable<CdnPeeringPrefix>
+    internal partial class CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT : Pageable<CdnPeeringPrefix>
     {
         private readonly CdnPeeringPrefixes _client;
         private readonly string _subscriptionId;
         private readonly string _peeringLocation;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of CdnPeeringPrefixesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CdnPeeringPrefixes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CdnPeeringPrefixesGetAllCollectionResultOfT(CdnPeeringPrefixes client, string subscriptionId, string peeringLocation, RequestContext context) : base(context?.CancellationToken ?? default)
+        public CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT(CdnPeeringPrefixes client, string subscriptionId, string peeringLocation, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Peering
             _context = context;
         }
 
-        /// <summary> Gets the pages of CdnPeeringPrefixesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CdnPeeringPrefixesGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of CdnPeeringPrefixesGetCdnPeeringPrefixesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<CdnPeeringPrefix>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _peeringLocation, _context) : _client.CreateGetAllRequest(_subscriptionId, _peeringLocation, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetCdnPeeringPrefixesRequest(nextLink, _subscriptionId, _peeringLocation, _context) : _client.CreateGetCdnPeeringPrefixesRequest(_subscriptionId, _peeringLocation, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes");
             scope.Start();
             try
             {
