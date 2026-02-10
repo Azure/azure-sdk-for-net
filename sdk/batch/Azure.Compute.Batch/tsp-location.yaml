@@ -1,4 +1,4 @@
 directory: specification/batch/data-plane/Batch
-commit: 09fee50b88b6951671d9b82597759cd3f4b3776b
+commit: cb3e670017e0440d8071e81f06cd0aeddb2a3aad
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

@@ -4,7 +4,7 @@
 
 ### Breaking Changes
 
-- Removed 'StorageAccountType` from `DataDisk`.  Use `StorageAccountType` in `ManagedDisk` instead
+- Removed `DataDisk.StorageAccountType`.  Use `DataDisk.ManagedDisk.StorageAccountType` instead
 
 ## 1.0.0-beta.4 (2025-09-01)
 
