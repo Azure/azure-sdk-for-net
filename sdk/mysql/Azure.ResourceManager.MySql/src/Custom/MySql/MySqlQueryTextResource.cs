@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(ResourceType, out string mySqlQueryTextQueryTextsApiVersion);
             _mySqlQueryTextQueryTextsRestClient = new QueryTextsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlQueryTextQueryTextsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 
