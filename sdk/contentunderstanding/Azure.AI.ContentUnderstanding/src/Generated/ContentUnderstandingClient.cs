@@ -133,48 +133,6 @@ namespace Azure.AI.ContentUnderstanding
             return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
         }
 
-        /// <summary> Extract content and fields from input. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
-        /// <param name="stringEncoding"> The string encoding format for content spans in the response. Possible values are 'codePoint', 'utf16', and 'utf8'. </param>
-        /// <param name="input"> The binary content of the document to analyze. </param>
-        /// <param name="range"> Range of the input to analyze (ex. `1-3,5,9-`). Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
-        /// <param name="contentType"> Request content type. </param>
-        /// <param name="processingLocation"> The location where the data may be processed. Defaults to global. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="stringEncoding"/> or <paramref name="input"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="stringEncoding"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation<AnalyzeResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string stringEncoding, BinaryData input, string range = default, string contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
-            Argument.AssertNotNullOrEmpty(stringEncoding, nameof(stringEncoding));
-            Argument.AssertNotNull(input, nameof(input));
-
-            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(input), stringEncoding, processingLocation?.ToString(), context: cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
-        }
-
-        /// <summary> Extract content and fields from input. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
-        /// <param name="stringEncoding"> The string encoding format for content spans in the response. Possible values are 'codePoint', 'utf16', and 'utf8'. </param>
-        /// <param name="input"> The binary content of the document to analyze. </param>
-        /// <param name="range"> Range of the input to analyze (ex. `1-3,5,9-`). Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
-        /// <param name="contentType"> Request content type. </param>
-        /// <param name="processingLocation"> The location where the data may be processed. Defaults to global. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="stringEncoding"/> or <paramref name="input"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="stringEncoding"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string stringEncoding, BinaryData input, string range = default, string contentType = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
-            Argument.AssertNotNullOrEmpty(stringEncoding, nameof(stringEncoding));
-            Argument.AssertNotNull(input, nameof(input));
-
-            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(input), stringEncoding, processingLocation?.ToString(), context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
-        }
-
         /// <summary> Create a copy of the source analyzer to the current location. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
