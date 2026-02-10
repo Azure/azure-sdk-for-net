@@ -52,9 +52,7 @@ import {
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import {
   resolveArmResources,
-  getOperationScopeFromPath,
-  extractParentResourceTypeFromPath,
-  getParentTypeDiscriminator
+  getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { isPrefix } from "./utils.js";
@@ -497,17 +495,6 @@ export function buildArmProviderSchema(
               const clientName = resourcePathToClientName.get(metadataKey);
               if (clientName) {
                 resource.metadata.resourceName = pluralize.singular(clientName);
-              }
-              
-              // Final fallback: add parent type discriminator if the resourceIdPattern contains an extension pattern
-              // This handles cases like GuestConfiguration where same model is used for VM, HCRP, VMSS, VMwarevSphere
-              const parentType = extractParentResourceTypeFromPath(resource.metadata.resourceIdPattern);
-              if (parentType) {
-                const discriminator = getParentTypeDiscriminator(parentType);
-                if (discriminator) {
-                  const baseName = resource.metadata.resourceName;
-                  resource.metadata.resourceName = `${baseName}For${discriminator}`;
-                }
               }
             }
             break;

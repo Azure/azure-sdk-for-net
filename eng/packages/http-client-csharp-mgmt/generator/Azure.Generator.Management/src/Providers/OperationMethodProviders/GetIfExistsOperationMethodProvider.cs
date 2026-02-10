@@ -35,7 +35,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected override CSharpType BuildReturnType()
         {
-            return new CSharpType(typeof(NullableResponse<>), _returnBodyType!).WrapAsync(_isAsync);
+            return new CSharpType(typeof(NullableResponse<>), EffectiveResourceClient.Type).WrapAsync(_isAsync);
         }
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
