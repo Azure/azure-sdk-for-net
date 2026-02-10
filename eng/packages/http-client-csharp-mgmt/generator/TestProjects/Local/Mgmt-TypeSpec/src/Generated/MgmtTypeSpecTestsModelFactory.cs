@@ -1229,6 +1229,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new RedisPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="baseOnlyProperty"> A base property that won't be redefined. </param>
+        /// <param name="overridableProperty">
+        /// This property will be redefined in derived models with a default value.
+        /// Similar to accessKeysAuthentication in the original RedisEnterprise issue.
+        /// </param>
+        /// <returns> A new <see cref="Tests.DuplicatePropertyTestData"/> instance for mocking. </returns>
+        public static DuplicatePropertyTestData DuplicatePropertyTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string baseOnlyProperty = default, string overridableProperty = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DuplicatePropertyTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                baseOnlyProperty is null && overridableProperty is null ? default : new PropertyOverrideCreateProperties(baseOnlyProperty, overridableProperty, null));
+        }
+
         /// <summary> Site at ServiceGroup scope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

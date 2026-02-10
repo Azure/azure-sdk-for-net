@@ -22,6 +22,7 @@ import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
 import "./redisenterprise.tsp";
+import "./propertyoverride.tsp";
 import "./sitemanager.tsp";
 import "./flatten-with-customized-property.tsp";
 using TypeSpec.Versioning;
