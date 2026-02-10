@@ -26,9 +26,9 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
         public ConfigurableCredentialTestHelper(
             string credentialSource,
-            string processOutput,
-            IFileSystemService defaultFileSystem,
-            Func<ConfigurableCredential, ConfigurableCredential> instrumentClient)
+            string processOutput = null,
+            IFileSystemService defaultFileSystem = null,
+            Func<ConfigurableCredential, ConfigurableCredential> instrumentClient = null)
         {
             _credentialSource = credentialSource;
             _processOutput = processOutput;
@@ -57,22 +57,25 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
         public ConfigurableCredential InstrumentCredential(ConfigurableCredential credential, IProcessService processService = null, IFileSystemService fileSystem = null)
         {
-            // Create a fresh TestProcess each time since TestProcess is single-use
-            IProcessService testProcessService = processService ?? new TestProcessService(new TestProcess { Output = _processOutput }, true);
-            IFileSystemService testFileSystem = fileSystem ?? _defaultFileSystem;
-
             TCred underlyingCredential = GetUnderlyingCredential(credential);
-
-            underlyingCredential
-                .GetType()
-                .GetField("_processService", BindingFlags.NonPublic | BindingFlags.Instance)
-                .SetValue(underlyingCredential, testProcessService);
 
             underlyingCredential
                 .GetType()
                 .GetField("_pipeline", BindingFlags.NonPublic | BindingFlags.Instance)
                 .SetValue(underlyingCredential, CredentialPipeline.GetInstance(null));
 
+            if (processService != null || _processOutput != null)
+            {
+                // Create a fresh TestProcess each time since TestProcess is single-use
+                IProcessService testProcessService = processService ?? new TestProcessService(new TestProcess { Output = _processOutput }, true);
+
+                underlyingCredential
+                    .GetType()
+                    .GetField("_processService", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .SetValue(underlyingCredential, testProcessService);
+            }
+
+            IFileSystemService testFileSystem = fileSystem ?? _defaultFileSystem;
             if (testFileSystem != null)
             {
                 underlyingCredential
@@ -81,7 +84,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                     ?.SetValue(underlyingCredential, testFileSystem);
             }
 
-            return _instrumentClient(credential);
+            return _instrumentClient != null ? _instrumentClient(credential) : credential;
         }
 
         public IConfiguration GetConfiguration()
