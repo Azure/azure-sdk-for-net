@@ -18,6 +18,23 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class LlmFillerResponseConfig : FillerResponseConfigBase, IJsonModel<LlmFillerResponseConfig>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FillerResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LlmFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLlmFillerResponseConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LlmFillerResponseConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LlmFillerResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -169,23 +186,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LlmFillerResponseConfig IPersistableModel<LlmFillerResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (LlmFillerResponseConfig)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FillerResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LlmFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLlmFillerResponseConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LlmFillerResponseConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LlmFillerResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
