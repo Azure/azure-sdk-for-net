@@ -41,7 +41,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 .Where(e => e.Trim().Length != 0)
                 .Select(e => e.Split(','))
                 .Where(e => e.Length == 2)
-                .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
+                .Select(e => new TimeSeriesPoint(float.Parse(e[1])) { Timestamp = DateTime.Parse(e[0]) }).ToList();
 
             //create request
             UnivariateDetectionOptions request = new UnivariateDetectionOptions(list)

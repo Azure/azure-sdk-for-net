@@ -105,7 +105,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     modelStatus = response.ModelInfo.Status;
                     TestContext.Progress.WriteLine($"try {tryoutCount}, model id: {trainedModelId}, status: {modelStatus}.");
                     tryoutCount += 1;
-                };
+                }
+                ;
 
                 if (modelStatus == ModelStatus.Ready)
                 {
