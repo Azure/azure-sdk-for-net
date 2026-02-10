@@ -66,6 +66,11 @@ namespace Azure.Generator.Management
                 return replacedType;
             }
 
+            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out replacedType))
+            {
+                return replacedType;
+            }
+
             if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out replacedType))
             {
                 return replacedType;
