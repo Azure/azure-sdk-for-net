@@ -45,9 +45,6 @@
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
-# PRLabel: %CodeGen
-/sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta
-
 # Smoke tests
 /common/SmokeTests/                                                @jsquire @m-redding
 
@@ -1220,6 +1217,9 @@
 /eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
+
+# PRLabel: %CodeGen
+/sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta
 
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes

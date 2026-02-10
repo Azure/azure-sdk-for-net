@@ -290,17 +290,6 @@
     <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
   </ItemGroup>
 
-  <!-- Packages used by CLI tools -->
-  <ItemGroup Condition="'$(IsToolProject)' == 'true'">
-    <PackageReference Update="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
-    <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.2" />
-    <PackageReference Update="System.CommandLine" Version="2.0.1" />
-  </ItemGroup>
-
   <!-- Packages intended for current generation integration libraries only -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageReference Update="Apache.Avro" Version="1.12.1" />
@@ -400,7 +389,8 @@
       or '$(IsTestSupportProject)' == 'true'
       or '$(IsPerfProject)' == 'true'
       or '$(IsStressProject)' == 'true'
-      or '$(IsSamplesProject)' == 'true'">
+      or '$(IsSamplesProject)' == 'true'
+      or '$(IsToolProject)' == 'true'">
 
     <!-- General testing infrastructure  -->
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
