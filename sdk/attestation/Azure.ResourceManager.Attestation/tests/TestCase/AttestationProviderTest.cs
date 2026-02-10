@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Attestation.Tests
             var providerResource = (await providrerCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, input)).Value;
             Assert.AreEqual(providerName, providerResource.Data.Name);
             //2.Get
-            var providerResource2 =(await providerResource.GetAsync()).Value;
+            var providerResource2 = (await providerResource.GetAsync()).Value;
             ResourceDataHelper.AssertProvider(providerResource.Data, providerResource2.Data);
             //3.GetAll
             _ = await providrerCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName2, input);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Attestation.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await providrerCollection.ExistsAsync(null));
             //Resouece operation
             //1.Get
-            var providerResource3 =(await providerResource.GetAsync()).Value;
+            var providerResource3 = (await providerResource.GetAsync()).Value;
             ResourceDataHelper.AssertProvider(providerResource.Data, providerResource3.Data);
             //2.Update
             var patch = new AttestationProviderPatch()
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Attestation.Tests
                 },
                 AttestationServicePatchSpecificParamsPublicNetworkAccess = PublicNetworkAccessType.Disabled
             };
-            var providerResource4 =(await providerResource3.UpdateAsync(patch)).Value;
+            var providerResource4 = (await providerResource3.UpdateAsync(patch)).Value;
             Assert.AreEqual(patch.Tags.Count, providerResource4.Data.Tags.Count);
             //3. Delete
             await providerResource4.DeleteAsync(WaitUntil.Completed);

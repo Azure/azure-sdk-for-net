@@ -87,7 +87,8 @@ namespace Azure.Security.Attestation.Tests
         public async Task ValidateJustExpiredAttestationToken()
         {
             // Create a JWT whose body has just expired.
-            object tokenBody = new JwtTestBody{
+            object tokenBody = new JwtTestBody
+            {
                 StringField = "Foo",
                 ExpiresAt = DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(5)).ToUnixTimeSeconds(),
             };
@@ -156,7 +157,7 @@ namespace Azure.Security.Attestation.Tests
 
             // ValidateTokenAsync will throw an exception if a callback is specified outside of an attestation client.
             // Note that validation callbacks are tested elsewhere in the AttestationClient codebase.
-            Assert.ThrowsAsync(typeof(Exception), async() => await ValidateSerializedToken(
+            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(
                 serializedToken,
                 tokenBody,
                 validationOptions));

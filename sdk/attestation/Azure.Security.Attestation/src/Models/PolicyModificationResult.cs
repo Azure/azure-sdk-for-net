@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using System.Runtime.CompilerServices;
-using System;
 
 namespace Azure.Security.Attestation
 {

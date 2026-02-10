@@ -42,7 +42,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
-        public AttestationClient(Uri endpoint, TokenCredential credential): this(endpoint, credential, new AttestationClientOptions())
+        public AttestationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AttestationClientOptions())
         {
             Endpoint = endpoint;
         }
@@ -229,7 +229,7 @@ namespace Azure.Security.Attestation
                     DraftPolicyForAttestation = request.DraftPolicyForAttestation,
                     RuntimeData = null,
                     InitTimeData = null,
-            };
+                };
 
                 if (request.InittimeData != null)
                 {

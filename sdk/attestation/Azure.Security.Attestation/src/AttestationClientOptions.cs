@@ -37,7 +37,7 @@ namespace Azure.Security.Attestation
 
             // If the caller specified that they have token validation options, use them, otherwise
             // use the defaults.
-            TokenOptions = tokenOptions != null ? tokenOptions.Clone() :  new AttestationTokenValidationOptions();
+            TokenOptions = tokenOptions != null ? tokenOptions.Clone() : new AttestationTokenValidationOptions();
         }
 
         /// <summary>

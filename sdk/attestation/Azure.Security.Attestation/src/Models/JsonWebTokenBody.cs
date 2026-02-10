@@ -30,13 +30,13 @@ namespace Azure.Security.Attestation
         /// Audience of the token.
         /// </summary>
         [JsonPropertyName("aud")]
-        public string Audience{ get; set; }
+        public string Audience { get; set; }
 
         /// <summary>
         /// Expiration time for the token.
         /// </summary>
         [JsonPropertyName("exp")]
-        public double? ExpirationTime{ get; set; }
+        public double? ExpirationTime { get; set; }
 
         /// <summary>
         /// Time before which this token is not valid.

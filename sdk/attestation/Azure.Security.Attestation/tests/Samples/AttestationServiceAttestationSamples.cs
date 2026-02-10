@@ -184,9 +184,9 @@ namespace Azure.Security.Attestation.Tests.Samples
                 }
                 catch (RequestFailedException ex)
                     when (ex.ErrorCode == "InvalidParameter")
-                    {
+                {
                     // Ignore invalid quote errors.
-                    }
+                }
                 #endregion
 
             }
@@ -204,7 +204,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             tokenOptions.TokenValidated += (AttestationTokenValidationEventArgs args) => { args.IsValid = true; return Task.CompletedTask; };
             var client = new AttestationAdministrationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential(),
-                new AttestationClientOptions(tokenOptions:tokenOptions));
+                new AttestationClientOptions(tokenOptions: tokenOptions));
             ;
             IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
@@ -215,20 +215,22 @@ namespace Azure.Security.Attestation.Tests.Samples
         public async Task SettingAttestationPolicy()
         {
             var endpoint = TestEnvironment.AadAttestationUrl;
-#region Snippet:GetPolicy
+            #region Snippet:GetPolicy
             var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             AttestationResponse<string> policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
             string result = policyResult.Value;
             #endregion
 
-#region Snippet:SetPolicy
+            #region Snippet:SetPolicy
             string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
             //@@ X509Certificate2 policyTokenCertificate = new X509Certificate2(<Attestation Policy Signing Certificate>);
             //@@ AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key>;
-            /*@@*/var policyTokenCertificate = TestEnvironment.PolicyCertificate0;
-            /*@@*/var policyTokenKey = TestEnvironment.PolicySigningKey0;
+            /*@@*/
+            var policyTokenCertificate = TestEnvironment.PolicyCertificate0;
+            /*@@*/
+            var policyTokenKey = TestEnvironment.PolicySigningKey0;
 
             var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate));
             #endregion
@@ -240,7 +242,8 @@ namespace Azure.Security.Attestation.Tests.Samples
             // verify that the hash of the policy document returned from the Attestation Service matches the hash
             // of an attestation token created locally.
             //@@ TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
-            /*@@*/AttestationTokenSigningKey signingKey =  new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate);
+            /*@@*/
+            AttestationTokenSigningKey signingKey = new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate);
             var policySetToken = new AttestationToken(
                 BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }),
                 signingKey);
@@ -249,7 +252,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             byte[] attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
             Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash.ToArray()));
-#endregion
+            #endregion
             var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
 
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.

@@ -78,7 +78,7 @@ namespace Azure.Security.Attestation
         public BinaryData DeprecatedEnclaveHeldData2 => InternalDeprecatedEnclaveHeldData2 != null ? BinaryData.FromBytes(Base64Url.Decode(InternalDeprecatedEnclaveHeldData2)) : null;
 
         [CodeGenMember("DeprecatedEnclaveHeldData2")]
-        private string InternalDeprecatedEnclaveHeldData2{ get; }
+        private string InternalDeprecatedEnclaveHeldData2 { get; }
 
         /// <summary>
         /// DEPRECATED: Private preview version of x-ms-sgx-ehd claim.
@@ -122,7 +122,7 @@ namespace Azure.Security.Attestation
         public float? DeprecatedSvn { get => InternalDeprecatedSvn; }
 
         [CodeGenMember("DeprecatedSvn")]
-        private float? InternalDeprecatedSvn{ get; }
+        private float? InternalDeprecatedSvn { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrsigner. </summary>
         [Obsolete("DeprecatedMrSigner is deprecated, use MrSigner instead")]

@@ -13,7 +13,7 @@ namespace Azure.Security.Attestation
     /// Represents a response from an Attestation Service API.
     /// </summary>
     public class AttestationResponse<T> : Response<T>
-        where T: class
+        where T : class
     {
         private readonly AttestationToken _token;
         private readonly Response _response;

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json.Serialization;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Security.Attestation
