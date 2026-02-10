@@ -64,7 +64,7 @@ namespace Azure.Security.CodeTransparency
             _keyCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy() },
                 _keyCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) },

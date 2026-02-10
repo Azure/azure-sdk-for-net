@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `CodeTransparencyRedirectPolicy` to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, redirects between Confidential Ledger nodes would fail because the default redirect behavior strips the Authorization header.
 
 ## 1.0.0-beta.6 (2025-12-17)
 
