@@ -80,7 +80,7 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// Determines if the current global test mode.
+    /// Determines if there is a current global test mode.
     /// </summary>
     internal static RecordedTestMode GlobalTestMode
     {
