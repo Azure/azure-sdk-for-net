@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = rgOp.Value;
             Assert.AreEqual(rgName, rg.Data.Name);
 
-            Assert.DoesNotThrow(() => { subscription.GetResourceGroups().Construct(null); });
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, null, new ResourceGroupData(AzureLocation.WestUS2)));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, null));
         }

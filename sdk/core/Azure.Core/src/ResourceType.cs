@@ -82,7 +82,7 @@ namespace Azure.Core
             {
                 return default;
             }
-            
+
             return new ResourceType(resourceType);
         }
 
