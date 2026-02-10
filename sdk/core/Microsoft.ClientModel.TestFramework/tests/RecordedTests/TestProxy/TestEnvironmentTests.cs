@@ -13,6 +13,14 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 [TestFixture]
 public class TestEnvironmentTests
 {
+    [TearDown]
+    public void TearDown()
+    {
+        // Clear all static overrides after each test so subsequent tests
+        // can rely on environment variables and default behavior.
+        TestEnvironment.ResetEnvironmentOverrides();
+    }
+
     #region Test Implementation
 
     private class TestableTestEnvironment : TestEnvironment
@@ -458,17 +466,6 @@ public class TestEnvironmentTests
     #endregion
 
     #region Static Environment Properties
-
-    [TearDown]
-    public void ResetStaticProperties()
-    {
-        // Reset all static properties to their default state after each test.
-        TestEnvironment.GlobalTestMode = RecordedTestMode.Playback;
-        TestEnvironment.GlobalDisableAutoRecording = false;
-        TestEnvironment.EnableFiddler = false;
-        TestEnvironment.DisableBootstrapping = false;
-        TestEnvironment.EnableTestProxyDebugLogs = false;
-    }
 
     [Test]
     [NonParallelizable]

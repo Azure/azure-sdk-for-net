@@ -438,12 +438,12 @@ public abstract class TestEnvironment
 
         if (value == null)
         {
-            value = Environment.GetEnvironmentVariable($"AZURE_{name}");
+            value = Environment.GetEnvironmentVariable(name);
         }
 
         if (value == null)
         {
-            _environmentFile?.TryGetValue($"AZURE_{name}", out value);
+            _environmentFile?.TryGetValue(name, out value);
         }
 
         return value;
@@ -524,6 +524,19 @@ public abstract class TestEnvironment
 
         Console.WriteLine($"Using fallback path: {assemblyDir}");
         return assemblyDir;
+    }
+
+    /// <summary>
+    ///   Intended for test use, this operation resets any
+    ///   static environment overrides back to their default state.
+    /// </summary>
+    internal static void ResetEnvironmentOverrides()
+    {
+        s_recordedTestMode = null;
+        s_disableAutoRecording = null;
+        s_enableFiddler = null;
+        s_disableBootstrapping = null;
+        s_enableTestProxyDebugLogs = null;
     }
 
     /// <summary>
