@@ -2432,8 +2432,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             while (run.Status == RunStatus.Queued
-        || run.Status == RunStatus.InProgress
-        || run.Status == RunStatus.RequiresAction);
+                || run.Status == RunStatus.InProgress
+                || run.Status == RunStatus.RequiresAction);
             Assert.AreEqual(
                 RunStatus.Completed,
                 run.Status,
