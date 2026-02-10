@@ -4,13 +4,13 @@
 # nullable enable
 
 using System;
-using System.IO;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Core;
-using System.Text.RegularExpressions;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.AI.Projects
 {

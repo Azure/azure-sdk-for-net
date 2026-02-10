@@ -8,10 +8,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.Identity;
 using Azure.AI.Projects.Tests.Utils;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -115,7 +115,7 @@ namespace Azure.AI.Projects.Tests
             }
         }
 
-        private async Task SearchIndexesTestAsync(AIProjectClient projectClient, string indexName,string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
+        private async Task SearchIndexesTestAsync(AIProjectClient projectClient, string indexName, string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
         {
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            AIProjectIndex index = (AIProjectIndex) await projectClient.Indexes.CreateOrUpdateAsync(
+            AIProjectIndex index = (AIProjectIndex)await projectClient.Indexes.CreateOrUpdateAsync(
                 name: indexName,
                 version: indexVersion,
                 content: content

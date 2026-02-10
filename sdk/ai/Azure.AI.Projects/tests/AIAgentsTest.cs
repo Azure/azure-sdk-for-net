@@ -9,10 +9,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent;
-using Azure.Identity;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.AI.Projects.Tests.Utils;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 

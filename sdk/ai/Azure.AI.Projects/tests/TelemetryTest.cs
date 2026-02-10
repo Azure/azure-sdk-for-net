@@ -4,12 +4,12 @@
 #nullable disable
 
 using System;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Azure.AI.Projects.Tests.Utils;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {

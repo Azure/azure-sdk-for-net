@@ -4,14 +4,14 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Azure.Identity;
+using System.Threading.Tasks;
 using Azure.AI.Projects.Tests.Utils;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -54,7 +54,7 @@ public class DeploymentTest : ProjectsClientTestBase
         }
 
         Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-        ModelDeployment deploymentDetails = (ModelDeployment) projectClient.Deployments.GetDeployment(modelDeploymentName);
+        ModelDeployment deploymentDetails = (ModelDeployment)projectClient.Deployments.GetDeployment(modelDeploymentName);
         ValidateDeployment(deploymentDetails);
     }
     private async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
@@ -72,7 +72,7 @@ public class DeploymentTest : ProjectsClientTestBase
         }
 
         Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-        ModelDeployment deploymentDetails = (ModelDeployment) await projectClient.Deployments.GetDeploymentAsync(modelDeploymentName);
+        ModelDeployment deploymentDetails = (ModelDeployment)await projectClient.Deployments.GetDeploymentAsync(modelDeploymentName);
         ValidateDeployment(deploymentDetails);
     }
 }

@@ -10,11 +10,11 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.Identity;
-using NUnit.Framework.Internal;
 using Azure.AI.Projects.Tests.Utils;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.AI.Projects.Tests
 {
