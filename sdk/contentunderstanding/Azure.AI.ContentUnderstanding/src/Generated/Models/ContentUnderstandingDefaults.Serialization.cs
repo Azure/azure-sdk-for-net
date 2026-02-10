@@ -13,7 +13,10 @@ using Azure;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    /// <summary> default settings for this Content Understanding resource. </summary>
+    /// <summary>
+    /// Default settings for this Content Understanding resource. Can include multiple kinds of settings;
+    /// for example, mapping required large language models to model deployment names in Microsoft Foundry (see modelDeployments).
+    /// </summary>
     public partial class ContentUnderstandingDefaults : IJsonModel<ContentUnderstandingDefaults>
     {
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingDefaults"/> for deserialization. </summary>
