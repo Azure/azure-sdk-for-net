@@ -21,6 +21,23 @@ namespace Azure.AI.Language.Conversations.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResolutionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpeedResolution>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSpeedResolution(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SpeedResolution)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SpeedResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,23 +136,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SpeedResolution IPersistableModel<SpeedResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpeedResolution)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResolutionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SpeedResolution>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSpeedResolution(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SpeedResolution)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SpeedResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

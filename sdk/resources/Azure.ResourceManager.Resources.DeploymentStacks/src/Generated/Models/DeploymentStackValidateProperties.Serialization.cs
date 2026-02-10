@@ -8,17 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    public partial class DeploymentStackValidateProperties : IUtf8JsonSerializable, IJsonModel<DeploymentStackValidateProperties>
+    /// <summary> The Deployment stack validation result details. </summary>
+    public partial class DeploymentStackValidateProperties : IJsonModel<DeploymentStackValidateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentStackValidateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentStackValidateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +29,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ActionOnUnmanage))
             {
                 writer.WritePropertyName("actionOnUnmanage"u8);
@@ -81,21 +79,36 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("validatedResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidatedResources)
+                foreach (DeploymentStackResourceReference item in ValidatedResources)
                 {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(DeploymentExtensions))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("deploymentExtensions"u8);
+                writer.WriteStartArray();
+                foreach (DeploymentExtension item in DeploymentExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ValidationLevel))
+            {
+                writer.WritePropertyName("validationLevel"u8);
+                writer.WriteStringValue(ValidationLevel.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -104,326 +117,186 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        DeploymentStackValidateProperties IJsonModel<DeploymentStackValidateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentStackValidateProperties IJsonModel<DeploymentStackValidateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentStackValidateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentStackValidateProperties(document.RootElement, options);
         }
 
-        internal static DeploymentStackValidateProperties DeserializeDeploymentStackValidateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentStackValidateProperties DeserializeDeploymentStackValidateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ActionOnUnmanage actionOnUnmanage = default;
             string correlationId = default;
-            DenySettings denySettings = default;
+            DeploymentStackDenySettings denySettings = default;
             string deploymentScope = default;
             string description = default;
-            IDictionary<string, DeploymentParameter> parameters = default;
+            IDictionary<string, DeploymentParameterItem> parameters = default;
             DeploymentStacksTemplateLink templateLink = default;
-            IList<SubResource> validatedResources = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<DeploymentStackResourceReference> validatedResources = default;
+            IList<DeploymentExtension> deploymentExtensions = default;
+            DeploymentStackValidationLevel? validationLevel = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("actionOnUnmanage"u8))
+                if (prop.NameEquals("actionOnUnmanage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actionOnUnmanage = ActionOnUnmanage.DeserializeActionOnUnmanage(property.Value, options);
+                    actionOnUnmanage = ActionOnUnmanage.DeserializeActionOnUnmanage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("correlationId"u8))
+                if (prop.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("denySettings"u8))
+                if (prop.NameEquals("denySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    denySettings = DenySettings.DeserializeDenySettings(property.Value, options);
+                    denySettings = DeploymentStackDenySettings.DeserializeDeploymentStackDenySettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("deploymentScope"u8))
+                if (prop.NameEquals("deploymentScope"u8))
                 {
-                    deploymentScope = property.Value.GetString();
+                    deploymentScope = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, DeploymentParameter> dictionary = new Dictionary<string, DeploymentParameter>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    Dictionary<string, DeploymentParameterItem> dictionary = new Dictionary<string, DeploymentParameterItem>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeploymentParameter.DeserializeDeploymentParameter(property0.Value, options));
+                        dictionary.Add(prop0.Name, DeploymentParameterItem.DeserializeDeploymentParameterItem(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("templateLink"u8))
+                if (prop.NameEquals("templateLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(property.Value, options);
+                    templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("validatedResources"u8))
+                if (prop.NameEquals("validatedResources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<DeploymentStackResourceReference> array = new List<DeploymentStackResourceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
+                        array.Add(DeploymentStackResourceReference.DeserializeDeploymentStackResourceReference(item, options));
                     }
                     validatedResources = array;
                     continue;
                 }
+                if (prop.NameEquals("deploymentExtensions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DeploymentExtension> array = new List<DeploymentExtension>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeploymentExtension.DeserializeDeploymentExtension(item, options));
+                    }
+                    deploymentExtensions = array;
+                    continue;
+                }
+                if (prop.NameEquals("validationLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationLevel = new DeploymentStackValidationLevel(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DeploymentStackValidateProperties(
                 actionOnUnmanage,
                 correlationId,
                 denySettings,
                 deploymentScope,
                 description,
-                parameters ?? new ChangeTrackingDictionary<string, DeploymentParameter>(),
+                parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
                 templateLink,
-                validatedResources ?? new ChangeTrackingList<SubResource>(),
-                serializedAdditionalRawData);
+                validatedResources ?? new ChangeTrackingList<DeploymentStackResourceReference>(),
+                deploymentExtensions ?? new ChangeTrackingList<DeploymentExtension>(),
+                validationLevel,
+                additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentStackValidateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionOnUnmanage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  actionOnUnmanage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ActionOnUnmanage))
-                {
-                    builder.Append("  actionOnUnmanage: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ActionOnUnmanage, options, 2, false, "  actionOnUnmanage: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  correlationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CorrelationId))
-                {
-                    builder.Append("  correlationId: ");
-                    if (CorrelationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CorrelationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CorrelationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DenySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  denySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DenySettings))
-                {
-                    builder.Append("  denySettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DenySettings, options, 2, false, "  denySettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentScope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  deploymentScope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeploymentScope))
-                {
-                    builder.Append("  deploymentScope: ");
-                    if (DeploymentScope.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeploymentScope}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeploymentScope}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  parameters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Parameters))
-                {
-                    if (Parameters.Any())
-                    {
-                        builder.Append("  parameters: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Parameters)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  parameters: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateLink), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  templateLink: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TemplateLink))
-                {
-                    builder.Append("  templateLink: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TemplateLink, options, 2, false, "  templateLink: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validatedResources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ValidatedResources))
-                {
-                    if (ValidatedResources.Any())
-                    {
-                        builder.Append("  validatedResources: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ValidatedResources)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  validatedResources: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentStackValidateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeploymentStackValidateProperties IPersistableModel<DeploymentStackValidateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentStackValidateProperties IPersistableModel<DeploymentStackValidateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentStackValidateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeploymentStackValidateProperties(document.RootElement, options);
                     }
                 default:
@@ -431,6 +304,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeploymentStackValidateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

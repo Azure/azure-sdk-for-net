@@ -15,6 +15,23 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The DependentResource. </summary>
     public partial class DependentResource : IJsonModel<DependentResource>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependentResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDependentResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -454,23 +471,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DependentResource IPersistableModel<DependentResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DependentResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDependentResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DependentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

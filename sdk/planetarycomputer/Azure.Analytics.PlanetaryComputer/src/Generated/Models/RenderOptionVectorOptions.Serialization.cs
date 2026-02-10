@@ -20,6 +20,23 @@ namespace Azure.Analytics.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RenderOptionVectorOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RenderOptionVectorOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRenderOptionVectorOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RenderOptionVectorOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RenderOptionVectorOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -207,23 +224,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RenderOptionVectorOptions IPersistableModel<RenderOptionVectorOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RenderOptionVectorOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RenderOptionVectorOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRenderOptionVectorOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RenderOptionVectorOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RenderOptionVectorOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

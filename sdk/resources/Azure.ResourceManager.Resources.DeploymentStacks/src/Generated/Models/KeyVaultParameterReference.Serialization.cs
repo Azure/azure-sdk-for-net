@@ -8,16 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    public partial class KeyVaultParameterReference : IUtf8JsonSerializable, IJsonModel<KeyVaultParameterReference>
+    /// <summary> Azure Key Vault parameter reference. </summary>
+    public partial class KeyVaultParameterReference : IJsonModel<KeyVaultParameterReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultParameterReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KeyVaultParameterReference"/> for deserialization. </summary>
+        internal KeyVaultParameterReference()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultParameterReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,14 +34,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultParameterReference)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("keyVault"u8);
-            ((IJsonModel<WritableSubResource>)KeyVault).Write(writer, options);
+            writer.WriteObjectValue(KeyVault, options);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
@@ -44,15 +48,15 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,160 +65,90 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        KeyVaultParameterReference IJsonModel<KeyVaultParameterReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultParameterReference IJsonModel<KeyVaultParameterReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultParameterReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultParameterReference)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKeyVaultParameterReference(document.RootElement, options);
         }
 
-        internal static KeyVaultParameterReference DeserializeKeyVaultParameterReference(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KeyVaultParameterReference DeserializeKeyVaultParameterReference(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WritableSubResource keyVault = default;
+            KeyVaultReference keyVault = default;
             string secretName = default;
             string secretVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVault"u8))
+                if (prop.NameEquals("keyVault"u8))
                 {
-                    keyVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
+                    keyVault = KeyVaultReference.DeserializeKeyVaultReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secretName"u8))
+                if (prop.NameEquals("secretName"u8))
                 {
-                    secretName = property.Value.GetString();
+                    secretName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretVersion"u8))
+                if (prop.NameEquals("secretVersion"u8))
                 {
-                    secretVersion = property.Value.GetString();
+                    secretVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KeyVaultParameterReference(keyVault, secretName, secretVersion, serializedAdditionalRawData);
+            return new KeyVaultParameterReference(keyVault, secretName, secretVersion, additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KeyVaultParameterReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("KeyVaultId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVault: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVault))
-                {
-                    builder.Append("  keyVault: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, KeyVault, options, 2, false, "  keyVault: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretName))
-                {
-                    builder.Append("  secretName: ");
-                    if (SecretName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretVersion))
-                {
-                    builder.Append("  secretVersion: ");
-                    if (SecretVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretVersion}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KeyVaultParameterReference>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultParameterReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyVaultParameterReference IPersistableModel<KeyVaultParameterReference>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultParameterReference IPersistableModel<KeyVaultParameterReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultParameterReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultParameterReference(document.RootElement, options);
                     }
                 default:
@@ -222,6 +156,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultParameterReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

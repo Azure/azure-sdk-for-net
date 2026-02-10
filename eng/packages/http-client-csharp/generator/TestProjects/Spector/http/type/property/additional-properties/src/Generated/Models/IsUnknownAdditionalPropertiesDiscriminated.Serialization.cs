@@ -18,6 +18,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal IsUnknownAdditionalPropertiesDiscriminated() => throw null;
 
+        protected virtual IsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator IsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
+
         void IJsonModel<IsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -32,13 +36,9 @@ namespace _Type.Property.AdditionalProperties
 
         IsUnknownAdditionalPropertiesDiscriminated IPersistableModel<IsUnknownAdditionalPropertiesDiscriminated>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual IsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<IsUnknownAdditionalPropertiesDiscriminated>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="isUnknownAdditionalPropertiesDiscriminated"> The <see cref="IsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsUnknownAdditionalPropertiesDiscriminated isUnknownAdditionalPropertiesDiscriminated) => throw null;
-
-        public static explicit operator IsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
     }
 }

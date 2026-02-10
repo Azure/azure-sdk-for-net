@@ -15,6 +15,23 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TriggerCompleted. </summary>
     public partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter, IJsonModel<TriggerCompletedNotificationEventFilter>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerCompletedNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTriggerCompletedNotificationEventFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TriggerCompletedNotificationEventFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TriggerCompletedNotificationEventFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -97,23 +114,6 @@ namespace Azure.Developer.LoadTesting
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TriggerCompletedNotificationEventFilter IPersistableModel<TriggerCompletedNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (TriggerCompletedNotificationEventFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerCompletedNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTriggerCompletedNotificationEventFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TriggerCompletedNotificationEventFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TriggerCompletedNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

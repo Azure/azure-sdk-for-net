@@ -16,6 +16,23 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </summary>
     public partial class RedactedTranscriptContent : IJsonModel<RedactedTranscriptContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedactedTranscriptContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedactedTranscriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRedactedTranscriptContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedactedTranscriptContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedactedTranscriptContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -181,23 +198,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RedactedTranscriptContent IPersistableModel<RedactedTranscriptContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedactedTranscriptContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedactedTranscriptContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRedactedTranscriptContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedactedTranscriptContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedactedTranscriptContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
