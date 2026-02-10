@@ -13,7 +13,7 @@ namespace Azure.Security.CodeTransparency
     /// while preserving the Authorization header.
     /// </summary>
     /// <remarks>
-    /// Azure Confidential Ledger nodes may return 307 (Temporary Redirect) or 308 (Permanent Redirect)
+    /// Code Transparency Service nodes may return 307 (Temporary Redirect) or 308 (Permanent Redirect)
     /// responses to route write operations to the primary node. The standard redirect behavior in .NET
     /// strips the Authorization header on cross-domain redirects for security reasons. However, ACL
     /// redirects occur between trusted nodes within the same ledger, so the Authorization header must
