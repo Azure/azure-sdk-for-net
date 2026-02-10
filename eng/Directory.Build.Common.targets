@@ -147,30 +147,35 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+  <!-- 
+    Remove packages built into the .NET runtime 
+
+    NOTE:
+      This is only safe for packages in the same line as the target framework.  Because of edge cases with
+      dependencies and versions, it should not be applied for other runtimes.   For example:
+
+      - Safe: removing BCL packages in the 10.x line for the `net10.0` target.  
+      - Unsafe: removing BCL packages in the 10.x line for the `net8.0` target, even though an earlier version is built-in.
+  -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+    <PackageReference Remove="Microsoft.CSharp" />
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Formats.Asn1" />
+    <PackageReference Remove="System.IO.Compression" />
+    <PackageReference Remove="System.Linq.Async" />
+    <PackageReference Remove="System.Linq.AsyncEnumerable" />
     <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Net.WebSockets.Client" />
     <PackageReference Remove="System.Numerics.Vectors" />
+    <PackageReference Remove="System.Reflection.Emit" />
+    <PackageReference Remove="System.Runtime.InteropServices" />
+    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
     <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
     <PackageReference Remove="System.Threading.Channels" />
     <PackageReference Remove="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
-  <!-- Remove packages built into the .NET 10+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
-    <PackageReference Remove="Microsoft.CSharp" />
-    <PackageReference Remove="System.Formats.Asn1" />
-    <PackageReference Remove="System.Linq.Async" />
-    <PackageReference Remove="System.Linq.AsyncEnumerable" />
-    <PackageReference Remove="System.IO.Compression" />
-    <PackageReference Remove="System.Net.WebSockets.Client" />
-    <PackageReference Remove="System.Reflection.Emit" />
-    <PackageReference Remove="System.Runtime.InteropServices" />
-    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
     <PackageReference Remove="System.ValueTuple" />
   </ItemGroup>
 

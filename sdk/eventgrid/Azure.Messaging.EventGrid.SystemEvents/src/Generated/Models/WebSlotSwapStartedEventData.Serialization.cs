@@ -17,6 +17,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(WebSlotSwapStartedEventDataConverter))]
     public partial class WebSlotSwapStartedEventData : IJsonModel<WebSlotSwapStartedEventData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebSlotSwapStartedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebSlotSwapStartedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebSlotSwapStartedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebSlotSwapStartedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,23 +213,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WebSlotSwapStartedEventData IPersistableModel<WebSlotSwapStartedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebSlotSwapStartedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebSlotSwapStartedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebSlotSwapStartedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebSlotSwapStartedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -636,10 +636,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "58",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "58",
+                    "$id": "59",
                     "kind": "body",
                     "name": "bodyParameter",
                     "serializedName": "bodyParameter",
@@ -655,7 +675,30 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "60",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "61",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -682,43 +725,10 @@
               },
               "parameters": [
                 {
-                  "$id": "59",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "60",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "60"
                 },
                 {
-                  "$id": "61",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "58"
                 }
               ],
               "response": {},
@@ -754,10 +764,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "65",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "65",
+                    "$id": "66",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -773,7 +803,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "67",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -800,39 +849,10 @@
               },
               "parameters": [
                 {
-                  "$id": "66",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "19"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "67"
                 },
                 {
-                  "$id": "67",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "3"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "65"
                 }
               ],
               "response": {},
@@ -874,15 +894,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.name"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.name",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "72",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "73",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "72",
+                    "$id": "74",
                     "kind": "header",
                     "name": "testHeader",
                     "serializedName": "test-header",
                     "type": {
-                      "$id": "73",
+                      "$id": "75",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -894,7 +937,30 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.testHeader"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.testHeader",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "76",
+                        "kind": "method",
+                        "name": "testHeader",
+                        "serializedName": "test-header",
+                        "type": {
+                          "$id": "77",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.testHeader",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -918,46 +984,10 @@
               },
               "parameters": [
                 {
-                  "$id": "74",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "75",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "72"
                 },
                 {
-                  "$id": "76",
-                  "kind": "method",
-                  "name": "testHeader",
-                  "serializedName": "test-header",
-                  "type": {
-                    "$id": "77",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.testHeader",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "76"
                 }
               ],
               "response": {},
@@ -999,15 +1029,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.name"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.name",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "82",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "83",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "82",
+                    "$id": "84",
                     "kind": "header",
                     "name": "testHeader",
                     "serializedName": "test-header",
                     "type": {
-                      "$id": "83",
+                      "$id": "85",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1019,10 +1072,33 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.testHeader"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.testHeader",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "86",
+                        "kind": "method",
+                        "name": "testHeader",
+                        "serializedName": "test-header",
+                        "type": {
+                          "$id": "87",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.testHeader",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "84",
+                    "$id": "88",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -1036,10 +1112,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "89",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "5"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "85",
+                    "$id": "90",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -1055,7 +1151,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "91",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1082,81 +1197,16 @@
               },
               "parameters": [
                 {
-                  "$id": "86",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "87",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "82"
                 },
                 {
-                  "$id": "88",
-                  "kind": "method",
-                  "name": "testHeader",
-                  "serializedName": "test-header",
-                  "type": {
-                    "$id": "89",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.testHeader",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "86"
                 },
                 {
-                  "$id": "90",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "19"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "91"
                 },
                 {
-                  "$id": "91",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "5"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "89"
                 }
               ],
               "response": {},
@@ -1198,15 +1248,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.name"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.name",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "96",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "97",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "96",
+                    "$id": "98",
                     "kind": "header",
                     "name": "testHeader",
                     "serializedName": "test-header",
                     "type": {
-                      "$id": "97",
+                      "$id": "99",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1218,10 +1291,33 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.testHeader"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.testHeader",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "100",
+                        "kind": "method",
+                        "name": "testHeader",
+                        "serializedName": "test-header",
+                        "type": {
+                          "$id": "101",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.testHeader",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "98",
+                    "$id": "102",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -1235,10 +1331,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "103",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "7"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "99",
+                    "$id": "104",
                     "kind": "body",
                     "name": "spreadCompositeRequestMixRequest",
                     "serializedName": "spreadCompositeRequestMixRequest",
@@ -1254,7 +1370,30 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "105",
+                        "kind": "method",
+                        "name": "prop",
+                        "serializedName": "prop",
+                        "type": {
+                          "$id": "106",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.prop",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1281,85 +1420,16 @@
               },
               "parameters": [
                 {
-                  "$id": "100",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "101",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "96"
                 },
                 {
-                  "$id": "102",
-                  "kind": "method",
-                  "name": "testHeader",
-                  "serializedName": "test-header",
-                  "type": {
-                    "$id": "103",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.testHeader",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "100"
                 },
                 {
-                  "$id": "104",
-                  "kind": "method",
-                  "name": "prop",
-                  "serializedName": "prop",
-                  "type": {
-                    "$id": "105",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.prop",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "105"
                 },
                 {
-                  "$id": "106",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "7"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "103"
                 }
               ],
               "response": {},
@@ -1443,10 +1513,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "114",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "114",
+                    "$id": "115",
                     "kind": "body",
                     "name": "spreadAsRequestBodyRequest",
                     "serializedName": "spreadAsRequestBodyRequest",
@@ -1462,7 +1552,30 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "116",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "117",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1489,43 +1602,10 @@
               },
               "parameters": [
                 {
-                  "$id": "115",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "116",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "116"
                 },
                 {
-                  "$id": "117",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "114"
                 }
               ],
               "response": {},
@@ -1567,15 +1647,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.id"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.id",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "122",
+                        "kind": "method",
+                        "name": "id",
+                        "serializedName": "id",
+                        "type": {
+                          "$id": "123",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.id",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "122",
+                    "$id": "124",
                     "kind": "header",
                     "name": "x-ms-test-header",
                     "serializedName": "x-ms-test-header",
                     "type": {
-                      "$id": "123",
+                      "$id": "125",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1587,10 +1690,33 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.x-ms-test-header"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.x-ms-test-header",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "126",
+                        "kind": "method",
+                        "name": "x-ms-test-header",
+                        "serializedName": "x-ms-test-header",
+                        "type": {
+                          "$id": "127",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.x-ms-test-header",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "124",
+                    "$id": "128",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -1604,10 +1730,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "129",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "125",
+                    "$id": "130",
                     "kind": "body",
                     "name": "spreadParameterWithInnerModelRequest",
                     "serializedName": "spreadParameterWithInnerModelRequest",
@@ -1623,7 +1769,30 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "131",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "132",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1650,85 +1819,16 @@
               },
               "parameters": [
                 {
-                  "$id": "126",
-                  "kind": "method",
-                  "name": "id",
-                  "serializedName": "id",
-                  "type": {
-                    "$id": "127",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.id",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "122"
                 },
                 {
-                  "$id": "128",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "129",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "131"
                 },
                 {
-                  "$id": "130",
-                  "kind": "method",
-                  "name": "x-ms-test-header",
-                  "serializedName": "x-ms-test-header",
-                  "type": {
-                    "$id": "131",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.x-ms-test-header",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "126"
                 },
                 {
-                  "$id": "132",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "11"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "129"
                 }
               ],
               "response": {},
@@ -1770,15 +1870,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.id"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.id",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "137",
+                        "kind": "method",
+                        "name": "id",
+                        "serializedName": "id",
+                        "type": {
+                          "$id": "138",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.id",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "137",
+                    "$id": "139",
                     "kind": "header",
                     "name": "x-ms-test-header",
                     "serializedName": "x-ms-test-header",
                     "type": {
-                      "$id": "138",
+                      "$id": "140",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1790,10 +1913,33 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.x-ms-test-header"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.x-ms-test-header",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "141",
+                        "kind": "method",
+                        "name": "x-ms-test-header",
+                        "serializedName": "x-ms-test-header",
+                        "type": {
+                          "$id": "142",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.x-ms-test-header",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "139",
+                    "$id": "143",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -1807,10 +1953,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "144",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "13"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "140",
+                    "$id": "145",
                     "kind": "body",
                     "name": "spreadAsRequestParameterRequest",
                     "serializedName": "spreadAsRequestParameterRequest",
@@ -1826,7 +1992,30 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "146",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "147",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1853,85 +2042,16 @@
               },
               "parameters": [
                 {
-                  "$id": "141",
-                  "kind": "method",
-                  "name": "id",
-                  "serializedName": "id",
-                  "type": {
-                    "$id": "142",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.id",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "137"
                 },
                 {
-                  "$id": "143",
-                  "kind": "method",
-                  "name": "x-ms-test-header",
-                  "serializedName": "x-ms-test-header",
-                  "type": {
-                    "$id": "144",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.x-ms-test-header",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "141"
                 },
                 {
-                  "$id": "145",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "146",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "146"
                 },
                 {
-                  "$id": "147",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "13"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "144"
                 }
               ],
               "response": {},
@@ -1973,15 +2093,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.id"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.id",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "152",
+                        "kind": "method",
+                        "name": "id",
+                        "serializedName": "id",
+                        "type": {
+                          "$id": "153",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.id",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "152",
+                    "$id": "154",
                     "kind": "header",
                     "name": "x-ms-test-header",
                     "serializedName": "x-ms-test-header",
                     "type": {
-                      "$id": "153",
+                      "$id": "155",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1993,10 +2136,33 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.x-ms-test-header"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.x-ms-test-header",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "156",
+                        "kind": "method",
+                        "name": "x-ms-test-header",
+                        "serializedName": "x-ms-test-header",
+                        "type": {
+                          "$id": "157",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.x-ms-test-header",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "154",
+                    "$id": "158",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -2010,10 +2176,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "159",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "155",
+                    "$id": "160",
                     "kind": "body",
                     "name": "spreadWithMultipleParametersRequest",
                     "serializedName": "spreadWithMultipleParametersRequest",
@@ -2029,7 +2215,31 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "161",
+                        "kind": "method",
+                        "name": "requiredString",
+                        "serializedName": "requiredString",
+                        "doc": "required string",
+                        "type": {
+                          "$id": "162",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.requiredString",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2056,77 +2266,22 @@
               },
               "parameters": [
                 {
-                  "$id": "156",
-                  "kind": "method",
-                  "name": "id",
-                  "serializedName": "id",
-                  "type": {
-                    "$id": "157",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.id",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "152"
                 },
                 {
-                  "$id": "158",
-                  "kind": "method",
-                  "name": "x-ms-test-header",
-                  "serializedName": "x-ms-test-header",
-                  "type": {
-                    "$id": "159",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.x-ms-test-header",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "156"
                 },
                 {
-                  "$id": "160",
-                  "kind": "method",
-                  "name": "requiredString",
-                  "serializedName": "requiredString",
-                  "doc": "required string",
-                  "type": {
-                    "$id": "161",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.requiredString",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "161"
                 },
                 {
-                  "$id": "162",
+                  "$id": "163",
                   "kind": "method",
                   "name": "optionalInt",
                   "serializedName": "optionalInt",
                   "doc": "optional int",
                   "type": {
-                    "$id": "163",
+                    "$id": "164",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -2142,7 +2297,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "164",
+                  "$id": "165",
                   "kind": "method",
                   "name": "requiredIntList",
                   "serializedName": "requiredIntList",
@@ -2160,7 +2315,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "165",
+                  "$id": "166",
                   "kind": "method",
                   "name": "optionalStringList",
                   "serializedName": "optionalStringList",
@@ -2178,22 +2333,7 @@
                   "decorators": []
                 },
                 {
-                  "$id": "166",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "15"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "159"
                 }
               ],
               "response": {},
@@ -2237,15 +2377,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.id"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.id",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "171",
+                        "kind": "method",
+                        "name": "id",
+                        "serializedName": "id",
+                        "type": {
+                          "$id": "172",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.id",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "171",
+                    "$id": "173",
                     "kind": "header",
                     "name": "x-ms-test-header",
                     "serializedName": "x-ms-test-header",
                     "type": {
-                      "$id": "172",
+                      "$id": "174",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2257,10 +2420,33 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.x-ms-test-header"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.x-ms-test-header",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "175",
+                        "kind": "method",
+                        "name": "x-ms-test-header",
+                        "serializedName": "x-ms-test-header",
+                        "type": {
+                          "$id": "176",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.x-ms-test-header",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "173",
+                    "$id": "177",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -2274,10 +2460,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "178",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "17"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "174",
+                    "$id": "179",
                     "kind": "body",
                     "name": "spreadParameterWithInnerAliasRequest",
                     "serializedName": "spreadParameterWithInnerAliasRequest",
@@ -2293,7 +2499,31 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.body"
+                    "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "180",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "doc": "name of the Thing",
+                        "type": {
+                          "$id": "181",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2320,56 +2550,19 @@
               },
               "parameters": [
                 {
-                  "$id": "175",
-                  "kind": "method",
-                  "name": "id",
-                  "serializedName": "id",
-                  "type": {
-                    "$id": "176",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.id",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "171"
                 },
                 {
-                  "$id": "177",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "doc": "name of the Thing",
-                  "type": {
-                    "$id": "178",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "180"
                 },
                 {
-                  "$id": "179",
+                  "$id": "182",
                   "kind": "method",
                   "name": "age",
                   "serializedName": "age",
                   "doc": "age of the Thing",
                   "type": {
-                    "$id": "180",
+                    "$id": "183",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -2385,43 +2578,10 @@
                   "decorators": []
                 },
                 {
-                  "$id": "181",
-                  "kind": "method",
-                  "name": "x-ms-test-header",
-                  "serializedName": "x-ms-test-header",
-                  "type": {
-                    "$id": "182",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.x-ms-test-header",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "175"
                 },
                 {
-                  "$id": "183",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "17"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "178"
                 }
               ],
               "response": {},

@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -136,9 +136,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             uri.AppendQuery("stringIndexType", stringIndexType, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
@@ -149,14 +149,14 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetModelEvaluationResultsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetModelEvaluationResultsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
             uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -368,6 +368,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TargetResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="DuplicatePropertyTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DuplicatePropertyTestResource"/> object. </returns>
+        public virtual DuplicatePropertyTestResource GetDuplicatePropertyTestResource(ResourceIdentifier id)
+        {
+            DuplicatePropertyTestResource.ValidateResourceId(id);
+            return new DuplicatePropertyTestResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ServiceGroupSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceGroupSiteResource"/> object. </returns>
@@ -501,6 +510,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             Argument.AssertNotNullOrEmpty(hcrpConfigAssignmentName, nameof(hcrpConfigAssignmentName));
 
             return await GetHcrpConfigurationAssignments(scope).GetAsync(hcrpConfigAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MultiFlattenTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MultiFlattenTestResource"/> object. </returns>
+        public virtual MultiFlattenTestResource GetMultiFlattenTestResource(ResourceIdentifier id)
+        {
+            MultiFlattenTestResource.ValidateResourceId(id);
+            return new MultiFlattenTestResource(Client, id);
         }
 
         /// <summary>

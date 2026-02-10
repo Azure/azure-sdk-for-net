@@ -2033,10 +2033,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "165",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "165",
+                    "$id": "166",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2052,7 +2071,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "167",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "59"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2079,38 +2117,10 @@
               },
               "parameters": [
                 {
-                  "$id": "166",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "5"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "165"
                 },
                 {
-                  "$id": "167",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "59"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "167"
                 }
               ],
               "response": {},
@@ -2147,10 +2157,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "171",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "7"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "171",
+                    "$id": "172",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2166,7 +2195,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "173",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "64"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2193,38 +2241,10 @@
               },
               "parameters": [
                 {
-                  "$id": "172",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "9"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "171"
                 },
                 {
-                  "$id": "173",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "64"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "173"
                 }
               ],
               "response": {},
@@ -2261,10 +2281,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "177",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "177",
+                    "$id": "178",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2280,7 +2319,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "179",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "69"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2307,38 +2365,10 @@
               },
               "parameters": [
                 {
-                  "$id": "178",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "13"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "177"
                 },
                 {
-                  "$id": "179",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "69"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "179"
                 }
               ],
               "response": {},
@@ -2375,10 +2405,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "183",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "183",
+                    "$id": "184",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2394,7 +2443,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "185",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "74"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2421,38 +2489,10 @@
               },
               "parameters": [
                 {
-                  "$id": "184",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "17"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "183"
                 },
                 {
-                  "$id": "185",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "74"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "185"
                 }
               ],
               "response": {},
@@ -2489,10 +2529,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "189",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "189",
+                    "$id": "190",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2508,7 +2567,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "191",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "86"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2535,38 +2613,10 @@
               },
               "parameters": [
                 {
-                  "$id": "190",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "21"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "189"
                 },
                 {
-                  "$id": "191",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "86"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "191"
                 }
               ],
               "response": {},
@@ -2603,10 +2653,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "195",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "23"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "195",
+                    "$id": "196",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2622,7 +2691,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "197",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "90"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2649,38 +2737,10 @@
               },
               "parameters": [
                 {
-                  "$id": "196",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "25"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "195"
                 },
                 {
-                  "$id": "197",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "90"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "197"
                 }
               ],
               "response": {},
@@ -2717,10 +2777,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "201",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "27"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "201",
+                    "$id": "202",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2736,7 +2815,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "203",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "96"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2763,38 +2861,10 @@
               },
               "parameters": [
                 {
-                  "$id": "202",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "29"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "201"
                 },
                 {
-                  "$id": "203",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "96"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "203"
                 }
               ],
               "response": {},
@@ -2831,10 +2901,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "207",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "31"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "207",
+                    "$id": "208",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2850,7 +2939,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "209",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "59"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2877,38 +2985,10 @@
               },
               "parameters": [
                 {
-                  "$id": "208",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "33"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "207"
                 },
                 {
-                  "$id": "209",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "59"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "209"
                 }
               ],
               "response": {},
@@ -2945,10 +3025,29 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.contentType"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "213",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "35"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "213",
+                    "$id": "214",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -2964,7 +3063,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.body"
+                    "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "215",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "101"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2991,38 +3109,10 @@
               },
               "parameters": [
                 {
-                  "$id": "214",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "37"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "213"
                 },
                 {
-                  "$id": "215",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "101"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "215"
                 }
               ],
               "response": {},
@@ -3106,10 +3196,29 @@
                         "scope": "Constant",
                         "readOnly": false,
                         "decorators": [],
-                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.contentType"
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.contentType",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "223",
+                            "kind": "method",
+                            "name": "contentType",
+                            "serializedName": "Content-Type",
+                            "type": {
+                              "$ref": "39"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.contentType",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       },
                       {
-                        "$id": "223",
+                        "$id": "224",
                         "kind": "body",
                         "name": "body",
                         "serializedName": "body",
@@ -3125,7 +3234,26 @@
                         "scope": "Method",
                         "decorators": [],
                         "readOnly": false,
-                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.body"
+                        "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.body",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "225",
+                            "kind": "method",
+                            "name": "body",
+                            "serializedName": "body",
+                            "type": {
+                              "$ref": "104"
+                            },
+                            "location": "Body",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Method",
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.body",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
                       }
                     ],
                     "responses": [
@@ -3152,38 +3280,10 @@
                   },
                   "parameters": [
                     {
-                      "$id": "224",
-                      "kind": "method",
-                      "name": "contentType",
-                      "serializedName": "Content-Type",
-                      "type": {
-                        "$ref": "41"
-                      },
-                      "location": "Header",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Constant",
-                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.contentType",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "223"
                     },
                     {
-                      "$id": "225",
-                      "kind": "method",
-                      "name": "body",
-                      "serializedName": "body",
-                      "type": {
-                        "$ref": "104"
-                      },
-                      "location": "Body",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.body",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
+                      "$ref": "225"
                     }
                   ],
                   "response": {},
@@ -3267,10 +3367,29 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.contentType"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.contentType",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "233",
+                                "kind": "method",
+                                "name": "contentType",
+                                "serializedName": "Content-Type",
+                                "type": {
+                                  "$ref": "43"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.contentType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "233",
+                            "$id": "234",
                             "kind": "body",
                             "name": "body",
                             "serializedName": "body",
@@ -3286,7 +3405,26 @@
                             "scope": "Method",
                             "decorators": [],
                             "readOnly": false,
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.body"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.body",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "235",
+                                "kind": "method",
+                                "name": "body",
+                                "serializedName": "body",
+                                "type": {
+                                  "$ref": "129"
+                                },
+                                "location": "Body",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.body",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -3313,38 +3451,10 @@
                       },
                       "parameters": [
                         {
-                          "$id": "234",
-                          "kind": "method",
-                          "name": "contentType",
-                          "serializedName": "Content-Type",
-                          "type": {
-                            "$ref": "45"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.contentType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "233"
                         },
                         {
-                          "$id": "235",
-                          "kind": "method",
-                          "name": "body",
-                          "serializedName": "body",
-                          "type": {
-                            "$ref": "129"
-                          },
-                          "location": "Body",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.body",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "235"
                         }
                       ],
                       "response": {},
@@ -3381,10 +3491,29 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.contentType"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.contentType",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "239",
+                                "kind": "method",
+                                "name": "contentType",
+                                "serializedName": "Content-Type",
+                                "type": {
+                                  "$ref": "47"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.contentType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "239",
+                            "$id": "240",
                             "kind": "body",
                             "name": "body",
                             "serializedName": "body",
@@ -3400,7 +3529,26 @@
                             "scope": "Method",
                             "decorators": [],
                             "readOnly": false,
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.body"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.body",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "241",
+                                "kind": "method",
+                                "name": "body",
+                                "serializedName": "body",
+                                "type": {
+                                  "$ref": "140"
+                                },
+                                "location": "Body",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.body",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -3427,38 +3575,10 @@
                       },
                       "parameters": [
                         {
-                          "$id": "240",
-                          "kind": "method",
-                          "name": "contentType",
-                          "serializedName": "Content-Type",
-                          "type": {
-                            "$ref": "49"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.contentType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "239"
                         },
                         {
-                          "$id": "241",
-                          "kind": "method",
-                          "name": "body",
-                          "serializedName": "body",
-                          "type": {
-                            "$ref": "140"
-                          },
-                          "location": "Body",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.body",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "241"
                         }
                       ],
                       "response": {},
@@ -3495,10 +3615,29 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.contentType"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.contentType",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "245",
+                                "kind": "method",
+                                "name": "contentType",
+                                "serializedName": "Content-Type",
+                                "type": {
+                                  "$ref": "51"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.contentType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "245",
+                            "$id": "246",
                             "kind": "body",
                             "name": "body",
                             "serializedName": "body",
@@ -3514,7 +3653,26 @@
                             "scope": "Method",
                             "decorators": [],
                             "readOnly": false,
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.body"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.body",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "247",
+                                "kind": "method",
+                                "name": "body",
+                                "serializedName": "body",
+                                "type": {
+                                  "$ref": "142"
+                                },
+                                "location": "Body",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.body",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -3541,38 +3699,10 @@
                       },
                       "parameters": [
                         {
-                          "$id": "246",
-                          "kind": "method",
-                          "name": "contentType",
-                          "serializedName": "Content-Type",
-                          "type": {
-                            "$ref": "53"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.contentType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "245"
                         },
                         {
-                          "$id": "247",
-                          "kind": "method",
-                          "name": "body",
-                          "serializedName": "body",
-                          "type": {
-                            "$ref": "142"
-                          },
-                          "location": "Body",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.body",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "247"
                         }
                       ],
                       "response": {},
@@ -3657,10 +3787,29 @@
                             "scope": "Constant",
                             "readOnly": false,
                             "decorators": [],
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.contentType"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.contentType",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "255",
+                                "kind": "method",
+                                "name": "contentType",
+                                "serializedName": "Content-Type",
+                                "type": {
+                                  "$ref": "55"
+                                },
+                                "location": "Header",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Constant",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.contentType",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           },
                           {
-                            "$id": "255",
+                            "$id": "256",
                             "kind": "body",
                             "name": "body",
                             "serializedName": "body",
@@ -3676,7 +3825,26 @@
                             "scope": "Method",
                             "decorators": [],
                             "readOnly": false,
-                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.body"
+                            "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.body",
+                            "methodParameterSegments": [
+                              {
+                                "$id": "257",
+                                "kind": "method",
+                                "name": "body",
+                                "serializedName": "body",
+                                "type": {
+                                  "$ref": "151"
+                                },
+                                "location": "Body",
+                                "isApiVersion": false,
+                                "optional": false,
+                                "scope": "Method",
+                                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.body",
+                                "readOnly": false,
+                                "access": "public",
+                                "decorators": []
+                              }
+                            ]
                           }
                         ],
                         "responses": [
@@ -3703,38 +3871,10 @@
                       },
                       "parameters": [
                         {
-                          "$id": "256",
-                          "kind": "method",
-                          "name": "contentType",
-                          "serializedName": "Content-Type",
-                          "type": {
-                            "$ref": "57"
-                          },
-                          "location": "Header",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Constant",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.contentType",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "255"
                         },
                         {
-                          "$id": "257",
-                          "kind": "method",
-                          "name": "body",
-                          "serializedName": "body",
-                          "type": {
-                            "$ref": "151"
-                          },
-                          "location": "Body",
-                          "isApiVersion": false,
-                          "optional": false,
-                          "scope": "Method",
-                          "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.body",
-                          "readOnly": false,
-                          "access": "public",
-                          "decorators": []
+                          "$ref": "257"
                         }
                       ],
                       "response": {},
