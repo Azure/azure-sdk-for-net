@@ -6,12 +6,13 @@ using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.AgentServer.AgentFramework.Persistence;
+namespace Azure.AI.AgentServer.Core.Responses.Conversations;
 
 /// <summary>
 /// Client for fetching conversation items from the Foundry Conversations API.
 /// </summary>
-internal sealed class ConversationItemsClient
+#pragma warning disable AZC0003, AZC0004, AZC0005, AZC0007, AZC0015
+public sealed class ConversationItemsClient
 {
     private readonly HttpPipeline _pipeline;
     private readonly Uri _endpoint;
@@ -22,17 +23,24 @@ internal sealed class ConversationItemsClient
     /// </summary>
     /// <param name="endpoint">The Foundry project endpoint.</param>
     /// <param name="credential">The credential used for authentication.</param>
-    /// <param name="options">Optional client options.</param>
     public ConversationItemsClient(
         Uri endpoint,
+        TokenCredential credential)
+        : this(endpoint, credential, new ConversationItemsClientOptions())
+    {
+    }
+
+    internal ConversationItemsClient(
+        Uri endpoint,
         TokenCredential credential,
-        ConversationItemsClientOptions? options = null)
+        ConversationItemsClientOptions options)
     {
         ArgumentNullException.ThrowIfNull(endpoint);
         ArgumentNullException.ThrowIfNull(credential);
+        ArgumentNullException.ThrowIfNull(options);
 
         _endpoint = EnsureTrailingSlash(endpoint);
-        _options = options ?? new ConversationItemsClientOptions();
+        _options = options;
         _pipeline = HttpPipelineBuilder.Build(
             _options,
             Array.Empty<HttpPipelinePolicy>(),
@@ -146,3 +154,4 @@ internal sealed class ConversationItemsClient
             : new Uri(endpointText + "/", UriKind.Absolute);
     }
 }
+#pragma warning restore AZC0003, AZC0004, AZC0005, AZC0007, AZC0015

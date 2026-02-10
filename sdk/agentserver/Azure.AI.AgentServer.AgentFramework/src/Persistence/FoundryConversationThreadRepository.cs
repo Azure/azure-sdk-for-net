@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using Azure.AI.AgentServer.Core.Responses.Conversations;
 using Azure.Core;
 using Microsoft.Agents.AI;
 

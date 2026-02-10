@@ -4,6 +4,7 @@
 using System.Text.Json;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
+using Azure.AI.AgentServer.Core.Responses.Conversations;
 using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework.Persistence;

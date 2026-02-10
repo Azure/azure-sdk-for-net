@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.AgentServer.AgentFramework.Persistence;
+namespace Azure.AI.AgentServer.Core.Responses.Conversations;
 
 /// <summary>
 /// Options for configuring <see cref="ConversationItemsClient"/>.

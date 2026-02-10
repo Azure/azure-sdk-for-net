@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added Foundry conversation history hydration via `FoundryConversationThreadRepository` and conversation items API integration.
+- Added Foundry conversation history hydration via `FoundryConversationThreadRepository` and Core conversation items API integration.
 - Added `RunAIAgentAsync` and `RunWorkflowAgentAsync` overloads accepting `TokenCredential` and optional project endpoint for Foundry-backed thread hydration.
 - Enabled automatic Foundry-backed thread repository creation in existing run extension methods when `AZURE_AI_PROJECT_ENDPOINT` is configured.
 
