@@ -204,8 +204,8 @@ namespace Azure.Identity.Tests
                     { "AZURE_CLIENT_CERTIFICATE_PATH", null } },
                 typeof(UsernamePasswordCredential)};
 
-                // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
-                yield return new object[] {
+            // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
+            yield return new object[] {
                 new Dictionary<string, string> {
                     { "AZURE_CLIENT_ID", "mockclientid" },
                     { "AZURE_CLIENT_SECRET", null },
