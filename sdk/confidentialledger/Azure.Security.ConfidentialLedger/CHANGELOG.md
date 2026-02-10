@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-- Moved `ConfidentialLedgerRedirectPolicy` to a shared project (`Azure.Security.ConfidentialLedger.Shared`) to be reused by both `Azure.Security.ConfidentialLedger` and `Azure.Security.CodeTransparency` SDKs, reducing code duplication and maintenance overhead.
+- Extracted `ConfidentialLedgerRedirectPolicy` to a shared project (`Azure.Security.ConfidentialLedger.Shared`) to be reused by both `Azure.Security.ConfidentialLedger` and `Azure.Security.CodeTransparency` SDKs, reducing code duplication and maintenance overhead.
 
 ## 1.4.1-beta.2 (2025-04-23)
 

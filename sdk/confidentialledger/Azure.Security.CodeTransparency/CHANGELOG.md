@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-- Replaced the duplicated `CodeTransparencyRedirectPolicy` with the shared `ConfidentialLedgerRedirectPolicy` from `Azure.Security.ConfidentialLedger.Shared` to reduce code duplication. This policy automatically follows HTTP 307/308 redirects while preserving the Authorization header.
+- Replaced the duplicated `CodeTransparencyRedirectPolicy` with the shared `ConfidentialLedgerRedirectPolicy` from `Azure.Security.ConfidentialLedger.Shared` to reduce code duplication.
 
 ## 1.0.0-beta.6 (2025-12-17)
 
