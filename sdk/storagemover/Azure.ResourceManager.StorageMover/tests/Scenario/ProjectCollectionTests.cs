@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 {
-    public class ProjectCollectionTests :StorageMoverManagementTestBase
+    public class ProjectCollectionTests : StorageMoverManagementTestBase
     {
         public ProjectCollectionTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
-            {
-            }
+        {
+        }
 
         private ResourceGroupResource _resourceGroup;
 
