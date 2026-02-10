@@ -41,8 +41,7 @@ namespace Azure.Core
             _pairs.TryGetValue(keyword, out value);
 
         public string? GetSegmentValueOrDefault(string keyword, string defaultValue) =>
-            _pairs.TryGetValue(keyword, out var value) switch
-            {
+            _pairs.TryGetValue(keyword, out var value) switch {
                 false => defaultValue,
                 true => value
             };

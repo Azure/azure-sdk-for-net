@@ -159,8 +159,7 @@ namespace Azure.Messaging
                             element,
                             nameof(element));
                     }
-                }
-                ;
+                };
             }
             return cloudEvent;
         }

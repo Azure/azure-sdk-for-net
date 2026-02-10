@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Net;
+using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
@@ -135,8 +135,7 @@ namespace Azure.Core.Pipeline
                 {
                     auth = Uri.UnescapeDataString(auth);
                 }
-                catch { }
-                ;
+                catch { };
 
                 value = value.Substring(separatorIndex + 1);
                 separatorIndex = auth.IndexOfOrdinal(':');
@@ -194,8 +193,7 @@ namespace Azure.Core.Pipeline
 
                 return ub.Uri;
             }
-            catch { }
-            ;
+            catch { };
             return null;
         }
 
