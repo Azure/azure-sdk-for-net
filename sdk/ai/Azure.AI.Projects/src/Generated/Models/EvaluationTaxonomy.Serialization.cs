@@ -18,6 +18,31 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EvaluationTaxonomy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationTaxonomy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEvaluationTaxonomy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EvaluationTaxonomy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluationTaxonomy"/> from. </param>
+        public static explicit operator EvaluationTaxonomy(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEvaluationTaxonomy(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EvaluationTaxonomy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -271,23 +296,6 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         EvaluationTaxonomy IPersistableModel<EvaluationTaxonomy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EvaluationTaxonomy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluationTaxonomy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEvaluationTaxonomy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EvaluationTaxonomy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EvaluationTaxonomy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -299,14 +307,6 @@ namespace Azure.AI.Projects
                 return null;
             }
             return BinaryContent.Create(evaluationTaxonomy, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluationTaxonomy"/> from. </param>
-        public static explicit operator EvaluationTaxonomy(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEvaluationTaxonomy(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

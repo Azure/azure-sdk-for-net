@@ -12,6 +12,23 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The workflow agent definition. </summary>
     public partial class WorkflowAgentDefinition : AgentDefinition, IJsonModel<WorkflowAgentDefinition>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkflowAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkflowAgentDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkflowAgentDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkflowAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,23 +132,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WorkflowAgentDefinition IPersistableModel<WorkflowAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkflowAgentDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkflowAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWorkflowAgentDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkflowAgentDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

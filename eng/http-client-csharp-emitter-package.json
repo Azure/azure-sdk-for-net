@@ -2,7 +2,7 @@
   "main": "dist/src/index.js",
   "dependencies": {
     "client-plugin": "file:../../../../eng/packages/plugins/client",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260130.7"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260205.4"
   },
   "devDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.64.4",
@@ -16,6 +16,6 @@
     "@azure-tools/typespec-azure-rulesets": "0.64.0",
     "@azure-tools/typespec-azure-resource-manager": "0.64.0",
     "@azure-tools/typespec-autorest": "0.64.0",
-    "@azure-tools/openai-typespec": "https://pkg.pr.new/microsoft/openai-openapi-pr/@azure-tools/openai-typespec@bf9d7eb.tgz"
+    "@azure-tools/openai-typespec": "1.8.0"
   }
 }

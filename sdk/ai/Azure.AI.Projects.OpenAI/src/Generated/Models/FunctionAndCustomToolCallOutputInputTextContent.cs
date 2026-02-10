@@ -30,6 +30,6 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The text input to the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

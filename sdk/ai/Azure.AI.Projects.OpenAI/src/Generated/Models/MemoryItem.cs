@@ -49,16 +49,16 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The unique ID of the memory item. </summary>
-        public string MemoryId { get; }
+        public string MemoryId { get; set; }
 
         /// <summary> The last update time of the memory item. </summary>
-        public DateTimeOffset UpdatedAt { get; }
+        public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary> The namespace that logically groups and isolates memories, such as a user ID. </summary>
-        public string Scope { get; }
+        public string Scope { get; set; }
 
         /// <summary> The content of the memory. </summary>
-        public string Content { get; }
+        public string Content { get; set; }
 
         /// <summary> The kind of the memory item. </summary>
         internal MemoryItemKind Kind { get; set; }

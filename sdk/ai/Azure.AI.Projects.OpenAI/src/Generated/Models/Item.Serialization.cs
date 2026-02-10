@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// Content item used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemorySearchToolCallItemParam"/>, <see cref="InputMessage"/>, <see cref="ComputerCallOutputItemParam"/>, <see cref="FunctionCallOutputItemParam"/>, <see cref="CompactionSummaryItemParam"/>, <see cref="FunctionShellCallItemParam"/>, <see cref="FunctionShellCallOutputItemParam"/>, <see cref="ApplyPatchToolCallOutputItemParam"/>, <see cref="MCPApprovalResponse"/>, <see cref="ItemReferenceParam"/>, <see cref="ItemOutputMessage"/>, <see cref="ItemFileSearchToolCall"/>, <see cref="ItemWebSearchToolCall"/>, <see cref="ItemFunctionToolCall"/>, <see cref="ItemReasoningItem"/>, <see cref="ItemImageGenToolCall"/>, <see cref="ItemCodeInterpreterToolCall"/>, <see cref="ItemMcpApprovalRequest"/>, <see cref="ItemMcpToolCall"/>, <see cref="ItemCustomToolCallOutput"/>, and <see cref="ItemCustomToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemorySearchToolCallItemParam"/>, <see cref="ComputerCallOutputItemParam"/>, <see cref="FunctionCallOutputItemParam"/>, <see cref="CompactionSummaryItemParam"/>, <see cref="FunctionShellCallItemParam"/>, <see cref="FunctionShellCallOutputItemParam"/>, <see cref="ApplyPatchToolCallOutputItemParam"/>, <see cref="MCPApprovalResponse"/>, <see cref="ItemReferenceParam"/>, <see cref="ItemOutputMessage"/>, <see cref="ItemFileSearchToolCall"/>, <see cref="ItemWebSearchToolCall"/>, <see cref="ItemFunctionToolCall"/>, <see cref="ItemReasoningItem"/>, <see cref="ItemImageGenToolCall"/>, <see cref="ItemCodeInterpreterToolCall"/>, <see cref="ItemMcpApprovalRequest"/>, <see cref="ItemMcpToolCall"/>, <see cref="ItemCustomToolCallOutput"/>, and <see cref="ItemCustomToolCall"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItem))]
     internal abstract partial class Item : IJsonModel<Item>
@@ -18,6 +18,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="Item"/> for deserialization. </summary>
         internal Item()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Item>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Item)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -88,8 +105,6 @@ namespace Azure.AI.Projects.OpenAI
                 {
                     case "memory_search_call":
                         return MemorySearchToolCallItemParam.DeserializeMemorySearchToolCallItemParam(element, options);
-                    case "message":
-                        return InputMessage.DeserializeInputMessage(element, options);
                     case "computer_call_output":
                         return ComputerCallOutputItemParam.DeserializeComputerCallOutputItemParam(element, options);
                     case "function_call_output":
@@ -108,6 +123,8 @@ namespace Azure.AI.Projects.OpenAI
                         return MCPApprovalResponse.DeserializeMCPApprovalResponse(element, options);
                     case "item_reference":
                         return ItemReferenceParam.DeserializeItemReferenceParam(element, options);
+                    case "message":
+                        return InternalItemMessage.DeserializeInternalItemMessage(element, options);
                     case "output_message":
                         return ItemOutputMessage.DeserializeItemOutputMessage(element, options);
                     case "file_search_call":
@@ -162,23 +179,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         Item IPersistableModel<Item>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Item>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(Item)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<Item>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

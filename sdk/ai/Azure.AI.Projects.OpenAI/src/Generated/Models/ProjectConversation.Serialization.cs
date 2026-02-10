@@ -3,19 +3,35 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The ProjectConversation. </summary>
+    /// <summary> The conversation object. </summary>
     public partial class ProjectConversation : IJsonModel<ProjectConversation>
     {
         /// <summary> Initializes a new instance of <see cref="ProjectConversation"/> for deserialization. </summary>
         internal ProjectConversation()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProjectConversation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeProjectConversation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProjectConversation)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -164,32 +180,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         ProjectConversation IPersistableModel<ProjectConversation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectConversation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProjectConversation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProjectConversation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProjectConversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectConversation"/> from. </param>
-        public static explicit operator ProjectConversation(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

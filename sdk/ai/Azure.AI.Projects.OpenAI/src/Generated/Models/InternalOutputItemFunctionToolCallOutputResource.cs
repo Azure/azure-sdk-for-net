@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemFunctionToolCallOutputResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, BinaryData output, OutputItemFunctionToolCallOutputResourceStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFunctionToolCallOutputResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, BinaryData output, FunctionToolCallOutputResourceStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;
@@ -93,6 +93,6 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OutputItemFunctionToolCallOutputResourceStatus? Status { get; }
+        public FunctionToolCallOutputResourceStatus? Status { get; }
     }
 }

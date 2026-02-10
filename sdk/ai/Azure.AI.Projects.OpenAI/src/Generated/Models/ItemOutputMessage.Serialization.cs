@@ -17,6 +17,23 @@ namespace Azure.AI.Projects.OpenAI
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemOutputMessage>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeItemOutputMessage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ItemOutputMessage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ItemOutputMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -42,7 +59,7 @@ namespace Azure.AI.Projects.OpenAI
             writer.WriteStringValue(Role);
             writer.WritePropertyName("content"u8);
             writer.WriteStartArray();
-            foreach (OutputMessageContent item in Content)
+            foreach (InternalOutputMessageContent item in Content)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -80,7 +97,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string role = default;
-            IList<OutputMessageContent> content = default;
+            IList<InternalOutputMessageContent> content = default;
             OutputItemOutputMessageStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -101,10 +118,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    List<OutputMessageContent> array = new List<OutputMessageContent>();
+                    List<InternalOutputMessageContent> array = new List<InternalOutputMessageContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputMessageContent.DeserializeOutputMessageContent(item, options));
+                        array.Add(InternalOutputMessageContent.DeserializeInternalOutputMessageContent(item, options));
                     }
                     content = array;
                     continue;
@@ -147,23 +164,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ItemOutputMessage IPersistableModel<ItemOutputMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => (ItemOutputMessage)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ItemOutputMessage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeItemOutputMessage(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ItemOutputMessage)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ItemOutputMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

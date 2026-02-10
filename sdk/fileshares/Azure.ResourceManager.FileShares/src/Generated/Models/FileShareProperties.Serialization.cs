@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (FileSharePrivateEndpointConnection item in PrivateEndpointConnections)
+                foreach (FileSharePrivateEndpointConnectionData item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FileShares.Models
             PublicAccessProperties publicAccessProperties = default;
             FileShareProvisioningState? provisioningState = default;
             FileSharePublicNetworkAccess? publicNetworkAccess = default;
-            IReadOnlyList<FileSharePrivateEndpointConnection> privateEndpointConnections = default;
+            IReadOnlyList<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -343,10 +343,10 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    List<FileSharePrivateEndpointConnection> array = new List<FileSharePrivateEndpointConnection>();
+                    List<FileSharePrivateEndpointConnectionData> array = new List<FileSharePrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FileSharePrivateEndpointConnection.DeserializeFileSharePrivateEndpointConnection(item, options));
+                        array.Add(FileSharePrivateEndpointConnectionData.DeserializeFileSharePrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 publicAccessProperties,
                 provisioningState,
                 publicNetworkAccess,
-                privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnection>(),
+                privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnectionData>(),
                 additionalBinaryDataProperties);
         }
 

@@ -58,54 +58,112 @@ namespace Azure.AI.Projects.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input text. </summary>
-        /// <param name="text"> The text input to the model. </param>
-        /// <returns> A new <see cref="OpenAI.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default)
+        /// <summary>
+        /// The AgentResponseItem.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <returns> A new <see cref="OpenAI.AgentResponseItem"/> instance for mocking. </returns>
+        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentReference agentReference = default, string responseId = default)
         {
-            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
+            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), id, agentReference, responseId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input image. </summary>
-        /// <param name="imageUrl"></param>
-        /// <param name="fileId"></param>
-        /// <param name="detail"></param>
-        /// <returns> A new <see cref="OpenAI.InputImageContentParamAutoParam"/> instance for mocking. </returns>
-        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(Uri imageUrl = default, string fileId = default, DetailEnum? detail = default)
+        /// <summary> The AgentReference. </summary>
+        /// <param name="name"> The name of the agent. </param>
+        /// <param name="version"> The version identifier of the agent. </param>
+        /// <returns> A new <see cref="OpenAI.AgentReference"/> instance for mocking. </returns>
+        public static AgentReference AgentReference(string name = default, string version = default)
         {
-            return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
+            return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"></param>
-        /// <param name="fileData"></param>
-        /// <param name="fileUrl"></param>
-        /// <returns> A new <see cref="OpenAI.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="output"> The structured output captured during the response. </param>
+        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
         {
-            return new InputFileContentParam(
-                "input_file",
-                fileId,
-                filename,
-                fileData,
-                fileUrl,
-                additionalBinaryDataProperties: null);
+            return new AgentStructuredOutputsResponseItem(
+                AgentResponseItemKind.StructuredOutputs,
+                id,
+                agentReference,
+                responseId,
+                additionalBinaryDataProperties: null,
+                output);
         }
 
-        /// <summary> The ProjectConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// <summary> The AgentWorkflowActionResponseItem. </summary>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
+        /// <param name="actionId"> Unique identifier for the action. </param>
+        /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
+        /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
+        /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
+        /// <returns> A new <see cref="OpenAI.AgentWorkflowActionResponseItem"/> instance for mocking. </returns>
+        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
+        {
+            return new AgentWorkflowActionResponseItem(
+                AgentResponseItemKind.WorkflowAction,
+                id,
+                agentReference,
+                responseId,
+                additionalBinaryDataProperties: null,
+                kind,
+                actionId,
+                parentActionId,
+                previousActionId,
+                status);
+        }
+
+        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string consentLink = default, string serverLabel = default)
+        {
+            return new OAuthConsentRequestResponseItem(
+                AgentResponseItemKind.OauthConsentRequest,
+                id,
+                agentReference,
+                responseId,
+                additionalBinaryDataProperties: null,
+                consentLink,
+                serverLabel);
+        }
+
+        /// <summary> The MemorySearchToolCallResponseItem. </summary>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="status">
+        /// The status of the memory search tool call. One of `in_progress`,
+        /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
+        /// <param name="results"> The results returned from the memory search. </param>
+        /// <returns> A new <see cref="OpenAI.MemorySearchToolCallResponseItem"/> instance for mocking. </returns>
+        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemorySearchItem> results = default)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            results ??= new ChangeTrackingList<MemorySearchItem>();
 
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
+            return new MemorySearchToolCallResponseItem(
+                AgentResponseItemKind.MemorySearchCall,
+                id,
+                agentReference,
+                responseId,
+                additionalBinaryDataProperties: null,
+                status,
+                results.ToList());
         }
 
         /// <summary>
@@ -338,17 +396,17 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Security details for OpenApi managed_identity authentication. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
         /// <returns> A new <see cref="OpenAI.OpenAPIManagedAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIManagedAuthenticationDetails OpenAPIManagedAuthenticationDetails(OpenApiManagedSecurityScheme securityScheme = default)
+        public static OpenAPIManagedAuthenticationDetails OpenAPIManagedAuthenticationDetails(OpenAPIManagedSecurityScheme securityScheme = default)
         {
             return new OpenAPIManagedAuthenticationDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
-        public static OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = default)
+        /// <returns> A new <see cref="OpenAI.OpenAPIManagedSecurityScheme"/> instance for mocking. </returns>
+        public static OpenAPIManagedSecurityScheme OpenAPIManagedSecurityScheme(string audience = default)
         {
-            return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
+            return new OpenAPIManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The OpenAPIFunctionEntry. </summary>
@@ -550,144 +608,6 @@ namespace Azure.AI.Projects.OpenAI
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// How the model should select which tool (or tools) to use when generating
-        /// a response. See the `tools` parameter to see how to specify which tools
-        /// the model can call.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ToolChoiceAllowed"/>, <see cref="OpenAI.ToolChoiceFunction"/>, <see cref="OpenAI.ToolChoiceMCP"/>, <see cref="OpenAI.ToolChoiceCustom"/>, <see cref="OpenAI.SpecificApplyPatchParam"/>, <see cref="OpenAI.SpecificFunctionShellParam"/>, <see cref="OpenAI.ToolChoiceFileSearch"/>, <see cref="OpenAI.ToolChoiceWebSearchPreview"/>, <see cref="OpenAI.ToolChoiceComputerUsePreview"/>, <see cref="OpenAI.ToolChoiceWebSearchPreview20250311"/>, <see cref="OpenAI.ToolChoiceImageGeneration"/>, and <see cref="OpenAI.ToolChoiceCodeInterpreter"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceParam"/> instance for mocking. </returns>
-        public static ToolChoiceParam ToolChoiceParam(string @type = default)
-        {
-            return new UnknownToolChoiceParam(new ToolChoiceParamType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Allowed tools. </summary>
-        /// <param name="mode">
-        /// Constrains the tools available to the model to a pre-defined set.
-        ///   `auto` allows the model to pick from among the allowed tools and generate a
-        ///   message.
-        ///   `required` requires the model to call one or more of the allowed tools.
-        /// </param>
-        /// <param name="tools">
-        /// A list of tool definitions that the model should be allowed to call.
-        ///   For the Responses API, the list of tool definitions might look like:
-        ///   ```json
-        ///   [
-        ///     { "type": "function", "name": "get_weather" },
-        ///     { "type": "mcp", "server_label": "deepwiki" },
-        ///     { "type": "image_generation" }
-        ///   ]
-        ///   ```
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceAllowed"/> instance for mocking. </returns>
-        public static ToolChoiceAllowed ToolChoiceAllowed(ToolChoiceAllowedMode mode = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
-        {
-            tools ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-
-            return new ToolChoiceAllowed(ToolChoiceParamType.AllowedTools, additionalBinaryDataProperties: null, mode, tools.ToList());
-        }
-
-        /// <summary> Function tool. </summary>
-        /// <param name="name"> The name of the function to call. </param>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceFunction"/> instance for mocking. </returns>
-        public static ToolChoiceFunction ToolChoiceFunction(string name = default)
-        {
-            return new ToolChoiceFunction(ToolChoiceParamType.Function, additionalBinaryDataProperties: null, name);
-        }
-
-        /// <summary> MCP tool. </summary>
-        /// <param name="serverLabel"> The label of the MCP server to use. </param>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceMCP"/> instance for mocking. </returns>
-        public static ToolChoiceMCP ToolChoiceMCP(string serverLabel = default, string name = default)
-        {
-            return new ToolChoiceMCP(ToolChoiceParamType.Mcp, additionalBinaryDataProperties: null, serverLabel, name);
-        }
-
-        /// <summary> Custom tool. </summary>
-        /// <param name="name"> The name of the custom tool to call. </param>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceCustom"/> instance for mocking. </returns>
-        public static ToolChoiceCustom ToolChoiceCustom(string name = default)
-        {
-            return new ToolChoiceCustom(ToolChoiceParamType.Custom, additionalBinaryDataProperties: null, name);
-        }
-
-        /// <summary> Specific apply patch tool choice. </summary>
-        /// <returns> A new <see cref="OpenAI.SpecificApplyPatchParam"/> instance for mocking. </returns>
-        public static SpecificApplyPatchParam SpecificApplyPatchParam()
-        {
-            return new SpecificApplyPatchParam(ToolChoiceParamType.ApplyPatch, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specific shell tool choice. </summary>
-        /// <returns> A new <see cref="OpenAI.SpecificFunctionShellParam"/> instance for mocking. </returns>
-        public static SpecificFunctionShellParam SpecificFunctionShellParam()
-        {
-            return new SpecificFunctionShellParam(ToolChoiceParamType.Shell, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceFileSearch"/> instance for mocking. </returns>
-        public static ToolChoiceFileSearch ToolChoiceFileSearch()
-        {
-            return new ToolChoiceFileSearch(ToolChoiceParamType.FileSearch, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceWebSearchPreview"/> instance for mocking. </returns>
-        public static ToolChoiceWebSearchPreview ToolChoiceWebSearchPreview()
-        {
-            return new ToolChoiceWebSearchPreview(ToolChoiceParamType.WebSearchPreview, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceComputerUsePreview"/> instance for mocking. </returns>
-        public static ToolChoiceComputerUsePreview ToolChoiceComputerUsePreview()
-        {
-            return new ToolChoiceComputerUsePreview(ToolChoiceParamType.ComputerUsePreview, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceWebSearchPreview20250311"/> instance for mocking. </returns>
-        public static ToolChoiceWebSearchPreview20250311 ToolChoiceWebSearchPreview20250311()
-        {
-            return new ToolChoiceWebSearchPreview20250311(ToolChoiceParamType.WebSearchPreview20250311, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceImageGeneration"/> instance for mocking. </returns>
-        public static ToolChoiceImageGeneration ToolChoiceImageGeneration()
-        {
-            return new ToolChoiceImageGeneration(ToolChoiceParamType.ImageGeneration, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="OpenAI.ToolChoiceCodeInterpreter"/> instance for mocking. </returns>
-        public static ToolChoiceCodeInterpreter ToolChoiceCodeInterpreter()
-        {
-            return new ToolChoiceCodeInterpreter(ToolChoiceParamType.CodeInterpreter, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
@@ -817,112 +737,19 @@ namespace Azure.AI.Projects.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AgentReference. </summary>
-        /// <param name="name"> The name of the agent. </param>
-        /// <param name="version"> The version identifier of the agent. </param>
-        /// <returns> A new <see cref="OpenAI.AgentReference"/> instance for mocking. </returns>
-        public static AgentReference AgentReference(string name = default, string version = default)
-        {
-            return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="output"> The structured output captured during the response. </param>
-        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
-        {
-            return new AgentStructuredOutputsResponseItem(
-                AgentResponseItemKind.StructuredOutputs,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                output);
-        }
-
-        /// <summary>
-        /// The AgentResponseItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <returns> A new <see cref="OpenAI.AgentResponseItem"/> instance for mocking. </returns>
-        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentReference agentReference = default, string responseId = default)
-        {
-            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), id, agentReference, responseId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
-        /// <param name="actionId"> Unique identifier for the action. </param>
-        /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
-        /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
-        /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
-        {
-            return new AgentWorkflowPreviewActionResponseItem(
-                AgentResponseItemKind.WorkflowPreviewAction,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                kind,
-                actionId,
-                parentActionId,
-                previousActionId,
-                status);
-        }
-
-        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
-        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string consentLink = default, string serverLabel = default)
-        {
-            return new OAuthConsentRequestResponseItem(
-                AgentResponseItemKind.OauthConsentRequest,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                consentLink,
-                serverLabel);
-        }
-
-        /// <summary> The MemorySearchToolCallResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="status">
-        /// The status of the memory search tool call. One of `in_progress`,
-        /// `searching`, `completed`, `incomplete` or `failed`,
+        /// <summary> The conversation object. </summary>
+        /// <param name="id"> The unique ID of the conversation. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
-        /// <param name="results"> The results returned from the memory search. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchToolCallResponseItem"/> instance for mocking. </returns>
-        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemorySearchItem> results = default)
+        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
+        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
+        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
         {
-            results ??= new ChangeTrackingList<MemorySearchItem>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MemorySearchToolCallResponseItem(
-                AgentResponseItemKind.MemorySearchCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                status,
-                results.ToList());
+            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
     }
 }

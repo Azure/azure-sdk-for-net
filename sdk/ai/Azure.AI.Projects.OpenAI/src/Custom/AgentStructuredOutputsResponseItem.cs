@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("StructuredOutputsItemResource")]
+[CodeGenType("StructuredOutputsOutputItem")]
 public partial class AgentStructuredOutputsResponseItem
 {
     public AgentStructuredOutputsResponseItem(BinaryData output)

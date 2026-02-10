@@ -1,5 +1,6 @@
 import "@typespec/rest";
 import "@typespec/http";
+import "@typespec/xml";
 import "@azure-tools/typespec-client-generator-core";
 import "@azure-tools/typespec-azure-core";
 
@@ -20,6 +21,7 @@ namespace BasicTypeSpec;
 
 using TypeSpec.Http;
 using TypeSpec.Versioning;
+using TypeSpec.Xml;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
 
@@ -255,6 +257,184 @@ union DaysOfWeekExtensibleEnum {
   Saturday: "Saturday",
   Sunday: "Sunday",
 }
+
+@nsDeclarations
+enum XmlNamespaces {
+  ns1: "https://example.com/ns1",
+  ns2: "https://example.com/ns2",
+}
+
+@doc("An advanced XML model for testing various property types and XML features.")
+@Xml.name("AdvancedXmlModel")
+model XmlAdvancedModel {
+  @doc("A simple string property")
+  name: string;
+
+  @doc("An integer property")
+  age: int32;
+
+  @doc("A boolean property")
+  enabled: boolean;
+
+  @doc("A float property")
+  score: float32;
+
+  @doc("An optional string")
+  optionalString?: string;
+
+  @doc("An optional integer")
+  optionalInt?: int32;
+
+  @doc("A nullable string")
+  nullableString: string | null;
+
+  @doc("A string as XML attribute")
+  @attribute
+  id: string;
+
+  @doc("An integer as XML attribute")
+  @attribute
+  version: int32;
+
+  @doc("A boolean as XML attribute")
+  @attribute
+  isActive: boolean;
+
+  @doc("A property with a custom XML element name")
+  @Xml.name("RenamedProperty")
+  originalName: string;
+
+  @doc("An attribute with a custom XML name")
+  @attribute
+  @Xml.name("xml-id")
+  xmlIdentifier: string;
+
+  @doc("Text content in the element (unwrapped string)")
+  @unwrapped
+  content: string;
+
+  @doc("An unwrapped array of strings - items appear directly without wrapper")
+  @unwrapped
+  unwrappedStrings: string[];
+
+  @doc("An unwrapped array of integers")
+  @unwrapped
+  unwrappedCounts: int32[];
+
+  @doc("An unwrapped array of models")
+  @unwrapped
+  unwrappedItems: XmlItem[];
+
+  @doc("A wrapped array of strings (default)")
+  wrappedColors: string[];
+
+  @doc("A wrapped array with custom wrapper name")
+  @Xml.name("ItemCollection")
+  items: XmlItem[];
+
+  @doc("A nested model property")
+  nestedModel: XmlNestedModel;
+
+  @doc("An optional nested model")
+  optionalNestedModel?: XmlNestedModel;
+
+  @doc("A dictionary property")
+  metadata: Record<string>;
+
+  @doc("A date-time property")
+  createdAt: utcDateTime;
+
+  @doc("A duration property")
+  duration: duration;
+
+  @doc("A bytes property")
+  data: bytes;
+
+  @doc("optional record of unknown")
+  optionalRecordUnknown?: Record<unknown>;
+
+  @doc("A fixed enum property")
+  fixedEnum: StringFixedEnum;
+
+  @doc("An extensible enum property")
+  extensibleEnum: StringExtensibleEnum;
+
+  @doc("An optional fixed enum property")
+  optionalFixedEnum?: IntFixedEnum;
+
+  @doc("An optional extensible enum property")
+  optionalExtensibleEnum?: IntExtensibleEnum;
+
+  @attribute
+  @ns(XmlNamespaces.ns1)
+  label: string;
+
+  @ns(XmlNamespaces.ns2)
+  daysUsed: int32;
+
+  @ns("http://www.contoso.com/anotherbook.dtd", "foo")
+  fooItems: string[];
+
+  @ns("http://www.contoso.com/anothermodel.dtd", "bar")
+  anotherModel: XmlNestedModel;
+
+  modelsWithNamespaces: XmlModelWithNamespace[];
+
+  @unwrapped
+  unwrappedModelsWithNamespaces: XmlModelWithNamespace[];
+}
+
+@doc("A nested model for XML testing")
+model XmlNestedModel {
+  @doc("The value of the nested model")
+  value: string;
+
+  @doc("An attribute on the nested model")
+  @attribute
+  nestedId: int32;
+}
+
+@doc("An item model for XML array testing")
+@Xml.name("Item")
+model XmlItem {
+  @doc("The item name")
+  itemName: string;
+
+  @doc("The item value")
+  itemValue: int32;
+
+  @doc("Item ID as attribute")
+  @attribute
+  itemId: string;
+}
+
+@ns("http://www.example.com/namespace", "ns1")
+model XmlModelWithNamespace {
+  foo: string;
+}
+
+@doc("Base plant with discriminator")
+@discriminator("species")
+model Plant {
+  @doc("The species of plant")
+  species: string;
+
+  @doc("The unique identifier of the plant")
+  id: string;
+
+  @doc("The height of the plant in centimeters")
+  height: int32;
+}
+
+@doc("Tree is a specific type of plant")
+@usage(Usage.xml | Usage.output | Usage.json)
+model Tree extends Plant {
+  species: "tree";
+
+  @doc("The age of the tree in years")
+  age: int32;
+}
+
 
 @route("/hello")
 @doc("Return hi")
@@ -513,3 +693,22 @@ op CreateDataFactoryModel(@body body: DataFactoryElementModel): DataFactoryEleme
 @convenientAPI(true)
 @get
 op GetDataFactoryModel(@path id: string): DataFactoryElementModel;
+
+@route("xmlAdvanced")
+@doc("Get an advanced XML model with various property types")
+@get
+op GetXmlAdvancedModel(): {
+  @header contentType: "application/xml";
+  @body body: XmlAdvancedModel;
+};
+
+@route("/plants")
+interface PlantOperations {
+  @doc("Get a tree as a plant")
+  @get
+  @route("/tree/as-plant")
+  getTree(): {
+    @header contentType: "application/xml";
+    @body body: Tree;
+  };
+}

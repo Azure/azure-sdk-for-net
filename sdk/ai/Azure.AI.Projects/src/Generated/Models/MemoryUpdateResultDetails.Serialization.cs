@@ -18,6 +18,31 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MemoryUpdateResultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMemoryUpdateResultDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MemoryUpdateResultDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryUpdateResultDetails"/> from. </param>
+        public static explicit operator MemoryUpdateResultDetails(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMemoryUpdateResultDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MemoryUpdateResultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -135,32 +160,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         MemoryUpdateResultDetails IPersistableModel<MemoryUpdateResultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MemoryUpdateResultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryUpdateResultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMemoryUpdateResultDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MemoryUpdateResultDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MemoryUpdateResultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryUpdateResultDetails"/> from. </param>
-        public static explicit operator MemoryUpdateResultDetails(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMemoryUpdateResultDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

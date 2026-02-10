@@ -17,6 +17,23 @@ namespace Azure.AI.Projects.OpenAI
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeItemReasoningItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ItemReasoningItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ItemReasoningItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -188,23 +205,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ItemReasoningItem IPersistableModel<ItemReasoningItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (ItemReasoningItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ItemReasoningItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeItemReasoningItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ItemReasoningItem)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ItemReasoningItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

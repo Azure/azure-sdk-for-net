@@ -1,6 +1,8 @@
-# Sample for use of `BrowserAutomationAgentTool` and Agents in Azure.AI.Projects.OpenAI.
+# Sample for use of `BrowserAutomationPreviewTool` and Agents in Azure.AI.Projects.OpenAI.
 
-Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
+Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationPreviewTool.
+
+**Note:** This feature is in the preview.
 
 ## Create Azure Playwright workspace
 
@@ -31,7 +33,7 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an Agent with  `BrowserAutomationAgentTool`. Use the serverless connection name to get the connection from the project and use the connection ID to create the tool.
+2. Create an Agent with  `BrowserAutomationPreviewTool`. Use the serverless connection name to get the connection from the project and use the connection ID to create the tool.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync

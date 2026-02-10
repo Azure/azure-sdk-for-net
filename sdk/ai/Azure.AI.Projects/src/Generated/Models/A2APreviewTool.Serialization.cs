@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> An agent implementing the A2A protocol. </summary>
     internal partial class A2APreviewTool : InternalTool, IJsonModel<A2APreviewTool>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2APreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeA2APreviewTool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2APreviewTool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2APreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,23 +148,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         A2APreviewTool IPersistableModel<A2APreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (A2APreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<A2APreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeA2APreviewTool(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(A2APreviewTool)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<A2APreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -113,11 +113,11 @@ namespace Azure.AI.Projects.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ConversationResource> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = UpdateConversation(conversationId, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            return ClientResult.FromValue((ConversationResource)result, result.GetRawResponse());
         }
 
         /// <summary> Update a conversation. </summary>
@@ -128,11 +128,11 @@ namespace Azure.AI.Projects.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ConversationResource>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            return ClientResult.FromValue((ConversationResource)result, result.GetRawResponse());
         }
     }
 }

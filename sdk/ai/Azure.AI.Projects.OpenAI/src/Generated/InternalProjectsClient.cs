@@ -6,6 +6,8 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
+using Azure.AI.Projects.OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -23,6 +25,7 @@ namespace Azure.AI.Projects
                 { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
+        private Responses _cachedResponses;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -51,5 +54,11 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> Initializes a new instance of Responses. </summary>
+        public virtual Responses GetResponsesClient()
+        {
+            return Volatile.Read(ref _cachedResponses) ?? Interlocked.CompareExchange(ref _cachedResponses, new Responses(Pipeline, _endpoint), null) ?? _cachedResponses;
+        }
     }
 }

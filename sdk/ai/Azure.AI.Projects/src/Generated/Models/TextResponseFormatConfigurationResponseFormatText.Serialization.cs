@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> Text. </summary>
     internal partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatConfigurationResponseFormatText>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TextResponseFormatConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextResponseFormatConfigurationResponseFormatText>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTextResponseFormatConfigurationResponseFormatText(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextResponseFormatConfigurationResponseFormatText)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextResponseFormatConfigurationResponseFormatText>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,23 +111,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TextResponseFormatConfigurationResponseFormatText IPersistableModel<TextResponseFormatConfigurationResponseFormatText>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextResponseFormatConfigurationResponseFormatText)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TextResponseFormatConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextResponseFormatConfigurationResponseFormatText>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTextResponseFormatConfigurationResponseFormatText(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TextResponseFormatConfigurationResponseFormatText)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TextResponseFormatConfigurationResponseFormatText>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

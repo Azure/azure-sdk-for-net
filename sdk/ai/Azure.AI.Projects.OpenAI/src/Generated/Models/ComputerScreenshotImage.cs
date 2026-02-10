@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.OpenAI
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
         /// </summary>
-        internal string Type { get; } = "computer_screenshot";
+        public string Type { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
         public Uri ImageUrl { get; set; }

@@ -16,6 +16,23 @@ namespace Azure.AI.Projects.OpenAI
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemFunctionToolCallOutputResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalOutputItemFunctionToolCallOutputResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalOutputItemFunctionToolCallOutputResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalOutputItemFunctionToolCallOutputResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -85,7 +102,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             BinaryData output = default;
-            OutputItemFunctionToolCallOutputResourceStatus? status = default;
+            FunctionToolCallOutputResourceStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -128,7 +145,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemFunctionToolCallOutputResourceStatus();
+                    status = prop.Value.GetString().ToFunctionToolCallOutputResourceStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,23 +183,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalOutputItemFunctionToolCallOutputResource IPersistableModel<InternalOutputItemFunctionToolCallOutputResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemFunctionToolCallOutputResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemFunctionToolCallOutputResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalOutputItemFunctionToolCallOutputResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemFunctionToolCallOutputResource)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalOutputItemFunctionToolCallOutputResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

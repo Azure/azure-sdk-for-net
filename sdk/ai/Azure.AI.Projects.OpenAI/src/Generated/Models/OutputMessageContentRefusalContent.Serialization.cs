@@ -10,11 +10,28 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Refusal. </summary>
-    internal partial class OutputMessageContentRefusalContent : OutputMessageContent, IJsonModel<OutputMessageContentRefusalContent>
+    internal partial class OutputMessageContentRefusalContent : InternalOutputMessageContent, IJsonModel<OutputMessageContentRefusalContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/> for deserialization. </summary>
         internal OutputMessageContentRefusalContent()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalOutputMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OutputMessageContentRefusalContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOutputMessageContentRefusalContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OutputMessageContentRefusalContent)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -46,7 +63,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalOutputMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputMessageContentRefusalContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -107,23 +124,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         OutputMessageContentRefusalContent IPersistableModel<OutputMessageContentRefusalContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (OutputMessageContentRefusalContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputMessageContentRefusalContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOutputMessageContentRefusalContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OutputMessageContentRefusalContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OutputMessageContentRefusalContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

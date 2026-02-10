@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentResponseItem))]
     public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
@@ -18,6 +18,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/> for deserialization. </summary>
         internal AgentResponseItem()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAgentResponseItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentResponseItem)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -103,14 +120,14 @@ namespace Azure.AI.Projects.OpenAI
                 {
                     case "structured_outputs":
                         return AgentStructuredOutputsResponseItem.DeserializeAgentStructuredOutputsResponseItem(element, options);
-                    case "workflow_preview_action":
-                        return AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(element, options);
+                    case "workflow_action":
+                        return AgentWorkflowActionResponseItem.DeserializeAgentWorkflowActionResponseItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
                     case "memory_search_call":
                         return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
-                    case "message":
-                        return InternalInputMessageResource.DeserializeInternalInputMessageResource(element, options);
+                    case "function_call_output":
+                        return InternalOutputItemFunctionToolCallOutputResource.DeserializeInternalOutputItemFunctionToolCallOutputResource(element, options);
                     case "output_message":
                         return InternalOutputItemOutputMessage.DeserializeInternalOutputItemOutputMessage(element, options);
                     case "file_search_call":
@@ -147,14 +164,16 @@ namespace Azure.AI.Projects.OpenAI
                         return InternalOutputItemMcpApprovalRequest.DeserializeInternalOutputItemMcpApprovalRequest(element, options);
                     case "custom_tool_call":
                         return InternalOutputItemCustomToolCall.DeserializeInternalOutputItemCustomToolCall(element, options);
+                    case "message":
+                        return InternalOutputItemMessage.DeserializeInternalOutputItemMessage(element, options);
                     case "computer_call_output":
                         return InternalOutputItemComputerToolCallOutputResource.DeserializeInternalOutputItemComputerToolCallOutputResource(element, options);
-                    case "function_call_output":
-                        return InternalOutputItemFunctionToolCallOutputResource.DeserializeInternalOutputItemFunctionToolCallOutputResource(element, options);
                     case "local_shell_call_output":
                         return InternalOutputItemLocalShellToolCallOutput.DeserializeInternalOutputItemLocalShellToolCallOutput(element, options);
                     case "mcp_approval_response":
                         return InternalOutputItemMcpApprovalResponseResource.DeserializeInternalOutputItemMcpApprovalResponseResource(element, options);
+                    case "custom_tool_call_output":
+                        return InternalOutputItemCustomToolCallOutput.DeserializeInternalOutputItemCustomToolCallOutput(element, options);
                 }
             }
             return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);
@@ -179,23 +198,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AgentResponseItem IPersistableModel<AgentResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAgentResponseItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AgentResponseItem)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgentResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

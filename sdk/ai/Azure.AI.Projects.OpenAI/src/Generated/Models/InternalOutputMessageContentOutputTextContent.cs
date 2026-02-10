@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    internal partial class InternalOutputMessageContentOutputTextContent : OutputMessageContent
+    internal partial class InternalOutputMessageContentOutputTextContent : InternalOutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
 
         /// <summary> The annotations of the text output. </summary>
         public IList<Annotation> Annotations { get; }

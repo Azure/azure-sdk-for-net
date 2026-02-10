@@ -37,6 +37,6 @@ namespace Azure.AI.Projects.OpenAI
         public string FileId { get; set; }
 
         /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </summary>
-        public ImageDetail Detail { get; }
+        public ImageDetail Detail { get; set; }
     }
 }

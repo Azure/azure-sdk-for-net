@@ -17,6 +17,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal IsModelArrayAdditionalProperties() => throw null;
 
+        protected virtual IsModelArrayAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator IsModelArrayAdditionalProperties(Response response) => throw null;
+
         void IJsonModel<IsModelArrayAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Property.AdditionalProperties
 
         IsModelArrayAdditionalProperties IPersistableModel<IsModelArrayAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual IsModelArrayAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<IsModelArrayAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="isModelArrayAdditionalProperties"> The <see cref="IsModelArrayAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsModelArrayAdditionalProperties isModelArrayAdditionalProperties) => throw null;
-
-        public static explicit operator IsModelArrayAdditionalProperties(Response response) => throw null;
     }
 }

@@ -33,6 +33,6 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> Retrieved memory item. </summary>
-        public MemoryItem MemoryItem { get; }
+        public MemoryItem MemoryItem { get; set; }
     }
 }

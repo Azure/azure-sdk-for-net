@@ -31,9 +31,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The type of the object. Always `summary_text`. </summary>
-        internal string Type { get; } = "summary_text";
+        public string Type { get; } = "summary_text";
 
         /// <summary> A summary of the reasoning output from the model so far. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

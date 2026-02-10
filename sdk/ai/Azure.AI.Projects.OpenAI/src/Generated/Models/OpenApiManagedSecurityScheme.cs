@@ -8,25 +8,25 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-    public partial class OpenApiManagedSecurityScheme
+    public partial class OpenAPIManagedSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiManagedSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAPIManagedSecurityScheme"/>. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="audience"/> is null. </exception>
-        public OpenApiManagedSecurityScheme(string audience)
+        public OpenAPIManagedSecurityScheme(string audience)
         {
             Argument.AssertNotNull(audience, nameof(audience));
 
             Audience = audience;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiManagedSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAPIManagedSecurityScheme"/>. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiManagedSecurityScheme(string audience, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenAPIManagedSecurityScheme(string audience, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Audience = audience;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

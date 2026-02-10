@@ -12,6 +12,23 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The MCPListToolsToolAnnotations. </summary>
     internal partial class MCPListToolsToolAnnotations : IJsonModel<MCPListToolsToolAnnotations>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MCPListToolsToolAnnotations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MCPListToolsToolAnnotations>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMCPListToolsToolAnnotations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MCPListToolsToolAnnotations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MCPListToolsToolAnnotations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -102,23 +119,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MCPListToolsToolAnnotations IPersistableModel<MCPListToolsToolAnnotations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MCPListToolsToolAnnotations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MCPListToolsToolAnnotations>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMCPListToolsToolAnnotations(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MCPListToolsToolAnnotations)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MCPListToolsToolAnnotations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

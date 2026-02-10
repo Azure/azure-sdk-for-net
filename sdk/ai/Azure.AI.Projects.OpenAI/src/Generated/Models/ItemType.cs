@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.OpenAI
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
-        private const string WorkflowPreviewActionValue = "workflow_preview_action";
+        private const string WorkflowActionValue = "workflow_action";
 
         /// <summary> Initializes a new instance of <see cref="ItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -135,8 +135,8 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the MemorySearchCall. </summary>
         public static ItemType MemorySearchCall { get; } = new ItemType(MemorySearchCallValue);
 
-        /// <summary> Gets the WorkflowPreviewAction. </summary>
-        public static ItemType WorkflowPreviewAction { get; } = new ItemType(WorkflowPreviewActionValue);
+        /// <summary> Gets the WorkflowAction. </summary>
+        public static ItemType WorkflowAction { get; } = new ItemType(WorkflowActionValue);
 
         /// <summary> Determines if two <see cref="ItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -13,16 +13,17 @@
 
 * To align with OpenAI naming conventions, use "Tool" suffix for class names describing Azure tools that are generally available (stable release):
   * Rename class `AzureAISearchAgentTool` to `AzureAISearchTool`
-  * Rename class `OpenApiAgentTool` to OpenAPITool`
+  * Rename class `OpenApiAgentTool` to `OpenAPITool`
   * Rename class `AzureFunctionAgentTool` to `AzureFunctionTool`
   * Rename class `BingGroundingAgentTool` to `BingGroundingTool`
 * To align with OpenAI naming conventions, use "PreviewTool" suffix for class names descirbing Azure tools in preview:
   * Rename class `MicrosoftFabricAgentTool` to `MicrosoftFabricPreviewTool`
-  * REname class `MemorySearchTool` to `MemorySearchPreviewTool`
+  * Rename class `MemorySearchTool` to `MemorySearchPreviewTool`
   * Rename class `SharepointAgentTool` to `SharepointPreviewTool`
   * Rename class `BingCustomSearchAgentTool` to `BingCustomSearchPreviewTool`
   * Rename class `BrowserAutomationAgentTool` to `BrowserAutomationPreviewTool`
   * Rename class `A2ATool` to `A2APreviewTool`
+  * Removed class `LocalShellAgentTool`
 
 ## 1.0.0-beta.5 (2025-12-12)
 

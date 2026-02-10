@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,116 +15,187 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct ConversationPiiCategoryExclusions : IEquatable<ConversationPiiCategoryExclusions>
     {
         private readonly string _value;
+        /// <summary> Address category. </summary>
+        private const string AddressValue = "Address";
+        /// <summary> Credit card category. </summary>
+        private const string CreditCardValue = "CreditCard";
+        /// <summary> Email category. </summary>
+        private const string EmailValue = "Email";
+        /// <summary> Person category. </summary>
+        private const string PersonValue = "Person";
+        /// <summary> Numeric identifier category. </summary>
+        private const string NumericIdentifierValue = "NumericIdentifier";
+        /// <summary> Phone category. </summary>
+        private const string PhoneValue = "Phone";
+        /// <summary> US social security number category. </summary>
+        private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
+        /// <summary> Driver's license number category. </summary>
+        private const string DriversLicenseNumberValue = "DriversLicenseNumber";
+        /// <summary> Passport number category. </summary>
+        private const string PassportNumberValue = "PassportNumber";
+        /// <summary> Person type category. </summary>
+        private const string PersonTypeValue = "PersonType";
+        /// <summary> Organization category. </summary>
+        private const string OrganizationValue = "Organization";
+        /// <summary> ABA routing number category. </summary>
+        private const string ABARoutingNumberValue = "ABARoutingNumber";
+        /// <summary> Bank account number category. </summary>
+        private const string BankAccountNumberValue = "BankAccountNumber";
+        /// <summary> Date of birth category. </summary>
+        private const string DateOfBirthValue = "DateOfBirth";
+        /// <summary> International Bank Account Number category. </summary>
+        private const string InternationalBankingAccountNumberValue = "InternationalBankingAccountNumber";
+        /// <summary> SWIFT code category. </summary>
+        private const string SWIFTCodeValue = "SWIFTCode";
+        /// <summary> Vehicle identification number category. </summary>
+        private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
+        /// <summary> Age category. </summary>
+        private const string AgeValue = "Age";
+        /// <summary> Date category. </summary>
+        private const string DateValue = "Date";
+        /// <summary> Zip code category. </summary>
+        private const string ZipCodeValue = "ZipCode";
+        /// <summary> Government issued ID category. </summary>
+        private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
+        /// <summary> Card verification value category. </summary>
+        private const string CVVValue = "CVV";
+        /// <summary> Health card number category. </summary>
+        private const string HealthCardNumberValue = "HealthCardNumber";
+        /// <summary> CA Social insurance number category. </summary>
+        private const string CASocialInsuranceNumberValue = "CASocialInsuranceNumber";
+        /// <summary> US Medicare beneficiary ID category. </summary>
+        private const string USMedicareBeneficiaryIdValue = "USMedicareBeneficiaryId";
+        /// <summary> Github account category. </summary>
+        private const string GithubAccountValue = "GithubAccount";
+        /// <summary> Location category. </summary>
+        private const string LocationValue = "Location";
+        /// <summary> GPE category. </summary>
+        private const string GPEValue = "GPE";
 
         /// <summary> Initializes a new instance of <see cref="ConversationPiiCategoryExclusions"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationPiiCategoryExclusions(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AddressValue = "Address";
-        private const string CreditCardValue = "CreditCard";
-        private const string EmailValue = "Email";
-        private const string PersonValue = "Person";
-        private const string NumericIdentifierValue = "NumericIdentifier";
-        private const string PhoneValue = "Phone";
-        private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
-        private const string DriversLicenseNumberValue = "DriversLicenseNumber";
-        private const string PassportNumberValue = "PassportNumber";
-        private const string PersonTypeValue = "PersonType";
-        private const string OrganizationValue = "Organization";
-        private const string ABARoutingNumberValue = "ABARoutingNumber";
-        private const string BankAccountNumberValue = "BankAccountNumber";
-        private const string DateOfBirthValue = "DateOfBirth";
-        private const string InternationalBankingAccountNumberValue = "InternationalBankingAccountNumber";
-        private const string SWIFTCodeValue = "SWIFTCode";
-        private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
-        private const string AgeValue = "Age";
-        private const string DateValue = "Date";
-        private const string ZipCodeValue = "ZipCode";
-        private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
-        private const string CVVValue = "CVV";
-        private const string HealthCardNumberValue = "HealthCardNumber";
-        private const string CASocialInsuranceNumberValue = "CASocialInsuranceNumber";
-        private const string USMedicareBeneficiaryIdValue = "USMedicareBeneficiaryId";
-        private const string GithubAccountValue = "GithubAccount";
-        private const string LocationValue = "Location";
-        private const string GPEValue = "GPE";
+            _value = value;
+        }
 
         /// <summary> Address category. </summary>
         public static ConversationPiiCategoryExclusions Address { get; } = new ConversationPiiCategoryExclusions(AddressValue);
+
         /// <summary> Credit card category. </summary>
         public static ConversationPiiCategoryExclusions CreditCard { get; } = new ConversationPiiCategoryExclusions(CreditCardValue);
+
         /// <summary> Email category. </summary>
         public static ConversationPiiCategoryExclusions Email { get; } = new ConversationPiiCategoryExclusions(EmailValue);
+
         /// <summary> Person category. </summary>
         public static ConversationPiiCategoryExclusions Person { get; } = new ConversationPiiCategoryExclusions(PersonValue);
+
         /// <summary> Numeric identifier category. </summary>
         public static ConversationPiiCategoryExclusions NumericIdentifier { get; } = new ConversationPiiCategoryExclusions(NumericIdentifierValue);
+
         /// <summary> Phone category. </summary>
         public static ConversationPiiCategoryExclusions Phone { get; } = new ConversationPiiCategoryExclusions(PhoneValue);
+
         /// <summary> US social security number category. </summary>
         public static ConversationPiiCategoryExclusions UsSocialSecurityNumber { get; } = new ConversationPiiCategoryExclusions(UsSocialSecurityNumberValue);
+
         /// <summary> Driver's license number category. </summary>
         public static ConversationPiiCategoryExclusions DriversLicenseNumber { get; } = new ConversationPiiCategoryExclusions(DriversLicenseNumberValue);
+
         /// <summary> Passport number category. </summary>
         public static ConversationPiiCategoryExclusions PassportNumber { get; } = new ConversationPiiCategoryExclusions(PassportNumberValue);
+
         /// <summary> Person type category. </summary>
         public static ConversationPiiCategoryExclusions PersonType { get; } = new ConversationPiiCategoryExclusions(PersonTypeValue);
+
         /// <summary> Organization category. </summary>
         public static ConversationPiiCategoryExclusions Organization { get; } = new ConversationPiiCategoryExclusions(OrganizationValue);
+
         /// <summary> ABA routing number category. </summary>
         public static ConversationPiiCategoryExclusions ABARoutingNumber { get; } = new ConversationPiiCategoryExclusions(ABARoutingNumberValue);
+
         /// <summary> Bank account number category. </summary>
         public static ConversationPiiCategoryExclusions BankAccountNumber { get; } = new ConversationPiiCategoryExclusions(BankAccountNumberValue);
+
         /// <summary> Date of birth category. </summary>
         public static ConversationPiiCategoryExclusions DateOfBirth { get; } = new ConversationPiiCategoryExclusions(DateOfBirthValue);
+
         /// <summary> International Bank Account Number category. </summary>
         public static ConversationPiiCategoryExclusions InternationalBankingAccountNumber { get; } = new ConversationPiiCategoryExclusions(InternationalBankingAccountNumberValue);
+
         /// <summary> SWIFT code category. </summary>
         public static ConversationPiiCategoryExclusions SWIFTCode { get; } = new ConversationPiiCategoryExclusions(SWIFTCodeValue);
+
         /// <summary> Vehicle identification number category. </summary>
         public static ConversationPiiCategoryExclusions VehicleIdentificationNumber { get; } = new ConversationPiiCategoryExclusions(VehicleIdentificationNumberValue);
+
         /// <summary> Age category. </summary>
         public static ConversationPiiCategoryExclusions Age { get; } = new ConversationPiiCategoryExclusions(AgeValue);
+
         /// <summary> Date category. </summary>
         public static ConversationPiiCategoryExclusions Date { get; } = new ConversationPiiCategoryExclusions(DateValue);
+
         /// <summary> Zip code category. </summary>
         public static ConversationPiiCategoryExclusions ZipCode { get; } = new ConversationPiiCategoryExclusions(ZipCodeValue);
+
         /// <summary> Government issued ID category. </summary>
         public static ConversationPiiCategoryExclusions GovernmentIssuedId { get; } = new ConversationPiiCategoryExclusions(GovernmentIssuedIdValue);
+
         /// <summary> Card verification value category. </summary>
         public static ConversationPiiCategoryExclusions CVV { get; } = new ConversationPiiCategoryExclusions(CVVValue);
+
         /// <summary> Health card number category. </summary>
         public static ConversationPiiCategoryExclusions HealthCardNumber { get; } = new ConversationPiiCategoryExclusions(HealthCardNumberValue);
+
         /// <summary> CA Social insurance number category. </summary>
         public static ConversationPiiCategoryExclusions CASocialInsuranceNumber { get; } = new ConversationPiiCategoryExclusions(CASocialInsuranceNumberValue);
+
         /// <summary> US Medicare beneficiary ID category. </summary>
         public static ConversationPiiCategoryExclusions USMedicareBeneficiaryId { get; } = new ConversationPiiCategoryExclusions(USMedicareBeneficiaryIdValue);
+
         /// <summary> Github account category. </summary>
         public static ConversationPiiCategoryExclusions GithubAccount { get; } = new ConversationPiiCategoryExclusions(GithubAccountValue);
+
         /// <summary> Location category. </summary>
         public static ConversationPiiCategoryExclusions Location { get; } = new ConversationPiiCategoryExclusions(LocationValue);
+
         /// <summary> GPE category. </summary>
         public static ConversationPiiCategoryExclusions GPE { get; } = new ConversationPiiCategoryExclusions(GPEValue);
+
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationPiiCategoryExclusions left, ConversationPiiCategoryExclusions right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationPiiCategoryExclusions left, ConversationPiiCategoryExclusions right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationPiiCategoryExclusions"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConversationPiiCategoryExclusions"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConversationPiiCategoryExclusions(string value) => new ConversationPiiCategoryExclusions(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConversationPiiCategoryExclusions"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConversationPiiCategoryExclusions?(string value) => value == null ? null : new ConversationPiiCategoryExclusions(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConversationPiiCategoryExclusions other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConversationPiiCategoryExclusions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

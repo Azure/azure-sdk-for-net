@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(IEnumerable<OutputMessageContent> content, OutputItemOutputMessageStatus status) : base(AgentResponseItemKind.OutputMessage)
+        internal InternalOutputItemOutputMessage(IEnumerable<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(AgentResponseItemKind.OutputMessage)
         {
             Content = content.ToList();
             Status = status;
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<OutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -42,10 +42,10 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The role of the output message. Always `assistant`. </summary>
-        internal string Role { get; } = "assistant";
+        public string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
-        public IList<OutputMessageContent> Content { get; }
+        public IList<InternalOutputMessageContent> Content { get; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or

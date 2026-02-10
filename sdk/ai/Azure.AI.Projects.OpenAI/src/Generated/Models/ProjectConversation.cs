@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The ProjectConversation. </summary>
+    /// <summary> The conversation object. </summary>
     public partial class ProjectConversation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

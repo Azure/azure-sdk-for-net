@@ -16,6 +16,8 @@ namespace Service
     {
         internal Input() => throw null;
 
+        protected virtual Input PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Input>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace Service
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Input IPersistableModel<Input>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Input PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Input>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 

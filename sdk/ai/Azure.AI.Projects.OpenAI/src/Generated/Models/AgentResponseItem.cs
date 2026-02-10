@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
     /// </summary>
     public abstract partial class AgentResponseItem
     {
