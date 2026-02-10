@@ -420,7 +420,7 @@ namespace Azure.Core
         /// Creates a new location implicitly from a string.
         /// </summary>
         /// <param name="location"> String to be assigned in the Name form. </param>
-        public static implicit operator AzureLocation(string location)
+        public static implicit operator AzureLocation(string? location)
         {
             if (ReferenceEquals(location, null))
             {

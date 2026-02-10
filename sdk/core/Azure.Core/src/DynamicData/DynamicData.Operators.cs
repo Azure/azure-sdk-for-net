@@ -21,7 +21,7 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="bool"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator bool(DynamicData value)
+        public static implicit operator bool(DynamicData? value)
         {
             if (value is null)
             {
@@ -41,7 +41,7 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="string"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator string?(DynamicData value)
+        public static implicit operator string?(DynamicData? value)
         {
             if (value is null)
             {
@@ -187,7 +187,7 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="uint"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator uint(DynamicData value)
+        public static implicit operator uint(DynamicData? value)
         {
             if (value is null)
             {
@@ -237,7 +237,7 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="ulong"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator ulong(DynamicData value)
+        public static implicit operator ulong(DynamicData? value)
         {
             if (value is null)
             {
@@ -287,7 +287,7 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="double"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator double(DynamicData value)
+        public static implicit operator double(DynamicData? value)
         {
             if (value is null)
             {
@@ -312,7 +312,7 @@ namespace Azure.Core.Serialization
         /// Converts the value to a <see cref="decimal"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator decimal(DynamicData value)
+        public static implicit operator decimal(DynamicData? value)
         {
             if (value is null)
             {

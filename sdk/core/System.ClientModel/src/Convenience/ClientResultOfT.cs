@@ -36,7 +36,7 @@ public class ClientResult<T> : ClientResult
     /// Returns the value of this <see cref="ClientResult{T}"/> object.
     /// </summary>
     /// <param name="result">The <see cref="ClientResult{T}"/> instance.</param>
-    public static implicit operator T(ClientResult<T> result)
+    public static implicit operator T(ClientResult<T>? result)
     {
         if (result is null)
         {
