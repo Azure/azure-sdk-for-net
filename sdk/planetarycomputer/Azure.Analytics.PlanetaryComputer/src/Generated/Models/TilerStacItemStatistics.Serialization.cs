@@ -16,6 +16,30 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Return dataset's statistics. </summary>
     public partial class TilerStacItemStatistics : IJsonModel<TilerStacItemStatistics>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TilerStacItemStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TilerStacItemStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTilerStacItemStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TilerStacItemStatistics)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TilerStacItemStatistics"/> from. </param>
+        public static explicit operator TilerStacItemStatistics(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTilerStacItemStatistics(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TilerStacItemStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -101,31 +125,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         TilerStacItemStatistics IPersistableModel<TilerStacItemStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TilerStacItemStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerStacItemStatistics>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTilerStacItemStatistics(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TilerStacItemStatistics)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TilerStacItemStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TilerStacItemStatistics"/> from. </param>
-        public static explicit operator TilerStacItemStatistics(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTilerStacItemStatistics(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -16,6 +16,30 @@ namespace Azure.Communication.ProgrammableConnectivity
     /// <summary> Response with SimSwap date. </summary>
     public partial class SimSwapRetrievalResult : IJsonModel<SimSwapRetrievalResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SimSwapRetrievalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SimSwapRetrievalResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSimSwapRetrievalResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SimSwapRetrievalResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SimSwapRetrievalResult"/> from. </param>
+        public static explicit operator SimSwapRetrievalResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSimSwapRetrievalResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SimSwapRetrievalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,31 +146,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="options"> The client options for reading and writing models. </param>
         SimSwapRetrievalResult IPersistableModel<SimSwapRetrievalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SimSwapRetrievalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SimSwapRetrievalResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSimSwapRetrievalResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SimSwapRetrievalResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SimSwapRetrievalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SimSwapRetrievalResult"/> from. </param>
-        public static explicit operator SimSwapRetrievalResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSimSwapRetrievalResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

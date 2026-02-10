@@ -20,6 +20,23 @@ namespace Azure.AI.Language.Text.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TextAuthoringDocumentEvalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomHealthcareDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomHealthcareDocumentEvalResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomHealthcareDocumentEvalResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomHealthcareDocumentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CustomHealthcareDocumentEvalResult IPersistableModel<CustomHealthcareDocumentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomHealthcareDocumentEvalResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TextAuthoringDocumentEvalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomHealthcareDocumentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCustomHealthcareDocumentEvalResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomHealthcareDocumentEvalResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomHealthcareDocumentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
