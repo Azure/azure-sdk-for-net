@@ -14,8 +14,8 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore

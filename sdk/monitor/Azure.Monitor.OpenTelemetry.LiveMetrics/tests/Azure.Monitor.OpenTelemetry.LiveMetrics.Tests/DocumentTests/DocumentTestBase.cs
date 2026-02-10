@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             // LiveMetrics supports a maximum of 10 Properties; reservedPropertyCount is the count of properties taken up by standard properties
             int firstOmittedPropertyIndex = 11 - reservedPropertyCount;
-            Assert.DoesNotContain(document.Properties, x => x.Key == $"customKey{ firstOmittedPropertyIndex }" && x.Value == $"customValue{ firstOmittedPropertyIndex }");
+            Assert.DoesNotContain(document.Properties, x => x.Key == $"customKey{firstOmittedPropertyIndex}" && x.Value == $"customValue{firstOmittedPropertyIndex}");
         }
     }
 }

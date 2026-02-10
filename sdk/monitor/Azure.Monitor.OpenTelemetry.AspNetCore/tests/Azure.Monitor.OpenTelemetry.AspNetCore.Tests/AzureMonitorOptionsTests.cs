@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Azure.Monitor.OpenTelemetry.Exporter;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using System.Text.Json.Serialization;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 

@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Monitor.Models;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
+using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
-using Azure.Core;
-using System;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Tests
 {

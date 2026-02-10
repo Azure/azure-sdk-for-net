@@ -93,7 +93,8 @@ namespace Azure.Monitor.Ingestion.Tests
                         AdditionalContext = 3
                     }
                 }));
-            };
+            }
+            ;
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
             Assert.AreEqual(2, x.Length);

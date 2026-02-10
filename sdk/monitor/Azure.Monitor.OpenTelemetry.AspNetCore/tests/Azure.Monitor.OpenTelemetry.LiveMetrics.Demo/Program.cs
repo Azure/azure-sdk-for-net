@@ -4,15 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
-using Azure.Monitor.OpenTelemetry.Exporter;
-using System.Threading;
-using System.Diagnostics.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {

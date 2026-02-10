@@ -305,7 +305,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             };
             Assert.Equal(expectedData, remoteDependencyData.Data);
 
-            var expectedCount = shouldEnrich? 3 : 2;
+            var expectedCount = shouldEnrich ? 3 : 2;
             Assert.Equal(expectedCount, remoteDependencyData.Properties.Count);
             Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "db.name" && kvp.Value == "master");
             Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "_MS.ProcessedByMetricExtractors" && kvp.Value == "(Name: X,Ver:'1.1')");

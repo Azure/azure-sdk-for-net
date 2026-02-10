@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core
 {
-    internal class GZipUtf8JsonRequestContent: RequestContent
+    internal class GZipUtf8JsonRequestContent : RequestContent
     {
 #pragma warning disable CA2213 // Disposable fields should be disposed
         private GZipStream _gzip;

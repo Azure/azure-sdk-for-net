@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             using var activity = activitySource.StartActivity(name: "HelloWorld");
             Assert.NotNull(activity);
 
-            activity.AddEvent(new ActivityEvent("This is a log message", tags: new ActivityTagsCollection( new[]{
+            activity.AddEvent(new ActivityEvent("This is a log message", tags: new ActivityTagsCollection(new[]{
                     new KeyValuePair<string, object?>("customKey1", "customValue1"),
                     new KeyValuePair<string, object?>("customKey2", "customValue2"),
                     new KeyValuePair<string, object?>("customKey3", "customValue3"),

@@ -5,11 +5,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
-    using System.Diagnostics.CodeAnalysis;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-
     using ExceptionDocument = Models.Exception;
 
     /// <summary>

@@ -218,7 +218,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             LogsTableColumn logsTableColumn7 = LogsQueryModelFactory.LogsTableColumn("column7", LogsColumnType.Decimal);
             LogsTableColumn logsTableColumn8 = LogsQueryModelFactory.LogsTableColumn("column8", LogsColumnType.Bool);
             LogsTableColumn logsTableColumn9 = LogsQueryModelFactory.LogsTableColumn("column9", LogsColumnType.Dynamic);
-            LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn0, logsTableColumn1, logsTableColumn2, logsTableColumn3, logsTableColumn4, logsTableColumn5, logsTableColumn6, logsTableColumn7, logsTableColumn8, logsTableColumn9};
+            LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn0, logsTableColumn1, logsTableColumn2, logsTableColumn3, logsTableColumn4, logsTableColumn5, logsTableColumn6, logsTableColumn7, logsTableColumn8, logsTableColumn9 };
             Object[] rowValues = new Object[] { "2015-12-31T23:59:59.9Z", "74be27de-1e4e-49d9-b579-fe0b331d3642", 12345, 1234567890123, 12345.6789, "string value", "00:00:10", "0.10101", false, "{\u0022a\u0022:123,\u0022b\u0022:\u0022hello\u0022,\u0022c\u0022:[1,2,3],\u0022d\u0022:{}}" };
 
             LogsTableRow logsTableRow = LogsQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);

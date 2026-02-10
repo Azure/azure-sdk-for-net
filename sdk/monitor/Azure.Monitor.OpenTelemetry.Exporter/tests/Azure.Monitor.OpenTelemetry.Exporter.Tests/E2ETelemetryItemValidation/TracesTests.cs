@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
-            using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind ))
+            using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind))
             {
                 Assert.NotNull(activity);
                 traceId = activity.TraceId.ToHexString();
@@ -129,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Where(x => x.Name =="Request").First()!;
+            var telemetryItem = telemetryItems.Where(x => x.Name == "Request").First()!;
 
             TelemetryItemValidationHelper.AssertActivity_As_RequestTelemetry(
                 telemetryItem: telemetryItem,
@@ -233,7 +233,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
 
-            var logCategoryName = $"logCategoryName{uniqueTestId}"; ;
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+            ;
 
             List<TelemetryItem>? logTelemetryItems = null;
 
@@ -303,7 +304,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: logTelemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { {"EventId", "1" }, { "name", "World" } },
+                expectedMessageProperties: new Dictionary<string, string> { { "EventId", "1" }, { "name", "World" } },
                 expectedSpanId: spanId,
                 expectedTraceId: traceId);
         }
