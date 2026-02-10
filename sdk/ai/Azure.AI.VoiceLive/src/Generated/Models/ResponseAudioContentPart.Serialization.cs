@@ -15,6 +15,23 @@ namespace Azure.AI.VoiceLive
     /// <summary> An audio content part for a response. </summary>
     public partial class ResponseAudioContentPart : VoiceLiveContentPart, IJsonModel<ResponseAudioContentPart>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResponseAudioContentPart(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResponseAudioContentPart)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseAudioContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -108,23 +125,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResponseAudioContentPart IPersistableModel<ResponseAudioContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseAudioContentPart)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAudioContentPart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResponseAudioContentPart(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResponseAudioContentPart)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseAudioContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

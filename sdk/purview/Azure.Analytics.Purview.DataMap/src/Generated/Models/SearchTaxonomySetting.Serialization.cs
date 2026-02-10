@@ -15,6 +15,23 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> Taxonomy setting for search request. </summary>
     public partial class SearchTaxonomySetting : IJsonModel<SearchTaxonomySetting>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchTaxonomySetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchTaxonomySetting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSearchTaxonomySetting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchTaxonomySetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,23 +174,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SearchTaxonomySetting IPersistableModel<SearchTaxonomySetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchTaxonomySetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchTaxonomySetting>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchTaxonomySetting(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchTaxonomySetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

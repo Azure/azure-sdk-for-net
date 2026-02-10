@@ -1811,7 +1811,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Assign the given term to the provided list of related objects. Recommend using
         /// small batches with multiple API calls.
-        /// 
         /// [Entities Create Or Update
         /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
         /// is an alternative to assign a term to multiple entities.
@@ -1850,7 +1849,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Assign the given term to the provided list of related objects. Recommend using
         /// small batches with multiple API calls.
-        /// 
         /// [Entities Create Or Update
         /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
         /// is an alternative to assign a term to multiple entities.
@@ -1889,7 +1887,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Assign the given term to the provided list of related objects. Recommend using
         /// small batches with multiple API calls.
-        /// 
         /// [Entities Create Or Update
         /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
         /// is an alternative to assign a term to multiple entities.
@@ -1912,7 +1909,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Assign the given term to the provided list of related objects. Recommend using
         /// small batches with multiple API calls.
-        /// 
         /// [Entities Create Or Update
         /// operation](https://learn.microsoft.com/en-us/rest/api/purview/datamapdataplane/entity/bulk-create-or-update?tabs=HTTP)
         /// is an alternative to assign a term to multiple entities.
@@ -2697,11 +2693,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Get a specific glossary with detailed information. This API is not
         /// recommend.
-        /// 
         /// Recommend to fetch terms/categories details separately using 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
         /// <list type="bullet">
         /// <item>
@@ -2736,11 +2729,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Get a specific glossary with detailed information. This API is not
         /// recommend.
-        /// 
         /// Recommend to fetch terms/categories details separately using 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
         /// <list type="bullet">
         /// <item>
@@ -2775,11 +2765,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Get a specific glossary with detailed information. This API is not
         /// recommend.
-        /// 
         /// Recommend to fetch terms/categories details separately using 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
@@ -2798,11 +2785,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Get a specific glossary with detailed information. This API is not
         /// recommend.
-        /// 
         /// Recommend to fetch terms/categories details separately using 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms and 
-        /// 
         /// GET /datamap/api/atlas/v2/glossary/{glossaryId}/categories.
         /// </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
@@ -2821,10 +2805,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Update the glossary partially. Some properties such as qualifiedName are not
         /// allowed to be updated.
-        /// 
         /// So far we only supports partial updating
         /// shortDescription, longDescription, language and usage for glossary. 
-        /// 
         /// Recommend
         /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// <list type="bullet">
@@ -2863,10 +2845,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Update the glossary partially. Some properties such as qualifiedName are not
         /// allowed to be updated.
-        /// 
         /// So far we only supports partial updating
         /// shortDescription, longDescription, language and usage for glossary. 
-        /// 
         /// Recommend
         /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// <list type="bullet">
@@ -2905,10 +2885,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Update the glossary partially. Some properties such as qualifiedName are not
         /// allowed to be updated.
-        /// 
         /// So far we only supports partial updating
         /// shortDescription, longDescription, language and usage for glossary. 
-        /// 
         /// Recommend
         /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// </summary>
@@ -2935,10 +2913,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Update the glossary partially. Some properties such as qualifiedName are not
         /// allowed to be updated.
-        /// 
         /// So far we only supports partial updating
         /// shortDescription, longDescription, language and usage for glossary. 
-        /// 
         /// Recommend
         /// using 'ignoreTermsAndCategories=true' to reduce response body size.
         /// </summary>

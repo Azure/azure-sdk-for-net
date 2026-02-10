@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap;
+
 public partial class BusinessMetadataOptions
 {
     // CUSTOM CODE NOTE:

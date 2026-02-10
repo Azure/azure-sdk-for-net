@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class ScopingQuestion : IUtf8JsonSerializable, IJsonModel<ScopingQuestion>
+    /// <summary> The definition of a scoping question. </summary>
+    public partial class ScopingQuestion : IJsonModel<ScopingQuestion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScopingQuestion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScopingQuestion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScopingQuestion)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("questionId"u8);
@@ -53,8 +53,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("optionIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in OptionIds)
+                foreach (string item in OptionIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (var item in Rules)
+                foreach (QuestionRuleItem item in Rules)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -74,15 +79,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("showSubQuestionsValue"u8);
                 writer.WriteStringValue(ShowSubQuestionsValue);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +96,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        ScopingQuestion IJsonModel<ScopingQuestion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScopingQuestion IJsonModel<ScopingQuestion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScopingQuestion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScopingQuestion)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScopingQuestion(document.RootElement, options);
         }
 
-        internal static ScopingQuestion DeserializeScopingQuestion(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScopingQuestion DeserializeScopingQuestion(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,56 +127,61 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             IReadOnlyList<string> optionIds = default;
             IReadOnlyList<QuestionRuleItem> rules = default;
             string showSubQuestionsValue = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("questionId"u8))
+                if (prop.NameEquals("questionId"u8))
                 {
-                    questionId = property.Value.GetString();
+                    questionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("superiorQuestionId"u8))
+                if (prop.NameEquals("superiorQuestionId"u8))
                 {
-                    superiorQuestionId = property.Value.GetString();
+                    superiorQuestionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputType"u8))
+                if (prop.NameEquals("inputType"u8))
                 {
-                    inputType = new ScopingQuestionInputType(property.Value.GetString());
+                    inputType = new ScopingQuestionInputType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("optionIds"u8))
+                if (prop.NameEquals("optionIds"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     optionIds = array;
                     continue;
                 }
-                if (property.NameEquals("rules"u8))
+                if (prop.NameEquals("rules"u8))
                 {
                     List<QuestionRuleItem> array = new List<QuestionRuleItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new QuestionRuleItem(item.GetString()));
                     }
                     rules = array;
                     continue;
                 }
-                if (property.NameEquals("showSubQuestionsValue"u8))
+                if (prop.NameEquals("showSubQuestionsValue"u8))
                 {
-                    showSubQuestionsValue = property.Value.GetString();
+                    showSubQuestionsValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScopingQuestion(
                 questionId,
                 superiorQuestionId,
@@ -174,13 +189,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 optionIds,
                 rules,
                 showSubQuestionsValue,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ScopingQuestion>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScopingQuestion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -190,15 +208,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        ScopingQuestion IPersistableModel<ScopingQuestion>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScopingQuestion IPersistableModel<ScopingQuestion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScopingQuestion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScopingQuestion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScopingQuestion(document.RootElement, options);
                     }
                 default:
@@ -206,6 +229,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScopingQuestion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,6 +8,7 @@ using System.Text.Json;
 
 #pragma warning disable AOAI001
 #pragma warning disable AZC0112
+#pragma warning disable SCME0001
 
 namespace Azure.AI.OpenAI.Chat;
 
@@ -96,6 +97,8 @@ internal partial class AzureChatClient : ChatClient
             options.Patch.Remove("$.stream_options"u8);
         }
     }
+
+    private static bool HasValue(JsonPatch patch, ReadOnlySpan<byte> path) => patch.Contains(path) && !patch.IsRemoved(path);
 
     /**
      * As of 2024-09-01-preview, Azure OpenAI conditionally supports the use of the new max_completion_tokens property:

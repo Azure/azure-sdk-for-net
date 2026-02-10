@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ManagedDiskDetails : IUtf8JsonSerializable, IJsonModel<ManagedDiskDetails>
+    /// <summary> Details of the managed disks. </summary>
+    public partial class ManagedDiskDetails : DataAccountDetails, IJsonModel<ManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskDetails"/> for deserialization. </summary>
+        internal ManagedDiskDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedDiskDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resourceGroupId"u8);
             writer.WriteStringValue(ResourceGroupId);
@@ -41,67 +47,73 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StagingStorageAccountId);
         }
 
-        ManagedDiskDetails IJsonModel<ManagedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedDiskDetails IJsonModel<ManagedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedDiskDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataAccountDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedDiskDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedDiskDetails(document.RootElement, options);
         }
 
-        internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier resourceGroupId = default;
-            ResourceIdentifier stagingStorageAccountId = default;
             DataAccountType dataAccountType = default;
             string sharePassword = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceIdentifier resourceGroupId = default;
+            ResourceIdentifier stagingStorageAccountId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceGroupId"u8))
+                if (prop.NameEquals("dataAccountType"u8))
                 {
-                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    dataAccountType = prop.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("stagingStorageAccountId"u8))
+                if (prop.NameEquals("sharePassword"u8))
                 {
-                    stagingStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    sharePassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"u8))
+                if (prop.NameEquals("resourceGroupId"u8))
                 {
-                    dataAccountType = property.Value.GetString().ToDataAccountType();
+                    resourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sharePassword"u8))
+                if (prop.NameEquals("stagingStorageAccountId"u8))
                 {
-                    sharePassword = property.Value.GetString();
+                    stagingStorageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedDiskDetails(dataAccountType, sharePassword, serializedAdditionalRawData, resourceGroupId, stagingStorageAccountId);
+            return new ManagedDiskDetails(dataAccountType, sharePassword, additionalBinaryDataProperties, resourceGroupId, stagingStorageAccountId);
         }
 
-        BinaryData IPersistableModel<ManagedDiskDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedDiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -111,15 +123,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        ManagedDiskDetails IPersistableModel<ManagedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedDiskDetails IPersistableModel<ManagedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedDiskDetails)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataAccountDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedDiskDetails(document.RootElement, options);
                     }
                 default:
@@ -127,6 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

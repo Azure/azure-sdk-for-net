@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 _giVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                shape.ToString(),
+                shape?.ToString(),
                 zone,
                 shapeAttribute,
                 context), data => new OracleGIVersionResource(Client, data));
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 _giVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                shape.ToString(),
+                shape?.ToString(),
                 zone,
                 shapeAttribute,
                 context), data => new OracleGIVersionResource(Client, data));

@@ -38,11 +38,18 @@ import {
   ResourceMethod,
   ResourceOperationKind,
   ResourceScope,
-  sortResourceMethods
+  postProcessArmResources,
+  ParentResourceLookupContext
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
+import { getAllSdkClients } from "./sdk-client-utils.js";
+import {
+  extensionResourceOperationName,
+  legacyExtensionResourceOperationName,
+  legacyResourceOperationName
+} from "./sdk-context-options.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -105,113 +112,49 @@ export function resolveArmResources(
   // Convert non-resource methods
   const nonResourceMethods: NonResourceMethod[] = [];
 
-  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
-  const validResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern !== ""
-  );
-  const incompleteResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern === ""
-  );
-
-  // now we populate parentResourceId in all resources. Incomplete resources are also handled here because when merging their methods into others, we need correct parentResourceId
+  // Create parent lookup context for resolveArmResources
+  // In this case, parent information comes from ResolvedResource objects
+  // Build validResourceMap once for efficient lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
-  for (const resource of validResources) {
-    const resolved = schemaToResolvedResource.get(resource);
-    if (resolved) {
-      validResourceMap.set(resolved.resourceInstancePath, resource);
+  for (const r of resources.filter(
+    (r) => r.metadata.resourceIdPattern !== ""
+  )) {
+    const resolvedR = schemaToResolvedResource.get(r);
+    if (resolvedR) {
+      validResourceMap.set(resolvedR.resourceInstancePath, r);
     }
   }
 
-  for (const resource of resources) {
-    const resolved = schemaToResolvedResource.get(resource);
-    if (!resolved) continue;
+  const parentLookup: ParentResourceLookupContext = {
+    getParentResource: (
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined => {
+      const resolved = schemaToResolvedResource.get(resource);
+      if (!resolved) return undefined;
 
-    let parent = resolved.parent;
-    while (parent) {
-      // Check if this parent is a valid resource in our set
-      const parentResource = validResourceMap.get(parent.resourceInstancePath);
-      if (parentResource) {
-        resource.metadata.parentResourceId =
-          parentResource.metadata.resourceIdPattern;
-        resource.metadata.parentResourceModelId =
-          parentResource.resourceModelId;
-        break;
+      // Walk up the parent chain to find a valid parent
+      let parent = resolved.parent;
+      while (parent) {
+        const parentResource = validResourceMap.get(
+          parent.resourceInstancePath
+        );
+        if (parentResource) {
+          return parentResource;
+        }
+        parent = parent.parent;
       }
-      parent = parent.parent;
+      return undefined;
     }
-  }
+  };
 
-  // then we merge the methods in incomplete resources to their parents or siblings
-  for (const resource of incompleteResources) {
-    const metadata = resource.metadata;
-    let merged = false;
-
-    // First try to merge with parent if it exists
-    if (metadata.parentResourceModelId) {
-      const parent = validResources.find(
-        (r) => r.resourceModelId === metadata.parentResourceModelId
-      );
-      if (parent) {
-        parent.metadata.methods.push(...metadata.methods);
-        merged = true;
-      }
-    }
-
-    if (!merged) {
-      // No parent or parent not found - try to find another entry for the same model
-      const sibling = validResources.find(
-        (r) => r.resourceModelId === resource.resourceModelId
-      );
-      if (sibling) {
-        sibling.metadata.methods.push(...metadata.methods);
-        merged = true;
-      }
-    }
-
-    // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
-    if (!merged) {
-      for (const method of metadata.methods) {
-        nonResourceMethods.push({
-          methodId: method.methodId,
-          operationPath: method.operationPath,
-          operationScope: method.operationScope
-        });
-      }
-    }
-  }
-
-  // populate the resourceScope for list operations
-  // first we find all the converted list operations
-  const listOperations: ResourceMethod[] = [];
-  for (const resource of validResources) {
-    for (const method of resource.metadata.methods) {
-      if (method.kind === ResourceOperationKind.List) {
-        listOperations.push(method);
-      }
-    }
-  }
-  // then we gather all the resourceInstancePath for all resources as candidates
-  const resourceInstancePaths: Array<string[]> = validResources.map((r) =>
-    r.metadata.resourceIdPattern.split("/").filter((s) => s.length > 0)
+  // Use the shared post-processing function
+  const filteredResources = postProcessArmResources(
+    resources,
+    nonResourceMethods,
+    parentLookup
   );
-  // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
-  for (const listOp of listOperations) {
-    const validCandidates: Array<string[]> = [];
-    const listOperationPathSegments = listOp.operationPath
-      .split("/")
-      .filter((s) => s.length > 0);
-    for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
-        validCandidates.push(candidatePath);
-      }
-    }
-    // now we have a list of candidates that can be the resourceScope for this list.
-    // we take the longest as the resourceScope of this list
-    if (validCandidates.length > 0) {
-      validCandidates.sort((a, b) => b.length - a.length);
-      listOp.resourceScope = "/" + validCandidates[0].join("/");
-    }
-  }
+
+  // Add provider operations as non-resource methods
   if (provider.providerOperations) {
     for (const operation of provider.providerOperations) {
       // Get method ID from the operation
@@ -232,33 +175,43 @@ export function resolveArmResources(
     }
   }
 
-  // Sort methods in all valid resources for deterministic ordering
-  // This is necessary because methods may have been merged from incomplete resources
-  // and list operations may have been processed, so we sort at the end to ensure consistency
-  for (const resource of validResources) {
-    sortResourceMethods(resource.metadata.methods);
+  // Post-processing step: Find operations that were not recognized by the ARM library
+  // and add them as non-resource methods
+  const includedOperationIds = new Set<string>();
+  // Track all operations that are already included
+  for (const resource of filteredResources) {
+    for (const method of resource.metadata.methods) {
+      includedOperationIds.add(method.methodId);
+    }
+  }
+  for (const nonResourceMethod of nonResourceMethods) {
+    includedOperationIds.add(nonResourceMethod.methodId);
   }
 
-  // Filter out resources without Get/Read operations (non-singleton resources only)
-  // Singleton resources can exist without Get operations
-  const filteredResources: ArmResourceSchema[] = [];
-  for (const resource of validResources) {
-    const hasReadOperation = resource.metadata.methods.some(
-      (m) => m.kind === ResourceOperationKind.Read
-    );
-    if (!hasReadOperation && !resource.metadata.singletonResourceName) {
-      // Move all methods to non-resource methods since there's no Get operation
-      for (const method of resource.metadata.methods) {
-        nonResourceMethods.push({
-          methodId: method.methodId,
-          operationPath: method.operationPath,
-          operationScope: method.operationScope
-        });
+  // Get all SDK operations
+  const allSdkClients = getAllSdkClients(sdkContext);
+  for (const client of allSdkClients) {
+    for (const method of client.methods) {
+      const methodId = method.crossLanguageDefinitionId;
+      const operation = method.operation;
+
+      // Skip if already included
+      if (includedOperationIds.has(methodId)) {
+        continue;
       }
-      // Note: We don't add a diagnostic here because it's already added in buildArmProviderSchema
-      continue;
+
+      // Skip if not an HTTP operation with a path
+      if (!operation || operation.kind !== "http" || !operation.path) {
+        continue;
+      }
+
+      // Add this missing operation as a non-resource method
+      nonResourceMethods.push({
+        methodId: methodId,
+        operationPath: operation.path,
+        operationScope: getOperationScopeFromPath(operation.path)
+      });
     }
-    filteredResources.push(resource);
   }
 
   return {
@@ -398,6 +351,15 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
+  // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
+  // The spec should always define unique resource names for extension resources targeting
+  // different parent types — the emitter should not auto-generate disambiguated names.
+  let resourceName = resolvedResource.resourceName;
+  const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
+  if (explicitName) {
+    resourceName = explicitName;
+  }
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -411,7 +373,7 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resolvedResource.resourceName
+    resourceName: resourceName
   };
 }
 
@@ -481,8 +443,21 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
     )
   ) {
     return ResourceScope.ManagementGroup;
+  } else if (hasMultipleProviderSegments(path)) {
+    // Paths with multiple /providers/ segments indicate extension resources
+    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
+    return ResourceScope.Extension;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
+}
+
+/**
+ * Check if a path has multiple /providers/ segments, indicating an extension resource
+ * that extends another ARM resource.
+ */
+function hasMultipleProviderSegments(path: string): boolean {
+  const providerMatches = path.match(/\/providers\//gi);
+  return providerMatches !== null && providerMatches.length > 1;
 }
 
 /**
@@ -508,38 +483,6 @@ function extractSingletonName(path: string): string | undefined {
   return undefined;
 }
 
-function canBeListResourceScope(
-  listPathSegments: string[],
-  resourceInstancePathSegments: string[]
-): boolean {
-  // Check if resourceInstancePath is a prefix of listPath
-  if (listPathSegments.length < resourceInstancePathSegments.length) {
-    return false;
-  }
-  for (let i = 0; i < resourceInstancePathSegments.length; i++) {
-    // if both segments are variables, we consider it as a match
-    if (
-      isVariableSegment(listPathSegments[i]) &&
-      isVariableSegment(resourceInstancePathSegments[i])
-    ) {
-      continue;
-    }
-    // if one of them is a variable, the other is not, we consider it as not a match
-    if (
-      isVariableSegment(listPathSegments[i]) ||
-      isVariableSegment(resourceInstancePathSegments[i])
-    ) {
-      return false;
-    }
-    // both are fixed strings, they must match
-    if (listPathSegments[i] !== resourceInstancePathSegments[i]) {
-      return false;
-    }
-  }
-  // here it means every segment in listPath matches the corresponding segment in resourceInstancePath
-  return true;
-}
-
 function calculateResourceScope(
   operationPath: string,
   resolvedResource: ResolvedResource
@@ -554,6 +497,57 @@ function calculateResourceScope(
       return parent.resourceInstancePath;
     }
     parent = parent.parent;
+  }
+
+  return undefined;
+}
+
+/**
+ * Extracts the explicit resource name from a resolved resource's operations.
+ * Checks the CRUD operations' decorators for OverrideResourceName parameters
+ * set via @extensionResourceOperation or @legacyExtensionResourceOperation.
+ */
+function getExplicitResourceNameFromOperations(
+  resolvedResource: ResolvedResource
+): string | undefined {
+  const lifecycle = resolvedResource.operations.lifecycle;
+  if (!lifecycle) return undefined;
+
+  // Check all CRUD operations for an explicit resource name
+  const operations: Operation[] = [];
+  if (lifecycle.read) {
+    for (const op of lifecycle.read) operations.push(op.operation);
+  }
+  if (lifecycle.createOrUpdate) {
+    for (const op of lifecycle.createOrUpdate) operations.push(op.operation);
+  }
+  if (lifecycle.delete) {
+    for (const op of lifecycle.delete) operations.push(op.operation);
+  }
+
+  for (const operation of operations) {
+    const decorators = operation.decorators;
+    for (const decorator of decorators) {
+      const name = decorator.definition?.name;
+      if (
+        name === extensionResourceOperationName ||
+        name === legacyExtensionResourceOperationName ||
+        name === legacyResourceOperationName
+      ) {
+        // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
+        // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
+        const argIndex =
+          name === extensionResourceOperationName ? 3 : 2;
+        if (
+          decorator.args.length > argIndex &&
+          decorator.args[argIndex].jsValue &&
+          typeof decorator.args[argIndex].jsValue === "string" &&
+          (decorator.args[argIndex].jsValue as string).length > 0
+        ) {
+          return decorator.args[argIndex].jsValue as string;
+        }
+      }
+    }
   }
 
   return undefined;

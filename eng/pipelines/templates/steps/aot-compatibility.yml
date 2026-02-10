@@ -42,10 +42,11 @@ steps:
     - task: Powershell@2
       displayName: Check for AOT compatibility regressions in ${{ artifact.name }}
       inputs:
+        pwsh: true
         targetType: filepath
         filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
         arguments: >-
           -ServiceDirectory ${{ parameters.ServiceDirectory }}
           -PackageName ${{ artifact.name }}
-          -DirectoryName ${{ artifact.directoryName }}
+          -DirectoryName ${{ coalesce(artifact.directoryName, artifact.name) }}
         workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility

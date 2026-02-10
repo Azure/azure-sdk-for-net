@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     public readonly partial struct PreflightCheckEntityType : IEquatable<PreflightCheckEntityType>
     {
         private readonly string _value;
+        /// <summary> Branch entity. </summary>
+        private const string BranchValue = "branch";
+        /// <summary> NeonRole entity. </summary>
+        private const string NeonRoleValue = "neonRole";
+        /// <summary> Database entity. </summary>
+        private const string NeonDatabaseValue = "neonDatabase";
+        /// <summary> Endpoint entity. </summary>
+        private const string EndpointValue = "endpoint";
 
         /// <summary> Initializes a new instance of <see cref="PreflightCheckEntityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PreflightCheckEntityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BranchValue = "branch";
-        private const string NeonRoleValue = "neonRole";
-        private const string NeonDatabaseValue = "neonDatabase";
-        private const string EndpointValue = "endpoint";
+            _value = value;
+        }
 
         /// <summary> Branch entity. </summary>
         public static PreflightCheckEntityType Branch { get; } = new PreflightCheckEntityType(BranchValue);
+
         /// <summary> NeonRole entity. </summary>
         public static PreflightCheckEntityType NeonRole { get; } = new PreflightCheckEntityType(NeonRoleValue);
+
         /// <summary> Database entity. </summary>
         public static PreflightCheckEntityType NeonDatabase { get; } = new PreflightCheckEntityType(NeonDatabaseValue);
+
         /// <summary> Endpoint entity. </summary>
         public static PreflightCheckEntityType Endpoint { get; } = new PreflightCheckEntityType(EndpointValue);
+
         /// <summary> Determines if two <see cref="PreflightCheckEntityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PreflightCheckEntityType left, PreflightCheckEntityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PreflightCheckEntityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PreflightCheckEntityType left, PreflightCheckEntityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PreflightCheckEntityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PreflightCheckEntityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PreflightCheckEntityType(string value) => new PreflightCheckEntityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PreflightCheckEntityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PreflightCheckEntityType?(string value) => value == null ? null : new PreflightCheckEntityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PreflightCheckEntityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PreflightCheckEntityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

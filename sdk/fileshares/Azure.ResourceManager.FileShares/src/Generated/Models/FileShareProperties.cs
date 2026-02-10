@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
         public FileShareProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<FileSharePrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<FileSharePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IReadOnlyList<FileSharePrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IReadOnlyList<FileSharePrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MountName = mountName;
             HostName = hostName;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileSharePublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The list of associated private endpoint connections. </summary>
-        public IReadOnlyList<FileSharePrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<FileSharePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
 
         /// <summary> Root squash defines how root users on clients are mapped to the NFS share. </summary>
         public ShareRootSquash? NfsProtocolRootSquash

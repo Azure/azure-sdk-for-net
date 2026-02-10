@@ -20,6 +20,13 @@ import "./testresourcetype.tsp";
 import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
+import "./chaos.tsp";
+import "./redisenterprise.tsp";
+import "./propertyoverride.tsp";
+import "./sitemanager.tsp";
+import "./extensionresources.tsp";
+import "./flatten-with-customized-property.tsp";
+import "./extensionresourcename.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -42,6 +49,8 @@ namespace MgmtTypeSpec {
   @@clientLocation(Bars.get, "Bar");
   @@clientLocation(Bars.update, "Bar");
 
+  @@clientName(Joos.createOrUpdate::parameters.resource, "parameters");
+
   @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkSegments.get, "WorkloadNetworks");
@@ -57,6 +66,8 @@ namespace MgmtTypeSpec {
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");

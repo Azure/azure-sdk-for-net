@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> SAS Credential definition. </summary>
     public partial class BlobReferenceSasCredential : IJsonModel<BlobReferenceSasCredential>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobReferenceSasCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasCredential>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBlobReferenceSasCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobReferenceSasCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BlobReferenceSasCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,23 +141,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BlobReferenceSasCredential IPersistableModel<BlobReferenceSasCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobReferenceSasCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasCredential>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBlobReferenceSasCredential(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobReferenceSasCredential)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BlobReferenceSasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

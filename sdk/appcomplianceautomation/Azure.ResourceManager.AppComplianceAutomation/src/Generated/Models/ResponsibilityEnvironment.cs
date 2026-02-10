@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ResponsibilityEnvironment : IEquatable<ResponsibilityEnvironment>
     {
         private readonly string _value;
+        /// <summary> The responsibility is supported in Azure. </summary>
+        private const string AzureValue = "Azure";
+        /// <summary> The responsibility is supported in AWS. </summary>
+        private const string AwsValue = "AWS";
+        /// <summary> The responsibility is supported in GCP. </summary>
+        private const string GcpValue = "GCP";
+        /// <summary> The responsibility is general requirement of all environment. </summary>
+        private const string GeneralValue = "General";
 
         /// <summary> Initializes a new instance of <see cref="ResponsibilityEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResponsibilityEnvironment(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "Azure";
-        private const string AwsValue = "AWS";
-        private const string GcpValue = "GCP";
-        private const string GeneralValue = "General";
+            _value = value;
+        }
 
         /// <summary> The responsibility is supported in Azure. </summary>
         public static ResponsibilityEnvironment Azure { get; } = new ResponsibilityEnvironment(AzureValue);
+
         /// <summary> The responsibility is supported in AWS. </summary>
         public static ResponsibilityEnvironment Aws { get; } = new ResponsibilityEnvironment(AwsValue);
+
         /// <summary> The responsibility is supported in GCP. </summary>
         public static ResponsibilityEnvironment Gcp { get; } = new ResponsibilityEnvironment(GcpValue);
+
         /// <summary> The responsibility is general requirement of all environment. </summary>
         public static ResponsibilityEnvironment General { get; } = new ResponsibilityEnvironment(GeneralValue);
+
         /// <summary> Determines if two <see cref="ResponsibilityEnvironment"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResponsibilityEnvironment left, ResponsibilityEnvironment right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResponsibilityEnvironment"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResponsibilityEnvironment left, ResponsibilityEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponsibilityEnvironment"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResponsibilityEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResponsibilityEnvironment(string value) => new ResponsibilityEnvironment(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResponsibilityEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponsibilityEnvironment?(string value) => value == null ? null : new ResponsibilityEnvironment(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResponsibilityEnvironment other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResponsibilityEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

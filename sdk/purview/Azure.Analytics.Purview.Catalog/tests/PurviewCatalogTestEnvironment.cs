@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Analytics.Purview.Catalog.Tests
 {
-    public class PurviewCatalogTestEnvironment: TestEnvironment
+    public class PurviewCatalogTestEnvironment : TestEnvironment
     {
         public PurviewCatalogTestEnvironment()
         {

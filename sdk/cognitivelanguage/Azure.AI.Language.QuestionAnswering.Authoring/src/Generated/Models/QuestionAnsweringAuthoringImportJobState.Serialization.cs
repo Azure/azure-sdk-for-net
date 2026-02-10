@@ -22,6 +22,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuestionAnsweringAuthoringImportJobState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringImportJobState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuestionAnsweringAuthoringImportJobState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringImportJobState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuestionAnsweringAuthoringImportJobState"/> from. </param>
+        public static explicit operator QuestionAnsweringAuthoringImportJobState(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeQuestionAnsweringAuthoringImportJobState(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuestionAnsweringAuthoringImportJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -207,31 +231,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         QuestionAnsweringAuthoringImportJobState IPersistableModel<QuestionAnsweringAuthoringImportJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuestionAnsweringAuthoringImportJobState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringImportJobState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuestionAnsweringAuthoringImportJobState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringImportJobState)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuestionAnsweringAuthoringImportJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuestionAnsweringAuthoringImportJobState"/> from. </param>
-        public static explicit operator QuestionAnsweringAuthoringImportJobState(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeQuestionAnsweringAuthoringImportJobState(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

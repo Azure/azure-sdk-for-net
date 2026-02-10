@@ -170,6 +170,14 @@ namespace Azure.Communication.CallAutomation
             {
                 options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
             }
+            else if (targetParticipant is MicrosoftTeamsAppIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsAppIdentifier);
+            }
+            else if (targetParticipant is TeamsExtensionUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as TeamsExtensionUserIdentifier);
+            }
             else
             {
                 throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
@@ -232,6 +240,14 @@ namespace Azure.Communication.CallAutomation
             else if (targetParticipant is MicrosoftTeamsUserIdentifier)
             {
                 options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsAppIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsAppIdentifier);
+            }
+            else if (targetParticipant is TeamsExtensionUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as TeamsExtensionUserIdentifier);
             }
             else
             {

@@ -152,8 +152,11 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var pluralOfResourceName = ResourceName.Pluralize();
-                var methodName = BuildFactoryMethodName();
+                var methodName = ResourceName.GetCollectionMethodName();
+                // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
+                // are treated by Humanizer as already plural (from Latin), and we want to preserve
+                // them unchanged rather than incorrectly pluralizing them.
+                var pluralOfResourceName = ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
                 return new MethodSignature(
                     methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
@@ -174,22 +177,6 @@ namespace Azure.Generator.Management.Providers
                     $"Returns a {Type:C} object.",
                     []
                     );
-            }
-        }
-
-        // TODO: Temporary workaround for recent breaking changes in converting Playwright service.
-        // This special-casing will be replaced by a generalized naming strategy in a follow-up PR.
-        private string BuildFactoryMethodName()
-        {
-            var ResourceNamesHavingIrregularPlural = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "PlaywrightQuota", "PlaywrightWorkspaceQuota" };
-
-            if (ResourceNamesHavingIrregularPlural.Contains(ResourceName))
-            {
-                return $"GetAll{ResourceName}";
-            }
-            else
-            {
-                return $"Get{ResourceName.Pluralize()}";
             }
         }
 
@@ -532,7 +519,35 @@ namespace Azure.Generator.Management.Providers
 
         private bool HasTags()
         {
+            if (HasTagsInModel(_inputModel))
+            {
+                return true;
+            }
+
+            // Also check properties of flattened model types
+            var flattenMap = ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap;
             InputModelType? currentModel = _inputModel;
+            while (currentModel != null)
+            {
+                if (flattenMap.TryGetValue(currentModel, out var flattenedProperties))
+                {
+                    foreach (var flattenedProperty in flattenedProperties)
+                    {
+                        if (flattenedProperty.Type is InputModelType flattenedModel && HasTagsInModel(flattenedModel))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                currentModel = currentModel.BaseModel;
+            }
+
+            return false;
+        }
+
+        private static bool HasTagsInModel(InputModelType model)
+        {
+            InputModelType? currentModel = model;
             while (currentModel != null)
             {
                 foreach (var property in currentModel.Properties)
