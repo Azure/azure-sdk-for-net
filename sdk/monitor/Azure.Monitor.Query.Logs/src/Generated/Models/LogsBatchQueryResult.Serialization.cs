@@ -16,6 +16,23 @@ namespace Azure.Monitor.Query.Logs.Models
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsBatchQueryResult : LogsQueryResult, IJsonModel<LogsBatchQueryResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LogsQueryResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLogsBatchQueryResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogsBatchQueryResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogsBatchQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -244,23 +261,6 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LogsBatchQueryResult IPersistableModel<LogsBatchQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogsBatchQueryResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LogsQueryResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LogsBatchQueryResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLogsBatchQueryResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LogsBatchQueryResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LogsBatchQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Defender.Easm
         private readonly string _filter;
         private readonly string _orderby;
         private readonly int? _skip;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of EasmClientGetTasksCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -27,15 +27,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetTasksCollectionResultOfT(EasmClient client, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EasmClientGetTasksCollectionResultOfT(EasmClient client, string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
             _orderby = @orderby;
             _skip = skip;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTasksRequest(nextLink, pageSize, _context) : _client.CreateGetTasksRequest(_filter, _orderby, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetTasks");
             scope.Start();

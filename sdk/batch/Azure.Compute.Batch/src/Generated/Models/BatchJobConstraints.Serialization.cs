@@ -15,6 +15,23 @@ namespace Azure.Compute.Batch
     /// <summary> The execution constraints for a Job. </summary>
     public partial class BatchJobConstraints : IJsonModel<BatchJobConstraints>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobConstraints PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobConstraints>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchJobConstraints(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobConstraints)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobConstraints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -135,23 +152,6 @@ namespace Azure.Compute.Batch
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BatchJobConstraints IPersistableModel<BatchJobConstraints>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchJobConstraints PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobConstraints>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchJobConstraints(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchJobConstraints)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJobConstraints>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

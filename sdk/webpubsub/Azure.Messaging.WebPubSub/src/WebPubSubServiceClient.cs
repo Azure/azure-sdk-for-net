@@ -18,6 +18,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Ownership of <paramref name="content"/> is transferred to this method. It will be disposed automatically when this method completes, whether it succeeds or fails.
+        /// Callers should not dispose the content themselves or reuse it after passing it to this method.
+        /// </remarks>
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
@@ -42,6 +46,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Ownership of <paramref name="content"/> is transferred to this method. It will be disposed automatically when this method completes, whether it succeeds or fails.
+        /// Callers should not dispose the content themselves or reuse it after passing it to this method.
+        /// </remarks>
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
@@ -68,6 +76,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Ownership of <paramref name="content"/> is transferred to this method. It will be disposed automatically when this method completes, whether it succeeds or fails.
+        /// Callers should not dispose the content themselves or reuse it after passing it to this method.
+        /// </remarks>
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
@@ -94,6 +106,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Ownership of <paramref name="content"/> is transferred to this method. It will be disposed automatically when this method completes, whether it succeeds or fails.
+        /// Callers should not dispose the content themselves or reuse it after passing it to this method.
+        /// </remarks>
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
@@ -119,6 +135,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Ownership of <paramref name="content"/> is transferred to this method. It will be disposed automatically when this method completes, whether it succeeds or fails.
+        /// Callers should not dispose the content themselves or reuse it after passing it to this method.
+        /// </remarks>
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
@@ -144,6 +164,10 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Ownership of <paramref name="content"/> is transferred to this method. It will be disposed automatically when this method completes, whether it succeeds or fails.
+        /// Callers should not dispose the content themselves or reuse it after passing it to this method.
+        /// </remarks>
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");

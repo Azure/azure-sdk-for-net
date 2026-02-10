@@ -21,6 +21,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PagedRetrieveQnaRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedRetrieveQnaRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePagedRetrieveQnaRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedRetrieveQnaRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedRetrieveQnaRecord"/> from. </param>
+        public static explicit operator PagedRetrieveQnaRecord(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedRetrieveQnaRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PagedRetrieveQnaRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,31 +169,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         PagedRetrieveQnaRecord IPersistableModel<PagedRetrieveQnaRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedRetrieveQnaRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedRetrieveQnaRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePagedRetrieveQnaRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PagedRetrieveQnaRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedRetrieveQnaRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedRetrieveQnaRecord"/> from. </param>
-        public static explicit operator PagedRetrieveQnaRecord(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedRetrieveQnaRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
