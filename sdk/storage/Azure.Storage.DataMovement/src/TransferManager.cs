@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement
                 CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
                 options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
                 default)
-        {}
+        { }
 
         /// <summary>
         /// Dependency injection constructor.
