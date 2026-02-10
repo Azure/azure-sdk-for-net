@@ -4,7 +4,11 @@
 
 ### Features Added
 
-- Added `CodeTransparencyRedirectPolicy` to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, redirects between Confidential Ledger nodes would fail because the default redirect behavior strips the Authorization header.
+- Added `ConfidentialLedgerRedirectPolicy` (shared from `Azure.Security.ConfidentialLedger.Shared`) to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, redirects between Confidential Ledger nodes would fail because the default redirect behavior strips the Authorization header.
+
+### Other Changes
+
+- Now uses the shared `ConfidentialLedgerRedirectPolicy` from `Azure.Security.ConfidentialLedger.Shared` instead of a duplicated implementation.
 
 ## 1.0.0-beta.6 (2025-12-17)
 

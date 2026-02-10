@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Security.ConfidentialLedger;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
 {
-    public class CodeTransparencyRedirectPolicyTests : SyncAsyncPolicyTestBase
+    public class ConfidentialLedgerRedirectPolicyTests : SyncAsyncPolicyTestBase
     {
-        public CodeTransparencyRedirectPolicyTests(bool isAsync) : base(isAsync)
+        public ConfidentialLedgerRedirectPolicyTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -26,7 +27,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -43,7 +44,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -61,7 +62,7 @@ namespace Azure.Security.CodeTransparency.Tests
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
                 message.Request.Headers.SetValue("Authorization", "Bearer test-token");
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -80,7 +81,7 @@ namespace Azure.Security.CodeTransparency.Tests
             {
                 message.Request.Method = RequestMethod.Post;
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -97,7 +98,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://example.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(statusCode, response.Status);
             Assert.AreEqual(1, mockTransport.Requests.Count);
@@ -113,7 +114,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(307, response.Status);
             // 1 original + 5 redirects = 6 total requests
@@ -130,7 +131,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(307, response.Status);
             Assert.AreEqual(1, mockTransport.Requests.Count);
@@ -146,7 +147,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             // Should NOT follow the redirect (HTTPS → HTTP downgrade)
             Assert.AreEqual(307, response.Status);
@@ -163,7 +164,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -182,7 +183,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(4, mockTransport.Requests.Count);
@@ -200,7 +201,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var response = await SendRequestAsync(mockTransport, message =>
             {
                 message.Request.Uri.Reset(new Uri("https://secondary-node.confidential-ledger.azure.com/ledger"));
-            }, new CodeTransparencyRedirectPolicy());
+            }, new ConfidentialLedgerRedirectPolicy());
 
             Assert.AreEqual(200, response.Status);
             Assert.IsTrue(redirectResponse.IsDisposed);

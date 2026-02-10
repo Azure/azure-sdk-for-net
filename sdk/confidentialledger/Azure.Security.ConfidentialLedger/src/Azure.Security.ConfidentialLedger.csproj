@@ -21,6 +21,8 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+  <Import Project="..\..\Azure.Security.ConfidentialLedger.Shared\src\Azure.Security.ConfidentialLedger.Shared.projitems" Label="Shared" />
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />

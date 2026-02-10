@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.CodeTransparency.Receipt;
+using Azure.Security.ConfidentialLedger;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.CodeTransparency
@@ -64,7 +65,7 @@ namespace Azure.Security.CodeTransparency
             _keyCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy() },
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy() },
                 _keyCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
