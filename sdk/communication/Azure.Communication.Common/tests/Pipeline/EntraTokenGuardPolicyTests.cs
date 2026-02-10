@@ -182,7 +182,7 @@ namespace Azure.Communication.Pipeline
             Assert.AreEqual(successfullResponse, _httpMessage.Response);
         }
 
-        private class CustomRequest: MockRequest
+        private class CustomRequest : MockRequest
         {
             public CustomRequest(string authHeader)
             {

@@ -20,13 +20,13 @@ namespace Azure.Communication.CallingServer
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) {Value = "https://sanitized.skype.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
             IgnoredHeaders.Add("Repeatability-Request-ID");
             IgnoredHeaders.Add("Repeatability-First-Sent");
         }
 
         public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClient" />
@@ -82,7 +82,8 @@ namespace Azure.Communication.CallingServer
                     TestEnvironment.LiveTestStaticConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
-        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync() {
+        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
+        {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
         }

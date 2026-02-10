@@ -125,7 +125,7 @@ namespace Azure.Communication.Messages
         /// <summary>Initializes a new instance of <see cref="ConversationThreadClient"/> for mocking.</summary>
         protected ConversationThreadClient()
         {
-           ClientDiagnostics = null!;
+            ClientDiagnostics = null!;
         }
     }
 }

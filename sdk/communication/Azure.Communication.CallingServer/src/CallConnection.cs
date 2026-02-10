@@ -430,11 +430,11 @@ namespace Azure.Communication.CallingServer
 
                 request.OperationContext = operationContext;
 
-               return RestClient.RemoveParticipants(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    cancellationToken: cancellationToken
-                    );
+                return RestClient.RemoveParticipants(
+                     callConnectionId: CallConnectionId,
+                     request,
+                     cancellationToken: cancellationToken
+                     );
             }
             catch (Exception ex)
             {
