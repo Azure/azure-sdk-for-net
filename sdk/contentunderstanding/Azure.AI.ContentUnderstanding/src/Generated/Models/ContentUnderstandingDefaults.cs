@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    /// <summary> default settings for this Content Understanding resource. </summary>
+    /// <summary>
+    /// Default settings for this Content Understanding resource. Can include multiple kinds of settings;
+    /// for example, mapping required large language models to model deployment names in Microsoft Foundry (see modelDeployments).
+    /// </summary>
     public partial class ContentUnderstandingDefaults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,8 +21,13 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingDefaults"/>. </summary>
         /// <param name="modelDeployments">
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// Dictionary of supported large language model (LLM) name (key) to your model deployment name in Microsoft Foundry (value). Both keys and values are strings.
+        /// Prebuilt and custom analyzers that use large language models require model deployment names in Microsoft Foundry for their supported models.
+        /// The mapping applies to all analyzers you intend to use: ensure each supported model for those analyzers is mapped. To get supported model names for a given analyzer, call Get Analyzer (GET /analyzers/{analyzerId}); the response includes supportedModels.
+        /// Deploy the required models in your Microsoft Foundry resource (portal or API); each deployment has a model name and a model deployment name.
+        /// Call Update Defaults (PATCH /defaults) with this dictionary to map each supported LLM name to your model deployment name in Microsoft Foundry.
+        /// To get more information for a quickstart for REST API, see https://aka.ms/cudoc-quickstart-rest.
+        /// Example: { "gpt-4.1": "myGpt41Deployment", "gpt-4.1-mini": "myGpt41MiniDeployment", "text-embedding-3-large": "myEmbeddingDeployment" }.
         /// </param>
         internal ContentUnderstandingDefaults(IDictionary<string, string> modelDeployments)
         {
@@ -28,8 +36,13 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingDefaults"/>. </summary>
         /// <param name="modelDeployments">
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// Dictionary of supported large language model (LLM) name (key) to your model deployment name in Microsoft Foundry (value). Both keys and values are strings.
+        /// Prebuilt and custom analyzers that use large language models require model deployment names in Microsoft Foundry for their supported models.
+        /// The mapping applies to all analyzers you intend to use: ensure each supported model for those analyzers is mapped. To get supported model names for a given analyzer, call Get Analyzer (GET /analyzers/{analyzerId}); the response includes supportedModels.
+        /// Deploy the required models in your Microsoft Foundry resource (portal or API); each deployment has a model name and a model deployment name.
+        /// Call Update Defaults (PATCH /defaults) with this dictionary to map each supported LLM name to your model deployment name in Microsoft Foundry.
+        /// To get more information for a quickstart for REST API, see https://aka.ms/cudoc-quickstart-rest.
+        /// Example: { "gpt-4.1": "myGpt41Deployment", "gpt-4.1-mini": "myGpt41MiniDeployment", "text-embedding-3-large": "myEmbeddingDeployment" }.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContentUnderstandingDefaults(IDictionary<string, string> modelDeployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -39,8 +52,13 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary>
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// Dictionary of supported large language model (LLM) name (key) to your model deployment name in Microsoft Foundry (value). Both keys and values are strings.
+        /// Prebuilt and custom analyzers that use large language models require model deployment names in Microsoft Foundry for their supported models.
+        /// The mapping applies to all analyzers you intend to use: ensure each supported model for those analyzers is mapped. To get supported model names for a given analyzer, call Get Analyzer (GET /analyzers/{analyzerId}); the response includes supportedModels.
+        /// Deploy the required models in your Microsoft Foundry resource (portal or API); each deployment has a model name and a model deployment name.
+        /// Call Update Defaults (PATCH /defaults) with this dictionary to map each supported LLM name to your model deployment name in Microsoft Foundry.
+        /// To get more information for a quickstart for REST API, see https://aka.ms/cudoc-quickstart-rest.
+        /// Example: { "gpt-4.1": "myGpt41Deployment", "gpt-4.1-mini": "myGpt41MiniDeployment", "text-embedding-3-large": "myEmbeddingDeployment" }.
         /// </summary>
         public IDictionary<string, string> ModelDeployments { get; }
     }
