@@ -519,44 +519,49 @@ namespace Azure.Generator.Management.Providers
 
         private bool HasTags()
         {
+            if (HasTagsInModel(_inputModel))
+            {
+                return true;
+            }
+
+            // Also check properties of flattened model types
+            var flattenMap = ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap;
             InputModelType? currentModel = _inputModel;
             while (currentModel != null)
             {
-                if (HasTagsInProperties(currentModel.Properties))
-                {
-                    return true;
-                }
-
-                // Also check properties of flattened model types
-                var flattenMap = ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap;
                 if (flattenMap.TryGetValue(currentModel, out var flattenedProperties))
                 {
                     foreach (var flattenedProperty in flattenedProperties)
                     {
-                        if (flattenedProperty.Type is InputModelType flattenedModel && HasTagsInProperties(flattenedModel.Properties))
+                        if (flattenedProperty.Type is InputModelType flattenedModel && HasTagsInModel(flattenedModel))
                         {
                             return true;
                         }
                     }
                 }
-
                 currentModel = currentModel.BaseModel;
             }
+
             return false;
         }
 
-        private static bool HasTagsInProperties(IReadOnlyList<InputModelProperty> properties)
+        private static bool HasTagsInModel(InputModelType model)
         {
-            foreach (var property in properties)
+            InputModelType? currentModel = model;
+            while (currentModel != null)
             {
-                if (property.SerializedName == "tags" && property.Type is InputDictionaryType
-                    {
-                        KeyType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String },
-                        ValueType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String }
-                    })
+                foreach (var property in currentModel.Properties)
                 {
-                    return true;
+                    if (property.SerializedName == "tags" && property.Type is InputDictionaryType
+                        {
+                            KeyType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String },
+                            ValueType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String }
+                        })
+                    {
+                        return true;
+                    }
                 }
+                currentModel = currentModel.BaseModel;
             }
             return false;
         }
