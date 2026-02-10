@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch
             string id)
         {
             if (String.IsNullOrEmpty(id))
-                throw new ArgumentNullException("id is not formated correctly");
+                throw new ArgumentNullException("id is not formatted correctly");
             _jobId = id;
             Id = id;
             _value = false;
