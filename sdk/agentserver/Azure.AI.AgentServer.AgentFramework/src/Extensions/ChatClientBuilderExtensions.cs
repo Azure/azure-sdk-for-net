@@ -4,6 +4,7 @@
 using System.Reflection;
 using Azure.Identity;
 using Microsoft.Extensions.AI;
+using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Facade;
 
@@ -60,7 +61,7 @@ public static class ChatClientBuilderExtensions
             return builder;
         }
 
-        var endpoint = ResolveProjectEndpoint();
+        var endpoint = FoundryProjectEndpointResolver.ResolveProjectEndpointFromEnvironment();
         var credential = new DefaultAzureCredential();
 
         return builder.Use(innerClient =>
@@ -68,17 +69,6 @@ public static class ChatClientBuilderExtensions
             var functionInvokingClient = new FunctionInvokingChatClient(innerClient, loggerFactory: null, functionInvocationServices: null);
             return new FoundryToolsChatClient(functionInvokingClient, endpoint, credential, foundryTools);
         });
-    }
-
-    private static Uri ResolveProjectEndpoint()
-    {
-        var endpointFromEnv = Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_ENDPOINT");
-        if (!string.IsNullOrWhiteSpace(endpointFromEnv))
-        {
-            return new Uri(endpointFromEnv);
-        }
-
-        throw new InvalidOperationException("AZURE_AI_PROJECT_ENDPOINT must be set to resolve tools.");
     }
 
     private static FoundryTool ConvertToFoundryTool(object tool)

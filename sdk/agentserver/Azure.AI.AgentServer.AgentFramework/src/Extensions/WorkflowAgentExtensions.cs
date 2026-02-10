@@ -4,6 +4,7 @@
 using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Responses.Invocation;
+using Azure.Core;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,35 @@ namespace Azure.AI.AgentServer.AgentFramework.Extensions;
 /// </summary>
 public static class WorkflowAgentExtensions
 {
+    /// <summary>
+    /// Runs a workflow-based AI agent asynchronously with Foundry-backed conversation history hydration.
+    /// </summary>
+    /// <param name="workflowAgentFactory">The workflow agent factory.</param>
+    /// <param name="credential">The token credential used to access Foundry conversations.</param>
+    /// <param name="projectEndpoint">Optional Foundry project endpoint. Defaults to AZURE_AI_PROJECT_ENDPOINT.</param>
+    /// <param name="loggerFactory">Optional logger factory for creating loggers.</param>
+    /// <param name="telemetrySourceName">The telemetry source name.</param>
+    /// <param name="threadRepository">Optional thread repository. When provided, it overrides auto-hydration repository creation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public static Task RunWorkflowAgentAsync(
+        this WorkflowAgentFactory workflowAgentFactory,
+        TokenCredential credential,
+        Uri? projectEndpoint = null,
+        ILoggerFactory? loggerFactory = null,
+        string telemetrySourceName = "Agents",
+        IAgentThreadRepository? threadRepository = null)
+    {
+        ArgumentNullException.ThrowIfNull(workflowAgentFactory);
+        ArgumentNullException.ThrowIfNull(credential);
+
+        var effectiveThreadRepository =
+            threadRepository ?? FoundryConversationThreadRepositoryFactory.Create(credential, projectEndpoint);
+        return workflowAgentFactory.RunWorkflowAgentAsync(
+            loggerFactory: loggerFactory,
+            telemetrySourceName: telemetrySourceName,
+            threadRepository: effectiveThreadRepository);
+    }
+
     /// <summary>
     /// Runs a workflow-based AI agent asynchronously using the provided service provider.
     /// </summary>
@@ -28,14 +58,17 @@ public static class WorkflowAgentExtensions
         IServiceProvider sp, string telemetrySourceName = "Agents",
         IAgentThreadRepository? threadRepository = null)
     {
+        var effectiveThreadRepository =
+            threadRepository ?? FoundryConversationThreadRepositoryFactory.CreateWithDefaultCredential();
+
         return AgentServerApplication.RunAsync(new ApplicationOptions(
             ConfigureServices: services =>
             {
                 services.AddSingleton(workflowAgentFactory)
                     .AddSingleton<IAgentInvocation, WorkflowAgentInvocation>();
-                if (threadRepository != null)
+                if (effectiveThreadRepository != null)
                 {
-                    services.AddSingleton<IAgentThreadRepository>(threadRepository);
+                    services.AddSingleton<IAgentThreadRepository>(effectiveThreadRepository);
                 }
             },
             LoggerFactory: GetLoggerFactory(sp),
@@ -57,14 +90,17 @@ public static class WorkflowAgentExtensions
         string telemetrySourceName = "Agents",
         IAgentThreadRepository? threadRepository = null)
     {
+        var effectiveThreadRepository =
+            threadRepository ?? FoundryConversationThreadRepositoryFactory.CreateWithDefaultCredential();
+
         return AgentServerApplication.RunAsync(new ApplicationOptions(
             ConfigureServices: services =>
             {
                 services.AddSingleton(workflowAgentFactory)
                     .AddSingleton<IAgentInvocation, WorkflowAgentInvocation>();
-                if (threadRepository != null)
+                if (effectiveThreadRepository != null)
                 {
-                    services.AddSingleton<IAgentThreadRepository>(threadRepository);
+                    services.AddSingleton<IAgentThreadRepository>(effectiveThreadRepository);
                 }
             },
             LoggerFactory: loggerFactory == null ? null : () => loggerFactory,
@@ -85,6 +121,9 @@ public static class WorkflowAgentExtensions
             string telemetrySourceName = "Agents",
             IAgentThreadRepository? threadRepository = null)
     {
+        var effectiveThreadRepository =
+            threadRepository ?? FoundryConversationThreadRepositoryFactory.CreateWithDefaultCredential();
+
         return AgentServerApplication.RunAsync(new ApplicationOptions(
             ConfigureServices: services =>
             {
@@ -96,9 +135,9 @@ public static class WorkflowAgentExtensions
                 {
                     services.AddSingleton(sp.GetRequiredService<IAgentInvocation>());
                 }
-                if (threadRepository != null)
+                if (effectiveThreadRepository != null)
                 {
-                    services.AddSingleton<IAgentThreadRepository>(threadRepository);
+                    services.AddSingleton<IAgentThreadRepository>(effectiveThreadRepository);
                 }
             },
             LoggerFactory: GetLoggerFactory(sp),

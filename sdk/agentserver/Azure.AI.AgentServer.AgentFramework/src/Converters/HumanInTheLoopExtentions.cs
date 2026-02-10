@@ -107,17 +107,30 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
             this AgentThread agentThread)
         {
             var res = new Dictionary<string, UserInputRequestContent>();
-            if (agentThread == null || agentThread is not ChatClientAgentThread)
-            {
-                return res;
-            }
-            var chatClientAgentThread = (ChatClientAgentThread)agentThread;
-            if (chatClientAgentThread.MessageStore == null)
+            if (agentThread == null)
             {
                 return res;
             }
 
-            var messages = await chatClientAgentThread.MessageStore.GetMessagesAsync().ConfigureAwait(false);
+            IEnumerable<ChatMessage>? messages = null;
+            if (agentThread is ChatClientAgentThread chatClientAgentThread)
+            {
+                if (chatClientAgentThread.MessageStore == null)
+                {
+                    return res;
+                }
+
+                messages = await chatClientAgentThread.MessageStore.GetMessagesAsync().ConfigureAwait(false);
+            }
+            else if (agentThread is InMemoryAgentThread inMemoryAgentThread)
+            {
+                messages = await inMemoryAgentThread.MessageStore.GetMessagesAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                return res;
+            }
+
             foreach (var message in messages)
             {
                 foreach (var content in message.Contents)

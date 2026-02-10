@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.7 (Unreleased)
+
+### Features Added
+
+- Added `FoundryProjectEndpointResolver` for centralized `AZURE_AI_PROJECT_ENDPOINT` resolution across hosting integrations.
+
 ## 1.0.0-beta.6 (2026-01-20)
 
 ### Features Added
