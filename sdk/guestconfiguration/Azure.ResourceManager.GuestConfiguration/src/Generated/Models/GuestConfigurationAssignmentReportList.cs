@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </summary>
+        [WirePath("value")]
         public IList<GuestConfigurationAssignmentReport> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

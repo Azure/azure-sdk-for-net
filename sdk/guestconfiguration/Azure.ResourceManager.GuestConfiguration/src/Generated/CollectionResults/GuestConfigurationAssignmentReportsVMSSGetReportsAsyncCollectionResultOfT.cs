@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _vmssName, _guestConfigurationAssignmentName, _context) : _client.CreateGetReportsRequest(_subscriptionId, _resourceGroupName, _vmssName, _guestConfigurationAssignmentName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.GetReportsVmss");
             scope.Start();
             try
             {

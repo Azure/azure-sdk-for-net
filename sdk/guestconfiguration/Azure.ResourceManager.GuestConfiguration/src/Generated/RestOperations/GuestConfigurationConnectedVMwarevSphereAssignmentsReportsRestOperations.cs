@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, RequestContext context)
+        internal HttpMessage CreateGetReportsRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, string reportId, RequestContext context)
+        internal HttpMessage CreateGetReportRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, string reportId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

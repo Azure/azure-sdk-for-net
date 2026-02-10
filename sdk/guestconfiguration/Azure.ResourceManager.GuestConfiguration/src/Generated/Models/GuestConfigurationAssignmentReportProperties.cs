@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="details"> Details of the assignment report. </param>
         /// <param name="vmssResourceId"> Azure resource Id of the VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportProperties(ComplianceStatus? complianceStatus, string reportId, AssignmentInfo assignment, VMInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, string reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, GuestConfigurationAssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComplianceStatus = complianceStatus;
             ReportId = reportId;
@@ -45,27 +46,35 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
-        public ComplianceStatus? ComplianceStatus { get; }
+        [WirePath("complianceStatus")]
+        public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
 
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
+        [WirePath("reportId")]
         public string ReportId { get; }
 
         /// <summary> Configuration details of the guest configuration assignment. </summary>
-        public AssignmentInfo Assignment { get; }
+        [WirePath("assignment")]
+        public GuestConfigurationAssignmentInfo Assignment { get; }
 
         /// <summary> Information about the VM. </summary>
-        public VMInfo Vm { get; }
+        [WirePath("vm")]
+        public GuestConfigurationVmInfo Vm { get; }
 
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Details of the assignment report. </summary>
-        public AssignmentReportDetails Details { get; }
+        [WirePath("details")]
+        public GuestConfigurationAssignmentReportDetails Details { get; }
 
         /// <summary> Azure resource Id of the VMSS. </summary>
+        [WirePath("vmssResourceId")]
         public string VmssResourceId { get; }
     }
 }

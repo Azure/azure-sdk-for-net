@@ -31,13 +31,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        internal GuestConfigurationAssignmentData(string id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties, SystemData systemData) : base(id, name, resourceType, systemData)
+        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties, SystemData systemData) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Properties of the Guest configuration assignment. </summary>
+        [WirePath("properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
     }
 }

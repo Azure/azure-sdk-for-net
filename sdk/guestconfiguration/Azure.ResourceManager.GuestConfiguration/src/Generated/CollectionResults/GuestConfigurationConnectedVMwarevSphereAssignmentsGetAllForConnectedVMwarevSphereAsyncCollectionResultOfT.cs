@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllForConnectedVMwarevSphereRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _context) : _client.CreateGetAllForConnectedVMwarevSphereRequest(_subscriptionId, _resourceGroupName, _vmName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.GetAllForConnectedVMwarevSphere");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentCollection.GetAll");
             scope.Start();
             try
             {

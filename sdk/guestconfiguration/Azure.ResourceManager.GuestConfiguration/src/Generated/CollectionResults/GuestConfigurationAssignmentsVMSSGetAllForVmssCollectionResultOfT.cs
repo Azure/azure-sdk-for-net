@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllForVmssRequest(nextLink, _subscriptionId, _resourceGroupName, _vmssName, _context) : _client.CreateGetAllForVmssRequest(_subscriptionId, _resourceGroupName, _vmssName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.GetAllForVmss");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentCollection.GetAll");
             scope.Start();
             try
             {

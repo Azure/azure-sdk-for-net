@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextSubscriptionListRequest(nextLink, _subscriptionId, _context) : _client.CreateSubscriptionListRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationSubscriptionResource.GetGuestConfigurationVmAssignments");
             scope.Start();
             try
             {

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllForMachineRequest(nextLink, _subscriptionId, _resourceGroupName, _machineName, _context) : _client.CreateGetAllForMachineRequest(_subscriptionId, _resourceGroupName, _machineName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.GetAllForMachine");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
             scope.Start();
             try
             {

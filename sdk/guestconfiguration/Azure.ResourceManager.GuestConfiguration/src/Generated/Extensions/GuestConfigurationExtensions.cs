@@ -39,455 +39,307 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GuestConfigurationVmAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmAssignmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> object. </returns>
-        public static VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource"/> object. </returns>
+        public static GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableGuestConfigurationArmClient(client).GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(id);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmAssignmentResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineCollection"/> objects within the specified scope.
+        /// Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationHcrpAssignmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> objects. </returns>
-        public static VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineCollection GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource"/> object. </returns>
+        public static GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableGuestConfigurationArmClient(client).GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(scope);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationHcrpAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmssAssignmentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource"/> object. </returns>
+        public static GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmssAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVMwarevSphereAssignmentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> object. </returns>
+        public static GuestConfigurationVMwarevSphereAssignmentResource GetGuestConfigurationVMwarevSphereAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVMwarevSphereAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of GuestConfigurationVmAssignments in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVmAssignments(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GuestConfigurationVmAssignments and their operations over a GuestConfigurationVmAssignmentResource. </returns>
+        public static GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(this ResourceGroupResource resourceGroupResource, string vmName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVmAssignments(vmName);
         }
 
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachine(ResourceIdentifier, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVmAssignmentAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachine(this ArmClient client, ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GuestConfigurationVmAssignmentResource>> GetGuestConfigurationVmAssignmentAsync(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationArmClient(client).GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachine(scope, subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVmAssignmentAsync(vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineAsync(ResourceIdentifier, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVmAssignment(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource>> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineAsync(this ArmClient client, ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignment(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableGuestConfigurationArmClient(client).GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineAsync(scope, subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVmAssignment(vmName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachinesGuestConfigurationAssignmentsForMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of GuestConfigurationHcrpAssignments in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetMachinesGuestConfigurationAssignmentsForMachineResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationHcrpAssignments(string)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachinesGuestConfigurationAssignmentsForMachineResource"/> object. </returns>
-        public static MachinesGuestConfigurationAssignmentsForMachineResource GetMachinesGuestConfigurationAssignmentsForMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The machineName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GuestConfigurationHcrpAssignments and their operations over a GuestConfigurationHcrpAssignmentResource. </returns>
+        public static GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(this ResourceGroupResource resourceGroupResource, string machineName)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationArmClient(client).GetMachinesGuestConfigurationAssignmentsForMachineResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of <see cref="MachinesGuestConfigurationAssignmentsForMachineCollection"/> objects within the specified scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetMachinesGuestConfigurationAssignmentsForMachines(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="MachinesGuestConfigurationAssignmentsForMachineResource"/> objects. </returns>
-        public static MachinesGuestConfigurationAssignmentsForMachineCollection GetMachinesGuestConfigurationAssignmentsForMachines(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableGuestConfigurationArmClient(client).GetMachinesGuestConfigurationAssignmentsForMachines(scope);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationHcrpAssignments(machineName);
         }
 
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetMachinesGuestConfigurationAssignmentsForMachine(ResourceIdentifier, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationHcrpAssignmentAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The machineName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MachinesGuestConfigurationAssignmentsForMachineResource> GetMachinesGuestConfigurationAssignmentsForMachine(this ArmClient client, ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(this ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationArmClient(client).GetMachinesGuestConfigurationAssignmentsForMachine(scope, subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName, cancellationToken);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationHcrpAssignmentAsync(machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetMachinesGuestConfigurationAssignmentsForMachineAsync(ResourceIdentifier, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationHcrpAssignment(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The machineName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MachinesGuestConfigurationAssignmentsForMachineResource>> GetMachinesGuestConfigurationAssignmentsForMachineAsync(this ArmClient client, ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(this ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableGuestConfigurationArmClient(client).GetMachinesGuestConfigurationAssignmentsForMachineAsync(scope, subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationHcrpAssignment(machineName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ExternalResourceGuestConfigurationAssignmentForMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of GuestConfigurationVmssAssignments in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetExternalResourceGuestConfigurationAssignmentForMachineResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVmssAssignments(string)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExternalResourceGuestConfigurationAssignmentForMachineResource"/> object. </returns>
-        public static ExternalResourceGuestConfigurationAssignmentForMachineResource GetExternalResourceGuestConfigurationAssignmentForMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmssName"> The vmssName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GuestConfigurationVmssAssignments and their operations over a GuestConfigurationVmssAssignmentResource. </returns>
+        public static GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(this ResourceGroupResource resourceGroupResource, string vmssName)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationArmClient(client).GetExternalResourceGuestConfigurationAssignmentForMachineResource(id);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVmssAssignments(vmssName);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="ExternalResourceGuestConfigurationAssignmentForMachineCollection"/> objects within the specified scope.
+        /// Get information about a guest configuration assignment for VMSS
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetExternalResourceGuestConfigurationAssignmentForMachines(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVmssAssignmentAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ExternalResourceGuestConfigurationAssignmentForMachineResource"/> objects. </returns>
-        public static ExternalResourceGuestConfigurationAssignmentForMachineCollection GetExternalResourceGuestConfigurationAssignmentForMachines(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableGuestConfigurationArmClient(client).GetExternalResourceGuestConfigurationAssignmentForMachines(scope);
-        }
-
-        /// <summary>
-        /// List all reports for the VMSS guest configuration assignment, latest report first.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetExternalResourceGuestConfigurationAssignmentForMachine(ResourceIdentifier, string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmssName"> The vmssName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GuestConfigurationAssignmentReportList> GetExternalResourceGuestConfigurationAssignmentForMachine(this ArmClient client, ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GuestConfigurationVmssAssignmentResource>> GetGuestConfigurationVmssAssignmentAsync(this ResourceGroupResource resourceGroupResource, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationArmClient(client).GetExternalResourceGuestConfigurationAssignmentForMachine(scope, subscriptionId, resourceGroupName, vmssName, guestConfigurationAssignmentName, cancellationToken);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVmssAssignmentAsync(vmssName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// List all reports for the VMSS guest configuration assignment, latest report first.
+        /// Get information about a guest configuration assignment for VMSS
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetExternalResourceGuestConfigurationAssignmentForMachineAsync(ResourceIdentifier, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVmssAssignment(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmssName"> The vmssName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Task<Response<GuestConfigurationAssignmentReportList>> GetExternalResourceGuestConfigurationAssignmentForMachineAsync(this ArmClient client, ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableGuestConfigurationArmClient(client).GetExternalResourceGuestConfigurationAssignmentForMachineAsync(scope, subscriptionId, resourceGroupName, vmssName, guestConfigurationAssignmentName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource"/> object. </returns>
-        public static VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableGuestConfigurationArmClient(client).GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource"/> object. </returns>
-        public static ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableGuestConfigurationArmClient(client).GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachinesGuestConfigurationAssignmentsReportsForMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetMachinesGuestConfigurationAssignmentsReportsForMachineResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachinesGuestConfigurationAssignmentsReportsForMachineResource"/> object. </returns>
-        public static MachinesGuestConfigurationAssignmentsReportsForMachineResource GetMachinesGuestConfigurationAssignmentsReportsForMachineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableGuestConfigurationArmClient(client).GetMachinesGuestConfigurationAssignmentsReportsForMachineResource(id);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a virtual machine.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetVmVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVmVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(this ResourceGroupResource resourceGroupResource, string vmName, CancellationToken cancellationToken = default)
+        public static Response<GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(this ResourceGroupResource resourceGroupResource, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetVmVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(vmName, cancellationToken);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVmssAssignment(vmssName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
-        /// List all guest configuration assignments for a virtual machine.
+        /// Gets a collection of GuestConfigurationVMwarevSphereAssignments in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetVmVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVMwarevSphereAssignments(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVmVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(this ResourceGroupResource resourceGroupResource, string vmName, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of GuestConfigurationVMwarevSphereAssignments and their operations over a GuestConfigurationVMwarevSphereAssignmentResource. </returns>
+        public static GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(this ResourceGroupResource resourceGroupResource, string vmName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetVmVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(vmName, cancellationToken);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVMwarevSphereAssignments(vmName);
         }
 
         /// <summary>
-        /// List all guest configuration assignments for an ARC machine.
+        /// Get information about a guest configuration assignment
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetVMwarevSphereVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVMwarevSphereAssignmentAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVMwarevSphereVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(this ResourceGroupResource resourceGroupResource, string vmName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetGuestConfigurationVMwarevSphereAssignmentAsync(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetVMwarevSphereVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(vmName, cancellationToken);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVMwarevSphereAssignmentAsync(vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// List all guest configuration assignments for an ARC machine.
+        /// Get information about a guest configuration assignment
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetVMwarevSphereVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationVMwarevSphereAssignment(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVMwarevSphereVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(this ResourceGroupResource resourceGroupResource, string vmName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<GuestConfigurationVMwarevSphereAssignmentResource> GetGuestConfigurationVMwarevSphereAssignment(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetVMwarevSphereVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(vmName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for VMSS.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetVmssExternalResourceGuestConfigurationAssignmentForMachinesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVmssExternalResourceGuestConfigurationAssignmentForMachinesAsync(this ResourceGroupResource resourceGroupResource, string vmssName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetVmssExternalResourceGuestConfigurationAssignmentForMachinesAsync(vmssName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for VMSS.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetVmssExternalResourceGuestConfigurationAssignmentForMachines(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVmssExternalResourceGuestConfigurationAssignmentForMachines(this ResourceGroupResource resourceGroupResource, string vmssName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetVmssExternalResourceGuestConfigurationAssignmentForMachines(vmssName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for an ARC machine.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetHcrpExternalResourceGuestConfigurationAssignmentForMachinesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetHcrpExternalResourceGuestConfigurationAssignmentForMachinesAsync(this ResourceGroupResource resourceGroupResource, string machineName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetHcrpExternalResourceGuestConfigurationAssignmentForMachinesAsync(machineName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for an ARC machine.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetHcrpExternalResourceGuestConfigurationAssignmentForMachines(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetHcrpExternalResourceGuestConfigurationAssignmentForMachines(this ResourceGroupResource resourceGroupResource, string machineName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetHcrpExternalResourceGuestConfigurationAssignmentForMachines(machineName, cancellationToken);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationVMwarevSphereAssignment(vmName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -500,8 +352,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> RGListAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GuestConfigurationVmAssignmentResource> RGListAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -518,8 +370,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> RGList(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GuestConfigurationVmAssignmentResource> RGList(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -527,222 +379,353 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// Gets a collection of VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines in the <see cref="SubscriptionResource"/>
+        /// Get a report for the guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportVmAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines and their operations over a VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource. </returns>
-        public static VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineCollection GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines(this SubscriptionResource subscriptionResource)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReport>> GetReportVmAsync(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines();
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportVmAsync(vmName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a report for the guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportVm(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GuestConfigurationAssignmentReport>> GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReport> GetReportVm(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineAsync(resourceGroupName, vmName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportVm(vmName, guestConfigurationAssignmentName, reportId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsVmAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReportList>> GetReportsVmAsync(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsVmAsync(vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsVm(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReportList> GetReportsVm(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsVm(vmName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// Get a report for the guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachine(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportHcrpAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The name of the ARC machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GuestConfigurationAssignmentReport> GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachine(this SubscriptionResource subscriptionResource, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReport>> GetReportHcrpAsync(this ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachine(resourceGroupName, vmName, guestConfigurationAssignmentName, reportId, cancellationToken);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportHcrpAsync(machineName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a collection of ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets in the <see cref="SubscriptionResource"/>
+        /// Get a report for the guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportHcrp(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets and their operations over a ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource. </returns>
-        public static ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetCollection GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets(this SubscriptionResource subscriptionResource)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReport> GetReportHcrp(this ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets();
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportHcrp(machineName, guestConfigurationAssignmentName, reportId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsHcrpAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReportList>> GetReportsHcrpAsync(this ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsHcrpAsync(machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsHcrp(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReportList> GetReportsHcrp(this ResourceGroupResource resourceGroupResource, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsHcrp(machineName, guestConfigurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all reports for the VMSS guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsVmssAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GuestConfigurationAssignmentReport> GetReportsVmssAsync(this ResourceGroupResource resourceGroupResource, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsVmssAsync(vmssName, guestConfigurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all reports for the VMSS guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsVmss(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GuestConfigurationAssignmentReport> GetReportsVmss(this ResourceGroupResource resourceGroupResource, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsVmss(vmssName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// Get a report for the VMSS guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportVmssAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="id"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GuestConfigurationAssignmentReport>> GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReport>> GetReportVmssAsync(this ResourceGroupResource resourceGroupResource, string vmssName, string guestConfigurationAssignmentName, string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetAsync(resourceGroupName, vmssName, guestConfigurationAssignmentName, id, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportVmssAsync(vmssName, guestConfigurationAssignmentName, id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a report for the VMSS guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSet(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportVmss(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="id"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GuestConfigurationAssignmentReport> GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSet(this SubscriptionResource subscriptionResource, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReport> GetReportVmss(this ResourceGroupResource resourceGroupResource, string vmssName, string guestConfigurationAssignmentName, string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSet(resourceGroupName, vmssName, guestConfigurationAssignmentName, id, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of MachinesGuestConfigurationAssignmentsReportsForMachines in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetMachinesGuestConfigurationAssignmentsReportsForMachines()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of MachinesGuestConfigurationAssignmentsReportsForMachines and their operations over a MachinesGuestConfigurationAssignmentsReportsForMachineResource. </returns>
-        public static MachinesGuestConfigurationAssignmentsReportsForMachineCollection GetMachinesGuestConfigurationAssignmentsReportsForMachines(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetMachinesGuestConfigurationAssignmentsReportsForMachines();
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportVmss(vmssName, guestConfigurationAssignmentName, id, cancellationToken);
         }
 
         /// <summary>
         /// Get a report for the guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetMachinesGuestConfigurationAssignmentsReportsForMachineAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportVMwarevSphereAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GuestConfigurationAssignmentReport>> GetMachinesGuestConfigurationAssignmentsReportsForMachineAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReport>> GetReportVMwarevSphereAsync(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetMachinesGuestConfigurationAssignmentsReportsForMachineAsync(resourceGroupName, machineName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportVMwarevSphereAsync(vmName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a report for the guest configuration assignment, by reportId.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetMachinesGuestConfigurationAssignmentsReportsForMachine(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportVMwarevSphere(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GuestConfigurationAssignmentReport> GetMachinesGuestConfigurationAssignmentsReportsForMachine(this SubscriptionResource subscriptionResource, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReport> GetReportVMwarevSphere(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetMachinesGuestConfigurationAssignmentsReportsForMachine(resourceGroupName, machineName, guestConfigurationAssignmentName, reportId, cancellationToken);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportVMwarevSphere(vmName, guestConfigurationAssignmentName, reportId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsVMwarevSphereAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<GuestConfigurationAssignmentReportList>> GetReportsVMwarevSphereAsync(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsVMwarevSphereAsync(vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetReportsVMwarevSphere(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<GuestConfigurationAssignmentReportList> GetReportsVMwarevSphere(this ResourceGroupResource resourceGroupResource, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetReportsVMwarevSphere(vmName, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// List all guest configuration assignments for a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetGuestConfigurationVmAssignmentsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(cancellationToken);
+            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetGuestConfigurationVmAssignmentsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List all guest configuration assignments for a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationSubscriptionResource.GetGuestConfigurationVmAssignments(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(cancellationToken);
+            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetGuestConfigurationVmAssignments(cancellationToken);
         }
     }
 }

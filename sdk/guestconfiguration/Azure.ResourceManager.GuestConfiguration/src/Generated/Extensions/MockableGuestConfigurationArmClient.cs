@@ -5,14 +5,9 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration;
-using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
@@ -31,202 +26,40 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GuestConfigurationVmAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> object. </returns>
-        public virtual VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource"/> object. </returns>
+        public virtual GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(ResourceIdentifier id)
         {
-            VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource.ValidateResourceId(id);
-            return new VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(Client, id);
+            GuestConfigurationVmAssignmentResource.ValidateResourceId(id);
+            return new GuestConfigurationVmAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> objects. </returns>
-        public virtual VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineCollection GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(ResourceIdentifier scope)
-        {
-            return new VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineCollection(Client, scope);
-        }
-
-        /// <summary> Get information about a guest configuration assignment. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachine(ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
-            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
-
-            return GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(scope).Get(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Get information about a guest configuration assignment. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource>> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachineAsync(ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
-            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
-
-            return await GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(scope).GetAsync(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MachinesGuestConfigurationAssignmentsForMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachinesGuestConfigurationAssignmentsForMachineResource"/> object. </returns>
-        public virtual MachinesGuestConfigurationAssignmentsForMachineResource GetMachinesGuestConfigurationAssignmentsForMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource"/> object. </returns>
+        public virtual GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(ResourceIdentifier id)
         {
-            MachinesGuestConfigurationAssignmentsForMachineResource.ValidateResourceId(id);
-            return new MachinesGuestConfigurationAssignmentsForMachineResource(Client, id);
+            GuestConfigurationHcrpAssignmentResource.ValidateResourceId(id);
+            return new GuestConfigurationHcrpAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="MachinesGuestConfigurationAssignmentsForMachineCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="MachinesGuestConfigurationAssignmentsForMachineResource"/> objects. </returns>
-        public virtual MachinesGuestConfigurationAssignmentsForMachineCollection GetMachinesGuestConfigurationAssignmentsForMachines(ResourceIdentifier scope)
-        {
-            return new MachinesGuestConfigurationAssignmentsForMachineCollection(Client, scope);
-        }
-
-        /// <summary> Get information about a guest configuration assignment. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachinesGuestConfigurationAssignmentsForMachineResource> GetMachinesGuestConfigurationAssignmentsForMachine(ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
-            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
-
-            return GetMachinesGuestConfigurationAssignmentsForMachines(scope).Get(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Get information about a guest configuration assignment. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachinesGuestConfigurationAssignmentsForMachineResource>> GetMachinesGuestConfigurationAssignmentsForMachineAsync(ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
-            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
-
-            return await GetMachinesGuestConfigurationAssignmentsForMachines(scope).GetAsync(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ExternalResourceGuestConfigurationAssignmentForMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalResourceGuestConfigurationAssignmentForMachineResource"/> object. </returns>
-        public virtual ExternalResourceGuestConfigurationAssignmentForMachineResource GetExternalResourceGuestConfigurationAssignmentForMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource"/> object. </returns>
+        public virtual GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(ResourceIdentifier id)
         {
-            ExternalResourceGuestConfigurationAssignmentForMachineResource.ValidateResourceId(id);
-            return new ExternalResourceGuestConfigurationAssignmentForMachineResource(Client, id);
+            GuestConfigurationVmssAssignmentResource.ValidateResourceId(id);
+            return new GuestConfigurationVmssAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ExternalResourceGuestConfigurationAssignmentForMachineCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ExternalResourceGuestConfigurationAssignmentForMachineResource"/> objects. </returns>
-        public virtual ExternalResourceGuestConfigurationAssignmentForMachineCollection GetExternalResourceGuestConfigurationAssignmentForMachines(ResourceIdentifier scope)
-        {
-            return new ExternalResourceGuestConfigurationAssignmentForMachineCollection(Client, scope);
-        }
-
-        /// <summary> List all reports for the VMSS guest configuration assignment, latest report first. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GuestConfigurationAssignmentReportList> GetExternalResourceGuestConfigurationAssignmentForMachine(ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
-            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
-
-            return GetExternalResourceGuestConfigurationAssignmentForMachines(scope).Get(subscriptionId, resourceGroupName, vmssName, guestConfigurationAssignmentName, cancellationToken);
-        }
-
-        /// <summary> List all reports for the VMSS guest configuration assignment, latest report first. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Task<Response<GuestConfigurationAssignmentReportList>> GetExternalResourceGuestConfigurationAssignmentForMachineAsync(ResourceIdentifier scope, string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
-            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
-
-            return GetExternalResourceGuestConfigurationAssignmentForMachines(scope).GetAsync(subscriptionId, resourceGroupName, vmssName, guestConfigurationAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a <see cref="VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource"/> object. </returns>
-        public virtual VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> object. </returns>
+        public virtual GuestConfigurationVMwarevSphereAssignmentResource GetGuestConfigurationVMwarevSphereAssignmentResource(ResourceIdentifier id)
         {
-            VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource.ValidateResourceId(id);
-            return new VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource"/> object. </returns>
-        public virtual ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource(ResourceIdentifier id)
-        {
-            ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource.ValidateResourceId(id);
-            return new ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MachinesGuestConfigurationAssignmentsReportsForMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachinesGuestConfigurationAssignmentsReportsForMachineResource"/> object. </returns>
-        public virtual MachinesGuestConfigurationAssignmentsReportsForMachineResource GetMachinesGuestConfigurationAssignmentsReportsForMachineResource(ResourceIdentifier id)
-        {
-            MachinesGuestConfigurationAssignmentsReportsForMachineResource.ValidateResourceId(id);
-            return new MachinesGuestConfigurationAssignmentsReportsForMachineResource(Client, id);
+            GuestConfigurationVMwarevSphereAssignmentResource.ValidateResourceId(id);
+            return new GuestConfigurationVMwarevSphereAssignmentResource(Client, id);
         }
     }
 }

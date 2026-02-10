@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
+        internal HttpMessage CreateGetForVmssRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateForVmssRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
+        internal HttpMessage CreateDeleteForVmssRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string vmssName, RequestContext context)
+        internal HttpMessage CreateGetAllForVmssRequest(string subscriptionId, string resourceGroupName, string vmssName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string vmssName, RequestContext context)
+        internal HttpMessage CreateNextGetAllForVmssRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string vmssName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Result of the list guest configuration assignment operation. </summary>
+        [WirePath("value")]
         public IList<GuestConfigurationAssignmentData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

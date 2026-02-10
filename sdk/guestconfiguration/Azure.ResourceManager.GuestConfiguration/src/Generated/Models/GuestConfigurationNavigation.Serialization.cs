@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUri"u8);
-                writer.WriteStringValue(ContentUri);
+                writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ContentHash))
             {
@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsCollectionDefined(ConfigurationParameter))
+            if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
-                foreach (ConfigurationParameter item in ConfigurationParameter)
+                foreach (GuestConfigurationParameter item in ConfigurationParameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedParameter))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();
-                foreach (ConfigurationParameter item in ConfigurationProtectedParameter)
+                foreach (GuestConfigurationParameter item in ConfigurationProtectedParameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationKind? kind = default;
             string name = default;
             string version = default;
-            string contentUri = default;
+            Uri contentUri = default;
             string contentHash = default;
             string contentManagedIdentity = default;
-            AssignmentType? assignmentType = default;
+            GuestConfigurationAssignmentType? assignmentType = default;
             string assignmentSource = default;
             string contentType = default;
-            IList<ConfigurationParameter> configurationParameter = default;
-            IList<ConfigurationParameter> configurationProtectedParameter = default;
-            ConfigurationSetting configurationSetting = default;
+            IList<GuestConfigurationParameter> configurationParameters = default;
+            IList<GuestConfigurationParameter> configurationProtectedParameters = default;
+            LcmConfigurationSetting configurationSetting = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +182,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("contentUri"u8))
                 {
-                    contentUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    contentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("contentHash"u8))
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    assignmentType = new AssignmentType(prop.Value.GetString());
+                    assignmentType = new GuestConfigurationAssignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignmentSource"u8))
@@ -230,12 +234,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item, options));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
                     }
-                    configurationParameter = array;
+                    configurationParameters = array;
                     continue;
                 }
                 if (prop.NameEquals("configurationProtectedParameter"u8))
@@ -244,12 +248,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item, options));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
                     }
-                    configurationProtectedParameter = array;
+                    configurationProtectedParameters = array;
                     continue;
                 }
                 if (prop.NameEquals("configurationSetting"u8))
@@ -258,7 +262,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    configurationSetting = ConfigurationSetting.DeserializeConfigurationSetting(prop.Value, options);
+                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -276,8 +280,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 assignmentType,
                 assignmentSource,
                 contentType,
-                configurationParameter ?? new ChangeTrackingList<ConfigurationParameter>(),
-                configurationProtectedParameter ?? new ChangeTrackingList<ConfigurationParameter>(),
+                configurationParameters ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationProtectedParameters ?? new ChangeTrackingList<GuestConfigurationParameter>(),
                 configurationSetting,
                 additionalBinaryDataProperties);
         }
