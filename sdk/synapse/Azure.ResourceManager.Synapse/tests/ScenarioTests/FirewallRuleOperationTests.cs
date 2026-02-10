@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Tests
 {
     public class FirewallRuleOperationTests : SynapseManagementTestBase
     {
-        public FirewallRuleOperationTests(bool async): base(async)
+        public FirewallRuleOperationTests(bool async) : base(async)
         {
         }
 
