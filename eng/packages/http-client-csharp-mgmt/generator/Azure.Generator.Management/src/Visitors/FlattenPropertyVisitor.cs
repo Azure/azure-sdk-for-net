@@ -306,11 +306,28 @@ namespace Azure.Generator.Management.Visitors
                                     var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                                     parameters.Add(New.Instance(constructorParameterType, innerParameters));
                                 }
-                                // Note: If innerFlattenedProperties is empty, we skip adding this parameter.
-                                // This can happen when the nested model has no required properties, and all
-                                // flattened properties are optional. In such cases, the model factory will
-                                // not include this nested object in the constructor call.
+                                else
+                                {
+                                    // If innerFlattenedProperties is empty, we still need to add a parameter
+                                    // to maintain the correct parameter count for the constructor.
+                                    // This can happen when the nested model has no required properties, and all
+                                    // flattened properties are optional.
+                                    // Use Default.CastTo to handle both value types and reference types correctly.
+                                    parameters.Add(Default.CastTo(constructorParameterType));
+                                }
                             }
+                            else
+                            {
+                                // Constructor parameter not found in propertyNameMap, add default as parameter
+                                // Use Default.CastTo to handle both value types and reference types correctly.
+                                parameters.Add(Default.CastTo(constructorParameterType));
+                            }
+                        }
+                        else
+                        {
+                            // propertyType not found in _flattenedModelTypes, add default as parameter
+                            // Use Default.CastTo to handle both value types and reference types correctly.
+                            parameters.Add(Default.CastTo(constructorParameterType));
                         }
                     }
                 }
