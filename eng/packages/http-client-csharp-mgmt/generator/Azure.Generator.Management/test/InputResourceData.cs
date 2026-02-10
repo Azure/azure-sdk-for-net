@@ -3,7 +3,6 @@
 
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -75,10 +74,8 @@ namespace Azure.Generator.Management.Tests.Common
                         ]);
 
             // Create the properties property with the flattenProperty decorator
-            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isReadOnly: false);
             var flattenDecorator = new InputDecoratorInfo("Azure.ResourceManager.@flattenProperty", null);
-            var decoratorsProperty = typeof(InputModelProperty).GetProperty(nameof(InputModelProperty.Decorators));
-            decoratorsProperty?.GetSetMethod(true)!.Invoke(propertiesProperty, [new[] { flattenDecorator }]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isReadOnly: false, decorators: [flattenDecorator]);
 
             var responseModel = InputFactory.Model(ResourceModelName,
                         usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
