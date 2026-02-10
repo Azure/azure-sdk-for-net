@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
 
             string deploymentStackName = Recording.GenerateAssetName("deployStackRG-CreateOrUpdate-");
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            var deploymentStack =  (await Client.GetDeploymentStacks(rg.Data.Id).CreateOrUpdateAsync(WaitUntil.Completed ,deploymentStackName, deploymentStackData)).Value;
+            var deploymentStack = (await Client.GetDeploymentStacks(rg.Data.Id).CreateOrUpdateAsync(WaitUntil.Completed, deploymentStackName, deploymentStackData)).Value;
 
             Assert.AreEqual(deploymentStackName, deploymentStack.Data.Name);
 
