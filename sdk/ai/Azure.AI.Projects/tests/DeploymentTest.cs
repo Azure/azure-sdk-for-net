@@ -4,13 +4,8 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Tests.Utils;
-using Azure.Core.TestFramework;
-using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -27,38 +22,8 @@ public class DeploymentTest : ProjectsClientTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
-        AIProjectClient projectClient = GetTestClient();
+        AIProjectClient projectClient = GetTestProjectClient();
 
-        if (IsAsync)
-        {
-            await DeploymentTestAsync(projectClient, modelDeploymentName, modelPublisher);
-        }
-        else
-        {
-            DeploymentTestSync(projectClient, modelDeploymentName, modelPublisher);
-        }
-    }
-
-    private void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
-    {
-        Console.WriteLine("List all deployments:");
-        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
-        {
-            ValidateDeployment(deployment);
-        }
-
-        Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
-        {
-            ValidateDeployment(deployment);
-        }
-
-        Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-        ModelDeployment deploymentDetails = (ModelDeployment)projectClient.Deployments.GetDeployment(modelDeploymentName);
-        ValidateDeployment(deploymentDetails);
-    }
-    private async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
-    {
         Console.WriteLine("List all deployments:");
         await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {

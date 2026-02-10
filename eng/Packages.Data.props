@@ -251,6 +251,11 @@
     <PackageReference Update="OpenAI" Version="2.8.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Projects'))">
+    <PackageReference Update="OpenAI" Version="2.8.0" />
+    <PackageReference Update="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
     <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="10.1.1"/>
   </ItemGroup>
