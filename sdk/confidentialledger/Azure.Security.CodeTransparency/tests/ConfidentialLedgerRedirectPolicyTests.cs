@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Security.ConfidentialLedger;
+using Azure.Security.ConfidentialLedger; // Shared redirect policy implementation
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
