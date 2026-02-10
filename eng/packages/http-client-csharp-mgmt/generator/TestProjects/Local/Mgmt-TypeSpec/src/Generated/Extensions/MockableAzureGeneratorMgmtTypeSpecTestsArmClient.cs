@@ -521,6 +521,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new MultiFlattenTestResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PolicyVmAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyVmAssignmentResource"/> object. </returns>
+        public virtual PolicyVmAssignmentResource GetPolicyVmAssignmentResource(ResourceIdentifier id)
+        {
+            PolicyVmAssignmentResource.ValidateResourceId(id);
+            return new PolicyVmAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyArcAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyArcAssignmentResource"/> object. </returns>
+        public virtual PolicyArcAssignmentResource GetPolicyArcAssignmentResource(ResourceIdentifier id)
+        {
+            PolicyArcAssignmentResource.ValidateResourceId(id);
+            return new PolicyArcAssignmentResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

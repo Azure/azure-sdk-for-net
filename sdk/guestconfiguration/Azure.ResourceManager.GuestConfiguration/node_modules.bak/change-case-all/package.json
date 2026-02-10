@@ -1,0 +1,56 @@
+{
+   "name": "change-case-all",
+   "version": "2.1.0",
+   "description": "All change-case methods bundled in a single module",
+   "license": "MIT",
+   "main": "./dist/index.js",
+   "types": "dist/index.d.ts",
+   "type": "module",
+   "module": "./dist/index.js",
+   "exports": {
+      ".": {
+         "import": "./dist/index.js",
+         "require": "./dist/index.umd.cjs"
+      }
+   },
+   "author": {
+      "name": "Jonas Gnioui",
+      "email": "btxtiger@icloud.com"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/btxtiger/change-case-all"
+   },
+   "scripts": {
+      "build": "vite build",
+      "test": "vitest run",
+      "release": "npm run build && npm run test && npm publish"
+   },
+   "files": [
+      "dist",
+      "LICENSE"
+   ],
+   "keywords": [
+      "change-case",
+      "camel-case",
+      "pascal-case",
+      "change-case",
+      "snake-case",
+      "lowercase",
+      "uppercase",
+      "constant-case"
+   ],
+   "dependencies": {
+      "change-case": "^5.2.0",
+      "sponge-case": "^2.0.2",
+      "swap-case": "^3.0.2",
+      "title-case": "^3.0.3"
+   },
+   "devDependencies": {
+      "prettier": "^3.1.0",
+      "typescript": "^5.3.2",
+      "vite": "^5.0.2",
+      "vite-plugin-dts": "^3.6.3",
+      "vitest": "^0.34.6"
+   }
+}

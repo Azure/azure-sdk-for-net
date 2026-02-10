@@ -72,6 +72,27 @@ namespace Azure.Generator.Management.Utilities
         }
 
         /// <summary>
+        /// Determines if a method is a non-CRUD operation that should use the SDK method name
+        /// instead of the standard CRUD method name (e.g., GetReports vs Get).
+        /// </summary>
+        public static bool IsNonCrudOperation(ResourceOperationKind operationKind, string methodName)
+        {
+            // Standard CRUD names for each kind
+            var standardName = operationKind switch
+            {
+                ResourceOperationKind.Read => "Get",
+                ResourceOperationKind.Create => "CreateOrUpdate",
+                ResourceOperationKind.Delete => "Delete",
+                ResourceOperationKind.List => "GetAll",
+                ResourceOperationKind.Update => "Update",
+                _ => null
+            };
+
+            // If the method name differs from the standard CRUD name, it's a non-CRUD operation
+            return standardName != null && !methodName.Equals(standardName, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
         /// Gets the appropriate method name for an extension operation based on its kind and corresponding resource name.
         /// </summary>
         /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>

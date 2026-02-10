@@ -1,0 +1,134 @@
+{
+  "name": "@azure-tools/codegen",
+  "entries": [
+    {
+      "version": "2.10.1",
+      "tag": "@azure-tools/codegen_v2.10.1",
+      "date": "Tue, 20 May 2025 18:08:56 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update dependencies"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.10.0",
+      "tag": "@azure-tools/codegen_v2.10.0",
+      "date": "Thu, 16 Nov 2023 16:00:04 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Upgrade dependencies"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.9.2",
+      "tag": "@azure-tools/codegen_v2.9.2",
+      "date": "Wed, 07 Dec 2022 22:24:34 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update dependencies"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.9.1",
+      "tag": "@azure-tools/codegen_v2.9.1",
+      "date": "Tue, 15 Mar 2022 16:00:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump `semver` dependency"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.9.0",
+      "tag": "@azure-tools/codegen_v2.9.0",
+      "date": "Fri, 19 Nov 2021 04:23:42 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "**Removed** `shadow` and replace with `shadowPosition`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.8.0",
+      "tag": "@azure-tools/codegen_v2.8.0",
+      "date": "Thu, 14 Oct 2021 23:03:29 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "**Removed** Array and String extension methods(`.last`, `.captialize`, etc.) causing polution and conflicts."
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.7.0",
+      "tag": "@azure-tools/codegen_v2.7.0",
+      "date": "Wed, 08 Sep 2021 15:39:22 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "**Internal** Remove @azure-tools/linq library\""
+          },
+          {
+            "comment": "**Perf** Modified yaml dump improving serialization"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.6.0",
+      "tag": "@azure-tools/codegen_v2.6.0",
+      "date": "Mon, 19 Jul 2021 15:15:42 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Drop support for node 10"
+          },
+          {
+            "comment": "**Remove** include/exclude x-dash properties utils. Use @azure-tools/openapi instead for this functionality"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.5.294",
+      "tag": "@azure-tools/codegen_v2.5.294",
+      "date": "Tue, 16 Mar 2021 15:52:56 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump dependencies versions"
+          }
+        ]
+      }
+    },
+    {
+      "version": "2.5.293",
+      "tag": "@azure-tools/codegen_v2.5.293",
+      "date": "Thu, 04 Feb 2021 19:05:18 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Internal: Moved source to src/ folder"
+          },
+          {
+            "comment": "Internal code linting fixes"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "emitter-ts",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./testing": {
+      "types": "./dist/src/testing/index.d.ts",
+      "default": "./dist/src/testing/index.js"
+    }
+  },
+  "peerDependencies": {
+    "@typespec/compiler": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "eslint": "^9.15.0",
+    "@typespec/compiler": "latest",
+    "typescript": "^5.3.3",
+    "prettier": "^3.3.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "node --test 'dist/test**/*.test.js'",
+    "lint": "eslint src/ test/ --report-unused-disable-directives --max-warnings=0",
+    "lint:fix": "eslint . --report-unused-disable-directives --fix",
+    "format": "prettier .  --write",
+    "format:check": "prettier --check ."
+  },
+  "private": true
+}

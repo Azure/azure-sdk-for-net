@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src"
+  },
+  "exclude": ["**/*.test.*", "test/**/*"],
+  "references": [
+    { "path": "../../libs/common/tsconfig.build.json" },
+    { "path": "../../libs/configuration/tsconfig.build.json" },
+    { "path": "../../libs/datastore/tsconfig.build.json" },
+    { "path": "../../libs/openapi/tsconfig.build.json" },
+    { "path": "../../libs/json/tsconfig.build.json" },
+    { "path": "../../libs/jsonschema/tsconfig.build.json" },
+    { "path": "../../libs/deduplication/tsconfig.build.json" },
+    { "path": "../../libs/yaml/tsconfig.build.json" },
+    { "path": "../../libs/oai2-to-oai3/tsconfig.build.json" },
+    { "path": "../../testing/test-utils/tsconfig.build.json" }
+  ]
+}

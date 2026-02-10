@@ -1,0 +1,9 @@
+export const ProvidersSegment = "/providers/";
+export const ManagementGroupPath = "/providers/Microsoft.Management/managementGroups/{managementGroupId}";
+export const ManagementGroupScopePrefix = "/providers/Microsoft.Management/managementGroups";
+export const ResourceGroupPath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}";
+export const ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
+export const SubscriptionPath = "/subscriptions/{subscriptionId}";
+export const SubscriptionScopePrefix = "/subscriptions";
+export const TenantPath = "";
+export const TenantScopePrefix = "/tenants";

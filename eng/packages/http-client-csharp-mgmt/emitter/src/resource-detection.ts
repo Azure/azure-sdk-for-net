@@ -591,7 +591,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "createOrUpdate":
             return {
@@ -601,7 +604,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "update":
             return {
@@ -611,7 +617,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "delete":
             return {
@@ -621,7 +630,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "list":
             return {
@@ -631,7 +643,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "action":
             return {
@@ -641,7 +656,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
         }
         break;
@@ -656,10 +674,10 @@ function parseResourceOperation(
                 decorator.args[0].value as Model,
                 decorator.definition?.name
               ),
-              // Extract the explicit resource name if available (4th parameter in LegacyOperations)
+              // Extract the explicit resource name if available (3rd parameter: Resource, kind, ResourceName)
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "createOrUpdate":
@@ -671,8 +689,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "update":
@@ -684,8 +702,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "delete":
@@ -697,8 +715,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "list":
@@ -710,8 +728,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "action":
@@ -723,8 +741,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
         }

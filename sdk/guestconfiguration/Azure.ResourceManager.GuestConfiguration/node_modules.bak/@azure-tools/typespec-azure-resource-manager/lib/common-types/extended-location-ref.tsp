@@ -1,0 +1,1 @@
+import "./extended-location.tsp";

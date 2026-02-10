@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+// Need to have this intermediate file due to rush issue with generated bin https://github.com/microsoft/rushstack/issues/2400
+require("../dist/app.js");

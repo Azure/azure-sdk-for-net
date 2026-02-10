@@ -1,0 +1,383 @@
+$schema: http://json-schema.org/draft-07/schema#
+definitions:
+  APIKeySecurityScheme:
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+        const: apiKey
+      description:
+        type: string
+      in:
+        $ref: ./enums.yaml#/definitions/ParameterLocation
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - in
+      - name
+      - type
+  AuthorizationCodeOAuthFlow:
+    type: object
+    additionalProperties: false
+    properties:
+      authorizationUrl:
+        type: string
+        description: an URI
+      refreshUrl:
+        type: string
+        description: an URI
+      scopes:
+        $ref: ./master.yaml#/definitions/Record<string,string>
+      tokenUrl:
+        type: string
+        description: an URI
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - authorizationUrl
+      - scopes
+      - tokenUrl
+  BearerHTTPSecurityScheme:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        type: string
+        const: http
+      description:
+        type: string
+      bearerFormat:
+        type: string
+      scheme:
+        type: string
+        const: bearer
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - scheme
+      - type
+  ClientCredentialsFlow:
+    type: object
+    additionalProperties: false
+    properties:
+      refreshUrl:
+        type: string
+        description: an URI
+      scopes:
+        $ref: ./master.yaml#/definitions/Record<string,string>
+      tokenUrl:
+        type: string
+        description: an URI
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - scopes
+      - tokenUrl
+  HTTPSecurityScheme:
+    anyOf:
+      - $ref: ./http.yaml#/definitions/BearerHTTPSecurityScheme
+      - $ref: ./http.yaml#/definitions/NonBearerHTTPSecurityScheme
+  HttpBinaryRequest:
+    type: object
+    additionalProperties: false
+    allOf:
+      - $ref: ./http.yaml#/definitions/HttpWithBodyRequest
+    properties:
+      binary:
+        type: boolean
+        const: true
+    required:
+      - binary
+      - knownMediaType
+      - mediaTypes
+      - method
+      - path
+      - uri
+  HttpBinaryResponse:
+    type: object
+    additionalProperties: false
+    allOf:
+      - $ref: ./http.yaml#/definitions/HttpResponse
+    properties:
+      binary:
+        type: boolean
+        description: binary responses
+        const: true
+    required:
+      - binary
+      - statusCodes
+  HttpHeader:
+    type: object
+    additionalProperties: false
+    properties:
+      schema:
+        $ref: ./schemas.yaml#/definitions/Schema
+      header:
+        type: string
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+      language:
+        $ref: ./master.yaml#/definitions/Languages
+    required:
+      - header
+      - language
+      - schema
+  HttpModel:
+    type: object
+    description: code model metadata for HTTP protocol
+    additionalProperties: false
+    allOf:
+      - $ref: ./master.yaml#/definitions/Protocol
+    properties:
+      security:
+        type: array
+        description: a collection of security requirements for the service
+        items:
+          $ref: ./http.yaml#/definitions/SecurityRequirement
+  HttpMultipartRequest:
+    type: object
+    additionalProperties: false
+    allOf:
+      - $ref: ./http.yaml#/definitions/HttpWithBodyRequest
+    properties:
+      multipart:
+        type: boolean
+        description: |-
+          indicates that the HTTP Request should be a multipart request
+
+          ie, that it has multiple requests in a single request.
+        const: true
+    required:
+      - knownMediaType
+      - mediaTypes
+      - method
+      - multipart
+      - path
+      - uri
+  HttpParameter:
+    type: object
+    description: extended metadata for HTTP operation parameters
+    additionalProperties: false
+    allOf:
+      - $ref: ./master.yaml#/definitions/Protocol
+    properties:
+      explode:
+        type: boolean
+        description: when set, 'form' style parameters generate separate parameters for each value of an array.
+      in:
+        type: string
+        description: the location that this parameter is placed in the http request
+        enum:
+          - body
+          - cookie
+          - header
+          - none
+          - path
+          - query
+          - uri
+          - virtual
+      skipUriEncoding:
+        type: boolean
+        description: when set, this indicates that the content of the parameter should not be subject to URI encoding rules.
+      style:
+        description: the Serialization Style used for the parameter.
+        $ref: ./enums.yaml#/definitions/SerializationStyle
+    required:
+      - in
+  HttpRequest:
+    type: object
+    description: HTTP operation protocol data
+    additionalProperties: false
+    allOf:
+      - $ref: ./master.yaml#/definitions/Protocol
+    properties:
+      path:
+        type: string
+        description: |-
+          A relative path to an individual endpoint.
+
+          The field name MUST begin with a slash.
+          The path is appended (no relative URL resolution) to the expanded URL from the Server Object's url field in order to construct the full URL.
+          Path templating is allowed.
+
+          When matching URLs, concrete (non-templated) paths would be matched before their templated counterparts.
+      method:
+        description: the HTTP Method used to process this operation
+        $ref: ./enums.yaml#/definitions/HttpMethod
+      uri:
+        type: string
+        description: the base URI template for the operation. This will be a template that has Uri parameters to craft the base url to use.
+    required:
+      - method
+      - path
+      - uri
+  HttpResponse:
+    type: object
+    additionalProperties: false
+    allOf:
+      - $ref: ./master.yaml#/definitions/Protocol
+    properties:
+      headerGroups:
+        type: array
+        description: sets of HTTP headers grouped together into a single schema
+        items:
+          $ref: ./schemas.yaml#/definitions/GroupSchema
+      headers:
+        type: array
+        description: content returned by the service in the HTTP headers
+        items:
+          $ref: ./http.yaml#/definitions/HttpHeader
+      knownMediaType:
+        description: canonical response type (ie, 'json').
+        $ref: ./enums.yaml#/definitions/KnownMediaType
+      mediaTypes:
+        type: array
+        description: The possible media types that this response MUST match one of.
+        items:
+          type: string
+      statusCodes:
+        type: array
+        description: the possible HTTP status codes that this response MUST match one of.
+        items:
+          $ref: ./enums.yaml#/definitions/StatusCode
+    required:
+      - statusCodes
+  HttpWithBodyRequest:
+    type: object
+    additionalProperties: false
+    allOf:
+      - $ref: ./http.yaml#/definitions/HttpRequest
+    properties:
+      knownMediaType:
+        description: a normalized value for the media type (ie, distills down to a well-known moniker (ie, 'json'))
+        $ref: ./enums.yaml#/definitions/KnownMediaType
+      mediaTypes:
+        type: array
+        description: must contain at least one media type to send for the body
+        items:
+          type: string
+    required:
+      - knownMediaType
+      - mediaTypes
+      - method
+      - path
+      - uri
+  ImplicitOAuthFlow:
+    type: object
+    additionalProperties: false
+    properties:
+      authorizationUrl:
+        type: string
+        description: an URI
+      refreshUrl:
+        type: string
+        description: an URI
+      scopes:
+        $ref: ./master.yaml#/definitions/Record<string,string>
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - authorizationUrl
+      - scopes
+  NonBearerHTTPSecurityScheme:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        type: string
+        const: http
+      description:
+        type: string
+      scheme:
+        type: string
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - scheme
+      - type
+  OAuth2SecurityScheme:
+    type: object
+    additionalProperties: false
+    allOf:
+      - $ref: ./http.yaml#/definitions/SecurityScheme
+    properties:
+      scopes:
+        type: array
+        items:
+          type: string
+    required:
+      - scopes
+      - type
+  OAuthFlows:
+    type: object
+    additionalProperties: false
+    properties:
+      authorizationCode:
+        $ref: ./http.yaml#/definitions/AuthorizationCodeOAuthFlow
+      clientCredentials:
+        $ref: ./http.yaml#/definitions/ClientCredentialsFlow
+      implicit:
+        $ref: ./http.yaml#/definitions/ImplicitOAuthFlow
+      password:
+        $ref: ./http.yaml#/definitions/PasswordOAuthFlow
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+  OpenIdConnectSecurityScheme:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        type: string
+        const: openIdConnect
+      description:
+        type: string
+      openIdConnectUrl:
+        type: string
+        description: an URI
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - openIdConnectUrl
+      - type
+  PasswordOAuthFlow:
+    type: object
+    additionalProperties: false
+    properties:
+      refreshUrl:
+        type: string
+        description: an URI
+      scopes:
+        $ref: ./master.yaml#/definitions/Record<string,string>
+      tokenUrl:
+        type: string
+        description: an URI
+      extensions:
+        description: additional metadata extensions dictionary
+        $ref: ./master.yaml#/definitions/Record<string,any>
+    required:
+      - scopes
+      - tokenUrl
+  SecurityRequirement:
+    type: object
+    description: common ways of serializing simple parameters
+    additionalProperties: false
+  SecurityScheme:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        type: string
+    required:
+      - type
