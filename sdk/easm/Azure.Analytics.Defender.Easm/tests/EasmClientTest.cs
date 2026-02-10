@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Defender.Easm.Tests
 {
-    public class EasmClientTest: RecordedTestBase<EasmClientTestEnvironment>
+    public class EasmClientTest : RecordedTestBase<EasmClientTestEnvironment>
     {
         protected Regex UUID_REGEX = new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
         protected EasmClient client { get; private set; }
