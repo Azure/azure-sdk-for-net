@@ -188,7 +188,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
                 }
             };
             KeyVaultRoleDefinition createdDefinition = client.CreateOrUpdateRoleDefinition(options);
-#endregion
+            #endregion
 
             #region Snippet:GetRoleDefinition
             Guid roleDefinitionId = new Guid(createdDefinition.Name);

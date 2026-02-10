@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #endif
                 stream.CopyTo(file);
             }
-#endregion
+            #endregion
 
             Assert.AreEqual("test", Encoding.UTF8.GetString(ms.ToArray()));
         }
@@ -106,14 +106,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void SampleFromStream()
         {
-#region Snippet:KeyReleasePolicy_FromStream
+            #region Snippet:KeyReleasePolicy_FromStream
 #if SNIPPET
             using FileStream file = File.OpenRead("policy.dat");
 #else
             using Stream file = new MemoryStream(Encoding.UTF8.GetBytes("test"));
 #endif
             KeyReleasePolicy policy = new KeyReleasePolicy(BinaryData.FromStream(file));
-#endregion
+            #endregion
 
             using JsonStream json = new();
             json.WriteObject(policy);

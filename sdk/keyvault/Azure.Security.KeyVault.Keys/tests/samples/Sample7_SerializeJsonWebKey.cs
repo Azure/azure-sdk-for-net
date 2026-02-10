@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Security.KeyVault.Keys.Cryptography;
-using NUnit.Framework;
 using System;
 using System.Diagnostics;
-using System.Text;
-using System.Threading;
 using System.IO;
+using System.Text;
 using System.Text.Json;
+using System.Threading;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {

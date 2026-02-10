@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Keys
                 switch (prop.Name)
                 {
                     case ExpiryTimePropertyName:
-                        ExpiresIn =prop.Value.GetString();
+                        ExpiresIn = prop.Value.GetString();
                         break;
 
                     case CreatedPropertyName:

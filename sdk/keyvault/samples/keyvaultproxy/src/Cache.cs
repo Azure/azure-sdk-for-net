@@ -20,7 +20,7 @@ namespace AzureSamples.Security.KeyVault.Proxy
         /// <inheritdoc/>
         public void Dispose()
         {
-            if (_lock is {})
+            if (_lock is { })
             {
                 _lock.Dispose();
                 _lock = null;

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
@@ -370,7 +370,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             RecoverDeletedSecretOperation operation = await Client.StartRecoverDeletedSecretAsync(secretName);
             SecretProperties recoverSecretResult = operation.Value;
 
-            await operation.WaitForCompletionAsync(); ;
+            await operation.WaitForCompletionAsync();
+            ;
 
             KeyVaultSecret recoveredSecret = await Client.GetSecretAsync(secretName);
 

@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 "",
                 null,
                 DateTimeOffset.Now.AddMinutes(-5),
-                null, JobId, BackupLocation,new Dictionary<string, BinaryData>());
+                null, JobId, BackupLocation, new Dictionary<string, BinaryData>());
 
             failedResponse = new Mock<Response<FullBackupDetailsInternal>>();
             failedResponse.SetupGet(m => m.Value).Returns(failedBackup);

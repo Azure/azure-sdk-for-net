@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Administration
                 return new KeyVaultBackupResult(
                     _value.AzureStorageBlobContainerUri is null ?
                     null :
-                    new Uri(_value.AzureStorageBlobContainerUri) ,
+                    new Uri(_value.AzureStorageBlobContainerUri),
                     _value.StartTime.Value,
                     _value.EndTime.Value);
             }

@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedCertificateOperation" /> for mocking. </summary>
-        protected RecoverDeletedCertificateOperation() {}
+        protected RecoverDeletedCertificateOperation() { }
 
         /// <inheritdoc/>
         public override string Id => _value.Id.AbsoluteUri;

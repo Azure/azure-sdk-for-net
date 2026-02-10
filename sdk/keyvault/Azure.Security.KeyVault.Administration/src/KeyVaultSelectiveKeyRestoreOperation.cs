@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSelectiveKeyRestoreOperation" /> for mocking. </summary>
-        protected KeyVaultSelectiveKeyRestoreOperation() {}
+        protected KeyVaultSelectiveKeyRestoreOperation() { }
 
         /// <summary>
         /// The start time of the restore operation.

@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             AssertModel(() => new LifetimeAction(CertificatePolicyAction.AutoRenew));
 
         #region Assertion helpers
-        private static void AssertModel<T>(Func<T> factory) where T: IJsonSerializable, IJsonDeserializable
+        private static void AssertModel<T>(Func<T> factory) where T : IJsonSerializable, IJsonDeserializable
         {
             T obj = factory();
 

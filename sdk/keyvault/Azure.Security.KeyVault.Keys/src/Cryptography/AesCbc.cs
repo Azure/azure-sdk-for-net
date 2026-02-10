@@ -32,50 +32,50 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public PaddingMode Padding { get; }
 
-        private static Aes Create( byte[] key, byte[] iv, PaddingMode padding )
+        private static Aes Create(byte[] key, byte[] iv, PaddingMode padding)
         {
             var aes = Aes.Create();
 
-            aes.Mode    = CipherMode.CBC;
+            aes.Mode = CipherMode.CBC;
             aes.Padding = padding;
             aes.KeySize = key.Length * 8;
-            aes.Key     = key;
-            aes.IV      = iv;
+            aes.Key = key;
+            aes.IV = iv;
 
             return aes;
         }
 
-        public ICryptoTransform CreateDecryptor( byte[] key, byte[] iv )
+        public ICryptoTransform CreateDecryptor(byte[] key, byte[] iv)
         {
-            if ( key == null )
-                throw new CryptographicException( "No key material" );
+            if (key == null)
+                throw new CryptographicException("No key material");
 
             if (key.Length < KeySizeInBytes)
                 throw new CryptographicException("key", $"key must be at least {KeySizeInBytes << 3} bits");
 
-            if ( iv == null )
-                throw new CryptographicException( "No initialization vector" );
+            if (iv == null)
+                throw new CryptographicException("No initialization vector");
 
             // Create the AES provider
-            using ( var aes = Create( key.Take(KeySizeInBytes), iv, Padding ) )
+            using (var aes = Create(key.Take(KeySizeInBytes), iv, Padding))
             {
                 return aes.CreateDecryptor();
             }
         }
 
-        public ICryptoTransform CreateEncryptor( byte[] key, byte[] iv )
+        public ICryptoTransform CreateEncryptor(byte[] key, byte[] iv)
         {
-            if ( key == null )
-                throw new CryptographicException( "No key material" );
+            if (key == null)
+                throw new CryptographicException("No key material");
 
             if (key.Length < KeySizeInBytes)
                 throw new CryptographicException("key", $"key must be at least {KeySizeInBytes << 3} bits");
 
-            if ( iv == null )
-                throw new CryptographicException( "No initialization vector" );
+            if (iv == null)
+                throw new CryptographicException("No initialization vector");
 
             // Create the AES provider
-            using ( var aes = Create( key.Take(KeySizeInBytes), iv, Padding ) )
+            using (var aes = Create(key.Take(KeySizeInBytes), iv, Padding))
             {
                 return aes.CreateEncryptor();
             }

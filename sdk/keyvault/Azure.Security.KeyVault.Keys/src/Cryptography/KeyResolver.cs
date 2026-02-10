@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public class KeyResolver : IKeyEncryptionKeyResolver
     {
         private const string OTelKeyIdKey = "az.keyvault.key.id";
-        private readonly HttpPipeline  _pipeline;
+        private readonly HttpPipeline _pipeline;
         private readonly string _apiVersion;
 
         private ClientDiagnostics _clientDiagnostics;

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ValidateSecret(secret.Value.Data, secretName);
 
             // Exist
-            bool flag = await secretCollection.ExistsAsync( secretName);
+            bool flag = await secretCollection.ExistsAsync(secretName);
             Assert.IsTrue(flag);
 
             // Get

@@ -252,12 +252,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters = new KeyVaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             // Recover in default mode
-            ArmOperation<KeyVaultResource> recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName,parameters).ConfigureAwait(false);
+            ArmOperation<KeyVaultResource> recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
             KeyVaultResource recoveredVault = recoveredRawVault.Value;
             Assert.True(recoveredVault.Data.IsEqual(vaultValue.Data));
 
             // Get recovered vault
-            Response<KeyVaultResource> getResult =  await VaultCollection.GetAsync(VaultName);
+            Response<KeyVaultResource> getResult = await VaultCollection.GetAsync(VaultName);
 
             // Delete
             await getResult.Value.DeleteAsync(WaitUntil.Completed);

@@ -155,7 +155,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 keyResponse.ContentStream.Position = 0;
                 return keyResponse;
-                }
+            }
             ));
 
             object result = await thunk(client, "invalid");

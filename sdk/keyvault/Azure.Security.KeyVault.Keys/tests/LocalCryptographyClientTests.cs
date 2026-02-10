@@ -244,7 +244,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
 
-            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)) , async () => await client.SignDataAsync(algorithm, TestData));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.SignDataAsync(algorithm, TestData));
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             VerifyResult verified = await client.VerifyDataAsync(algorithm, TestStream, signed.Signature);
             Assert.IsTrue(verified.IsValid);
         }
-#endregion
+        #endregion
 
         #region WrapKey / UnwrapKey
         [Test]

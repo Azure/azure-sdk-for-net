@@ -1,17 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Keys.Cryptography;
-using NUnit.Framework;
-using Org.BouncyCastle.Asn1;
-using Org.BouncyCastle.Asn1.Pkcs;
-using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Operators;
-using Org.BouncyCastle.Math;
-using Org.BouncyCastle.Pkcs;
-using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +14,17 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using NUnit.Framework;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.Asn1.Pkcs;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Operators;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Pkcs;
+using Org.BouncyCastle.X509;
 using X509Certificate = Org.BouncyCastle.X509.X509Certificate;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -1099,7 +1099,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
             // OpenSSL-based implementations do not support P256K.
             // TODO: Remove this entire check when https://github.com/Azure/azure-sdk-for-net/issues/20244 is resolved.
-            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException {  ParamName: "privateKey" }) &&
+            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException { ParamName: "privateKey" }) &&
             !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
             keyCurveName == CertificateKeyCurveName.P256K;
 
@@ -1172,7 +1172,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 PreserveCertificateOrder = preserveOrder
             };
 
-            KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
+            KeyVaultCertificateWithPolicy cert = await client.ImportCertificateAsync(importOptions);
 
             Assert.NotNull(cert.Cer, "Certificate should have a cer");
             Assert.AreEqual(certName, cert.Name, "Certificate name should match the expected name");

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.Security.Cryptography;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {

@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
                 var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultBackupOperation(this, responseWithHeaders);
             }
@@ -564,7 +564,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
                 var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultBackupOperation(this, responseWithHeaders);
             }
@@ -605,7 +605,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
                 var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
-                var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
+                var responseWithHeaders = ResponseWithHeaders.FromValue(headers, operation.GetRawResponse());
 
                 return new KeyVaultBackupOperation(this, responseWithHeaders);
             }

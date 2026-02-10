@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public class SecretClientTests: ClientTestBase
+    public class SecretClientTests : ClientTestBase
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {

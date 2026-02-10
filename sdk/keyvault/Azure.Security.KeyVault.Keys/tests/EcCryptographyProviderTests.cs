@@ -236,7 +236,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 yield return ("1.3.132.0.10", new[] { SignatureAlgorithm.ES256, SignatureAlgorithm.ES384, SignatureAlgorithm.ES512 }); // P-256K
                 yield return ("1.3.132.0.34", new[] { SignatureAlgorithm.ES256, SignatureAlgorithm.ES256K, SignatureAlgorithm.ES512 }); // P-384
                 yield return ("1.3.132.0.35", new[] { SignatureAlgorithm.ES256, SignatureAlgorithm.ES256K, SignatureAlgorithm.ES384 }); // P-521
-            };
+            }
+            ;
 
             foreach ((string oid, SignatureAlgorithm[] algorithms) in GetInvalidPairs())
             {

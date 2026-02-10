@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -43,7 +43,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await foreach (SecretProperties secret in client.GetPropertiesOfSecretsAsync())
             {
 #if !SNIPPET
-                if (secret.Managed) continue;
+                if (secret.Managed)
+                    continue;
 #endif
                 // Getting a disabled secret will fail, so skip disabled secrets.
                 if (!secret.Enabled.GetValueOrDefault())

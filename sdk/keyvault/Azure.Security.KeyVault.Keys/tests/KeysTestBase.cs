@@ -287,7 +287,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
@@ -310,7 +311,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using (Recording.DisableRecording())
             {
                 delay ??= PollingInterval;
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);

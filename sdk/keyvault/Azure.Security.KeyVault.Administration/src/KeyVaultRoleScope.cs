@@ -31,5 +31,5 @@ namespace Azure.Security.KeyVault.Administration
                 _value = resourceId.AbsolutePath;
             }
         }
-     }
+    }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
         {
-                await Initialize().ConfigureAwait(false);
+            await Initialize().ConfigureAwait(false);
         }
 
         [RecordedTest]

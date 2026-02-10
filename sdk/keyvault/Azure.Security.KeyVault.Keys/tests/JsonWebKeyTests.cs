@@ -487,12 +487,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             public bool Equals(JsonWebKey x, JsonWebKey y)
             {
-                if (ReferenceEquals(x, y)) return true;
-                if (x is null || y is null) return false;
+                if (ReferenceEquals(x, y))
+                    return true;
+                if (x is null || y is null)
+                    return false;
 
-                if (!string.Equals(x.Id, y.Id)) return false;
-                if (x.KeyType != y.KeyType) return false;
-                if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
+                if (!string.Equals(x.Id, y.Id))
+                    return false;
+                if (x.KeyType != y.KeyType)
+                    return false;
+                if (!CollectionEquals(x.KeyOps, y.KeyOps))
+                    return false;
 
                 if (x.KeyType == KeyType.Oct)
                 {
@@ -548,9 +553,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             private static bool CollectionEquals<T>(IReadOnlyCollection<T> x, IReadOnlyCollection<T> y)
             {
-                if (ReferenceEquals(x, y)) return true;
-                if (x is null) return y.Count == 0;
-                if (y is null) return x.Count == 0;
+                if (ReferenceEquals(x, y))
+                    return true;
+                if (x is null)
+                    return y.Count == 0;
+                if (y is null)
+                    return x.Count == 0;
 
                 return x.SequenceEqual(y);
             }
