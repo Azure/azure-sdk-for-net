@@ -206,35 +206,25 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-            for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
+            var usedFlattenedPropertyIndices = new HashSet<int>();
+            for (int fullConstructorParameterIndex = 0; fullConstructorParameterIndex < constructorParameters.Count; fullConstructorParameterIndex++)
             {
-                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
-                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= constructorParameters.Count)
-                {
-                    break;
-                }
-
                 if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
                     parameters.Add(Null);
-
-                    // If the additionalProperties parameter is the last parameter, we can break the loop.
-                    if (fullConstructorParameterIndex == constructorParameters.Count - 1)
-                    {
-                        break;
-                    }
-                    fullConstructorParameterIndex++;
+                    continue;
                 }
 
                 var constructorParameter = constructorParameters[fullConstructorParameterIndex];
                 var constructorParameterType = constructorParameter.Type;
 
-                // First, try to find a match by name (ignoring case) in remaining flattened properties
+                // First, try to find a match by name (ignoring case) in all unused flattened properties
                 var nameMatchIndex = -1;
-                for (int i = flattenedPropertyIndex; i < flattenedProperties.Count; i++)
+                for (int i = 0; i < flattenedProperties.Count; i++)
                 {
-                    if (string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
+                    if (!usedFlattenedPropertyIndices.Contains(i) &&
+                        string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         nameMatchIndex = i;
                         break;
@@ -258,18 +248,30 @@ namespace Azure.Generator.Management.Visitors
                         ? parameter.Property("Value")
                         : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                    // Move past the matched property
-                    flattenedPropertyIndex = nameMatchIndex + 1;
+                    usedFlattenedPropertyIndices.Add(nameMatchIndex);
                 }
                 else
                 {
-                    // No name match found, try to match by type with current flattened property
-                    var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
-                    var flattenedPropertyType = flattenedProperty.Type;
-
-                    if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
-                        constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                    // No name match found, try to match by type with unused flattened properties
+                    var typeMatchIndex = -1;
+                    for (int i = 0; i < flattenedProperties.Count; i++)
                     {
+                        if (usedFlattenedPropertyIndices.Contains(i))
+                        {
+                            continue;
+                        }
+                        var flattenedPropertyType = flattenedProperties[i].FlattenedProperty.Type;
+                        if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
+                            constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                        {
+                            typeMatchIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (typeMatchIndex >= 0)
+                    {
+                        var (flattenedProperty, _) = flattenedProperties[typeMatchIndex];
                         var propertyParameter = flattenedProperty.AsParameter;
                         var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                             ? updatedParameter
@@ -281,8 +283,7 @@ namespace Azure.Generator.Management.Visitors
                             ? parameter.Property("Value")
                             : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                        // only increase flattenedPropertyIndex when we use a flattened property
-                        flattenedPropertyIndex++;
+                        usedFlattenedPropertyIndices.Add(typeMatchIndex);
                     }
                     else
                     {

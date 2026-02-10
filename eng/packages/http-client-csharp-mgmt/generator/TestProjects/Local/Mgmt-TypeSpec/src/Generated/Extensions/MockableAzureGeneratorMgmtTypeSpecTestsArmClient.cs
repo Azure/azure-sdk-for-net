@@ -422,6 +422,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetServiceGroupSites(scope).GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="MultiFlattenTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MultiFlattenTestResource"/> object. </returns>
+        public virtual MultiFlattenTestResource GetMultiFlattenTestResource(ResourceIdentifier id)
+        {
+            MultiFlattenTestResource.ValidateResourceId(id);
+            return new MultiFlattenTestResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">
