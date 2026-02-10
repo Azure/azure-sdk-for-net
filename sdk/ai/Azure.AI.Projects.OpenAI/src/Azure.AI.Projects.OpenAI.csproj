@@ -18,10 +18,6 @@
     <NoWarn>$(NoWarn);OPENAI001</NoWarn>
     <!-- Temporary suppression of XML doc requirement -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <!-- Ignore Azure-Core-specific constructor rule -->
-    <NoWarn>$(NoWarn);AZC0007</NoWarn>
-    <!-- Ignore Azure-Core-specific pageable rule -->
-    <NoWarn>$(NoWarn);AZC0015</NoWarn>
     <!-- Ignore ModelFactory error (applied to externally originating types) -->
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
   </PropertyGroup>
