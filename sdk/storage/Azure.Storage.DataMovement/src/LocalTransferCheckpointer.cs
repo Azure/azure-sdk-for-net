@@ -276,7 +276,7 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(false);
             }
 
-            foreach (KeyValuePair<int,JobPartPlanFile> jobPartPair in jobPlanFile.JobParts)
+            foreach (KeyValuePair<int, JobPartPlanFile> jobPartPair in jobPlanFile.JobParts)
             {
                 filesToDelete.Add(jobPartPair.Value.FilePath);
             }

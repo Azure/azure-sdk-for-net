@@ -43,11 +43,11 @@ namespace Azure.Storage.Files.Shares
             }
 
             return shareEnabledProtocols switch
-                {
-                    ShareProtocols.Smb => Constants.File.SmbProtocol,
-                    ShareProtocols.Nfs => Constants.File.NfsProtocol,
-                    _ => throw new ArgumentException($"Unknown share protocol: {shareEnabledProtocols}"),
-                };
+            {
+                ShareProtocols.Smb => Constants.File.SmbProtocol,
+                ShareProtocols.Nfs => Constants.File.NfsProtocol,
+                _ => throw new ArgumentException($"Unknown share protocol: {shareEnabledProtocols}"),
+            };
         }
 
         internal static DeleteSnapshotsOptionType? ToShareSnapshotsDeleteOptionInternal(this ShareSnapshotsDeleteOption? option)
@@ -445,7 +445,7 @@ namespace Azure.Storage.Files.Shares
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties {}
+                SmbProperties = new FileSmbProperties { }
             };
         }
 
@@ -753,7 +753,7 @@ namespace Azure.Storage.Files.Shares
                 LeaseStatus = response.Headers.LeaseStatus,
                 LeaseState = response.Headers.LeaseState,
                 LeaseDuration = response.Headers.LeaseDuration,
-                Protocols =  ToShareEnabledProtocols(response.Headers.EnabledProtocols),
+                Protocols = ToShareEnabledProtocols(response.Headers.EnabledProtocols),
                 RootSquash = response.Headers.RootSquash,
                 Metadata = response.Headers.Metadata,
                 EnableSnapshotVirtualDirectoryAccess = response.Headers.EnableSnapshotVirtualDirectoryAccess,
