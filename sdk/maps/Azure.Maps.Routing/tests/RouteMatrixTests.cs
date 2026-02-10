@@ -99,7 +99,7 @@ namespace Azure.Maps.Routing.Tests
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
-                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625)},
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {
@@ -128,7 +128,7 @@ namespace Azure.Maps.Routing.Tests
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
-                Destinations = new List<GeoPosition>() {},
+                Destinations = new List<GeoPosition>() { },
             };
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {

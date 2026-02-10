@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Maps.TimeZones.Tests
 {

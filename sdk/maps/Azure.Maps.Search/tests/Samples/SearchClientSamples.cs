@@ -19,7 +19,7 @@ using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Tests
 {
-    public class SearchClientSamples: SamplesBase<SearchClientTestEnvironment>
+    public class SearchClientSamples : SamplesBase<SearchClientTestEnvironment>
     {
         public void SearchClientViaSubscriptionKey()
         {
@@ -75,7 +75,7 @@ namespace Azure.Maps.Search.Tests
             #endregion
         }
 
-         [Test]
+        [Test]
         public void GetGeocoding()
         {
             var client = TestEnvironment.CreateClient();

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Drawing;
-using NUnit.Framework;
 using Azure.Core.GeoJson;
+using NUnit.Framework;
 
 // cspell:ignore fromargb
 namespace Azure.Maps.Rendering.Tests

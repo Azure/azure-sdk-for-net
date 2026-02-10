@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using Azure.Core;
 using System.Net;
+using Azure.Core;
 using Azure.Maps.Geolocation;
 
 namespace Azure.Maps.Geolocation

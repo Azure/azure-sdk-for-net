@@ -6,7 +6,8 @@ using Azure.Core.GeoJson;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> Weather along route waypoint. </summary>
-    public class WeatherAlongRouteWaypoint {
+    public class WeatherAlongRouteWaypoint
+    {
         /// <summary> Coordinates of the waypoint. </summary>
         public GeoPosition Coordinates { get; set; }
         /// <summary> The number of minutes from the present time that it will take for the vehicle to reach the waypoint. Allowed range is from 0.0 to 120.0 minutes. </summary>

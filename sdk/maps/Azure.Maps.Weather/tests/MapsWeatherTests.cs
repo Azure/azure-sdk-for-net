@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Azure.Core.TestFramework;
+using System.Threading.Tasks;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
 using Azure.Maps.Weather.Models;
 using Azure.Maps.Weather.Models.Options;
 using NUnit.Framework;
@@ -204,7 +204,8 @@ namespace Azure.Maps.Weather.Tests
                 Language = WeatherLanguage.EnglishUsa
             };
             Response<SevereWeatherAlertsResult> response = await client.GetSevereWeatherAlertsAsync(options);
-            if (response.Value.Results.Count > 0) {
+            if (response.Value.Results.Count > 0)
+            {
                 Console.WriteLine("Description: " + response.Value.Results[0].Description);
             }
             Assert.NotNull(response);
@@ -232,9 +233,11 @@ namespace Azure.Maps.Weather.Tests
                 IncludeGeometricDetails = true
             };
             Response<StormForecastResult> response = await client.GetTropicalStormForecastAsync(options);
-            if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon) {
+            if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon)
+            {
                 Console.WriteLine("Geometry type: Polygon");
-                for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i) {
+                for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i)
+                {
                     Console.WriteLine("Point {0}: {1}", i, geoPolygon.Coordinates[0][i]);
                 }
             }

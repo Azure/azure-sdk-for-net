@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Maps;
 using Azure.Core.TestFramework;
+using Azure.Maps;
 using NUnit.Framework;
 
 namespace Azure.Maps.Tests

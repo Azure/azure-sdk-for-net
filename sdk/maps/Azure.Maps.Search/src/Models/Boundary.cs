@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Maps.Common;
-using System.Text.Json;
 
 namespace Azure.Maps.Search.Models
 {

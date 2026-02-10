@@ -79,7 +79,8 @@ namespace Azure.Maps.Rendering
         public int? RotationInDegrees { get; set; }
 
         /// <summary> Convert ImagePushpinStyle to endpoint-specific string format. </summary>
-        internal string ToQueryString() {
+        internal string ToQueryString()
+        {
             StringBuilder sb = new StringBuilder(256);
 
             if (CustomPushpinImageUri == null)

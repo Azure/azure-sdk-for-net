@@ -435,10 +435,14 @@ namespace Azure.Maps.Weather
             try
             {
                 string queryString = "";
-                foreach (WeatherAlongRouteWaypoint waypoint in query.Waypoints) {
-                    if (waypoint.Heading == null) {
+                foreach (WeatherAlongRouteWaypoint waypoint in query.Waypoints)
+                {
+                    if (waypoint.Heading == null)
+                    {
                         queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.EtaInMinutes}:";
-                    } else {
+                    }
+                    else
+                    {
                         queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.Heading},{waypoint.EtaInMinutes}:";
                     }
                 }
@@ -483,10 +487,14 @@ namespace Azure.Maps.Weather
             try
             {
                 string queryString = "";
-                foreach (WeatherAlongRouteWaypoint waypoint in query.Waypoints) {
-                    if (waypoint.Heading == null) {
+                foreach (WeatherAlongRouteWaypoint waypoint in query.Waypoints)
+                {
+                    if (waypoint.Heading == null)
+                    {
                         queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.EtaInMinutes}:";
-                    } else {
+                    }
+                    else
+                    {
                         queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.Heading},{waypoint.EtaInMinutes}:";
                     }
                 }

@@ -34,9 +34,12 @@ namespace Azure.Maps.Routing.Models
                     {
                         continue;
                     }
-                    if (statusCode == 200) {
+                    if (statusCode == 200)
+                    {
                         response = RouteMatrixResultResponse.DeserializeRouteMatrixResultResponse(property.Value);
-                    } else {
+                    }
+                    else
+                    {
                         response = new RouteMatrixResultResponse(null);
                     }
                     continue;

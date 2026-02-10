@@ -92,7 +92,7 @@ namespace Azure.Maps.Rendering.Tests
 
             #region Snippet:RenderStaticImages
             // Prepare static image options
-            GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
+            GetMapStaticImageOptions staticImageOptions = new GetMapStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
             {
                 ZoomLevel = 10,
                 Language = RenderingLanguage.EnglishUsa,
@@ -135,7 +135,7 @@ namespace Azure.Maps.Rendering.Tests
                 LabelScaleRatio = 18
             };
             ImagePushpinStyle pushpinSet2 = new ImagePushpinStyle(
-                new List<PushpinPosition>() {new PushpinPosition(13.495, 52.497, "Label 3")}
+                new List<PushpinPosition>() { new PushpinPosition(13.495, 52.497, "Label 3") }
             )
             {
                 PushpinScaleRatio = 1.2,

@@ -26,7 +26,7 @@ namespace Azure.Maps.Weather
         public Uri Endpoint { get; set; }
 
         /// <summary> Initializes new instance of MapsWeatherClientOptions. </summary>
-        public MapsWeatherClientOptions(ServiceVersion version = LatestVersion,  Uri endpoint = null)
+        public MapsWeatherClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
             Version = version switch
             {

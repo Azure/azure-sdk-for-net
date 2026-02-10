@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Maps.Search.Tests
 {
-    public class SearchClientLiveTestsBase: RecordedTestBase<SearchClientTestEnvironment>
+    public class SearchClientLiveTestsBase : RecordedTestBase<SearchClientTestEnvironment>
     {
         public SearchClientLiveTestsBase(bool isAsync) : base(isAsync)
         {

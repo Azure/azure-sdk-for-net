@@ -49,7 +49,8 @@ namespace Azure.Maps.Rendering
         public int? CircleRadiusInMeters { get; set; }
 
         /// <summary> Convert ImagePathStyle to endpoint-specific string format. </summary>
-        internal string ToQueryString() {
+        internal string ToQueryString()
+        {
             StringBuilder sb = new StringBuilder(256);
 
             if (LineColor != null)

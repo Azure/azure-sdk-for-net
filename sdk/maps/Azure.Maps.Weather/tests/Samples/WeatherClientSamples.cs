@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using Azure.Maps.Weather.Models;
+using Azure.Maps.Weather.Models.Options;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
-using Azure.Maps.Weather.Models;
-using Azure.Maps.Weather.Models.Options;
 using NUnit.Framework;
 
 namespace Azure.Maps.Weather.Tests.Samples

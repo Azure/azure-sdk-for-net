@@ -40,7 +40,8 @@ namespace Azure.Maps.Routing
         ///  Please refer to <see ref="https://docs.microsoft.com/azure/azure-maps/how-to-use-best-practices-for-routing#calculate-and-bias-alternative-routes-using-supporting-points">Supporting Points</see> for details.
         /// </summary>
         /// <exception cref="ArgumentException"> Unsupported GeoCollection type when assign to <c>SupportingPoints</c>. </exception>
-        public GeoCollection SupportingPoints {
+        public GeoCollection SupportingPoints
+        {
             get => _SupportingPoints;
             set
             {
@@ -49,19 +50,32 @@ namespace Azure.Maps.Routing
                 foreach (var supportingPoint in _SupportingPoints)
                 {
                     GeoJsonGeometry geometry;
-                    if (supportingPoint is GeoPoint) {
+                    if (supportingPoint is GeoPoint)
+                    {
                         geometry = (GeoJsonGeometry)GeoJsonConverter.GeoPointToGeoJsonPoint((GeoPoint)supportingPoint);
-                    } else if (supportingPoint is GeoPointCollection) {
+                    }
+                    else if (supportingPoint is GeoPointCollection)
+                    {
                         geometry = (GeoJsonGeometry)GeoJsonConverter.GeoPointCollectionToGeoJsonMultiPoint((GeoPointCollection)supportingPoint);
-                    } else if (supportingPoint is GeoPolygon) {
+                    }
+                    else if (supportingPoint is GeoPolygon)
+                    {
                         geometry = (GeoJsonGeometry)GeoJsonConverter.GeoPolygonToGeoJsonPolygon((GeoPolygon)supportingPoint);
-                    } else if (supportingPoint is GeoPolygonCollection) {
+                    }
+                    else if (supportingPoint is GeoPolygonCollection)
+                    {
                         geometry = (GeoJsonGeometry)GeoJsonConverter.GeoPolygonCollectionToGeoJsonMultiPolygon((GeoPolygonCollection)supportingPoint);
-                    } else if (supportingPoint is GeoLineString) {
+                    }
+                    else if (supportingPoint is GeoLineString)
+                    {
                         geometry = (GeoJsonGeometry)GeoJsonConverter.GeoLineStringToGeoJsonLineString((GeoLineString)supportingPoint);
-                    } else if (supportingPoint is GeoLineStringCollection) {
+                    }
+                    else if (supportingPoint is GeoLineStringCollection)
+                    {
                         geometry = (GeoJsonGeometry)GeoJsonConverter.GeoLineStringCollectionToGeoJsonMultiLineString((GeoLineStringCollection)supportingPoint);
-                    } else {
+                    }
+                    else
+                    {
                         throw new ArgumentException("Unsupported GeoJson type.", nameof(value));
                     }
                     geometries.Add(geometry);
@@ -76,7 +90,8 @@ namespace Azure.Maps.Routing
         private GeoPolygonCollection _AvoidAreas;
 
         /// <summary> A GeoJSON PolygonCollection representing list of areas to avoid. Only rectangle polygons are supported. The maximum size of a rectangle is about 160x160 km. Maximum number of avoided areas is <c>10</c>. It cannot cross the 180th meridian. It must be between -80 and +80 degrees of latitude. </summary>
-        public GeoPolygonCollection AvoidAreas {
+        public GeoPolygonCollection AvoidAreas
+        {
             get => _AvoidAreas;
             set
             {
@@ -91,7 +106,7 @@ namespace Azure.Maps.Routing
                         IList<IList<double>> coord = new List<IList<double>>();
                         foreach (var layer2 in layer1)
                         {
-                            coord.Add(new List<double>() {layer2.Longitude, layer2.Latitude});
+                            coord.Add(new List<double>() { layer2.Longitude, layer2.Latitude });
                         }
                         coordArray.Add(coord);
                     }
