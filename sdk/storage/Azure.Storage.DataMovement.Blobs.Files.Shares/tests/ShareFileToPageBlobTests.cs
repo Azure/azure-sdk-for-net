@@ -72,8 +72,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override Task<Stream> DestinationOpenReadAsync(PageBlobClient objectClient)
             => objectClient.OpenReadAsync();
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
 
         protected override async Task<PageBlobClient> GetDestinationObjectClientAsync(
             BlobContainerClient container,
@@ -155,7 +162,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return new PageBlobStorageResource(objectClient, options);
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetTestShareAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestShareAsync(service, containerName);
 
         protected override async Task<ShareFileClient> GetSourceObjectClientAsync(

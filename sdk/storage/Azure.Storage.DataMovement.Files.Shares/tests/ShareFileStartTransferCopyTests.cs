@@ -69,11 +69,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         protected override async Task<bool> DestinationExistsAsync(ShareFileClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestShareSasAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetTestShareAzureSasCredentialAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestShareSasAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetTestShareAzureSasCredentialAsync(service, containerName);
 
         private async Task<ShareFileClient> CreateFileClientWithShortPermissionsAsync(
             ShareClient container,

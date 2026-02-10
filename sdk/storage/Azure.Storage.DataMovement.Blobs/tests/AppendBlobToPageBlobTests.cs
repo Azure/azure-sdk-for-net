@@ -62,11 +62,25 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override async Task<bool> DestinationExistsAsync(PageBlobClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
 
         protected override async Task<AppendBlobClient> GetSourceObjectClientAsync(
             BlobContainerClient container,

@@ -84,6 +84,15 @@ namespace Azure.Storage.DataMovement.Tests
             string containerName = default);
 
         /// <summary>
+        /// Gets a service-specific disposing container for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
+        protected abstract Task<IDisposingContainer<TSourceContainerClient>> GetSourceSasDisposingContainerAsync(
+            TSourceServiceClient service = default,
+            string containerName = default);
+
+        /// <summary>
         /// Gets a new service-specific child object client from a given container, e.g. a BlobClient from a
         /// TSourceContainerClient or a TSourceObjectClient from a ShareClient.
         /// </summary>
@@ -133,6 +142,15 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="service">Optionally specified service client to get container from.</param>
         /// <param name="containerName">Optional container name specification.</param>
         protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationDisposingContainerAsync(
+            TDestinationServiceClient service = default,
+            string containerName = default);
+
+        /// <summary>
+        /// Gets a service-specific disposing container for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
+        protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationSasDisposingContainerAsync(
             TDestinationServiceClient service = default,
             string containerName = default);
 
@@ -949,6 +967,21 @@ namespace Azure.Storage.DataMovement.Tests
                 source.Container,
                 destination.Container,
                 (TransferPropertiesTestType) propertiesType,
+                size: Constants.KB,
+                chunkSize: Constants.KB / 2);
+        }
+
+        [RecordedTest]
+        public virtual async Task SourceObjectToDestinationObject_Sas()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceSasDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationSasDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Default,
                 size: Constants.KB,
                 chunkSize: Constants.KB / 2);
         }

@@ -971,6 +971,54 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mockDestination.VerifyNoOtherCalls();
         }
 
+        [Test]
+        public async Task CopyFromUriAsync_SourceSasUri()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<StorageResourceItem> sourceResource = new();
+            sourceResource.Setup(b => b.Uri)
+                .Returns(sourceUri);
+            Mock<BlockBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destinationfile"),
+                new BlobClientOptions());
+
+            long length = 1024;
+            mockDestination.Setup(b => b.SyncUploadFromUriAsync(It.IsAny<Uri>(), It.IsAny<BlobSyncUploadFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        blobSequenceNumber: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default),
+                    new MockResponse(200))));
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(mockDestination.Object);
+
+            // Act
+            // Create options with a SAS Uri and verify that it is used instead of the sourceResource Uri
+            Uri sasUri = new Uri("https://storageaccount.blob.core.windows.net/container/sourcefile?sasToken");
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SasUri = sasUri
+            };
+            await destinationResource.CopyFromUriInternalAsync(
+                sourceResource.Object,
+                false,
+                length,
+                options);
+
+            sourceResource.VerifyNoOtherCalls();
+            mockDestination.Verify(b => b.SyncUploadFromUriAsync(
+                sasUri,
+                It.IsAny<BlobSyncUploadFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
+        }
+
         [RecordedTest]
         public async Task CopyBlockFromUriAsync()
         {
@@ -1173,6 +1221,53 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");
                 });
+        }
+
+        [Test]
+        public async Task CopyBlockFromUriAsync_SourceSasUri()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<StorageResourceItem> sourceResource = new();
+            sourceResource.Setup(b => b.Uri)
+                .Returns(sourceUri);
+            Mock<BlockBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destinationfile"),
+                new BlobClientOptions());
+
+            long length = 1024;
+            mockDestination.Setup(b => b.StageBlockFromUriAsync(It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<StageBlockFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlockInfo(
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default),
+                    new MockResponse(200))));
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(mockDestination.Object);
+
+            // Act
+            // Create options with a SAS Uri and verify that it is used instead of the sourceResource Uri
+            Uri sasUri = new Uri("https://storageaccount.blob.core.windows.net/container/sourcefile?sasToken");
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SasUri = sasUri
+            };
+            await destinationResource.CopyBlockFromUriInternalAsync(
+                sourceResource.Object,
+                new HttpRange(0, 1024),
+                false,
+                length,
+                options);
+
+            sourceResource.VerifyNoOtherCalls();
+            mockDestination.Verify(b => b.StageBlockFromUriAsync(
+                sasUri,
+                It.IsAny<string>(),
+                It.IsAny<StageBlockFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
         }
 
         [RecordedTest]

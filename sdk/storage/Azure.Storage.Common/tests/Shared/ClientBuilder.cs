@@ -135,6 +135,13 @@ namespace Azure.Storage.Test.Shared
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     options ?? GetOptions()));
 
+        public TServiceClient GetServiceClientFromAzureSasCredentialConfig(TenantConfiguration config, TServiceClientOptions options = default)
+            => AzureCoreRecordedTestBase.InstrumentClient(
+                _getServiceClientAzureSasCredential(
+                    new Uri(GetEndpoint(config)),
+                    new AzureSasCredential(GetNewAccountSas().ToString()),
+                    options ?? GetOptions()));
+
         public TServiceClient GetServiceClientFromOauthConfig(
             TenantConfiguration config,
             TokenCredential tokenCredential,

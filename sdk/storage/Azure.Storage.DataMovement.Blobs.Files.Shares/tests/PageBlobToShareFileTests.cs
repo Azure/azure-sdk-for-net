@@ -68,6 +68,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string containerName = default)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
         /// <summary>
         /// Gets the specific storage resource from the given client
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
@@ -165,8 +170,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestShareAsync(service, containerName);
 
         protected override async Task<ShareFileClient> GetDestinationObjectClientAsync(
             ShareClient container,

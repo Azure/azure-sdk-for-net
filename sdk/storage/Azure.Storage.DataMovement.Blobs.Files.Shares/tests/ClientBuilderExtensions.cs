@@ -21,6 +21,8 @@ using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;
+using Azure.Storage.Sas;
+using BaseShares::Azure.Storage.Sas;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -33,6 +35,9 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
         public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static BlobServiceClient GetServiceClient_AzureSasCredential(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
+            => clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
         /// <summary>
         /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
@@ -91,6 +96,20 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return await DisposingShare.CreateAsync(share, metadata);
         }
 
+        public static async Task<DisposingShare> GetAzureSasCredentialTestShareAsync(
+            this SharesClientBuilder clientBuilder,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
+        {
+            service ??= clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
+            return await DisposingShare.CreateAsync(share, metadata);
+        }
+
         public static async Task<DisposingContainer> GetTestContainerAsync(
             this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,
@@ -106,6 +125,21 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 publicAccessType = PublicAccessType.None;
             }
+
+            BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return new DisposingContainer(container);
+        }
+
+        public static async Task<DisposingContainer> GetAzureSasCredentialTestContainerAsync(
+            this BlobsClientBuilder clientBuilder,
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default)
+        {
+            containerName ??= clientBuilder.GetNewContainerName();
+            service ??= clientBuilder.GetServiceClient_AzureSasCredential();
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);

@@ -640,6 +640,29 @@ namespace Azure.Storage.Blobs.Specialized
             }
             return default;
         }
+
+        /// <summary>
+        /// Get the Uri with SAS appended if the <see cref="BlobBaseClient"/> has an <see cref="AzureSasCredential"/>,
+        /// for use as the source URI when performing service to service copy
+        /// where the client was initialized with an <see cref="AzureSasCredential"/>.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client from which to retrieve the URI and SAS credential.
+        /// </param>
+        /// <returns>
+        /// The URI with SAS appended if the client has an <see cref="AzureSasCredential"/>;
+        /// otherwise, the original URI.
+        /// </returns>
+        protected static Uri GetUriWithSas(BlobBaseClient client)
+        {
+            if (client.ClientConfiguration.SasCredential != null)
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
+                uriBuilder.Query += client.ClientConfiguration.SasCredential.Signature;
+                return uriBuilder.ToUri();
+            }
+            return client.Uri;
+        }
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
