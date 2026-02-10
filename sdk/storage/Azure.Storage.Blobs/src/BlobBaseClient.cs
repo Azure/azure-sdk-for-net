@@ -658,7 +658,25 @@ namespace Azure.Storage.Blobs.Specialized
             if (client.ClientConfiguration.SasCredential != null)
             {
                 BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
-                uriBuilder.Query += client.ClientConfiguration.SasCredential.Signature;
+                // Only append SAS if the URI doesn't already contain one
+                if (uriBuilder.Sas == null)
+                {
+                    string signature = client.ClientConfiguration.SasCredential.Signature;
+                    // Strip leading '?' if present to avoid malformed query
+                    if (signature.StartsWith("?", StringComparison.Ordinal))
+                    {
+                        signature = signature.Substring(1);
+                    }
+                    // Use '&' if there's already a query string, otherwise start fresh
+                    if (string.IsNullOrEmpty(uriBuilder.Query))
+                    {
+                        uriBuilder.Query = signature;
+                    }
+                    else
+                    {
+                        uriBuilder.Query += "&" + signature;
+                    }
+                }
                 return uriBuilder.ToUri();
             }
             return client.Uri;
