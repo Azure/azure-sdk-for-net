@@ -177,7 +177,7 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        public async Task PrallelToolCallTest()
+        public async Task ParallelToolCallTest()
         {
             var vlc = GetLiveClient();
 
