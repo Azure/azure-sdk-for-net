@@ -108,7 +108,8 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(stringEncoding, nameof(stringEncoding));
 
-            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), default);
+            IList<AnalyzeInput> inputsList = inputs as IList<AnalyzeInput> ?? (inputs is null ? new ChangeTrackingList<AnalyzeInput>() : inputs.ToList());
+            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputsList, modelDeployments ?? new ChangeTrackingDictionary<string, string>(), default);
             Operation<BinaryData> result = Analyze(waitUntil, analyzerId, spreadModel, stringEncoding, processingLocation?.ToString(), context: cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.Analyze");
         }
