@@ -95,6 +95,7 @@ namespace Azure.AI.VoiceLive
                         return VoiceLiveMcpServerDefinition.DeserializeVoiceLiveMcpServerDefinition(element, options);
                     case "foundry_agent":
                         return VoiceLiveFoundryAgentDefinition.DeserializeVoiceLiveFoundryAgentDefinition(element, options);
+
                 }
             }
             return UnknownVoiceLiveToolDefinition.DeserializeUnknownVoiceLiveToolDefinition(element, options);

@@ -54,11 +54,10 @@ namespace Azure.AI.VoiceLive
         /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
         /// </param>
         /// <param name="fillerResponse"> Configuration for filler response generation during latency or tool calls. </param>
-        /// <param name="agent"> The agent configuration for the session, if applicable. </param>
         /// <param name="id"> The unique identifier for the session. </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData fillerResponse, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData fillerResponse, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -79,7 +78,6 @@ namespace Azure.AI.VoiceLive
             MaxResponseOutputTokens = maxResponseOutputTokens;
             ReasoningEffort = reasoningEffort;
             FillerResponse = fillerResponse;
-            Agent = agent;
             Id = id;
             _turnDetection = turnDetection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
