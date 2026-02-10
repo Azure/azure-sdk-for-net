@@ -163,7 +163,7 @@ namespace Azure.AI.Projects.Tests
             return TestEnvironment.Credential;
         }
 
-        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default, bool useDefaultEndpoint=false)
+        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default, bool useDefaultEndpoint = false)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
             Uri endpoint = new(TestEnvironment.PROJECT_ENDPOINT);
@@ -398,7 +398,7 @@ namespace Azure.AI.Projects.Tests
         protected static string GetTestFile(string fileName, [CallerFilePath] string pth = "")
         {
             var dirName = Path.GetDirectoryName(pth) ?? "";
-            return Path.Combine([ dirName, "TestData", fileName ]);
+            return Path.Combine([dirName, "TestData", fileName]);
         }
     }
 }
