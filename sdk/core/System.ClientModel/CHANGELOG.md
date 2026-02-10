@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
+
 ### Other Changes
 
 ## 1.9.0 (2026-01-27)
