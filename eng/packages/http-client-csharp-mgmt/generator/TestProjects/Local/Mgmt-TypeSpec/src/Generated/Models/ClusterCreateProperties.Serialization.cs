@@ -13,12 +13,17 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The ClusterProperties. </summary>
-    internal partial class ClusterProperties : IJsonModel<ClusterProperties>
+    /// <summary>
+    /// Create properties model that extends ClusterProperties - reproduces issue #55437.
+    /// When Cluster.properties is flattened, the inherited properties from ClusterProperties
+    /// (like encryption with its single-property ClusterPropertiesEncryption)
+    /// should be safe-flattened through the inheritance chain.
+    /// </summary>
+    internal partial class ClusterCreateProperties : ClusterProperties, IJsonModel<ClusterCreateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterCreateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -27,105 +32,41 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(HighAvailability))
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("highAvailability"u8);
-                writer.WriteStringValue(HighAvailability.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(MinimumTlsVersion))
-            {
-                writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
-            }
-            if (Optional.IsDefined(MaintenanceConfiguration))
-            {
-                writer.WritePropertyName("maintenanceConfiguration"u8);
-                writer.WriteObjectValue(MaintenanceConfiguration, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
-            {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(RedundancyMode))
-            {
-                writer.WritePropertyName("redundancyMode"u8);
-                writer.WriteStringValue(RedundancyMode.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(RedisVersion))
-            {
-                writer.WritePropertyName("redisVersion"u8);
-                writer.WriteStringValue(RedisVersion);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (RedisPrivateEndpointConnection item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterProperties IJsonModel<ClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClusterCreateProperties IJsonModel<ClusterCreateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClusterCreateProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterProperties(document.RootElement, options);
+            return DeserializeClusterCreateProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterProperties DeserializeClusterProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterCreateProperties DeserializeClusterCreateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,6 +83,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string redisVersion = default;
             IReadOnlyList<RedisPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PublicNetworkAccess? publicNetworkAccess = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("highAvailability"u8))
@@ -231,12 +173,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (prop.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicNetworkAccess = null;
+                        continue;
+                    }
+                    publicNetworkAccess = prop.Value.GetString().ToPublicNetworkAccess();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterProperties(
+            return new ClusterCreateProperties(
                 highAvailability,
                 minimumTlsVersion,
                 encryption,
@@ -247,47 +199,48 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceState,
                 redisVersion,
                 privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnection>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                publicNetworkAccess);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ClusterCreateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterProperties IPersistableModel<ClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClusterCreateProperties IPersistableModel<ClusterCreateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClusterCreateProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterProperties(document.RootElement, options);
+                        return DeserializeClusterCreateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterCreateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

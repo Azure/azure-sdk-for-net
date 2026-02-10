@@ -374,6 +374,14 @@ namespace Azure.Generator.Management.Visitors
             }
             _visitedModelTypes.Add(model.Type);
 
+            // Ensure base model types are flattened first so that inherited properties
+            // are in their final state (e.g., safe-flattened single-property models become internal)
+            // before this model processes them via GetAllProperties.
+            if (model.BaseModelProvider is ModelProvider baseModel && !_flattenedModelTypes.ContainsKey(baseModel.Type))
+            {
+                FlattenModel(baseModel);
+            }
+
             var isFlattenProperty = false;
             var isSafeFlatten = false;
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
