@@ -167,7 +167,7 @@ namespace Azure.AI.ContentUnderstanding
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeRequest(analyzerId, content, stringEncoding, processingLocation, context);
+                using HttpMessage message = CreateAnalyzeRequest(analyzerId, content, stringEncoding, processingLocation, null, context);
 
                 // Always use WaitUntil.Started to ensure we get the initial response with Operation-Location header.
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.Analyze", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
@@ -213,7 +213,7 @@ namespace Azure.AI.ContentUnderstanding
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeRequest(analyzerId, content, stringEncoding, processingLocation, context);
+                using HttpMessage message = CreateAnalyzeRequest(analyzerId, content, stringEncoding, processingLocation, null, context);
 
                 // Always use WaitUntil.Started to ensure we get the initial response with Operation-Location header.
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.Analyze", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
@@ -261,7 +261,7 @@ namespace Azure.AI.ContentUnderstanding
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeBinaryRequest(analyzerId, contentType ?? DefaultContentType, content, stringEncoding, processingLocation, inputRange, context);
+                using HttpMessage message = CreateAnalyzeBinaryRequest(analyzerId, contentType ?? DefaultContentType, content, stringEncoding, processingLocation, inputRange, null, context);
 
                 // Always use WaitUntil.Started to ensure we get the initial response with Operation-Location header.
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
@@ -309,7 +309,7 @@ namespace Azure.AI.ContentUnderstanding
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeBinaryRequest(analyzerId, contentType ?? DefaultContentType, content, stringEncoding, processingLocation, inputRange, context);
+                using HttpMessage message = CreateAnalyzeBinaryRequest(analyzerId, contentType ?? DefaultContentType, content, stringEncoding, processingLocation, inputRange, null, context);
 
                 // Always use WaitUntil.Started to ensure we get the initial response with Operation-Location header.
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
