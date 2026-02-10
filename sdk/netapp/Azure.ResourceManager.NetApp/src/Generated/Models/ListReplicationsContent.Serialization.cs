@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Exclude? exclude = default;
+            ExcludeReplicationsFilter? exclude = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    exclude = new Exclude(prop.Value.GetString());
+                    exclude = new ExcludeReplicationsFilter(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

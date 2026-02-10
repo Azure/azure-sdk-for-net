@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class VolumeGroupsGetByNetAppAccountCollectionResultOfT : Pageable<VolumeGroup>
+    internal partial class VolumeGroupsGetByNetAppAccountCollectionResultOfT : Pageable<NetAppVolumeGroupResult>
     {
         private readonly VolumeGroups _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VolumeGroupsGetByNetAppAccountCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VolumeGroup>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetAppVolumeGroupResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 VolumeGroupList result = VolumeGroupList.FromResponse(response);
-                yield return Page<VolumeGroup>.FromValues((IReadOnlyList<VolumeGroup>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppVolumeGroupResult>.FromValues((IReadOnlyList<NetAppVolumeGroupResult>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

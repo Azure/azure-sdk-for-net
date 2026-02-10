@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The required parameters to perform encryption migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ChangeKeyVaultAsync(WaitUntil waitUntil, ChangeKeyVault body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ChangeKeyVaultAsync(WaitUntil waitUntil, NetAppChangeKeyVault body = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("NetAppAccountResource.ChangeKeyVault");
             scope.Start();
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Models.ChangeKeyVault.ToRequestContent(body), context);
+                HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppChangeKeyVault.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The required parameters to perform encryption migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ChangeKeyVault(WaitUntil waitUntil, ChangeKeyVault body = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ChangeKeyVault(WaitUntil waitUntil, NetAppChangeKeyVault body = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("NetAppAccountResource.ChangeKeyVault");
             scope.Start();
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Models.ChangeKeyVault.ToRequestContent(body), context);
+                HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppChangeKeyVault.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -645,8 +645,8 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VolumeGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VolumeGroup> GetByNetAppAccountAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetByNetAppAccountAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -677,8 +677,8 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VolumeGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VolumeGroup> GetByNetAppAccount(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppVolumeGroupResult> GetByNetAppAccount(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1298,11 +1298,11 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppResourceQuotaLimitsAccounts().Get(quotaLimitName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VolumeGroupDetails in the <see cref="NetAppAccountResource"/>. </summary>
-        /// <returns> An object representing collection of VolumeGroupDetails and their operations over a VolumeGroupDetailsResource. </returns>
-        public virtual VolumeGroupDetailsCollection GetAllVolumeGroupDetails()
+        /// <summary> Gets a collection of NetAppVolumeGroups in the <see cref="NetAppAccountResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppVolumeGroups and their operations over a NetAppVolumeGroupResource. </returns>
+        public virtual NetAppVolumeGroupCollection GetNetAppVolumeGroups()
         {
-            return GetCachedClient(client => new VolumeGroupDetailsCollection(client, Id));
+            return GetCachedClient(client => new NetAppVolumeGroupCollection(client, Id));
         }
 
         /// <summary> Get details of the specified volume group. </summary>
@@ -1311,11 +1311,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VolumeGroupDetailsResource>> GetVolumeGroupDetailsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeGroupResource>> GetNetAppVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            return await GetAllVolumeGroupDetails().GetAsync(volumeGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppVolumeGroups().GetAsync(volumeGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get details of the specified volume group. </summary>
@@ -1324,11 +1324,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VolumeGroupDetailsResource> GetVolumeGroupDetails(string volumeGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeGroupResource> GetNetAppVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            return GetAllVolumeGroupDetails().Get(volumeGroupName, cancellationToken);
+            return GetNetAppVolumeGroups().Get(volumeGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SnapshotPolicies in the <see cref="NetAppAccountResource"/>. </summary>
@@ -1364,11 +1364,11 @@ namespace Azure.ResourceManager.NetApp
             return GetSnapshotPolicies().Get(snapshotPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupPolicies in the <see cref="NetAppAccountResource"/>. </summary>
-        /// <returns> An object representing collection of BackupPolicies and their operations over a BackupPolicyResource. </returns>
-        public virtual BackupPolicyCollection GetBackupPolicies()
+        /// <summary> Gets a collection of NetAppBackupPolicies in the <see cref="NetAppAccountResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppBackupPolicies and their operations over a NetAppBackupPolicyResource. </returns>
+        public virtual NetAppBackupPolicyCollection GetNetAppBackupPolicies()
         {
-            return GetCachedClient(client => new BackupPolicyCollection(client, Id));
+            return GetCachedClient(client => new NetAppBackupPolicyCollection(client, Id));
         }
 
         /// <summary> Get a particular backup Policy. </summary>
@@ -1377,11 +1377,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BackupPolicyResource>> GetBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBackupPolicyResource>> GetNetAppBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            return await GetBackupPolicies().GetAsync(backupPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppBackupPolicies().GetAsync(backupPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a particular backup Policy. </summary>
@@ -1390,31 +1390,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackupPolicyResource> GetBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBackupPolicyResource> GetNetAppBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            return GetBackupPolicies().Get(backupPolicyName, cancellationToken);
+            return GetNetAppBackupPolicies().Get(backupPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupVaults in the <see cref="NetAppAccountResource"/>. </summary>
-        /// <returns> An object representing collection of BackupVaults and their operations over a BackupVaultResource. </returns>
-        public virtual BackupVaultCollection GetBackupVaults()
+        /// <summary> Gets a collection of NetAppBackupVaults in the <see cref="NetAppAccountResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppBackupVaults and their operations over a NetAppBackupVaultResource. </returns>
+        public virtual NetAppBackupVaultCollection GetNetAppBackupVaults()
         {
-            return GetCachedClient(client => new BackupVaultCollection(client, Id));
-        }
-
-        /// <summary> Get the Backup Vault. </summary>
-        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupVaultResource>> GetBackupVaultAsync(string backupVaultName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
-
-            return await GetBackupVaults().GetAsync(backupVaultName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new NetAppBackupVaultCollection(client, Id));
         }
 
         /// <summary> Get the Backup Vault. </summary>
@@ -1423,11 +1410,24 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackupVaultResource> GetBackupVault(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBackupVaultResource>> GetNetAppBackupVaultAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
-            return GetBackupVaults().Get(backupVaultName, cancellationToken);
+            return await GetNetAppBackupVaults().GetAsync(backupVaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the Backup Vault. </summary>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetAppBackupVaultResource> GetNetAppBackupVault(string backupVaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
+
+            return GetNetAppBackupVaults().Get(backupVaultName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CapacityPools in the <see cref="NetAppAccountResource"/>. </summary>

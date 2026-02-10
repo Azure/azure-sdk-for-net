@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string networkSiblingSetId = default;
             ResourceIdentifier subnetId = default;
             string networkSiblingSetStateId = default;
-            NetworkFeatures networkFeatures = default;
+            NetAppNetworkFeature networkFeatures = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("networkFeatures"u8))
                 {
-                    networkFeatures = new NetworkFeatures(prop.Value.GetString());
+                    networkFeatures = new NetAppNetworkFeature(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

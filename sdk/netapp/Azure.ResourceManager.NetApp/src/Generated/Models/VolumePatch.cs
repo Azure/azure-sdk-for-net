@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
-        public VolumePatchPropertiesDataProtection DataProtection
+        public NetAppVolumePatchDataProtection DataProtection
         {
             get
             {

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            KeySource? keySource = default;
+            NetAppKeySource? keySource = default;
             ElasticKeyVaultProperties keyVaultProperties = default;
             ElasticEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keySource = new KeySource(prop.Value.GetString());
+                    keySource = new NetAppKeySource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultProperties"u8))

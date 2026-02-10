@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class BackupsGetByVaultCollectionResultOfT : Pageable<BackupData>
+    internal partial class BackupsGetByVaultCollectionResultOfT : Pageable<NetAppBackupVaultBackupData>
     {
         private readonly Backups _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BackupsGetByVaultCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BackupData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetAppBackupVaultBackupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 BackupsList result = BackupsList.FromResponse(response);
-                yield return Page<BackupData>.FromValues((IReadOnlyList<BackupData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppBackupVaultBackupData>.FromValues((IReadOnlyList<NetAppBackupVaultBackupData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByVaultRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _backupVaultName, _filter, _context) : _client.CreateGetByVaultRequest(_subscriptionId, _resourceGroupName, _accountName, _backupVaultName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetAppBackupVaultBackupCollection.GetAll");
             scope.Start();
             try
             {

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string networkSiblingSetId = default;
             ResourceIdentifier subnetId = default;
             string networkSiblingSetStateId = default;
-            NetworkFeatures? networkFeatures = default;
+            NetAppNetworkFeature? networkFeatures = default;
             NetworkSiblingSetProvisioningState? provisioningState = default;
             IReadOnlyList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    networkFeatures = new NetworkFeatures(prop.Value.GetString());
+                    networkFeatures = new NetAppNetworkFeature(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

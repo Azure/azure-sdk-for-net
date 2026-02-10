@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RegionInfo>> QueryRegionInfoAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 };
                 HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RegionInfo> response = Response.FromValue(RegionInfo.FromResponse(result), result);
+                Response<NetAppRegionInfo> response = Response.FromValue(NetAppRegionInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RegionInfo> QueryRegionInfo(string location, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppRegionInfo> QueryRegionInfo(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 };
                 HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RegionInfo> response = Response.FromValue(RegionInfo.FromResponse(result), result);
+                Response<NetAppRegionInfo> response = Response.FromValue(NetAppRegionInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -970,8 +970,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UsageResult> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppUsageResult> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -1003,8 +1003,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UsageResult> GetAll(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppUsageResult> GetAll(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<UsageResult>> GetAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppUsageResult>> GetAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 };
                 HttpMessage message = NetAppResourceUsagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UsageResult> response = Response.FromValue(UsageResult.FromResponse(result), result);
+                Response<NetAppUsageResult> response = Response.FromValue(NetAppUsageResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<UsageResult> Get(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppUsageResult> Get(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 };
                 HttpMessage message = NetAppResourceUsagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<UsageResult> response = Response.FromValue(UsageResult.FromResponse(result), result);
+                Response<NetAppUsageResult> response = Response.FromValue(NetAppUsageResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

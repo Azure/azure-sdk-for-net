@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The original value of the network features type available to the volume at the time it was created. </summary>
-        public NetworkFeatures? NetworkFeatures
+        public NetAppNetworkFeature? NetworkFeatures
         {
             get
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The effective value of the network features type available to the volume, or current effective state of update. </summary>
-        public NetworkFeatures? EffectiveNetworkFeatures
+        public NetAppNetworkFeature? EffectiveNetworkFeatures
         {
             get
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Provides storage to network proximity information for the volume. </summary>
-        public VolumeStorageToNetworkProximity? StorageToNetworkProximity
+        public NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity
         {
             get
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> List of mount targets. </summary>
-        public IReadOnlyList<MountTargetProperties> MountTargets
+        public IReadOnlyList<NetAppVolumeMountTarget> MountTargets
         {
             get
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
-        public VolumePropertiesDataProtection DataProtection
+        public NetAppVolumeDataProtection DataProtection
         {
             get
             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </summary>
-        public SecurityStyle? SecurityStyle
+        public NetAppVolumeSecurityStyle? SecurityStyle
         {
             get
             {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
-        public EncryptionKeySource? EncryptionKeySource
+        public NetAppEncryptionKeySource? EncryptionKeySource
         {
             get
             {
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </summary>
-        public FileAccessLogs? FileAccessLogs
+        public NetAppFileAccessLog? FileAccessLogs
         {
             get
             {
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </summary>
-        public AvsDataStore? AvsDataStore
+        public NetAppAvsDataStore? AvsDataStore
         {
             get
             {
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
-        public EnableSubvolumes? EnableSubvolumes
+        public EnableNetAppSubvolume? EnableSubvolumes
         {
             get
             {

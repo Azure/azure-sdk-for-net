@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Gets the status of the NetworkSiblingSet at the time the operation was called. </param>
         /// <param name="nicInfoList"> List of NIC information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSiblingSet(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetworkFeatures? networkFeatures, NetworkSiblingSetProvisioningState? provisioningState, IReadOnlyList<NicInfo> nicInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSiblingSet(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature? networkFeatures, NetworkSiblingSetProvisioningState? provisioningState, IReadOnlyList<NicInfo> nicInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkSiblingSetId = networkSiblingSetId;
             SubnetId = subnetId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string NetworkSiblingSetStateId { get; }
 
         /// <summary> Network features available to the volume, or current state of update. </summary>
-        public NetworkFeatures? NetworkFeatures { get; }
+        public NetAppNetworkFeature? NetworkFeatures { get; }
 
         /// <summary> Gets the status of the NetworkSiblingSet at the time the operation was called. </summary>
         public NetworkSiblingSetProvisioningState? ProvisioningState { get; }

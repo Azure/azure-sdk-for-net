@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public VolumePatchPropertiesDataProtection DataProtection { get; set; }
+        public NetAppVolumePatchDataProtection DataProtection { get; set; }
 
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             set
             {
                 if (DataProtection is null)
-                    DataProtection = new VolumePatchPropertiesDataProtection();
+                    DataProtection = new NetAppVolumePatchDataProtection();
                 DataProtection.SnapshotPolicyId = value?.ToString();
             }
         }

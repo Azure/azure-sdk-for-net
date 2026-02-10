@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> regionInfo properties. </param>
-        internal RegionInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegionInfo properties) : base(id, name, resourceType, systemData)
+        internal RegionInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetAppRegionInfo properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> regionInfo properties. </summary>
-        internal RegionInfo Properties { get; }
+        internal NetAppRegionInfo Properties { get; }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>
         public RegionStorageToNetworkProximity? StorageToNetworkProximity
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        public IList<AvailabilityZoneMapping> AvailabilityZoneMappings
+        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings
         {
             get
             {

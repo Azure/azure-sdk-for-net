@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var patch = new NetAppVolumePatch();
             if (snapshotPolicyId != null)
             {
-                patch.DataProtection = new VolumePatchPropertiesDataProtection() { Snapshot = new VolumeSnapshotProperties() { SnapshotPolicyId = snapshotPolicyId.ToString() } };
+                patch.DataProtection = new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() { SnapshotPolicyId = snapshotPolicyId.ToString() } };
             }
             return patch;
         }

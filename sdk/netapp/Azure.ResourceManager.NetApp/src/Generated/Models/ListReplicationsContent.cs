@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ListReplicationsContent"/>. </summary>
         /// <param name="exclude"> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListReplicationsContent(Exclude? exclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListReplicationsContent(ExcludeReplicationsFilter? exclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Exclude = exclude;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
-        public Exclude? Exclude { get; set; }
+        public ExcludeReplicationsFilter? Exclude { get; set; }
     }
 }

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? nfsv41 = default;
             string allowedClients = default;
             bool? hasRootAccess = default;
-            ChownMode? chownMode = default;
+            NetAppChownMode? chownMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    chownMode = new ChownMode(prop.Value.GetString());
+                    chownMode = new NetAppChownMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

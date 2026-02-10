@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RegionInfo properties = default;
+            NetAppRegionInfo properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    properties = RegionInfo.DeserializeRegionInfo(prop.Value, options);
+                    properties = NetAppRegionInfo.DeserializeNetAppRegionInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

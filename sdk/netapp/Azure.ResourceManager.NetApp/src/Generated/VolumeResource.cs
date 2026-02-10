@@ -2785,12 +2785,12 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Object for snapshot to revert supplied in the body of the operation. </param>
+        /// <param name="content"> Object for snapshot to revert supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> RevertAsync(WaitUntil waitUntil, VolumeRevert body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RevertAsync(WaitUntil waitUntil, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Revert");
             scope.Start();
@@ -2800,7 +2800,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumeRevert.ToRequestContent(body), context);
+                HttpMessage message = _volumesRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumeRevertContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_volumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2838,12 +2838,12 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Object for snapshot to revert supplied in the body of the operation. </param>
+        /// <param name="content"> Object for snapshot to revert supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation Revert(WaitUntil waitUntil, VolumeRevert body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Revert(WaitUntil waitUntil, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Revert");
             scope.Start();
@@ -2853,7 +2853,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumeRevert.ToRequestContent(body), context);
+                HttpMessage message = _volumesRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumeRevertContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_volumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3351,11 +3351,11 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Gets a collection of Snapshots in the <see cref="VolumeResource"/>. </summary>
-        /// <returns> An object representing collection of Snapshots and their operations over a SnapshotResource. </returns>
-        public virtual SnapshotCollection GetSnapshots()
+        /// <summary> Gets a collection of NetAppVolumeSnapshots in the <see cref="VolumeResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppVolumeSnapshots and their operations over a NetAppVolumeSnapshotResource. </returns>
+        public virtual NetAppVolumeSnapshotCollection GetNetAppVolumeSnapshots()
         {
-            return GetCachedClient(client => new SnapshotCollection(client, Id));
+            return GetCachedClient(client => new NetAppVolumeSnapshotCollection(client, Id));
         }
 
         /// <summary> Get details of the specified snapshot. </summary>
@@ -3364,11 +3364,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SnapshotResource>> GetSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeSnapshotResource>> GetNetAppVolumeSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            return await GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppVolumeSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get details of the specified snapshot. </summary>
@@ -3377,31 +3377,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SnapshotResource> GetSnapshot(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeSnapshotResource> GetNetAppVolumeSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            return GetSnapshots().Get(snapshotName, cancellationToken);
+            return GetNetAppVolumeSnapshots().Get(snapshotName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VolumeQuotaRules in the <see cref="VolumeResource"/>. </summary>
-        /// <returns> An object representing collection of VolumeQuotaRules and their operations over a VolumeQuotaRuleResource. </returns>
-        public virtual VolumeQuotaRuleCollection GetVolumeQuotaRules()
+        /// <summary> Gets a collection of NetAppVolumeQuotaRules in the <see cref="VolumeResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppVolumeQuotaRules and their operations over a NetAppVolumeQuotaRuleResource. </returns>
+        public virtual NetAppVolumeQuotaRuleCollection GetNetAppVolumeQuotaRules()
         {
-            return GetCachedClient(client => new VolumeQuotaRuleCollection(client, Id));
-        }
-
-        /// <summary> Get details of the specified quota rule. </summary>
-        /// <param name="volumeQuotaRuleName"> The name of volume quota rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VolumeQuotaRuleResource>> GetVolumeQuotaRuleAsync(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
-
-            return await GetVolumeQuotaRules().GetAsync(volumeQuotaRuleName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new NetAppVolumeQuotaRuleCollection(client, Id));
         }
 
         /// <summary> Get details of the specified quota rule. </summary>
@@ -3410,11 +3397,24 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VolumeQuotaRuleResource> GetVolumeQuotaRule(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeQuotaRuleResource>> GetNetAppVolumeQuotaRuleAsync(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
 
-            return GetVolumeQuotaRules().Get(volumeQuotaRuleName, cancellationToken);
+            return await GetNetAppVolumeQuotaRules().GetAsync(volumeQuotaRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get details of the specified quota rule. </summary>
+        /// <param name="volumeQuotaRuleName"> The name of volume quota rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetAppVolumeQuotaRuleResource> GetNetAppVolumeQuotaRule(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+
+            return GetNetAppVolumeQuotaRules().Get(volumeQuotaRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RansomwareReports in the <see cref="VolumeResource"/>. </summary>
@@ -3491,11 +3491,11 @@ namespace Azure.ResourceManager.NetApp
             return GetBuckets().Get(bucketName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubvolumeInfos in the <see cref="VolumeResource"/>. </summary>
-        /// <returns> An object representing collection of SubvolumeInfos and their operations over a SubvolumeInfoResource. </returns>
-        public virtual SubvolumeInfoCollection GetSubvolumeInfos()
+        /// <summary> Gets a collection of NetAppSubvolumeInfos in the <see cref="VolumeResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppSubvolumeInfos and their operations over a NetAppSubvolumeInfoResource. </returns>
+        public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
         {
-            return GetCachedClient(client => new SubvolumeInfoCollection(client, Id));
+            return GetCachedClient(client => new NetAppSubvolumeInfoCollection(client, Id));
         }
 
         /// <summary> Returns the path associated with the subvolumeName provided. </summary>
@@ -3504,11 +3504,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubvolumeInfoResource>> GetSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
-            return await GetSubvolumeInfos().GetAsync(subvolumeName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubvolumeInfos().GetAsync(subvolumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Returns the path associated with the subvolumeName provided. </summary>
@@ -3517,11 +3517,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubvolumeInfoResource> GetSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
-            return GetSubvolumeInfos().Get(subvolumeName, cancellationToken);
+            return GetNetAppSubvolumeInfos().Get(subvolumeName, cancellationToken);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceGroup"/> is null. </exception>
-        public NetAppNameAvailabilityContent(string name, CheckNameResourceTypes @type, string resourceGroup)
+        public NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType @type, string resourceGroup)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppNameAvailabilityContent(string name, CheckNameResourceTypes @type, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType @type, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string Name { get; }
 
         /// <summary> Resource type used for verification. </summary>
-        public CheckNameResourceTypes Type { get; }
+        public NetAppNameAvailabilityResourceType Type { get; }
 
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }

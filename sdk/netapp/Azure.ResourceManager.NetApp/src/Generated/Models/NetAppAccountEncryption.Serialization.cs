@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            KeySource? keySource = default;
+            NetAppKeySource? keySource = default;
             KeyVaultProperties keyVaultProperties = default;
-            EncryptionIdentity identity = default;
+            NetAppEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keySource = new KeySource(prop.Value.GetString());
+                    keySource = new NetAppKeySource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultProperties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(prop.Value, options);
+                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

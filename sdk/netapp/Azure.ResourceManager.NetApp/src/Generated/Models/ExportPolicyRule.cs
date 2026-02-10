@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="hasRootAccess"> Has root access to volume. </param>
         /// <param name="chownMode"> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportPolicyRule(int? ruleIndex, bool? unixReadOnly, bool? unixReadWrite, bool? kerberos5ReadOnly, bool? kerberos5ReadWrite, bool? kerberos5IReadOnly, bool? kerberos5IReadWrite, bool? kerberos5PReadOnly, bool? kerberos5PReadWrite, bool? cifs, bool? nfsv3, bool? nfsv41, string allowedClients, bool? hasRootAccess, ChownMode? chownMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportPolicyRule(int? ruleIndex, bool? unixReadOnly, bool? unixReadWrite, bool? kerberos5ReadOnly, bool? kerberos5ReadWrite, bool? kerberos5IReadOnly, bool? kerberos5IReadWrite, bool? kerberos5PReadOnly, bool? kerberos5PReadWrite, bool? cifs, bool? nfsv3, bool? nfsv41, string allowedClients, bool? hasRootAccess, NetAppChownMode? chownMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleIndex = ruleIndex;
             UnixReadOnly = unixReadOnly;
@@ -101,6 +101,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? HasRootAccess { get; set; }
 
         /// <summary> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </summary>
-        public ChownMode? ChownMode { get; set; }
+        public NetAppChownMode? ChownMode { get; set; }
     }
 }

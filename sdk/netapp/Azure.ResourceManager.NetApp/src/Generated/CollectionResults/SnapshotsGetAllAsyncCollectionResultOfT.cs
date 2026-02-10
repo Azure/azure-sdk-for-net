@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class SnapshotsGetAllAsyncCollectionResultOfT : AsyncPageable<SnapshotData>
+    internal partial class SnapshotsGetAllAsyncCollectionResultOfT : AsyncPageable<NetAppVolumeSnapshotData>
     {
         private readonly Snapshots _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SnapshotsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SnapshotData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppVolumeSnapshotData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 SnapshotsList result = SnapshotsList.FromResponse(response);
-                yield return Page<SnapshotData>.FromValues((IReadOnlyList<SnapshotData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppVolumeSnapshotData>.FromValues((IReadOnlyList<NetAppVolumeSnapshotData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.GetAll");
             scope.Start();
             try
             {

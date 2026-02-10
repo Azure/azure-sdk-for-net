@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
         /// <param name="originClusterInformation"> Origin cluster information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filepath"/>, <paramref name="cacheSubnetResourceId"/>, <paramref name="peeringSubnetResourceId"/> or <paramref name="originClusterInformation"/> is null. </exception>
-        public CacheProperties(string filepath, long size, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, EncryptionKeySource encryptionKeySource, OriginClusterInformation originClusterInformation)
+        public CacheProperties(string filepath, long size, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, NetAppEncryptionKeySource encryptionKeySource, OriginClusterInformation originClusterInformation)
         {
             Argument.AssertNotNull(filepath, nameof(filepath));
             Argument.AssertNotNull(cacheSubnetResourceId, nameof(cacheSubnetResourceId));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheProperties(string filepath, long size, NetAppCachePropertiesExportPolicy exportPolicy, IList<ProtocolTypes> protocolTypes, CacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, KerberosState? kerberos, SmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, EncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, EncryptionState? encryption, VolumeLanguage? language, LdapState? ldap, LdapServerType? ldapServerType, OriginClusterInformation originClusterInformation, CifsChangeNotifyState? cifsChangeNotifications, GlobalFileLockingState? globalFileLocking, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheProperties(string filepath, long size, NetAppCachePropertiesExportPolicy exportPolicy, IList<ProtocolTypes> protocolTypes, CacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, KerberosState? kerberos, SmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, EncryptionState? encryption, VolumeLanguage? language, LdapState? ldap, LdapServerType? ldapServerType, OriginClusterInformation originClusterInformation, CifsChangeNotifyState? cifsChangeNotifications, GlobalFileLockingState? globalFileLocking, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filepath = filepath;
             Size = size;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public float? ActualThroughputMibps { get; }
 
         /// <summary> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
-        public EncryptionKeySource EncryptionKeySource { get; set; }
+        public NetAppEncryptionKeySource EncryptionKeySource { get; set; }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }

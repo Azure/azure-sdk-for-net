@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="networkSiblingSetStateId"> Network sibling set state Id identifying the current state of the sibling set. </param>
         /// <param name="networkFeatures"> Network features available to the volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSiblingSetId"/>, <paramref name="subnetId"/> or <paramref name="networkSiblingSetStateId"/> is null. </exception>
-        public UpdateNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetworkFeatures networkFeatures)
+        public UpdateNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature networkFeatures)
         {
             Argument.AssertNotNull(networkSiblingSetId, nameof(networkSiblingSetId));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="networkSiblingSetStateId"> Network sibling set state Id identifying the current state of the sibling set. </param>
         /// <param name="networkFeatures"> Network features available to the volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetworkFeatures networkFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature networkFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkSiblingSetId = networkSiblingSetId;
             SubnetId = subnetId;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public string NetworkSiblingSetStateId { get; }
 
         /// <summary> Network features available to the volume. </summary>
-        public NetworkFeatures NetworkFeatures { get; }
+        public NetAppNetworkFeature NetworkFeatures { get; }
     }
 }

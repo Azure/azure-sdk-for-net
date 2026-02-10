@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="percentageUsed"> Percentage of used size compared to total size. </param>
         /// <param name="isDerivedQuota"> Flag to indicate whether the quota is derived from default quota. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaReport(Type? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaReport(NetAppVolumeQuotaType? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuotaType = quotaType;
             QuotaTarget = quotaTarget;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Type of quota. </summary>
-        public Type? QuotaType { get; }
+        public NetAppVolumeQuotaType? QuotaType { get; }
 
         /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; }

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetApp.Models
             VolumePatchPropertiesExportPolicy exportPolicy = default;
             IList<string> protocolTypes = default;
             float? throughputMibps = default;
-            VolumePatchPropertiesDataProtection dataProtection = default;
+            NetAppVolumePatchDataProtection dataProtection = default;
             bool? isDefaultQuotaEnabled = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    dataProtection = VolumePatchPropertiesDataProtection.DeserializeVolumePatchPropertiesDataProtection(prop.Value, options);
+                    dataProtection = NetAppVolumePatchDataProtection.DeserializeNetAppVolumePatchDataProtection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isDefaultQuotaEnabled"u8))

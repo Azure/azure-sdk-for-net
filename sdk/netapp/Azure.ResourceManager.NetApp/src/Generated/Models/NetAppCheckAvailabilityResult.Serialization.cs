@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             bool? isAvailable = default;
-            InAvailabilityReasonType? reason = default;
+            NetAppNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    reason = new InAvailabilityReasonType(prop.Value.GetString());
+                    reason = new NetAppNameUnavailableReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))

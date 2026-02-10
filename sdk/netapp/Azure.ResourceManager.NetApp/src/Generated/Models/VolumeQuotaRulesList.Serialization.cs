@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VolumeQuotaRuleData item in Value)
+            foreach (NetAppVolumeQuotaRuleData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<VolumeQuotaRuleData> value = default;
+            IList<NetAppVolumeQuotaRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VolumeQuotaRuleData> array = new List<VolumeQuotaRuleData>();
+                    List<NetAppVolumeQuotaRuleData> array = new List<NetAppVolumeQuotaRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VolumeQuotaRuleData.DeserializeVolumeQuotaRuleData(item, options));
+                        array.Add(NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(item, options));
                     }
                     value = array;
                     continue;

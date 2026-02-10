@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (UsageResult item in Value)
+            foreach (NetAppUsageResult item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<UsageResult> value = default;
+            IList<NetAppUsageResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<UsageResult> array = new List<UsageResult>();
+                    List<NetAppUsageResult> array = new List<NetAppUsageResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UsageResult.DeserializeUsageResult(item, options));
+                        array.Add(NetAppUsageResult.DeserializeNetAppUsageResult(item, options));
                     }
                     value = array;
                     continue;

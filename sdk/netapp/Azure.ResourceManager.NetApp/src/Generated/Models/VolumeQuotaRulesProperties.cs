@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeQuotaRulesProperties(NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, Type? quotaType, string quotaTarget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeQuotaRulesProperties(NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             QuotaSizeInKiBs = quotaSizeInKiBs;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? QuotaSizeInKiBs { get; set; }
 
         /// <summary> Type of quota. </summary>
-        public Type? QuotaType { get; set; }
+        public NetAppVolumeQuotaType? QuotaType { get; set; }
 
         /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; set; }

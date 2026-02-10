@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string name = default;
-            CheckNameResourceTypes @type = default;
+            NetAppNameAvailabilityResourceType @type = default;
             string resourceGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CheckNameResourceTypes(prop.Value.GetString());
+                    @type = new NetAppNameAvailabilityResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceGroup"u8))

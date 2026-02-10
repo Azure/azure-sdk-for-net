@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultProperties"> Properties provided by KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticEncryption(KeySource? keySource, ElasticKeyVaultProperties keyVaultProperties, ElasticEncryptionIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticEncryption(NetAppKeySource? keySource, ElasticKeyVaultProperties keyVaultProperties, ElasticEncryptionIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeySource = keySource;
             KeyVaultProperties = keyVaultProperties;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive): Microsoft.NetApp, Microsoft.KeyVault. </summary>
-        public KeySource? KeySource { get; set; }
+        public NetAppKeySource? KeySource { get; set; }
 
         /// <summary> Properties provided by KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
         public ElasticKeyVaultProperties KeyVaultProperties { get; set; }

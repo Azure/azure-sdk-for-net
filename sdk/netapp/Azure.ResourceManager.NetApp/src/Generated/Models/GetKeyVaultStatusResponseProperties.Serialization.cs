@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("keyVaultPrivateEndpoints"u8);
                 writer.WriteStartArray();
-                foreach (KeyVaultPrivateEndpoint item in KeyVaultPrivateEndpoints)
+                foreach (NetAppKeyVaultPrivateEndpoint item in KeyVaultPrivateEndpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Uri keyVaultUri = default;
             string keyName = default;
             ResourceIdentifier keyVaultResourceId = default;
-            IList<KeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = default;
+            IList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<KeyVaultPrivateEndpoint> array = new List<KeyVaultPrivateEndpoint>();
+                    List<NetAppKeyVaultPrivateEndpoint> array = new List<NetAppKeyVaultPrivateEndpoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpoint.DeserializeKeyVaultPrivateEndpoint(item, options));
+                        array.Add(NetAppKeyVaultPrivateEndpoint.DeserializeNetAppKeyVaultPrivateEndpoint(item, options));
                     }
                     keyVaultPrivateEndpoints = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GetKeyVaultStatusResponseProperties(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints ?? new ChangeTrackingList<KeyVaultPrivateEndpoint>(), additionalBinaryDataProperties);
+            return new GetKeyVaultStatusResponseProperties(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints ?? new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

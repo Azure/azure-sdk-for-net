@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BackupPolicyData item in Value)
+            foreach (NetAppBackupPolicyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<BackupPolicyData> value = default;
+            IList<NetAppBackupPolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<BackupPolicyData> array = new List<BackupPolicyData>();
+                    List<NetAppBackupPolicyData> array = new List<NetAppBackupPolicyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BackupPolicyData.DeserializeBackupPolicyData(item, options));
+                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;

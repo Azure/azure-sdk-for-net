@@ -57,39 +57,39 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeGroupDetailsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppVolumeGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetVolumeGroupDetailsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VolumeGroupDetailsResource"/> object. </returns>
-        public static VolumeGroupDetailsResource GetVolumeGroupDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeGroupResource"/> object. </returns>
+        public static NetAppVolumeGroupResource GetNetAppVolumeGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetVolumeGroupDetailsResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeGroupResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppBackupVaultBackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetBackupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBackupVaultBackupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupResource"/> object. </returns>
-        public static BackupResource GetBackupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
+        public static NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetBackupResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBackupVaultBackupResource(id);
         }
 
         /// <summary>
@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppVolumeSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetSnapshotResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeSnapshotResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
-        public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeSnapshotResource"/> object. </returns>
+        public static NetAppVolumeSnapshotResource GetNetAppVolumeSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetSnapshotResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeSnapshotResource(id);
         }
 
         /// <summary>
@@ -147,39 +147,39 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetBackupPolicyResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBackupPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupPolicyResource"/> object. </returns>
-        public static BackupPolicyResource GetBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBackupPolicyResource"/> object. </returns>
+        public static NetAppBackupPolicyResource GetNetAppBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetBackupPolicyResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBackupPolicyResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeQuotaRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppVolumeQuotaRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetVolumeQuotaRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeQuotaRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VolumeQuotaRuleResource"/> object. </returns>
-        public static VolumeQuotaRuleResource GetVolumeQuotaRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeQuotaRuleResource"/> object. </returns>
+        public static NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetVolumeQuotaRuleResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeQuotaRuleResource(id);
         }
 
         /// <summary>
@@ -201,21 +201,21 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetBackupVaultResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBackupVaultResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupVaultResource"/> object. </returns>
-        public static BackupVaultResource GetBackupVaultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBackupVaultResource"/> object. </returns>
+        public static NetAppBackupVaultResource GetNetAppBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetBackupVaultResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBackupVaultResource(id);
         }
 
         /// <summary>
@@ -489,21 +489,21 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubvolumeInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppSubvolumeInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetSubvolumeInfoResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppSubvolumeInfoResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubvolumeInfoResource"/> object. </returns>
-        public static SubvolumeInfoResource GetSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppSubvolumeInfoResource"/> object. </returns>
+        public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetSubvolumeInfoResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppSubvolumeInfoResource(id);
         }
 
         /// <summary>
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<RegionInfo>> QueryRegionInfoAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<RegionInfo> QueryRegionInfo(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<NetAppRegionInfo> QueryRegionInfo(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1093,8 +1093,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UsageResult> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppUsageResult> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1112,8 +1112,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UsageResult> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppUsageResult> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<UsageResult>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppUsageResult>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="usageType"> The type of usage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<UsageResult> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public static Response<NetAppUsageResult> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

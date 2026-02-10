@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("destinationReplications"u8);
                 writer.WriteStartArray();
-                foreach (DestinationReplication item in DestinationReplications)
+                foreach (NetAppDestinationReplication item in DestinationReplications)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string remoteVolumeResourceId = default;
             RemotePath remotePath = default;
             string remoteVolumeRegion = default;
-            IReadOnlyList<DestinationReplication> destinationReplications = default;
+            IReadOnlyList<NetAppDestinationReplication> destinationReplications = default;
             ExternalReplicationSetupStatus? externalReplicationSetupStatus = default;
             string externalReplicationSetupInfo = default;
             NetAppMirrorState? mirrorState = default;
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<DestinationReplication> array = new List<DestinationReplication>();
+                    List<NetAppDestinationReplication> array = new List<NetAppDestinationReplication>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DestinationReplication.DeserializeDestinationReplication(item, options));
+                        array.Add(NetAppDestinationReplication.DeserializeNetAppDestinationReplication(item, options));
                     }
                     destinationReplications = array;
                     continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 remoteVolumeResourceId,
                 remotePath,
                 remoteVolumeRegion,
-                destinationReplications ?? new ChangeTrackingList<DestinationReplication>(),
+                destinationReplications ?? new ChangeTrackingList<NetAppDestinationReplication>(),
                 externalReplicationSetupStatus,
                 externalReplicationSetupInfo,
                 mirrorState,

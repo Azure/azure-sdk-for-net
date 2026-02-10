@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class VolumeQuotaRulesGetByVolumeAsyncCollectionResultOfT : AsyncPageable<VolumeQuotaRuleData>
+    internal partial class VolumeQuotaRulesGetByVolumeAsyncCollectionResultOfT : AsyncPageable<NetAppVolumeQuotaRuleData>
     {
         private readonly VolumeQuotaRules _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VolumeQuotaRulesGetByVolumeAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<VolumeQuotaRuleData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppVolumeQuotaRuleData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 VolumeQuotaRulesList result = VolumeQuotaRulesList.FromResponse(response);
-                yield return Page<VolumeQuotaRuleData>.FromValues((IReadOnlyList<VolumeQuotaRuleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppVolumeQuotaRuleData>.FromValues((IReadOnlyList<NetAppVolumeQuotaRuleData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByVolumeRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context) : _client.CreateGetByVolumeRequest(_subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VolumeQuotaRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.GetAll");
             scope.Start();
             try
             {

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             NetAppProvisioningState? provisioningState = default;
             long? quotaSizeInKiBs = default;
-            Type? quotaType = default;
+            NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    quotaType = new Type(prop.Value.GetString());
+                    quotaType = new NetAppVolumeQuotaType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("quotaTarget"u8))

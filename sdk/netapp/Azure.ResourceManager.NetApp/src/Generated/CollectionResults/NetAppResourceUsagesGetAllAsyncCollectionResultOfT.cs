@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class NetAppResourceUsagesGetAllAsyncCollectionResultOfT : AsyncPageable<UsageResult>
+    internal partial class NetAppResourceUsagesGetAllAsyncCollectionResultOfT : AsyncPageable<NetAppUsageResult>
     {
         private readonly NetAppResourceUsages _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of NetAppResourceUsagesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<UsageResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppUsageResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 UsagesListResult result = UsagesListResult.FromResponse(response);
-                yield return Page<UsageResult>.FromValues((IReadOnlyList<UsageResult>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppUsageResult>.FromValues((IReadOnlyList<NetAppUsageResult>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

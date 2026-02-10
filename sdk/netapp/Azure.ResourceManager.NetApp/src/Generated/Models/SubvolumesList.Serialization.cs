@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SubvolumeInfoData item in Value)
+            foreach (NetAppSubvolumeInfoData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<SubvolumeInfoData> value = default;
+            IList<NetAppSubvolumeInfoData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SubvolumeInfoData> array = new List<SubvolumeInfoData>();
+                    List<NetAppSubvolumeInfoData> array = new List<NetAppSubvolumeInfoData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubvolumeInfoData.DeserializeSubvolumeInfoData(item, options));
+                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item, options));
                     }
                     value = array;
                     continue;

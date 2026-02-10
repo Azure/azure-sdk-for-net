@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SmbSettings smbSettings = default;
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
-            EncryptionKeySource encryptionKeySource = default;
+            NetAppEncryptionKeySource encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             long? maximumNumberOfFiles = default;
             EncryptionState? encryption = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("encryptionKeySource"u8))
                 {
-                    encryptionKeySource = new EncryptionKeySource(prop.Value.GetString());
+                    encryptionKeySource = new NetAppEncryptionKeySource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultPrivateEndpointResourceId"u8))

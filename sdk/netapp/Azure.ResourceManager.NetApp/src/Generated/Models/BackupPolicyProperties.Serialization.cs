@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("volumeBackups"u8);
                 writer.WriteStartArray();
-                foreach (VolumeBackups item in VolumeBackups)
+                foreach (NetAppVolumeBackupDetail item in VolumeBackups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetApp.Models
             int? monthlyBackupsToKeep = default;
             int? volumesAssigned = default;
             bool? enabled = default;
-            IReadOnlyList<VolumeBackups> volumeBackups = default;
+            IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<VolumeBackups> array = new List<VolumeBackups>();
+                    List<NetAppVolumeBackupDetail> array = new List<NetAppVolumeBackupDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.VolumeBackups.DeserializeVolumeBackups(item, options));
+                        array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item, options));
                     }
                     volumeBackups = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 monthlyBackupsToKeep,
                 volumesAssigned,
                 enabled,
-                volumeBackups ?? new ChangeTrackingList<VolumeBackups>(),
+                volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
                 additionalBinaryDataProperties);
         }
 

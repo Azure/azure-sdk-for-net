@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class SubvolumesGetByVolumeAsyncCollectionResultOfT : AsyncPageable<SubvolumeInfoData>
+    internal partial class SubvolumesGetByVolumeAsyncCollectionResultOfT : AsyncPageable<NetAppSubvolumeInfoData>
     {
         private readonly Subvolumes _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SubvolumesGetByVolumeAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SubvolumeInfoData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppSubvolumeInfoData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 SubvolumesList result = SubvolumesList.FromResponse(response);
-                yield return Page<SubvolumeInfoData>.FromValues((IReadOnlyList<SubvolumeInfoData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppSubvolumeInfoData>.FromValues((IReadOnlyList<NetAppSubvolumeInfoData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByVolumeRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context) : _client.CreateGetByVolumeRequest(_subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SubvolumeInfoCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.GetAll");
             scope.Start();
             try
             {

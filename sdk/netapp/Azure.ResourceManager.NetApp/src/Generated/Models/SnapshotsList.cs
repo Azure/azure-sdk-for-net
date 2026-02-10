@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
         /// <param name="value"> The Snapshot items on this page. </param>
-        internal SnapshotsList(IEnumerable<SnapshotData> value)
+        internal SnapshotsList(IEnumerable<NetAppVolumeSnapshotData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The Snapshot items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotsList(IList<SnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotsList(IList<NetAppVolumeSnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Snapshot items on this page. </summary>
-        public IList<SnapshotData> Value { get; }
+        public IList<NetAppVolumeSnapshotData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

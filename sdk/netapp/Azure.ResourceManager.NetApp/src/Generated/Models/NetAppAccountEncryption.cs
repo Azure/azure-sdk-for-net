@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountEncryption(KeySource? keySource, KeyVaultProperties keyVaultProperties, EncryptionIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppAccountEncryption(NetAppKeySource? keySource, KeyVaultProperties keyVaultProperties, NetAppEncryptionIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeySource = keySource;
             KeyVaultProperties = keyVaultProperties;
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
-        public KeySource? KeySource { get; set; }
+        public NetAppKeySource? KeySource { get; set; }
 
         /// <summary> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
         public KeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        public EncryptionIdentity Identity { get; set; }
+        public NetAppEncryptionIdentity Identity { get; set; }
     }
 }

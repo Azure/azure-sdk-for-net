@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="GetKeyVaultStatusResponseProperties"/>. </summary>
         internal GetKeyVaultStatusResponseProperties()
         {
-            KeyVaultPrivateEndpoints = new ChangeTrackingList<KeyVaultPrivateEndpoint>();
+            KeyVaultPrivateEndpoints = new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetKeyVaultStatusResponseProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetKeyVaultStatusResponseProperties(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IList<KeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetKeyVaultStatusResponseProperties(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public ResourceIdentifier KeyVaultResourceId { get; }
 
         /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
-        public IList<KeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; } = new ChangeTrackingList<KeyVaultPrivateEndpoint>();
+        public IList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; } = new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>();
     }
 }

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("mountTargets"u8);
                 writer.WriteStartArray();
-                foreach (MountTargetProperties item in MountTargets)
+                foreach (NetAppVolumeMountTarget item in MountTargets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -425,25 +425,25 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier backupId = default;
             string baremetalTenantId = default;
             string subnetId = default;
-            NetworkFeatures? networkFeatures = default;
-            NetworkFeatures? effectiveNetworkFeatures = default;
+            NetAppNetworkFeature? networkFeatures = default;
+            NetAppNetworkFeature? effectiveNetworkFeatures = default;
             string networkSiblingSetId = default;
-            VolumeStorageToNetworkProximity? storageToNetworkProximity = default;
-            IReadOnlyList<MountTargetProperties> mountTargets = default;
+            NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default;
+            IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
-            VolumePropertiesDataProtection dataProtection = default;
+            NetAppVolumeDataProtection dataProtection = default;
             AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default;
             bool? isRestoring = default;
             bool? snapshotDirectoryVisible = default;
             bool? kerberosEnabled = default;
-            SecurityStyle? securityStyle = default;
+            NetAppVolumeSecurityStyle? securityStyle = default;
             bool? smbEncryption = default;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
             bool? smbContinuouslyAvailable = default;
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
-            EncryptionKeySource? encryptionKeySource = default;
+            NetAppEncryptionKeySource? encryptionKeySource = default;
             string keyVaultPrivateEndpointResourceId = default;
             bool? ldapEnabled = default;
             LdapServerType? ldapServerType = default;
@@ -453,8 +453,8 @@ namespace Azure.ResourceManager.NetApp.Models
             CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
             string unixPermissions = default;
             int? cloneProgress = default;
-            FileAccessLogs? fileAccessLogs = default;
-            AvsDataStore? avsDataStore = default;
+            NetAppFileAccessLog? fileAccessLogs = default;
+            NetAppAvsDataStore? avsDataStore = default;
             IReadOnlyList<string> dataStoreResourceId = default;
             bool? isDefaultQuotaEnabled = default;
             long? defaultUserQuotaInKiBs = default;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string volumeSpecName = default;
             bool? encrypted = default;
             IList<NetAppVolumePlacementRule> placementRules = default;
-            EnableSubvolumes? enableSubvolumes = default;
+            EnableNetAppSubvolume? enableSubvolumes = default;
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             LargeVolumeType? largeVolumeType = default;
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    networkFeatures = new NetworkFeatures(prop.Value.GetString());
+                    networkFeatures = new NetAppNetworkFeature(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("effectiveNetworkFeatures"u8))
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    effectiveNetworkFeatures = new NetworkFeatures(prop.Value.GetString());
+                    effectiveNetworkFeatures = new NetAppNetworkFeature(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkSiblingSetId"u8))
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    storageToNetworkProximity = new VolumeStorageToNetworkProximity(prop.Value.GetString());
+                    storageToNetworkProximity = new NetAppVolumeStorageToNetworkProximity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mountTargets"u8))
@@ -614,10 +614,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<MountTargetProperties> array = new List<MountTargetProperties>();
+                    List<NetAppVolumeMountTarget> array = new List<NetAppVolumeMountTarget>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MountTargetProperties.DeserializeMountTargetProperties(item, options));
+                        array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item, options));
                     }
                     mountTargets = array;
                     continue;
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    dataProtection = VolumePropertiesDataProtection.DeserializeVolumePropertiesDataProtection(prop.Value, options);
+                    dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("acceptGrowCapacityPoolForShortTermCloneSplit"u8))
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    securityStyle = new SecurityStyle(prop.Value.GetString());
+                    securityStyle = new NetAppVolumeSecurityStyle(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("smbEncryption"u8))
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    encryptionKeySource = new EncryptionKeySource(prop.Value.GetString());
+                    encryptionKeySource = new NetAppEncryptionKeySource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultPrivateEndpointResourceId"u8))
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    fileAccessLogs = new FileAccessLogs(prop.Value.GetString());
+                    fileAccessLogs = new NetAppFileAccessLog(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("avsDataStore"u8))
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    avsDataStore = new AvsDataStore(prop.Value.GetString());
+                    avsDataStore = new NetAppAvsDataStore(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataStoreResourceId"u8))
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    enableSubvolumes = new EnableSubvolumes(prop.Value.GetString());
+                    enableSubvolumes = new EnableNetAppSubvolume(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisionedAvailabilityZone"u8))
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 effectiveNetworkFeatures,
                 networkSiblingSetId,
                 storageToNetworkProximity,
-                mountTargets ?? new ChangeTrackingList<MountTargetProperties>(),
+                mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
                 volumeType,
                 dataProtection,
                 acceptGrowCapacityPoolForShortTermCloneSplit,

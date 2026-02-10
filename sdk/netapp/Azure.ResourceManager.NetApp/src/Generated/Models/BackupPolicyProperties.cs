@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="BackupPolicyProperties"/>. </summary>
         public BackupPolicyProperties()
         {
-            VolumeBackups = new ChangeTrackingList<VolumeBackups>();
+            VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupPolicyProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="enabled"> The property to decide policy is enabled or not. </param>
         /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPolicyProperties(string backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<VolumeBackups> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupPolicyProperties(string backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupPolicyId = backupPolicyId;
             ProvisioningState = provisioningState;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? Enabled { get; set; }
 
         /// <summary> A list of volumes assigned to this policy. </summary>
-        public IReadOnlyList<VolumeBackups> VolumeBackups { get; } = new ChangeTrackingList<VolumeBackups>();
+        public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; } = new ChangeTrackingList<NetAppVolumeBackupDetail>();
     }
 }
