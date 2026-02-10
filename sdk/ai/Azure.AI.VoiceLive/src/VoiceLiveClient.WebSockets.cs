@@ -60,6 +60,57 @@ namespace Azure.AI.VoiceLive
 
             return session;
         }
+        /// <summary>
+        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication with an agent.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
+        /// simultaneously sending and receiving WebSocket messages.
+        /// </remarks>
+        /// <param name="agentConfig">The agent configuration for the session.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
+        public virtual async Task<VoiceLiveSession> StartSessionAsync(AgentSessionConfig agentConfig, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(agentConfig, nameof(agentConfig));
+
+            // Convert the HTTP endpoint to a WebSocket endpoint with agent parameters
+            Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint, agentConfig);
+
+            VoiceLiveSession session = _keyCredential != null ? new(this, webSocketEndpoint, _keyCredential) : new(this, webSocketEndpoint, _tokenCredential);
+
+            await session.ConnectAsync(Options.Headers, cancellationToken).ConfigureAwait(false);
+
+            return session;
+        }
+
+        /// <summary>
+        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication with an agent and specified session configuration.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
+        /// simultaneously sending and receiving WebSocket messages.
+        /// </remarks>
+        /// <param name="agentConfig">The agent configuration for the session.</param>
+        /// <param name="sessionConfig">The configuration for the session.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
+        public virtual async Task<VoiceLiveSession> StartSessionAsync(
+            AgentSessionConfig agentConfig,
+            VoiceLiveSessionOptions sessionConfig,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(agentConfig, nameof(agentConfig));
+            Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
+
+            VoiceLiveSession session = await StartSessionAsync(agentConfig, cancellationToken).ConfigureAwait(false);
+
+            // Send the session configuration
+            ClientEventSessionUpdate sessionUpdateEvent = new(sessionConfig);
+            await session.SendCommandAsync(sessionUpdateEvent, cancellationToken).ConfigureAwait(false);
+
+            return session;
+        }
 #pragma warning restore AZC0004 // Websocket is an async only class
 
         /// <summary>
@@ -104,6 +155,77 @@ namespace Azure.AI.VoiceLive
             if (!builder.Query.Contains("model="))
             {
                 builder.Query = $"{builder.Query.TrimStart('?')}&model={model}";
+            }
+
+            return builder.Uri;
+        }
+        /// <summary>
+        /// Converts an HTTP endpoint to a WebSocket endpoint with agent configuration.
+        /// </summary>
+        /// <param name="httpEndpoint">The HTTP endpoint to convert.</param>
+        /// <param name="agentConfig">The agent configuration for agent-centric sessions.</param>
+        /// <returns>The WebSocket endpoint.</returns>
+        private Uri ConvertToWebSocketEndpoint(Uri httpEndpoint, AgentSessionConfig agentConfig)
+        {
+            if (httpEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(httpEndpoint));
+            }
+
+            if (agentConfig == null)
+            {
+                throw new ArgumentNullException(nameof(agentConfig));
+            }
+
+            var scheme = httpEndpoint.Scheme.ToLower() switch
+            {
+                "wss" => "wss",
+                "ws" => "ws",
+                "https" => "wss",
+                "http" => "ws",
+                _ => throw new ArgumentException($"Scheme {httpEndpoint.Scheme} is not supported."),
+            };
+
+            var builder = new UriBuilder(httpEndpoint)
+            {
+                Scheme = scheme
+            };
+
+            // Ensure the path includes the WebSocket endpoint
+            if (!builder.Path.EndsWith("/realtime", StringComparison.OrdinalIgnoreCase))
+            {
+                builder.Path = builder.Path.TrimEnd('/') + "/voice-live/realtime";
+            }
+
+            // Add the query parameter for the API version if it doesn't already exist
+            if (!builder.Query.Contains("api-version="))
+            {
+                builder.Query = $"{builder.Query.TrimStart('?')}&api-version={Options.Version}";
+            }
+
+            // Add agent-specific query parameters (required)
+            builder.Query = $"{builder.Query.TrimStart('?')}&agent-name={Uri.EscapeDataString(agentConfig.AgentName)}";
+            builder.Query = $"{builder.Query}&agent-project-name={Uri.EscapeDataString(agentConfig.ProjectName)}";
+
+            // Add optional agent parameters
+            if (!string.IsNullOrEmpty(agentConfig.AgentVersion))
+            {
+                builder.Query = $"{builder.Query}&agent-version={Uri.EscapeDataString(agentConfig.AgentVersion)}";
+            }
+
+            if (!string.IsNullOrEmpty(agentConfig.ConversationId))
+            {
+                builder.Query = $"{builder.Query}&conversation-id={Uri.EscapeDataString(agentConfig.ConversationId)}";
+            }
+
+            if (!string.IsNullOrEmpty(agentConfig.AuthenticationIdentityClientId))
+            {
+                builder.Query = $"{builder.Query}&agent-authentication-identity-client-id={Uri.EscapeDataString(agentConfig.AuthenticationIdentityClientId)}";
+            }
+
+            if (!string.IsNullOrEmpty(agentConfig.FoundryResourceOverride))
+            {
+                builder.Query = $"{builder.Query}&foundry-resource-override={Uri.EscapeDataString(agentConfig.FoundryResourceOverride)}";
             }
 
             return builder.Uri;
