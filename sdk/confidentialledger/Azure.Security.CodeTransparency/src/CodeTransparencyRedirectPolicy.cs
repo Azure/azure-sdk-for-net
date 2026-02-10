@@ -72,7 +72,7 @@ namespace Azure.Security.CodeTransparency
                 }
 
                 // Update the request URI to the redirect target.
-                // The Authorization header is intentionally preserved because ACL redirects
+                // The Authorization header is intentionally preserved because CTS redirects
                 // are between trusted nodes within the same ledger.
                 message.Request.Uri.Reset(redirectUri);
 
