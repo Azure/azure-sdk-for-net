@@ -83,8 +83,81 @@ namespace Azure.Generator.Management.Utilities
             return operationKind switch
             {
                 ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",
+                ResourceOperationKind.Read => isAsync ? $"Get{resourceName}Async" : $"Get{resourceName}",
+                ResourceOperationKind.Create => isAsync ? $"CreateOrUpdate{resourceName}Async" : $"CreateOrUpdate{resourceName}",
+                ResourceOperationKind.Delete => isAsync ? $"Delete{resourceName}Async" : $"Delete{resourceName}",
+                ResourceOperationKind.Update => isAsync ? $"Update{resourceName}Async" : $"Update{resourceName}",
                 _ => null
             };
+        }
+
+        /// <summary>
+        /// Gets the appropriate method name for an extension operation with parent type disambiguation.
+        /// Used when multiple extension resources target the same model but different parent types.
+        /// </summary>
+        /// <param name="operationKind">The kind of resource operation to perform.</param>
+        /// <param name="resourceName">The name of the resource.</param>
+        /// <param name="parentResourceType">The parent resource type (e.g., "Microsoft.Compute/virtualMachines").</param>
+        /// <param name="isAsync">Whether the method should be asynchronous.</param>
+        /// <returns>The disambiguated method name.</returns>
+        public static string? GetExtensionOperationMethodNameWithParentType(
+            ResourceOperationKind operationKind,
+            string resourceName,
+            string parentResourceType,
+            bool isAsync)
+        {
+            // Extract a short discriminator from the parent resource type
+            // e.g., "Microsoft.Compute/virtualMachines" -> "Vm"
+            //       "Microsoft.HybridCompute/machines" -> "Hcrp"
+            //       "Microsoft.Compute/virtualMachineScaleSets" -> "Vmss"
+            var discriminator = GetParentTypeDiscriminator(parentResourceType);
+
+            // If we can't get a discriminator, fall back to standard method name
+            if (string.IsNullOrEmpty(discriminator))
+            {
+                return GetExtensionOperationMethodName(operationKind, resourceName, isAsync);
+            }
+
+            // Build method name with discriminator
+            return operationKind switch
+            {
+                ResourceOperationKind.List => isAsync ? $"Get{discriminator}{resourceName.Pluralize()}Async" : $"Get{discriminator}{resourceName.Pluralize()}",
+                ResourceOperationKind.Read => isAsync ? $"Get{discriminator}{resourceName}Async" : $"Get{discriminator}{resourceName}",
+                ResourceOperationKind.Create => isAsync ? $"CreateOrUpdate{discriminator}{resourceName}Async" : $"CreateOrUpdate{discriminator}{resourceName}",
+                ResourceOperationKind.Delete => isAsync ? $"Delete{discriminator}{resourceName}Async" : $"Delete{discriminator}{resourceName}",
+                ResourceOperationKind.Update => isAsync ? $"Update{discriminator}{resourceName}Async" : $"Update{discriminator}{resourceName}",
+                _ => null
+            };
+        }
+
+        /// <summary>
+        /// Extracts a short discriminator from a parent resource type.
+        /// </summary>
+        internal static string GetParentTypeDiscriminator(string parentResourceType)
+        {
+            return parentResourceType switch
+            {
+                "Microsoft.Compute/virtualMachines" => "Vm",
+                "Microsoft.Compute/virtualMachineScaleSets" => "Vmss",
+                "Microsoft.HybridCompute/machines" => "Hcrp",
+                "Microsoft.ConnectedVMwarevSphere/virtualmachines" => "VMwarevSphere",
+                _ => ExtractGenericDiscriminator(parentResourceType)
+            };
+        }
+
+        /// <summary>
+        /// Extracts a generic discriminator from an unknown parent resource type.
+        /// </summary>
+        private static string ExtractGenericDiscriminator(string parentResourceType)
+        {
+            // Try to extract the resource type portion (after the /)
+            var parts = parentResourceType.Split('/');
+            if (parts.Length >= 2)
+            {
+                // Convert to identifier name (PascalCase)
+                return parts[1].ToIdentifierName();
+            }
+            return string.Empty;
         }
 
         public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)
