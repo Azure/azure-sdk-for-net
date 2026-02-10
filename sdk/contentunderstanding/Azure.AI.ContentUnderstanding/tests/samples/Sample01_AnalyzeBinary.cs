@@ -55,7 +55,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("Analysis operation properties verified");
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
-            Console.WriteLine($"Analysis result contains {result.Contents?.Count ??  0} content(s)");
+            Console.WriteLine($"Analysis result contains {result.Contents?.Count ?? 0} content(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractMarkdown

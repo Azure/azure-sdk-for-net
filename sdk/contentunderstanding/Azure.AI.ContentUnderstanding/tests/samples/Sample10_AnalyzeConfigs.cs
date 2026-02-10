@@ -210,9 +210,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 bool hasUrl = !string.IsNullOrEmpty(hyperlink.Url);
                 bool hasContent = !string.IsNullOrEmpty(hyperlink.Content);
 
-                if (hasUrl) hyperlinksWithUrl++;
-                if (hasContent) hyperlinksWithContent++;
-                if (hasUrl && hasContent) hyperlinksWithBoth++;
+                if (hasUrl)
+                    hyperlinksWithUrl++;
+                if (hasContent)
+                    hyperlinksWithContent++;
+                if (hasUrl && hasContent)
+                    hyperlinksWithBoth++;
 
                 Console.WriteLine($"  Hyperlink {hyperlinkIndex}:");
 

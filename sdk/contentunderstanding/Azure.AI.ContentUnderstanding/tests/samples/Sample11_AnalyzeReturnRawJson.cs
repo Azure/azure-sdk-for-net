@@ -115,7 +115,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("Raw JSON pretty-printing completed successfully");
             #endregion
 
-                        // Extract key information from raw JSON
+            // Extract key information from raw JSON
             using var jsonDocExtraction = JsonDocument.Parse(rawJson);
             var resultElement = jsonDocExtraction.RootElement.GetProperty("result");
 

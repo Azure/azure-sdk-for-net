@@ -262,7 +262,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             try
             {
-                #if SNIPPET
+#if SNIPPET
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
@@ -329,7 +329,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Verify segments cover the entire document without gaps or overlaps
                     var sortedSegments = documentContent.Segments.OrderBy(s => s.StartPageNumber).ToList();
                     int segmentIndex = 1;
-                    int?  lastEndPage = null;
+                    int? lastEndPage = null;
 
                     foreach (var segment in sortedSegments)
                     {

@@ -125,15 +125,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingDeleteAnalyzer
-            #if SNIPPET
+#if SNIPPET
             // Delete an analyzer
             await client.DeleteAnalyzerAsync(analyzerId);
             Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
-            #else
+#else
             // Delete an analyzer
             await client.DeleteAnalyzerAsync(analyzerId);
             Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
-            #endif
+#endif
             #endregion
 
             #region Assertion:ContentUnderstandingDeleteAnalyzer
@@ -141,7 +141,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Verify the analyzer was deleted by trying to get it
             bool deletionVerified = false;
-            int?  statusCode = null;
+            int? statusCode = null;
             string? errorMessage = null;
 
             try
@@ -155,7 +155,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 if (deletedResponse.HasValue && deletedResponse.Value != null)
                 {
-                    Console.WriteLine($"  Analyzer ID: {deletedResponse.Value.AnalyzerId ??  "(null)"}");
+                    Console.WriteLine($"  Analyzer ID: {deletedResponse.Value.AnalyzerId ?? "(null)"}");
                     Console.WriteLine($"  Description: {deletedResponse.Value.Description ?? "(null)"}");
                 }
 
@@ -170,7 +170,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 Console.WriteLine($"RequestFailedException caught as expected");
                 Console.WriteLine($"  Status code: {ex.Status}");
-                Console.WriteLine($"  Error code: {ex.ErrorCode ??  "(none)"}");
+                Console.WriteLine($"  Error code: {ex.ErrorCode ?? "(none)"}");
                 Console.WriteLine($"  Message: {ex.Message}");
 
                 // Verify status code is 404 (Not Found) or 400 (Bad Request)
