@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
 using Azure.Core.Shared;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;

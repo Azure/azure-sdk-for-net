@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
             while (store.Count < eventLimit)
             {
-                Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Test"))), Is.True, $"The batch contains { store.Count } events; adding another should be permitted.");
+                Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Test"))), Is.True, $"The batch contains {store.Count} events; adding another should be permitted.");
             }
 
             Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit.");
