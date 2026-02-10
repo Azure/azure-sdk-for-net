@@ -5,9 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Identity;
