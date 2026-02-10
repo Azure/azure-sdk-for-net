@@ -98,10 +98,10 @@
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms
+/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms
+# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms @linglingye001
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @Azure/azure-sdk-write-attestation @gkostal
