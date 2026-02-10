@@ -20,6 +20,23 @@ namespace Azure.Communication.ProgrammableConnectivity
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual Ipv4Address PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Ipv4Address>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIpv4Address(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Ipv4Address)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<Ipv4Address>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,23 +143,6 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         Ipv4Address IPersistableModel<Ipv4Address>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Ipv4Address PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Ipv4Address>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIpv4Address(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(Ipv4Address)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<Ipv4Address>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

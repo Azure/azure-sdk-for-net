@@ -283,7 +283,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestRunsRequest(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
+        internal HttpMessage CreateGetTestRunsRequest(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -313,9 +313,9 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("status", status, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             if (createdByTypes != null && !(createdByTypes is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -333,14 +333,14 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetTestRunsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTestRunsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
             uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -15,6 +15,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the authorization for the resource. </summary>
     public partial class ResourceAuthorization : IJsonModel<ResourceAuthorization>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceAuthorization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceAuthorization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -161,23 +178,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResourceAuthorization IPersistableModel<ResourceAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceAuthorization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceAuthorization>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceAuthorization(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceAuthorization)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

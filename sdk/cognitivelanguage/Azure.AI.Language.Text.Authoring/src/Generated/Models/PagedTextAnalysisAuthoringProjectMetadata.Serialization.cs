@@ -21,6 +21,30 @@ namespace Azure.AI.Language.Text.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PagedTextAnalysisAuthoringProjectMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePagedTextAnalysisAuthoringProjectMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedTextAnalysisAuthoringProjectMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringProjectMetadata"/> from. </param>
+        public static explicit operator PagedTextAnalysisAuthoringProjectMetadata(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedTextAnalysisAuthoringProjectMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PagedTextAnalysisAuthoringProjectMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,31 +169,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         PagedTextAnalysisAuthoringProjectMetadata IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedTextAnalysisAuthoringProjectMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePagedTextAnalysisAuthoringProjectMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PagedTextAnalysisAuthoringProjectMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedTextAnalysisAuthoringProjectMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringProjectMetadata"/> from. </param>
-        public static explicit operator PagedTextAnalysisAuthoringProjectMetadata(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedTextAnalysisAuthoringProjectMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
