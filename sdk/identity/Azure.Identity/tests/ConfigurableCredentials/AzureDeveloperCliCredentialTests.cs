@@ -8,17 +8,17 @@ using Azure.Identity.Tests.Mock;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
-namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePowerShell
+namespace Azure.Identity.Tests.ConfigurableCredentials.AzureDeveloperCli
 {
-    internal class AzurePowerShellCredentialTests : Tests.AzurePowerShellCredentialsTests
+    internal class AzureDeveloperCliCredentialTests : Tests.AzureDeveloperCliCredentialTests
     {
-        private readonly ConfigurableCredentialTestHelper<AzurePowerShellCredential> _helper;
+        private readonly ConfigurableCredentialTestHelper<AzureDeveloperCliCredential> _helper;
 
-        public AzurePowerShellCredentialTests(bool isAsync) : base(isAsync)
+        public AzureDeveloperCliCredentialTests(bool isAsync) : base(isAsync)
         {
-            _helper = new ConfigurableCredentialTestHelper<AzurePowerShellCredential>(
-                "AzurePowerShell",
-                CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30)).Json,
+            _helper = new ConfigurableCredentialTestHelper<AzureDeveloperCliCredential>(
+                "AzureDeveloperCli",
+                CredentialTestHelpers.CreateTokenForAzureDeveloperCli().Json,
                 null,
                 InstrumentClient);
         }
