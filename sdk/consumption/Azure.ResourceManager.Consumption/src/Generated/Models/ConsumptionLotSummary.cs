@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,109 +16,178 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A lot summary resource. </summary>
     public partial class ConsumptionLotSummary : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLotSummary"/>. </summary>
-        public ConsumptionLotSummary()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The lot properties. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        internal ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LotProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConsumptionLotSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="originalAmount"> The original amount of a lot. </param>
-        /// <param name="closedBalance"> The balance as of the last invoice. </param>
-        /// <param name="source"> The source of the lot. </param>
-        /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expireOn"> The expiration date of a lot. </param>
-        /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
-        /// <param name="purchasedOn"> The date when the lot was added. </param>
-        /// <param name="status"> The status of the lot. </param>
-        /// <param name="creditCurrency"> The currency of the lot. </param>
-        /// <param name="billingCurrency"> The billing currency of the lot. </param>
-        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
-        /// <param name="reseller"> The reseller of the lot. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <summary> The lot properties. </summary>
+        internal LotProperties Properties { get; }
+
+        /// <summary> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
+        public ConsumptionAmount OriginalAmount
         {
-            OriginalAmount = originalAmount;
-            ClosedBalance = closedBalance;
-            Source = source;
-            StartOn = startOn;
-            ExpireOn = expireOn;
-            PoNumber = poNumber;
-            PurchasedOn = purchasedOn;
-            Status = status;
-            CreditCurrency = creditCurrency;
-            BillingCurrency = billingCurrency;
-            OriginalAmountInBillingCurrency = originalAmountInBillingCurrency;
-            ClosedBalanceInBillingCurrency = closedBalanceInBillingCurrency;
-            Reseller = reseller;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            get
+            {
+                return Properties.OriginalAmount;
+            }
         }
 
-        /// <summary> The original amount of a lot. </summary>
-        public ConsumptionAmount OriginalAmount { get; }
         /// <summary> The balance as of the last invoice. </summary>
-        public ConsumptionAmount ClosedBalance { get; }
+        public ConsumptionAmount ClosedBalance
+        {
+            get
+            {
+                return Properties.ClosedBalance;
+            }
+        }
+
         /// <summary> The source of the lot. </summary>
-        public ConsumptionLotSource? Source { get; }
+        public ConsumptionLotSource? Source
+        {
+            get
+            {
+                return Properties.Source;
+            }
+        }
+
         /// <summary> The date when the lot became effective. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties.StartOn;
+            }
+        }
+
         /// <summary> The expiration date of a lot. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties.ExpireOn;
+            }
+        }
+
         /// <summary> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </summary>
-        public string PoNumber { get; }
+        public string PoNumber
+        {
+            get
+            {
+                return Properties.PoNumber;
+            }
+        }
+
         /// <summary> The date when the lot was added. </summary>
-        public DateTimeOffset? PurchasedOn { get; }
+        public DateTimeOffset? PurchasedOn
+        {
+            get
+            {
+                return Properties.PurchasedOn;
+            }
+        }
+
         /// <summary> The status of the lot. </summary>
-        public ConsumptionLotStatus? Status { get; }
+        public ConsumptionLotStatus? Status
+        {
+            get
+            {
+                return Properties.Status;
+            }
+        }
+
         /// <summary> The currency of the lot. </summary>
-        public string CreditCurrency { get; }
+        public string CreditCurrency
+        {
+            get
+            {
+                return Properties.CreditCurrency;
+            }
+        }
+
         /// <summary> The billing currency of the lot. </summary>
-        public string BillingCurrency { get; }
-        /// <summary> The original amount of a lot in billing currency. </summary>
-        public ConsumptionAmountWithExchangeRate OriginalAmountInBillingCurrency { get; }
+        public string BillingCurrency
+        {
+            get
+            {
+                return Properties.BillingCurrency;
+            }
+        }
+
+        /// <summary> The original amount of a lot in billing currency,  Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
+        public ConsumptionAmountWithExchangeRate OriginalAmountInBillingCurrency
+        {
+            get
+            {
+                return Properties.OriginalAmountInBillingCurrency;
+            }
+        }
+
         /// <summary> The balance as of the last invoice in billing currency. </summary>
-        public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency { get; }
+        public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency
+        {
+            get
+            {
+                return Properties.ClosedBalanceInBillingCurrency;
+            }
+        }
+
         /// <summary> The reseller of the lot. </summary>
-        public ConsumptionReseller Reseller { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ConsumptionReseller Reseller
+        {
+            get
+            {
+                return Properties.Reseller;
+            }
+        }
+
+        /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
+        public bool? IsEstimatedBalance
+        {
+            get
+            {
+                return Properties.IsEstimatedBalance;
+            }
+        }
+
+        /// <summary> The eTag for the resource. </summary>
+        public string PropertiesETag
+        {
+            get
+            {
+                return Properties.PropertiesETag;
+            }
+        }
+
+        /// <summary> The organization type of the lot. </summary>
+        public OrganizationType? OrganizationType
+        {
+            get
+            {
+                return Properties.OrganizationType;
+            }
+        }
+
+        /// <summary> Amount consumed from the commitment. </summary>
+        public ConsumptionAmount UsedAmount
+        {
+            get
+            {
+                return Properties.UsedAmount;
+            }
+        }
     }
 }

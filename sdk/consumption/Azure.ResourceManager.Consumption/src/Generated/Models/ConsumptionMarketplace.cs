@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A marketplace resource. </summary>
     public partial class ConsumptionMarketplace : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
         internal ConsumptionMarketplace()
@@ -54,127 +26,263 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
-        /// <param name="usageStartOn"> The start of the date time range covered by the usage detail. </param>
-        /// <param name="usageEndOn"> The end of the date time range covered by the usage detail. </param>
-        /// <param name="resourceRate"> The marketplace resource rate. </param>
-        /// <param name="offerName"> The type of offer. </param>
-        /// <param name="resourceGroup"> The name of resource group. </param>
-        /// <param name="additionalInfo"> Additional information. </param>
-        /// <param name="orderNumber"> The order number. </param>
-        /// <param name="instanceName"> The name of the resource instance that the usage is about. </param>
-        /// <param name="instanceId"> The uri of the resource instance that the usage is about. </param>
-        /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
-        /// <param name="consumedQuantity"> The quantity of usage. </param>
-        /// <param name="unitOfMeasure"> The unit of measure. </param>
-        /// <param name="pretaxCost"> The amount of cost before tax. </param>
-        /// <param name="isEstimated"> The estimated usage is subject to change. </param>
-        /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="subscriptionGuid"> Subscription guid. </param>
-        /// <param name="subscriptionName"> Subscription name. </param>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="departmentName"> Department name. </param>
-        /// <param name="consumedService"> Consumed service name. </param>
-        /// <param name="costCenter"> The cost center of this department if it is a department and a costcenter exists. </param>
-        /// <param name="additionalProperties"> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. </param>
-        /// <param name="publisherName"> The name of publisher. </param>
-        /// <param name="planName"> The name of plan. </param>
-        /// <param name="isRecurringCharge"> Flag indicating whether this is a recurring charge or not. </param>
-        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the marketplace usage detail. </param>
+        /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MarketplaceProperties properties, string eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            BillingPeriodId = billingPeriodId;
-            UsageStartOn = usageStartOn;
-            UsageEndOn = usageEndOn;
-            ResourceRate = resourceRate;
-            OfferName = offerName;
-            ResourceGroup = resourceGroup;
-            AdditionalInfo = additionalInfo;
-            OrderNumber = orderNumber;
-            InstanceName = instanceName;
-            InstanceId = instanceId;
-            Currency = currency;
-            ConsumedQuantity = consumedQuantity;
-            UnitOfMeasure = unitOfMeasure;
-            PretaxCost = pretaxCost;
-            IsEstimated = isEstimated;
-            MeterId = meterId;
-            SubscriptionGuid = subscriptionGuid;
-            SubscriptionName = subscriptionName;
-            AccountName = accountName;
-            DepartmentName = departmentName;
-            ConsumedService = consumedService;
-            CostCenter = costCenter;
-            AdditionalProperties = additionalProperties;
-            PublisherName = publisherName;
-            PlanName = planName;
-            IsRecurringCharge = isRecurringCharge;
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The id of the billing period resource that the usage belongs to. </summary>
-        public string BillingPeriodId { get; }
-        /// <summary> The start of the date time range covered by the usage detail. </summary>
-        public DateTimeOffset? UsageStartOn { get; }
-        /// <summary> The end of the date time range covered by the usage detail. </summary>
-        public DateTimeOffset? UsageEndOn { get; }
-        /// <summary> The marketplace resource rate. </summary>
-        public decimal? ResourceRate { get; }
-        /// <summary> The type of offer. </summary>
-        public string OfferName { get; }
-        /// <summary> The name of resource group. </summary>
-        public string ResourceGroup { get; }
-        /// <summary> Additional information. </summary>
-        public string AdditionalInfo { get; }
-        /// <summary> The order number. </summary>
-        public string OrderNumber { get; }
-        /// <summary> The name of the resource instance that the usage is about. </summary>
-        public string InstanceName { get; }
-        /// <summary> The uri of the resource instance that the usage is about. </summary>
-        public string InstanceId { get; }
-        /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
-        public string Currency { get; }
-        /// <summary> The quantity of usage. </summary>
-        public decimal? ConsumedQuantity { get; }
-        /// <summary> The unit of measure. </summary>
-        public string UnitOfMeasure { get; }
-        /// <summary> The amount of cost before tax. </summary>
-        public decimal? PretaxCost { get; }
-        /// <summary> The estimated usage is subject to change. </summary>
-        public bool? IsEstimated { get; }
-        /// <summary> The meter id (GUID). </summary>
-        public Guid? MeterId { get; }
-        /// <summary> Subscription guid. </summary>
-        public Guid? SubscriptionGuid { get; }
-        /// <summary> Subscription name. </summary>
-        public string SubscriptionName { get; }
-        /// <summary> Account name. </summary>
-        public string AccountName { get; }
-        /// <summary> Department name. </summary>
-        public string DepartmentName { get; }
-        /// <summary> Consumed service name. </summary>
-        public string ConsumedService { get; }
-        /// <summary> The cost center of this department if it is a department and a costcenter exists. </summary>
-        public string CostCenter { get; }
-        /// <summary> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. </summary>
-        public string AdditionalProperties { get; }
-        /// <summary> The name of publisher. </summary>
-        public string PublisherName { get; }
-        /// <summary> The name of plan. </summary>
-        public string PlanName { get; }
-        /// <summary> Flag indicating whether this is a recurring charge or not. </summary>
-        public bool? IsRecurringCharge { get; }
+        /// <summary> The properties of the marketplace usage detail. </summary>
+        internal MarketplaceProperties Properties { get; }
+
         /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
+
+        /// <summary> The id of the billing period resource that the usage belongs to. </summary>
+        public string BillingPeriodId
+        {
+            get
+            {
+                return Properties.BillingPeriodId;
+            }
+        }
+
+        /// <summary> The start of the date time range covered by the usage detail. </summary>
+        public DateTimeOffset? UsageStartOn
+        {
+            get
+            {
+                return Properties.UsageStartOn;
+            }
+        }
+
+        /// <summary> The end of the date time range covered by the usage detail. </summary>
+        public DateTimeOffset? UsageEndOn
+        {
+            get
+            {
+                return Properties.UsageEndOn;
+            }
+        }
+
+        /// <summary> The marketplace resource rate. </summary>
+        public decimal? ResourceRate
+        {
+            get
+            {
+                return Properties.ResourceRate;
+            }
+        }
+
+        /// <summary> The type of offer. </summary>
+        public string OfferName
+        {
+            get
+            {
+                return Properties.OfferName;
+            }
+        }
+
+        /// <summary> The name of resource group. </summary>
+        public string ResourceGroup
+        {
+            get
+            {
+                return Properties.ResourceGroup;
+            }
+        }
+
+        /// <summary> Additional information. </summary>
+        public string AdditionalInfo
+        {
+            get
+            {
+                return Properties.AdditionalInfo;
+            }
+        }
+
+        /// <summary> The order number. </summary>
+        public string OrderNumber
+        {
+            get
+            {
+                return Properties.OrderNumber;
+            }
+        }
+
+        /// <summary> The name of the resource instance that the usage is about. </summary>
+        public string InstanceName
+        {
+            get
+            {
+                return Properties.InstanceName;
+            }
+        }
+
+        /// <summary> The uri of the resource instance that the usage is about. </summary>
+        public string InstanceId
+        {
+            get
+            {
+                return Properties.InstanceId;
+            }
+        }
+
+        /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
+        public string Currency
+        {
+            get
+            {
+                return Properties.Currency;
+            }
+        }
+
+        /// <summary> The quantity of usage. </summary>
+        public decimal? ConsumedQuantity
+        {
+            get
+            {
+                return Properties.ConsumedQuantity;
+            }
+        }
+
+        /// <summary> The unit of measure. </summary>
+        public string UnitOfMeasure
+        {
+            get
+            {
+                return Properties.UnitOfMeasure;
+            }
+        }
+
+        /// <summary> The amount of cost before tax. </summary>
+        public decimal? PretaxCost
+        {
+            get
+            {
+                return Properties.PretaxCost;
+            }
+        }
+
+        /// <summary> The estimated usage is subject to change. </summary>
+        public bool? IsEstimated
+        {
+            get
+            {
+                return Properties.IsEstimated;
+            }
+        }
+
+        /// <summary> The meter id (GUID). </summary>
+        public string MeterId
+        {
+            get
+            {
+                return Properties.MeterId;
+            }
+        }
+
+        /// <summary> Subscription guid. </summary>
+        public string SubscriptionGuid
+        {
+            get
+            {
+                return Properties.SubscriptionGuid;
+            }
+        }
+
+        /// <summary> Subscription name. </summary>
+        public string SubscriptionName
+        {
+            get
+            {
+                return Properties.SubscriptionName;
+            }
+        }
+
+        /// <summary> Account name. </summary>
+        public string AccountName
+        {
+            get
+            {
+                return Properties.AccountName;
+            }
+        }
+
+        /// <summary> Department name. </summary>
+        public string DepartmentName
+        {
+            get
+            {
+                return Properties.DepartmentName;
+            }
+        }
+
+        /// <summary> Consumed service name. </summary>
+        public string ConsumedService
+        {
+            get
+            {
+                return Properties.ConsumedService;
+            }
+        }
+
+        /// <summary> The cost center of this department if it is a department and a costcenter exists. </summary>
+        public string CostCenter
+        {
+            get
+            {
+                return Properties.CostCenter;
+            }
+        }
+
+        /// <summary> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. </summary>
+        public string AdditionalProperties
+        {
+            get
+            {
+                return Properties.AdditionalProperties;
+            }
+        }
+
+        /// <summary> The name of publisher. </summary>
+        public string PublisherName
+        {
+            get
+            {
+                return Properties.PublisherName;
+            }
+        }
+
+        /// <summary> The name of plan. </summary>
+        public string PlanName
+        {
+            get
+            {
+                return Properties.PlanName;
+            }
+        }
+
+        /// <summary> Flag indicating whether this is a recurring charge or not. </summary>
+        public bool? IsRecurringCharge
+        {
+            get
+            {
+                return Properties.IsRecurringCharge;
+            }
+        }
     }
 }

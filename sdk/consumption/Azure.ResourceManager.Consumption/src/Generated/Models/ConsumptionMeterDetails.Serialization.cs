@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionMeterDetails : IUtf8JsonSerializable, IJsonModel<ConsumptionMeterDetails>
+    /// <summary> The properties of the meter detail. </summary>
+    public partial class ConsumptionMeterDetails : IJsonModel<ConsumptionMeterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionMeterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionMeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(MeterName))
             {
                 writer.WritePropertyName("meterName"u8);
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +96,27 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        ConsumptionMeterDetails IJsonModel<ConsumptionMeterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionMeterDetails IJsonModel<ConsumptionMeterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConsumptionMeterDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionMeterDetails(document.RootElement, options);
         }
 
-        internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,69 +130,67 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? pretaxStandardRate = default;
             string serviceName = default;
             string serviceTier = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("meterName"u8))
+                if (prop.NameEquals("meterName"u8))
                 {
-                    meterName = property.Value.GetString();
+                    meterName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterCategory"u8))
+                if (prop.NameEquals("meterCategory"u8))
                 {
-                    meterCategory = property.Value.GetString();
+                    meterCategory = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterSubCategory"u8))
+                if (prop.NameEquals("meterSubCategory"u8))
                 {
-                    meterSubCategory = property.Value.GetString();
+                    meterSubCategory = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString();
+                    unit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("meterLocation"u8))
+                if (prop.NameEquals("meterLocation"u8))
                 {
-                    meterLocation = property.Value.GetString();
+                    meterLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalIncludedQuantity"u8))
+                if (prop.NameEquals("totalIncludedQuantity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalIncludedQuantity = property.Value.GetDecimal();
+                    totalIncludedQuantity = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("pretaxStandardRate"u8))
+                if (prop.NameEquals("pretaxStandardRate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pretaxStandardRate = property.Value.GetDecimal();
+                    pretaxStandardRate = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("serviceName"u8))
+                if (prop.NameEquals("serviceName"u8))
                 {
-                    serviceName = property.Value.GetString();
+                    serviceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceTier"u8))
+                if (prop.NameEquals("serviceTier"u8))
                 {
-                    serviceTier = property.Value.GetString();
+                    serviceTier = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionMeterDetails(
                 meterName,
                 meterCategory,
@@ -198,13 +201,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 pretaxStandardRate,
                 serviceName,
                 serviceTier,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ConsumptionMeterDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConsumptionMeterDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -214,15 +220,20 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        ConsumptionMeterDetails IPersistableModel<ConsumptionMeterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionMeterDetails IPersistableModel<ConsumptionMeterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConsumptionMeterDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConsumptionMeterDetails(document.RootElement, options);
                     }
                 default:
@@ -230,6 +241,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionMeterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

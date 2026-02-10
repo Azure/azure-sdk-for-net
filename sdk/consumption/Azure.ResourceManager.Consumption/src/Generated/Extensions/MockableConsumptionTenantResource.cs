@@ -5,29 +5,427 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption;
+using Azure.ResourceManager.Consumption.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Consumption.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableConsumptionTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionTenantResource"/> class for mocking. </summary>
+        private ClientDiagnostics _reservationsSummariesClientDiagnostics;
+        private ReservationsSummaries _reservationsSummariesRestClient;
+        private ClientDiagnostics _reservationsDetailsClientDiagnostics;
+        private ReservationsDetails _reservationsDetailsRestClient;
+        private ClientDiagnostics _reservationRecommendationsClientDiagnostics;
+        private ReservationRecommendations _reservationRecommendationsRestClient;
+        private ClientDiagnostics _reservationRecommendationDetailsClientDiagnostics;
+        private ReservationRecommendationDetails _reservationRecommendationDetailsRestClient;
+
+        /// <summary> Initializes a new instance of MockableConsumptionTenantResource for mocking. </summary>
         protected MockableConsumptionTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConsumptionTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConsumptionTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private ClientDiagnostics ReservationsSummariesClientDiagnostics => _reservationsSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReservationsSummaries ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummaries(ReservationsSummariesClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+
+        private ClientDiagnostics ReservationsDetailsClientDiagnostics => _reservationsDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReservationsDetails ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetails(ReservationsDetailsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+
+        private ClientDiagnostics ReservationRecommendationsClientDiagnostics => _reservationRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReservationRecommendations ReservationRecommendationsRestClient => _reservationRecommendationsRestClient ??= new ReservationRecommendations(ReservationRecommendationsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+
+        private ClientDiagnostics ReservationRecommendationDetailsClientDiagnostics => _reservationRecommendationDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReservationRecommendationDetails ReservationRecommendationDetailsRestClient => _reservationRecommendationDetailsRestClient ??= new ReservationRecommendationDetails(ReservationRecommendationDetailsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+
+        /// <summary>
+        /// Lists the reservations summaries for the defined scope daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationsSummariesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
+        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
+        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
+        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetAllAsync(string resourceScope, ReservationSummaryDataGrain grain, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ReservationsSummariesGetAllAsyncCollectionResultOfT(
+                ReservationsSummariesRestClient,
+                resourceScope,
+                grain.ToString(),
+                startDate,
+                endDate,
+                filter,
+                reservationId,
+                reservationOrderId,
+                context);
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for the defined scope daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationsSummariesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
+        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
+        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
+        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationSummary> GetAll(string resourceScope, ReservationSummaryDataGrain grain, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ReservationsSummariesGetAllCollectionResultOfT(
+                ReservationsSummariesRestClient,
+                resourceScope,
+                grain.ToString(),
+                startDate,
+                endDate,
+                filter,
+                reservationId,
+                reservationOrderId,
+                context);
+        }
+
+        /// <summary>
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. If the data size is too large, customers may also get 504 as the API timed out preparing the data. In such cases, API call should be made with smaller date ranges or a call to Generate Reservation Details Report API should be made as it is asynchronous and will not run into response size time outs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationsDetailsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
+        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
+        /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
+        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
+        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetAllAsync(string resourceScope, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ReservationsDetailsGetAllAsyncCollectionResultOfT(
+                ReservationsDetailsRestClient,
+                resourceScope,
+                startDate,
+                endDate,
+                filter,
+                reservationId,
+                reservationOrderId,
+                context);
+        }
+
+        /// <summary>
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. If the data size is too large, customers may also get 504 as the API timed out preparing the data. In such cases, API call should be made with smaller date ranges or a call to Generate Reservation Details Report API should be made as it is asynchronous and will not run into response size time outs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationsDetailsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
+        /// <param name="endDate"> End date. Only applicable when querying with billing profile. </param>
+        /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </param>
+        /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
+        /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationDetail> GetAll(string resourceScope, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ReservationsDetailsGetAllCollectionResultOfT(
+                ReservationsDetailsRestClient,
+                resourceScope,
+                startDate,
+                endDate,
+                filter,
+                reservationId,
+                reservationOrderId,
+                context);
+        }
+
+        /// <summary>
+        /// List of recommendations for purchasing reserved instances.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationRecommendationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ConsumptionReservationRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationRecommendation> GetAllAsync(string resourceScope, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ReservationRecommendationsGetAllAsyncCollectionResultOfT(ReservationRecommendationsRestClient, resourceScope, filter, context);
+        }
+
+        /// <summary>
+        /// List of recommendations for purchasing reserved instances.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationRecommendationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ConsumptionReservationRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationRecommendation> GetAll(string resourceScope, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ReservationRecommendationsGetAllCollectionResultOfT(ReservationRecommendationsRestClient, resourceScope, filter, context);
+        }
+
+        /// <summary>
+        /// Details of a reservation recommendation for what-if analysis of reserved instances.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationRecommendationDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationRecommendationDetailsOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope, and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope. </param>
+        /// <param name="scope"> Scope of the reservation. </param>
+        /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
+        /// <param name="term"> Specify length of reservation recommendation term. </param>
+        /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
+        /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
+        /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(string resourceScope, ConsumptionReservationRecommendationScope scope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(product, nameof(product));
+
+            using DiagnosticScope scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionTenantResource.Get");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(resourceScope, scope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Details of a reservation recommendation for what-if analysis of reserved instances.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/Microsoft.Consumption/reservationRecommendationDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationRecommendationDetailsOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceScope"> The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope, and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope. </param>
+        /// <param name="scope"> Scope of the reservation. </param>
+        /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
+        /// <param name="term"> Specify length of reservation recommendation term. </param>
+        /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
+        /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
+        /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConsumptionReservationRecommendationDetails> Get(string resourceScope, ConsumptionReservationRecommendationScope scope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(product, nameof(product));
+
+            using DiagnosticScope scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionTenantResource.Get");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(resourceScope, scope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

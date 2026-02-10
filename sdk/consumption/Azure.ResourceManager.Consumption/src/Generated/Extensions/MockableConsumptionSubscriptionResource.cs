@@ -5,114 +5,80 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Consumption.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Consumption.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableConsumptionSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _priceSheetClientDiagnostics;
-        private PriceSheetRestOperations _priceSheetRestClient;
-
-        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConsumptionSubscriptionResource for mocking. </summary>
         protected MockableConsumptionSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConsumptionSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConsumptionSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConsumptionSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PriceSheetRestOperations PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary>
+        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheet_GetByBillingPeriod. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PriceSheetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="PriceSheetResource"/> object. </returns>
+        public virtual PriceSheetResource GetPriceSheet()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return new PriceSheetResource(Client, Id.AppendProviderResource("Microsoft.Consumption", "pricesheets", "default"));
         }
 
         /// <summary>
         /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PriceSheet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PriceSheetResultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="PriceSheetResultResource"/> object. </returns>
+        public virtual PriceSheetResultResource GetPriceSheetResult()
         {
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableConsumptionSubscriptionResource.GetPriceSheet");
-            scope.Start();
-            try
-            {
-                var response = await PriceSheetRestClient.GetAsync(Id.SubscriptionId, expand, skipToken, top, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PriceSheet_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the top N results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableConsumptionSubscriptionResource.GetPriceSheet");
-            scope.Start();
-            try
-            {
-                var response = PriceSheetRestClient.Get(Id.SubscriptionId, expand, skipToken, top, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new PriceSheetResultResource(Client, Id.AppendProviderResource("Microsoft.Consumption", "pricesheets", "default"));
         }
     }
 }

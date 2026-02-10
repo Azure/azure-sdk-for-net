@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionAmountWithExchangeRate : IUtf8JsonSerializable, IJsonModel<ConsumptionAmountWithExchangeRate>
+    /// <summary> The amount with exchange rate. </summary>
+    public partial class ConsumptionAmountWithExchangeRate : ConsumptionAmount, IJsonModel<ConsumptionAmountWithExchangeRate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAmountWithExchangeRate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionAmountWithExchangeRate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ExchangeRate))
             {
@@ -47,79 +47,85 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        ConsumptionAmountWithExchangeRate IJsonModel<ConsumptionAmountWithExchangeRate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionAmountWithExchangeRate IJsonModel<ConsumptionAmountWithExchangeRate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionAmountWithExchangeRate)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ConsumptionAmount JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionAmountWithExchangeRate(document.RootElement, options);
         }
 
-        internal static ConsumptionAmountWithExchangeRate DeserializeConsumptionAmountWithExchangeRate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConsumptionAmountWithExchangeRate DeserializeConsumptionAmountWithExchangeRate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            decimal? exchangeRate = default;
-            int? exchangeRateMonth = default;
             string currency = default;
             decimal? value = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            decimal? exchangeRate = default;
+            int? exchangeRateMonth = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("exchangeRate"u8))
+                if (prop.NameEquals("currency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    currency = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exchangeRate = property.Value.GetDecimal();
+                    value = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("exchangeRateMonth"u8))
+                if (prop.NameEquals("exchangeRate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exchangeRateMonth = property.Value.GetInt32();
+                    exchangeRate = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("currency"u8))
+                if (prop.NameEquals("exchangeRateMonth"u8))
                 {
-                    currency = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    value = property.Value.GetDecimal();
+                    exchangeRateMonth = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ConsumptionAmountWithExchangeRate(currency, value, serializedAdditionalRawData, exchangeRate, exchangeRateMonth);
+            return new ConsumptionAmountWithExchangeRate(currency, value, additionalBinaryDataProperties, exchangeRate, exchangeRateMonth);
         }
 
-        BinaryData IPersistableModel<ConsumptionAmountWithExchangeRate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConsumptionAmountWithExchangeRate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -129,15 +135,20 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        ConsumptionAmountWithExchangeRate IPersistableModel<ConsumptionAmountWithExchangeRate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionAmountWithExchangeRate IPersistableModel<ConsumptionAmountWithExchangeRate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionAmountWithExchangeRate)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ConsumptionAmount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConsumptionAmountWithExchangeRate(document.RootElement, options);
                     }
                 default:
@@ -145,6 +156,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionAmountWithExchangeRate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

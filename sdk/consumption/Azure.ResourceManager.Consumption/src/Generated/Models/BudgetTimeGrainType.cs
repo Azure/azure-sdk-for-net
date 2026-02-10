@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct BudgetTimeGrainType : IEquatable<BudgetTimeGrainType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BudgetTimeGrainType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BudgetTimeGrainType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MonthlyValue = "Monthly";
         private const string QuarterlyValue = "Quarterly";
         private const string AnnuallyValue = "Annually";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string BillingQuarterValue = "BillingQuarter";
         private const string BillingAnnualValue = "BillingAnnual";
 
-        /// <summary> Monthly. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetTimeGrainType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BudgetTimeGrainType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Monthly. </summary>
         public static BudgetTimeGrainType Monthly { get; } = new BudgetTimeGrainType(MonthlyValue);
-        /// <summary> Quarterly. </summary>
+
+        /// <summary> Gets the Quarterly. </summary>
         public static BudgetTimeGrainType Quarterly { get; } = new BudgetTimeGrainType(QuarterlyValue);
-        /// <summary> Annually. </summary>
+
+        /// <summary> Gets the Annually. </summary>
         public static BudgetTimeGrainType Annually { get; } = new BudgetTimeGrainType(AnnuallyValue);
-        /// <summary> BillingMonth. </summary>
+
+        /// <summary> Gets the BillingMonth. </summary>
         public static BudgetTimeGrainType BillingMonth { get; } = new BudgetTimeGrainType(BillingMonthValue);
-        /// <summary> BillingQuarter. </summary>
+
+        /// <summary> Gets the BillingQuarter. </summary>
         public static BudgetTimeGrainType BillingQuarter { get; } = new BudgetTimeGrainType(BillingQuarterValue);
-        /// <summary> BillingAnnual. </summary>
+
+        /// <summary> Gets the BillingAnnual. </summary>
         public static BudgetTimeGrainType BillingAnnual { get; } = new BudgetTimeGrainType(BillingAnnualValue);
+
         /// <summary> Determines if two <see cref="BudgetTimeGrainType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BudgetTimeGrainType left, BudgetTimeGrainType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BudgetTimeGrainType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BudgetTimeGrainType left, BudgetTimeGrainType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BudgetTimeGrainType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BudgetTimeGrainType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BudgetTimeGrainType(string value) => new BudgetTimeGrainType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BudgetTimeGrainType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BudgetTimeGrainType?(string value) => value == null ? null : new BudgetTimeGrainType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BudgetTimeGrainType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BudgetTimeGrainType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,15 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLotSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionLotSummary>
+    /// <summary> A lot summary resource. </summary>
+    public partial class ConsumptionLotSummary : ResourceData, IJsonModel<ConsumptionLotSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLotSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionLotSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,312 +33,126 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteObjectValue<ETag?>(ETag.Value, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
-            {
-                writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
-            {
-                writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(PoNumber))
-            {
-                writer.WritePropertyName("poNumber"u8);
-                writer.WriteStringValue(PoNumber);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PurchasedOn))
-            {
-                writer.WritePropertyName("purchasedDate"u8);
-                writer.WriteStringValue(PurchasedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
-            {
-                writer.WritePropertyName("creditCurrency"u8);
-                writer.WriteStringValue(CreditCurrency);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
-            {
-                writer.WritePropertyName("billingCurrency"u8);
-                writer.WriteStringValue(BillingCurrency);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
-            {
-                writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
-            {
-                writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Reseller))
-            {
-                writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller, options);
-            }
-            writer.WriteEndObject();
         }
 
-        ConsumptionLotSummary IJsonModel<ConsumptionLotSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionLotSummary IJsonModel<ConsumptionLotSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionLotSummary)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionLotSummary(document.RootElement, options);
         }
 
-        internal static ConsumptionLotSummary DeserializeConsumptionLotSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConsumptionLotSummary DeserializeConsumptionLotSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ConsumptionAmount originalAmount = default;
-            ConsumptionAmount closedBalance = default;
-            ConsumptionLotSource? source = default;
-            DateTimeOffset? startDate = default;
-            DateTimeOffset? expirationDate = default;
-            string poNumber = default;
-            DateTimeOffset? purchasedDate = default;
-            ConsumptionLotStatus? status = default;
-            string creditCurrency = default;
-            string billingCurrency = default;
-            ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default;
-            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
-            ConsumptionReseller reseller = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            LotProperties properties = default;
+            ETag? eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConsumptionContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConsumptionContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("originalAmount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            originalAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("closedBalance"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = new ConsumptionLotSource(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("startDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("expirationDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expirationDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("poNumber"u8))
-                        {
-                            poNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("purchasedDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            purchasedDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new ConsumptionLotStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("creditCurrency"u8))
-                        {
-                            creditCurrency = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("billingCurrency"u8))
-                        {
-                            billingCurrency = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("originalAmountInBillingCurrency"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            originalAmountInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("reseller"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    properties = LotProperties.DeserializeLotProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("eTag"u8))
+                {
+                    DeserializeETag(prop, ref eTag);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionLotSummary(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                originalAmount,
-                closedBalance,
-                source,
-                startDate,
-                expirationDate,
-                poNumber,
-                purchasedDate,
-                status,
-                creditCurrency,
-                billingCurrency,
-                originalAmountInBillingCurrency,
-                closedBalanceInBillingCurrency,
-                reseller,
-                etag,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties,
+                eTag);
         }
 
-        BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -345,15 +162,20 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        ConsumptionLotSummary IPersistableModel<ConsumptionLotSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionLotSummary IPersistableModel<ConsumptionLotSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionLotSummary)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConsumptionLotSummary(document.RootElement, options);
                     }
                 default:
@@ -361,6 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionLotSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
