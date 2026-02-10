@@ -60,40 +60,40 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Key))
+            if (Optional.IsDefined(IsKey))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteBooleanValue(Key.Value);
+                writer.WriteBooleanValue(IsKey.Value);
             }
-            if (Optional.IsDefined(Retrievable))
+            if (Optional.IsDefined(IsRetrievable))
             {
                 writer.WritePropertyName("retrievable"u8);
-                writer.WriteBooleanValue(Retrievable.Value);
+                writer.WriteBooleanValue(IsRetrievable.Value);
             }
-            if (Optional.IsDefined(Stored))
+            if (Optional.IsDefined(IsStored))
             {
                 writer.WritePropertyName("stored"u8);
-                writer.WriteBooleanValue(Stored.Value);
+                writer.WriteBooleanValue(IsStored.Value);
             }
-            if (Optional.IsDefined(Searchable))
+            if (Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable"u8);
-                writer.WriteBooleanValue(Searchable.Value);
+                writer.WriteBooleanValue(IsSearchable.Value);
             }
-            if (Optional.IsDefined(Filterable))
+            if (Optional.IsDefined(IsFilterable))
             {
                 writer.WritePropertyName("filterable"u8);
-                writer.WriteBooleanValue(Filterable.Value);
+                writer.WriteBooleanValue(IsFilterable.Value);
             }
-            if (Optional.IsDefined(Sortable))
+            if (Optional.IsDefined(IsSortable))
             {
                 writer.WritePropertyName("sortable"u8);
-                writer.WriteBooleanValue(Sortable.Value);
+                writer.WriteBooleanValue(IsSortable.Value);
             }
-            if (Optional.IsDefined(Facetable))
+            if (Optional.IsDefined(IsFacetable))
             {
                 writer.WritePropertyName("facetable"u8);
-                writer.WriteBooleanValue(Facetable.Value);
+                writer.WriteBooleanValue(IsFacetable.Value);
             }
             if (Optional.IsDefined(PermissionFilter))
             {
@@ -209,13 +209,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SearchFieldDataType @type = default;
-            bool? key = default;
-            bool? retrievable = default;
-            bool? stored = default;
-            bool? searchable = default;
-            bool? filterable = default;
-            bool? sortable = default;
-            bool? facetable = default;
+            bool? isKey = default;
+            bool? isRetrievable = default;
+            bool? isStored = default;
+            bool? isSearchable = default;
+            bool? isFilterable = default;
+            bool? isSortable = default;
+            bool? isFacetable = default;
             PermissionFilter? permissionFilter = default;
             bool? sensitivityLabel = default;
             LexicalAnalyzerName? analyzerName = default;
@@ -246,7 +246,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    key = prop.Value.GetBoolean();
+                    isKey = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("retrievable"u8))
@@ -255,7 +255,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    retrievable = prop.Value.GetBoolean();
+                    isRetrievable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("stored"u8))
@@ -264,7 +264,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    stored = prop.Value.GetBoolean();
+                    isStored = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("searchable"u8))
@@ -273,7 +273,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    searchable = prop.Value.GetBoolean();
+                    isSearchable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("filterable"u8))
@@ -282,7 +282,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    filterable = prop.Value.GetBoolean();
+                    isFilterable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sortable"u8))
@@ -291,7 +291,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    sortable = prop.Value.GetBoolean();
+                    isSortable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("facetable"u8))
@@ -300,7 +300,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    facetable = prop.Value.GetBoolean();
+                    isFacetable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("permissionFilter"u8))
@@ -435,13 +435,13 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchField(
                 name,
                 @type,
-                key,
-                retrievable,
-                stored,
-                searchable,
-                filterable,
-                sortable,
-                facetable,
+                isKey,
+                isRetrievable,
+                isStored,
+                isSearchable,
+                isFilterable,
+                isSortable,
+                isFacetable,
                 permissionFilter,
                 sensitivityLabel,
                 analyzerName,

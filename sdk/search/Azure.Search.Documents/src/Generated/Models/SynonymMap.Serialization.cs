@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -123,78 +122,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSynonymMap(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SynonymMap DeserializeSynonymMap(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string format = default;
-            IList<string> synonymsList = default;
-            SearchResourceEncryptionKey encryptionKey = default;
-            string etag = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("format"u8))
-                {
-                    format = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("synonyms"u8))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    synonymsList = array;
-                    continue;
-                }
-                if (prop.NameEquals("encryptionKey"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        encryptionKey = null;
-                        continue;
-                    }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("@odata.etag"u8))
-                {
-                    etag = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new SynonymMap(
-                name,
-                format,
-                synonymsList,
-                encryptionKey,
-                etag,
-                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -313,10 +313,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndex(null));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexAsync(null));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -388,13 +388,13 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null, CancellationToken.None));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((SearchIndex)null));
             Assert.AreEqual("index", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null, CancellationToken.None));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((SearchIndex)null));
             Assert.AreEqual("index", ex.ParamName);
@@ -436,10 +436,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSynonymMap(null));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSynonymMapAsync(null));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -450,13 +450,13 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null, CancellationToken.None));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((SynonymMap)null));
             Assert.AreEqual("synonymMap", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null, CancellationToken.None));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((SynonymMap)null));
             Assert.AreEqual("synonymMap", ex.ParamName);
@@ -471,7 +471,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
 
-            SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
+            SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, ["msft=>Microsoft"]));
             Assert.AreEqual(synonymMapName, createdMap.Name);
             Assert.AreEqual("solr", createdMap.Format);
             Assert.AreEqual("msft=>Microsoft", createdMap.Synonyms);

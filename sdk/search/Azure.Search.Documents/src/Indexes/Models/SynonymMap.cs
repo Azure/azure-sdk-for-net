@@ -2,16 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-     public partial class SynonymMap
+    public partial class SynonymMap
     {
         [CodeGenMember("ETag")]
         private string _etag;
+
+        /// <summary>
+        /// Keeps the synonym rules as a list for serialization purposes.
+        /// </summary>
+        [CodeGenMember("Synonyms")]
+        public IList<string> SynonymsList { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SynonymMap"/> class.
@@ -29,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNullOrEmpty(synonyms, nameof(synonyms));
 
             Name = name;
-            Synonyms = synonyms;
+            SynonymsList = [.. synonyms.Split('\n')];
         }
 
         /// <summary>
@@ -51,23 +60,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymsList = [.. reader.ReadToEnd().Split('\n')];
         }
 
-        /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
-        /// <param name="name"> The name of the synonym map. </param>
-        /// <param name="format"> The format of the synonym map. Only the 'solr' format is currently supported. </param>
-        /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="etag"> The ETag of the synonym map. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SynonymMap(string name, string format, string synonyms, SearchResourceEncryptionKey encryptionKey, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Name = name;
-            Format = format;
-            Synonyms = synonyms;
-            EncryptionKey = encryptionKey;
-            _etag = etag;
-            _additionalBinaryDataProperties = serializedAdditionalRawData;
-        }
-
         /// <summary>
         /// The <see cref="global::Azure.ETag"/> of the <see cref="SynonymMap"/>.
         /// </summary>
@@ -77,14 +69,140 @@ namespace Azure.Search.Documents.Indexes.Models
             set => _etag = value?.ToString();
         }
 
-        /// <summary> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </summary>
-        [CodeGenMember("Synonyms")]
-        public IList<string> SynonymsList { get; private set; }
-
-        /// <summary> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </summary>
-        public string Synonyms { get => string.Join("\n", SynonymsList); set => SynonymsList = [.. value.Split('\n')]; }
+        /// <summary>
+        /// A series of synonym rules in the specified synonym map format. The rules must be separated by newlines.
+        /// </summary>
+        public string Synonyms
+        {
+            get => SynonymsList is null ? null : string.Join("\n", SynonymsList);
+            set => SynonymsList = value is null ? null : [.. value.Split('\n')];
+        }
 
         /// <summary> The format of the synonym map. Only the "solr" format is currently supported. </summary>
         internal string Format { get; } = "solr";
+
+//        /// <param name="writer"> The JSON writer. </param>
+//        /// <param name="options"> The client options for reading and writing models. </param>
+//        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+//        {
+//            string format = options.Format == "W" ? ((IPersistableModel<SynonymMap>)this).GetFormatFromOptions(options) : options.Format;
+//            if (format != "J")
+//            {
+//                throw new FormatException($"The model {nameof(SynonymMap)} does not support writing '{format}' format.");
+//            }
+//            writer.WritePropertyName("name"u8);
+//            writer.WriteStringValue(Name);
+//            writer.WritePropertyName("format"u8);
+//            writer.WriteStringValue(Format);
+//            writer.WritePropertyName("synonyms"u8);
+//            writer.WriteStartArray();
+//            foreach (var synonym in SynonymsList)
+//            {
+//                writer.WriteStringValue(synonym);
+//            }
+//            writer.WriteEndArray();
+//            if (Optional.IsDefined(EncryptionKey))
+//            {
+//                writer.WritePropertyName("encryptionKey"u8);
+//                writer.WriteObjectValue(EncryptionKey, options);
+//            }
+//            if (Optional.IsDefined(ETag))
+//            {
+//                writer.WritePropertyName("@odata.etag"u8);
+//                writer.WriteStringValue(ETag.ToString());
+//            }
+//            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+//            {
+//                foreach (var item in _additionalBinaryDataProperties)
+//                {
+//                    writer.WritePropertyName(item.Key);
+//#if NET6_0_OR_GREATER
+//                    writer.WriteRawValue(item.Value);
+//#else
+//                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+//                    {
+//                        JsonSerializer.Serialize(writer, document.RootElement);
+//                    }
+//#endif
+//                }
+//            }
+//        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SynonymMap DeserializeSynonymMap(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            string format = default;
+            IList<string> synonyms = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            string eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("format"u8))
+                {
+                    format = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("synonyms"u8))
+                {
+                    // Handle both string (old format) and array (new format) for backwards compatibility
+                    if (prop.Value.ValueKind == JsonValueKind.String)
+                    {
+                        string stringValue = prop.Value.GetString();
+                        synonyms = string.IsNullOrEmpty(stringValue) ? new List<string>() : [.. stringValue.Split('\n')];
+                    }
+                    else if (prop.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        synonyms = new List<string>();
+                        foreach (var item in prop.Value.EnumerateArray())
+                        {
+                            synonyms.Add(item.GetString());
+                        }
+                    }
+                    else
+                    {
+                        synonyms = new List<string>();
+                    }
+                    continue;
+                }
+                if (prop.NameEquals("encryptionKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        encryptionKey = null;
+                        continue;
+                    }
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("@odata.etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new SynonymMap(
+                name,
+                format,
+                synonyms,
+                encryptionKey,
+                eTag,
+                additionalBinaryDataProperties);
+        }
     }
 }

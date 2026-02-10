@@ -723,7 +723,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SynonymMap(name, format, synonyms, encryptionKey, etag, additionalBinaryDataProperties);
+            return new SynonymMap(name, format, synonyms?.Split('\n'), encryptionKey, etag, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SearchAlias. </summary>

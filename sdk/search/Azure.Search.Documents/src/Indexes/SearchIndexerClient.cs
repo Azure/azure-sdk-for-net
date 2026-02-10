@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
-        public SearchIndexerClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new SearchClientOptions())
+        public SearchIndexerClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, null)
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
-        public SearchIndexerClient(Uri endpoint, TokenCredential tokenCredential) : this(endpoint, tokenCredential, new SearchClientOptions())
+        public SearchIndexerClient(Uri endpoint, TokenCredential tokenCredential) : this(endpoint, tokenCredential, null)
         {
         }
 
@@ -80,13 +80,14 @@ namespace Azure.Search.Documents.Indexes
         public SearchIndexerClient(Uri endpoint, AzureKeyCredential credential, SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            endpoint.AssertHttpsScheme(nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
             _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            Pipeline = options.Build(credential);
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -105,13 +106,14 @@ namespace Azure.Search.Documents.Indexes
         public SearchIndexerClient(Uri endpoint, TokenCredential tokenCredential, SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            endpoint.AssertHttpsScheme(nameof(endpoint));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
 
             options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
             _tokenCredential = tokenCredential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            Pipeline = options.Build(tokenCredential);
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }

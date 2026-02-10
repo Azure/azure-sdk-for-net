@@ -11,35 +11,6 @@ namespace Azure.Search.Documents.Models
 {
     public partial class FacetResult : IReadOnlyDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
-        public FacetResult()
-        {
-            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
-        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="avg"> The resulting total avg for the facet when a avg metric is requested. </param>
-        /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
-        /// <param name="max"> The resulting total max for the facet when a max metric is requested. </param>
-        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
-        /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
-        /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
-        /// <param name="additionalProperties"></param>
-        internal FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, IList<FacetResult>> facets, IDictionary<string, BinaryData> additionalProperties)
-        {
-            Count = count;
-            Avg = avg;
-            Min = min;
-            Max = max;
-            Sum = sum;
-            Cardinality = cardinality;
-            Facets = facets;
-            _additionalBinaryDataProperties = additionalProperties;
-            AdditionalProperties = (IReadOnlyDictionary<string, object>)additionalProperties.ToObjectDictionary();
-        }
         /// <summary>
         /// Gets the type of this facet.  Value facets count documents with a
         /// particular field value and Range facets count documents with a
@@ -134,7 +105,7 @@ namespace Azure.Search.Documents.Models
             return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
         }
 
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        internal IDictionary<string, object> AdditionalProperties => _additionalBinaryDataProperties.ToObjectDictionary();
 
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

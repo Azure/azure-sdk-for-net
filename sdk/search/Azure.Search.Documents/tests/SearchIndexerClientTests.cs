@@ -255,7 +255,7 @@ namespace Azure.Search.Documents.Tests
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateIndexer(null));
             Assert.AreEqual("indexer", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexerAsync(null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexerAsync(null, false)); // TODO: Change this back to not have false
             Assert.AreEqual("indexer", ex.ParamName);
         }
 

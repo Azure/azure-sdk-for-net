@@ -20,7 +20,6 @@ namespace Azure.Search.Documents.Indexes
     /// </summary>
     public partial class SearchIndexClient
     {
-        private SearchClientOptions.ServiceVersion _version;
         private ObjectSerializer _serializer;
         private string _serviceName;
 
@@ -101,7 +100,6 @@ namespace Azure.Search.Documents.Indexes
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
-            _version = options.Version;
             _apiVersion = options.Version.ToVersionString();
         }
 
@@ -131,7 +129,6 @@ namespace Azure.Search.Documents.Indexes
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(tokenCredential);
-            _version = options.Version;
             _apiVersion = options.Version.ToVersionString();
         }
 
@@ -176,7 +173,7 @@ namespace Azure.Search.Documents.Indexes
             _serializer = serializer;
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
-            _version = version;
+            _apiVersion = version.ToVersionString();
         }
 
         /// <summary>
@@ -199,7 +196,7 @@ namespace Azure.Search.Documents.Indexes
                 _serializer,
                 Pipeline,
                 ClientDiagnostics,
-                _version);
+                _apiVersion.ToServiceVersion());
         }
 
         #region Index operations - Convenience overloads

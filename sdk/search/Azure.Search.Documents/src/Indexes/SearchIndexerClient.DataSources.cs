@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
@@ -60,6 +62,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
@@ -116,6 +119,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
@@ -136,6 +140,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteDataSourceConnection(
             string dataSourceConnectionName,
             CancellationToken cancellationToken = default)
@@ -152,6 +157,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             string dataSourceConnectionName,
             CancellationToken cancellationToken = default)
@@ -172,6 +178,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
@@ -195,6 +202,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
@@ -212,6 +220,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<SearchIndexerDataSourceConnection>> GetDataSourceConnections(
             CancellationToken cancellationToken = default)
         {
@@ -225,6 +234,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSourceConnection>>> GetDataSourceConnectionsAsync(
             CancellationToken cancellationToken = default)
         {
@@ -238,6 +248,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<string>> GetDataSourceConnectionNames(
             CancellationToken cancellationToken = default)
         {
@@ -252,6 +263,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceConnectionNamesAsync(
             CancellationToken cancellationToken = default)
         {
