@@ -44,7 +44,14 @@ namespace Azure.Generator.Visitors
         {
             if (_visited.Add(method) && IsCreateNextLinkRequestMethod(method))
             {
-                var restClient = method.EnclosingType as RestClientProvider;
+                // Try to get RestClientProvider from different sources
+                RestClientProvider? restClient = null;
+
+                if (method.EnclosingType is RestClientProvider rc)
+                {
+                    restClient = rc;
+                }
+
                 if (restClient != null)
                 {
                     UpdateCreateNextLinkRequestMethod(method, restClient);
@@ -52,6 +59,25 @@ namespace Azure.Generator.Visitors
             }
 
             return method;
+        }
+
+        protected override TypeProvider? VisitType(TypeProvider type)
+        {
+            // Visit RestClient types and check their methods
+            if (type is RestClientProvider restClient)
+            {
+                foreach (var methodProvider in restClient.Methods)
+                {
+                    if (methodProvider is ScmMethodProvider method &&
+                        _visited.Add(method) &&
+                        IsCreateNextLinkRequestMethod(method))
+                    {
+                        UpdateCreateNextLinkRequestMethod(method, restClient);
+                    }
+                }
+            }
+
+            return type;
         }
 
         private static bool IsCreateNextLinkRequestMethod(ScmMethodProvider method)
@@ -81,45 +107,46 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
+            var endpointField = enclosingType.Fields.FirstOrDefault(f => f.Name == "_endpoint");
+            if (endpointField == null)
+            {
+                return;
+            }
+
             var updatedStatements = new List<MethodBodyStatement>();
-            bool uriBuilderFound = false;
             VariableExpression? uriBuilderVariable = null;
+            bool modified = false;
 
             foreach (var statement in method.BodyStatements)
             {
-                // Check if this is a URI builder declaration: RawRequestUriBuilder uri = new RawRequestUriBuilder();
-                if (!uriBuilderFound &&
-                    statement is ExpressionStatement { Expression: AssignmentExpression { Variable: DeclarationExpression declaration } } &&
+                // Try to find variable declaration for RawRequestUriBuilder
+                if (uriBuilderVariable == null &&
+                    statement is ExpressionStatement { Expression: AssignmentExpression assignment } &&
+                    assignment.Variable is DeclarationExpression declaration &&
                     declaration.Variable.Type.Name == "RawRequestUriBuilder")
                 {
-                    // Found the URI builder declaration
                     uriBuilderVariable = declaration.Variable;
-                    uriBuilderFound = true;
                     updatedStatements.Add(statement);
+                    continue;
                 }
-                else if (uriBuilderFound && uriBuilderVariable != null &&
-                         statement is ExpressionStatement exprStatement &&
-                         IsUriResetWithNextLinkCall(exprStatement, uriBuilderVariable, nextLinkParam))
+
+                // If we found the uri builder, check if this statement is uri.Reset(nextPage)
+                if (uriBuilderVariable != null &&
+                    statement is ExpressionStatement { Expression: InvokeMethodExpression invoke } &&
+                    invoke.MethodName == "Reset" &&
+                    invoke.InstanceReference is VariableExpression varRef &&
+                    varRef.Equals(uriBuilderVariable) &&
+                    invoke.Arguments.Count == 1 &&
+                    invoke.Arguments[0] is VariableExpression argVar &&
+                    argVar.Equals(nextLinkParam))
                 {
                     // Replace uri.Reset(nextPage) with:
                     // uri.Reset(_endpoint);
                     // uri.AppendRawNextLink(nextPage.AbsoluteUri, false);
-
-                    var endpointField = enclosingType.Fields.FirstOrDefault(f => f.Name == "_endpoint");
-                    if (endpointField != null)
-                    {
-                        // uri.Reset(_endpoint);
-                        updatedStatements.Add(uriBuilderVariable.Invoke("Reset", [endpointField]).Terminate());
-
-                        // uri.AppendRawNextLink(nextPage.AbsoluteUri, false);
-                        updatedStatements.Add(uriBuilderVariable.Invoke("AppendRawNextLink",
-                            [nextLinkParam.Property("AbsoluteUri"), Literal(false)]).Terminate());
-                    }
-                    else
-                    {
-                        // If we can't find _endpoint field, keep the original statement
-                        updatedStatements.Add(statement);
-                    }
+                    updatedStatements.Add(uriBuilderVariable.Invoke("Reset", [endpointField]).Terminate());
+                    updatedStatements.Add(uriBuilderVariable.Invoke("AppendRawNextLink",
+                        [nextLinkParam.Property("AbsoluteUri"), Literal(false)]).Terminate());
+                    modified = true;
                 }
                 else
                 {
@@ -127,42 +154,10 @@ namespace Azure.Generator.Visitors
                 }
             }
 
-            if (uriBuilderFound)
+            if (modified)
             {
                 method.Update(bodyStatements: updatedStatements);
             }
-        }
-
-        private static bool IsUriResetWithNextLinkCall(
-            ExpressionStatement statement,
-            VariableExpression uriBuilderVariable,
-            ParameterProvider nextLinkParam)
-        {
-            if (statement.Expression is not InvokeMethodExpression invoke)
-            {
-                return false;
-            }
-
-            // Check if this is uri.Reset(nextPage/nextLink)
-            if (invoke.MethodName != "Reset")
-            {
-                return false;
-            }
-
-            if (invoke.InstanceReference is not VariableExpression varExpr ||
-                !varExpr.Equals(uriBuilderVariable))
-            {
-                return false;
-            }
-
-            // Check if the argument is the nextLink parameter
-            if (invoke.Arguments.Count != 1)
-            {
-                return false;
-            }
-
-            var arg = invoke.Arguments[0];
-            return arg is VariableExpression argVar && argVar.Declaration.Equals(nextLinkParam);
         }
     }
 }
