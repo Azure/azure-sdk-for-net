@@ -123,6 +123,7 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
       or '$(IsGeneratorLibrary)' == 'true'
+      or '$(IsToolProject)' == 'true'
       or '$(IsSamplesProject)' == 'true'
       or '$(IsTestProject)' == 'true'
       or '$(IsTestSupportProject)' == 'true'
@@ -287,6 +288,17 @@
     <PackageReference Update="Humanizer.Core" Version="3.0.1" />
     <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
+  </ItemGroup>
+
+  <!-- Packages used by CLI tools -->
+  <ItemGroup Condition="'$(IsToolProject)' == 'true'">
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.2" />
+    <PackageReference Update="System.CommandLine" Version="2.0.1" />
   </ItemGroup>
 
   <!-- Packages intended for current generation integration libraries only -->
