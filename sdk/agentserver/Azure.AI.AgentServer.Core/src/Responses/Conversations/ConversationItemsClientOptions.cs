@@ -8,17 +8,37 @@ namespace Azure.AI.AgentServer.Core.Responses.Conversations;
 /// <summary>
 /// Options for configuring <see cref="ConversationItemsClient"/>.
 /// </summary>
-internal sealed class ConversationItemsClientOptions : ClientOptions
+public sealed class ConversationItemsClientOptions : ClientOptions
 {
     /// <summary>
-    /// Gets or sets the API version for conversation items operations.
+    /// Service API versions supported by <see cref="ConversationItemsClient"/>.
     /// </summary>
-    public string ApiVersion { get; set; } = "2025-11-15-preview";
+    public enum ServiceVersion
+    {
+        /// <summary>
+        /// Service version <c>2025-11-15-preview</c>.
+        /// </summary>
+        V2025_11_15_Preview = 1
+    }
+
+    internal const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
 
     /// <summary>
-    /// Gets or sets credential scopes used for authentication.
+    /// Initializes a new instance of the <see cref="ConversationItemsClientOptions"/> class.
     /// </summary>
-    public IList<string> CredentialScopes { get; set; } = new List<string>
+    /// <param name="version">The service API version.</param>
+    public ConversationItemsClientOptions(ServiceVersion version = LatestVersion)
+    {
+        ApiVersion = version switch
+        {
+            ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
+            _ => throw new NotSupportedException($"The service version '{version}' is not supported.")
+        };
+    }
+
+    internal string ApiVersion { get; }
+
+    internal IList<string> CredentialScopes { get; } = new List<string>
     {
         "https://ai.azure.com/.default"
     };
