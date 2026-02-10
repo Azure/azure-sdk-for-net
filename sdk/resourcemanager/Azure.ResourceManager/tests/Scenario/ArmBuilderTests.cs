@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate 
+            Assert.ThrowsAsync<ArgumentException>(async delegate
             {
                 SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
                 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();

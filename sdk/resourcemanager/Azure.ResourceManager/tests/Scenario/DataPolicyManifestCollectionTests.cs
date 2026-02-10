@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-        
+
         [TestCase]
         [RecordedTest]
         public async Task List()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests
                 }
             }
         }
-        
+
         [TestCase]
         [RecordedTest]
         public async Task Get()

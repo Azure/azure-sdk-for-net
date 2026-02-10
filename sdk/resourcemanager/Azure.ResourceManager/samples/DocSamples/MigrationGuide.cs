@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Tests.Samples
             string subnetName = "QuickstartSubnet";
 
             VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
-                {
-                    Location = AzureLocation.EastUS,
-                    AddressPrefixes = { "192.168.0.0/16" },
-                    Subnets =
+            {
+                Location = AzureLocation.EastUS,
+                AddressPrefixes = { "192.168.0.0/16" },
+                Subnets =
                     {
                         new SubnetData()
                             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Tests.Samples
                                 Name = "subnet1"
                             }
                     },
-                };
+            };
             VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
             ArmOperation<VirtualNetworkResource> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
             VirtualNetworkResource virtualNetwork = virtualNetworkOperation.Value;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Tests.Samples
             return virtualMachine;
         }
 
-        public async Task<VirtualMachineResource> MigrationExample_UpdateVmByReplace(ResourceGroupResource resourceGroup,VirtualMachineResource virtualMachine, NetworkInterfaceResource networkInterface)
+        public async Task<VirtualMachineResource> MigrationExample_UpdateVmByReplace(ResourceGroupResource resourceGroup, VirtualMachineResource virtualMachine, NetworkInterfaceResource networkInterface)
         {
             #region Snippet:UpdateByReplace_Fluent_VirtualMachine
             var virtualMachineDataToModify = new VirtualMachineData(AzureLocation.EastUS)

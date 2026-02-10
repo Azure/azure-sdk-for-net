@@ -4,8 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Tests
     //        }
     //        Assert.AreEqual(count, 2);
     //    }
-        
+
     //    [TestCase]
     //    [RecordedTest]
     //    public async Task Get()

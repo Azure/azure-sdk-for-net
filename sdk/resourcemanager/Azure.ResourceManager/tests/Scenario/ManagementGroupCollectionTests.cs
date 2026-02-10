@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
         {
             var mgmtGroupCollection = Client.GetManagementGroups();
             ManagementGroupResource mgmtGroup = null;
-            await foreach(var item in mgmtGroupCollection.GetAllAsync("no-cache"))
+            await foreach (var item in mgmtGroupCollection.GetAllAsync("no-cache"))
             {
                 mgmtGroup = item;
                 break;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Tests
             var mgmtGroupCollection = Client.GetManagementGroups();
             var rq = new ManagementGroupCollectionGetEntitiesOptions();
             EntityData entity;
-            await foreach(var item in mgmtGroupCollection.GetEntitiesAsync(rq))
+            await foreach (var item in mgmtGroupCollection.GetEntitiesAsync(rq))
             {
                 entity = item;
                 break;

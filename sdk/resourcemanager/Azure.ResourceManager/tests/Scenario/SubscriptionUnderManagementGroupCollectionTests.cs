@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Tests
     public class ManagementGroupSubscriptionCollectionTests : ResourceManagerTestBase
     {
         public ManagementGroupSubscriptionCollectionTests(bool isAsync)
-            :base(isAsync,RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Tests
             var mgmtGroup = await CreateManagementGroupAsync();
             var subscriptionUnderMgmtGroupCollection = mgmtGroup.GetManagementGroupSubscriptions();
             var subscriptionId = (await Client.GetDefaultSubscriptionAsync()).Id.SubscriptionId;
-            var subscriptionUnderMgmtGroup = (await subscriptionUnderMgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed,subscriptionId)).Value;
-            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId,subscriptionId);
+            var subscriptionUnderMgmtGroup = (await subscriptionUnderMgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionId)).Value;
+            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId, subscriptionId);
         }
 
         [RecordedTest]
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Tests
             var subscriptionId = (await Client.GetDefaultSubscriptionAsync()).Id.SubscriptionId;
             var subscriptionUnderMgmtGroup = (await subscriptionUnderMgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionId)).Value;
             var subscriptionUnderMgmtGroup1 = (await subscriptionUnderMgmtGroupCollection.GetAsync(subscriptionId)).Value;
-            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Name,subscriptionUnderMgmtGroup1.Data.Name);
-            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId,subscriptionUnderMgmtGroup1.Data.Id.SubscriptionId);
+            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Name, subscriptionUnderMgmtGroup1.Data.Name);
+            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId, subscriptionUnderMgmtGroup1.Data.Id.SubscriptionId);
         }
 
         [RecordedTest]
@@ -63,7 +63,8 @@ namespace Azure.ResourceManager.Tests
             await foreach (var item in subscriptionUnderMgmtGroupCollection.GetAllAsync())
             {
                 count++;
-            };
+            }
+            ;
             Assert.AreEqual(2, count);
         }
 

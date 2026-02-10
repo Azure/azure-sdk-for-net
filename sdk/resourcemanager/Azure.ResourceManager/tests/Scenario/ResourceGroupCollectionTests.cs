@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg = rgOp.Value;
             int count = 0;
-            await foreach(var rgFromList in subscription.GetResourceGroups())
+            await foreach (var rgFromList in subscription.GetResourceGroups())
             {
                 count++;
             }

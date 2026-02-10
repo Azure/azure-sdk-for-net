@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-        
+
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdateAtResourceGroup()
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(WaitUntil.Completed);
         }
-        
+
         [TestCase]
         [RecordedTest]
         public async Task List()
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Tests
             await mgmtLockObject1.DeleteAsync(WaitUntil.Completed);
             await mgmtLockObject2.DeleteAsync(WaitUntil.Completed);
         }
-        
+
         [TestCase]
         [RecordedTest]
         public async Task Get()
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Level, getResult.Data.Level);
             Assert.AreEqual(model.Data.Notes, getResult.Data.Notes);
-            if(model.Data.Owners != null || getResult.Data.Owners != null)
+            if (model.Data.Owners != null || getResult.Data.Owners != null)
             {
                 Assert.NotNull(model.Data.Owners);
                 Assert.NotNull(getResult.Data.Owners);
                 Assert.AreEqual(model.Data.Owners.Count, getResult.Data.Owners.Count);
-                for(int i = 0; i < model.Data.Owners.Count; ++i)
+                for (int i = 0; i < model.Data.Owners.Count; ++i)
                 {
                     Assert.AreEqual(model.Data.Owners[i].ApplicationId, getResult.Data.Owners[i].ApplicationId);
                 }

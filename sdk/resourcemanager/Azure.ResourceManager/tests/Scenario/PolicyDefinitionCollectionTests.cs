@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
             Assert.AreEqual(model.Data.PolicyRule.ToArray(), getResult.Data.PolicyRule.ToArray());
             Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
-            if(model.Data.Parameters != null || getResult.Data.Parameters != null)
+            if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Tests
                         }
                     }
                     Assert.AreEqual(kvp.Value.DefaultValue, getParameterDefinitionsValue.DefaultValue);
-                    if(kvp.Value.Metadata != null || getParameterDefinitionsValue.Metadata != null)
+                    if (kvp.Value.Metadata != null || getParameterDefinitionsValue.Metadata != null)
                     {
                         Assert.NotNull(kvp.Value.Metadata);
                         Assert.NotNull(getParameterDefinitionsValue.Metadata);

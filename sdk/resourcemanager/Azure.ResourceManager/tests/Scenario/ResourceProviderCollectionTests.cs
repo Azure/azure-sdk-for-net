@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Tests
         public async Task GetNullException()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => {await providerCollection.GetAsync(null); });
+            Assert.ThrowsAsync<ArgumentNullException>(async () => { await providerCollection.GetAsync(null); });
         }
 
         [RecordedTest]
         public async Task GetEmptyException()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Assert.ThrowsAsync<ArgumentException>(async () => {await providerCollection.GetAsync(""); });
+            Assert.ThrowsAsync<ArgumentException>(async () => { await providerCollection.GetAsync(""); });
         }
 
         [RecordedTest]

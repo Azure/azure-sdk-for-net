@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Tests
     {
         private ManagementGroupResource _mgmtGroup;
         private string _mgmtGroupName;
-        
+
         public ManagementGroupOperationsTests(bool isAsync)
         : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
         {
             ManagementGroupResource mgmtGroup = await Client.GetManagementGroupResource(_mgmtGroup.Id).GetAsync();
             DescendantData descendant = null;
-            await foreach(var desc in mgmtGroup.GetDescendantsAsync())
+            await foreach (var desc in mgmtGroup.GetDescendantsAsync())
             {
                 descendant = desc;
                 break;

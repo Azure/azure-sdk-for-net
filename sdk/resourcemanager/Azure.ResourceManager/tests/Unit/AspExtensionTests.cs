@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Azure.ResourceManager.Resources;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Microsoft.Extensions.Azure;
-using System.Collections.Generic;
-using System;
-using System.Reflection;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Tests
 {

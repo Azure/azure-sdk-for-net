@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Tests
             FeatureResource result = null;
             await foreach (var feature in asyncPageable)
             {
-                if(isRegistered.HasValue)
+                if (isRegistered.HasValue)
                 {
-                    if(isRegistered.Value == (feature.Data.Properties.State == "Registered"))
+                    if (isRegistered.Value == (feature.Data.Properties.State == "Registered"))
                     {
                         result = feature;
                         break;
