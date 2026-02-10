@@ -1132,6 +1132,60 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ServiceGroupSiteProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Configuration assignment for VM scope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.VmConfigurationAssignmentData"/> instance for mocking. </returns>
+        public static VmConfigurationAssignmentData VmConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmConfigurationAssignmentProperties properties = default)
+        {
+            return new VmConfigurationAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Configuration assignment properties. </summary>
+        /// <param name="configurationName"> The configuration name. </param>
+        /// <param name="complianceStatus"> The compliance status. </param>
+        /// <returns> A new <see cref="Models.VmConfigurationAssignmentProperties"/> instance for mocking. </returns>
+        public static VmConfigurationAssignmentProperties VmConfigurationAssignmentProperties(string configurationName = default, VmConfigurationAssignmentPropertiesComplianceStatus? complianceStatus = default)
+        {
+            return new VmConfigurationAssignmentProperties(configurationName, complianceStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration assignment for hybrid machine scope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.HcrpConfigurationAssignmentData"/> instance for mocking. </returns>
+        public static HcrpConfigurationAssignmentData HcrpConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcrpConfigurationAssignmentProperties properties = default)
+        {
+            return new HcrpConfigurationAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> HCRP Configuration assignment properties. </summary>
+        /// <param name="configurationName"> The configuration name. </param>
+        /// <param name="machineComplianceStatus"> Machine compliance status. </param>
+        /// <returns> A new <see cref="Models.HcrpConfigurationAssignmentProperties"/> instance for mocking. </returns>
+        public static HcrpConfigurationAssignmentProperties HcrpConfigurationAssignmentProperties(string configurationName = default, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default)
+        {
+            return new HcrpConfigurationAssignmentProperties(configurationName, machineComplianceStatus, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1149,6 +1203,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 disabled is null && innerSelectionType is null && channel is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, null), disabled, null));
+        }
+
+        /// <summary>
+        /// Test resource for verifying explicit ResourceName on ExtensionOperations.
+        /// Same model used by two different extension interfaces with different parent paths.
+        /// Each interface specifies an explicit ResourceName to control generated class names.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.PolicyAssignmentData"/> instance for mocking. </returns>
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyAssignmentProperties properties = default)
+        {
+            return new PolicyAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <summary> The ZooRecommendation. </summary>

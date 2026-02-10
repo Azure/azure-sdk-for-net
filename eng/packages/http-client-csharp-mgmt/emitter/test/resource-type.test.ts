@@ -3,7 +3,11 @@ import {
   calculateResourceTypeFromPath,
   ResourceScope
 } from "../src/resource-metadata.js";
-import { getOperationScopeFromPath } from "../src/resolve-arm-resources-converter.js";
+import {
+  getOperationScopeFromPath,
+  extractParentResourceTypeFromPath,
+  getParentTypeDiscriminator
+} from "../src/resolve-arm-resources-converter.js";
 import { strictEqual } from "assert";
 
 describe("Resource Type Calculation", () => {
@@ -134,5 +138,96 @@ describe("Operation Scope Detection", () => {
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = getOperationScopeFromPath(path);
     strictEqual(scope, ResourceScope.ResourceGroup);
+  });
+});
+
+describe("Extract Parent Resource Type From Path", () => {
+  it("extracts parent type from extension resource targeting virtualMachines", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{assignmentName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, "Microsoft.Compute/virtualMachines");
+  });
+
+  it("extracts parent type from extension resource targeting HybridCompute machines", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{assignmentName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, "Microsoft.HybridCompute/machines");
+  });
+
+  it("returns undefined for non-extension resource path", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, undefined);
+  });
+
+  it("returns undefined for subscription-scoped resource", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, undefined);
+  });
+
+  it("returns undefined for tenant-scoped resource", async () => {
+    const path = "/providers/Microsoft.Compute/virtualMachines/{vmName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, undefined);
+  });
+
+  it("returns undefined for scope-based extension path", async () => {
+    const path = "/{scope}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{assignmentName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, undefined);
+  });
+
+  it("extracts parent type from nested sub-resource extension", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{assignmentName}";
+    const parentType = extractParentResourceTypeFromPath(path);
+    strictEqual(parentType, "Microsoft.Compute/virtualMachineScaleSets");
+  });
+});
+
+describe("Get Parent Type Discriminator", () => {
+  it("returns known mapping for Microsoft.Compute/virtualMachines", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.Compute/virtualMachines");
+    strictEqual(discriminator, "VirtualMachine");
+  });
+
+  it("returns known mapping for Microsoft.HybridCompute/machines", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.HybridCompute/machines");
+    strictEqual(discriminator, "Machine");
+  });
+
+  it("returns known mapping for Microsoft.Compute/virtualMachineScaleSets", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.Compute/virtualMachineScaleSets");
+    strictEqual(discriminator, "VirtualMachineScaleSet");
+  });
+
+  it("returns known mapping for Microsoft.ConnectedVMwarevSphere/virtualMachines", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.ConnectedVMwarevSphere/virtualMachines");
+    strictEqual(discriminator, "VMwarevSphereVirtualMachine");
+  });
+
+  it("generates discriminator for unknown type with plural name", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.Storage/storageAccounts");
+    strictEqual(discriminator, "StorageAccount");
+  });
+
+  it("generates discriminator for unknown type with singular name", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.Network/virtualNetwork");
+    strictEqual(discriminator, "VirtualNetwork");
+  });
+
+  it("handles empty string gracefully", async () => {
+    const discriminator = getParentTypeDiscriminator("");
+    strictEqual(discriminator, "");
+  });
+
+  it("handles single segment gracefully", async () => {
+    const discriminator = getParentTypeDiscriminator("Microsoft.Compute");
+    strictEqual(discriminator, "");
   });
 });
