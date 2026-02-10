@@ -45,7 +45,7 @@
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
-# PRLabel: %Generator Agent
+# PRLabel: %CodeGen
 /sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta
 
 # Smoke tests
