@@ -47,6 +47,7 @@ namespace Azure.Core.Serialization
             {
                 return null;
             }
+            
             try
             {
                 return value._element.GetString();
@@ -67,6 +68,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetByte();
@@ -91,6 +93,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetSByte();
@@ -115,6 +118,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetInt16();
@@ -139,6 +143,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetUInt16();
@@ -163,6 +168,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetInt32();
@@ -187,6 +193,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetUInt32();
@@ -211,6 +218,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetInt64();
@@ -235,6 +243,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetUInt64();
@@ -259,6 +268,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetSingle();
@@ -283,6 +293,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetDouble();
@@ -307,6 +318,7 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
+            
             try
             {
                 return value._element.GetDecimal();
