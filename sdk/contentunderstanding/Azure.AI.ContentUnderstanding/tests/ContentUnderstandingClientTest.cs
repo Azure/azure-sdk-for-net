@@ -815,7 +815,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             {
                 await client.DeleteAnalyzerAsync(analyzerId);
             }
-            catch
+            catch (Exception)
             {
                 // Ignore cleanup errors in tests
             }
@@ -1010,7 +1010,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
                 }
-                catch
+                catch (Exception)
                 {
                     // Ignore cleanup errors in tests
                 }
@@ -1196,7 +1196,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
                 }
-                catch
+                catch (Exception)
                 {
                     // Ignore cleanup errors
                 }
@@ -1479,9 +1479,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     requestContent,
                     clientRequestId: testGuid);
             }
-            catch
+            catch (Exception)
             {
-                // Ignore errors, we only care about the request
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
             }
 
             // Assert
@@ -1521,9 +1522,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     requestContent,
                     clientRequestId: testGuid);
             }
-            catch
+            catch (Exception)
             {
-                // Ignore errors, we only care about the request
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
             }
 
             // Assert
@@ -1564,9 +1566,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     requestContent,
                     clientRequestId: testGuid);
             }
-            catch
+            catch (Exception)
             {
-                // Ignore errors, we only care about the request
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
             }
 
             // Assert
@@ -1607,9 +1610,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     requestContent,
                     clientRequestId: testGuid);
             }
-            catch
+            catch (Exception)
             {
-                // Ignore errors, we only care about the request
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
             }
 
             // Assert
@@ -1647,9 +1651,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     "test-analyzer",
                     requestContent);
             }
-            catch
+            catch (Exception)
             {
-                // Ignore errors, we only care about the request
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
             }
 
             // Assert
@@ -1689,9 +1694,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     "application/pdf",
                     requestContent);
             }
-            catch
+            catch (Exception)
             {
-                // Ignore errors, we only care about the request
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
             }
 
             // Assert
