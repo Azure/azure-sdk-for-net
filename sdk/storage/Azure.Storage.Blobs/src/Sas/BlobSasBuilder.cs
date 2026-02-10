@@ -118,7 +118,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Beginning in version 2020-02-10, this value defines whether or
         /// not the <see cref="BlobName"/> is a virtual directory.
-        /// Required when <see cref="Resource"/> is set to d.
+        /// Required when <see cref="Resource"/> is set to "d".
         /// </summary>
         public bool? IsDirectory { get; set; }
 
@@ -221,7 +221,7 @@ namespace Azure.Storage.Sas
         public Dictionary<string, string> RequestQueryParameters { get; set; }
 
         /// <summary>
-        /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
+        /// Optional. Required when <see cref="Resource"/> is set to "d" to indicate the
         /// depth of the virtual blob directory specified in the canonicalizedresource
         /// field of the string-to-sign.
         /// </summary>
