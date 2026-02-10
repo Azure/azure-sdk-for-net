@@ -1321,8 +1321,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                RequestContent.Create(BinaryData.FromBytes(fileBytes)),
-                "application/pdf");
+                "application/pdf",
+                RequestContent.Create(BinaryData.FromBytes(fileBytes)));
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
