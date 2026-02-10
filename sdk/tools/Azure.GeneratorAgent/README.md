@@ -1,104 +1,45 @@
-# Azure Generator Agent
+# Azure Generator Agent CLI tool for .NET
 
-The Azure Generator Agent is a powerful CLI tool for automated Azure SDK code generation and migration workflows with improved architecture and enhanced capabilities.
+A command-line tool for automating Azure SDK code generation workflows.
 
-## Installation
+## Getting started
+
+### Install the package
+
+Install as a .NET global tool:
+
+```bash
+dotnet tool install --global Azure.GeneratorAgent
+```
 
 ### Prerequisites
 
-- .NET 8.0 or later
+- [.NET 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) or later
 - Git (for repository operations)
 
-### Build and Run
+### Authenticate the client
 
-1. Clone the repository and navigate to the project directory:
-   ```bash
-   cd sdk/tools/Azure.GeneratorAgent/src
-   ```
+Authentication is handled automatically when working within Azure SDK repositories.
 
-2. Restore packages:
-   ```bash
-   dotnet restore
-   ```
+## Key concepts
 
-3. Build the project:
-   ```bash
-   dotnet build
-   ```
+The Azure Generator Agent automates SDK code generation workflows, including code generation from service specifications and migration to new SDK patterns.
 
-## Usage
+## Examples
 
-### Generate Command
-
-Generate code for Azure SDK from an existing SDK path:
+Generate code for an SDK:
 
 ```bash
-dotnet run -- generate <sdk-path>
+azure-generator-agent generate <sdk-path>
 ```
 
-**Parameters:**
-- `<sdk-path>`: Path to the SDK directory to generate code for
-
-**Example:**
-```bash
-dotnet run -- generate "C:\path\to\your\sdk\directory"
-```
-
-### Migrate Command
-
-Migrate existing code to new Azure SDK patterns:
+Validate an SDK structure:
 
 ```bash
-dotnet run -- migrate <sdk-path>
+azure-generator-agent validate <sdk-path>
 ```
 
-**Parameters:**
-- `<sdk-path>`: Path to the SDK directory to migrate
+## Next steps
 
-**Example:**
-```bash
-dotnet run -- migrate "C:\path\to\your\sdk\directory"
-```
-
-## Configuration
-
-Configuration is managed through `appsettings.json` and supports:
-
-- **Logging levels and output targets**: Control verbosity and output format
-- **Workflow settings**: Configure max retries, timeouts, and verbose mode
-- **Environment-specific overrides**: Customize settings per environment
-
-### Sample Configuration
-
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information"
-    }
-  },
-  "Workflow": {
-    "MaxRetries": 3,
-    "VerboseMode": false,
-    "TimeoutMinutes": 30
-  }
-}
-```
-
-## Features
-
-- **SDK Path Validation**: Comprehensive validation of SDK directory structure
-
-## Contributing
-
-This tool is part of the Azure SDK for .NET project. Please see the [contributing guide](../../../CONTRIBUTING.md) for details on how to contribute.
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"Not a git repository" error**: Ensure the SDK path is within a git repository
-2. **"Git is not available" error**: Install Git and ensure it's in your PATH
-3. **Build failures**: Ensure .NET 8.0 or later is installed
-
-For additional help, check the logs for detailed error information.
+- Explore the [Azure SDK for .NET repository](https://github.com/Azure/azure-sdk-for-net)
+- Learn about [Azure SDK design guidelines](https://azure.github.io/azure-sdk/)
