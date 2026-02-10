@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
@@ -814,7 +815,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             {
                 await client.DeleteAnalyzerAsync(analyzerId);
             }
-            catch
+            catch (Exception)
             {
                 // Ignore cleanup errors in tests
             }
@@ -1009,7 +1010,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
                 }
-                catch
+                catch (Exception)
                 {
                     // Ignore cleanup errors in tests
                 }
@@ -1195,7 +1196,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
                 }
-                catch
+                catch (Exception)
                 {
                     // Ignore cleanup errors
                 }
@@ -1448,6 +1449,265 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Verify file data
             byte[] imageBytes = fileResponse.Value.ToArray();
             Assert.IsTrue(imageBytes.Length > 0, "Keyframe image should not be empty");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in Analyze operation.
+        /// </summary>
+        [Test]
+        public void Analyze_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            try
+            {
+                client.Analyze(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    requestContent,
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in AnalyzeAsync operation.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeAsync_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            try
+            {
+                await client.AnalyzeAsync(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    requestContent,
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in AnalyzeBinary operation.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            try
+            {
+                client.AnalyzeBinary(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    "application/pdf",
+                    requestContent,
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in AnalyzeBinaryAsync operation.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeBinaryAsync_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            try
+            {
+                await client.AnalyzeBinaryAsync(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    "application/pdf",
+                    requestContent,
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that when clientRequestId is not provided, the x-ms-client-request-id header is auto-generated in Analyze operation.
+        /// </summary>
+        [Test]
+        public void Analyze_WithoutClientRequestId_AutoGeneratesHeader()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            try
+            {
+                client.Analyze(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    requestContent);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain auto-generated x-ms-client-request-id header");
+            Assert.IsNotNull(headerValue, "Auto-generated x-ms-client-request-id should not be null");
+            Assert.IsTrue(Guid.TryParse(headerValue, out _),
+                "Auto-generated x-ms-client-request-id should be a valid GUID");
+        }
+
+        /// <summary>
+        /// Tests that when clientRequestId is not provided, the x-ms-client-request-id header is auto-generated in AnalyzeBinary operation.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_WithoutClientRequestId_AutoGeneratesHeader()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            try
+            {
+                client.AnalyzeBinary(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    "application/pdf",
+                    requestContent);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain auto-generated x-ms-client-request-id header");
+            Assert.IsNotNull(headerValue, "Auto-generated x-ms-client-request-id should not be null");
+            Assert.IsTrue(Guid.TryParse(headerValue, out _),
+                "Auto-generated x-ms-client-request-id should be a valid GUID");
         }
     }
 }
