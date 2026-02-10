@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
-    public class RouterWorkerLiveTests: RouterLiveTestBase
+    public class RouterWorkerLiveTests : RouterLiveTestBase
     {
         public RouterWorkerLiveTests(bool isAsync) : base(isAsync)
         {
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var workerId = $"{IdPrefix}-WorkerIDRegisterWorker";
 
             var capacity = 100;
-            var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, capacity) {AvailableForOffers = true});
+            var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, capacity) { AvailableForOffers = true });
             AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
