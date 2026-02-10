@@ -522,18 +522,41 @@ namespace Azure.Generator.Management.Providers
             InputModelType? currentModel = _inputModel;
             while (currentModel != null)
             {
-                foreach (var property in currentModel.Properties)
+                if (HasTagsInProperties(currentModel.Properties))
                 {
-                    if (property.SerializedName == "tags" && property.Type is InputDictionaryType
-                        {
-                            KeyType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String },
-                            ValueType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String }
-                        })
+                    return true;
+                }
+
+                // Also check properties of flattened model types
+                var flattenMap = ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap;
+                if (flattenMap.TryGetValue(currentModel, out var flattenedProperties))
+                {
+                    foreach (var flattenedProperty in flattenedProperties)
                     {
-                        return true;
+                        if (flattenedProperty.Type is InputModelType flattenedModel && HasTagsInProperties(flattenedModel.Properties))
+                        {
+                            return true;
+                        }
                     }
                 }
+
                 currentModel = currentModel.BaseModel;
+            }
+            return false;
+        }
+
+        private static bool HasTagsInProperties(IReadOnlyList<InputModelProperty> properties)
+        {
+            foreach (var property in properties)
+            {
+                if (property.SerializedName == "tags" && property.Type is InputDictionaryType
+                    {
+                        KeyType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String },
+                        ValueType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String }
+                    })
+                {
+                    return true;
+                }
             }
             return false;
         }
