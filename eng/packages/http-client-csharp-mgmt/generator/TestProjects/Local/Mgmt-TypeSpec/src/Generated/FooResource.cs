@@ -968,5 +968,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             return GetBars().Get(barName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of MultiFlattenTests in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of MultiFlattenTests and their operations over a MultiFlattenTestResource. </returns>
+        public virtual MultiFlattenTestCollection GetMultiFlattenTests()
+        {
+            return GetCachedClient(client => new MultiFlattenTestCollection(client, Id));
+        }
+
+        /// <summary> Get a MultiFlattenTest. </summary>
+        /// <param name="multiFlattenTestName"> The name of the MultiFlattenTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="multiFlattenTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="multiFlattenTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MultiFlattenTestResource>> GetMultiFlattenTestAsync(string multiFlattenTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(multiFlattenTestName, nameof(multiFlattenTestName));
+
+            return await GetMultiFlattenTests().GetAsync(multiFlattenTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a MultiFlattenTest. </summary>
+        /// <param name="multiFlattenTestName"> The name of the MultiFlattenTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="multiFlattenTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="multiFlattenTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MultiFlattenTestResource> GetMultiFlattenTest(string multiFlattenTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(multiFlattenTestName, nameof(multiFlattenTestName));
+
+            return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
+        }
     }
 }

@@ -1257,6 +1257,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ServiceGroupSiteProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
+        /// <param name="innerSelectionType"> Gets or sets the SelectionType. </param>
+        /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
+        /// <returns> A new <see cref="Tests.MultiFlattenTestData"/> instance for mocking. </returns>
+        public static MultiFlattenTestData MultiFlattenTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? disabled = default, string innerSelectionType = default, FlattenChannel? channel = default)
+        {
+            return new MultiFlattenTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                disabled is null && innerSelectionType is null && channel is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, null), disabled, null));
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
