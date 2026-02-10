@@ -462,8 +462,7 @@ public class TestEnvironmentTests
     [TearDown]
     public void ResetStaticProperties()
     {
-        // Reset all static properties to their default state after each test
-        // by setting them to read from environment variables again
+        // Reset all static properties to their default state after each test.
         TestEnvironment.GlobalTestMode = RecordedTestMode.Playback;
         TestEnvironment.GlobalDisableAutoRecording = false;
         TestEnvironment.EnableFiddler = false;
