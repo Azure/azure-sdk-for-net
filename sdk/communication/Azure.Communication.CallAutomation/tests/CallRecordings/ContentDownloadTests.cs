@@ -3,14 +3,14 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using Azure.Core;
-using NUnit.Framework;
-using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {

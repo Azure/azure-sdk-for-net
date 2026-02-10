@@ -283,7 +283,7 @@ namespace Azure.Communication.Rooms.Tests
             Assert.AreEqual(400, ex?.Status);
         }
 
-         [Test]
+        [Test]
         public async Task UpdateRoom_WithPastValidUntil_Fail()
         {
             // Arrange
@@ -374,7 +374,7 @@ namespace Azure.Communication.Rooms.Tests
             await roomsClient.DeleteRoomAsync(createdRoom.Id);
         }
 
-            [Test]
+        [Test]
         public async Task RoomParticipantsAddUpdateAndRemoveLiveTest()
         {
             // Arrange

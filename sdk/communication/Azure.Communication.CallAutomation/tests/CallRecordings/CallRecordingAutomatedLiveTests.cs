@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         [RecordedTest]
         public async Task RecordingOperationsTest()
         {
-             // create caller and receiver
+            // create caller and receiver
             var target = await CreateIdentityUserAsync().ConfigureAwait(false);
             var user = await CreateIdentityUserAsync().ConfigureAwait(false);
 
