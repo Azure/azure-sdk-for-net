@@ -302,7 +302,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         };
     }
 
-#endregion
+    #endregion
 
     /// <summary>
     /// Polls until a condition has been met with a maximum wait time. The function will always return the last value even
@@ -430,7 +430,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
                 break;
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
-        };
+        }
+        ;
 
         if (!wrapClient)
         {

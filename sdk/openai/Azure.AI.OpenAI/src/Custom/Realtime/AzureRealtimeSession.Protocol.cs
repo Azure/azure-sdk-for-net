@@ -3,10 +3,10 @@
 
 #if !AZURE_OPENAI_GA
 
-using Azure.Core;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Net.WebSockets;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Realtime;
 
