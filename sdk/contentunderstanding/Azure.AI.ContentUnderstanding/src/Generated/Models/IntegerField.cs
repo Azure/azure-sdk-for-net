@@ -24,16 +24,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fieldType"> Semantic data type of the field value. </param>
         /// <param name="valueInteger"> Integer field value. </param>
-        internal IntegerField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContentFieldType fieldType, long? valueInteger) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
+        internal IntegerField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? valueInteger) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
         {
-            FieldType = fieldType;
             ValueInteger = valueInteger;
         }
-
-        /// <summary> Semantic data type of the field value. </summary>
-        internal ContentFieldType FieldType { get; set; } = "integer";
 
         /// <summary> Integer field value. </summary>
         public long? ValueInteger { get; }

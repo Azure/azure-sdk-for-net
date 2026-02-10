@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                HttpMessage message = _certificateResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose?.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                HttpMessage message = _certificateResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose?.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                HttpMessage message = _certificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose?.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CertificateVerificationCodeResult> response = Response.FromValue(CertificateVerificationCodeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                HttpMessage message = _certificateResponsesRestClient.CreateGenerateVerificationCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose?.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CertificateVerificationCodeResult> response = Response.FromValue(CertificateVerificationCodeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                HttpMessage message = _certificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose?.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
+                HttpMessage message = _certificateResponsesRestClient.CreateVerifyCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, CertificateVerificationCodeContent.ToRequestContent(content), certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose?.ToString(), certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
                 if (response.Value == null)

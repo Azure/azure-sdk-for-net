@@ -8,7 +8,16 @@
 
 ### Bugs Fixed
 
+- Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
+
 ### Other Changes
+
+## 1.51.1 (2026-02-04)
+
+### Features Added
+
+- Update the APIs for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection to enable Azure.Identity use cases.
+- Updated BCL dependencies to 10.x.
 
 ## 1.51.0 (2026-01-29)
 

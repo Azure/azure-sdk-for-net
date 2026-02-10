@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             {
                 throw new FormatException($"The model {nameof(EdgeActionAttachment)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -151,17 +151,5 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeActionAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="edgeActionAttachment"> The <see cref="EdgeActionAttachment"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EdgeActionAttachment edgeActionAttachment)
-        {
-            if (edgeActionAttachment == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeActionAttachment, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

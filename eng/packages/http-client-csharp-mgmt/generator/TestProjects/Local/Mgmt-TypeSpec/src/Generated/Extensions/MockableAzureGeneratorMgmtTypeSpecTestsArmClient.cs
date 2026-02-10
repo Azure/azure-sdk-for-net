@@ -368,6 +368,69 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TargetResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="DuplicatePropertyTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DuplicatePropertyTestResource"/> object. </returns>
+        public virtual DuplicatePropertyTestResource GetDuplicatePropertyTestResource(ResourceIdentifier id)
+        {
+            DuplicatePropertyTestResource.ValidateResourceId(id);
+            return new DuplicatePropertyTestResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceGroupSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceGroupSiteResource"/> object. </returns>
+        public virtual ServiceGroupSiteResource GetServiceGroupSiteResource(ResourceIdentifier id)
+        {
+            ServiceGroupSiteResource.ValidateResourceId(id);
+            return new ServiceGroupSiteResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ServiceGroupSiteCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ServiceGroupSiteResource"/> objects. </returns>
+        public virtual ServiceGroupSiteCollection GetServiceGroupSites(ResourceIdentifier scope)
+        {
+            return new ServiceGroupSiteCollection(Client, scope);
+        }
+
+        /// <summary> Get Site at ServiceGroup scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="siteName"> The name of the ServiceGroupSite. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceGroupSiteResource> GetServiceGroupSite(ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return GetServiceGroupSites(scope).Get(siteName, cancellationToken);
+        }
+
+        /// <summary> Get Site at ServiceGroup scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="siteName"> The name of the ServiceGroupSite. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceGroupSiteResource>> GetServiceGroupSiteAsync(ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return await GetServiceGroupSites(scope).GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MultiFlattenTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MultiFlattenTestResource"/> object. </returns>
+        public virtual MultiFlattenTestResource GetMultiFlattenTestResource(ResourceIdentifier id)
+        {
+            MultiFlattenTestResource.ValidateResourceId(id);
+            return new MultiFlattenTestResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

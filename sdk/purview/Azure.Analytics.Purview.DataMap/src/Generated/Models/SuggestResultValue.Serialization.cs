@@ -15,6 +15,23 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The value item of the search suggest. </summary>
     public partial class SuggestResultValue : IJsonModel<SuggestResultValue>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SuggestResultValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSuggestResultValue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SuggestResultValue)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SuggestResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -540,23 +557,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SuggestResultValue IPersistableModel<SuggestResultValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SuggestResultValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SuggestResultValue>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSuggestResultValue(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SuggestResultValue)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SuggestResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

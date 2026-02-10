@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting
         private readonly string _search;
         private readonly DateTimeOffset? _lastModifiedStartTime;
         private readonly DateTimeOffset? _lastModifiedEndTime;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientGetTestsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -36,16 +36,16 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestAdministrationClientGetTestsCollectionResultOfT(LoadTestAdministrationClient client, string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetTestsCollectionResultOfT(LoadTestAdministrationClient client, string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _orderby = @orderby;
             _search = search;
             _lastModifiedStartTime = lastModifiedStartTime;
             _lastModifiedEndTime = lastModifiedEndTime;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTestsRequest(nextLink, pageSize, _context) : _client.CreateGetTestsRequest(_orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
             scope.Start();

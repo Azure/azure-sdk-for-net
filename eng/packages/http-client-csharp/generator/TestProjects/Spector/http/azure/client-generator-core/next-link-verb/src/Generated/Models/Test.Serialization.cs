@@ -15,6 +15,8 @@ namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
     {
         internal Test() => throw null;
 
+        protected virtual Test PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Test>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Test IPersistableModel<Test>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Test PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Test>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

@@ -16,6 +16,10 @@ namespace Client.Clientnamespace.First
     {
         internal FirstClientResult() => throw null;
 
+        protected virtual FirstClientResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator FirstClientResult(Response response) => throw null;
+
         void IJsonModel<FirstClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,10 +34,6 @@ namespace Client.Clientnamespace.First
 
         FirstClientResult IPersistableModel<FirstClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual FirstClientResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<FirstClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator FirstClientResult(Response response) => throw null;
     }
 }

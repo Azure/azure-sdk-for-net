@@ -17,6 +17,10 @@ namespace _Type.Property.ValueTypes
     {
         internal IntProperty() => throw null;
 
+        protected virtual IntProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator IntProperty(Response response) => throw null;
+
         void IJsonModel<IntProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Property.ValueTypes
 
         IntProperty IPersistableModel<IntProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual IntProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<IntProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="intProperty"> The <see cref="IntProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IntProperty intProperty) => throw null;
-
-        public static explicit operator IntProperty(Response response) => throw null;
     }
 }
