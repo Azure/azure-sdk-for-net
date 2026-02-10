@@ -6,6 +6,13 @@
 
 - Updated for full `net10` framework compatibility, including removal of `<EnablePreviewFeatures>` flagging.
 
+### Breaking Changes
+
+**Transitive from Azure.AI.Projects.OpenAI**:
+
+* `ImageBasedHostedAgentDefinition` has been merged into `HostedAgentDefinition`
+  * `Image` is now an optional property on `HostedAgentDefinition`; no other net change
+
 ### Sample Updates
 - Added Evaluation sample.
 

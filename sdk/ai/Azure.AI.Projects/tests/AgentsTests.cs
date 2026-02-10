@@ -1464,13 +1464,13 @@ public class AgentsTests : AgentsTestBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        ImageBasedHostedAgentDefinition agentDefinition = new(
+        HostedAgentDefinition agentDefinition = new(
             containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
             cpu: "1",
-            memory: "2Gi",
-            image: TestEnvironment.AGENT_DOCKER_IMAGE
+            memory: "2Gi"
         )
         {
+            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },
