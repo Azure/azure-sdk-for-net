@@ -26,8 +26,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Initializes a new instance of <see cref="AnalyzeRequest1"/>. </summary>
         /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
         /// <param name="modelDeployments">
-        /// Override default mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// Override the resource-level default mapping of supported large language model (LLM) names to model deployment names in Microsoft Foundry. Dictionary of string to string
+        /// (LLM model name -&gt; model deployment name in Microsoft Foundry). Keys must be supported model names for the analyzer you are calling (get them via Get Analyzer, GET /analyzers/{analyzerId}, response.supportedModels).
+        /// Values are model deployment names in your Microsoft Foundry resource.
+        /// To get more information for a quickstart for REST API, see https://aka.ms/cudoc-quickstart-rest.
+        /// Example: { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AnalyzeRequest1(IList<AnalyzeInput> inputs, IDictionary<string, string> modelDeployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -41,8 +44,11 @@ namespace Azure.AI.ContentUnderstanding
         public IList<AnalyzeInput> Inputs { get; }
 
         /// <summary>
-        /// Override default mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// Override the resource-level default mapping of supported large language model (LLM) names to model deployment names in Microsoft Foundry. Dictionary of string to string
+        /// (LLM model name -&gt; model deployment name in Microsoft Foundry). Keys must be supported model names for the analyzer you are calling (get them via Get Analyzer, GET /analyzers/{analyzerId}, response.supportedModels).
+        /// Values are model deployment names in your Microsoft Foundry resource.
+        /// To get more information for a quickstart for REST API, see https://aka.ms/cudoc-quickstart-rest.
+        /// Example: { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
         /// </summary>
         public IDictionary<string, string> ModelDeployments { get; }
     }
