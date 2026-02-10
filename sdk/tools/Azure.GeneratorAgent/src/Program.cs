@@ -42,7 +42,8 @@ public static class GeneratorAgentProgram
             var commandFactory = host.Services.GetRequiredService<RootCommandFactory>();
             var rootCommand = commandFactory.CreateRootCommand();
 
-            return await rootCommand.InvokeAsync(args).ConfigureAwait(false);
+            var parseResult = rootCommand.Parse(args);
+            return await parseResult.InvokeAsync().ConfigureAwait(false);
         }
         catch (Exception ex)
         {

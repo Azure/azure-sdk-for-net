@@ -37,27 +37,26 @@ public class RootCommandFactory
     {
         var rootCommand = new RootCommand("Azure SDK Code Generation CLI");
 
-        rootCommand.AddCommand(CreateGenerateCommand());
-        rootCommand.AddCommand(CreateMigrateCommand());
+        rootCommand.Add(CreateGenerateCommand());
+        rootCommand.Add(CreateMigrateCommand());
 
         return rootCommand;
     }
 
     private Command CreateGenerateCommand()
     {
-        var sdkPathArgument = new Argument<string>("sdk-path", "Path to the SDK directory");
-        var generateCommand = new Command("generate", "Generate code for Azure SDK")
-        {
-            sdkPathArgument
-        };
+        var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
+        var generateCommand = new Command("generate", "Generate code for Azure SDK");
+        generateCommand.Add(sdkPathArgument);
 
-        generateCommand.SetHandler(async (string sdkPath) =>
+        generateCommand.SetAction(async (parseResult) =>
         {
+            var sdkPath = parseResult.GetValue(sdkPathArgument);
             _logger.LogInformation("Generate command called with SDK path: {SdkPath}", sdkPath);
 
             try
             {
-                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, CancellationToken.None).ConfigureAwait(false);
+                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath!, CancellationToken.None).ConfigureAwait(false);
 
                 _logger.LogInformation("Generate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
                 // TODO: Continue with remaining workflow steps (Build → Parse → Fix)
@@ -67,26 +66,25 @@ public class RootCommandFactory
                 _logger.LogError(ex, "Generate command failed");
                 Environment.Exit(1);
             }
-        }, sdkPathArgument);
+        });
 
         return generateCommand;
     }
 
     private Command CreateMigrateCommand()
     {
-        var sdkPathArgument = new Argument<string>("sdk-path", "Path to the SDK directory");
-        var migrateCommand = new Command("migrate", "Migrate existing code to new Azure SDK")
-        {
-            sdkPathArgument
-        };
+        var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
+        var migrateCommand = new Command("migrate", "Migrate existing code to new Azure SDK");
+        migrateCommand.Add(sdkPathArgument);
 
-        migrateCommand.SetHandler(async (string sdkPath) =>
+        migrateCommand.SetAction(async (parseResult) =>
         {
+            var sdkPath = parseResult.GetValue(sdkPathArgument);
             _logger.LogInformation("Migrate command called with SDK path: {SdkPath}", sdkPath);
 
             try
             {
-                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, CancellationToken.None).ConfigureAwait(false);
+                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath!, CancellationToken.None).ConfigureAwait(false);
 
                 _logger.LogInformation("Migrate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
                 // TODO: Step 4 (Migration specific): Update tsp-location.yaml & .csproj
@@ -97,7 +95,7 @@ public class RootCommandFactory
                 _logger.LogError(ex, "Migrate command failed");
                 Environment.Exit(1);
             }
-        }, sdkPathArgument);
+        });
 
         return migrateCommand;
     }
@@ -106,10 +104,13 @@ public class RootCommandFactory
         string sdkPath,
         CancellationToken cancellationToken)
     {
-        // Step 1: Validate SDK path
+        if (string.IsNullOrEmpty(sdkPath))
+        {
+            throw new ArgumentException("SDK path is required but was not provided", nameof(sdkPath));
+        }
+
         var validatedPath = await _validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
 
-        // Step 2: Fetch latest commit ID
         var commitSha = await _gitService.GetLatestCommitAsync(validatedPath, cancellationToken).ConfigureAwait(false);
 
         return (validatedPath, commitSha);
