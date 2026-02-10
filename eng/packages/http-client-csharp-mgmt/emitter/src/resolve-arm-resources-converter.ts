@@ -45,6 +45,11 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
+import {
+  extensionResourceOperationName,
+  legacyExtensionResourceOperationName,
+  legacyResourceOperationName
+} from "./sdk-context-options.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -94,6 +99,9 @@ export function resolveArmResources(
         sdkContext,
         resolvedResource
       );
+
+      // Debug log after conversion
+      console.log(`[DEBUG] Converted resourceName: ${metadata.resourceName}`);
 
       const resource = {
         resourceModelId: modelId,
@@ -239,7 +247,8 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Read,
             operationPath: readOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(readOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(readOp.path, resolvedResource),
+            parentResourceType: extractParentResourceTypeFromPath(readOp.path)
           });
           // Use the first read operation's path as the resource ID pattern
           if (!resourceIdPattern) {
@@ -261,10 +270,8 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
-              createOp.path,
-              resolvedResource
-            )
+            resourceScope: calculateResourceScope(createOp.path, resolvedResource),
+            parentResourceType: extractParentResourceTypeFromPath(createOp.path)
           });
         }
       }
@@ -282,10 +289,8 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
-              updateOp.path,
-              resolvedResource
-            )
+            resourceScope: calculateResourceScope(updateOp.path, resolvedResource),
+            parentResourceType: extractParentResourceTypeFromPath(updateOp.path)
           });
         }
       }
@@ -303,10 +308,8 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
-              deleteOp.path,
-              resolvedResource
-            )
+            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource),
+            parentResourceType: extractParentResourceTypeFromPath(deleteOp.path)
           });
         }
       }
@@ -325,7 +328,8 @@ function convertResolvedResourceToMetadata(
           // TODO: resolveArmResources is not returning the operation scope for list operations, so we calculate it from the path.
           operationScope: getOperationScopeFromPath(listOp.path),
           // TODO: resolveArmResources is not returning the resource scope for list operations, so this should be populated later.
-          resourceScope: undefined
+          resourceScope: undefined,
+          parentResourceType: extractParentResourceTypeFromPath(listOp.path)
         });
       }
     }
@@ -341,7 +345,8 @@ function convertResolvedResourceToMetadata(
           kind: ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
-          resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
+          resourceScope: calculateResourceScope(actionOp.path, resolvedResource),
+          parentResourceType: extractParentResourceTypeFromPath(actionOp.path)
         });
       }
     }
@@ -354,6 +359,27 @@ function convertResolvedResourceToMetadata(
 
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
+
+  // Generate unique resource name for extension resources
+  // If this resource has a parent resource type (extension resource pattern),
+  // append a discriminator to make the name unique — unless an explicit ResourceName
+  // was provided via the OverrideResourceName template parameter.
+  let resourceName = resolvedResource.resourceName;
+  const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
+  if (explicitName) {
+    resourceName = explicitName;
+  } else {
+    const parentResourceType = extractParentResourceTypeFromPath(
+      resolvedResource.resourceInstancePath
+    );
+    if (parentResourceType) {
+      // Extract the resource type name (e.g., "virtualMachines" -> "VirtualMachine")
+      const discriminator = getParentTypeDiscriminator(parentResourceType);
+      if (discriminator) {
+        resourceName = `${resourceName}For${discriminator}`;
+      }
+    }
+  }
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
@@ -368,7 +394,7 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resolvedResource.resourceName
+    resourceName: resourceName
   };
 }
 
@@ -492,6 +518,141 @@ function calculateResourceScope(
       return parent.resourceInstancePath;
     }
     parent = parent.parent;
+  }
+
+  return undefined;
+}
+
+/**
+ * Extracts the parent resource type from an extension resource operation path.
+ * For paths like /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...
+ * returns "Microsoft.Compute/virtualMachines"
+ */
+export function extractParentResourceTypeFromPath(
+  operationPath: string
+): string | undefined {
+  // Split the path and find providers segments
+  const segments = operationPath.split("/").filter((s) => s.length > 0);
+  
+  // Find all "providers" occurrences
+  const providerIndices: number[] = [];
+  for (let i = 0; i < segments.length; i++) {
+    if (segments[i] === "providers") {
+      providerIndices.push(i);
+    }
+  }
+  
+  // If there are at least 2 provider segments (parent resource and extension resource),
+  // extract the parent type from the first non-core provider
+  if (providerIndices.length >= 2) {
+    // Find the first provider that isn't the extension resource provider
+    // Start from the first providers segment after resourceGroups
+    const rgIndex = segments.findIndex((s) => s === "resourceGroups");
+    if (rgIndex >= 0) {
+      // Look for the first provider after resourceGroups that has a complete resource path
+      for (let i = 0; i < providerIndices.length - 1; i++) {
+        const providerIdx = providerIndices[i];
+        // Skip if before resourceGroups
+        if (providerIdx <= rgIndex) continue;
+        
+        // Provider namespace is at providerIdx + 1
+        // Resource type is at providerIdx + 2
+        if (providerIdx + 2 < segments.length) {
+          const namespace = segments[providerIdx + 1];
+          const resourceType = segments[providerIdx + 2];
+          
+          // Skip if the next segment is a variable (meaning this is a valid parent)
+          if (providerIdx + 3 < segments.length && isVariableSegment(segments[providerIdx + 3])) {
+            return `${namespace}/${resourceType}`;
+          }
+        }
+      }
+    }
+  }
+  
+  return undefined;
+}
+
+/**
+ * Converts a parent resource type to a discriminator suitable for appending to resource names.
+ * E.g., "Microsoft.Compute/virtualMachines" -> "VirtualMachines"
+ *       "Microsoft.HybridCompute/machines" -> "Machines"
+ */
+export function getParentTypeDiscriminator(parentResourceType: string): string {
+  // Known mappings for common parent resource types
+  const knownMappings: Record<string, string> = {
+    "Microsoft.Compute/virtualMachines": "VirtualMachine",
+    "Microsoft.HybridCompute/machines": "Machine",
+    "Microsoft.Compute/virtualMachineScaleSets": "VirtualMachineScaleSet",
+    "Microsoft.ConnectedVMwarevSphere/virtualMachines": "VMwarevSphereVirtualMachine"
+  };
+
+  const mapped = knownMappings[parentResourceType];
+  if (mapped) {
+    return mapped;
+  }
+
+  // Generic fallback: extract the resource type name and convert to PascalCase singular
+  const parts = parentResourceType.split("/");
+  if (parts.length >= 2) {
+    const resourceTypeName = parts[1];
+    // Convert to PascalCase and singularize (remove trailing 's' if present)
+    let result = resourceTypeName.charAt(0).toUpperCase() + resourceTypeName.slice(1);
+    if (result.endsWith("s") && result.length > 1) {
+      result = result.slice(0, -1);
+    }
+    return result;
+  }
+
+  return "";
+}
+
+/**
+ * Extracts the explicit resource name from a resolved resource's operations.
+ * Checks the CRUD operations' decorators for OverrideResourceName parameters
+ * set via @extensionResourceOperation or @legacyExtensionResourceOperation.
+ */
+function getExplicitResourceNameFromOperations(
+  resolvedResource: ResolvedResource
+): string | undefined {
+  const lifecycle = resolvedResource.operations.lifecycle;
+  if (!lifecycle) return undefined;
+
+  // Check all CRUD operations for an explicit resource name
+  const operations: Operation[] = [];
+  if (lifecycle.read) {
+    for (const op of lifecycle.read) operations.push(op.operation);
+  }
+  if (lifecycle.createOrUpdate) {
+    for (const op of lifecycle.createOrUpdate) operations.push(op.operation);
+  }
+  if (lifecycle.delete) {
+    for (const op of lifecycle.delete) operations.push(op.operation);
+  }
+
+  for (const operation of operations) {
+    const decorators = operation.decorators;
+    for (const decorator of decorators) {
+      const name = decorator.definition?.name;
+      if (
+        name === extensionResourceOperationName ||
+        name === legacyExtensionResourceOperationName ||
+        name === legacyResourceOperationName
+      ) {
+        // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
+        // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
+        const argIndex =
+          name === extensionResourceOperationName ? 3 : 2;
+        if (
+          decorator.args.length > argIndex &&
+          decorator.args[argIndex].jsValue &&
+          typeof decorator.args[argIndex].jsValue === "string" &&
+          (decorator.args[argIndex].jsValue as string).length > 0
+        ) {
+          return decorator.args[argIndex].jsValue as string;
+        }
+      }
+    }
   }
 
   return undefined;

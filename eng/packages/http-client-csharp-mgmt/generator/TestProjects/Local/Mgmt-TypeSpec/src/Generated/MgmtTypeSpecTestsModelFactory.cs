@@ -1151,6 +1151,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 disabled is null && innerSelectionType is null && channel is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, null), disabled, null));
         }
 
+        /// <summary>
+        /// Test resource for verifying explicit ResourceName on ExtensionOperations.
+        /// Same model used by two different extension interfaces with different parent paths.
+        /// Each interface specifies an explicit ResourceName to control generated class names.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.PolicyAssignmentData"/> instance for mocking. </returns>
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyAssignmentProperties properties = default)
+        {
+            return new PolicyAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

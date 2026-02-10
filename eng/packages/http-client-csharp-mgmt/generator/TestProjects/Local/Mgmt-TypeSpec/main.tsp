@@ -24,6 +24,7 @@ import "./chaos.tsp";
 import "./propertyoverride.tsp";
 import "./sitemanager.tsp";
 import "./flatten-with-customized-property.tsp";
+import "./extensionresourcename.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
