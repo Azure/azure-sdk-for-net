@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SuggestResults() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize the SuggestResults.
         /// </summary>
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
             ObjectSerializer serializer,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             // Parse the JSON
             using JsonDocument doc = async ?
