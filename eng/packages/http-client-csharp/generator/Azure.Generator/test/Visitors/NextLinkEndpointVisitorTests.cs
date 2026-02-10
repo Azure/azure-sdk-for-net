@@ -7,6 +7,7 @@ using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Visitors
@@ -17,30 +18,28 @@ namespace Azure.Generator.Tests.Visitors
         public void ModifiesCreateNextRequestMethodToUseEndpointAndAppendRawNextLink()
         {
             // Create a pagination operation with nextLink
-            var stringType = InputFactory.Literal(InputLiteralTypeKind.String);
-            var itemModel = InputFactory.Model("Item", properties: [InputFactory.Property("Name", stringType)]);
-            var pageModel = InputFactory.Model(
-                "PagedItems",
-                properties:
-                [
-                    InputFactory.Property("Items", InputFactory.List(itemModel)),
-                    InputFactory.Property("NextLink", stringType)
-                ]);
+            var itemModel = InputFactory.Model("Item", properties: [InputFactory.Property("Name", InputPrimitiveType.String)]);
+            var pagingMetadata = InputFactory.NextLinkPagingMetadata("Items", "NextLink", InputResponseLocation.Body);
+
+            var response = InputFactory.OperationResponse(
+                [200],
+                InputFactory.Model(
+                    "PagedItems",
+                    properties:
+                    [
+                        InputFactory.Property("Items", InputFactory.Array(itemModel)),
+                        InputFactory.Property("NextLink", InputPrimitiveType.Url)
+                    ]));
 
             var operation = InputFactory.Operation(
                 "ListItems",
                 parameters: [],
-                responses: [InputFactory.OperationResponse(bodytype: pageModel)]);
-
-            var paging = new InputPagingServiceMetadata(
-                itemPropertySegments: ["Items"],
-                nextLink: new InputPagingServiceMetadataNextLink("NextLink"));
+                responses: [response]);
 
             var pagingMethod = InputFactory.PagingServiceMethod(
                 "ListItems",
                 operation,
-                paging: paging,
-                response: InputFactory.ServiceMethodResponse(pageModel, ["result"]));
+                pagingMetadata: pagingMetadata);
 
             var inputClient = InputFactory.Client("TestClient", methods: [pagingMethod]);
 
@@ -76,15 +75,15 @@ namespace Azure.Generator.Tests.Visitors
         {
             // Create a simple non-paging operation
             var responseModel = InputFactory.Model("Response");
+            var response = InputFactory.OperationResponse([200], responseModel);
             var operation = InputFactory.Operation(
                 "GetItem",
                 parameters: [],
-                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+                responses: [response]);
 
             var serviceMethod = InputFactory.ServiceMethod(
                 "GetItem",
-                operation,
-                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+                operation);
 
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
 
@@ -115,30 +114,28 @@ namespace Azure.Generator.Tests.Visitors
         public void OnlyModifiesMethodsWithNextPageParameter()
         {
             // Create a pagination operation with nextLink
-            var stringType = InputFactory.Literal(InputLiteralTypeKind.String);
-            var itemModel = InputFactory.Model("Item", properties: [InputFactory.Property("Name", stringType)]);
-            var pageModel = InputFactory.Model(
-                "PagedItems",
-                properties:
-                [
-                    InputFactory.Property("Items", InputFactory.List(itemModel)),
-                    InputFactory.Property("NextLink", stringType)
-                ]);
+            var itemModel = InputFactory.Model("Item", properties: [InputFactory.Property("Name", InputPrimitiveType.String)]);
+            var pagingMetadata = InputFactory.NextLinkPagingMetadata("Items", "NextLink", InputResponseLocation.Body);
+
+            var response = InputFactory.OperationResponse(
+                [200],
+                InputFactory.Model(
+                    "PagedItems",
+                    properties:
+                    [
+                        InputFactory.Property("Items", InputFactory.Array(itemModel)),
+                        InputFactory.Property("NextLink", InputPrimitiveType.Url)
+                    ]));
 
             var operation = InputFactory.Operation(
                 "ListItems",
                 parameters: [],
-                responses: [InputFactory.OperationResponse(bodytype: pageModel)]);
-
-            var paging = new InputPagingServiceMetadata(
-                itemPropertySegments: ["Items"],
-                nextLink: new InputPagingServiceMetadataNextLink("NextLink"));
+                responses: [response]);
 
             var pagingMethod = InputFactory.PagingServiceMethod(
                 "ListItems",
                 operation,
-                paging: paging,
-                response: InputFactory.ServiceMethodResponse(pageModel, ["result"]));
+                pagingMetadata: pagingMetadata);
 
             var inputClient = InputFactory.Client("TestClient", methods: [pagingMethod]);
 
