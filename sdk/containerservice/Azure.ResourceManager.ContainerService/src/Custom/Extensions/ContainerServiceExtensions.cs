@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.ResourceManager.ContainerService.Mocking;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerService. </summary>

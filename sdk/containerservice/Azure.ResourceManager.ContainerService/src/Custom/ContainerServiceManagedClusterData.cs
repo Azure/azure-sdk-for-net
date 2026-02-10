@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> A class representing the ContainerServiceManagedCluster data model. </summary>
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
                 AutoUpgradeProfile.UpgradeChannel = value;
             }
         }
-
+/*
         /// <summary> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedServiceIdentity Identity
@@ -78,10 +79,38 @@ namespace Azure.ResourceManager.ContainerService
                 else
                 {
                     IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
-                    if (value.ManagedServiceIdentityType == ManagedServiceIdentityType.UserAssigned || value.ManagedServiceIdentityType == ManagedServiceIdentityType.SystemAssignedUserAssigned)
+                    if (value.ManagedServiceIdentityType == Azure.ResourceManager.Models.ManagedServiceIdentityType.UserAssigned || value.ManagedServiceIdentityType == Azure.ResourceManager.Models.ManagedServiceIdentityType.SystemAssignedUserAssigned)
                         userAssignedIdentities = value.UserAssignedIdentities;
                     ClusterIdentity = new ManagedClusterIdentity(value.PrincipalId, value.TenantId, value.ManagedServiceIdentityType, new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>(), userAssignedIdentities, null);
                 }
+            }
+        }
+*/
+        /// <summary> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </summary>
+        [WirePath("properties.azureMonitorProfile.metrics")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
+        {
+            get => AzureMonitorProfile is null ? default : AzureMonitorProfile.Metrics;
+            set
+            {
+                if (AzureMonitorProfile is null)
+                    AzureMonitorProfile = new ManagedClusterAzureMonitorProfile();
+                AzureMonitorProfile.Metrics = value;
+            }
+        }
+
+        /// <summary> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </summary>
+        [WirePath("properties.ingressProfile.webAppRouting")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
+        {
+            get => IngressProfile is null ? default : IngressProfile.WebAppRouting;
+            set
+            {
+                if (IngressProfile is null)
+                    IngressProfile = new ManagedClusterIngressProfile();
+                IngressProfile.WebAppRouting = value;
             }
         }
     }
