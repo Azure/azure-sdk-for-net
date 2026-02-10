@@ -102,31 +102,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         internal DataFeedDetailPatch InstantiateDataFeedDetailPatch() => this switch
         {
             AzureApplicationInsightsDataFeedSource d => new AzureApplicationInsightsDataFeedPatch()
-                { DataSourceParameter = new() { Query = d.Query, ApiKey = d.ApiKey, ApplicationId = d.ApplicationId, AzureCloud = d.AzureCloud } },
+            { DataSourceParameter = new() { Query = d.Query, ApiKey = d.ApiKey, ApplicationId = d.ApplicationId, AzureCloud = d.AzureCloud } },
             AzureBlobDataFeedSource d => new AzureBlobDataFeedPatch()
-                { DataSourceParameter = new() { Container = d.Container, BlobTemplate = d.BlobTemplate, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Container = d.Container, BlobTemplate = d.BlobTemplate, ConnectionString = d.ConnectionString } },
             AzureCosmosDbDataFeedSource d => new AzureCosmosDBDataFeedPatch()
-                { DataSourceParameter = new() { SqlQuery = d.SqlQuery, Database = d.Database, CollectionId = d.CollectionId, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { SqlQuery = d.SqlQuery, Database = d.Database, CollectionId = d.CollectionId, ConnectionString = d.ConnectionString } },
             AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeedPatch()
-                { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             AzureDataLakeStorageDataFeedSource d => new AzureDataLakeStorageGen2DataFeedPatch()
-                { DataSourceParameter = new() { FileSystemName = d.FileSystemName, DirectoryTemplate = d.DirectoryTemplate, FileTemplate = d.FileTemplate, AccountKey = d.AccountKey, AccountName = d.AccountName } },
+            { DataSourceParameter = new() { FileSystemName = d.FileSystemName, DirectoryTemplate = d.DirectoryTemplate, FileTemplate = d.FileTemplate, AccountKey = d.AccountKey, AccountName = d.AccountName } },
             AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeedPatch()
-                { DataSourceParameter = new() { ConnectionString = d.ConnectionString, ConsumerGroup = d.ConsumerGroup } },
+            { DataSourceParameter = new() { ConnectionString = d.ConnectionString, ConsumerGroup = d.ConsumerGroup } },
             AzureTableDataFeedSource d => new AzureTableDataFeedPatch()
-                { DataSourceParameter = new() { Table = d.Table, Query = d.Query, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Table = d.Table, Query = d.Query, ConnectionString = d.ConnectionString } },
             InfluxDbDataFeedSource d => new InfluxDBDataFeedPatch()
-                { DataSourceParameter = new() { Query = d.Query, UserName = d.Username, Password = d.Password, Database = d.Database, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Query = d.Query, UserName = d.Username, Password = d.Password, Database = d.Database, ConnectionString = d.ConnectionString } },
             LogAnalyticsDataFeedSource d => new AzureLogAnalyticsDataFeedPatch()
-                { DataSourceParameter = new() { WorkspaceId = d.WorkspaceId, Query = d.Query, ClientId = d.ClientId, ClientSecret = d.ClientSecret, TenantId = d.TenantId } },
+            { DataSourceParameter = new() { WorkspaceId = d.WorkspaceId, Query = d.Query, ClientId = d.ClientId, ClientSecret = d.ClientSecret, TenantId = d.TenantId } },
             MongoDbDataFeedSource d => new MongoDBDataFeedPatch()
-                { DataSourceParameter = new() { Command = d.Command, Database = d.Database, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Command = d.Command, Database = d.Database, ConnectionString = d.ConnectionString } },
             MySqlDataFeedSource d => new MySqlDataFeedPatch()
-                { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             PostgreSqlDataFeedSource d => new PostgreSqlDataFeedPatch()
-                { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             SqlServerDataFeedSource d => new SQLServerDataFeedPatch()
-                { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
+            { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             _ => new DataFeedDetailPatch() { DataSourceType = DataSourceKind }
         };
 
