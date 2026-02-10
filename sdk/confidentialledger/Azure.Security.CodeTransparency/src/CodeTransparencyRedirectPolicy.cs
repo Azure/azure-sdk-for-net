@@ -15,7 +15,7 @@ namespace Azure.Security.CodeTransparency
     /// <remarks>
     /// Code Transparency Service nodes may return 307 (Temporary Redirect) or 308 (Permanent Redirect)
     /// responses to route write operations to the primary node. The standard redirect behavior in .NET
-    /// strips the Authorization header on cross-domain redirects for security reasons. However, ACL
+    /// strips the Authorization header on cross-domain redirects for security reasons. However, CTS
     /// redirects occur between trusted nodes within the same ledger, so the Authorization header must
     /// be preserved for the redirected request to succeed.
     /// </remarks>
