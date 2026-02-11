@@ -48,6 +48,10 @@ steps:
     inputs:
       versionSpec: '3.11'
 
+  - script: |
+      python eng/scripts/overrides/check_version_overrides.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/versionoverride.allowlist.json
+    displayName: 'Verify VersionOverride allowlist (eng/overrides)'
+
   - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
     parameters:
       PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'

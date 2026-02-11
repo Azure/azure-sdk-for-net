@@ -1,0 +1,156 @@
+[
+  {
+    "project": "sdk/ai/Azure.AI.Projects/tests/Azure.AI.Projects.Tests.csproj",
+    "packageId": "NUnit",
+    "versionOverride": "4.4.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/ai/Azure.AI.Projects/tests/Azure.AI.Projects.Tests.csproj",
+    "packageId": "NUnit3TestAdapter",
+    "versionOverride": "5.1.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/batch/Microsoft.Azure.Batch/tests/IntegrationTestCommon/Microsoft.Azure.Batch.IntegrationTestCommon.csproj",
+    "packageId": "Microsoft.IdentityModel.Clients.ActiveDirectory",
+    "versionOverride": "[3.14.2, 4.0.0)",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/batch/Microsoft.Azure.Batch/tests/IntegrationTests/Microsoft.Azure.Batch.Integration.Tests.csproj",
+    "packageId": "Microsoft.Identity.Client",
+    "versionOverride": "4.61.3",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/batch/Microsoft.Azure.Batch/tests/IntegrationTests/Microsoft.Azure.Batch.Integration.Tests.csproj",
+    "packageId": "Microsoft.IdentityModel.Clients.ActiveDirectory",
+    "versionOverride": "[3.14.2, 4.0.0)",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/batch/Microsoft.Azure.Batch/tests/TestCommon/Microsoft.Azure.Batch.Common.csproj",
+    "packageId": "Microsoft.IdentityModel.Clients.ActiveDirectory",
+    "versionOverride": "[3.14.2, 4.0.0)",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/batch/Microsoft.Azure.Batch/tests/UnitTests/Microsoft.Azure.Batch.Unit.Tests.csproj",
+    "packageId": "Microsoft.IdentityModel.Clients.ActiveDirectory",
+    "versionOverride": "[3.14.2, 4.0.0)",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj",
+    "packageId": "Microsoft.Azure.AutoRest.CSharp",
+    "versionOverride": "3.0.0-beta.20231107.1",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/core/Microsoft.ClientModel.TestFramework/tests/Microsoft.ClientModel.TestFramework.Tests.csproj",
+    "packageId": "Microsoft.NET.Test.Sdk",
+    "versionOverride": "17.13.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/core/Microsoft.ClientModel.TestFramework/tests/Microsoft.ClientModel.TestFramework.Tests.csproj",
+    "packageId": "NUnit",
+    "versionOverride": "4.4.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/core/Microsoft.ClientModel.TestFramework/tests/Microsoft.ClientModel.TestFramework.Tests.csproj",
+    "packageId": "NUnit3TestAdapter",
+    "versionOverride": "5.1.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/securitycenter/Azure.ResourceManager.SecurityCenter/tests/Azure.ResourceManager.SecurityCenter.Tests.csproj",
+    "packageId": "Azure.ResourceManager.IotHub",
+    "versionOverride": "1.2.0-beta.1",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/securitycenter/Azure.ResourceManager.SecurityCenter/tests/Azure.ResourceManager.SecurityCenter.Tests.csproj",
+    "packageId": "Azure.ResourceManager.Logic",
+    "versionOverride": "1.2.0-beta.1",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/src/Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj",
+    "packageId": "Microsoft.AspNetCore.Http.Connections",
+    "versionOverride": "1.0.15",
+    "referenceKind": "Include",
+    "condition": "'$(TargetFramework)' == 'netstandard2.0'",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables/tests/Microsoft.Azure.WebJobs.Extensions.Tables.Tests.csproj",
+    "packageId": "Microsoft.Azure.WebJobs.Extensions.Storage",
+    "versionOverride": "4.0.5",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/tools/Azure.SdkAnalyzers/perf/Azure.SdkAnalyzers.Perf.csproj",
+    "packageId": "Microsoft.CodeAnalysis.CSharp",
+    "versionOverride": "4.14.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  },
+  {
+    "project": "sdk/tools/Azure.SdkAnalyzers/tests/Azure.SdkAnalyzers.Tests/Azure.SdkAnalyzers.Tests.csproj",
+    "packageId": "Microsoft.CodeAnalysis.CSharp",
+    "versionOverride": "4.8.0",
+    "referenceKind": "Include",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing VersionOverride entry when guardrail was introduced."
+  }
+]
+
