@@ -1,0 +1,38 @@
+[
+  {
+    "project": "sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Azure.Data.AppConfiguration.Tests.csproj",
+    "excludedPackageId": "Azure.Messaging.EventGrid",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing exclusion when guardrail was introduced."
+  },
+  {
+    "project": "sdk/communication/Azure.Communication.JobRouter/tests/Azure.Communication.JobRouter.Tests.csproj",
+    "excludedPackageId": "Azure.Messaging.EventGrid",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing exclusion when guardrail was introduced."
+  },
+  {
+    "project": "sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Microsoft.Azure.WebJobs.Extensions.Clients.csproj",
+    "excludedPackageId": "Microsoft.Extensions.Azure",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing exclusion when guardrail was introduced."
+  },
+  {
+    "project": "sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables/tests/Microsoft.Azure.WebJobs.Extensions.Tables.Tests.csproj",
+    "excludedPackageId": "Microsoft.Azure.WebJobs.Extensions.Storage",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing exclusion when guardrail was introduced."
+  },
+  {
+    "project": "sdk/translation/Azure.AI.Translation.Document/tests/Azure.AI.Translation.Document.Tests.csproj",
+    "excludedPackageId": "Azure.Storage.Blobs",
+    "condition": null,
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing exclusion when guardrail was introduced."
+  }
+]
+

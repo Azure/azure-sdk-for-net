@@ -52,6 +52,30 @@ steps:
       python eng/scripts/overrides/check_version_overrides.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/versionoverride.allowlist.json
     displayName: 'Verify VersionOverride allowlist (eng/overrides)'
 
+  - script: |
+      python eng/scripts/overrides/check_projectrefconversion_exclusions.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/projectrefconversion-exclusions.allowlist.json
+    displayName: 'Verify ProjectRef conversion exclusions allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_aot_optouts.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/aot-optouts.allowlist.json
+    displayName: 'Verify AOT opt-out allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_apicompat_baselines.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/apicompat-baselines.allowlist.json
+    displayName: 'Verify ApiCompatBaseline.txt allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_global_suppressions.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/global-suppressions.allowlist.json
+    displayName: 'Verify GlobalSuppressions.cs allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_nowarn_directory_overrides.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/nowarn-directory-overrides.allowlist.json
+    displayName: 'Verify Directory.Build.props NoWarn(AZC) allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_matrix_overrides.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/matrix-overrides.allowlist.json
+    displayName: 'Verify matrix overrides allowlist (eng/overrides)'
+
   - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
     parameters:
       PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'

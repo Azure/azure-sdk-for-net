@@ -1,0 +1,103 @@
+[
+  {
+    "file": "sdk/communication/Azure.Communication.Chat/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/core/Azure.Core/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/dynatrace/Azure.ResourceManager.Dynatrace/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/eventgrid/Azure.Messaging.EventGrid/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/identity/Azure.Identity/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/netapp/Azure.ResourceManager.NetApp/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/provisioning/Azure.Provisioning.RedisEnterprise/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/quota/Azure.ResourceManager.Quota/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/search/Azure.Search.Documents/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/servicebus/Azure.Messaging.ServiceBus/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/storage/Azure.Storage.Blobs/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/storage/Azure.Storage.Common/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/storage/Azure.Storage.Files.DataLake/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/storage/Azure.Storage.Files.Shares/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/storage/Azure.Storage.Queues/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/tables/Azure.Data.Tables/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  },
+  {
+    "file": "sdk/textanalytics/Azure.AI.TextAnalytics/src/ApiCompatBaseline.txt",
+    "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310",
+    "justification": "Existing ApiCompatBaseline.txt when guardrail was introduced."
+  }
+]
+

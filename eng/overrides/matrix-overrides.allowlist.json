@@ -1,0 +1,19 @@
+[
+  { "file": "sdk/communication/Azure.Communication.PhoneNumbers/tests.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/communication/Azure.Communication.PhoneNumbers/tests.yml", "key": "MatrixConfigs", "name": "PhoneNumbers_NET_matrix", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/core/ci.yml", "key": "TestDependsOnDependency", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/keyvault/tests.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/keyvault/tests.yml", "key": "MatrixConfigs", "name": "keyvault_test_matrix", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/resourcemanager/ci.mgmt.yml", "key": "TestDependsOnDependency", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.datamovement.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.datamovement.yml", "key": "MatrixConfigs", "name": "Storage_all_versions", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.functions.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.functions.yml", "key": "MatrixConfigs", "name": "Storage_all_versions", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.mgmt.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.mgmt.yml", "key": "MatrixConfigs", "name": "Storage_all_versions", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.virtualized.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.virtualized.yml", "key": "MatrixConfigs", "name": "Storage_virtualized", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.yml", "key": "MatrixConfigs", "name": null, "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." },
+  { "file": "sdk/storage/tests.yml", "key": "MatrixConfigs", "name": "Storage_all_versions", "tracking": "https://github.com/Azure/azure-sdk-for-net/issues/55310", "justification": "Existing matrix override when guardrail was introduced." }
+]
+

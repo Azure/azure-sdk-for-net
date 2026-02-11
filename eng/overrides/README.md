@@ -41,3 +41,81 @@ python3 eng/scripts/overrides/check_version_overrides.py --repoRoot . --searchPa
 
 2. Add (or update) the corresponding entry in `eng/overrides/versionoverride.allowlist.json` with tracking + justification.
 
+## `ExcludeFromProjectReferenceToConversion` allowlist
+
+- **Allowlist file**: `eng/overrides/projectrefconversion-exclusions.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_projectrefconversion_exclusions.py`
+- **What is checked**: any `ExcludeFromProjectReferenceToConversion` item in `sdk/**/*.csproj`, e.g.
+
+```xml
+<ExcludeFromProjectReferenceToConversion Include="Azure.Storage.Blobs" />
+```
+
+The PR pipeline fails if it finds an exclusion that is **not** present in the allowlist.
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_projectrefconversion_exclusions.py --repoRoot . --searchPath sdk --allowlist eng/overrides/projectrefconversion-exclusions.allowlist.json
+```
+
+## AOT opt-out allowlist
+
+- **Allowlist file**: `eng/overrides/aot-optouts.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_aot_optouts.py`
+- **What is checked**: `AotCompatOptOut` / `AotAnalyzersOptOut` set to `true` in MSBuild files under `sdk/` (e.g., `.csproj`, `Directory.Build.props`).
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_aot_optouts.py --repoRoot . --searchPath sdk --allowlist eng/overrides/aot-optouts.allowlist.json
+```
+
+## ApiCompatBaseline.txt allowlist
+
+- **Allowlist file**: `eng/overrides/apicompat-baselines.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_apicompat_baselines.py`
+- **What is checked**: presence of `ApiCompatBaseline.txt` files under `sdk/` (these act as baseline/suppression inputs for API compatibility checks).
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_apicompat_baselines.py --repoRoot . --searchPath sdk --allowlist eng/overrides/apicompat-baselines.allowlist.json
+```
+
+## GlobalSuppressions.cs allowlist
+
+- **Allowlist file**: `eng/overrides/global-suppressions.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_global_suppressions.py`
+- **What is checked**: presence of `GlobalSuppressions.cs` files under `sdk/`.
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_global_suppressions.py --repoRoot . --searchPath sdk --allowlist eng/overrides/global-suppressions.allowlist.json
+```
+
+## Directory.Build.props NoWarn(AZC) allowlist
+
+- **Allowlist file**: `eng/overrides/nowarn-directory-overrides.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_nowarn_directory_overrides.py`
+- **What is checked**: `AZC####` rule IDs present in `<NoWarn>...</NoWarn>` in `sdk/**/Directory.Build.props`.
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_nowarn_directory_overrides.py --repoRoot . --searchPath sdk --allowlist eng/overrides/nowarn-directory-overrides.allowlist.json
+```
+
+## Matrix overrides allowlist
+
+- **Allowlist file**: `eng/overrides/matrix-overrides.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_matrix_overrides.py`
+- **What is checked**: pipeline matrix-related keys in YAML under `sdk/` (currently `MatrixConfigs`, `AdditionalMatrixConfigs`, `TestDependsOnDependency`).
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_matrix_overrides.py --repoRoot . --searchPath sdk --allowlist eng/overrides/matrix-overrides.allowlist.json
+```
+
