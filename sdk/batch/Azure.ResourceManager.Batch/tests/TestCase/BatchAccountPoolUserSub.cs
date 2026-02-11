@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
 using Azure.ResourceManager.Resources;
@@ -37,8 +36,6 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             //1.Get
             var collection = userSub.GetBatchAccountPools();
             var name = Recording.GenerateAssetName("Pool-");
-            var name2 = Recording.GenerateAssetName("Pool-");
-            var name3 = Recording.GenerateAssetName("Pool-");
             var input = ResourceDataHelper.GetBatchAccountPoolData();
             var DiskEncryptionSetId = TestEnvironment.DiskEncryptionSetId;
 
