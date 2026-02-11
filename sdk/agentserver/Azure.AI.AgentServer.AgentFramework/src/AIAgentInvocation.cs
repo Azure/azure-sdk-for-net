@@ -104,7 +104,7 @@ public class AIAgentInvocation(
     {
         if (threadRepository != null)
         {
-            return await threadRepository.Get(context.ConversationId).ConfigureAwait(false);
+            return await threadRepository.Get(context.ConversationId, agent).ConfigureAwait(false);
         }
         return null;
     }

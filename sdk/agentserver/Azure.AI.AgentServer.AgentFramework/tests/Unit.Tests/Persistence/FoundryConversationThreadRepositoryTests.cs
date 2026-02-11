@@ -5,6 +5,7 @@ using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.Core;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
+using Moq;
 
 namespace Azure.AI.AgentServer.AgentFramework.Unit.Tests.Persistence;
 
@@ -46,6 +47,20 @@ public class FoundryConversationThreadRepositoryTests
 
         Assert.That(updated, Is.SameAs(replacement));
         Assert.That(updated, Is.Not.SameAs(first));
+    }
+
+    [Test]
+    public async Task Get_WithAgent_CreatesThreadUsingAgent()
+    {
+        var repository = CreateRepository();
+        var expectedThread = new TestAgentThread();
+        var agent = new Mock<AIAgent>();
+        agent.Setup(mock => mock.GetNewThread()).Returns(expectedThread);
+
+        var thread = await repository.Get("conv_with_agent", agent.Object).ConfigureAwait(false);
+
+        Assert.That(thread, Is.SameAs(expectedThread));
+        agent.Verify(mock => mock.GetNewThread(), Times.Once);
     }
 
     private static FoundryConversationThreadRepository CreateRepository()

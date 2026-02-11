@@ -41,7 +41,7 @@ public class FoundryConversationThreadRepository : IAgentThreadRepository
             return existingThread;
         }
 
-        var createdThread = await CreateThreadAsync(conversationId).ConfigureAwait(false);
+        var createdThread = await CreateThreadAsync(conversationId, agent).ConfigureAwait(false);
         if (_threads.TryAdd(conversationId, createdThread))
         {
             return createdThread;
@@ -60,10 +60,38 @@ public class FoundryConversationThreadRepository : IAgentThreadRepository
         return Task.CompletedTask;
     }
 
-    private async Task<AgentThread> CreateThreadAsync(string conversationId)
+    private async Task<AgentThread> CreateThreadAsync(string conversationId, AIAgent? agent)
     {
         var messageStore = new FoundryConversationMessageStore(_itemsClient, conversationId);
         var messages = await messageStore.GetMessagesAsync().ConfigureAwait(false);
+
+        // Agent threads must be created by the target agent to ensure compatibility.
+        if (agent is ChatClientAgent chatClientAgent)
+        {
+            var inMemoryMessageStore = new InMemoryChatMessageStore();
+            foreach (var message in messages)
+            {
+                inMemoryMessageStore.Add(message);
+            }
+
+            return chatClientAgent.GetNewThread(inMemoryMessageStore);
+        }
+
+        if (agent != null)
+        {
+            var agentThread = agent.GetNewThread();
+
+            if (agentThread is InMemoryAgentThread inMemoryAgentThread)
+            {
+                foreach (var message in messages)
+                {
+                    inMemoryAgentThread.MessageStore.Add(message);
+                }
+            }
+
+            return agentThread;
+        }
+
         return new FoundryConversationAgentThread(conversationId, messages);
     }
 }

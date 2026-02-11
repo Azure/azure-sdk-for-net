@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.8 (Unreleased)
+
+### Bugs Fixed
+
+- Fixed Foundry conversation thread hydration to create agent-owned threads for `AIAgent` invocations, preventing "thread is not compatible with the agent" failures on `/responses`.
+
 ## 1.0.0-beta.7 (2026-02-10)
 
 ### Features Added
