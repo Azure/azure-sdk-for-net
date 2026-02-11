@@ -13,7 +13,6 @@ namespace Azure.AI.Projects.OpenAI
     internal partial class Conversations
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Conversations for mocking. </summary>
         protected Conversations()
@@ -23,12 +22,10 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of Conversations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal Conversations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Conversations(ClientPipeline pipeline, Uri endpoint)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

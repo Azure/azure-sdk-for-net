@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Reasoning. </summary>
-    internal partial class InputItemReasoningItem : InputItem, IJsonModel<InputItemReasoningItem>
+    public partial class InputItemReasoningItem : InputItem, IJsonModel<InputItemReasoningItem>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemReasoningItem"/> for deserialization. </summary>
         internal InputItemReasoningItem()
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
-            foreach (Summary item in Summary)
+            foreach (InternalSummaryTextObject item in Summary)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -113,9 +113,9 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string encryptedContent = default;
-            IList<Summary> summary = default;
+            IList<InternalSummaryTextObject> summary = default;
             IList<ReasoningTextContent> content = default;
-            ItemReasoningItemStatus? status = default;
+            OutputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -140,10 +140,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<Summary> array = new List<Summary>();
+                    List<InternalSummaryTextObject> array = new List<InternalSummaryTextObject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OpenAI.Summary.DeserializeSummary(item, options));
+                        array.Add(InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
                     }
                     summary = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemReasoningItemStatus();
+                    status = prop.Value.GetString().ToOutputItemReasoningItemStatus();
                     continue;
                 }
                 if (options.Format != "W")

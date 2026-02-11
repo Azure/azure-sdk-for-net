@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> MCP tool call. </summary>
-    internal partial class InputItemMcpToolCall : InputItem
+    public partial class InputItemMcpToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the tool call. </param>

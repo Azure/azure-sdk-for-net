@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcomeParam"/> and <see cref="FunctionShellCallOutputExitOutcomeParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellCallOutputOutcomeParam))]
-    internal abstract partial class FunctionShellCallOutputOutcomeParam : IJsonModel<FunctionShellCallOutputOutcomeParam>
+    public abstract partial class FunctionShellCallOutputOutcomeParam : IJsonModel<FunctionShellCallOutputOutcomeParam>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputOutcomeParam"/> for deserialization. </summary>
         internal FunctionShellCallOutputOutcomeParam()

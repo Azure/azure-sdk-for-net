@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemReferenceParam"/>, <see cref="InputItemOutputMessage"/>, <see cref="InputItemFileSearchToolCall"/>, <see cref="InputItemComputerToolCall"/>, <see cref="InputItemComputerCallOutputItemParam"/>, <see cref="InputItemWebSearchToolCall"/>, <see cref="InputItemFunctionToolCall"/>, <see cref="InputItemFunctionCallOutputItemParam"/>, <see cref="InputItemReasoningItem"/>, <see cref="InputItemCompactionSummaryItemParam"/>, <see cref="InputItemImageGenToolCall"/>, <see cref="InputItemCodeInterpreterToolCall"/>, <see cref="InputItemLocalShellToolCall"/>, <see cref="InputItemLocalShellToolCallOutput"/>, <see cref="InputItemFunctionShellCallItemParam"/>, <see cref="InputItemFunctionShellCallOutputItemParam"/>, <see cref="InputItemApplyPatchToolCallItemParam"/>, <see cref="InputItemApplyPatchToolCallOutputItemParam"/>, <see cref="InputItemMcpListTools"/>, <see cref="InputItemMcpApprovalRequest"/>, <see cref="InputItemMcpApprovalResponse"/>, <see cref="InputItemMcpToolCall"/>, <see cref="InputItemCustomToolCallOutput"/>, and <see cref="InputItemCustomToolCall"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInputItem))]
-    internal abstract partial class InputItem : IJsonModel<InputItem>
+    public abstract partial class InputItem : IJsonModel<InputItem>
     {
         /// <summary> Initializes a new instance of <see cref="InputItem"/> for deserialization. </summary>
         internal InputItem()

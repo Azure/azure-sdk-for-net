@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell call timeout outcome. </summary>
-    internal partial class FunctionShellCallOutputTimeoutOutcomeParam : FunctionShellCallOutputOutcomeParam, IJsonModel<FunctionShellCallOutputTimeoutOutcomeParam>
+    public partial class FunctionShellCallOutputTimeoutOutcomeParam : FunctionShellCallOutputOutcomeParam, IJsonModel<FunctionShellCallOutputTimeoutOutcomeParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -86,10 +86,11 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200201);
             PipelineRequest request = message.Request;
-            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Content-Type", "application/merge-patch+json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 

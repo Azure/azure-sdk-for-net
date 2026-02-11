@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Function tool call. </summary>
-    internal partial class InputItemFunctionToolCall : InputItem, IJsonModel<InputItemFunctionToolCall>
+    public partial class InputItemFunctionToolCall : InputItem, IJsonModel<InputItemFunctionToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemFunctionToolCall"/> for deserialization. </summary>
         internal InputItemFunctionToolCall()
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects.OpenAI
             string callId = default;
             string name = default;
             string arguments = default;
-            ItemResourceFunctionToolCallResourceStatus? status = default;
+            OutputItemFunctionToolCallStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemResourceFunctionToolCallResourceStatus();
+                    status = prop.Value.GetString().ToOutputItemFunctionToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

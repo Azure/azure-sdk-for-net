@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell tool call output. </summary>
-    internal partial class InputItemFunctionShellCallOutputItemParam : InputItem, IJsonModel<InputItemFunctionShellCallOutputItemParam>
+    public partial class InputItemFunctionShellCallOutputItemParam : InputItem, IJsonModel<InputItemFunctionShellCallOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemFunctionShellCallOutputItemParam"/> for deserialization. </summary>
         internal InputItemFunctionShellCallOutputItemParam()

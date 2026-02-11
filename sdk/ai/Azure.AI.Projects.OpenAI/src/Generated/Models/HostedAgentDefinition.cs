@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerProtocolVersions"/>, <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
-        public HostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory) : base("hosted")
+        public HostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory) : base(AgentKind.Hosted)
         {
             Argument.AssertNotNull(containerProtocolVersions, nameof(containerProtocolVersions));
             Argument.AssertNotNull(cpu, nameof(cpu));
@@ -41,27 +41,15 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
-        internal HostedAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory, IDictionary<string, string> environmentVariables) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
+        internal HostedAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Tools = tools;
             ContainerProtocolVersions = containerProtocolVersions;
             Cpu = cpu;
             Memory = memory;
             EnvironmentVariables = environmentVariables;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="containerProtocolVersions"> The protocols that the agent supports for ingress communication of the containers. </param>
-        /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
-        /// <param name="memory"> The memory configuration for the hosted agent. </param>
-        private protected HostedAgentDefinition(AgentKind kind, IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory) : base(kind)
-        {
-            Tools = new ChangeTrackingList<AgentTool>();
-            ContainerProtocolVersions = containerProtocolVersions.ToList();
-            Cpu = cpu;
-            Memory = memory;
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            Image = image;
         }
 
         /// <summary>
@@ -81,5 +69,8 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Environment variables to set in the hosted agent container. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
+
+        /// <summary> The image ID for the agent, applicable to image-based hosted agents. </summary>
+        public string Image { get; set; }
     }
 }

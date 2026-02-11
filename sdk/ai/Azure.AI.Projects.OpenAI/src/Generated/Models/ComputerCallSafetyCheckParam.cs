@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> A pending safety check for the computer call. </summary>
-    internal partial class ComputerCallSafetyCheckParam
+    public partial class ComputerCallSafetyCheckParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The ID of the pending safety check. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> Gets or sets the Code. </summary>
         public string Code { get; set; }

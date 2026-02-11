@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(MemoryStoreDeleteScopeResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToSerialString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("scope"u8);
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @object = default;
+            MemoryStoreObjectType @object = default;
             string name = default;
             string scope = default;
             bool deleted = default;
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = prop.Value.GetString().ToMemoryStoreObjectType();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

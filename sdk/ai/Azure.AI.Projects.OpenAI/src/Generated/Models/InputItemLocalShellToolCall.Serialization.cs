@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Local shell call. </summary>
-    internal partial class InputItemLocalShellToolCall : InputItem, IJsonModel<InputItemLocalShellToolCall>
+    public partial class InputItemLocalShellToolCall : InputItem, IJsonModel<InputItemLocalShellToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemLocalShellToolCall"/> for deserialization. </summary>
         internal InputItemLocalShellToolCall()
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.OpenAI
             string id = default;
             string callId = default;
             LocalShellExecAction action = default;
-            ItemResourceLocalShellToolCallStatus status = default;
+            OutputItemLocalShellToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

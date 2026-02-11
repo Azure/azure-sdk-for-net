@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", initParameters, dataSchema, metrics, additionalBinaryDataProperties)
+        internal UnknownEvaluatorDefinition(EvaluatorDefinitionType @type, IDictionary<string, BinaryData> initParameters, IDictionary<string, BinaryData> dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", initParameters, dataSchema, metrics, additionalBinaryDataProperties)
         {
         }
     }

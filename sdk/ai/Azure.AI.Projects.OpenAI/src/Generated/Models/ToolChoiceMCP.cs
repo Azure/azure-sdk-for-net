@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> MCP tool. </summary>
-    public partial class ToolChoiceMCP : ToolChoiceParam
+    internal partial class ToolChoiceMCP : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server to use. </param>

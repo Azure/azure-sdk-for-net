@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
+    public partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/> for deserialization. </summary>
         internal InputItemComputerToolCall()
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects.OpenAI
             string callId = default;
             InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            ItemResourceComputerToolCallStatus status = default;
+            OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -137,7 +137,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceComputerToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

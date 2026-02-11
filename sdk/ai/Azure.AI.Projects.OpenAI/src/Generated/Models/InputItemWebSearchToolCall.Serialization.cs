@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Web search tool call. </summary>
-    internal partial class InputItemWebSearchToolCall : InputItem, IJsonModel<InputItemWebSearchToolCall>
+    public partial class InputItemWebSearchToolCall : InputItem, IJsonModel<InputItemWebSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/> for deserialization. </summary>
         internal InputItemWebSearchToolCall()
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceWebSearchToolCallStatus status = default;
+            OutputItemWebSearchToolCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceWebSearchToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemWebSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("action"u8))

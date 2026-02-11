@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> File search tool call. </summary>
-    internal partial class InputItemFileSearchToolCall : InputItem, IJsonModel<InputItemFileSearchToolCall>
+    public partial class InputItemFileSearchToolCall : InputItem, IJsonModel<InputItemFileSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemFileSearchToolCall"/> for deserialization. </summary>
         internal InputItemFileSearchToolCall()
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceFileSearchToolCallStatus status = default;
+            OutputItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
             IList<FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceFileSearchToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemFileSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("queries"u8))

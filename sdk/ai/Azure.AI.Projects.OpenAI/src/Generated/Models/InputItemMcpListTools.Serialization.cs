@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> MCP list tools. </summary>
-    internal partial class InputItemMcpListTools : InputItem, IJsonModel<InputItemMcpListTools>
+    public partial class InputItemMcpListTools : InputItem, IJsonModel<InputItemMcpListTools>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpListTools"/> for deserialization. </summary>
         internal InputItemMcpListTools()

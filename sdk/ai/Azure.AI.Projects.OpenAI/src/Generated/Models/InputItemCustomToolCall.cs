@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Custom tool call. </summary>
-    internal partial class InputItemCustomToolCall : InputItem
+    public partial class InputItemCustomToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCustomToolCall"/>. </summary>
         /// <param name="callId"> An identifier used to map this custom tool call to a tool call output. </param>

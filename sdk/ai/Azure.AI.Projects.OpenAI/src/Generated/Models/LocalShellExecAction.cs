@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Local shell exec action. </summary>
-    internal partial class LocalShellExecAction
+    public partial class LocalShellExecAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The type of the local shell action. Always `exec`. </summary>
-        internal string Type { get; } = "exec";
+        public string Type { get; } = "exec";
 
         /// <summary> The command to run. </summary>
         public IList<string> Command { get; }

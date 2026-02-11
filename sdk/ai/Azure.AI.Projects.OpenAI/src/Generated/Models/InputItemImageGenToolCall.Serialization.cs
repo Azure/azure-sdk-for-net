@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Image generation call. </summary>
-    internal partial class InputItemImageGenToolCall : InputItem, IJsonModel<InputItemImageGenToolCall>
+    public partial class InputItemImageGenToolCall : InputItem, IJsonModel<InputItemImageGenToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemImageGenToolCall"/> for deserialization. </summary>
         internal InputItemImageGenToolCall()
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceImageGenToolCallStatus status = default;
+            OutputItemImageGenToolCallStatus status = default;
             string result = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceImageGenToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemImageGenToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("result"u8))

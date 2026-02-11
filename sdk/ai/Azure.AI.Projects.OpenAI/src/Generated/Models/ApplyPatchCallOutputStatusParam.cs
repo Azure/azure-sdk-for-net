@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Outcome values reported for apply_patch tool call outputs. </summary>
-    internal enum ApplyPatchCallOutputStatusParam
+    public enum ApplyPatchCallOutputStatusParam
     {
         /// <summary> Completed. </summary>
         Completed,

@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell action. </summary>
-    internal partial class FunctionShellActionParam
+    public partial class FunctionShellActionParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

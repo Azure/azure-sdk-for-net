@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(InternalAgentObject)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToSerialString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
@@ -110,7 +110,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @object = default;
+            AgentObjectType @object = default;
             string id = default;
             string name = default;
             AgentObjectVersions versions = default;
@@ -119,7 +119,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = prop.Value.GetString().ToAgentObjectType();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

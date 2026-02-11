@@ -57,29 +57,51 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(InitParameters))
+            if (Optional.IsCollectionDefined(InitParameters))
             {
                 writer.WritePropertyName("init_parameters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(InitParameters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(InitParameters))
+                writer.WriteStartObject();
+                foreach (var item in InitParameters)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DataSchema))
+            if (Optional.IsCollectionDefined(DataSchema))
             {
                 writer.WritePropertyName("data_schema"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(DataSchema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(DataSchema))
+                writer.WriteStartObject();
+                foreach (var item in DataSchema)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Metrics))
             {

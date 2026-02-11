@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell call timeout outcome. </summary>
-    internal partial class FunctionShellCallOutputTimeoutOutcomeParam : FunctionShellCallOutputOutcomeParam
+    public partial class FunctionShellCallOutputTimeoutOutcomeParam : FunctionShellCallOutputOutcomeParam
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputTimeoutOutcomeParam"/>. </summary>
         public FunctionShellCallOutputTimeoutOutcomeParam() : base(FunctionShellCallOutputOutcomeParamType.Timeout)

@@ -1,5 +1,5 @@
 repo: Azure/azure-rest-api-specs
-commit: 4ab38ce3f942f44e941c9f1f4aad2bcaa2aea1ff
+commit: c76b572acf6f4ff6d7a6fb857a319985ccba1fc7
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-projects-openai
 entrypointFile: client.tsp
 additionalDirectories:

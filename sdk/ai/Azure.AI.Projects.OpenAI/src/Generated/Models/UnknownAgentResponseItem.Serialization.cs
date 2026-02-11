@@ -81,7 +81,6 @@ namespace Azure.AI.Projects.OpenAI
             }
             AgentResponseItemKind @type = default;
             string id = default;
-            AgentItemSource itemSource = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -95,15 +94,6 @@ namespace Azure.AI.Projects.OpenAI
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("created_by"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -125,13 +115,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownAgentResponseItem(
-                @type,
-                id,
-                itemSource,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties);
+            return new UnknownAgentResponseItem(@type, id, agentReference, responseId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

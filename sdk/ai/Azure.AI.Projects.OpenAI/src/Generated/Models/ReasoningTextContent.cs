@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> ReasoningTextContent. </summary>
-    internal partial class ReasoningTextContent
+    public partial class ReasoningTextContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,9 +35,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The type of the reasoning text. Always `reasoning_text`. </summary>
-        internal string Type { get; } = "reasoning_text";
+        public string Type { get; } = "reasoning_text";
 
         /// <summary> The reasoning text from the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

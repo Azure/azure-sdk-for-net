@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.OpenAI
     /// as well as previous assistant responses and tool call outputs.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemReferenceParam"/>, <see cref="InputItemOutputMessage"/>, <see cref="InputItemFileSearchToolCall"/>, <see cref="InputItemComputerToolCall"/>, <see cref="InputItemComputerCallOutputItemParam"/>, <see cref="InputItemWebSearchToolCall"/>, <see cref="InputItemFunctionToolCall"/>, <see cref="InputItemFunctionCallOutputItemParam"/>, <see cref="InputItemReasoningItem"/>, <see cref="InputItemCompactionSummaryItemParam"/>, <see cref="InputItemImageGenToolCall"/>, <see cref="InputItemCodeInterpreterToolCall"/>, <see cref="InputItemLocalShellToolCall"/>, <see cref="InputItemLocalShellToolCallOutput"/>, <see cref="InputItemFunctionShellCallItemParam"/>, <see cref="InputItemFunctionShellCallOutputItemParam"/>, <see cref="InputItemApplyPatchToolCallItemParam"/>, <see cref="InputItemApplyPatchToolCallOutputItemParam"/>, <see cref="InputItemMcpListTools"/>, <see cref="InputItemMcpApprovalRequest"/>, <see cref="InputItemMcpApprovalResponse"/>, <see cref="InputItemMcpToolCall"/>, <see cref="InputItemCustomToolCallOutput"/>, and <see cref="InputItemCustomToolCall"/>.
     /// </summary>
-    internal abstract partial class InputItem
+    public abstract partial class InputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

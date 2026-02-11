@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> The FileSearchToolCallResults. </summary>
-    internal partial class FileSearchToolCallResults
+    public partial class FileSearchToolCallResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

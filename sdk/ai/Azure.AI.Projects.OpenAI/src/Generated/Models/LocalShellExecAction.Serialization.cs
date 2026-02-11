@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Local shell exec action. </summary>
-    internal partial class LocalShellExecAction : IJsonModel<LocalShellExecAction>
+    public partial class LocalShellExecAction : IJsonModel<LocalShellExecAction>
     {
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/> for deserialization. </summary>
         internal LocalShellExecAction()

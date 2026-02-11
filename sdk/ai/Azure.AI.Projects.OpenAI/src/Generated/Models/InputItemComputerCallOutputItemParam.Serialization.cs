@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Computer tool call output. </summary>
-    internal partial class InputItemComputerCallOutputItemParam : InputItem, IJsonModel<InputItemComputerCallOutputItemParam>
+    public partial class InputItemComputerCallOutputItemParam : InputItem, IJsonModel<InputItemComputerCallOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerCallOutputItemParam"/> for deserialization. </summary>
         internal InputItemComputerCallOutputItemParam()

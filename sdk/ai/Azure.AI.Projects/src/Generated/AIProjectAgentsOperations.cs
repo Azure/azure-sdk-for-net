@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,6 +35,218 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary>
+        /// [Protocol Method] Creates the agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult CreateAgent(BinaryContent content, BinaryData foundryFeatures = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates the agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, BinaryData foundryFeatures = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Creates the agent. </summary>
+        /// <param name="name">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<InternalAgentObject> CreateAgent(string name, InternalAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, BinaryData foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentRequest1 spreadModel = new CreateAgentRequest1(name, metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, default);
+            ClientResult result = CreateAgent(spreadModel, foundryFeatures, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((InternalAgentObject)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates the agent. </summary>
+        /// <param name="name">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<InternalAgentObject>> CreateAgentAsync(string name, InternalAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, BinaryData foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentRequest1 spreadModel = new CreateAgentRequest1(name, metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, default);
+            ClientResult result = await CreateAgentAsync(spreadModel, foundryFeatures, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((InternalAgentObject)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the agent by adding a new version if there are any changes to the agent definition.
+        /// If no changes, returns the existing agent version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, BinaryData foundryFeatures = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the agent by adding a new version if there are any changes to the agent definition.
+        /// If no changes, returns the existing agent version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, BinaryData foundryFeatures = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Updates the agent by adding a new version if there are any changes to the agent definition.
+        /// If no changes, returns the existing agent version.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<InternalAgentObject> UpdateAgent(string agentName, InternalAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, BinaryData foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            UpdateAgentRequest1 spreadModel = new UpdateAgentRequest1(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, default);
+            ClientResult result = UpdateAgent(agentName, spreadModel, foundryFeatures, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((InternalAgentObject)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Updates the agent by adding a new version if there are any changes to the agent definition.
+        /// If no changes, returns the existing agent version.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<InternalAgentObject>> UpdateAgentAsync(string agentName, InternalAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, BinaryData foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            UpdateAgentRequest1 spreadModel = new UpdateAgentRequest1(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, default);
+            ClientResult result = await UpdateAgentAsync(agentName, spreadModel, foundryFeatures, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((InternalAgentObject)result, result.GetRawResponse());
+        }
 
         /// <summary>
         /// [Protocol Method] Returns the list of all agents.
@@ -117,6 +330,120 @@ namespace Azure.AI.Projects
                 after,
                 before,
                 options);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new agent version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, BinaryData foundryFeatures = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new agent version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, BinaryData foundryFeatures = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Create a new agent version. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<InternalAgentVersionObject> CreateAgentVersion(string agentName, InternalAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, BinaryData foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentVersionRequest spreadModel = new CreateAgentVersionRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, default);
+            ClientResult result = CreateAgentVersion(agentName, spreadModel, foundryFeatures, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((InternalAgentVersionObject)result, result.GetRawResponse());
+        }
+
+        /// <summary> Create a new agent version. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<InternalAgentVersionObject>> CreateAgentVersionAsync(string agentName, InternalAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, BinaryData foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentVersionRequest spreadModel = new CreateAgentVersionRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, default);
+            ClientResult result = await CreateAgentVersionAsync(agentName, spreadModel, foundryFeatures, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((InternalAgentVersionObject)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -209,152 +536,6 @@ namespace Azure.AI.Projects
                 after,
                 before,
                 options);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Container log entry streamed from the container as text chunks.
-        /// Each chunk is a UTF-8 string that may be either a plain text log line
-        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
-        /// Clients should treat each chunk as opaque text and, if needed, attempt
-        /// to parse it as JSON based on their logging requirements.
-        /// For system logs, the format is JSON with the following structure:
-        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
-        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
-        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
-        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
-        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent. </param>
-        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
-        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
-        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult StreamAgentContainerLogs(string agentName, string agentVersion, string kind, string replicaName, int? tail, RequestOptions options)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
-
-            using PipelineMessage message = CreateStreamAgentContainerLogsRequest(agentName, agentVersion, kind, replicaName, tail, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Container log entry streamed from the container as text chunks.
-        /// Each chunk is a UTF-8 string that may be either a plain text log line
-        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
-        /// Clients should treat each chunk as opaque text and, if needed, attempt
-        /// to parse it as JSON based on their logging requirements.
-        /// For system logs, the format is JSON with the following structure:
-        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
-        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
-        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
-        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
-        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent. </param>
-        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
-        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
-        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> StreamAgentContainerLogsAsync(string agentName, string agentVersion, string kind, string replicaName, int? tail, RequestOptions options)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
-
-            using PipelineMessage message = CreateStreamAgentContainerLogsRequest(agentName, agentVersion, kind, replicaName, tail, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary>
-        /// Container log entry streamed from the container as text chunks.
-        /// Each chunk is a UTF-8 string that may be either a plain text log line
-        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
-        /// Clients should treat each chunk as opaque text and, if needed, attempt
-        /// to parse it as JSON based on their logging requirements.
-        /// For system logs, the format is JSON with the following structure:
-        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
-        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
-        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
-        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
-        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent. </param>
-        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
-        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
-        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult StreamAgentContainerLogs(string agentName, string agentVersion, ContainerLogKind? kind = default, string replicaName = default, int? tail = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
-
-            return StreamAgentContainerLogs(agentName, agentVersion, kind?.ToSerialString(), replicaName, tail, cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary>
-        /// Container log entry streamed from the container as text chunks.
-        /// Each chunk is a UTF-8 string that may be either a plain text log line
-        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
-        /// Clients should treat each chunk as opaque text and, if needed, attempt
-        /// to parse it as JSON based on their logging requirements.
-        /// For system logs, the format is JSON with the following structure:
-        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
-        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
-        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
-        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
-        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
-        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
-        /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent. </param>
-        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
-        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
-        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> StreamAgentContainerLogsAsync(string agentName, string agentVersion, ContainerLogKind? kind = default, string replicaName = default, int? tail = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
-
-            return await StreamAgentContainerLogsAsync(agentName, agentVersion, kind?.ToSerialString(), replicaName, tail, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

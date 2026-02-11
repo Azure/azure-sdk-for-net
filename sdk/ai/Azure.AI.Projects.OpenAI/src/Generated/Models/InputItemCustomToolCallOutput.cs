@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Custom tool call output. </summary>
-    internal partial class InputItemCustomToolCallOutput : InputItem
+    public partial class InputItemCustomToolCallOutput : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCustomToolCallOutput"/>. </summary>
         /// <param name="callId"> The call ID, used to map this custom tool call output to a custom tool call. </param>

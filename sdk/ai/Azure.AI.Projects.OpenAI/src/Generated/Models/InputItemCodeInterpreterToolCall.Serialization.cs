@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Code interpreter tool call. </summary>
-    internal partial class InputItemCodeInterpreterToolCall : InputItem, IJsonModel<InputItemCodeInterpreterToolCall>
+    public partial class InputItemCodeInterpreterToolCall : InputItem, IJsonModel<InputItemCodeInterpreterToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCodeInterpreterToolCall"/> for deserialization. </summary>
         internal InputItemCodeInterpreterToolCall()
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemResourceCodeInterpreterToolCallStatus status = default;
+            OutputItemCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
             IList<BinaryData> outputs = default;
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemResourceCodeInterpreterToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemCodeInterpreterToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("container_id"u8))

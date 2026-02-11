@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Local shell call output. </summary>
-    internal partial class InputItemLocalShellToolCallOutput : InputItem, IJsonModel<InputItemLocalShellToolCallOutput>
+    public partial class InputItemLocalShellToolCallOutput : InputItem, IJsonModel<InputItemLocalShellToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemLocalShellToolCallOutput"/> for deserialization. </summary>
         internal InputItemLocalShellToolCallOutput()
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string output = default;
-            ItemResourceLocalShellToolCallOutputStatus? status = default;
+            ItemLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.OpenAI
                         status = null;
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemResourceLocalShellToolCallOutputStatus();
+                    status = prop.Value.GetString().ToItemLocalShellToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

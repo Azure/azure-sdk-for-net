@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalFileSearchTool : AgentTool
     {

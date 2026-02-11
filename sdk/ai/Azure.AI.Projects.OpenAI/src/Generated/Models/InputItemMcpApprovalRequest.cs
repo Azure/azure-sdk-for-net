@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> MCP approval request. </summary>
-    internal partial class InputItemMcpApprovalRequest : InputItem
+    public partial class InputItemMcpApprovalRequest : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpApprovalRequest"/>. </summary>
         /// <param name="id"> The unique ID of the approval request. </param>
