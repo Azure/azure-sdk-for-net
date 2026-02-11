@@ -152,7 +152,7 @@
 # ServiceOwners:                                                   @bowgong @mengaims
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
