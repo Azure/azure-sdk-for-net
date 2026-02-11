@@ -30,9 +30,10 @@ extends:
     - name: Azure.GeneratorAgent
       safeName: AzureGeneratorAgent
     MatrixConfigs:
-    - Name: NET10_Only
-      Path: eng/pipelines/templates/stages/platform-matrix.json
-      Selection: sparse
+    - Name: NET10_Only_Custom
+      Matrix:
+        Windows_NET10:
+          Pool: env:WINDOWSPOOL
+          OSVmImage: env:WINDOWSVMIMAGE
+          TestTargetFramework: net10.0
       GenerateVMJobs: true
-    MatrixFilters:
-    - TestTargetFramework=net10.0
