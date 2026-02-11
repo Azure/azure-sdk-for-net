@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a managed identity. </summary>

@@ -15,6 +15,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DevTestLabs
 {
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetApplicableAsync", typeof(CancellationToken))]

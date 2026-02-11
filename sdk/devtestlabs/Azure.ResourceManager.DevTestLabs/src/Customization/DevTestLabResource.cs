@@ -18,6 +18,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DevTestLabs
 {
     // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetDevTestLabServiceFabricSchedules")]
