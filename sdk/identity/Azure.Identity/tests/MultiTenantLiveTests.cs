@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Net;
 
 namespace Azure.Identity.Tests
 {

@@ -48,7 +48,12 @@ namespace BasicTypeSpec
         /// <param name="anotherModel"></param>
         /// <param name="modelsWithNamespaces"></param>
         /// <param name="unwrappedModelsWithNamespaces"></param>
-        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IEnumerable<string> unwrappedStrings, IEnumerable<int> unwrappedCounts, IEnumerable<XmlItem> unwrappedItems, IEnumerable<string> wrappedColors, IEnumerable<XmlItem> items, XmlNestedModel nestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, string label, int daysUsed, IEnumerable<string> fooItems, XmlNestedModel anotherModel, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces)
+        /// <param name="listOfListFoo"></param>
+        /// <param name="dictionaryFoo"></param>
+        /// <param name="dictionaryOfDictionaryFoo"></param>
+        /// <param name="dictionaryListFoo"></param>
+        /// <param name="listOfDictionaryFoo"></param>
+        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IEnumerable<string> unwrappedStrings, IEnumerable<int> unwrappedCounts, IEnumerable<XmlItem> unwrappedItems, IEnumerable<string> wrappedColors, IEnumerable<XmlItem> items, XmlNestedModel nestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, string label, int daysUsed, IEnumerable<string> fooItems, XmlNestedModel anotherModel, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IEnumerable<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo)
         {
             Name = name;
             Age = age;
@@ -80,6 +85,11 @@ namespace BasicTypeSpec
             AnotherModel = anotherModel;
             ModelsWithNamespaces = modelsWithNamespaces.ToList();
             UnwrappedModelsWithNamespaces = unwrappedModelsWithNamespaces.ToList();
+            ListOfListFoo = listOfListFoo.ToList();
+            DictionaryFoo = dictionaryFoo;
+            DictionaryOfDictionaryFoo = dictionaryOfDictionaryFoo;
+            DictionaryListFoo = dictionaryListFoo;
+            ListOfDictionaryFoo = listOfDictionaryFoo.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="XmlAdvancedModel"/>. </summary>
@@ -118,8 +128,13 @@ namespace BasicTypeSpec
         /// <param name="anotherModel"></param>
         /// <param name="modelsWithNamespaces"></param>
         /// <param name="unwrappedModelsWithNamespaces"></param>
+        /// <param name="listOfListFoo"></param>
+        /// <param name="dictionaryFoo"></param>
+        /// <param name="dictionaryOfDictionaryFoo"></param>
+        /// <param name="dictionaryListFoo"></param>
+        /// <param name="listOfDictionaryFoo"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IList<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IList<IDictionary<string, XmlItem>> listOfDictionaryFoo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Age = age;
@@ -156,6 +171,11 @@ namespace BasicTypeSpec
             AnotherModel = anotherModel;
             ModelsWithNamespaces = modelsWithNamespaces;
             UnwrappedModelsWithNamespaces = unwrappedModelsWithNamespaces;
+            ListOfListFoo = listOfListFoo;
+            DictionaryFoo = dictionaryFoo;
+            DictionaryOfDictionaryFoo = dictionaryOfDictionaryFoo;
+            DictionaryListFoo = dictionaryListFoo;
+            ListOfDictionaryFoo = listOfDictionaryFoo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -303,5 +323,20 @@ namespace BasicTypeSpec
 
         /// <summary> Gets the UnwrappedModelsWithNamespaces. </summary>
         public IList<XmlModelWithNamespace> UnwrappedModelsWithNamespaces { get; }
+
+        /// <summary> Gets the ListOfListFoo. </summary>
+        public IList<IList<XmlItem>> ListOfListFoo { get; }
+
+        /// <summary> Gets the DictionaryFoo. </summary>
+        public IDictionary<string, XmlItem> DictionaryFoo { get; }
+
+        /// <summary> Gets the DictionaryOfDictionaryFoo. </summary>
+        public IDictionary<string, IDictionary<string, XmlItem>> DictionaryOfDictionaryFoo { get; }
+
+        /// <summary> Gets the DictionaryListFoo. </summary>
+        public IDictionary<string, IList<XmlItem>> DictionaryListFoo { get; }
+
+        /// <summary> Gets the ListOfDictionaryFoo. </summary>
+        public IList<IDictionary<string, XmlItem>> ListOfDictionaryFoo { get; }
     }
 }

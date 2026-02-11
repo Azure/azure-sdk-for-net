@@ -19,6 +19,8 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 
         protected override Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Siamese(Response response) => throw null;
 
         void IJsonModel<Siamese>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Model.Inheritance.NotDiscriminated
         protected override Pet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Siamese>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Siamese IPersistableModel<Siamese>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
