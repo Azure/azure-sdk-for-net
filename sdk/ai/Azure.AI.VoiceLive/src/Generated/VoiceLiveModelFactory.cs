@@ -392,6 +392,7 @@ namespace Azure.AI.VoiceLive
                 allowedTools.ToList(),
                 requireApproval);
         }
+
         /// <summary> The definition of a Foundry agent tool as used by the voicelive endpoint. </summary>
         /// <param name="agentName"> The name of the Foundry agent to call. </param>
         /// <param name="agentVersion"> The version of the Foundry agent to call. </param>
@@ -416,8 +417,6 @@ namespace Azure.AI.VoiceLive
                 agentContextType,
                 returnAgentResponseDirectly);
         }
-
-
 
         /// <summary>
         /// Configuration for basic/static filler response generation.
@@ -902,7 +901,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="VoiceLive.SessionResponseMcpListToolItem"/>, <see cref="VoiceLive.SessionResponseMcpCallItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalRequestItem"/>, and <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="VoiceLive.SessionResponseMcpListToolItem"/>, <see cref="VoiceLive.SessionResponseMcpCallItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalRequestItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/>, and <see cref="VoiceLive.SessionResponseFoundryAgentCallItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -1117,7 +1116,30 @@ namespace Azure.AI.VoiceLive
                 reason);
         }
 
-
+        /// <summary> A response item that represents a call to a Foundry agent. </summary>
+        /// <param name="id"></param>
+        /// <param name="object"></param>
+        /// <param name="name"> The name of the Foundry agent. </param>
+        /// <param name="callId"> The ID of the call. </param>
+        /// <param name="arguments"> The arguments for the agent call. </param>
+        /// <param name="agentResponseId"> The ID of the agent response, if any. </param>
+        /// <param name="output"> The output of the agent call. </param>
+        /// <param name="error"> The error, if any, from the agent call. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionResponseFoundryAgentCallItem"/> instance for mocking. </returns>
+        public static SessionResponseFoundryAgentCallItem SessionResponseFoundryAgentCallItem(string id = default, string @object = default, string name = default, string callId = default, string arguments = default, string agentResponseId = default, string output = default, BinaryData error = default)
+        {
+            return new SessionResponseFoundryAgentCallItem(
+                ItemType.FoundryAgentCall,
+                id,
+                @object,
+                additionalBinaryDataProperties: null,
+                name,
+                callId,
+                arguments,
+                agentResponseId,
+                output,
+                error);
+        }
 
         /// <summary> Overall usage statistics for a response. </summary>
         /// <param name="totalTokens"> Total number of tokens (input + output). </param>
@@ -1176,7 +1198,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, and <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted"/>, and <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallFailed"/>.
         /// </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
@@ -1949,7 +1971,80 @@ namespace Azure.AI.VoiceLive
             return new SessionUpdateResponseMcpCallFailed(ServerEventType.ResponseMcpCallFailed, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
         }
 
+        /// <summary> Represents a delta update of the arguments for a Foundry agent call. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="delta"> The delta of the arguments. </param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="responseId"> The ID of the response associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallArgumentsDelta SessionUpdateResponseFoundryAgentCallArgumentsDelta(string eventId = default, string delta = default, string itemId = default, string responseId = default, int outputIndex = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallArgumentsDelta(
+                ServerEventType.ResponseFoundryAgentCallArgumentsDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                delta,
+                itemId,
+                responseId,
+                outputIndex);
+        }
 
+        /// <summary> Indicates the completion of the arguments for a Foundry agent call. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="responseId"> The ID of the response associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <param name="arguments"> The full arguments for the agent call. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallArgumentsDone SessionUpdateResponseFoundryAgentCallArgumentsDone(string eventId = default, string itemId = default, string responseId = default, int outputIndex = default, string arguments = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallArgumentsDone(
+                ServerEventType.ResponseFoundryAgentCallArgumentsDone,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                responseId,
+                outputIndex,
+                arguments);
+        }
+
+        /// <summary> Indicates the Foundry agent call is in progress. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <param name="agentResponseId"> The ID of the agent response, if any. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallInProgress SessionUpdateResponseFoundryAgentCallInProgress(string eventId = default, string itemId = default, int outputIndex = default, string agentResponseId = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallInProgress(
+                ServerEventType.ResponseFoundryAgentCallInProgress,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                outputIndex,
+                agentResponseId);
+        }
+
+        /// <summary> Indicates the Foundry agent call has completed. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallCompleted SessionUpdateResponseFoundryAgentCallCompleted(string eventId = default, string itemId = default, int outputIndex = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallCompleted(ServerEventType.ResponseFoundryAgentCallCompleted, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
+        }
+
+        /// <summary> Indicates the Foundry agent call has failed. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item associated with the event. </param>
+        /// <param name="outputIndex"> The index of the output associated with the event. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFoundryAgentCallFailed"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFoundryAgentCallFailed SessionUpdateResponseFoundryAgentCallFailed(string eventId = default, string itemId = default, int outputIndex = default)
+        {
+            return new SessionUpdateResponseFoundryAgentCallFailed(ServerEventType.ResponseFoundryAgentCallFailed, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
+        }
 
         /// <summary> Base for session configuration shared between request and response. </summary>
         /// <param name="model"> The model for the session. </param>
