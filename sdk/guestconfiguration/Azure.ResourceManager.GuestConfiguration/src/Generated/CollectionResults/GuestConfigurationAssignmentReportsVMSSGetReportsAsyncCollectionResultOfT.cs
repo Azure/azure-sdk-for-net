@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _vmssName;
-        private readonly string _guestConfigurationAssignmentName;
+        private readonly string _name;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportsVMSSGetReportsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmssName"> The name of the virtual machine scale set. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationAssignmentReportsVMSSGetReportsAsyncCollectionResultOfT(GuestConfigurationAssignmentReportsVMSS client, string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public GuestConfigurationAssignmentReportsVMSSGetReportsAsyncCollectionResultOfT(GuestConfigurationAssignmentReportsVMSS client, string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _vmssName = vmssName;
-            _guestConfigurationAssignmentName = guestConfigurationAssignmentName;
+            _name = name;
             _context = context;
         }
 
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _vmssName, _guestConfigurationAssignmentName, _context) : _client.CreateGetReportsRequest(_subscriptionId, _resourceGroupName, _vmssName, _guestConfigurationAssignmentName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.GetReportsVmss");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _vmssName, _name, _context) : _client.CreateGetReportsRequest(_subscriptionId, _resourceGroupName, _vmssName, _name, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
             scope.Start();
             try
             {

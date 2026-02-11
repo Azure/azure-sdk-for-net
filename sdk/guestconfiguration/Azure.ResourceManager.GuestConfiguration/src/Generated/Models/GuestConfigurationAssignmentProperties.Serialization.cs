@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsCollectionDefined(VmssVMList))
+            if (Optional.IsCollectionDefined(VmssVmList))
             {
                 writer.WritePropertyName("vmssVMList"u8);
                 writer.WriteStartArray();
-                foreach (GuestConfigurationVmssVmInfo item in VmssVMList)
+                foreach (GuestConfigurationVmssVmInfo item in VmssVmList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,14 +146,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationNavigation guestConfiguration = default;
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
             DateTimeOffset? lastComplianceStatusCheckedOn = default;
-            string latestReportId = default;
+            ResourceIdentifier latestReportId = default;
             string parameterHash = default;
             GuestConfigurationAssignmentReportInfo latestAssignmentReport = default;
             string context = default;
             string assignmentHash = default;
             GuestConfigurationProvisioningState? provisioningState = default;
             string resourceType = default;
-            IList<GuestConfigurationVmssVmInfo> vmssVMList = default;
+            IList<GuestConfigurationVmssVmInfo> vmssVmList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,10 +199,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        latestReportId = null;
                         continue;
                     }
-                    latestReportId = prop.Value.GetString();
+                    latestReportId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameterHash"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item, options));
                     }
-                    vmssVMList = array;
+                    vmssVmList = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 assignmentHash,
                 provisioningState,
                 resourceType,
-                vmssVMList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
+                vmssVmList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
                 additionalBinaryDataProperties);
         }
 

@@ -40,10 +40,17 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
+            var seenResourceNames = new HashSet<string>();
 
-            // Build methods for extension resources
+            // Build methods for extension resources, deduplicating by resource name
+            // to avoid duplicate methods when parameterized scopes map multiple parents to the same resource type
             foreach (var resource in _resources)
             {
+                if (!seenResourceNames.Add(resource.Name))
+                {
+                    continue;
+                }
+
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
                 if (resource.IsExtensionResource)
                 {

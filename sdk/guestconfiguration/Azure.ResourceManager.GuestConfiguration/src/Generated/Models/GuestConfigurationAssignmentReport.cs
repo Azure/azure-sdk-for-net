@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="properties"> Properties of the guest configuration report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReport(string id, string name, GuestConfigurationAssignmentReportProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReport(ResourceIdentifier id, string name, GuestConfigurationAssignmentReportProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
         [WirePath("name")]

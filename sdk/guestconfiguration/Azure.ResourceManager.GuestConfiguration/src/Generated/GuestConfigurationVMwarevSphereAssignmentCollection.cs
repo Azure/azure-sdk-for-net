@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     {
         private readonly ClientDiagnostics _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics;
         private readonly GuestConfigurationConnectedVMwarevSphereAssignments _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics;
+        private readonly GuestConfigurationConnectedVMwarevSphereAssignmentsReports _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient;
         /// <summary> The vmName. </summary>
         private readonly string _vmName;
 
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             _vmName = vmName;
             _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

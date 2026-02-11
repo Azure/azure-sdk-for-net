@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
-                writer.WriteStringValue(Uuid);
+                writer.WriteStringValue(Uuid.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -86,19 +87,27 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            string id = default;
-            string uuid = default;
+            ResourceIdentifier id = default;
+            Guid? uuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("uuid"u8))
                 {
-                    uuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

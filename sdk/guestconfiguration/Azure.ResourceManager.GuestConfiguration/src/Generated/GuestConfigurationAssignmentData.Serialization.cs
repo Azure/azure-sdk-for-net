@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -79,9 +74,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GuestConfigurationAssignmentProperties properties = default;
-            SystemData systemData = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -107,15 +102,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("systemData"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -123,6 +109,15 @@ namespace Azure.ResourceManager.GuestConfiguration
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,9 +129,9 @@ namespace Azure.ResourceManager.GuestConfiguration
                 id,
                 name,
                 resourceType,
+                systemData,
                 additionalBinaryDataProperties,
-                properties,
-                systemData);
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

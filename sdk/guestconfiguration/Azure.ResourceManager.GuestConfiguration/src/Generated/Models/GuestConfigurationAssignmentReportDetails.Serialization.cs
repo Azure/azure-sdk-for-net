@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
-                writer.WriteStringValue(JobId);
+                writer.WriteStringValue(JobId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            string jobId = default;
+            Guid? jobId = default;
             GuestConfigurationAssignmentReportType? operationType = default;
             IReadOnlyList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("jobId"u8))
                 {
-                    jobId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("operationType"u8))

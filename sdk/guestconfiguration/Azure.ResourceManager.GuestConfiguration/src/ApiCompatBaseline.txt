@@ -1,0 +1,21 @@
+# Baseline for API compatibility errors that cannot be resolved with custom code during TypeSpec migration.
+
+# GuestConfigurationAssignmentData inherits from ResourceData in new generated code, not GuestConfigurationResourceData.
+# We provide GuestConfigurationResourceData as a standalone type but cannot change the generated inheritance chain.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData' does not inherit from base type 'Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData' in the implementation but it does in the contract.
+
+# GuestConfigurationResourceData was previously a generated model with JSON serialization support.
+# The custom shim does not implement IJsonModel as it is only provided for type existence compatibility.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData' does not implement interface 'System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>' in the implementation but it does in the contract.
+MembersMustExist : Member 'protected void Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter, System.ClientModel.Primitives.ModelReaderWriterOptions)' does not exist in the implementation but it does exist in the contract.
+
+# VM and HCRP GetReports/GetReportsAsync methods changed return type from Pageable<Report> to Response<ReportList>.
+# Cannot add overloads with same name and parameters but different return type in C#.
+MembersMustExist : Member 'public Azure.Pageable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport> Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource.GetReports(System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport> Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource.GetReportsAsync(System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Pageable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport> Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource.GetReports(System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport> Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource.GetReportsAsync(System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+
+# VmssVmList property is IList<> (mutable) but generated as get-only auto-property.
+# Cannot add a setter to an existing auto-property via partial class.
+MembersMustExist : Member 'public void Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties.VmssVmList.set(System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>)' does not exist in the implementation but it does exist in the contract.

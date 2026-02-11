@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="id"> Azure resource Id of the VM. </param>
         /// <param name="uuid"> UUID(Universally Unique Identifier) of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationVmInfo(string id, string uuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationVmInfo(ResourceIdentifier id, Guid? uuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uuid = uuid;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Azure resource Id of the VM. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> UUID(Universally Unique Identifier) of the VM. </summary>
         [WirePath("uuid")]
-        public string Uuid { get; }
+        public Guid? Uuid { get; }
     }
 }

@@ -24,8 +24,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 id,
                 name,
                 resourceType ?? default,
-                properties,
-                systemData);
+                systemData,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationResourceData"/>. </summary>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> Name of the guest configuration assignment. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Models.GuestConfigurationResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = default, string name = default, AzureLocation? location = default, ResourceType? resourceType = default, SystemData systemData = default)
+        {
+            return new GuestConfigurationResourceData(id, name, location, resourceType, systemData);
         }
     }
 }

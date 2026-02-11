@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (options.Format != "W" && Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
-                writer.WriteStringValue(ReportId);
+                writer.WriteStringValue(ReportId.Value);
             }
             if (Optional.IsDefined(Assignment))
             {
@@ -126,8 +127,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            string id = default;
-            string reportId = default;
+            ResourceIdentifier id = default;
+            Guid? reportId = default;
             GuestConfigurationAssignmentInfo assignment = default;
             GuestConfigurationVmInfo vm = default;
             DateTimeOffset? startOn = default;
@@ -140,12 +141,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reportId"u8))
                 {
-                    reportId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reportId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignment"u8))

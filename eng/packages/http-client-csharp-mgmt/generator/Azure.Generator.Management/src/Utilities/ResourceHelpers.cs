@@ -72,27 +72,6 @@ namespace Azure.Generator.Management.Utilities
         }
 
         /// <summary>
-        /// Determines if a method is a non-CRUD operation that should use the SDK method name
-        /// instead of the standard CRUD method name (e.g., GetReports vs Get).
-        /// </summary>
-        public static bool IsNonCrudOperation(ResourceOperationKind operationKind, string methodName)
-        {
-            // Standard CRUD names for each kind
-            var standardName = operationKind switch
-            {
-                ResourceOperationKind.Read => "Get",
-                ResourceOperationKind.Create => "CreateOrUpdate",
-                ResourceOperationKind.Delete => "Delete",
-                ResourceOperationKind.List => "GetAll",
-                ResourceOperationKind.Update => "Update",
-                _ => null
-            };
-
-            // If the method name differs from the standard CRUD name, it's a non-CRUD operation
-            return standardName != null && !methodName.Equals(standardName, StringComparison.OrdinalIgnoreCase);
-        }
-
-        /// <summary>
         /// Gets the appropriate method name for an extension operation based on its kind and corresponding resource name.
         /// </summary>
         /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>
@@ -110,75 +89,6 @@ namespace Azure.Generator.Management.Utilities
                 ResourceOperationKind.Update => isAsync ? $"Update{resourceName}Async" : $"Update{resourceName}",
                 _ => null
             };
-        }
-
-        /// <summary>
-        /// Gets the appropriate method name for an extension operation with parent type disambiguation.
-        /// Used when multiple extension resources target the same model but different parent types.
-        /// </summary>
-        /// <param name="operationKind">The kind of resource operation to perform.</param>
-        /// <param name="resourceName">The name of the resource.</param>
-        /// <param name="parentResourceType">The parent resource type (e.g., "Microsoft.Compute/virtualMachines").</param>
-        /// <param name="isAsync">Whether the method should be asynchronous.</param>
-        /// <returns>The disambiguated method name.</returns>
-        public static string? GetExtensionOperationMethodNameWithParentType(
-            ResourceOperationKind operationKind,
-            string resourceName,
-            string parentResourceType,
-            bool isAsync)
-        {
-            // Extract a short discriminator from the parent resource type
-            // e.g., "Microsoft.Compute/virtualMachines" -> "Vm"
-            //       "Microsoft.HybridCompute/machines" -> "Hcrp"
-            //       "Microsoft.Compute/virtualMachineScaleSets" -> "Vmss"
-            var discriminator = GetParentTypeDiscriminator(parentResourceType);
-
-            // If we can't get a discriminator, fall back to standard method name
-            if (string.IsNullOrEmpty(discriminator))
-            {
-                return GetExtensionOperationMethodName(operationKind, resourceName, isAsync);
-            }
-
-            // Build method name with discriminator
-            return operationKind switch
-            {
-                ResourceOperationKind.List => isAsync ? $"Get{discriminator}{resourceName.Pluralize()}Async" : $"Get{discriminator}{resourceName.Pluralize()}",
-                ResourceOperationKind.Read => isAsync ? $"Get{discriminator}{resourceName}Async" : $"Get{discriminator}{resourceName}",
-                ResourceOperationKind.Create => isAsync ? $"CreateOrUpdate{discriminator}{resourceName}Async" : $"CreateOrUpdate{discriminator}{resourceName}",
-                ResourceOperationKind.Delete => isAsync ? $"Delete{discriminator}{resourceName}Async" : $"Delete{discriminator}{resourceName}",
-                ResourceOperationKind.Update => isAsync ? $"Update{discriminator}{resourceName}Async" : $"Update{discriminator}{resourceName}",
-                _ => null
-            };
-        }
-
-        /// <summary>
-        /// Extracts a short discriminator from a parent resource type.
-        /// </summary>
-        internal static string GetParentTypeDiscriminator(string parentResourceType)
-        {
-            return parentResourceType switch
-            {
-                "Microsoft.Compute/virtualMachines" => "Vm",
-                "Microsoft.Compute/virtualMachineScaleSets" => "Vmss",
-                "Microsoft.HybridCompute/machines" => "Hcrp",
-                "Microsoft.ConnectedVMwarevSphere/virtualmachines" => "VMwarevSphere",
-                _ => ExtractGenericDiscriminator(parentResourceType)
-            };
-        }
-
-        /// <summary>
-        /// Extracts a generic discriminator from an unknown parent resource type.
-        /// </summary>
-        private static string ExtractGenericDiscriminator(string parentResourceType)
-        {
-            // Try to extract the resource type portion (after the /)
-            var parts = parentResourceType.Split('/');
-            if (parts.Length >= 2)
-            {
-                // Convert to identifier name (PascalCase)
-                return parts[1].ToIdentifierName();
-            }
-            return string.Empty;
         }
 
         public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)

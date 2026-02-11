@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
         public GuestConfigurationAssignmentProperties()
         {
-            VmssVMList = new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
+            VmssVmList = new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
@@ -35,9 +36,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="assignmentHash"> Combined hash of the configuration package and parameters. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
-        /// <param name="vmssVMList"> The list of VM Compliance data for VMSS. </param>
+        /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, string latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVMList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             AssignmentHash = assignmentHash;
             ProvisioningState = provisioningState;
             ResourceType = resourceType;
-            VmssVMList = vmssVMList;
+            VmssVmList = vmssVmList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Id of the latest report for the guest configuration assignment. </summary>
         [WirePath("latestReportId")]
-        public string LatestReportId { get; }
+        public ResourceIdentifier LatestReportId { get; }
 
         /// <summary> parameter hash for the guest configuration assignment. </summary>
         [WirePath("parameterHash")]
@@ -100,6 +101,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> The list of VM Compliance data for VMSS. </summary>
         [WirePath("vmssVMList")]
-        public IList<GuestConfigurationVmssVmInfo> VmssVMList { get; }
+        public IList<GuestConfigurationVmssVmInfo> VmssVmList { get; }
     }
 }

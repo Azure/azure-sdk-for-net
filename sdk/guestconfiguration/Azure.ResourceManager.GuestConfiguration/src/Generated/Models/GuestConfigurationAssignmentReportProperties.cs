@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="details"> Details of the assignment report. </param>
         /// <param name="vmssResourceId"> Azure resource Id of the VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, string reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, GuestConfigurationAssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, GuestConfigurationAssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComplianceStatus = complianceStatus;
             ReportId = reportId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
         [WirePath("reportId")]
-        public string ReportId { get; }
+        public Guid? ReportId { get; }
 
         /// <summary> Configuration details of the guest configuration assignment. </summary>
         [WirePath("assignment")]

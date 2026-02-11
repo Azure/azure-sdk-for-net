@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComplianceStatus = complianceStatus;
             StartOn = startOn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> GUID of the report. </summary>
         [WirePath("jobId")]
-        public string JobId { get; }
+        public Guid? JobId { get; }
 
         /// <summary> Type of report, Consistency or Initial. </summary>
         [WirePath("operationType")]

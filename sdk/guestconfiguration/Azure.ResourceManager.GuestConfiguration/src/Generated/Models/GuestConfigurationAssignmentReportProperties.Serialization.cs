@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (options.Format != "W" && Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
-                writer.WriteStringValue(ReportId);
+                writer.WriteStringValue(ReportId.Value);
             }
             if (Optional.IsDefined(Assignment))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 return null;
             }
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
-            string reportId = default;
+            Guid? reportId = default;
             GuestConfigurationAssignmentInfo assignment = default;
             GuestConfigurationVmInfo vm = default;
             DateTimeOffset? startOn = default;
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("reportId"u8))
                 {
-                    reportId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reportId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignment"u8))

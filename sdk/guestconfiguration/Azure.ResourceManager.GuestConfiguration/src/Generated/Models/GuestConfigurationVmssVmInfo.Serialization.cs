@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -54,10 +55,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("latestReportId"u8);
                 writer.WriteStringValue(LatestReportId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceChecked))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn))
             {
                 writer.WritePropertyName("lastComplianceChecked"u8);
-                writer.WriteStringValue(LastComplianceChecked.Value, "O");
+                writer.WriteStringValue(LastComplianceCheckedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -102,10 +103,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 return null;
             }
             Guid? vmId = default;
-            string vmResourceId = default;
+            ResourceIdentifier vmResourceId = default;
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
             Guid? latestReportId = default;
-            DateTimeOffset? lastComplianceChecked = default;
+            DateTimeOffset? lastComplianceCheckedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +121,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("vmResourceId"u8))
                 {
-                    vmResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("complianceStatus"u8))
@@ -145,10 +150,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lastComplianceChecked = null;
+                        lastComplianceCheckedOn = null;
                         continue;
                     }
-                    lastComplianceChecked = prop.Value.GetDateTimeOffset("O");
+                    lastComplianceCheckedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +166,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 vmResourceId,
                 complianceStatus,
                 latestReportId,
-                lastComplianceChecked,
+                lastComplianceCheckedOn,
                 additionalBinaryDataProperties);
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportInfo(string id, string reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportInfo(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ReportId = reportId;
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
         [WirePath("reportId")]
-        public string ReportId { get; }
+        public Guid? ReportId { get; }
 
         /// <summary> Configuration details of the guest configuration assignment. </summary>
         [WirePath("assignment")]

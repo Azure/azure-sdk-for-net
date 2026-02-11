@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public readonly partial struct GuestConfigurationKind : IEquatable<GuestConfigurationKind>
     {
         private readonly string _value;
-        private const string DSCValue = "DSC";
+        private const string DscValue = "DSC";
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _value = value;
         }
 
-        /// <summary> Gets the DSC. </summary>
-        public static GuestConfigurationKind DSC { get; } = new GuestConfigurationKind(DSCValue);
+        /// <summary> Gets the Dsc. </summary>
+        public static GuestConfigurationKind Dsc { get; } = new GuestConfigurationKind(DscValue);
 
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

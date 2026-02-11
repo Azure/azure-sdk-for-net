@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -27,15 +28,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
-        /// <param name="lastComplianceChecked"> Date and time when last compliance status was checked. </param>
+        /// <param name="lastComplianceCheckedOn"> Date and time when last compliance status was checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationVmssVmInfo(Guid? vmId, string vmResourceId, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? latestReportId, DateTimeOffset? lastComplianceChecked, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationVmssVmInfo(Guid? vmId, ResourceIdentifier vmResourceId, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? latestReportId, DateTimeOffset? lastComplianceCheckedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmId = vmId;
             VmResourceId = vmResourceId;
             ComplianceStatus = complianceStatus;
             LatestReportId = latestReportId;
-            LastComplianceChecked = lastComplianceChecked;
+            LastComplianceCheckedOn = lastComplianceCheckedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Azure resource Id of the VM. </summary>
         [WirePath("vmResourceId")]
-        public string VmResourceId { get; }
+        public ResourceIdentifier VmResourceId { get; }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         [WirePath("complianceStatus")]
@@ -57,6 +58,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Date and time when last compliance status was checked. </summary>
         [WirePath("lastComplianceChecked")]
-        public DateTimeOffset? LastComplianceChecked { get; }
+        public DateTimeOffset? LastComplianceCheckedOn { get; }
     }
 }
