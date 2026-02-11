@@ -13,8 +13,14 @@ Then invoke tests with:
 `Invoke-Pester ./Override-Guardrails.Tests.ps1 -Tag UnitTest`
 #>
 
-. (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" "PSModule-Helpers.ps1")
-Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
+try
+{
+    Import-Module Pester -MinimumVersion 5.3.3 -ErrorAction Stop | Out-Null
+}
+catch
+{
+    throw "Pester >= 5.3.3 is required to run these tests. Ensure Pester is available on the machine running CI."
+}
 
 $python = (Get-Command python -ErrorAction SilentlyContinue)
 if (-not $python)
