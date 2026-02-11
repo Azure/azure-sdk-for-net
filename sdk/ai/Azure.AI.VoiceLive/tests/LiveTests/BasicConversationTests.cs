@@ -229,13 +229,13 @@ namespace Azure.AI.VoiceLive.Tests
             responseItems.Insert(0, responseCreated);
             ValidateResponseUpdates(responseItems, string.Empty);
 
-            var callDones = responseItems.Where((s) =>
+            var callDone = responseItems.Where((s) =>
             {
                 return s is SessionUpdateResponseFunctionCallArgumentsDone;
             });
-            Assert.IsTrue(callDones.Count() == 2);
-            var callInfo1 = SafeCast<SessionUpdateResponseFunctionCallArgumentsDone>(callDones.First());
-            var callInfo2 = SafeCast<SessionUpdateResponseFunctionCallArgumentsDone>(callDones.Last());
+            Assert.IsTrue(callDone.Count() == 2);
+            var callInfo1 = SafeCast<SessionUpdateResponseFunctionCallArgumentsDone>(callDone.First());
+            var callInfo2 = SafeCast<SessionUpdateResponseFunctionCallArgumentsDone>(callDone.Last());
             await session.AddItemAsync(new FunctionCallOutputItem(callInfo1.CallId, "42"), TimeoutToken).ConfigureAwait(false);
             await session.AddItemAsync(new FunctionCallOutputItem(callInfo2.CallId, "98"), TimeoutToken).ConfigureAwait(false);
             await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
