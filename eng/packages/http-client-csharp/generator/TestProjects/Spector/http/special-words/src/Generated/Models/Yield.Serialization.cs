@@ -18,6 +18,8 @@ namespace SpecialWords._Models
 
         protected virtual Yield PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Yield>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,8 +29,6 @@ namespace SpecialWords._Models
         protected virtual Yield JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Yield>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Yield IPersistableModel<Yield>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

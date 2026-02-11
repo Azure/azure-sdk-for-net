@@ -75,13 +75,13 @@ namespace Azure.Identity
             private const string CoreFoundationLibrary = "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation";
             private const string SecurityLibrary = "/System/Library/Frameworks/Security.framework/Security";
 
-            [DllImport (CoreFoundationLibrary, CharSet=CharSet.Unicode)]
+            [DllImport(CoreFoundationLibrary, CharSet = CharSet.Unicode)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
             public static extern void CFRelease(IntPtr cfRef);
 
-            [DllImport (SecurityLibrary)]
+            [DllImport(SecurityLibrary)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern int SecKeychainFindGenericPassword (
+            public static extern int SecKeychainFindGenericPassword(
                 IntPtr keychainOrArray,
                 int serviceNameLength,
                 byte[] serviceName,
@@ -91,9 +91,9 @@ namespace Azure.Identity
                 out IntPtr passwordData,
                 out IntPtr itemRef);
 
-            [DllImport (SecurityLibrary)]
+            [DllImport(SecurityLibrary)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern int SecKeychainAddGenericPassword (
+            public static extern int SecKeychainAddGenericPassword(
                 IntPtr keychain,
                 int serviceNameLength,
                 byte[] serviceName,
@@ -103,17 +103,17 @@ namespace Azure.Identity
                 byte[] passwordData,
                 out IntPtr itemRef);
 
-            [DllImport (SecurityLibrary)]
+            [DllImport(SecurityLibrary)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
             public static extern int SecKeychainItemDelete(IntPtr itemRef);
 
-            [DllImport (SecurityLibrary)]
+            [DllImport(SecurityLibrary)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern int SecKeychainItemFreeContent (IntPtr attrList, IntPtr data);
+            public static extern int SecKeychainItemFreeContent(IntPtr attrList, IntPtr data);
 
-            [DllImport (SecurityLibrary)]
+            [DllImport(SecurityLibrary)]
             [DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.SafeDirectories)]
-            public static extern IntPtr SecCopyErrorMessageString (int status, IntPtr reserved);
+            public static extern IntPtr SecCopyErrorMessageString(int status, IntPtr reserved);
         }
     }
 }

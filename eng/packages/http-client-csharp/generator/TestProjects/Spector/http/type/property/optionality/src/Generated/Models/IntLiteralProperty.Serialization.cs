@@ -17,6 +17,8 @@ namespace _Type.Property.Optional
     {
         protected virtual IntLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator IntLiteralProperty(Response response) => throw null;
 
         void IJsonModel<IntLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace _Type.Property.Optional
         protected virtual IntLiteralProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<IntLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         IntLiteralProperty IPersistableModel<IntLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

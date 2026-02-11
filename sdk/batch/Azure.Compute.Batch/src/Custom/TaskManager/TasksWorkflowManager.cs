@@ -235,33 +235,33 @@ namespace Azure.Compute.Batch
             {
                 int currLength = tasksToAdd.Count;
                 if (e.ErrorCode == BatchErrorCode.RequestBodyTooLarge && currLength != 1)
+                {
+                    // Our chunk sizes were too large to fit in a request, so universally reduce size
+                    // This is an internal error due to us using greedy initial maximum chunk size,
+                    //   so do not increment retry counter.
                     {
-                        // Our chunk sizes were too large to fit in a request, so universally reduce size
-                        // This is an internal error due to us using greedy initial maximum chunk size,
-                        //   so do not increment retry counter.
+                        int newLength = currLength / 2;
+                        int tmpMaxTasks = this._maxTasks;
+                        while (newLength < tmpMaxTasks)
                         {
-                            int newLength = currLength / 2;
-                            int tmpMaxTasks = this._maxTasks;
-                            while (newLength < tmpMaxTasks)
-                            {
-                                tmpMaxTasks = Interlocked.CompareExchange(ref this._maxTasks, newLength, tmpMaxTasks);
-                            }
-                            foreach (TrackedBatchTask trackedTask in tasksToAdd.Values)
-                            {
-                                this._remainingTasksToAdd.Enqueue(trackedTask);
-                            }
-                            return;
+                            tmpMaxTasks = Interlocked.CompareExchange(ref this._maxTasks, newLength, tmpMaxTasks);
                         }
-                    }
-                else if (e.ErrorCode == BatchErrorCode.TooManyRequests)
-                    {
-                        _timeBetweenCalls = TimeSpan.FromSeconds(Math.Min(_timeBetweenCalls.TotalSeconds + _timeIncrementInSeconds, _maxTimeBetweenCallsInSeconds));
                         foreach (TrackedBatchTask trackedTask in tasksToAdd.Values)
                         {
                             this._remainingTasksToAdd.Enqueue(trackedTask);
                         }
                         return;
                     }
+                }
+                else if (e.ErrorCode == BatchErrorCode.TooManyRequests)
+                {
+                    _timeBetweenCalls = TimeSpan.FromSeconds(Math.Min(_timeBetweenCalls.TotalSeconds + _timeIncrementInSeconds, _maxTimeBetweenCallsInSeconds));
+                    foreach (TrackedBatchTask trackedTask in tasksToAdd.Values)
+                    {
+                        this._remainingTasksToAdd.Enqueue(trackedTask);
+                    }
+                    return;
+                }
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.Compute.Batch
         internal async Task ProcessPendingOperationResults()
         {
             //Wait for any task to complete
-           Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
+            Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
             //Check for a task failure -- if there is one, we a-wait for all remaining tasks to complete (this will throw an exception since at least one of them failed).
             if (completedTask.IsFaulted)
@@ -405,7 +405,7 @@ namespace Azure.Compute.Batch
             {
                 this.Task = batchTaskCreateOptions;
                 this.JobId = jobId;
-               this.RetryCount = 0;
+                this.RetryCount = 0;
             }
 
             public void IncrementRetryCount()

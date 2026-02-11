@@ -44,7 +44,7 @@ Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Trai
     details: trainingJobDetails
 );
 
- // Extract the operation-location header
+// Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

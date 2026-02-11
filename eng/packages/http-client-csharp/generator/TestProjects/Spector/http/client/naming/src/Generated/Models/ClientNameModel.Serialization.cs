@@ -18,6 +18,8 @@ namespace Client.Naming.Property
 
         protected virtual ClientNameModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<ClientNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,8 +29,6 @@ namespace Client.Naming.Property
         protected virtual ClientNameModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<ClientNameModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         ClientNameModel IPersistableModel<ClientNameModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
