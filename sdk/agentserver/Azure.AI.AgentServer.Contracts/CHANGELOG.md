@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.8 (2026-02-11)
+
+### Other Changes
+
+- Package version alignment only. No functional changes.
+
 ## 1.0.0-beta.7 (2026-02-10)
 
 ### Other Changes
