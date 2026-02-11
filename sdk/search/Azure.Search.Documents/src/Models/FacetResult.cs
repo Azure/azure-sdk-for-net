@@ -18,13 +18,20 @@ namespace Azure.Search.Documents.Models
         {
             get
             {
-                if (Value != null) return FacetType.Value;
-                if (From != null || To != null) return FacetType.Range;
-                if (Sum.HasValue) return FacetType.Sum;
-                if (Avg.HasValue) return FacetType.Average;
-                if (Min.HasValue) return FacetType.Minimum;
-                if (Max.HasValue) return FacetType.Maximum;
-                if (Cardinality.HasValue) return FacetType.Cardinality;
+                if (Value != null)
+                    return FacetType.Value;
+                if (From != null || To != null)
+                    return FacetType.Range;
+                if (Sum.HasValue)
+                    return FacetType.Sum;
+                if (Avg.HasValue)
+                    return FacetType.Average;
+                if (Min.HasValue)
+                    return FacetType.Minimum;
+                if (Max.HasValue)
+                    return FacetType.Maximum;
+                if (Cardinality.HasValue)
+                    return FacetType.Cardinality;
 
                 // Default to Value if no specific facet type can be determined
                 return FacetType.Value;
@@ -73,7 +80,8 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct
         {
-            if (FacetType != FacetType.Range) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Range)
+            { throw new InvalidCastException(); }
             return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
         }
 
@@ -90,7 +98,8 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public ValueFacetResult<T> AsValueFacetResult<T>()
         {
-            if (FacetType != FacetType.Value) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Value)
+            { throw new InvalidCastException(); }
             return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
         }
 

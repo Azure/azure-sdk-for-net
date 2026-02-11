@@ -188,7 +188,7 @@ public class AzureTestEnvironment
     {
         string? optionalVariable = GetOptionalVariable(name);
         return optionalVariable
-            ?? throw new InvalidOperationException($"Could not find required environment variable '{_optionPrefix + name }' or '{name}'.");
+            ?? throw new InvalidOperationException($"Could not find required environment variable '{_optionPrefix + name}' or '{name}'.");
     }
 
     private static DirectoryInfo? FindFirstParentWithSubfolders(IEnumerable<DirectoryInfo?> startingDirs, params string[] subFolders)

@@ -446,7 +446,7 @@ namespace Azure.Communication.Identity
             var expiresOn = utcNow.AddMinutes(minutes).ToUnixTimeSeconds();
             var tokenString = $"{{\"exp\": {expiresOn}}}";
             var base64Token = Convert.ToBase64String(Encoding.ASCII.GetBytes(tokenString));
-            return $"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{ base64Token}.adM-ddBZZlQ1WlN3pdPBOF5G4Wh9iZpxNP_fSvpF4cWs";
+            return $"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{base64Token}.adM-ddBZZlQ1WlN3pdPBOF5G4Wh9iZpxNP_fSvpF4cWs";
         }
     }
 }

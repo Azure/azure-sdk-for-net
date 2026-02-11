@@ -1529,14 +1529,14 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
         }
 
-         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
-            string searchText,
-            JsonTypeInfo<T> typeInfo,
-            string querySourceAuthorization,
-            bool? enableElevatedRead,
-            SearchOptions options,
-            bool async,
-            CancellationToken cancellationToken = default)
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+           string searchText,
+           JsonTypeInfo<T> typeInfo,
+           string querySourceAuthorization,
+           bool? enableElevatedRead,
+           SearchOptions options,
+           bool async,
+           CancellationToken cancellationToken = default)
         {
             if (options != null && searchText != null)
             {

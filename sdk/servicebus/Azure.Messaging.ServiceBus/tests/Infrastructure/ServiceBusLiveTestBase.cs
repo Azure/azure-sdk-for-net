@@ -63,10 +63,10 @@ namespace Azure.Messaging.ServiceBus.Tests
         protected static void SimulateNetworkFailure(ServiceBusClient client)
         {
             var amqpClient = client.Connection.InnerClient;
-            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
+            AmqpConnectionScope scope = (AmqpConnectionScope)typeof(AmqpClient).GetProperty(
                 "ConnectionScope",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
-            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
+            ((FaultTolerantAmqpObject<AmqpConnection>)typeof(AmqpConnectionScope).GetProperty(
                 "ActiveConnection",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
 

@@ -66,7 +66,7 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
 
     public IEnumerator<AzureProjectFeature> GetEnumerator()
     {
-        for (int i=0; i < _count; i++)
+        for (int i = 0; i < _count; i++)
         {
             yield return _features[i];
         }
@@ -76,7 +76,8 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
 
     public string CreateUniqueBicepIdentifier(string baseIdentifier)
     {
-        lock (_featureIndex) {
+        lock (_featureIndex)
+        {
             if (_featureIndex.TryGetValue(baseIdentifier, out int index))
             {
                 _featureIndex[baseIdentifier] = index + 1;

@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionBlobFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
+    public class DataProtectionBlobFunctionalTests : LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
         public async Task PersistsKeysToAzureBlob()

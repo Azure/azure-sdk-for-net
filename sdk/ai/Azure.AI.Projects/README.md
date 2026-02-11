@@ -1,7 +1,8 @@
 # Azure AI Projects client library for .NET
 The AI Projects client library is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
-* **Create and run Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Create and run Classic Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Create Agents** using `Agents` property.
 * **Enumerate AI Models** deployed to your Foundry Project using the `Deployments` operations.
 * **Enumerate connected Azure resources** in your Foundry project using the `Connections` operations.
 * **Upload documents and create Datasets** to reference them using the `Datasets` operations.
@@ -23,6 +24,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Performing Classic Agent operations](#performing-classic-agent-operations)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -30,6 +32,18 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Connections operations](#connections-operations)
   - [Dataset operations](#dataset-operations)
   - [Indexes operations](#indexes-operations)
+  - [Files operations](#files-operations)
+  - [Fine-Tuning operations](#fine-tuning-operations)
+  - [Memory store operations](#memory-store-operations)
+  - [Evaluations](#evalustions)
+    - [Agent evaluation](#agent-evaluation)
+    - [Model evaluation](#model-evaluation)
+    - [Using uploaded datasets](#using-uploaded-datasets)
+    - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
+    - [Using custom code-based evaluator](#using-custom-code-based-evaluator)
+    - [Evaluation with Application Insights](#evaluation-with-application-insights)
+    - [Evaluating responses](#evaluating-responses)
+    - [Evaluation rules](#evaluation-rules)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -73,9 +87,9 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 
 ## Examples
 
-### Performing Agent operations
+### Performing Classic Agent operations
 
-The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/samples) associated with the `Azure.AI.Agents.Persistent` package.
+The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
 ```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
@@ -104,7 +118,7 @@ PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
 // Intermission: listing messages will retrieve the message just added
 
 List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
-Assert.AreEqual(message.Id, messagesList[0].Id);
+Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
 
 // Step 4: Run the agent
 ThreadRun run = agentsClient.Runs.CreateRun(
@@ -118,9 +132,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
+Assert.That(
     RunStatus.Completed,
-    run.Status,
+    Is.EqualTo(run.Status),
     run.LastError?.Message);
 
 Pageable<PersistentThreadMessage> messages
@@ -146,6 +160,94 @@ foreach (PersistentThreadMessage threadMessage in messages)
 
 agentsClient.Threads.DeleteThread(threadId: thread.Id);
 agentsClient.Administration.DeleteAgent(agentId: agent.Id);
+```
+
+### Performing Agent operations
+
+Azure.AI.Projects can be used to create, update and delete Agents.
+
+Create Agent
+
+Synchronous call:
+```C# Snippet:Sample_CreateAgentVersionCRUD_Sync
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent."
+};
+AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent2",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_CreateAgentVersionCRUD_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent."
+};
+AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent2",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Get Agent
+
+Synchronous call:
+```C# Snippet:Sample_GetAgentCRUD_Sync
+AgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
+Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_GetAgentCRUD_Async
+AgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
+Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
+```
+
+List Agents
+
+Synchronous call:
+```C# Snippet:Sample_ListAgentsCRUD_Sync
+foreach (AgentRecord agent in projectClient.Agents.GetAgents())
+{
+    Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
+}
+```
+
+Asynchronous call:
+```C# Snippet:Sample_ListAgentsCRUD_Async
+await foreach (AgentRecord agent in projectClient.Agents.GetAgentsAsync())
+{
+    Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
+}
+```
+
+Delete Agent
+
+Synchronous call:
+```C# Snippet:Sample_DeleteAgentCRUD_Sync
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_DeleteAgentCRUD_Async
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
 ### Get an authenticated AzureOpenAI client
@@ -354,6 +456,763 @@ Console.WriteLine("Delete the Index version created above:");
 projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 ```
 
+### Files operations
+
+The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the ProjectOpenAIClient. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
+
+The first step working with OpenAI files is to authenticate to Azure through `AIProjectClient` and get the `OpenAIFileClient`.
+```C# Snippet:AI_Projects_Files_CreateClients
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
+
+Use authenticated `OpenAIFileClient` to upload the local files to Azure. 
+```C# Snippet:AI_Projects_Files_UploadFile
+using FileStream fileStream = File.OpenRead(trainFilePath);
+OpenAIFile uploadedFile = fileClient.UploadFile(
+    fileStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+```
+
+To retrieve file, use `GetFile` method of `OpenAIFileClient`.
+```C# Snippet:AI_Projects_Files_GetFile
+OpenAIFile retrievedFile = fileClient.GetFile(fileId);
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
+
+Use `GetFiles` method of `OpenAIFileClient` to list the files.
+```C# Snippet:AI_Projects_Files_ListFiles
+ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
+
+```C# Snippet:AI_Projects_Files_DeleteFile
+ClientResult<FileDeletionResult> deleteResult = fileClient.DeleteFile(fileId);
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
+```
+
+### Fine-Tuning operations
+
+The code below shows how to create a supervised fine-tuning job using the OpenAI Fine-Tuning API through the ProjectOpenAIClient. Fine-tuning allows you to customize models for specific tasks using your own training data. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
+
+```C# Snippet:AI_Projects_FineTuning_CreateClients
+string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
+
+The fine-tuning task represents the adaptation of deep neural network weights to the domain specific data. To achieve this goal, we need to provide model with training data set for weights update and a validation set for evaluation of learning efficiency.
+```C# Snippet:AI_Projects_FineTuning_UploadFiles
+// Upload training file
+Console.WriteLine("Uploading training file...");
+using FileStream trainStream = File.OpenRead(trainingFilePath);
+OpenAIFile trainFile = fileClient.UploadFile(
+    trainStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded training file with ID: {trainFile.Id}");
+
+// Upload validation file
+Console.WriteLine("Uploading validation file...");
+using FileStream validationStream = File.OpenRead(validationFilePath);
+OpenAIFile validationFile = fileClient.UploadFile(
+    validationStream,
+    "sft_validation_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
+```
+
+Now we will use the uploaded training and validation set to fine-tue the model. In our experiment we will train the model for three epochs batch size of one and the constant [learning rate](https://en.wikipedia.org/wiki/Learning_rate) of 1.0.
+```C# Snippet:AI_Projects_FineTuning_CreateJob
+// Create supervised fine-tuning job
+Console.WriteLine("Creating supervised fine-tuning job...");
+FineTuningJob fineTuningJob = fineTuningClient.FineTune(
+    modelDeploymentName,
+    trainFile.Id,
+    waitUntilCompleted: false,
+    new()
+    {
+        TrainingMethod = FineTuningTrainingMethod.CreateSupervised(
+            epochCount: 3,
+            batchSize: 1,
+            learningRate: 1.0),
+        ValidationFile = validationFile.Id
+    });
+Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Status: {fineTuningJob.Status}");
+```
+
+### Memory store operations
+
+Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
+Project client can be used to manage memory stores. In the examples below we show only synchronous version of API for brevity.
+
+Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for chat completion.
+
+```C# Snippet:Sample_Create_MemoryStore_Sync
+MemoryStoreDefaultDefinition memoryStoreDefinition = new(
+    chatModel: modelDeploymentName,
+    embeddingModel: embeddingDeploymentName
+);
+memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
+    name: "testMemoryStore",
+    definition: memoryStoreDefinition,
+    description: "Memory store demo."
+);
+Console.WriteLine($"Memory store with id {memoryStore.Id}, name {memoryStore.Name} and description {memoryStore.Description} was created.");
+```
+
+Update the description of memory store we have just created.
+
+```C# Snippet:Sample_Update_MemoryStore_Sync
+memoryStore = projectClient.MemoryStores.UpdateMemoryStore(name: memoryStore.Name, description: "New description for memory store demo.");
+Console.WriteLine($"Memory store with id {memoryStore.Id}, name {memoryStore.Name} now has description: {memoryStore.Description}.");
+```
+
+Get the memory store.
+
+```C# Snippet:Sample_Get_MemoryStore_Sync
+memoryStore = projectClient.MemoryStores.GetMemoryStore(name: memoryStore.Name);
+Console.WriteLine($"Returned Memory store with id {memoryStore.Id}, name {memoryStore.Name} and description {memoryStore.Description}.");
+```
+
+List all memory stores in our Microsoft Foundry.
+
+```C# Snippet:Sample_List_MemoryStore_Sync
+foreach (MemoryStore store in projectClient.MemoryStores.GetMemoryStores())
+{
+    Console.WriteLine($"Memory store id: {store.Id}, name: {store.Name}, description: {store.Description}.");
+}
+```
+
+Create a scope in the `MemoryStore` and add one item.
+
+```C# Snippet:Sample_AddMemories_MemoryStore_Sync
+string scope = "Flower";
+MemoryUpdateOptions memoryOptions = new(scope);
+memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem("My favourite flower is Cephalocereus euphorbioides."));
+MemoryUpdateResult updateResult = projectClient.MemoryStores.WaitForMemoriesUpdate(memoryStoreName: memoryStore.Name, options: memoryOptions, pollingInterval: 500);
+if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
+{
+    throw new InvalidOperationException(updateResult.ErrorDetails);
+}
+Console.WriteLine($"The update operation {updateResult.UpdateId} has finished with {updateResult.Status} status.");
+```
+
+Ask the question about the memorized item.
+
+```C# Snippet:Sample_MemorySearch_Sync
+MemorySearchOptions opts = new(scope)
+{
+    Items = { ResponseItem.CreateUserMessageItem("What was is your favourite flower?") },
+};
+MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
+    memoryStoreName: memoryStore.Name,
+    options: new(scope)
+);
+Console.WriteLine("==The output from memory tool.==");
+foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+{
+    Console.WriteLine(item.MemoryItem.Content);
+}
+Console.WriteLine("==End of memory tool output.==");
+```
+
+Remove the scope we have created from `MemoryStore`.
+
+```C# Snippet:Sample_DeleteScope_MemoryStore_Sync
+MemoryStoreDeleteScopeResponse deleteScopeResponse = projectClient.MemoryStores.DeleteScope(name: memoryStore.Name, scope: "Flower");
+string status = deleteScopeResponse.Deleted ? "" : " not";
+Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
+```
+
+Finally, delete `MemoryStore`.
+
+```C# Snippet:Sample_Cleanup_MemoryStore_Sync
+DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
+status = deleteResponse.Deleted ? "" : " not";
+Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
+```
+
+For more information abouit memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
+
+### Evaluations
+
+Evaluation in Azure AI Project client library provides quantitative, AI-assisted quality and safety metrics to asses
+performance and Evaluate LLM Models, GenAI Application and Agents. Metrics are defined as evaluators. Built-in or
+custom evaluators can provide comprehensive evaluation insights.
+
+#### Agent evaluation
+
+All the operations with evaluations can be performed using `EvaluationClient`. Here we will demonstrate only the basic concepts of the evaluations.
+Please see the full sample of evaluations in our samples section.
+
+First, we need to define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and
+data mappings for them. In the example below we will use three built in evaluators: "violence_detection",
+"fluency" and "task_adherence". We will use Agent's string and structured JSON outputs, named `sample.output_text` and `sample.output_items` respectively as response parameter for the evaluation and take query property from the data set, using `item.query` placeholder.
+
+```C# Snippet:Sample_CreateData_Evaluations
+object[] testingCriteria = [
+    new {
+        type = "azure_ai_evaluator",
+        name = "violence_detection",
+        evaluator_name = "builtin.violence",
+        data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
+    },
+    new {
+        type = "azure_ai_evaluator",
+        name = "fluency",
+        evaluator_name = "builtin.fluency",
+        initialization_parameters = new { deployment_name = modelDeploymentName},
+        data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
+    },
+    new {
+        type = "azure_ai_evaluator",
+        name = "task_adherence",
+        evaluator_name = "builtin.task_adherence",
+        initialization_parameters = new { deployment_name = modelDeploymentName},
+        data_mapping = new { query = "{{item.query}}", response = "{{sample.output_items}}"}
+    },
+];
+object dataSourceConfig = new {
+    type = "custom",
+    item_schema = new
+    {
+        type = "object",
+        properties = new
+        {
+            query = new
+            {
+                type = "string"
+            }
+        },
+        required = new[] { "query" }
+    },
+    include_sample_schema = true
+};
+BinaryData evaluationData = BinaryData.FromObjectAsJson(
+    new
+    {
+        name = "Agent Evaluation",
+        data_source_config = dataSourceConfig,
+        testing_criteria = testingCriteria
+    }
+);
+```
+
+Use `EvaluationClient` to create the evaluation with provided parameters.
+
+```C# Snippet:Sample_CreateEvaluationObject_Evaluations_Async
+using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
+string evaluationName = fields["name"];
+string evaluationId = fields["id"];
+Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
+```
+
+Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent. The target type `azure_ai_agent` informs the service that we are evaluating Agent.
+
+```C# Snippet:Sample_CreateDataSource_Evaluations
+object dataSource = new
+{
+    type = "azure_ai_target_completions",
+    source = new
+    {
+        type = "file_content",
+        content = new[] {
+            new { item = new { query = "What is the capital of France?" } },
+            new { item = new { query = "How do I reverse a string in Python? "} },
+        }
+    },
+    input_messages = new
+    {
+        type = "template",
+        template = new[] {
+            new {
+                type = "message",
+                role = "user",
+                content = new { type = "input_text", text = "{{item.query}}" }
+            }
+        }
+    },
+    target = new
+    {
+        type = "azure_ai_agent",
+        name = agentVersion.Name,
+        // Version is optional. Defaults to latest version if not specified.
+        version = agentVersion.Version,
+    }
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"Evaluation Run for Agent {agentVersion.Name}",
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+Create the evaluation run and extract its ID and status.
+
+```C# Snippet:Sample_CreateRun_Evaluations_Async
+ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
+fields = ParseClientResult(run, ["id", "status"]);
+string runId = fields["id"];
+string runStatus = fields["status"];
+Console.WriteLine($"Evaluation run created (id: {runId})");
+```
+
+Wait for evaluation run to arrive at the terminal state.
+
+```C# Snippet:Sample_WaitForRun_Evaluations_Async
+while (runStatus != "failed" && runStatus != "completed")
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+    runStatus = ParseClientResult(run, ["status"])["status"];
+    Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
+}
+if (runStatus == "failed")
+{
+    throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
+}
+```
+
+Get the results using `GetResultsListAsync` method. It calls `GetEvaluationRunOutputItemsAsync` on the `EvaluationClient` returning the object representing `ClientResult`, which contains binary encoded JSON response that can be retrieved using `GetRawResponse()`.
+
+```C# Snippet:Sampple_GetResultsList_Evaluations_Async
+private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+{
+    List<string> resultJsons = [];
+    bool hasMore = false;
+    do
+    {
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
+        JsonDocument document = JsonDocument.ParseValue(ref reader);
+
+        foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
+        {
+            if (topProperty.NameEquals("has_more"u8))
+            {
+                hasMore = topProperty.Value.GetBoolean();
+            }
+            else if (topProperty.NameEquals("data"u8))
+            {
+                if (topProperty.Value.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
+                    {
+                        resultJsons.Add(dataElement.ToString());
+                    }
+                }
+            }
+        }
+    } while (hasMore);
+    return resultJsons;
+}
+```
+
+#### Model evaluation
+
+Model evaluation scenario differs from agent evaluation only by the target configuration in `dataSource`:
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsModel
+object dataSource = new
+{
+    type = "azure_ai_target_completions",
+    source = new
+    {
+        type = "file_content",
+        content = new[] {
+            new { item = new { query = "What is the capital of France?" } },
+            new { item = new { query = "How do I reverse a string in Python? "} },
+        }
+    },
+    input_messages = new
+    {
+        type = "template",
+        template = new[] {
+            new {
+                type = "message",
+                role = "user",
+                content = new { type = "input_text", text = "{{item.query}}" }
+            }
+        }
+    },
+    target = new
+    {
+        type = "azure_ai_model",
+        model = modelDeploymentName,
+        sampling_params = new
+        {
+            top_p = 1.0f,
+            max_completion_tokens = 2048,
+        }
+    }
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"Evaluation Run for Model {modelDeploymentName}",
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+#### Using uploaded datasets
+
+To use the uploaded data set with evaluations please upload the data set as described in [dataset operations](#dataset-operations) section and
+use uploaded data set ID while creating data source object.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsWithDataSetID
+object dataSource = new
+{
+    type = "jsonl",
+    source = new
+    {
+        type = "file_id",
+        id = fileDataset.Id
+    },
+};
+object runMetadata = new
+{
+    team = "evaluator-experimentation",
+    scenario = "dataset-with-id",
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"Evaluation Run for dataset {fileDataset.Name}",
+        metadata = runMetadata,
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+#### Using custom prompt-based evaluator
+
+Side by side with built in evaluators, it is possible to define ones with custom logic. After the
+evaluator has been created and uploaded to catalog, it can be used as a regular evaluator:
+
+Create a prompt-based evaluator.
+
+```C# Snippet:Sampple_PromptEvaluator_EvaluationsCatalogPromptBased
+private EvaluatorVersion promptVersion = new(
+    categories: [EvaluatorCategory.Quality],
+    definition: new PromptBasedEvaluatorDefinition(
+        promptText: """
+            You are a Groundedness Evaluator.
+
+            Your task is to evaluate how well the given response is grounded in the provided ground truth.  
+            Groundedness means the response’s statements are factually supported by the ground truth.  
+            Evaluate factual alignment only — ignore grammar, fluency, or completeness.
+
+            ---
+
+            ### Input:
+            Query:
+            {{query}}
+
+            Response:
+            {{response}}
+
+            Ground Truth:
+            {{ground_truth}}
+
+            ---
+
+            ### Scoring Scale (1–5):
+            5 → Fully grounded. All claims supported by ground truth.  
+            4 → Mostly grounded. Minor unsupported details.  
+            3 → Partially grounded. About half the claims supported.  
+            2 → Mostly ungrounded. Only a few details supported.  
+            1 → Not grounded. Almost all information unsupported.
+
+            ---
+
+            ### Output Format (JSON):
+            {
+                "result": <integer from 1 to 5>,
+                "reason": "<brief explanation for the score>"
+            }
+            """
+    ),
+    evaluatorType: EvaluatorType.Custom
+) {
+    DisplayName = "Custom prompt evaluator example",
+    Description = "Custom evaluator for groundedness",
+};
+```
+
+Upload evaluator to Azure.
+
+```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Async
+EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
+    name: "myCustomEvaluatorPrompt",
+    evaluatorVersion: promptVersion
+);
+Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
+```
+
+To use the evaluator we have created, the next testing criteria should be set.
+
+```C# Snippet:Sample_TestingCriteria_EvaluationsCatalogPromptBased
+object[] testingCriteria = [
+    new {
+        type = "azure_ai_evaluator",
+        name = "MyCustomEvaluation",
+        evaluator_name = promptEvaluator.Name,
+        data_mapping = new {
+            query = "{{item.query}}",
+            response = "{{item.response}}",
+            ground_truth = "{{item.ground_truth}}",
+        },
+        initialization_parameters = new { deployment_name = modelDeploymentName, threshold = 3},
+    },
+];
+```
+
+#### Using custom code-based evaluator
+
+Custom evaluators may rely on code-based rules as shown below.
+
+```C# Snippet:Sampple_CodeEvaluator_EvaluationsCatalogCodeBased
+private EvaluatorVersion GetCodeEvaluatorVersion()
+{
+    EvaluatorMetric resultMetric = new()
+    {
+        Type = EvaluatorMetricType.Ordinal,
+        DesirableDirection = EvaluatorMetricDirection.Increase,
+        MinValue = 0.0f,
+        MaxValue = 1.0f
+    };
+    EvaluatorVersion evaluatorVersion = new(
+        categories: [EvaluatorCategory.Quality],
+        definition: new CodeBasedEvaluatorDefinition(
+            codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
+            initParameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "deployment_name", "pass_threshold" },
+                    type = "object",
+                    properties = new
+                    {
+                        deployment_name = new { type = "string" },
+                        pass_threshold = new { type = "string" }
+                    }
+                }
+            ),
+            dataSchema: BinaryData.FromObjectAsJson(
+                new {
+                    required = new[] { "item" },
+                    type = "object",
+                    properties = new
+                    {
+                        item = new
+                        {
+                            type = "object",
+                            properties = new
+                            {
+                                query = new { type = "string" },
+                                response = new { type = "string" },
+                                ground_truth = new { type = "string" },
+                            }
+                        }
+                    }
+                }
+            ),
+            metrics: new Dictionary<string, EvaluatorMetric> {
+                { "result", resultMetric }
+            }
+        ),
+        evaluatorType: EvaluatorType.Custom
+    )
+    {
+        DisplayName = "Custom code evaluator example",
+        Description = "Custom evaluator to detect violent content",
+    };
+    return evaluatorVersion;
+}
+```
+
+The code-based evaluator can be used the same way as prompt-based
+
+#### Evaluation with Application Insights
+
+Evaluators can be used to gather data from the Application Insights, connected to Microsoft Foundry.
+It requires both foundry and projects managed identity to be assigned "Log Analytics Reader" for the application insights.
+The data source configuration must have `scenario` field set to `traces`, informing that the data will be generated from Kusto query.
+
+```C# Snippet:Sample_CreateData_EvaluationsMonitor
+private static BinaryData GetEvaluationCriteria(string[] names, string modelDeploymentName)
+{
+    object[] testingCriteria = new object[names.Length];
+    for (int i = 0; i < names.Length; i++)
+    {
+        testingCriteria[i] = new {
+            type = "azure_ai_evaluator",
+            name = names[i],
+            evaluator_name = $"builtin.{names[i]}",
+            data_mapping = new { query = "{{query}}", response = "{{response}}", tool_definitions= "{{tool_definitions}}" },
+            initialization_parameters = new { deployment_name = modelDeploymentName },
+        };
+    }
+    object dataSourceConfig = new
+    {
+        type = "azure_ai_source",
+        scenario = "traces"
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            name = "Trace Evaluation",
+            data_source_config = dataSourceConfig,
+            testing_criteria = testingCriteria
+        }
+    );
+}
+```
+
+The `runData` must contain name and ID of the evaluation and data source. In this scenario it type is `azure_ai_traces`, which informs the service to run the Kusto query on traces and filter it by the trace IDs, stored in traceIDs array of strings.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsMonitor
+object dataSource = new
+{
+    type = "azure_ai_traces",
+    trace_ids = traceIDs,
+    lookback_hours = lookbackHours
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"agent_trace_eval_{endTime:O}",
+        data_source = dataSource,
+        metadata = new
+        {
+            agent_id = agentId,
+            start_time = endTime.AddHours(-lookbackHours).ToString("O"),
+            end_time = endTime.ToString("O"),
+        }
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+#### Evaluating responses
+
+The evaluation may be done on the OpenAI response items, received from the Agent. To use this data structure,
+the data source configuration `scenario` has to be set to "responses".
+
+```C# Snippet:Sample_CreateData_EvaluationsAgent
+private static BinaryData GetEvaluationConfig(string modelDeploymentName)
+{
+    object[] testingCriteria = [
+        new {
+            type = "azure_ai_evaluator",
+            name = "violence_detection",
+            evaluator_name = "builtin.violence",
+        },
+    ];
+    object dataSourceConfig = new
+    {
+        type = "azure_ai_source",
+        scenario = "responses"
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            name = "Agent Response Evaluation",
+            data_source_config = dataSourceConfig,
+            testing_criteria = testingCriteria
+        }
+    );
+}
+```
+
+The data source needs to have section `item_generation_params`, having `response_retrieval`  type.
+This section informs service to get the data from the response with the given ID.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsAgent
+private static BinaryData GetRunData(string agentName, string responseId, string evaluationId)
+{
+    object dataSource = new
+    {
+        type = "azure_ai_responses",
+        item_generation_params = new {
+            type = "response_retrieval",
+            data_mapping = new { response_id = "{{item.resp_id}}" },
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new
+                    {
+                        item = new { resp_id =  responseId}
+                    }
+                }
+            }
+        },
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            eval_id = evaluationId,
+            name = $"Evaluation Run for Agent {agentName}",
+            data_source = dataSource
+        }
+    );
+}
+```
+
+#### Evaluation rules
+
+Evaluation rules allow subscribing the evaluation to a specific event.
+In the example below we create evaluation rule, which launches evaluation each time the Agent sends the response.
+
+```C# Snippet:Sample_CreateRule_EvaluationRules
+ContinuousEvaluationRuleAction continuousAction = new(evaluationId)
+{
+    MaxHourlyRuns = 100,
+};
+EvaluationRule continuousRule = new(
+    action: continuousAction, eventType: EvaluationRuleEventType.ResponseCompleted, enabled: true)
+{
+    Filter = new EvaluationRuleFilter(agentName: agentVersion.Name),
+    DisplayName = "Continuous evaluation rule."
+};
+```
+
+Apply the rule.
+
+```C# Snippet:Sample_CreateRuleOnAzure_EvaluationRules_Async
+EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOrUpdateAsync(
+    id: "my-continuous-eval-rule",
+    evaluationRule: continuousRule
+);
+Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
+```
+
 ## Troubleshooting
 
 Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
@@ -392,11 +1251,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
+[samples]: https://aka.ms/azsdk/Azure.AI.Projects/net/samples
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-v1
 [nuget]: https://www.nuget.org/packages/Azure.AI.Projects
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects
-[product_doc]: https://learn.microsoft.com/azure/ai-studio/
+[source_code]: https://aka.ms/azsdk/Azure.AI.Projects/net/code
+[product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md

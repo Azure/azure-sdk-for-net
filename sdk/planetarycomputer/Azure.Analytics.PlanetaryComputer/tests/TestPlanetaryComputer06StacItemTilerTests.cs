@@ -83,7 +83,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"First matrix ID: {firstMatrix.Id}");
             TestContext.WriteLine($"Tile dimensions: {tileWidth}x{tileHeight}");
-            TestContext.WriteLine($"Scale denominator: {firstMatrix.ScaleDenominator}");        }
+            TestContext.WriteLine($"Scale denominator: {firstMatrix.ScaleDenominator}");
+        }
 
         /// <summary>
         /// Tests listing all available tile matrix set IDs.
