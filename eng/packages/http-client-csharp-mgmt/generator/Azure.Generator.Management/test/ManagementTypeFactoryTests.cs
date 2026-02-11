@@ -44,5 +44,27 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(expectedType, result!.FrameworkType);
         }
+
+        [TestCase("Azure.ResourceManager.CommonTypes.ExtendedLocationType")]
+        [TestCase("Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType")]
+        public void KnownSystemEnumTypeIsNotGenerated(string crossLanguageDefinitionId)
+        {
+            var enumType = new InputEnumType(
+                "TestEnum",
+                "Sample.Models",
+                crossLanguageDefinitionId,
+                "public",
+                null,
+                "",
+                "TestEnum description",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                InputPrimitiveType.String,
+                [],
+                true);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
+            var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
+            Assert.IsNull(result);
+        }
     }
 }

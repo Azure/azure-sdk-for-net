@@ -93,6 +93,16 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
+        protected override EnumProvider? CreateEnumCore(InputEnumType enumType, TypeProvider? declaringType)
+        {
+            if (KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out _))
+            {
+                return null;
+            }
+            return base.CreateEnumCore(enumType, declaringType);
+        }
+
+        /// <inheritdoc/>
         public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
