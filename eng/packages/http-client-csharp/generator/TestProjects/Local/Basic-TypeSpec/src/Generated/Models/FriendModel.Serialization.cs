@@ -39,6 +39,19 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FriendModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FriendModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FriendModel"/> from. </param>
         public static explicit operator FriendModel(Response response)
         {
@@ -127,19 +140,6 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FriendModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FriendModel>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FriendModel)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -19,6 +19,8 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual IsModelAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator IsModelAdditionalProperties(Response response) => throw null;
 
         void IJsonModel<IsModelAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Property.AdditionalProperties
         protected virtual IsModelAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<IsModelAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         IsModelAdditionalProperties IPersistableModel<IsModelAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

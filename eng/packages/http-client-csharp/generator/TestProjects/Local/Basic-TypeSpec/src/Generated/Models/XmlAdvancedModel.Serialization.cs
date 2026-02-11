@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure;
 
@@ -39,6 +40,33 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            Write(writer, options, "AdvancedXmlModel");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(XmlAdvancedModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="XmlAdvancedModel"/> from. </param>
         public static explicit operator XmlAdvancedModel(Response response)
         {
@@ -49,6 +77,200 @@ namespace BasicTypeSpec
             }
 
             return DeserializeXmlAdvancedModel(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void Write(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<XmlAdvancedModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(XmlAdvancedModel)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartAttribute("id");
+            writer.WriteValue(Id);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("version");
+            writer.WriteValue(Version);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("isActive");
+            writer.WriteValue(IsActive);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("xml-id");
+            writer.WriteValue(XmlIdentifier);
+            writer.WriteEndAttribute();
+            writer.WriteAttributeString("ns1", "label", "https://example.com/ns1", Label);
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("age");
+            writer.WriteValue(Age);
+            writer.WriteEndElement();
+            writer.WriteStartElement("enabled");
+            writer.WriteValue(Enabled);
+            writer.WriteEndElement();
+            writer.WriteStartElement("score");
+            writer.WriteValue(Score);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(OptionalString))
+            {
+                writer.WriteStartElement("optionalString");
+                writer.WriteValue(OptionalString);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(OptionalInt))
+            {
+                writer.WriteStartElement("optionalInt");
+                writer.WriteValue(OptionalInt);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NullableString))
+            {
+                writer.WriteStartElement("nullableString");
+                writer.WriteValue(NullableString);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("RenamedProperty");
+            writer.WriteValue(OriginalName);
+            writer.WriteEndElement();
+            foreach (string item in UnwrappedStrings)
+            {
+                writer.WriteStartElement("unwrappedStrings");
+                writer.WriteValue(item);
+                writer.WriteEndElement();
+            }
+            foreach (int item in UnwrappedCounts)
+            {
+                writer.WriteStartElement("unwrappedCounts");
+                writer.WriteValue(item);
+                writer.WriteEndElement();
+            }
+            foreach (XmlItem item in UnwrappedItems)
+            {
+                writer.WriteStartElement("unwrappedItems");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("wrappedColors");
+            foreach (string item in WrappedColors)
+            {
+                writer.WriteStartElement("string");
+                writer.WriteValue(item);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("ItemCollection");
+            foreach (XmlItem item in Items)
+            {
+                writer.WriteStartElement("Item");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("nestedModel");
+            writer.WriteObjectValue(NestedModel, options);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(OptionalNestedModel))
+            {
+                writer.WriteStartElement("optionalNestedModel");
+                writer.WriteObjectValue(OptionalNestedModel, options);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("metadata");
+            foreach (var pair in Metadata)
+            {
+                writer.WriteStartElement(pair.Key);
+                writer.WriteValue(pair.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("createdAt");
+            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteEndElement();
+            writer.WriteStartElement("duration");
+            writer.WriteStringValue(Duration, "P");
+            writer.WriteEndElement();
+            writer.WriteStartElement("data");
+            writer.WriteBase64StringValue(Data.ToArray(), "D");
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(OptionalRecordUnknown))
+            {
+                writer.WriteStartElement("optionalRecordUnknown");
+                foreach (var pair in OptionalRecordUnknown)
+                {
+                    writer.WriteStartElement(pair.Key);
+                    writer.WriteValue(pair.Value.ToString());
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("fixedEnum");
+            writer.WriteValue(FixedEnum.ToSerialString());
+            writer.WriteEndElement();
+            writer.WriteStartElement("extensibleEnum");
+            writer.WriteValue(ExtensibleEnum.ToString());
+            writer.WriteEndElement();
+            if (Optional.IsDefined(OptionalFixedEnum))
+            {
+                writer.WriteStartElement("optionalFixedEnum");
+                writer.WriteValue((int)OptionalFixedEnum.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(OptionalExtensibleEnum))
+            {
+                writer.WriteStartElement("optionalExtensibleEnum");
+                writer.WriteValue(OptionalExtensibleEnum.Value.ToSerialInt32());
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("ns2", "daysUsed", "https://example.com/ns2");
+            writer.WriteValue(DaysUsed);
+            writer.WriteEndElement();
+            writer.WriteStartElement("foo", "fooItems", "http://www.contoso.com/anotherbook.dtd");
+            foreach (string item in FooItems)
+            {
+                writer.WriteStartElement("string");
+                writer.WriteValue(item);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("bar", "anotherModel", "http://www.contoso.com/anothermodel.dtd");
+            writer.WriteObjectValue(AnotherModel, options);
+            writer.WriteEndElement();
+            writer.WriteStartElement("modelsWithNamespaces");
+            foreach (XmlModelWithNamespace item in ModelsWithNamespaces)
+            {
+                writer.WriteStartElement("ns1", "XmlModelWithNamespace", "http://www.example.com/namespace");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            foreach (XmlModelWithNamespace item in UnwrappedModelsWithNamespaces)
+            {
+                writer.WriteStartElement("unwrappedModelsWithNamespaces");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
+            writer.WriteValue(Content);
         }
 
         /// <param name="element"> The xml element to deserialize. </param>

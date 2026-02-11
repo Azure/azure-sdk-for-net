@@ -19,6 +19,8 @@ namespace Encode.Duration._Property
 
         protected virtual Int32MillisecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Int32MillisecondsDurationProperty(Response response) => throw null;
 
         void IJsonModel<Int32MillisecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Encode.Duration._Property
         protected virtual Int32MillisecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Int32MillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Int32MillisecondsDurationProperty IPersistableModel<Int32MillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

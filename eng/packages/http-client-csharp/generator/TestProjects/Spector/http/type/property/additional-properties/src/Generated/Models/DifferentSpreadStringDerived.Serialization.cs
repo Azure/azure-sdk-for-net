@@ -19,6 +19,8 @@ namespace _Type.Property.AdditionalProperties
 
         protected override DifferentSpreadStringRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator DifferentSpreadStringDerived(Response response) => throw null;
 
         void IJsonModel<DifferentSpreadStringDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Property.AdditionalProperties
         protected override DifferentSpreadStringRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<DifferentSpreadStringDerived>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         DifferentSpreadStringDerived IPersistableModel<DifferentSpreadStringDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

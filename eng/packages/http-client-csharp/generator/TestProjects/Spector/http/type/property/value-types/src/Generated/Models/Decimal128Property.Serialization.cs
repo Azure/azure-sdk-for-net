@@ -19,6 +19,8 @@ namespace _Type.Property.ValueTypes
 
         protected virtual Decimal128Property PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Decimal128Property(Response response) => throw null;
 
         void IJsonModel<Decimal128Property>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Property.ValueTypes
         protected virtual Decimal128Property JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Decimal128Property>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Decimal128Property IPersistableModel<Decimal128Property>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

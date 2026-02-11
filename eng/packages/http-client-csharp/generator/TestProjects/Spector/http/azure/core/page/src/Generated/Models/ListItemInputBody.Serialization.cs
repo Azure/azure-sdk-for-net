@@ -18,6 +18,8 @@ namespace Specs.Azure.Core.Page
 
         protected virtual ListItemInputBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<ListItemInputBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,8 +29,6 @@ namespace Specs.Azure.Core.Page
         protected virtual ListItemInputBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<ListItemInputBody>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         ListItemInputBody IPersistableModel<ListItemInputBody>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

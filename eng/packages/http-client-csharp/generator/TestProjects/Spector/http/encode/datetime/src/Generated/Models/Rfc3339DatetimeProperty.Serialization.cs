@@ -19,6 +19,8 @@ namespace Encode.Datetime
 
         protected virtual Rfc3339DatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Rfc3339DatetimeProperty(Response response) => throw null;
 
         void IJsonModel<Rfc3339DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Encode.Datetime
         protected virtual Rfc3339DatetimeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Rfc3339DatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Rfc3339DatetimeProperty IPersistableModel<Rfc3339DatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

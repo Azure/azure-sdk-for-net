@@ -19,6 +19,8 @@ namespace _Type.Model.Visibility
 
         protected virtual VisibilityModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator VisibilityModel(Response response) => throw null;
 
         void IJsonModel<VisibilityModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Model.Visibility
         protected virtual VisibilityModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<VisibilityModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         VisibilityModel IPersistableModel<VisibilityModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
