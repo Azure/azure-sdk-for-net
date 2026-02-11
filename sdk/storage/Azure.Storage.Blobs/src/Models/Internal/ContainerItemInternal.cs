@@ -6,5 +6,5 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     [CodeGenModel("ContainerItem")]
-    internal partial class ContainerItemInternal {}
+    internal partial class ContainerItemInternal { }
 }

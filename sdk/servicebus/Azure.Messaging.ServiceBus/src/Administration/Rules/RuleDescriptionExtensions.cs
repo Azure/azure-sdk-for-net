@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             if (description.Name.Contains(Constants.PathDelimiter) || description.Name.Contains(@"\"))
             {
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly. Specifying the Name property
-                               // is more intuitive, than just description.
+                // is more intuitive, than just description.
                 throw new ArgumentException(
                     Resources.InvalidCharacterInEntityName.FormatForUser(Constants.PathDelimiter, description.Name),
                     nameof(description.Name));

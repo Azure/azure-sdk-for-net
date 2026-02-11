@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     streamLength: length,
                     overwrite: false,
                     completeLength: length,
-                    options: new StorageResourceWriteToOffsetOptions(){ Position = position }),
+                    options: new StorageResourceWriteToOffsetOptions() { Position = position }),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "BlobAlreadyExists");
@@ -950,7 +950,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite:false, completeLength: length),
+                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
                     Assert.IsTrue(e.Status == (int)HttpStatusCode.Unauthorized);

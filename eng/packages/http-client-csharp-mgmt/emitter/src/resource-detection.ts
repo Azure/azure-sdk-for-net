@@ -63,11 +63,13 @@ export async function updateClients(
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
-  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
-  const armProviderSchema =
-    options?.["use-legacy-resource-detection"] === false
-      ? resolveArmResources(sdkContext.program, sdkContext)
-      : buildArmProviderSchema(sdkContext, codeModel);
+  let armProviderSchema: ArmProviderSchema;
+
+  if (options?.["use-legacy-resource-detection"] === false) {
+    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
+  } else {
+    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
@@ -144,6 +146,16 @@ export function buildArmProviderSchema(
       } else {
         // For non-CRUD operations like List or Action, try to match with existing resource paths for the same model
         const operationPath = method.operation.path;
+        // Collect all matching candidates with resource type match
+        const typeMatchCandidates: Array<{
+          existingPath: string;
+        }> = [];
+        // Collect candidates with both resource type and prefix match (scored by prefix length)
+        const prefixMatchCandidates: Array<{
+          existingPath: string;
+          matchScore: number;
+        }> = [];
+
         for (const [existingKey] of resourcePathToMetadataMap) {
           const [existingModelId, existingPath] = existingKey.split("|");
           // Check if this is for the same model
@@ -160,30 +172,45 @@ export function buildArmProviderSchema(
               // If we can't calculate resource type, try string matching
             }
 
-            // If resource types match exactly, this list operation belongs to this resource
+            // If resource types match exactly, this is a potential candidate
             if (
               existingResourceType &&
               operationResourceType === existingResourceType
             ) {
-              resourcePath = existingPath;
-              foundMatchingResource = true;
-              break;
+              // Add to type match candidates
+              typeMatchCandidates.push({ existingPath });
             }
 
-            // Fallback: check if the operation path ends with a segment that matches the existing path
-            // But only if we haven't found a better match yet
-            if (!resourcePath) {
-              const existingParentPath = existingPath.substring(
-                0,
-                existingPath.lastIndexOf("/")
-              );
-              if (isPrefix(existingParentPath, operationPath)) {
-                // Store this as a potential match, but continue looking for exact matches
-                resourcePath = existingPath;
-                foundMatchingResource = true;
-              }
+            // Also check for prefix match as a fallback
+            // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
+            const existingParentPath = existingPath.substring(
+              0,
+              existingPath.lastIndexOf("/")
+            );
+            if (isPrefix(existingParentPath, operationPath)) {
+              // Score based on how many segments match (longer prefix = better match)
+              const score = existingParentPath
+                .split("/")
+                .filter((s) => s.length > 0).length;
+              prefixMatchCandidates.push({ existingPath, matchScore: score });
             }
           }
+        }
+
+        // Selection strategy:
+        // 1. If there are prefix matches, use the best one (handles multi-scope resources correctly)
+        // 2. If there's only ONE type match candidate and no prefix matches, use it
+        //    (handles listBySubscription on a single resource group-scoped resource)
+        // 3. Otherwise, no match found - will be handled by post-processing
+        if (prefixMatchCandidates.length > 0) {
+          prefixMatchCandidates.sort((a, b) => b.matchScore - a.matchScore);
+          resourcePath = prefixMatchCandidates[0].existingPath;
+          foundMatchingResource = true;
+        } else if (typeMatchCandidates.length === 1) {
+          // Only one resource with matching type - safe to use it even without prefix match
+          // This handles cases like listBySubscription on a resource group-scoped resource
+          resourcePath = typeMatchCandidates[0].existingPath;
+          foundMatchingResource = true;
         }
         // If no match found for Action operations that don't have a resource instance in their path,
         // treat them as non-resource methods (provider operations).
@@ -194,7 +221,7 @@ export function buildArmProviderSchema(
           const model = resourceModelMap.get(modelId);
           const resourceTypeName = model?.name?.toLowerCase();
           const pathLower = operationPath.toLowerCase();
-          
+
           // If the path doesn't include the resource type segment (e.g., "scheduledactions"),
           // it's a provider operation, not a resource action
           if (resourceTypeName && !pathLower.includes(resourceTypeName)) {
@@ -310,11 +337,11 @@ export function buildArmProviderSchema(
   // Convert metadata map to ArmResourceSchema[] for post-processing
   const resources: ArmResourceSchema[] = [];
   const metadataKeyToResource = new Map<string, ArmResourceSchema>();
-  
+
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split("|")[0];
     const model = resourceModelMap.get(modelId);
-    
+
     // Emit diagnostic for resources without resourceIdPattern
     if (metadata.resourceIdPattern === "" && model) {
       sdkContext.logger.reportDiagnostic({
@@ -326,7 +353,7 @@ export function buildArmProviderSchema(
         target: NoTarget
       });
     }
-    
+
     const resource: ArmResourceSchema = {
       resourceModelId: modelId,
       metadata: metadata
@@ -386,13 +413,18 @@ export function buildArmProviderSchema(
   // Create parent lookup context for legacy resource detection
   // In this case, parent information comes from decorators and path matching (already populated above)
   const parentLookup: ParentResourceLookupContext = {
-    getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
+    getParentResource: (
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined => {
       const parentModelId = resource.metadata.parentResourceModelId;
       if (!parentModelId) return undefined;
 
       // Find parent resource with matching model ID and a valid resourceIdPattern
       for (const r of resources) {
-        if (r.resourceModelId === parentModelId && r.metadata.resourceIdPattern) {
+        if (
+          r.resourceModelId === parentModelId &&
+          r.metadata.resourceIdPattern
+        ) {
           return r;
         }
       }
@@ -401,10 +433,14 @@ export function buildArmProviderSchema(
   };
 
   // Convert non-resource methods map to array
-  const nonResourceMethodsArray: NonResourceMethod[] = Array.from(nonResourceMethods.values());
+  const nonResourceMethodsArray: NonResourceMethod[] = Array.from(
+    nonResourceMethods.values()
+  );
 
   // Track resources before post-processing to emit diagnostics for filtered resources
-  const resourcesBeforeFiltering = new Set(resources.filter(r => r.metadata.resourceIdPattern !== ""));
+  const resourcesBeforeFiltering = new Set(
+    resources.filter((r) => r.metadata.resourceIdPattern !== "")
+  );
 
   // Use the shared post-processing function
   const filteredResources = postProcessArmResources(
@@ -455,7 +491,7 @@ export function buildArmProviderSchema(
             if (explicitName) {
               resource.metadata.resourceName = explicitName;
             } else {
-              // Fallback: derive from client name using pluralize.singular
+              // Try to derive from client name using pluralize.singular
               const clientName = resourcePathToClientName.get(metadataKey);
               if (clientName) {
                 resource.metadata.resourceName = pluralize.singular(clientName);
@@ -542,7 +578,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "createOrUpdate":
             return {
@@ -552,7 +591,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "update":
             return {
@@ -562,7 +604,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "delete":
             return {
@@ -572,7 +617,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "list":
             return {
@@ -582,7 +630,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "action":
             return {
@@ -592,7 +643,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
         }
         break;
@@ -607,10 +661,10 @@ function parseResourceOperation(
                 decorator.args[0].value as Model,
                 decorator.definition?.name
               ),
-              // Extract the explicit resource name if available (4th parameter in LegacyOperations)
+              // Extract the explicit resource name if available (3rd parameter: Resource, kind, ResourceName)
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "createOrUpdate":
@@ -622,8 +676,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "update":
@@ -635,8 +689,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "delete":
@@ -648,8 +702,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "list":
@@ -661,8 +715,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "action":
@@ -674,8 +728,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
         }
@@ -805,6 +859,7 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
+    // Check for armResource decorators
     if (
       model.decorators?.some(
         (d) =>

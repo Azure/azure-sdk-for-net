@@ -8,16 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    public partial class ActionOnUnmanage : IUtf8JsonSerializable, IJsonModel<ActionOnUnmanage>
+    /// <summary> Defines the behavior of resources that are no longer managed after the stack is updated or deleted. </summary>
+    public partial class ActionOnUnmanage : IJsonModel<ActionOnUnmanage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionOnUnmanage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ActionOnUnmanage"/> for deserialization. </summary>
+        internal ActionOnUnmanage()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActionOnUnmanage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +34,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActionOnUnmanage)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resources"u8);
             writer.WriteStringValue(Resources.ToString());
             if (Optional.IsDefined(ResourceGroups))
@@ -47,15 +51,20 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStringValue(ManagementGroups.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ResourcesWithoutDeleteSupport))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("resourcesWithoutDeleteSupport"u8);
+                writer.WriteStringValue(ResourcesWithoutDeleteSupport.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,146 +73,108 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        ActionOnUnmanage IJsonModel<ActionOnUnmanage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActionOnUnmanage IJsonModel<ActionOnUnmanage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActionOnUnmanage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActionOnUnmanage)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeActionOnUnmanage(document.RootElement, options);
         }
 
-        internal static ActionOnUnmanage DeserializeActionOnUnmanage(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ActionOnUnmanage DeserializeActionOnUnmanage(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DeploymentStacksDeleteDetachEnum resources = default;
-            DeploymentStacksDeleteDetachEnum? resourceGroups = default;
-            DeploymentStacksDeleteDetachEnum? managementGroups = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            UnmanageActionResourceMode resources = default;
+            UnmanageActionResourceGroupMode? resourceGroups = default;
+            UnmanageActionManagementGroupMode? managementGroups = default;
+            ResourcesWithoutDeleteSupportAction? resourcesWithoutDeleteSupport = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resources"u8))
+                if (prop.NameEquals("resources"u8))
                 {
-                    resources = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
+                    resources = new UnmanageActionResourceMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroups"u8))
+                if (prop.NameEquals("resourceGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceGroups = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
+                    resourceGroups = new UnmanageActionResourceGroupMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managementGroups"u8))
+                if (prop.NameEquals("managementGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managementGroups = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
+                    managementGroups = new UnmanageActionManagementGroupMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resourcesWithoutDeleteSupport"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourcesWithoutDeleteSupport = new ResourcesWithoutDeleteSupportAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ActionOnUnmanage(resources, resourceGroups, managementGroups, serializedAdditionalRawData);
+            return new ActionOnUnmanage(resources, resourceGroups, managementGroups, resourcesWithoutDeleteSupport, additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ActionOnUnmanage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  resources: ");
-                builder.AppendLine($"'{Resources.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGroups))
-                {
-                    builder.Append("  resourceGroups: ");
-                    builder.AppendLine($"'{ResourceGroups.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagementGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  managementGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagementGroups))
-                {
-                    builder.Append("  managementGroups: ");
-                    builder.AppendLine($"'{ManagementGroups.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ActionOnUnmanage>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ActionOnUnmanage)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ActionOnUnmanage IPersistableModel<ActionOnUnmanage>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActionOnUnmanage IPersistableModel<ActionOnUnmanage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActionOnUnmanage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionOnUnmanage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeActionOnUnmanage(document.RootElement, options);
                     }
                 default:
@@ -211,6 +182,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ActionOnUnmanage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

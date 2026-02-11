@@ -13,6 +13,7 @@ import {
 import { updateClients } from "./resource-detection.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 import { AzureMgmtEmitterOptions } from "./options.js";
+import { transformSubscriptionIdParameters } from "./subscription-id-transformer.js";
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
@@ -26,6 +27,10 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     codeModel: CodeModel,
     sdkContext: CSharpEmitterContext
   ): CodeModel {
+    // Transform subscriptionId parameters from client scope to method scope
+    // This must happen before other transformations that may depend on method parameters
+    transformSubscriptionIdParameters(codeModel);
+
     updateClients(codeModel, sdkContext, context.options);
     setFlattenProperty(codeModel, sdkContext);
     return codeModel;

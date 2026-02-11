@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.SelfHelp.Models;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.SelfHelp.Tests
 {
@@ -43,8 +43,9 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var solutionId = "9004345-7759";
 
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
+            SimplifiedSolutionsResourceProperties simplifiedSolutionsResourceProperties = new SimplifiedSolutionsResourceProperties(solutionId, parameters, null, null, null, null, null);
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SelfHelpSimplifiedSolutionData(scope, null, resourceType, null, solutionId, parameters, null, null, null, null, null);
+            var data = new SelfHelpSimplifiedSolutionData(scope, null, resourceType, null, null, simplifiedSolutionsResourceProperties);
 
             return data;
         }

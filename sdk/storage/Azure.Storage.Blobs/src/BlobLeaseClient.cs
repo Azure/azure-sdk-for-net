@@ -1375,7 +1375,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            long? serviceBreakPeriod = breakPeriod != null ? Convert.ToInt64(breakPeriod.Value.TotalSeconds) : (long?) null;
+            long? serviceBreakPeriod = breakPeriod != null ? Convert.ToInt64(breakPeriod.Value.TotalSeconds) : (long?)null;
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
             {
                 Pipeline.LogMethodEnter(

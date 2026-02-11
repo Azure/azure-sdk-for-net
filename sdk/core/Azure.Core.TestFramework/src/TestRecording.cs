@@ -218,7 +218,7 @@ namespace Azure.Core.TestFramework
         {
             get
             {
-               return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
+                return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
             }
         }
 

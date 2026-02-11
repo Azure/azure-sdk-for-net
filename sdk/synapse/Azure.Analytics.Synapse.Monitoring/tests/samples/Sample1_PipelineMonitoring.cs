@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Core.TestFramework;
-using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Monitoring;
 using Azure.Analytics.Synapse.Monitoring.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -34,11 +34,11 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
             {
                 if (sparkJob.State == "Running")
                 {
-                    Console.WriteLine ($"{sparkJob.Name} has been running for {sparkJob.RunningDuration}");
+                    Console.WriteLine($"{sparkJob.Name} has been running for {sparkJob.RunningDuration}");
                 }
                 else
                 {
-                    Console.WriteLine ($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
+                    Console.WriteLine($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
                 }
             }
             #endregion

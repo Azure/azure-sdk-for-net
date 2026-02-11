@@ -15,6 +15,10 @@ namespace _Type.Property.ValueTypes
 {
     public partial class UnionEnumValueProperty : IJsonModel<UnionEnumValueProperty>
     {
+        protected virtual UnionEnumValueProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator UnionEnumValueProperty(Response response) => throw null;
+
         void IJsonModel<UnionEnumValueProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,13 +33,9 @@ namespace _Type.Property.ValueTypes
 
         UnionEnumValueProperty IPersistableModel<UnionEnumValueProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UnionEnumValueProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<UnionEnumValueProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="unionEnumValueProperty"> The <see cref="UnionEnumValueProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnionEnumValueProperty unionEnumValueProperty) => throw null;
-
-        public static explicit operator UnionEnumValueProperty(Response response) => throw null;
     }
 }

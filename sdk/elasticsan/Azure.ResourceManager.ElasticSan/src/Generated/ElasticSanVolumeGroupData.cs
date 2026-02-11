@@ -13,107 +13,139 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary>
-    /// A class representing the ElasticSanVolumeGroup data model.
-    /// Response for Volume Group request.
-    /// </summary>
+    /// <summary> Response for Volume Group request. </summary>
     public partial class ElasticSanVolumeGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupData"/>. </summary>
         public ElasticSanVolumeGroupData()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="protocolType"> Type of storage target. </param>
-        /// <param name="encryption"> Type of encryption. </param>
-        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
-        /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
-        /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="properties"> Properties of VolumeGroup. </param>
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity, VolumeGroupProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            ProtocolType = protocolType;
-            Encryption = encryption;
-            EncryptionProperties = encryptionProperties;
-            NetworkAcls = networkAcls;
-            PrivateEndpointConnections = privateEndpointConnections;
-            EnforceDataIntegrityCheckForIscsi = enforceDataIntegrityCheckForIscsi;
-            DeleteRetentionPolicy = deleteRetentionPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Properties of VolumeGroup. </summary>
+        internal VolumeGroupProperties Properties { get; set; }
+
         /// <summary> State of the operation on the resource. </summary>
-        public ElasticSanProvisioningState? ProvisioningState { get; }
+        public ElasticSanProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Type of storage target. </summary>
-        public ElasticSanStorageTargetType? ProtocolType { get; set; }
+        public ElasticSanStorageTargetType? ProtocolType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtocolType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.ProtocolType = value.Value;
+            }
+        }
+
         /// <summary> Type of encryption. </summary>
-        public ElasticSanEncryptionType? Encryption { get; set; }
+        public ElasticSanEncryptionType? Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.Encryption = value.Value;
+            }
+        }
+
         /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
-        public ElasticSanEncryptionProperties EncryptionProperties { get; set; }
-        /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
-        internal ElasticSanNetworkRuleSet NetworkAcls { get; set; }
+        public ElasticSanEncryptionProperties EncryptionProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.EncryptionProperties = value;
+            }
+        }
+
+        /// <summary> The list of Private Endpoint Connections. </summary>
+        public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> A boolean indicating whether or not Data Integrity Check is enabled. </summary>
+        public bool? EnforceDataIntegrityCheckForIscsi
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnforceDataIntegrityCheckForIscsi;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.EnforceDataIntegrityCheckForIscsi = value.Value;
+            }
+        }
+
         /// <summary> The list of virtual network rules. </summary>
         public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {
             get
             {
-                if (NetworkAcls is null)
-                    NetworkAcls = new ElasticSanNetworkRuleSet();
-                return NetworkAcls.VirtualNetworkRules;
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                return Properties.VirtualNetworkRules;
             }
         }
-
-        /// <summary> The list of Private Endpoint Connections. </summary>
-        public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> A boolean indicating whether or not Data Integrity Check is enabled. </summary>
-        public bool? EnforceDataIntegrityCheckForIscsi { get; set; }
-        /// <summary> The retention policy for the soft deleted volume group and its associated resources. </summary>
-        public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
     }
 }

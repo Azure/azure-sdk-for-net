@@ -28,7 +28,7 @@ public partial class MessageAttachment
         _serializedAdditionalRawData = null;
     }
 
-    private static List<BinaryData> serializeJson<T>(List<T> definitions) where T: IJsonModel<T>
+    private static List<BinaryData> serializeJson<T>(List<T> definitions) where T : IJsonModel<T>
     {
         List<BinaryData> serializedDefinitions = new();
         foreach (IJsonModel<T> definition in definitions)

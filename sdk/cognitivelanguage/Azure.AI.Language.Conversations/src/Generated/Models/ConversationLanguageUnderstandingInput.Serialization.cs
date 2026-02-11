@@ -9,14 +9,37 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class ConversationLanguageUnderstandingInput : IUtf8JsonSerializable, IJsonModel<ConversationLanguageUnderstandingInput>
+    /// <summary> The input for a conversation language understanding task. </summary>
+    public partial class ConversationLanguageUnderstandingInput : AnalyzeConversationInput, IJsonModel<ConversationLanguageUnderstandingInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationLanguageUnderstandingInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingInput"/> for deserialization. </summary>
+        internal ConversationLanguageUnderstandingInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnalyzeConversationInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConversationLanguageUnderstandingInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConversationLanguageUnderstandingInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +51,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("analysisInput"u8);
             writer.WriteObjectValue(ConversationInput, options);
@@ -41,61 +63,67 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteObjectValue(ActionContent, options);
         }
 
-        ConversationLanguageUnderstandingInput IJsonModel<ConversationLanguageUnderstandingInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationLanguageUnderstandingInput IJsonModel<ConversationLanguageUnderstandingInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConversationLanguageUnderstandingInput)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnalyzeConversationInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConversationLanguageUnderstandingInput(document.RootElement, options);
         }
 
-        internal static ConversationLanguageUnderstandingInput DeserializeConversationLanguageUnderstandingInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConversationLanguageUnderstandingInput DeserializeConversationLanguageUnderstandingInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ConversationAnalysisInput analysisInput = default;
-            ConversationLanguageUnderstandingActionContent parameters = default;
             AnalyzeConversationInputKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ConversationAnalysisInput conversationInput = default;
+            ConversationLanguageUnderstandingActionContent actionContent = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("analysisInput"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    analysisInput = ConversationAnalysisInput.DeserializeConversationAnalysisInput(property.Value, options);
+                    kind = new AnalyzeConversationInputKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameters"u8))
+                if (prop.NameEquals("analysisInput"u8))
                 {
-                    parameters = ConversationLanguageUnderstandingActionContent.DeserializeConversationLanguageUnderstandingActionContent(property.Value, options);
+                    conversationInput = ConversationAnalysisInput.DeserializeConversationAnalysisInput(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    kind = new AnalyzeConversationInputKind(property.Value.GetString());
+                    actionContent = ConversationLanguageUnderstandingActionContent.DeserializeConversationLanguageUnderstandingActionContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationLanguageUnderstandingInput(kind, serializedAdditionalRawData, analysisInput, parameters);
+            return new ConversationLanguageUnderstandingInput(kind, additionalBinaryDataProperties, conversationInput, actionContent);
         }
 
-        BinaryData IPersistableModel<ConversationLanguageUnderstandingInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConversationLanguageUnderstandingInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -105,38 +133,11 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        ConversationLanguageUnderstandingInput IPersistableModel<ConversationLanguageUnderstandingInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationLanguageUnderstandingInput IPersistableModel<ConversationLanguageUnderstandingInput>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationLanguageUnderstandingInput)PersistableModelCreateCore(data, options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConversationLanguageUnderstandingInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConversationLanguageUnderstandingInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ConversationLanguageUnderstandingInput FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConversationLanguageUnderstandingInput(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using NUnit.Framework.Internal;
-using System.IO;
-using System.Xml;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
                     {
                         PolicyParameters = new BackupInstancePolicySettings()
                         {
-                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters" ,null) }
+                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters", null) }
                         }
                     },
                     "BackupInstance"

@@ -8,62 +8,184 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmQuantumModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Quantum.QuantumWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed Identity information. Current supported identity types: SystemAssigned, None. </param>
-        /// <param name="providers"> List of Providers selected for this Workspace. </param>
-        /// <param name="usable"> Whether the current workspace is ready to accept Jobs. </param>
-        /// <param name="provisioningState"> Provisioning status field. </param>
-        /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
-        /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
-        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
-        /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
-        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<QuantumProvider> providers = null, WorkspaceUsableStatus? usable = null, QuantumProvisioningStatus? provisioningState = null, string storageAccount = null, Uri endpointUri = null, bool? isApiKeyEnabled = null)
+
+        /// <summary> The check availability result. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
+        /// <returns> A new <see cref="Models.WorkspaceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static WorkspaceNameAvailabilityResult WorkspaceNameAvailabilityResult(bool? isNameAvailable = default, WorkspaceNameUnavailableReason? reason = default, string message = default)
         {
-            tags ??= new Dictionary<string, string>();
-            providers ??= new List<QuantumProvider>();
+            return new WorkspaceNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource proxy definition object for Quantum Workspace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Gets or sets the properties. Define quantum workspace's specific properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
+        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, QuantumWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new QuantumWorkspaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                identity,
-                providers?.ToList(),
+                properties,
+                identity);
+        }
+
+        /// <param name="providers"> List of Providers selected for this Workspace. </param>
+        /// <param name="usable"> Whether the current workspace is ready to accept Jobs. </param>
+        /// <param name="provisioningState"> Provisioning status field. </param>
+        /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
+        /// <param name="workspaceKind"> Whether this workspace is V1 or V2. </param>
+        /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
+        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
+        /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
+        /// <param name="managedStorageAccount"> ARM Resource Id of the managed storage account associated with this workspace. </param>
+        /// <returns> A new <see cref="Models.QuantumWorkspaceProperties"/> instance for mocking. </returns>
+        public static QuantumWorkspaceProperties QuantumWorkspaceProperties(IEnumerable<QuantumProvider> providers = default, WorkspaceUsableStatus? usable = default, ProviderProvisioningStatus? provisioningState = default, ResourceIdentifier storageAccount = default, QuantumWorkspaceKind? workspaceKind = default, Uri endpointUri = default, bool? isApiKeyEnabled = default, IEnumerable<MoboBrokerInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier managedStorageAccount = default)
+        {
+            providers ??= new ChangeTrackingList<QuantumProvider>();
+
+            return new QuantumWorkspaceProperties(
+                providers.ToList(),
                 usable,
                 provisioningState,
                 storageAccount,
+                workspaceKind,
                 endpointUri,
                 isApiKeyEnabled,
-                serializedAdditionalRawData: null);
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerInfo>()).ToList(), null),
+                managedStorageAccount,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuantumProviderDescription"/>. </summary>
+        /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
+        /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
+        /// <returns> A new <see cref="Models.MoboBrokerInfo"/> instance for mocking. </returns>
+        public static MoboBrokerInfo MoboBrokerInfo(ResourceIdentifier id = default)
+        {
+            return new MoboBrokerInfo(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for updating tags in QuantumWorkspace resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.QuantumWorkspacePatch"/> instance for mocking. </returns>
+        public static QuantumWorkspacePatch QuantumWorkspacePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new QuantumWorkspacePatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of list Api keys and connection strings. </summary>
+        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
+        /// <param name="primaryKey"> The quantum workspace primary api key. </param>
+        /// <param name="secondaryKey"> The quantum workspace secondary api key. </param>
+        /// <param name="primaryConnectionString"> The connection string of the primary api key. </param>
+        /// <param name="secondaryConnectionString"> The connection string of the secondary api key. </param>
+        /// <returns> A new <see cref="Models.WorkspaceKeyListResult"/> instance for mocking. </returns>
+        public static WorkspaceKeyListResult WorkspaceKeyListResult(bool? isApiKeyEnabled = default, WorkspaceApiKey primaryKey = default, WorkspaceApiKey secondaryKey = default, string primaryConnectionString = default, string secondaryConnectionString = default)
+        {
+            return new WorkspaceKeyListResult(
+                isApiKeyEnabled,
+                primaryKey,
+                secondaryKey,
+                primaryConnectionString,
+                secondaryConnectionString,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure quantum workspace Api key details. </summary>
+        /// <param name="createdOn"> The creation time of the api key. </param>
+        /// <param name="key"> The Api key. </param>
+        /// <returns> A new <see cref="Models.WorkspaceApiKey"/> instance for mocking. </returns>
+        public static WorkspaceApiKey WorkspaceApiKey(DateTimeOffset? createdOn = default, string key = default)
+        {
+            return new WorkspaceApiKey(createdOn, key, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List of api keys to be generated. </summary>
+        /// <param name="keys"> A list of api key names. </param>
+        /// <returns> A new <see cref="Models.WorkspaceApiKeys"/> instance for mocking. </returns>
+        public static WorkspaceApiKeys WorkspaceApiKeys(IEnumerable<WorkspaceKeyType> keys = default)
+        {
+            keys ??= new ChangeTrackingList<WorkspaceKeyType>();
+
+            return new WorkspaceApiKeys(keys.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Quantum Suite Offer that is available to a subscription. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.QuantumSuiteOffer"/> instance for mocking. </returns>
+        public static QuantumSuiteOffer QuantumSuiteOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuantumSuiteOfferProperties properties = default)
+        {
+            return new QuantumSuiteOffer(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of a Quantum Suite Offer. </summary>
+        /// <param name="providerId"> The provider ID of the offer. </param>
+        /// <param name="providerName"> The provider name of the offer. </param>
+        /// <param name="companyName"> The name of the company that is providing this offer. </param>
+        /// <param name="location"> The location where this offer is available. </param>
+        /// <param name="description"> Description of the offer. </param>
+        /// <param name="quotas"> Quota allocations associated with this offer. </param>
+        /// <returns> A new <see cref="Models.QuantumSuiteOfferProperties"/> instance for mocking. </returns>
+        public static QuantumSuiteOfferProperties QuantumSuiteOfferProperties(string providerId = default, string providerName = default, string companyName = default, string location = default, string description = default, AzureLocation? quotas = default)
+        {
+            return new QuantumSuiteOfferProperties(
+                providerId,
+                providerName,
+                companyName,
+                location,
+                description,
+                quotas,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> Provider properties. </param>
-        /// <returns> A new <see cref="Models.QuantumProviderDescription"/> instance for mocking. </returns>
-        public static QuantumProviderDescription QuantumProviderDescription(string id = null, string name = null, QuantumProviderProperties properties = null)
+        /// <returns> A new <see cref="Models.QuantumProviderOffer"/> instance for mocking. </returns>
+        public static QuantumProviderOffer QuantumProviderOffer(string id = default, string name = default, QuantumProviderOfferProperties properties = default)
         {
-            return new QuantumProviderDescription(id, name, properties, serializedAdditionalRawData: null);
+            return new QuantumProviderOffer(id, name, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuantumProviderProperties"/>. </summary>
+        /// <summary> Provider properties. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -74,68 +196,75 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
-        /// <returns> A new <see cref="Models.QuantumProviderProperties"/> instance for mocking. </returns>
-        public static QuantumProviderProperties QuantumProviderProperties(string description = null, string providerType = null, string company = null, string defaultEndpoint = null, ProviderAadInfo aad = null, ProviderApplicationInfo managedApplication = null, IEnumerable<ProviderTargetDescription> targets = null, IEnumerable<ProviderSkuDescription> skus = null, IEnumerable<QuantumQuotaDimension> quotaDimensions = null, IEnumerable<ProviderPricingDimension> pricingDimensions = null)
+        /// <returns> A new <see cref="Models.QuantumProviderOfferProperties"/> instance for mocking. </returns>
+        public static QuantumProviderOfferProperties QuantumProviderOfferProperties(string description = default, string providerType = default, string company = default, string defaultEndpoint = default, ProviderAadInfo aad = default, ProviderApplicationInfo managedApplication = default, IEnumerable<ProviderTargetDescription> targets = default, IEnumerable<ProviderSkuDescription> skus = default, IEnumerable<QuantumQuotaDimension> quotaDimensions = default, IEnumerable<ProviderPricingDimension> pricingDimensions = default)
         {
-            targets ??= new List<ProviderTargetDescription>();
-            skus ??= new List<ProviderSkuDescription>();
-            quotaDimensions ??= new List<QuantumQuotaDimension>();
-            pricingDimensions ??= new List<ProviderPricingDimension>();
+            targets ??= new ChangeTrackingList<ProviderTargetDescription>();
+            skus ??= new ChangeTrackingList<ProviderSkuDescription>();
+            quotaDimensions ??= new ChangeTrackingList<QuantumQuotaDimension>();
+            pricingDimensions ??= new ChangeTrackingList<ProviderPricingDimension>();
 
-            return new QuantumProviderProperties(
+            return new QuantumProviderOfferProperties(
                 description,
                 providerType,
                 company,
                 defaultEndpoint,
                 aad,
                 managedApplication,
-                targets?.ToList(),
-                skus?.ToList(),
-                quotaDimensions?.ToList(),
-                pricingDimensions?.ToList(),
-                serializedAdditionalRawData: null);
+                targets.ToList(),
+                skus.ToList(),
+                quotaDimensions.ToList(),
+                pricingDimensions.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderAadInfo"/>. </summary>
+        /// <summary> Azure Active Directory info. </summary>
         /// <param name="applicationId"> Provider's application id. </param>
         /// <param name="tenantId"> Provider's tenant id. </param>
         /// <returns> A new <see cref="Models.ProviderAadInfo"/> instance for mocking. </returns>
-        public static ProviderAadInfo ProviderAadInfo(string applicationId = null, Guid? tenantId = null)
+        public static ProviderAadInfo ProviderAadInfo(string applicationId = default, Guid? tenantId = default)
         {
-            return new ProviderAadInfo(applicationId, tenantId, serializedAdditionalRawData: null);
+            return new ProviderAadInfo(applicationId, tenantId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderApplicationInfo"/>. </summary>
+        /// <summary> Provider's Managed-Application info. </summary>
         /// <param name="publisherId"> Provider's publisher id. </param>
         /// <param name="offerId"> Provider's offer id. </param>
         /// <returns> A new <see cref="Models.ProviderApplicationInfo"/> instance for mocking. </returns>
-        public static ProviderApplicationInfo ProviderApplicationInfo(string publisherId = null, string offerId = null)
+        public static ProviderApplicationInfo ProviderApplicationInfo(string publisherId = default, string offerId = default)
         {
-            return new ProviderApplicationInfo(publisherId, offerId, serializedAdditionalRawData: null);
+            return new ProviderApplicationInfo(publisherId, offerId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderTargetDescription"/>. </summary>
+        /// <summary> Information about a Target. A target is the component that can process a specific type of Job. </summary>
         /// <param name="id"> Unique target id. </param>
         /// <param name="name"> Display name of this target. </param>
         /// <param name="description"> A description about this target. </param>
         /// <param name="acceptedDataFormats"> List of data formats accepted by this target. </param>
         /// <param name="acceptedContentEncodings"> List of content encodings accepted by this target. </param>
+        /// <param name="numQubits"> The qubit number. </param>
+        /// <param name="targetProfile"> Target QIR profile. </param>
+        /// <param name="metadata"> The metadata of this target. </param>
         /// <returns> A new <see cref="Models.ProviderTargetDescription"/> instance for mocking. </returns>
-        public static ProviderTargetDescription ProviderTargetDescription(string id = null, string name = null, string description = null, IEnumerable<string> acceptedDataFormats = null, IEnumerable<string> acceptedContentEncodings = null)
+        public static ProviderTargetDescription ProviderTargetDescription(string id = default, string name = default, string description = default, IEnumerable<string> acceptedDataFormats = default, IEnumerable<string> acceptedContentEncodings = default, int? numQubits = default, string targetProfile = default, IReadOnlyDictionary<string, BinaryData> metadata = default)
         {
-            acceptedDataFormats ??= new List<string>();
-            acceptedContentEncodings ??= new List<string>();
+            acceptedDataFormats ??= new ChangeTrackingList<string>();
+            acceptedContentEncodings ??= new ChangeTrackingList<string>();
+            metadata ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ProviderTargetDescription(
                 id,
                 name,
                 description,
-                acceptedDataFormats?.ToList(),
-                acceptedContentEncodings?.ToList(),
-                serializedAdditionalRawData: null);
+                acceptedDataFormats.ToList(),
+                acceptedContentEncodings.ToList(),
+                numQubits,
+                targetProfile,
+                metadata,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderSkuDescription"/>. </summary>
+        /// <summary> Information about a specific sku. </summary>
         /// <param name="id"> Unique sku id. </param>
         /// <param name="name"> Display name of this sku. </param>
         /// <param name="version"> Display name of this sku. </param>
@@ -146,11 +275,11 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="quotaDimensions"> The list of quota dimensions for this sku. </param>
         /// <param name="pricingDetails"> The list of pricing details for the sku. </param>
         /// <returns> A new <see cref="Models.ProviderSkuDescription"/> instance for mocking. </returns>
-        public static ProviderSkuDescription ProviderSkuDescription(string id = null, string name = null, string version = null, string description = null, Uri restrictedAccessUri = null, bool? autoAdd = null, IEnumerable<string> targets = null, IEnumerable<QuantumQuotaDimension> quotaDimensions = null, IEnumerable<QuantumPricingDetail> pricingDetails = null)
+        public static ProviderSkuDescription ProviderSkuDescription(string id = default, string name = default, string version = default, string description = default, Uri restrictedAccessUri = default, bool? autoAdd = default, IEnumerable<string> targets = default, IEnumerable<QuantumQuotaDimension> quotaDimensions = default, IEnumerable<QuantumPricingDetail> pricingDetails = default)
         {
-            targets ??= new List<string>();
-            quotaDimensions ??= new List<QuantumQuotaDimension>();
-            pricingDetails ??= new List<QuantumPricingDetail>();
+            targets ??= new ChangeTrackingList<string>();
+            quotaDimensions ??= new ChangeTrackingList<QuantumQuotaDimension>();
+            pricingDetails ??= new ChangeTrackingList<QuantumPricingDetail>();
 
             return new ProviderSkuDescription(
                 id,
@@ -159,13 +288,13 @@ namespace Azure.ResourceManager.Quantum.Models
                 description,
                 restrictedAccessUri,
                 autoAdd,
-                targets?.ToList(),
-                quotaDimensions?.ToList(),
-                pricingDetails?.ToList(),
-                serializedAdditionalRawData: null);
+                targets.ToList(),
+                quotaDimensions.ToList(),
+                pricingDetails.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuantumQuotaDimension"/>. </summary>
+        /// <summary> Information about a specific quota dimension. </summary>
         /// <param name="id"> Unique id of this dimension. </param>
         /// <param name="scope"> The scope of this quota dimension. </param>
         /// <param name="period"> The reset period of this quota dimension. </param>
@@ -175,7 +304,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="unit"> The standard unit of measurement used for this quota dimension. </param>
         /// <param name="unitPlural"> The standard unit of measurement used for this quota dimension in plural form. </param>
         /// <returns> A new <see cref="Models.QuantumQuotaDimension"/> instance for mocking. </returns>
-        public static QuantumQuotaDimension QuantumQuotaDimension(string id = null, string scope = null, string period = null, float? quota = null, string name = null, string description = null, string unit = null, string unitPlural = null)
+        public static QuantumQuotaDimension QuantumQuotaDimension(string id = default, string scope = default, string period = default, float? quota = default, string name = default, string description = default, string unit = default, string unitPlural = default)
         {
             return new QuantumQuotaDimension(
                 id,
@@ -186,62 +315,25 @@ namespace Azure.ResourceManager.Quantum.Models
                 description,
                 unit,
                 unitPlural,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuantumPricingDetail"/>. </summary>
+        /// <summary> Detailed pricing information for an sku. </summary>
         /// <param name="id"> Unique id for this pricing information. </param>
         /// <param name="value"> The unit cost of this sku. </param>
         /// <returns> A new <see cref="Models.QuantumPricingDetail"/> instance for mocking. </returns>
-        public static QuantumPricingDetail QuantumPricingDetail(string id = null, string value = null)
+        public static QuantumPricingDetail QuantumPricingDetail(string id = default, string value = default)
         {
-            return new QuantumPricingDetail(id, value, serializedAdditionalRawData: null);
+            return new QuantumPricingDetail(id, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderPricingDimension"/>. </summary>
+        /// <summary> Information about pricing dimension. </summary>
         /// <param name="id"> Unique id of this pricing dimension. </param>
         /// <param name="name"> The display name of this pricing dimension. </param>
         /// <returns> A new <see cref="Models.ProviderPricingDimension"/> instance for mocking. </returns>
-        public static ProviderPricingDimension ProviderPricingDimension(string id = null, string name = null)
+        public static ProviderPricingDimension ProviderPricingDimension(string id = default, string name = default)
         {
-            return new ProviderPricingDimension(id, name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
-        /// <param name="reason"> The reason of unavailability. </param>
-        /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
-        /// <returns> A new <see cref="Models.WorkspaceNameAvailabilityResult"/> instance for mocking. </returns>
-        public static WorkspaceNameAvailabilityResult WorkspaceNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
-        {
-            return new WorkspaceNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceKeyListResult"/>. </summary>
-        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
-        /// <param name="primaryKey"> The quantum workspace primary api key. </param>
-        /// <param name="secondaryKey"> The quantum workspace secondary api key. </param>
-        /// <param name="primaryConnectionString"> The connection string of the primary api key. </param>
-        /// <param name="secondaryConnectionString"> The connection string of the secondary api key. </param>
-        /// <returns> A new <see cref="Models.WorkspaceKeyListResult"/> instance for mocking. </returns>
-        public static WorkspaceKeyListResult WorkspaceKeyListResult(bool? isApiKeyEnabled = null, WorkspaceApiKey primaryKey = null, WorkspaceApiKey secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null)
-        {
-            return new WorkspaceKeyListResult(
-                isApiKeyEnabled,
-                primaryKey,
-                secondaryKey,
-                primaryConnectionString,
-                secondaryConnectionString,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceApiKey"/>. </summary>
-        /// <param name="createdOn"> The creation time of the api key. </param>
-        /// <param name="key"> The Api key. </param>
-        /// <returns> A new <see cref="Models.WorkspaceApiKey"/> instance for mocking. </returns>
-        public static WorkspaceApiKey WorkspaceApiKey(DateTimeOffset? createdOn = null, string key = null)
-        {
-            return new WorkspaceApiKey(createdOn, key, serializedAdditionalRawData: null);
+            return new ProviderPricingDimension(id, name, additionalBinaryDataProperties: null);
         }
     }
 }

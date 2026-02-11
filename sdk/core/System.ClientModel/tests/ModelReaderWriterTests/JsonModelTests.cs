@@ -13,7 +13,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         #region Test Models
 
         // Simple test model for validation
+#pragma warning disable SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private class SimpleTestModel : JsonModel<SimpleTestModel>
+#pragma warning restore SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             public string? Name { get; set; }
             public int Value { get; set; }
@@ -58,7 +60,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         // Test model that throws in WriteCore for validation
+#pragma warning disable SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private class ThrowingWriteModel : JsonModel<ThrowingWriteModel>
+#pragma warning restore SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             protected override void WriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
@@ -72,7 +76,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         // Test model that throws in CreateCore for validation
+#pragma warning disable SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private class ThrowingCreateModel : JsonModel<ThrowingCreateModel>
+#pragma warning restore SCME0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             protected override void WriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {

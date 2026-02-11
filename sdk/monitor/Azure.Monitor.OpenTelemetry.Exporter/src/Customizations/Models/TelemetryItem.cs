@@ -25,9 +25,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
             string? microsoftClientIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "microsoft.client.ip")?.ToString();
+
+            // Check for microsoft.operation_name override (applies to both request and dependency)
+            string? overrideOperationName = activityTagsProcessor.HasOverrideAttributes
+                ? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftOperationName)?.ToString()
+                : null;
+
             if (activity.GetTelemetryType() == TelemetryType.Request)
             {
-                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                if (!string.IsNullOrEmpty(overrideOperationName))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = overrideOperationName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
@@ -53,6 +63,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             else // dependency
             {
+                if (!string.IsNullOrEmpty(overrideOperationName))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = overrideOperationName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+
                 if (microsoftClientIp != null)
                 {
                     Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;

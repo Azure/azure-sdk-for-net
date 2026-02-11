@@ -14,13 +14,10 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Tile Matrix Definition
-    /// 
     /// A tile matrix, usually corresponding to a particular zoom level of a
     /// TileMatrixSet.
-    /// 
     /// ref:
     /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrix.json
-    /// 
     /// Definition of a tile matrix at a specific zoom level within a tile matrix set
     /// </summary>
     public partial class TileMatrix : IJsonModel<TileMatrix>
@@ -28,6 +25,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TileMatrix"/> for deserialization. </summary>
         internal TileMatrix()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TileMatrix PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTileMatrix(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TileMatrix)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -307,23 +321,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TileMatrix IPersistableModel<TileMatrix>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TileMatrix PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTileMatrix(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TileMatrix)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TileMatrix>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

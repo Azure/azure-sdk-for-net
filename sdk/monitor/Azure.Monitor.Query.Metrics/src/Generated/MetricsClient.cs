@@ -87,9 +87,9 @@ namespace Azure.Monitor.Query.Metrics
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format.
         /// Defaults to PT1M. Special case for 'FULL' value that returns single datapoint
         /// for entire time span requested.
-        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
         /// </param>
-        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. *Examples: average, minimum, maximum*. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. <i>Examples: average, minimum, maximum</i>. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve per resource ID in the request.
         /// Valid only if filter is specified.
@@ -98,18 +98,18 @@ namespace Azure.Monitor.Query.Metrics
         /// <param name="orderBy">
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
-        /// *Examples: sum asc*
+        /// <i>Examples: sum asc</i>
         /// </param>
         /// <param name="filter">
         /// The filter is used to reduce the set of metric data
         /// returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all
         /// time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq
-        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’
+        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>filter=A eq ‘a1’
         /// and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical
         /// or operator cannot separate two different metadata names.&lt;br&gt;- Return all time
         /// series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and
-        /// C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and
-        /// B eq ‘*’ and C eq ‘*’**.
+        /// C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>filter=A eq ‘a1’ and
+        /// B eq ‘<i>’ and C eq ‘</i>’**.
         /// </param>
         /// <param name="rollUpBy">
         /// Dimension name(s) to rollup results by. For example if you only want to see
@@ -160,9 +160,9 @@ namespace Azure.Monitor.Query.Metrics
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format.
         /// Defaults to PT1M. Special case for 'FULL' value that returns single datapoint
         /// for entire time span requested.
-        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
         /// </param>
-        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. *Examples: average, minimum, maximum*. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. <i>Examples: average, minimum, maximum</i>. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve per resource ID in the request.
         /// Valid only if filter is specified.
@@ -171,18 +171,18 @@ namespace Azure.Monitor.Query.Metrics
         /// <param name="orderBy">
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
-        /// *Examples: sum asc*
+        /// <i>Examples: sum asc</i>
         /// </param>
         /// <param name="filter">
         /// The filter is used to reduce the set of metric data
         /// returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all
         /// time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq
-        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’
+        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>filter=A eq ‘a1’
         /// and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical
         /// or operator cannot separate two different metadata names.&lt;br&gt;- Return all time
         /// series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and
-        /// C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and
-        /// B eq ‘*’ and C eq ‘*’**.
+        /// C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>filter=A eq ‘a1’ and
+        /// B eq ‘<i>’ and C eq ‘</i>’**.
         /// </param>
         /// <param name="rollUpBy">
         /// Dimension name(s) to rollup results by. For example if you only want to see
@@ -226,9 +226,9 @@ namespace Azure.Monitor.Query.Metrics
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format.
         /// Defaults to PT1M. Special case for 'FULL' value that returns single datapoint
         /// for entire time span requested.
-        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
         /// </param>
-        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. *Examples: average, minimum, maximum*. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. <i>Examples: average, minimum, maximum</i>. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve per resource ID in the request.
         /// Valid only if filter is specified.
@@ -237,18 +237,18 @@ namespace Azure.Monitor.Query.Metrics
         /// <param name="orderBy">
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
-        /// *Examples: sum asc*
+        /// <i>Examples: sum asc</i>
         /// </param>
         /// <param name="filter">
         /// The filter is used to reduce the set of metric data
         /// returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all
         /// time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq
-        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’
+        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>filter=A eq ‘a1’
         /// and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical
         /// or operator cannot separate two different metadata names.&lt;br&gt;- Return all time
         /// series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and
-        /// C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and
-        /// B eq ‘*’ and C eq ‘*’**.
+        /// C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>filter=A eq ‘a1’ and
+        /// B eq ‘<i>’ and C eq ‘</i>’**.
         /// </param>
         /// <param name="rollUpBy">
         /// Dimension name(s) to rollup results by. For example if you only want to see
@@ -281,9 +281,9 @@ namespace Azure.Monitor.Query.Metrics
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format.
         /// Defaults to PT1M. Special case for 'FULL' value that returns single datapoint
         /// for entire time span requested.
-        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
         /// </param>
-        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. *Examples: average, minimum, maximum*. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. <i>Examples: average, minimum, maximum</i>. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve per resource ID in the request.
         /// Valid only if filter is specified.
@@ -292,18 +292,18 @@ namespace Azure.Monitor.Query.Metrics
         /// <param name="orderBy">
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
-        /// *Examples: sum asc*
+        /// <i>Examples: sum asc</i>
         /// </param>
         /// <param name="filter">
         /// The filter is used to reduce the set of metric data
         /// returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all
         /// time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq
-        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’
+        /// ‘b1’ or B eq ‘b2’ and C eq ‘*’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>filter=A eq ‘a1’
         /// and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical
         /// or operator cannot separate two different metadata names.&lt;br&gt;- Return all time
         /// series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and
-        /// C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and
-        /// B eq ‘*’ and C eq ‘*’**.
+        /// C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>filter=A eq ‘a1’ and
+        /// B eq ‘<i>’ and C eq ‘</i>’**.
         /// </param>
         /// <param name="rollUpBy">
         /// Dimension name(s) to rollup results by. For example if you only want to see

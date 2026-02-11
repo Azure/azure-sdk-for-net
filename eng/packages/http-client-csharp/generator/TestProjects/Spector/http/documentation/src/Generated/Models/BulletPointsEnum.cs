@@ -11,20 +11,17 @@ namespace Documentation._Lists
     {
         /// <summary>
         /// Simple bullet point. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
-        /// - One: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
-        /// - Two: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
+        /// <list type="bullet"><item><description>One: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.</description></item><item><description>Two: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.</description></item></list>
         /// </summary>
         Simple,
         /// <summary>
-        /// Bullet point with **bold text**. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
-        /// - **One**: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
-        /// - **Two**: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
+        /// Bullet point with <b>bold text</b>. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
+        /// <list type="bullet"><item><description><b>One</b>: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.</description></item><item><description><b>Two</b>: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.</description></item></list>
         /// </summary>
         Bold,
         /// <summary>
-        /// Bullet point with *italic text*. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
-        /// - *One*: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
-        /// - *Two*: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
+        /// Bullet point with <i>italic text</i>. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.
+        /// <list type="bullet"><item><description><i>One</i>: one. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.</description></item><item><description><i>Two</i>: two. This line is intentionally long to test text wrapping in bullet points within enum documentation comments. It should properly indent the wrapped lines.</description></item></list>
         /// </summary>
         Italic
     }

@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Personalizer.Tests
 {
-    public class PersonalizerTestEnvironment: TestEnvironment
+    public class PersonalizerTestEnvironment : TestEnvironment
     {
         /// <summary>The name of the environment variable from which Personalizer resource's endpoint will be extracted for the live tests.</summary>
         internal const string MultiSlotEndpointEnvironmentVariableName = "PERSONALIZER_ENDPOINT_MULTI_SLOT";

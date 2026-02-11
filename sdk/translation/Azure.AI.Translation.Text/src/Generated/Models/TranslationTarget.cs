@@ -50,11 +50,9 @@ namespace Azure.AI.Translation.Text
         /// Default is 'general', which uses NMT system.
         /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
         /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
-        /// 
         /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
         /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
-        /// 
         /// </param>
         /// <param name="allowFallback">
         /// In the case where a custom system is being used, specifies that the service is allowed to fall back to a
@@ -62,7 +60,6 @@ namespace Azure.AI.Translation.Text
         /// In the case where a Large Language Model is being used, specifies that the service is allowed to fall
         /// back to a Small Language Model if an error occurs.
         /// Possible values are: true (default) or false.
-        /// 
         /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
         /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
         /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
@@ -117,11 +114,9 @@ namespace Azure.AI.Translation.Text
         /// Default is 'general', which uses NMT system.
         /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
         /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
-        /// 
         /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
         /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
-        /// 
         /// </summary>
         public string DeploymentName { get; set; }
 
@@ -131,7 +126,6 @@ namespace Azure.AI.Translation.Text
         /// In the case where a Large Language Model is being used, specifies that the service is allowed to fall
         /// back to a Small Language Model if an error occurs.
         /// Possible values are: true (default) or false.
-        /// 
         /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
         /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
         /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 

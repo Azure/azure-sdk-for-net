@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesCommitmentPlanPatch() : base()
         {
         }
-        internal CognitiveServicesCommitmentPlanPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesSku sku): base(tags, serializedAdditionalRawData, sku)
+        internal CognitiveServicesCommitmentPlanPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesSku sku) : base(tags, serializedAdditionalRawData, sku)
         {
         }
     }
