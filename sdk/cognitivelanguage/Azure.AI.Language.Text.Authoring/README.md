@@ -98,7 +98,6 @@ Then you can create an instance of DefaultAzureCredential and pass it to a new i
 
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("{endpoint}");
-;
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```

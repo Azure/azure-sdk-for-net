@@ -36,7 +36,6 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             #region Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
             Uri endpoint = new Uri("{endpoint}");
-            ;
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
 #endif
