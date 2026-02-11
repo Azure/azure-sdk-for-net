@@ -28,6 +28,7 @@ namespace Azure.AI.Speech.Transcription
         public string TargetLanguage { get { throw null; } set { } }
         public string Task { get { throw null; } set { } }
         protected virtual Azure.AI.Speech.Transcription.EnhancedModeProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Speech.Transcription.EnhancedModeProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Speech.Transcription.EnhancedModeProperties System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.EnhancedModeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -133,6 +134,7 @@ namespace Azure.AI.Speech.Transcription
         public TranscriptionClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult<Azure.AI.Speech.Transcription.TranscriptionResult> Transcribe(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Speech.Transcription.TranscriptionResult>> TranscribeAsync(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TranscriptionClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
@@ -149,6 +151,7 @@ namespace Azure.AI.Speech.Transcription
         public bool? Enabled { get { throw null; } }
         public int? MaxSpeakers { get { throw null; } set { } }
         protected virtual Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -159,7 +162,6 @@ namespace Azure.AI.Speech.Transcription
     }
     public partial class TranscriptionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionOptions>
     {
-        public TranscriptionOptions() { }
         public TranscriptionOptions(System.IO.Stream audioStream) { }
         public TranscriptionOptions(System.Uri audioUri) { }
         public System.Collections.Generic.IList<int> ActiveChannels { get { throw null; } }
