@@ -11,11 +11,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Tests.TestCase
 {
-    public class BatchAccoutPoolUserSub : BatchManagementTestBase
+    public class BatchAccountPoolUserSub : BatchManagementTestBase
     {
         private BatchAccountResource userSub;
 
-        public BatchAccoutPoolUserSub(bool isAsync)
+        public BatchAccountPoolUserSub(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeType.Audit);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.Caching, BatchDiskCachingType.ReadWrite);
             Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, BatchSecurityEncryptionType.VmGuestStateOnly);
-            Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.ManagedDisk.DiskEncryptionSet.Id, DiskEncryptionSetId);
+            Assert.AreEqual(batchPool.DeploymentConfiguration.VmConfiguration.OSDisk.ManagedDisk.DiskEncryptionSet.Id.ToString(), DiskEncryptionSetId);
         }
     }
 }

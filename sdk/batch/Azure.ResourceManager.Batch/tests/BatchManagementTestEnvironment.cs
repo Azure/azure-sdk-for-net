@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.Batch.Tests
 
         public string CmkKeyvalutKeyUriWithVersion => GetRecordedVariable("cmk_keyvalut_keyUriWithVersion");
 
-        public string UserAssignedIdentity => GetRecordedVariable("USERIDENTITY_ID");
+        public string UserAssignedIdentity => GetRecordedVariable("useridentity_id");
     }
 }

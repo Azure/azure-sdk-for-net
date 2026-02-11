@@ -10,19 +10,18 @@ Added Models:
 - Added `HostEndpointSettingsModeType`
 - Added `IPFamily`
 - Added `JobDefaultOrder`
-- Added `PoolIdentityReference`
 - Added `ProxyAgentSettings`
 
 Added Properties:
 
-- Added `IpFamilies` and `IpTags` to `BatchPublicAddressConfiguration`
+- Added `IPFamilies` and `IPTags` to `BatchPublicIPAddressConfiguration`
 - Added `CustomerManagedKey` to `DiskEncryptionConfiguration`
 - Added `TaskSchedulingPolicy` to `BatchAccountPoolData`
 - Added `ManagedDisk` to `DataDisk`
 - Added `DiskEncryptionSet` to `ManagedDisk`
-- Added `ProxyAgentSetting` to `SecurityProfile`
-- Added `jobDefaultOrder` to `TaskSchedulingPolicy`
-- Added `diskEncryptionSet` to `VMDiskSecurityProfile`
+- Added `ProxyAgentSettings` to `BatchSecurityProfile`
+- Added `JobDefaultOrder` to `TaskSchedulingPolicy`
+- Added `DiskEncryptionSet` to `VmDiskSecurityProfile`
 
 ### Breaking Changes
 
