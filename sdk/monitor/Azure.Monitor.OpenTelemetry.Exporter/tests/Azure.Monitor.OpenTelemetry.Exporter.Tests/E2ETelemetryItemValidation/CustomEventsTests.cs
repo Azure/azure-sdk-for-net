@@ -271,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string> (),
+                expectedProperties: new Dictionary<string, string>(),
                 expectedSpanId: null,
                 expectedTraceId: null);
         }

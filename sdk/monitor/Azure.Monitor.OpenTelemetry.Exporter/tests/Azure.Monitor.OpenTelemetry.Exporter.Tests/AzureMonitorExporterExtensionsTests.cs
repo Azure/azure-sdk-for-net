@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public  class AzureMonitorExporterExtensionsTests
+    public class AzureMonitorExporterExtensionsTests
     {
         [Fact]
         public void AddAzureMonitorLogExporterWithNamedOptions()

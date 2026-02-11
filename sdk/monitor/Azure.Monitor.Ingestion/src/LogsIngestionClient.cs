@@ -619,7 +619,7 @@ namespace Azure.Monitor.Ingestion
 
             foreach (var log in logs)
             {
-               yield return serialize(log, options);
+                yield return serialize(log, options);
             }
         }
     }

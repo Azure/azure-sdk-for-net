@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         /// OpenTelemetry uses environment variables for miscellaneous configurations, which are read from an instance of <see cref="IConfiguration"/>.
         /// This method simplifies the process of setting environment variables for testing purposes.
         /// </remarks>
-        public static void AddEnvironmentVariables(this IServiceCollection serviceCollection, IEnumerable<KeyValuePair<string ,string?>> keyValuePairs)
+        public static void AddEnvironmentVariables(this IServiceCollection serviceCollection, IEnumerable<KeyValuePair<string, string?>> keyValuePairs)
         {
             IConfiguration configuration = new ConfigurationBuilder()
                .AddInMemoryCollection(keyValuePairs)

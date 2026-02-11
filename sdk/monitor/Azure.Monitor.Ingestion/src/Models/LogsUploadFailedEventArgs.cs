@@ -23,7 +23,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="isRunningSynchronously"></param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="cancellationToken"></param>
-        internal LogsUploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
+        internal LogsUploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this(failedLogs, exception, isRunningSynchronously, cancellationToken)
         {
             ClientDiagnostics = clientDiagnostics;
         }

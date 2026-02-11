@@ -45,10 +45,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
                                       });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock()
-                                {
-                                    StringField =
+            {
+                StringField =
                                         "This string contains some of the valuable words: 'apple', 'red', but doesn't mention the man's best friend..."
-                                };
+            };
 
             // ACT
             CollectionConfigurationError[] runtimeErrors;
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
         {
             // ARRANGE
             CollectionConfigurationError[] errors;
-            var filterGroupInfo = new FilterConjunctionGroupInfo( new FilterInfo[0] );
+            var filterGroupInfo = new FilterConjunctionGroupInfo(new FilterInfo[0]);
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock();
 

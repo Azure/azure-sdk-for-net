@@ -253,7 +253,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 workspaceId: workspaceId,
                 description: "Dependency for invoking HttpClient, from testhost",
                 query: _useTimestampInQuery!.Value
-                    ? $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{TestRoleName}' | where TimeGenerated >= datetime({ _testStartTimeStamp}) | top 1 by TimeGenerated"
+                    ? $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{TestRoleName}' | where TimeGenerated >= datetime({_testStartTimeStamp}) | top 1 by TimeGenerated"
                     : $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{TestRoleName}' | top 1 by TimeGenerated",
                 expectedAppDependency: new ExpectedAppDependency
                 {

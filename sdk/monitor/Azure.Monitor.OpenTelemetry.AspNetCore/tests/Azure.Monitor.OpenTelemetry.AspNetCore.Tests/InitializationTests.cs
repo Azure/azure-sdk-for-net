@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,11 +11,10 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Metrics;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Xunit;
-using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
@@ -182,7 +182,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitor(options => {
+                .UseAzureMonitor(options =>
+                {
                     options.ConnectionString = TestConnectionString;
                     options.EnableLiveMetrics = enableLiveMetrics;
                 });
@@ -221,7 +222,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             else // use distro
             {
                 serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitor(options => {
+                .UseAzureMonitor(options =>
+                {
                     options.ConnectionString = TestConnectionString;
                     options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
                 });
@@ -240,7 +242,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitorExporter(options => {
+                .UseAzureMonitorExporter(options =>
+                {
                     options.ConnectionString = TestConnectionString;
                     options.EnableLiveMetrics = enableLiveMetrics;
                 });
@@ -337,7 +340,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 // Get TracerProviderSdk
                 var tracerProviderSdkType = tracerProvider.GetType();
 
-                 // Validate Sampler
+                // Validate Sampler
                 var samplerProperty = tracerProviderSdkType.GetProperty("Sampler", BindingFlags.NonPublic | BindingFlags.Instance);
                 Assert.NotNull(samplerProperty);
                 var sampler = samplerProperty.GetValue(tracerProvider);

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {

@@ -127,7 +127,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                mockQuery,
                 _logsTestData.DataTimeRange);
 
-            CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
+            CollectionAssert.AreEqual(new[] { "a", "b", "c" }, results.Value);
         }
 
         [RecordedTest]
@@ -359,7 +359,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             Assert.AreEqual("string value", row.GetObject("String"));
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan("Timespan"));
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan(7));
-            Assert.AreEqual(TimeSpan.FromSeconds(10),  row.GetObject("Timespan"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetObject("Timespan"));
             Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
             Assert.AreEqual(0.10101m, row.GetDecimal(8));
             Assert.AreEqual(0.10101m, row.GetObject("Decimal"));

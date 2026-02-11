@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Concurrent;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
-using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {

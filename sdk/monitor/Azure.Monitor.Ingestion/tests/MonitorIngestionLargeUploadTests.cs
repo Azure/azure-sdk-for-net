@@ -53,7 +53,8 @@ namespace Azure.Monitor.Ingestion.Tests
             for (int i = 0; i < numEntries; i++)
             {
                 entries.Add(
-                    new {
+                    new
+                    {
                         Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
@@ -69,7 +70,8 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
@@ -95,14 +97,16 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             // Add 2 entries that are going to fail in 2 batches
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
                 );
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('!', Mb),
                         AdditionalContext = 1
@@ -127,7 +131,8 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
@@ -158,14 +163,16 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
                 );
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('!', Mb),
                         AdditionalContext = 1
@@ -195,23 +202,26 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
                 );
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('!', Mb),
                         AdditionalContext = 1
                     }
                 );
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
-                        Computer = "Computer" + new string(';', Mb*5),
+                        Computer = "Computer" + new string(';', Mb * 5),
                         AdditionalContext = 1
                     }
                 );
@@ -246,7 +256,8 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(
-                    new {
+                    new
+                    {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1

@@ -3,12 +3,10 @@
 
 #nullable disable // TODO: remove and fix errors
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
-using BenchmarkDotNet.Attributes;
-
 using System.Collections.Generic;
 using System.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using BenchmarkDotNet.Attributes;
 
 /*
 BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
@@ -58,15 +56,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             _tagObjects_No_Item = new Dictionary<string, object>();
 
             _azMonList_Items = AzMonList.Initialize();
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("intKey", 1));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("stringKey", "test"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "localhost"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("boolKey", true));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, "8888"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("arrayKey", new int[] { 1, 2, 3 }));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("somekey", "value"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("intKey", 1));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("stringKey", "test"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "localhost"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("boolKey", true));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, "8888"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("arrayKey", new int[] { 1, 2, 3 }));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("somekey", "value"));
 
             _tagObjects_Items = new Dictionary<string, object>
             {

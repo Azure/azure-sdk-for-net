@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// </summary>
         private readonly LogsBatchQuery _query;
 
-        internal LogsBatchQueryResultCollection(IList<LogsBatchQueryResult> results, LogsBatchQuery query): base(results)
+        internal LogsBatchQueryResultCollection(IList<LogsBatchQueryResult> results, LogsBatchQuery query) : base(results)
         {
             _query = query;
         }

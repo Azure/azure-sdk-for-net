@@ -123,7 +123,8 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             for (int i = 0; i < 100; i++)
             {
                 entries.Add(
-                    new {
+                    new
+                    {
                         Time = currentTime,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
@@ -173,7 +174,8 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             for (int i = 0; i < 100; i++)
             {
                 entries.Add(
-                    new {
+                    new
+                    {
                         Time = currentTime,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
@@ -216,7 +218,8 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #endregion
         }
 
-        public async Task UploadWithMaxConcurrencyAsync(){
+        public async Task UploadWithMaxConcurrencyAsync()
+        {
             #region Snippet:UploadWithMaxConcurrencyAsync
             var endpoint = new Uri("<data_collection_endpoint_uri>");
             var ruleId = "<data_collection_rule_id>";
@@ -237,7 +240,8 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             for (int i = 0; i < 100; i++)
             {
                 entries.Add(
-                    new {
+                    new
+                    {
                         Time = currentTime,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i

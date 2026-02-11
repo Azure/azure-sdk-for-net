@@ -120,7 +120,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: new MetricsQueryResourcesOptions { TimeRange = timeRange} ).ConfigureAwait(false);
+                options: new MetricsQueryResourcesOptions { TimeRange = timeRange }).ConfigureAwait(false);
 
             Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
             MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
