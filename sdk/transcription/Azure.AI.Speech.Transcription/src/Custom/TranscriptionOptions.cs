@@ -14,13 +14,14 @@ namespace Azure.AI.Speech.Transcription
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/> with an audio URI. </summary>
         /// <param name="audioUri"> The URL of the audio to be transcribed. </param>
-        public TranscriptionOptions(Uri audioUri) : this(audioUri, new ChangeTrackingList<string>(), new ChangeTrackingDictionary<string, Uri>(), null, null, new ChangeTrackingList<int>(), null, null, null)
+        public TranscriptionOptions(Uri audioUri) : this()
         {
+            AudioUri = audioUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/> with an audio stream. </summary>
         /// <param name="audioStream"> The audio stream to be transcribed. </param>
-        public TranscriptionOptions(Stream audioStream) : this(null, new ChangeTrackingList<string>(), new ChangeTrackingDictionary<string, Uri>(), null, null, new ChangeTrackingList<int>(), null, null, null)
+        public TranscriptionOptions(Stream audioStream) : this()
         {
             AudioStream = audioStream;
         }

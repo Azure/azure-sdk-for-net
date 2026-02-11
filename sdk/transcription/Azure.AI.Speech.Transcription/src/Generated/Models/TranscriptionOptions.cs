@@ -14,6 +14,14 @@ namespace Azure.AI.Speech.Transcription
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        public TranscriptionOptions()
+        {
+            Locales = new ChangeTrackingList<string>();
+            Models = new ChangeTrackingDictionary<string, Uri>();
+            ActiveChannels = new ChangeTrackingList<int>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
         /// <param name="audioUri"> The URL of the audio to be transcribed. The audio must be shorter than 2 hours in audio duration and smaller than 250 MB in size. If both Audio and AudioUrl are provided, Audio is used. </param>
         /// <param name="locales"> A list of possible locales for the transcription. If not specified, the locale of the speech in the audio is detected automatically from all supported locales. </param>
         /// <param name="models"> Maps some or all candidate locales to a model URI to be used for transcription. If no mapping is given, the default model for the locale is used. </param>

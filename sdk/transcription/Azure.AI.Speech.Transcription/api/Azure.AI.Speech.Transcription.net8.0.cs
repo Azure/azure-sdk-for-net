@@ -162,6 +162,7 @@ namespace Azure.AI.Speech.Transcription
     }
     public partial class TranscriptionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionOptions>
     {
+        public TranscriptionOptions() { }
         public TranscriptionOptions(System.IO.Stream audioStream) { }
         public TranscriptionOptions(System.Uri audioUri) { }
         public System.Collections.Generic.IList<int> ActiveChannels { get { throw null; } }
