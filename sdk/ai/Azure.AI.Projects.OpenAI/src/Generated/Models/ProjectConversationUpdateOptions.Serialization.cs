@@ -13,8 +13,8 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The ProjectConversationUpdateOptions. </summary>
     public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/> for deserialization. </summary>
-        internal ProjectConversationUpdateOptions()
+        /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/>. </summary>
+        public ProjectConversationUpdateOptions()
         {
         }
 
