@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public async Task GetPortalSettings()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.DoesNotThrow(()=>apiManagementService.GetPortalSettingsAsync());
+            Assert.DoesNotThrow(() => apiManagementService.GetPortalSettingsAsync());
         }
 
         [Test]

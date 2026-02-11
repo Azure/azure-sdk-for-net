@@ -93,7 +93,8 @@ public class OpenAIModelFeature : AzureProjectFeature
 
         CognitiveServicesAccount parent = infrastructure.GetConstruct<CognitiveServicesAccount>(Account.Id);
 
-        CognitiveServicesAccountDeployment deployment = new($"openai_{suffix}", "2024-06-01-preview") {
+        CognitiveServicesAccountDeployment deployment = new($"openai_{suffix}", "2024-06-01-preview")
+        {
             Parent = parent,
             Name = resourceName,
             Properties = new CognitiveServicesAccountDeploymentProperties()

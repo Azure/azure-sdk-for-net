@@ -137,19 +137,22 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeletePrivateEndpointConnection(){
+        public async Task CanDeletePrivateEndpointConnection()
+        {
             await deletePrivateEndpointConnection();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeletePrivateLinkScope(){
+        public async Task CanDeletePrivateLinkScope()
+        {
             await deletePrivateLinkScope();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteMachineExtension(){
+        public async Task CanDeleteMachineExtension()
+        {
             await deleteMachineExtension();
         }
     }

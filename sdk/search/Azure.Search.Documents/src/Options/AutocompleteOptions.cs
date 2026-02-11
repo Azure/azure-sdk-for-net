@@ -69,7 +69,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> SearchFields { get; internal set; } = new List<string>();
 
-        #pragma warning disable CA1822 // Only (unused but required) setters are static
+#pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents
             get => SearchFields.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(AutocompleteOptions)}.");
         }
-        #pragma warning restore CA1822
+#pragma warning restore CA1822
 
         /// <summary>
         /// Creates a shallow copy of the AutocompleteOptions.

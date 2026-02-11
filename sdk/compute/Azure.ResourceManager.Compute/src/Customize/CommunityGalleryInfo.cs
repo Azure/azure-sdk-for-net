@@ -3,9 +3,9 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                if (Uri.TryCreate(PublisherUriString,UriKind.Absolute,out Uri result))
+                if (Uri.TryCreate(PublisherUriString, UriKind.Absolute, out Uri result))
                 {
                     return result;
                 }

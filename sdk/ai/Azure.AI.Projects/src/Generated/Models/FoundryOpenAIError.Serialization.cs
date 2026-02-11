@@ -67,12 +67,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("param"u8);
                 writer.WriteStringValue(Param);
             }
-            else
+            if (Optional.IsDefined(Type))
             {
-                writer.WriteNull("param"u8);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
             if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);

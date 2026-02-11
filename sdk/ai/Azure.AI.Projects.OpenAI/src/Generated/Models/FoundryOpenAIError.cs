@@ -16,14 +16,10 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        /// <param name="param"></param>
-        /// <param name="type"></param>
-        internal FoundryOpenAIError(string code, string message, string @param, string @type)
+        internal FoundryOpenAIError(string code, string message)
         {
             Code = code;
             Message = message;
-            Param = @param;
-            Type = @type;
             Details = new ChangeTrackingList<FoundryOpenAIError>();
             AdditionalInfo = new ChangeTrackingDictionary<string, BinaryData>();
             DebugInfo = new ChangeTrackingDictionary<string, BinaryData>();
