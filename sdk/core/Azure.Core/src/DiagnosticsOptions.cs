@@ -17,38 +17,8 @@ namespace Azure.Core
     {
         private string? _applicationId;
         private int _maxApplicationIdLength = DefaultMaxApplicationIdLength;
-
-        /// <summary>
-        /// The default maximum allowed length for <see cref="ApplicationId"/>.
-        /// </summary>
-        internal const int DefaultMaxApplicationIdLength = 24;
-
-        /// <summary>
-        /// The absolute maximum allowed length for <see cref="ApplicationId"/>.
-        /// </summary>
-        internal const int AbsoluteMaxApplicationIdLength = 300;
-
-        /// <summary>
-        /// Gets or sets the maximum allowed length for <see cref="ApplicationId"/>.
-        /// </summary>
-        /// <remarks>
-        /// The default value is 24 characters. This can be increased up to 300 characters
-        /// to accommodate longer application identifiers. Values less than 24 or greater
-        /// than 300 are not permitted.
-        /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24 or greater than 300.</exception>
-        public int MaxApplicationIdLength
-        {
-            get => _maxApplicationIdLength;
-            set
-            {
-                if (value < DefaultMaxApplicationIdLength || value > AbsoluteMaxApplicationIdLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(MaxApplicationIdLength)} must be between {DefaultMaxApplicationIdLength} and {AbsoluteMaxApplicationIdLength}.");
-                }
-                _maxApplicationIdLength = value;
-            }
-        }
+        private const int DefaultMaxApplicationIdLength = 24;
+        private const int AbsoluteMaxApplicationIdLength = 300;
 
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
@@ -228,6 +198,28 @@ namespace Azure.Core
         /// Gets a list of query parameter names that are not redacted during logging.
         /// </summary>
         public IList<string> LoggedQueryParameters { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the maximum allowed length for <see cref="ApplicationId"/>.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 24 characters. This can be increased up to 300 characters
+        /// to accommodate longer application identifiers. Values less than 24 or greater
+        /// than 300 are not permitted.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24 or greater than 300.</exception>
+        public int MaxApplicationIdLength
+        {
+            get => _maxApplicationIdLength;
+            set
+            {
+                if (value < DefaultMaxApplicationIdLength || value > AbsoluteMaxApplicationIdLength)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(MaxApplicationIdLength)} must be between {DefaultMaxApplicationIdLength} and {AbsoluteMaxApplicationIdLength}.");
+                }
+                _maxApplicationIdLength = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
