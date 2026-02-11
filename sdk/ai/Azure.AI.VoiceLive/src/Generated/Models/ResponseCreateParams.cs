@@ -48,7 +48,6 @@ namespace Azure.AI.VoiceLive
         /// into your voice", "laugh frequently"). The instructions are not guaranteed
         /// to be followed by the model, but they provide guidance to the model on the
         /// desired behavior.
-        /// 
         /// Note that the server sets default instructions which will be used if this
         /// field is not set and are visible in the `session.created` event at the
         /// start of the session.
@@ -131,7 +130,6 @@ namespace Azure.AI.VoiceLive
         /// into your voice", "laugh frequently"). The instructions are not guaranteed
         /// to be followed by the model, but they provide guidance to the model on the
         /// desired behavior.
-        /// 
         /// Note that the server sets default instructions which will be used if this
         /// field is not set and are visible in the `session.created` event at the
         /// start of the session.

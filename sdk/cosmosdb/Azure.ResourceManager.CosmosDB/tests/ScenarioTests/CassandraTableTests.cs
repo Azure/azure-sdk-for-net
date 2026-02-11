@@ -192,7 +192,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
             return new CassandraTableCreateOrUpdateContent(AzureLocation.WestUS,
-                new Models.CassandraTableResourceInfo(_tableName, default, new CassandraSchema {
+                new Models.CassandraTableResourceInfo(_tableName, default, new CassandraSchema
+                {
                     Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
                     ClusterKeys = { new CassandraClusterKey { Name = "columnB", OrderBy = "Asc" } },

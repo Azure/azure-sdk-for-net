@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SiteManager;
 
 namespace Azure.ResourceManager.SiteManager.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSiteManagerResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSiteManagerResourceGroupResource for mocking. </summary>
         protected MockableSiteManagerResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSiteManagerResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSiteManagerResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSiteManagerResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ResourceGroupEdgeSiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourceGroupEdgeSiteResources and their operations over a ResourceGroupEdgeSiteResource. </returns>
+        /// <summary> Gets a collection of ResourceGroupEdgeSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceGroupEdgeSites and their operations over a ResourceGroupEdgeSiteResource. </returns>
         public virtual ResourceGroupEdgeSiteCollection GetResourceGroupEdgeSites()
         {
             return GetCachedClient(client => new ResourceGroupEdgeSiteCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGroupEdgeSiteResource>> GetResourceGroupEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
             return await GetResourceGroupEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGroupEdgeSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         [ForwardsClientCalls]
         public virtual Response<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSite(string siteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
             return GetResourceGroupEdgeSites().Get(siteName, cancellationToken);
         }
     }

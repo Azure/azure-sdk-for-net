@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePlaywrightSubscriptionResource.GetAllPlaywrightQuota(AzureLocation)"/> instead. </description>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public static PlaywrightQuotaCollection GetAllPlaywrightQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

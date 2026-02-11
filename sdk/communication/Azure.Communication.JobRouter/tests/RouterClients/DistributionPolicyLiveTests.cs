@@ -106,7 +106,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                         MinConcurrentOffers = 1,
                         MaxConcurrentOffers = 2
                     }
-                ) { Name = bestWorkerModeDistributionPolicyName });
+                )
+                { Name = bestWorkerModeDistributionPolicyName });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);

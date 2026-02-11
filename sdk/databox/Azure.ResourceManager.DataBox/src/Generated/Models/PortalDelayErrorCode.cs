@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataBox.Models
     public readonly partial struct PortalDelayErrorCode : IEquatable<PortalDelayErrorCode>
     {
         private readonly string _value;
+        /// <summary> Delay due to any internal reasons. </summary>
+        private const string InternalIssueDelayValue = "InternalIssueDelay";
+        /// <summary> Active Order limit breached. </summary>
+        private const string ActiveOrderLimitBreachedDelayValue = "ActiveOrderLimitBreachedDelay";
+        /// <summary> High demand. </summary>
+        private const string HighDemandDelayValue = "HighDemandDelay";
+        /// <summary> Slow copy due to large number of files. </summary>
+        private const string LargeNumberOfFilesDelayValue = "LargeNumberOfFilesDelay";
 
         /// <summary> Initializes a new instance of <see cref="PortalDelayErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PortalDelayErrorCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InternalIssueDelayValue = "InternalIssueDelay";
-        private const string ActiveOrderLimitBreachedDelayValue = "ActiveOrderLimitBreachedDelay";
-        private const string HighDemandDelayValue = "HighDemandDelay";
-        private const string LargeNumberOfFilesDelayValue = "LargeNumberOfFilesDelay";
+            _value = value;
+        }
 
         /// <summary> Delay due to any internal reasons. </summary>
         public static PortalDelayErrorCode InternalIssueDelay { get; } = new PortalDelayErrorCode(InternalIssueDelayValue);
+
         /// <summary> Active Order limit breached. </summary>
         public static PortalDelayErrorCode ActiveOrderLimitBreachedDelay { get; } = new PortalDelayErrorCode(ActiveOrderLimitBreachedDelayValue);
+
         /// <summary> High demand. </summary>
         public static PortalDelayErrorCode HighDemandDelay { get; } = new PortalDelayErrorCode(HighDemandDelayValue);
+
         /// <summary> Slow copy due to large number of files. </summary>
         public static PortalDelayErrorCode LargeNumberOfFilesDelay { get; } = new PortalDelayErrorCode(LargeNumberOfFilesDelayValue);
+
         /// <summary> Determines if two <see cref="PortalDelayErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PortalDelayErrorCode left, PortalDelayErrorCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PortalDelayErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PortalDelayErrorCode left, PortalDelayErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PortalDelayErrorCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PortalDelayErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PortalDelayErrorCode(string value) => new PortalDelayErrorCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PortalDelayErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PortalDelayErrorCode?(string value) => value == null ? null : new PortalDelayErrorCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PortalDelayErrorCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PortalDelayErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

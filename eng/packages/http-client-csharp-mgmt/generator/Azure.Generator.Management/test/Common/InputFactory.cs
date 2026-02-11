@@ -157,6 +157,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="summary"></param>
         /// <param name="serializedName"></param>
         /// <param name="doc"></param>
+        /// <param name="decorators"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -170,9 +171,10 @@ namespace Azure.Generator.Management.Tests.Common
             string? wireName = null,
             string? summary = null,
             string? serializedName = null,
-            string? doc = null)
+            string? doc = null,
+            IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
-            return new InputModelProperty(
+            var property = new InputModelProperty(
                 name: name,
                 summary: summary,
                 doc: doc ?? $"Description for {name}",
@@ -186,6 +188,13 @@ namespace Azure.Generator.Management.Tests.Common
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? wireName ?? name.ToVariableName(),
                 serializationOptions: new(json: new(wireName ?? name.ToVariableName())));
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputModelProperty).GetProperty(nameof(InputModelProperty.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(property, [decorators]);
+            }
+            return property;
         }
 
         public static InputHeaderParameter HeaderParameter(
@@ -469,7 +478,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                crossLanguageDefinitionId ?? string.Empty);
+                crossLanguageDefinitionId ?? Guid.NewGuid().ToString());
         }
 
         /// <summary>
@@ -542,6 +551,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="response"></param>
         /// <param name="exception"></param>
         /// <param name="longRunningServiceMetadata"></param>
+        /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
         public static InputLongRunningServiceMethod LongRunningServiceMethod(
             string name,
@@ -550,7 +560,8 @@ namespace Azure.Generator.Management.Tests.Common
             IReadOnlyList<InputMethodParameter>? parameters = null,
             InputServiceMethodResponse? response = null,
             InputServiceMethodResponse? exception = null,
-            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null,
+            string? crossLanguageDefinitionId = null)
         {
             return new InputLongRunningServiceMethod(
                 name,
@@ -565,7 +576,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty,
+                crossLanguageDefinitionId ?? Guid.NewGuid().ToString(),
                 longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
         }
 
@@ -591,6 +602,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="requestMediaTypes"></param>
         /// <param name="path"></param>
         /// <param name="decorators"></param>
+        /// <param name="ns"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -599,7 +611,8 @@ namespace Azure.Generator.Management.Tests.Common
             IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            IReadOnlyList<InputDecoratorInfo>? decorators = null,
+            string? ns = null)
         {
             var operation = new InputOperation(
                 name,
@@ -618,7 +631,8 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                name);
+                name,
+                ns);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));

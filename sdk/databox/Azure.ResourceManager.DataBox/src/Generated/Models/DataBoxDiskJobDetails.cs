@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskJobDetails"/>. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public DataBoxDiskJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails)
+        public DataBoxDiskJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails, DataBoxOrderType.DataBoxDisk)
         {
             Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
@@ -25,7 +26,6 @@ namespace Azure.ResourceManager.DataBox.Models
             GranularCopyProgress = new ChangeTrackingList<DataBoxDiskGranularCopyProgress>();
             GranularCopyLogDetails = new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>();
             DisksAndSizeDetails = new ChangeTrackingDictionary<string, int>();
-            JobDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskJobDetails"/>. </summary>
@@ -39,11 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobDetailsType"> Indicates the type of job details. </param>
         /// <param name="preferences"> Preferences for the order. </param>
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
@@ -51,20 +47,16 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
-        /// </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
         /// <param name="granularCopyProgress"> Copy progress per disk. </param>
         /// <param name="granularCopyLogDetails"> Copy progress per disk. </param>
         /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
         /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
-        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData)
+        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, additionalBinaryDataProperties)
         {
             PreferredDisks = preferredDisks;
             CopyProgress = copyProgress;
@@ -72,24 +64,23 @@ namespace Azure.ResourceManager.DataBox.Models
             GranularCopyLogDetails = granularCopyLogDetails;
             DisksAndSizeDetails = disksAndSizeDetails;
             Passkey = passkey;
-            JobDetailsType = jobDetailsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxDiskJobDetails"/> for deserialization. </summary>
-        internal DataBoxDiskJobDetails()
-        {
         }
 
         /// <summary> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </summary>
         public IDictionary<string, int> PreferredDisks { get; }
+
         /// <summary> Copy progress per disk. </summary>
         public IReadOnlyList<DataBoxDiskCopyProgress> CopyProgress { get; }
+
         /// <summary> Copy progress per disk. </summary>
         public IReadOnlyList<DataBoxDiskGranularCopyProgress> GranularCopyProgress { get; }
+
         /// <summary> Copy progress per disk. </summary>
         public IReadOnlyList<DataBoxDiskGranularCopyLogDetails> GranularCopyLogDetails { get; }
+
         /// <summary> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </summary>
         public IReadOnlyDictionary<string, int> DisksAndSizeDetails { get; }
+
         /// <summary> User entered passkey for DataBox Disk job. </summary>
         public string Passkey { get; set; }
     }

@@ -8,9 +8,10 @@ namespace Azure.Analytics.Purview.Scanning
 {
     public partial class PurviewScanClient
     {
-        internal PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, HttpPipeline pipeline, string apiVersion) {
+        internal PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, HttpPipeline pipeline, string apiVersion)
+        {
             _endpoint = endpoint;
-            _dataSourceName= dataSourceName;
+            _dataSourceName = dataSourceName;
             _scanName = scanName;
             _pipeline = pipeline;
             _apiVersion = apiVersion;

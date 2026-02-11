@@ -1018,10 +1018,11 @@ namespace Azure.Storage.Blobs.Test
             // Act
             // Check the error we get when a download fails because the blob
             // was replaced while we're downloading
-            RequestFailedException ex = Assert.CatchAsync<RequestFailedException>(async () => {
+            RequestFailedException ex = Assert.CatchAsync<RequestFailedException>(async () =>
+            {
                 BlobDownloadStreamingResult result = await blob.DownloadStreamingAsync();
                 await result.Content.CopyToAsync(Stream.Null);
-                });
+            });
 
             // Assert
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
@@ -2659,7 +2660,7 @@ namespace Azure.Storage.Blobs.Test
                     await operation.WaitForCompletionAsync();
 
                     // Assert
-                    Assert.AreEqual(operation.Value,0);
+                    Assert.AreEqual(operation.Value, 0);
                     Assert.True(operation.HasCompleted);
                     Assert.IsNotNull(operation.GetRawResponse());
                 }
@@ -7100,9 +7101,9 @@ namespace Azure.Storage.Blobs.Test
                 Dictionary<string, string> tags = BuildTags();
 
                 // Act
-                 await blob.SetTagsAsync(
-                    tags: tags,
-                    conditions: accessConditions);
+                await blob.SetTagsAsync(
+                   tags: tags,
+                   conditions: accessConditions);
 
                 Response<GetBlobTagResult> response = await blob.GetTagsAsync(
                     conditions: accessConditions);

@@ -17,6 +17,10 @@ namespace Versioning.TypeChangedFrom
     {
         internal TestModel() => throw null;
 
+        protected virtual TestModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator TestModel(Response response) => throw null;
+
         void IJsonModel<TestModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Versioning.TypeChangedFrom
 
         TestModel IPersistableModel<TestModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual TestModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<TestModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="testModel"> The <see cref="TestModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(TestModel testModel) => throw null;
-
-        public static explicit operator TestModel(Response response) => throw null;
     }
 }

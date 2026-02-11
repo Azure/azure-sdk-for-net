@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
         {
             if (name == null)
             {
-                Assert.Throws<ArgumentNullException>(()=> { AzureLocation location = name; });
+                Assert.Throws<ArgumentNullException>(() => { AzureLocation location = name; });
             }
             else
             {
@@ -159,6 +159,23 @@ namespace Azure.Core.Tests
             AzureLocation loc1 = string1;
             AzureLocation loc2 = string2;
             Assert.AreEqual(expected, loc1 != loc2);
+        }
+
+        [Test]
+        public void GetHashCodeDefault()
+        {
+            AzureLocation defaultLocation = default;
+            Assert.AreEqual(0, defaultLocation.GetHashCode());
+        }
+
+        [Test]
+        public void DefaultLocationsAreEquivalent()
+        {
+            AzureLocation defaultLocation1 = default;
+            AzureLocation defaultLocation2 = default;
+
+            Assert.IsTrue(defaultLocation1.Equals(defaultLocation2));
+            Assert.AreEqual(defaultLocation1.GetHashCode(), defaultLocation2.GetHashCode());
         }
     }
 }

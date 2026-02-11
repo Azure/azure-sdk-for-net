@@ -4,8 +4,8 @@
 #nullable enable
 
 using System;
-using Azure.Core;
 using System.ComponentModel;
+using Azure.Core;
 
 [assembly: CodeGenSuppressType("PhoneNumbersClientOptions")]
 namespace Azure.Communication.PhoneNumbers

@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMShare;
 extern alias BaseShares;
-
+extern alias DMShare;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
-using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {

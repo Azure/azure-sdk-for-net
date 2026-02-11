@@ -17,6 +17,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal DifferentSpreadModelRecord() => throw null;
 
+        protected virtual DifferentSpreadModelRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator DifferentSpreadModelRecord(Response response) => throw null;
+
         void IJsonModel<DifferentSpreadModelRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Property.AdditionalProperties
 
         DifferentSpreadModelRecord IPersistableModel<DifferentSpreadModelRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual DifferentSpreadModelRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<DifferentSpreadModelRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="differentSpreadModelRecord"> The <see cref="DifferentSpreadModelRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadModelRecord differentSpreadModelRecord) => throw null;
-
-        public static explicit operator DifferentSpreadModelRecord(Response response) => throw null;
     }
 }

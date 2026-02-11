@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x,null)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x, null)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
             return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList(), serializedAdditionalRawData);
         }
 
-        private static DatabaseRestoreResourceInfo ConvertFromRestorableSqlResourceData(RestorableSqlResourceData value , IDictionary<string, BinaryData> serializedAdditionalRawData)
+        private static DatabaseRestoreResourceInfo ConvertFromRestorableSqlResourceData(RestorableSqlResourceData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList(), serializedAdditionalRawData);
         }

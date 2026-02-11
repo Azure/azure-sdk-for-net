@@ -16,6 +16,10 @@ namespace Service
     {
         internal BlobProperties() => throw null;
 
+        protected virtual BlobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator BlobProperties(Response response) => throw null;
+
         void IJsonModel<BlobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,10 +34,6 @@ namespace Service
 
         BlobProperties IPersistableModel<BlobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BlobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<BlobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator BlobProperties(Response response) => throw null;
     }
 }

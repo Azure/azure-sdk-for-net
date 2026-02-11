@@ -1,0 +1,277 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+using Azure.AI.Projects;
+using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.OpenAI.Tests.Utils;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI;
+using OpenAI.Responses;
+
+namespace Azure.AI.Projects.OpenAI.Tests;
+
+[LiveParallelizable(ParallelScope.All)]
+public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
+{
+    public enum OpenAIClientMode
+    {
+        UseExternalOpenAI,
+        UseFDPOpenAI
+    }
+
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
+    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync, testMode: GetRecordedTestMode()) { }
+
+    public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
+    {
+        ProjectsTestSanitizers.ApplySanitizers(this);
+    }
+
+    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
+
+    protected T CreateTestOpenAIClientOptions<T>(Uri endpoint = null, bool instrument = true)
+        where T : OpenAIClientOptions
+    {
+        T options = typeof(T).Name switch
+        {
+            nameof(OpenAIClientOptions) => (T)new OpenAIClientOptions(),
+            nameof(ProjectOpenAIClientOptions) => (T)(object)new ProjectOpenAIClientOptions(),
+            nameof(ProjectResponsesClientOptions) => (T)(object)new ProjectResponsesClientOptions(),
+            _ => throw new NotImplementedException()
+        };
+        options.Endpoint = endpoint;
+        return GetConfiguredOptions(options, instrument);
+    }
+
+    private T GetConfiguredOptions<T>(T options, bool instrument)
+        where T : ClientPipelineOptions
+    {
+        options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    // TODO: ...why!?
+                    message.Request.Headers.Set("Authorization", "Sanitized");
+                }
+            }),
+            PipelinePosition.PerCall);
+
+        return instrument ? InstrumentClientOptions(options) : options;
+    }
+
+    protected AIProjectClient GetTestProjectClient()
+    {
+        AIProjectClientOptions options = CreateTestProjectClientOptions();
+        AIProjectClient baseClient = new(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), options);
+        return CreateProxyFromClient(baseClient);
+    }
+
+    protected ProjectOpenAIClient GetTestProjectOpenAIClient(bool endpointInConstructor = true, bool endpointInOptions = false)
+    {
+        ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+
+        return CreateProxyFromClient(endpointInConstructor
+            ? new ProjectOpenAIClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), clientOptions)
+            : new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
+    }
+
+    protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
+    {
+        ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+
+        AgentReference defaultAgent = null;
+        if (defaultAgentName is not null)
+        {
+            defaultAgent = new(defaultAgentName);
+        }
+        else if (defaultModelName is not null)
+        {
+            defaultAgent = new($"model:{defaultModelName}");
+        }
+
+        return CreateProxyFromClient(endpointInConstructor
+                ? new ProjectResponsesClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), defaultAgent, defaultConversationId, clientOptions)
+                : new ProjectResponsesClient(GetTestAuthenticationProvider(), clientOptions));
+    }
+
+    protected OpenAIClient GetTestBaseOpenAIClient(Uri overrideEndpoint = null)
+    {
+        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+
+        return CreateProxyFromClient(
+            new OpenAIClient(
+                new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
+                options));
+    }
+
+    protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null, string overrideModel = null)
+    {
+        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+
+        return CreateProxyFromClient(
+            new ResponsesClient(
+                overrideModel ?? TestEnvironment.MODELDEPLOYMENTNAME,
+                new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
+                options));
+    }
+
+    protected OpenAIClient GetTestOpenAIClient(OpenAIClientMode clientMode)
+    {
+        return clientMode switch
+        {
+            OpenAIClientMode.UseFDPOpenAI => GetTestProjectOpenAIClient(),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseOpenAIClient(),
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    protected ResponsesClient GetTestResponsesClient(OpenAIClientMode clientMode, string overrideModel = null)
+    {
+        return clientMode switch
+        {
+            OpenAIClientMode.UseFDPOpenAI => GetTestProjectResponsesClient(defaultModelName: overrideModel),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseResponsesClient(overrideModel: overrideModel),
+            _ => throw new NotImplementedException(),
+        };
+    }
+
+    protected AuthenticationTokenProvider GetTestAuthenticationProvider()
+    {
+        // For local testing if you are using non default account
+        // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
+        // also provide the PATH variable.
+        // This path should allow launching az command.
+        if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
+        {
+            return new AzureCliCredential();
+        }
+        return TestEnvironment.Credential;
+    }
+
+    protected AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
+
+    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime=500)
+    {
+        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
+        {
+            if (Mode != RecordedTestMode.Playback)
+                await Task.Delay(TimeSpan.FromMilliseconds(waitTime));
+            response = await responses.GetResponseAsync(responseId: response.Id);
+        }
+        return response;
+    }
+
+    protected void IgnoreSampleMayBe()
+    {
+        if (Mode != RecordedTestMode.Live)
+        {
+            Assert.Ignore("Samples represented as tests only for validation of compilation.");
+        }
+    }
+
+    #region ToolHelper
+
+    protected static string GetCityNicknameForTest(string location) => location switch
+    {
+        "Seattle, WA" => "The Emerald City",
+        _ => throw new NotImplementedException(),
+    };
+
+    #endregion
+    #region Cleanup
+
+    [TearDown]
+    public virtual void Cleanup()
+    {
+    }
+    #endregion
+
+    #region Debug Method
+    internal static PipelinePolicy GetDumpPolicy()
+    {
+        return new TestPipelinePolicy((message) =>
+        {
+            if (message.Request is not null && message.Response is null)
+            {
+                Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
+                Console.WriteLine($"--- New request ---");
+                IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                string headers = string.Join("", headerPairs);
+                Console.WriteLine($"Request headers:{headers}");
+                if (message.Request?.Content != null)
+                {
+                    string contentType = "Unknown Content Type";
+                    if (message.Request.Headers?.TryGetValue("Content-Type", out contentType) == true
+                        && contentType == "application/json")
+                    {
+                        using MemoryStream stream = new();
+                        message.Request.Content.WriteTo(stream, default);
+                        stream.Position = 0;
+                        using StreamReader reader = new(stream);
+                        string requestDump = reader.ReadToEnd();
+                        stream.Position = 0;
+                        requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
+                        // Make sure JSON string is properly formatted.
+                        JsonSerializerOptions jsonOptions = new()
+                        {
+                            WriteIndented = true,
+                        };
+                        JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                        Console.WriteLine("--- Begin request content ---");
+                        Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                        Console.WriteLine("--- End request content ---");
+                    }
+                    else
+                    {
+                        string length = message.Request.Content.TryComputeLength(out long numberLength)
+                            ? $"{numberLength} bytes"
+                            : "unknown length";
+                        Console.WriteLine($"<< Non-JSON content: {contentType} >> {length}");
+                    }
+                }
+            }
+            if (message.Response != null)
+            {
+                IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                string headers = string.Join("", headerPairs);
+                Console.WriteLine($"Response headers: {headers}");
+                if (message.BufferResponse)
+                {
+                    message.Response.BufferContent();
+                    Console.WriteLine("--- Begin response content ---");
+                    Console.WriteLine(message.Response.Content?.ToString());
+                    Console.WriteLine("--- End of response content ---");
+                }
+                else
+                {
+                    Console.WriteLine("--- Response (unbuffered, content not rendered) ---");
+                }
+            }
+        });
+    }
+    #endregion
+}

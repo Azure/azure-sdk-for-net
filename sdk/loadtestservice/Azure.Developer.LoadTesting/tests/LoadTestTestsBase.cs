@@ -11,7 +11,7 @@ using static NUnit.Framework.TestContext;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    public class LoadTestTestsBase: RecordedTestBase<LoadTestingClientTestEnvironment>
+    public class LoadTestTestsBase : RecordedTestBase<LoadTestingClientTestEnvironment>
     {
         internal string _testId;
         internal string _fileName;
@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
         internal bool RequiresTestProfile()
         {
-            _testProfileId = SafeSubstring($"{CurrentContext.Test.MethodName.Replace("_","-")}{_asyncSuffix}-testprofile".ToLower(), 50);
+            _testProfileId = SafeSubstring($"{CurrentContext.Test.MethodName.Replace("_", "-")}{_asyncSuffix}-testprofile".ToLower(), 50);
             var categories = CurrentContext.Test.Properties["Category"];
             return categories != null && categories.Contains(REQUIRES_TEST_PROFILE);
         }
