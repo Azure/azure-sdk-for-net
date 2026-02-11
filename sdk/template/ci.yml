@@ -41,6 +41,11 @@ extends:
     ${{ if eq(parameters.AutoApproveRelease, 'true') }}:
       PublicPublishEnvironment: none
     ServiceDirectory: template
+    MatrixConfigs:
+      - Name: BBP_TEMPLATE_TEST
+        Path: sdk/template/platform-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template
