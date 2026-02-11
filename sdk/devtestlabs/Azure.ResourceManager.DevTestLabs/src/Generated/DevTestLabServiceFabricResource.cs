@@ -960,5 +960,40 @@ namespace Azure.ResourceManager.DevTestLabs
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of DevTestLabServiceFabricSchedules in the <see cref="DevTestLabServiceFabricResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabServiceFabricSchedules and their operations over a DevTestLabServiceFabricScheduleResource. </returns>
+        public virtual DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules()
+        {
+            return GetCachedClient(client => new DevTestLabServiceFabricScheduleCollection(client, Id));
+        }
+
+        /// <summary> Get schedule. </summary>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabServiceFabricSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get schedule. </summary>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabServiceFabricSchedules().Get(name, expand, cancellationToken);
+        }
     }
 }

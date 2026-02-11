@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            DevTestLabWindowsOSState? windowsOSState = default;
+            WindowsOSState? windowsOSState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    windowsOSState = new DevTestLabWindowsOSState(prop.Value.GetString());
+                    windowsOSState = new WindowsOSState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

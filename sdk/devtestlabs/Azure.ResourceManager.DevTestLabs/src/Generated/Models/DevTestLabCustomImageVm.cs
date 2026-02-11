@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabLinuxOSInfo LinuxOsInfo { get; set; }
 
         /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
-        public DevTestLabWindowsOSState? WindowsOSState
+        public WindowsOSState? WindowsOSState
         {
             get
             {

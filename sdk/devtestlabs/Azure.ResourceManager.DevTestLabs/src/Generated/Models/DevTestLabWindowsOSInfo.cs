@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabWindowsOSInfo"/>. </summary>
         /// <param name="windowsOSState"> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabWindowsOSInfo(DevTestLabWindowsOSState? windowsOSState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabWindowsOSInfo(WindowsOSState? windowsOSState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WindowsOSState = windowsOSState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
-        public DevTestLabWindowsOSState? WindowsOSState { get; set; }
+        public WindowsOSState? WindowsOSState { get; set; }
     }
 }

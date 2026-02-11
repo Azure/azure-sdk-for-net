@@ -12,17 +12,17 @@ using Azure.ResourceManager.DevTestLabs;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
-    public readonly partial struct DevTestLabWindowsOSState : IEquatable<DevTestLabWindowsOSState>
+    public readonly partial struct WindowsOSState : IEquatable<WindowsOSState>
     {
         private readonly string _value;
         private const string NonSyspreppedValue = "NonSysprepped";
         private const string SysprepRequestedValue = "SysprepRequested";
         private const string SysprepAppliedValue = "SysprepApplied";
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabWindowsOSState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsOSState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabWindowsOSState(string value)
+        public WindowsOSState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Gets the NonSysprepped. </summary>
-        public static DevTestLabWindowsOSState NonSysprepped { get; } = new DevTestLabWindowsOSState(NonSyspreppedValue);
+        public static WindowsOSState NonSysprepped { get; } = new WindowsOSState(NonSyspreppedValue);
 
         /// <summary> Gets the SysprepRequested. </summary>
-        public static DevTestLabWindowsOSState SysprepRequested { get; } = new DevTestLabWindowsOSState(SysprepRequestedValue);
+        public static WindowsOSState SysprepRequested { get; } = new WindowsOSState(SysprepRequestedValue);
 
         /// <summary> Gets the SysprepApplied. </summary>
-        public static DevTestLabWindowsOSState SysprepApplied { get; } = new DevTestLabWindowsOSState(SysprepAppliedValue);
+        public static WindowsOSState SysprepApplied { get; } = new WindowsOSState(SysprepAppliedValue);
 
-        /// <summary> Determines if two <see cref="DevTestLabWindowsOSState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="WindowsOSState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DevTestLabWindowsOSState left, DevTestLabWindowsOSState right) => left.Equals(right);
+        public static bool operator ==(WindowsOSState left, WindowsOSState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DevTestLabWindowsOSState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="WindowsOSState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DevTestLabWindowsOSState left, DevTestLabWindowsOSState right) => !left.Equals(right);
+        public static bool operator !=(WindowsOSState left, WindowsOSState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DevTestLabWindowsOSState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WindowsOSState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabWindowsOSState(string value) => new DevTestLabWindowsOSState(value);
+        public static implicit operator WindowsOSState(string value) => new WindowsOSState(value);
 
-        /// <summary> Converts a string to a <see cref="DevTestLabWindowsOSState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WindowsOSState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DevTestLabWindowsOSState?(string value) => value == null ? null : new DevTestLabWindowsOSState(value);
+        public static implicit operator WindowsOSState?(string value) => value == null ? null : new WindowsOSState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DevTestLabWindowsOSState other && Equals(other);
+        public override bool Equals(object obj) => obj is WindowsOSState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DevTestLabWindowsOSState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WindowsOSState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

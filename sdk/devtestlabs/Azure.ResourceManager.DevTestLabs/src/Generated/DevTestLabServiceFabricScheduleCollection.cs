@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,10 +20,10 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabServiceFabricScheduleResource"/> and their operations.
-    /// Each <see cref="DevTestLabServiceFabricScheduleResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
-    /// To get a <see cref="DevTestLabServiceFabricScheduleCollection"/> instance call the GetDevTestLabServiceFabricSchedules method from an instance of <see cref="DevTestLabResource"/>.
+    /// Each <see cref="DevTestLabServiceFabricScheduleResource"/> in the collection will belong to the same instance of <see cref="DevTestLabServiceFabricResource"/>.
+    /// To get a <see cref="DevTestLabServiceFabricScheduleCollection"/> instance call the GetDevTestLabServiceFabricSchedules method from an instance of <see cref="DevTestLabServiceFabricResource"/>.
     /// </summary>
-    public partial class DevTestLabServiceFabricScheduleCollection : ArmCollection
+    public partial class DevTestLabServiceFabricScheduleCollection : ArmCollection, IEnumerable<DevTestLabServiceFabricScheduleResource>, IAsyncEnumerable<DevTestLabServiceFabricScheduleResource>
     {
         private readonly ClientDiagnostics _devTestLabServiceFabricSchedulesClientDiagnostics;
         private readonly DevTestLabServiceFabricSchedules _devTestLabServiceFabricSchedulesRestClient;
@@ -46,9 +48,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevTestLabResource.ResourceType)
+            if (id.ResourceType != DevTestLabServiceFabricResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabServiceFabricResource.ResourceType), id);
             }
         }
 
@@ -70,17 +72,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DevTestLabServiceFabricScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userName, string serviceFabricName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DevTestLabServiceFabricScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, DevTestLabScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, DevTestLabScheduleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -129,17 +127,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DevTestLabServiceFabricScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string userName, string serviceFabricName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DevTestLabServiceFabricScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, DevTestLabScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, DevTestLabScheduleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -187,17 +181,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabServiceFabricScheduleResource>> GetAsync(string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabServiceFabricScheduleResource>> GetAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.Get");
@@ -208,7 +198,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, expand, context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,17 +231,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabServiceFabricScheduleResource> Get(string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabServiceFabricScheduleResource> Get(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.Get");
@@ -262,7 +248,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, expand, context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,6 +265,92 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
+        /// List schedules in a given service fabric.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceFabricSchedules_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevTestLabServiceFabricScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabServiceFabricScheduleResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT(
+                _devTestLabServiceFabricSchedulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                expand,
+                filter,
+                top,
+                @orderby,
+                context), data => new DevTestLabServiceFabricScheduleResource(Client, data));
+        }
+
+        /// <summary>
+        /// List schedules in a given service fabric.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceFabricSchedules_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevTestLabServiceFabricScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabServiceFabricScheduleResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabServiceFabricSchedulesGetAllCollectionResultOfT(
+                _devTestLabServiceFabricSchedulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                expand,
+                filter,
+                top,
+                @orderby,
+                context), data => new DevTestLabServiceFabricScheduleResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -295,17 +367,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.Exists");
@@ -316,7 +384,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, expand, context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -357,17 +425,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.Exists");
@@ -378,7 +442,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, expand, context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -419,17 +483,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabServiceFabricScheduleResource>> GetIfExistsAsync(string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DevTestLabServiceFabricScheduleResource>> GetIfExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetIfExists");
@@ -440,7 +500,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, expand, context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -485,17 +545,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> users. </param>
-        /// <param name="serviceFabricName"> servicefabrics. </param>
         /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabServiceFabricScheduleResource> GetIfExists(string userName, string serviceFabricName, string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DevTestLabServiceFabricScheduleResource> GetIfExists(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
-            Argument.AssertNotNullOrEmpty(serviceFabricName, nameof(serviceFabricName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _devTestLabServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetIfExists");
@@ -506,7 +562,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, serviceFabricName, name, expand, context);
+                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabScheduleData> response = default;
@@ -532,6 +588,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DevTestLabServiceFabricScheduleResource> IEnumerable<DevTestLabServiceFabricScheduleResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DevTestLabServiceFabricScheduleResource> IAsyncEnumerable<DevTestLabServiceFabricScheduleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
