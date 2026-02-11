@@ -4,15 +4,15 @@
 
 ### Features Added
 
-### Breaking Changes
-
-- Added nullability annotation to the `ClientResult<T>` implicit conversion operator parameter to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/operator-overloads).
-
 ### Bugs Fixed
 
 - Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
 
 ### Other Changes
+
+### Breaking Changes
+
+- Added nullability annotation to the `ClientResult<T>` implicit conversion operator parameter to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/operator-overloads).
 
 ## 1.9.0 (2026-01-27)
 
