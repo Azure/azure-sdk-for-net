@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await StopProtectionAsync(waitUntil, xMsAuthorizationAuxiliary : null, content : null, cancellationToken).ConfigureAwait(false);
+            => await StopProtectionAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This operation will stop protection of a backup instance and data will be held forever
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation StopProtection(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => StopProtection(waitUntil, xMsAuthorizationAuxiliary : null, content : null, cancellationToken);
+            => StopProtection(waitUntil, null, null, cancellationToken);
 
         /// <summary>
         /// This operation will stop backup for a backup instance and retains the backup data as per the policy (except latest Recovery point, which will be retained forever)

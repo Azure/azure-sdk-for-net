@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource"/> object. </returns>
-        public virtual DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(ResourceIdentifier id)
-        {
-            DataProtectionBackupInstanceResource.ValidateResourceId(id);
-            return new DataProtectionBackupInstanceResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataProtectionBackupVaultResource"/> object. </returns>
@@ -60,6 +51,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             DataProtectionBackupPolicyResource.ValidateResourceId(id);
             return new DataProtectionBackupPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource"/> object. </returns>
+        public virtual DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(ResourceIdentifier id)
+        {
+            DataProtectionBackupInstanceResource.ValidateResourceId(id);
+            return new DataProtectionBackupInstanceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DataProtectionBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>

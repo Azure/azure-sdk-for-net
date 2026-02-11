@@ -45,24 +45,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstanceResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource"/> object. </returns>
-        public static DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupInstanceResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -114,6 +96,24 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstanceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource"/> object. </returns>
+        public static DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupInstanceResource(id);
         }
 
         /// <summary>

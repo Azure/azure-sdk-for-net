@@ -211,13 +211,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dataProtectionBackupVaultPatch"> Request body for operation. </param>
+        /// <param name="patch"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataProtectionBackupVaultPatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch dataProtectionBackupVaultPatch, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataProtectionBackupVaultPatch, nameof(dataProtectionBackupVaultPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _backupVaultResourcesClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupVaultResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataProtectionBackupVaultPatch.ToRequestContent(dataProtectionBackupVaultPatch), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _backupVaultResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataProtectionBackupVaultPatch.ToRequestContent(patch), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionBackupVaultResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupVaultResource>(
                     new DataProtectionBackupVaultOperationSource(Client),
@@ -271,13 +271,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dataProtectionBackupVaultPatch"> Request body for operation. </param>
+        /// <param name="patch"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataProtectionBackupVaultPatch"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch dataProtectionBackupVaultPatch, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataProtectionBackupVaultPatch, nameof(dataProtectionBackupVaultPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _backupVaultResourcesClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.Update");
             scope.Start();
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupVaultResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataProtectionBackupVaultPatch.ToRequestContent(dataProtectionBackupVaultPatch), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _backupVaultResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataProtectionBackupVaultPatch.ToRequestContent(patch), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionBackupVaultResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupVaultResource>(
                     new DataProtectionBackupVaultOperationSource(Client),
@@ -527,12 +527,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="adhocBackupValidateContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adhocBackupValidateContent"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateForBackupAsync(WaitUntil waitUntil, AdhocBackupValidateContent adhocBackupValidateContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateForBackupAsync(WaitUntil waitUntil, AdhocBackupValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(adhocBackupValidateContent, nameof(adhocBackupValidateContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _backupVaultResourcesClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.ValidateForBackup");
             scope.Start();
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupVaultResourcesRestClient.CreateValidateForBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AdhocBackupValidateContent.ToRequestContent(adhocBackupValidateContent), context);
+                HttpMessage message = _backupVaultResourcesRestClient.CreateValidateForBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AdhocBackupValidateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -586,12 +586,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="adhocBackupValidateContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adhocBackupValidateContent"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateForBackup(WaitUntil waitUntil, AdhocBackupValidateContent adhocBackupValidateContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateForBackup(WaitUntil waitUntil, AdhocBackupValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(adhocBackupValidateContent, nameof(adhocBackupValidateContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _backupVaultResourcesClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.ValidateForBackup");
             scope.Start();
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupVaultResourcesRestClient.CreateValidateForBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AdhocBackupValidateContent.ToRequestContent(adhocBackupValidateContent), context);
+                HttpMessage message = _backupVaultResourcesRestClient.CreateValidateForBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AdhocBackupValidateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -897,39 +897,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        /// <summary> Gets a collection of DataProtectionBackupInstances in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
-        /// <returns> An object representing collection of DataProtectionBackupInstances and their operations over a DataProtectionBackupInstanceResource. </returns>
-        public virtual DataProtectionBackupInstanceCollection GetDataProtectionBackupInstances()
-        {
-            return GetCachedClient(client => new DataProtectionBackupInstanceCollection(client, Id));
-        }
-
-        /// <summary> Gets a backup instance with name in a backup vault. </summary>
-        /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataProtectionBackupInstanceResource>> GetDataProtectionBackupInstanceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
-
-            return await GetDataProtectionBackupInstances().GetAsync(backupInstanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a backup instance with name in a backup vault. </summary>
-        /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstance(string backupInstanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
-
-            return GetDataProtectionBackupInstances().Get(backupInstanceName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DataProtectionBackupPolicies in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
         /// <returns> An object representing collection of DataProtectionBackupPolicies and their operations over a DataProtectionBackupPolicyResource. </returns>
         public virtual DataProtectionBackupPolicyCollection GetDataProtectionBackupPolicies()
@@ -961,6 +928,39 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             return GetDataProtectionBackupPolicies().Get(backupPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataProtectionBackupInstances in the <see cref="DataProtectionBackupVaultResource"/>. </summary>
+        /// <returns> An object representing collection of DataProtectionBackupInstances and their operations over a DataProtectionBackupInstanceResource. </returns>
+        public virtual DataProtectionBackupInstanceCollection GetDataProtectionBackupInstances()
+        {
+            return GetCachedClient(client => new DataProtectionBackupInstanceCollection(client, Id));
+        }
+
+        /// <summary> Gets a backup instance with name in a backup vault. </summary>
+        /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataProtectionBackupInstanceResource>> GetDataProtectionBackupInstanceAsync(string backupInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+
+            return await GetDataProtectionBackupInstances().GetAsync(backupInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a backup instance with name in a backup vault. </summary>
+        /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstance(string backupInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+
+            return GetDataProtectionBackupInstances().Get(backupInstanceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataProtectionBackupJobs in the <see cref="DataProtectionBackupVaultResource"/>. </summary>

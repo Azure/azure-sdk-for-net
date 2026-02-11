@@ -311,13 +311,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataProtectionUnlockDeleteContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataProtectionUnlockDeleteContent"/> is null. </exception>
-        public virtual async Task<Response<DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent dataProtectionUnlockDeleteContent, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent content, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataProtectionUnlockDeleteContent, nameof(dataProtectionUnlockDeleteContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResource.UnlockDelete");
             scope.Start();
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateUnlockDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionUnlockDeleteContent.ToRequestContent(dataProtectionUnlockDeleteContent), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateUnlockDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionUnlockDeleteContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionUnlockDeleteResult> response = Response.FromValue(DataProtectionUnlockDeleteResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,13 +364,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataProtectionUnlockDeleteContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataProtectionUnlockDeleteContent"/> is null. </exception>
-        public virtual Response<DataProtectionUnlockDeleteResult> UnlockDelete(DataProtectionUnlockDeleteContent dataProtectionUnlockDeleteContent, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DataProtectionUnlockDeleteResult> UnlockDelete(DataProtectionUnlockDeleteContent content, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataProtectionUnlockDeleteContent, nameof(dataProtectionUnlockDeleteContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _resourceGuardProxyBaseResourcesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResource.UnlockDelete");
             scope.Start();
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateUnlockDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionUnlockDeleteContent.ToRequestContent(dataProtectionUnlockDeleteContent), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _resourceGuardProxyBaseResourcesRestClient.CreateUnlockDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionUnlockDeleteContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionUnlockDeleteResult> response = Response.FromValue(DataProtectionUnlockDeleteResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -316,12 +316,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="adhocBackupTriggerContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adhocBackupTriggerContent"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> AdhocBackupAsync(WaitUntil waitUntil, AdhocBackupTriggerContent adhocBackupTriggerContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> AdhocBackupAsync(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(adhocBackupTriggerContent, nameof(adhocBackupTriggerContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.AdhocBackup");
             scope.Start();
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(adhocBackupTriggerContent), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -375,12 +375,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="adhocBackupTriggerContent"> Request body for operation. </param>
+        /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adhocBackupTriggerContent"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> AdhocBackup(WaitUntil waitUntil, AdhocBackupTriggerContent adhocBackupTriggerContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> AdhocBackup(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(adhocBackupTriggerContent, nameof(adhocBackupTriggerContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.AdhocBackup");
             scope.Start();
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(adhocBackupTriggerContent), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -734,10 +734,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="content"> The content of the action request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, StopProtectionContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, StopProtectionContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.StopProtection");
             scope.Start();
@@ -785,10 +785,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="content"> The content of the action request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation StopProtection(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, StopProtectionContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation StopProtection(WaitUntil waitUntil, StopProtectionContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.StopProtection");
             scope.Start();
@@ -836,10 +836,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="content"> The content of the action request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> SuspendBackupsAsync(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, SuspendBackupContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SuspendBackupsAsync(WaitUntil waitUntil, SuspendBackupContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SuspendBackups");
             scope.Start();
@@ -887,10 +887,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="content"> The content of the action request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation SuspendBackups(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = default, SuspendBackupContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SuspendBackups(WaitUntil waitUntil, SuspendBackupContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SuspendBackups");
             scope.Start();

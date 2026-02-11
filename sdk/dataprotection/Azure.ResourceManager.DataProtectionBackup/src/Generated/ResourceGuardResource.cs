@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGuardPatch"> Request body for operation. </param>
+        /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardPatch"/> is null. </exception>
-        public virtual async Task<Response<ResourceGuardResource>> UpdateAsync(ResourceGuardPatch resourceGuardPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ResourceGuardResource>> UpdateAsync(ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGuardPatch, nameof(resourceGuardPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _resourceGuardResourcesClientDiagnostics.CreateScope("ResourceGuardResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardResourcesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGuardPatch.ToRequestContent(resourceGuardPatch), context);
+                HttpMessage message = _resourceGuardResourcesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGuardPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardData> response = Response.FromValue(ResourceGuardData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGuardPatch"> Request body for operation. </param>
+        /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardPatch"/> is null. </exception>
-        public virtual Response<ResourceGuardResource> Update(ResourceGuardPatch resourceGuardPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ResourceGuardResource> Update(ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGuardPatch, nameof(resourceGuardPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _resourceGuardResourcesClientDiagnostics.CreateScope("ResourceGuardResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardResourcesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGuardPatch.ToRequestContent(resourceGuardPatch), context);
+                HttpMessage message = _resourceGuardResourcesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceGuardPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardData> response = Response.FromValue(ResourceGuardData.FromResponse(result), result);
                 if (response.Value == null)
