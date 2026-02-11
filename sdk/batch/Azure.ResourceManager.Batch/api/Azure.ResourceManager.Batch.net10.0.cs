@@ -1694,7 +1694,6 @@ namespace Azure.ResourceManager.Batch.Models
         public int DiskSizeInGB { get { throw null; } set { } }
         public int Lun { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.ManagedDisk ManagedDisk { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Batch.Models.BatchVmDataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchVmDataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchVmDataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
