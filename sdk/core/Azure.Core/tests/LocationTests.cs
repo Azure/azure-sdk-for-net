@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
         {
             if (name == null)
             {
-                Assert.Throws<ArgumentNullException>(()=> { AzureLocation location = name; });
+                Assert.Throws<ArgumentNullException>(() => { AzureLocation location = name; });
             }
             else
             {

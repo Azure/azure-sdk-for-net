@@ -1,29 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseShares;
 extern alias DMBlob;
 extern alias DMShare;
-extern alias BaseShares;
-
 using System;
-using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Blobs;
-using BaseShares::Azure.Storage.Files.Shares;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.Blobs.Specialized;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
-using DMBlob::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Shared;
-using NUnit.Framework;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using BaseShares::Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using DMBlob::Azure.Storage.DataMovement.Blobs;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {

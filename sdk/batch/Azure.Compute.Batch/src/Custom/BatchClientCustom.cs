@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using Azure.Compute.Batch.Custom;
-using System.Threading.Tasks;
-using static Azure.Core.HttpPipelineExtensions;
-using System.Threading;
 using System.Diagnostics;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Compute.Batch.Custom;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using static Azure.Core.HttpPipelineExtensions;
 
 namespace Azure.Compute.Batch
 {
@@ -658,7 +658,7 @@ namespace Azure.Compute.Batch
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<CreateTasksResult> CreateTasksAsync(string jobId, IEnumerable<BatchTaskCreateOptions> tasksToAdd, CreateTasksOptions createTasksOptions = null,TimeSpan ? timeOutInSeconds = null, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateTasksResult> CreateTasksAsync(string jobId, IEnumerable<BatchTaskCreateOptions> tasksToAdd, CreateTasksOptions createTasksOptions = null, TimeSpan? timeOutInSeconds = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(tasksToAdd, nameof(tasksToAdd));
@@ -668,7 +668,7 @@ namespace Azure.Compute.Batch
             try
             {
                 TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, createTasksOptions, cancellationToken: cancellationToken);
-                response = await addTasksWorkflowManager.AddTasksAsync(tasksToAdd,jobId, timeOutInSeconds).ConfigureAwait(false);
+                response = await addTasksWorkflowManager.AddTasksAsync(tasksToAdd, jobId, timeOutInSeconds).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -754,7 +754,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
-            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
+            {
+                Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -836,7 +837,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
-            {   Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
+            {
+                Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new DeleteJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -876,7 +878,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
-            {   Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
+            {
+                Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new DeleteJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -915,7 +918,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
             scope.Start();
             try
-            {   Response response = await DeletePoolInternalAsync(poolId, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
+            {
+                Response response = await DeletePoolInternalAsync(poolId, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
                 return new DeletePoolOperation(this, poolId, response);
             }
             catch (Exception e)
@@ -954,7 +958,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
             scope.Start();
             try
-            {   Response response = DeletePoolInternal(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
+            {
+                Response response = DeletePoolInternal(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
                 return new DeletePoolOperation(this, poolId, response);
             }
             catch (Exception e)
@@ -992,7 +997,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
-            {   Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken).ConfigureAwait(false);
+            {
+                Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken).ConfigureAwait(false);
                 return new TerminateJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1030,7 +1036,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
-            {   Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken);
+            {
+                Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken);
                 return new TerminateJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1070,7 +1077,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
             scope.Start();
             try
-            {   Response response = await TerminateJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
+            {
+                Response response = await TerminateJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new TerminateJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -1110,7 +1118,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
             scope.Start();
             try
-            {   Response response = TerminateJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
+            {
+                Response response = TerminateJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new TerminateJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -1149,7 +1158,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
             scope.Start();
             try
-            {   Response response = await DisableJobInternalAsync(jobId, disableOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken).ConfigureAwait(false);
+            {
+                Response response = await DisableJobInternalAsync(jobId, disableOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken).ConfigureAwait(false);
                 return new DisableJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1188,7 +1198,8 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
             scope.Start();
             try
-            {   Response response = DisableJobInternal(jobId, disableOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken);
+            {
+                Response response = DisableJobInternal(jobId, disableOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken);
                 return new DisableJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1267,8 +1278,9 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
             scope.Start();
             try
-            {   Response response = EnableJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions);
-                                return new EnableJobOperation(this, jobId, response);
+            {
+                Response response = EnableJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions);
+                return new EnableJobOperation(this, jobId, response);
             }
             catch (Exception e)
             {
@@ -1506,7 +1518,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await ReimageNodeInternalAsync(poolId: poolId, nodeId:  nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = await ReimageNodeInternalAsync(poolId: poolId, nodeId: nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)

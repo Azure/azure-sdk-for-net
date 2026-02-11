@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Mocking
 {

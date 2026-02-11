@@ -210,7 +210,7 @@ public partial class Sample_PersistentAgents_Computer_Use : SamplesBase<AIAgents
         #endregion
 
         #region Snippet:ComputerUse_ListSteps_Async
-        IEnumerable <RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
+        IEnumerable<RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
         ListRunSteps(steps);
         #endregion
 
@@ -277,7 +277,7 @@ public partial class Sample_PersistentAgents_Computer_Use : SamplesBase<AIAgents
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        List<PersistentThreadMessage> messagesList = [..client.Messages.GetMessages(thread.Id)];
+        List<PersistentThreadMessage> messagesList = [.. client.Messages.GetMessages(thread.Id)];
         Assert.AreEqual(message.Id, messagesList[0].Id);
 
         // Step 4: Run the agent

@@ -7,13 +7,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
-using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Embeddings;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AzureOpenAI_Embeddings : SamplesBase
 {
     [Test]
     [SyncOnly]
@@ -25,12 +26,12 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -69,12 +70,12 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -102,4 +103,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         Console.WriteLine($"Generated embedding with {result.ToFloats().Length} dimensions");
         #endregion
     }
+
+    public Sample_AzureOpenAI_Embeddings(bool isAsync) : base(isAsync)
+    { }
 }

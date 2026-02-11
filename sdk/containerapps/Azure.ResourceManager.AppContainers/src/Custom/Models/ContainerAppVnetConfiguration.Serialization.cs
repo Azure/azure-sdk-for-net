@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static void DeserializeInfrastructureSubnetIdValue(JsonProperty property, ref ResourceIdentifier infrastructureSubnetId)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
-            	return;
+                return;
             var str = property.Value.GetString();
             if (!string.IsNullOrEmpty(str))
             {

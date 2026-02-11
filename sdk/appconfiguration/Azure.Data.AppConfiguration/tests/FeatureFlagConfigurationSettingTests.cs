@@ -103,7 +103,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var feature = new FeatureFlagConfigurationSetting("my feature", false);
 
             Assert.AreEqual("application/vnd.microsoft.appconfig.ff+json;charset=utf-8", feature.ContentType);
-            Assert.AreEqual(".appconfig.featureflag/my feature" , feature.Key);
+            Assert.AreEqual(".appconfig.featureflag/my feature", feature.Key);
             Assert.AreEqual("my feature", feature.FeatureId);
             Assert.AreEqual(false, feature.IsEnabled);
         }

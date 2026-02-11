@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The remove participant succeeded event.
     /// </summary>
-    public class RemoveParticipantSucceeded: CallAutomationEventBase
+    public class RemoveParticipantSucceeded : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of RemoveParticipantSucceededInternal. </summary>
         internal RemoveParticipantSucceeded()

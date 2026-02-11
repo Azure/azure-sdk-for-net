@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The ClusterProperties. </summary>
-    public partial class ClusterProperties : IJsonModel<ClusterProperties>
+    internal partial class ClusterProperties : IJsonModel<ClusterProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

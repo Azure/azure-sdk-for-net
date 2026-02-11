@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.Communication.Pipeline
 {
@@ -182,7 +182,7 @@ namespace Azure.Communication.Pipeline
             Assert.AreEqual(successfullResponse, _httpMessage.Response);
         }
 
-        private class CustomRequest: MockRequest
+        private class CustomRequest : MockRequest
         {
             public CustomRequest(string authHeader)
             {
