@@ -29,3 +29,10 @@ extends:
     Artifacts:
     - name: Azure.GeneratorAgent
       safeName: AzureGeneratorAgent
+    MatrixConfigs:
+    - Name: NET10_Only
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      GenerateVMJobs: true
+    MatrixFilters:
+    - TestTargetFramework=net10.0
