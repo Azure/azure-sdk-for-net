@@ -22,15 +22,12 @@ pr:
     - sdk/tools/Azure.GeneratorAgent/
 
 extends:
-  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    ServiceDirectory: tools/Azure.GeneratorAgent
-    ArtifactName: packages
-    Artifacts:
-    - name: Azure.GeneratorAgent
-      safeName: AzureGeneratorAgent
-    MatrixConfigs:
-    - Name: NET10_CrossPlatform
-      Path: sdk/tools/Azure.GeneratorAgent/platform-matrix.json
-      Selection: sparse
-      GenerateVMJobs: true
+    InitializationSteps:
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+    EmitterPackagePath: sdk/tools/Azure.GeneratorAgent
+    TestMatrix:
+      All:
+        TestArguments: -UnitTests -Filter .NET
+        SpectorName: "Azure.GeneratorAgent"
