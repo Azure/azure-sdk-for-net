@@ -18,6 +18,23 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class BasicFillerResponseConfig : FillerResponseConfigBase, IJsonModel<BasicFillerResponseConfig>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FillerResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BasicFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBasicFillerResponseConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BasicFillerResponseConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BasicFillerResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,23 +179,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BasicFillerResponseConfig IPersistableModel<BasicFillerResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (BasicFillerResponseConfig)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FillerResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BasicFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBasicFillerResponseConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BasicFillerResponseConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BasicFillerResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
