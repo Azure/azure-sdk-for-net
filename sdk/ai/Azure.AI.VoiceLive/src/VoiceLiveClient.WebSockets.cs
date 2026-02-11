@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// simultaneously sending and receiving WebSocket messages.
         /// </remarks>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <param name="model"></param>
+        /// <param name="model">The model to use for the session.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
         public virtual async Task<VoiceLiveSession> StartSessionAsync(string model, CancellationToken cancellationToken = default)
         {
@@ -44,12 +44,11 @@ namespace Azure.AI.VoiceLive
             VoiceLiveSessionOptions sessionConfig,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
-
-            VoiceLiveSession session = await StartSessionAsync(sessionConfig.Model, cancellationToken).ConfigureAwait(false);
-            await ApplySessionConfigurationAsync(session, sessionConfig, cancellationToken).ConfigureAwait(false);
-
-            return session;
+            return await StartSessionWithConfigurationAsync(
+                sessionConfig?.Model,
+                agentConfig: null,
+                sessionConfig,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,8 +63,6 @@ namespace Azure.AI.VoiceLive
         /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
         public virtual async Task<VoiceLiveSession> StartSessionAsync(AgentSessionConfig agentConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agentConfig, nameof(agentConfig));
-
             Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint, agentConfig);
             return await CreateAndConnectSessionAsync(webSocketEndpoint, cancellationToken).ConfigureAwait(false);
         }
@@ -86,15 +83,53 @@ namespace Azure.AI.VoiceLive
             VoiceLiveSessionOptions sessionConfig,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agentConfig, nameof(agentConfig));
-            Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
+            return await StartSessionWithConfigurationAsync(
+                model: null,
+                agentConfig,
+                sessionConfig,
+                cancellationToken).ConfigureAwait(false);
+        }
+#pragma warning restore AZC0004 // Websocket is an async only class
 
-            VoiceLiveSession session = await StartSessionAsync(agentConfig, cancellationToken).ConfigureAwait(false);
-            await ApplySessionConfigurationAsync(session, sessionConfig, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Core method for starting a session with optional configurations.
+        /// </summary>
+        /// <param name="model">The model to use (for model-based sessions).</param>
+        /// <param name="agentConfig">The agent configuration (for agent-based sessions).</param>
+        /// <param name="sessionConfig">Optional session configuration to apply after connection.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>A connected and optionally configured VoiceLiveSession.</returns>
+        private async Task<VoiceLiveSession> StartSessionWithConfigurationAsync(
+            string model,
+            AgentSessionConfig agentConfig,
+            VoiceLiveSessionOptions sessionConfig,
+            CancellationToken cancellationToken)
+        {
+            // Validate inputs
+            if (sessionConfig != null)
+            {
+                Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
+            }
+            if (agentConfig != null)
+            {
+                Argument.AssertNotNull(agentConfig, nameof(agentConfig));
+            }
+
+            // Create endpoint and session
+            Uri webSocketEndpoint = agentConfig != null
+                ? ConvertToWebSocketEndpoint(_endpoint, agentConfig)
+                : ConvertToWebSocketEndpoint(_endpoint, model ?? sessionConfig?.Model);
+
+            VoiceLiveSession session = await CreateAndConnectSessionAsync(webSocketEndpoint, cancellationToken).ConfigureAwait(false);
+
+            // Apply session configuration if provided
+            if (sessionConfig != null)
+            {
+                await ApplySessionConfigurationAsync(session, sessionConfig, cancellationToken).ConfigureAwait(false);
+            }
 
             return session;
         }
-#pragma warning restore AZC0004 // Websocket is an async only class
 
         /// <summary>
         /// Creates and connects a VoiceLiveSession with the specified endpoint.
@@ -135,12 +170,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(httpEndpoint, nameof(httpEndpoint));
 
             var builder = CreateWebSocketUriBuilder(httpEndpoint);
-
-            if (!builder.Query.Contains("model="))
-            {
-                builder.Query = $"{builder.Query.TrimStart('?')}&model={model}";
-            }
-
+            AddQueryParameter(builder, "model", model);
             return builder.Uri;
         }
 
@@ -157,30 +187,15 @@ namespace Azure.AI.VoiceLive
 
             var builder = CreateWebSocketUriBuilder(httpEndpoint);
 
-            // Add agent-specific query parameters (required)
-            builder.Query = $"{builder.Query.TrimStart('?')}&agent-name={Uri.EscapeDataString(agentConfig.AgentName)}";
-            builder.Query = $"{builder.Query}&agent-project-name={Uri.EscapeDataString(agentConfig.ProjectName)}";
+            // Add required agent parameters
+            AddQueryParameter(builder, "agent-name", agentConfig.AgentName);
+            AddQueryParameter(builder, "agent-project-name", agentConfig.ProjectName);
 
             // Add optional agent parameters
-            if (!string.IsNullOrEmpty(agentConfig.AgentVersion))
-            {
-                builder.Query = $"{builder.Query}&agent-version={Uri.EscapeDataString(agentConfig.AgentVersion)}";
-            }
-
-            if (!string.IsNullOrEmpty(agentConfig.ConversationId))
-            {
-                builder.Query = $"{builder.Query}&conversation-id={Uri.EscapeDataString(agentConfig.ConversationId)}";
-            }
-
-            if (!string.IsNullOrEmpty(agentConfig.AuthenticationIdentityClientId))
-            {
-                builder.Query = $"{builder.Query}&agent-authentication-identity-client-id={Uri.EscapeDataString(agentConfig.AuthenticationIdentityClientId)}";
-            }
-
-            if (!string.IsNullOrEmpty(agentConfig.FoundryResourceOverride))
-            {
-                builder.Query = $"{builder.Query}&foundry-resource-override={Uri.EscapeDataString(agentConfig.FoundryResourceOverride)}";
-            }
+            AddQueryParameterIfNotEmpty(builder, "agent-version", agentConfig.AgentVersion);
+            AddQueryParameterIfNotEmpty(builder, "conversation-id", agentConfig.ConversationId);
+            AddQueryParameterIfNotEmpty(builder, "agent-authentication-identity-client-id", agentConfig.AuthenticationIdentityClientId);
+            AddQueryParameterIfNotEmpty(builder, "foundry-resource-override", agentConfig.FoundryResourceOverride);
 
             return builder.Uri;
         }
@@ -219,6 +234,34 @@ namespace Azure.AI.VoiceLive
             }
 
             return builder;
+        }
+
+        /// <summary>
+        /// Adds a query parameter to the UriBuilder if the value is not null or empty.
+        /// </summary>
+        /// <param name="builder">The UriBuilder to modify.</param>
+        /// <param name="name">The parameter name.</param>
+        /// <param name="value">The parameter value.</param>
+        private void AddQueryParameter(UriBuilder builder, string name, string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                builder.Query = $"{builder.Query.TrimStart('?')}&{name}={Uri.EscapeDataString(value)}";
+            }
+        }
+
+        /// <summary>
+        /// Adds a query parameter to the UriBuilder only if the value is not null or empty.
+        /// </summary>
+        /// <param name="builder">The UriBuilder to modify.</param>
+        /// <param name="name">The parameter name.</param>
+        /// <param name="value">The parameter value.</param>
+        private void AddQueryParameterIfNotEmpty(UriBuilder builder, string name, string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                AddQueryParameter(builder, name, value);
+            }
         }
     }
 }
