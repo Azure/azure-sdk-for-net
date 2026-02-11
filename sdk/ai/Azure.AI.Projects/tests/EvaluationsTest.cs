@@ -212,7 +212,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(found, Is.False);
     }
 
-    private async Task ValidateLatestList(AIProjectClient projectClient, string id, bool mustPresent, string errorText, ListVersionsRequestType? type=null)
+    private async Task ValidateLatestList(AIProjectClient projectClient, string id, bool mustPresent, string errorText, ListVersionsRequestType? type = null)
     {
         bool found = false;
         await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetLatestVersionsAsync(type: type))

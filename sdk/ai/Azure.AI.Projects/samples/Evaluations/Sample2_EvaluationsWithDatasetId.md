@@ -36,7 +36,8 @@ object[] testingCriteria = [
         initialization_parameters = new { deployment_name = modelDeploymentName},
     },
 ];
-object dataSourceConfig = new {
+object dataSourceConfig = new
+{
     type = "custom",
     item_schema = new
     {

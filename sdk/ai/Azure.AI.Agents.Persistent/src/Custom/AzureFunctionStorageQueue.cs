@@ -6,6 +6,6 @@ namespace Azure.AI.Agents.Persistent
     public partial class AzureFunctionStorageQueue
     {
         /// <summary> The name of an Azure function storage queue. </summary>
-        public string QueueName { get;}
+        public string QueueName { get; }
     }
 }

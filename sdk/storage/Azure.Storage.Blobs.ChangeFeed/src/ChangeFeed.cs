@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
-using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {

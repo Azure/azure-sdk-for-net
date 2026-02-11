@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.AI.Projects.OpenAI;
 
 namespace Azure.AI.Projects;
+
 internal static partial class CustomSerializationHelpers
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

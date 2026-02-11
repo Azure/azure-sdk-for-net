@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Models
         /// The client used to check for completion.
         /// </param>
         /// <param name="id">The ID of this operation.</param>
-        public CopyFromUriOperation(string id, BlobBaseClient client):
+        public CopyFromUriOperation(string id, BlobBaseClient client) :
             this(client, id, null, CancellationToken.None)
         {
         }

@@ -17,9 +17,9 @@ Use the client library to:
 
 ### Prerequisites
 
-- [.NET 6.0 SDK](https://dotnet.microsoft.com/download) or later
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download) or later
 - [Azure Subscription](https://azure.microsoft.com/free/)
-- An [Azure AI Speech resource](https://learn.microsoft.com/azure/ai-services/speech-service/overview#try-the-speech-service-for-free)
+- An [Azure AI Speech resource](https://learn.microsoft.com/azure/ai-services/speech-service/overview#try-the-speech-service-for-free) or an [Azure AI Foundry resource](https://learn.microsoft.com/azure/ai-foundry/)
 
 ### Install the package
 
@@ -219,7 +219,7 @@ foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
     Console.WriteLine($"\nPhrase: {phrase.Text}");
     Console.WriteLine($"  Offset: {phrase.Offset} | Duration: {phrase.Duration}");
     Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
-    
+
     // Access individual words in the phrase
     foreach (TranscribedWord word in phrase.Words)
     {

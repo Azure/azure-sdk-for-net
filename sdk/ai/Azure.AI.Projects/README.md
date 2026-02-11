@@ -685,7 +685,8 @@ object[] testingCriteria = [
         data_mapping = new { query = "{{item.query}}", response = "{{sample.output_items}}"}
     },
 ];
-object dataSourceConfig = new {
+object dataSourceConfig = new
+{
     type = "custom",
     item_schema = new
     {
@@ -957,7 +958,8 @@ private EvaluatorVersion promptVersion = new(
             """
     ),
     evaluatorType: EvaluatorType.Custom
-) {
+)
+{
     DisplayName = "Custom prompt evaluator example",
     Description = "Custom evaluator for groundedness",
 };
@@ -1022,7 +1024,8 @@ private EvaluatorVersion GetCodeEvaluatorVersion()
                 }
             ),
             dataSchema: BinaryData.FromObjectAsJson(
-                new {
+                new
+                {
                     required = new[] { "item" },
                     type = "object",
                     properties = new
@@ -1068,11 +1071,12 @@ private static BinaryData GetEvaluationCriteria(string[] names, string modelDepl
     object[] testingCriteria = new object[names.Length];
     for (int i = 0; i < names.Length; i++)
     {
-        testingCriteria[i] = new {
+        testingCriteria[i] = new
+        {
             type = "azure_ai_evaluator",
             name = names[i],
             evaluator_name = $"builtin.{names[i]}",
-            data_mapping = new { query = "{{query}}", response = "{{response}}", tool_definitions= "{{tool_definitions}}" },
+            data_mapping = new { query = "{{query}}", response = "{{response}}", tool_definitions = "{{tool_definitions}}" },
             initialization_parameters = new { deployment_name = modelDeploymentName },
         };
     }
@@ -1158,7 +1162,8 @@ private static BinaryData GetRunData(string agentName, string responseId, string
     object dataSource = new
     {
         type = "azure_ai_responses",
-        item_generation_params = new {
+        item_generation_params = new
+        {
             type = "response_retrieval",
             data_mapping = new { response_id = "{{item.resp_id}}" },
             source = new

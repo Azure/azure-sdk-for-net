@@ -182,7 +182,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
     }
 
-    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime=500)
+    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime = 500)
     {
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
@@ -196,8 +196,8 @@ public class AgentsTestBase : ProjectsClientTestBase
     public static void AssertListEqual(string[] expected, List<string> observed)
     {
         // Assert.AreEqual(expected.Length, observed.Count, $"The length of arrays are different. Expected: {expected}, Observed: {observed.ToArray()}");
-        HashSet<string> expectedHash = [..expected];
-        HashSet<string> observedHash = [..observed];
+        HashSet<string> expectedHash = [.. expected];
+        HashSet<string> observedHash = [.. observed];
         if (!expectedHash.SetEquals(observedHash))
         {
             Assert.Fail($"The members of arrays differ. Expected: {ToPritableString(expected)}, Observed: {ToPritableString(observed)}");

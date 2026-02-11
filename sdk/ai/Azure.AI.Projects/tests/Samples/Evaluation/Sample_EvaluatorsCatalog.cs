@@ -17,11 +17,12 @@ public class Sample_EvaluatorsCatalog : SamplesBase
     #region Snippet:Sampple_PromptEvaluator_EvaluatorsCatalog
     private static EvaluatorVersion GetPromptEvaluatorVersion()
     {
-        EvaluatorMetric metric = new() {
+        EvaluatorMetric metric = new()
+        {
             Type = EvaluatorMetricType.Ordinal,
             DesirableDirection = EvaluatorMetricDirection.Increase,
-            MinValue=1,
-            MaxValue=5
+            MinValue = 1,
+            MaxValue = 5
         };
         return new(
             categories: [EvaluatorCategory.Quality],

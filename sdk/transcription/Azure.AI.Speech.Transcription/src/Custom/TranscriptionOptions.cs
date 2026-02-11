@@ -9,7 +9,6 @@ using System.IO;
 
 namespace Azure.AI.Speech.Transcription
 {
-#pragma warning disable SCM0005
     /// <summary> Metadata for a transcription request. </summary>
     public partial class TranscriptionOptions
     {
@@ -39,5 +38,4 @@ namespace Azure.AI.Speech.Transcription
         public Uri AudioUri { get; }
         internal Stream AudioStream { get; }
     }
-#pragma warning restore SCM0005
 }

@@ -44,7 +44,8 @@ public class AgentsTests : AgentsTestBase
         {
             await projectClient.Agents.DeleteAgentAsync(emptyPromptAgentName);
         }
-        catch (ClientResultException){
+        catch (ClientResultException)
+        {
             // We do not have the agent to begin with.
         }
         AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -371,7 +372,7 @@ public class AgentsTests : AgentsTestBase
                 Items = { ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.") },
             });
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId:conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -1048,7 +1049,7 @@ public class AgentsTests : AgentsTestBase
         ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         bool functionCalled = false;
         bool functionWasCalled = false;
-        bool isStarted = false, isFinished=false, isStatusGood=false;
+        bool isStarted = false, isFinished = false, isStatusGood = false;
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
 
         CreateResponseOptions nextResponseOptions = new()

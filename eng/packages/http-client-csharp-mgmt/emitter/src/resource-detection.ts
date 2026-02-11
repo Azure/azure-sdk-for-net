@@ -55,7 +55,7 @@ import {
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { isPrefix } from "./utils.js";
+import { getSharedSegmentCount, isPrefix } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
@@ -380,6 +380,9 @@ export function buildArmProviderSchema(
   // This is also specific to legacy resource detection
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+      // Find the longest matching parent path (most specific parent)
+      let longestParentPath: string | undefined;
+      let longestParentSegmentCount = 0;
       // Check if this resource's path is a child of another resource's path
       for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
         if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
@@ -391,11 +394,21 @@ export function buildArmProviderSchema(
             isPrefix(potentialParentPath, thisPath) &&
             !isPrefix(thisPath, potentialParentPath)
           ) {
-            metadata.parentResourceId = potentialParentPath;
-            // Note: we don't set parentResourceModelId here since they share the same model
-            break;
+            // Use getSharedSegmentCount to get the segment count without redundant splitting
+            const segmentCount = getSharedSegmentCount(
+              potentialParentPath,
+              thisPath
+            );
+            if (segmentCount > longestParentSegmentCount) {
+              longestParentSegmentCount = segmentCount;
+              longestParentPath = potentialParentPath;
+            }
           }
         }
+      }
+      if (longestParentPath) {
+        metadata.parentResourceId = longestParentPath;
+        // Note: we don't set parentResourceModelId here since they share the same model
       }
     }
   }

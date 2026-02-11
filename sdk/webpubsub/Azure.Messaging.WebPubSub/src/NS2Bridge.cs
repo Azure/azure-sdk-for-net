@@ -55,7 +55,7 @@ namespace Azure.Core
                 return status;
             }
 
-            bytesWritten = Base64ToBase64Url(destination.Slice(0,bytesWritten));
+            bytesWritten = Base64ToBase64Url(destination.Slice(0, bytesWritten));
             return OperationStatus.Done;
         }
 
