@@ -25,7 +25,4 @@ public partial class AzureAISearchTool
 
         Options = options;
     }
-
-    internal AzureAISearchTool()
-    { }
 }

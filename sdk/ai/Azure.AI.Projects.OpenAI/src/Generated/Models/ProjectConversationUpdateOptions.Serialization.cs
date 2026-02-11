@@ -13,6 +13,11 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The ProjectConversationUpdateOptions. </summary>
     public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
     {
+        /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/> for deserialization. </summary>
+        internal ProjectConversationUpdateOptions()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectConversationUpdateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -27,6 +32,19 @@ namespace Azure.AI.Projects.OpenAI
                     }
                 default:
                     throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -123,19 +141,6 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProjectConversationUpdateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -10,12 +10,7 @@ public partial class ProjectConversationUpdateOptions
 {
     [CodeGenMember("Metadata")]
     private global::Azure.AI.Projects.OpenAI.InternalMetadataContainer InternalMetadata { get; set; }
+        = new global::Azure.AI.Projects.OpenAI.InternalMetadataContainer(new ChangeTrackingDictionary<string, string>(), null);
 
     public IDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
-
-    /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/>. </summary>
-    public ProjectConversationUpdateOptions()
-    {
-        InternalMetadata = new global::Azure.AI.Projects.OpenAI.InternalMetadataContainer(new ChangeTrackingDictionary<string, string>(), null);
-    }
 }

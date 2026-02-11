@@ -12,6 +12,11 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class AzureAISearchTool : AgentTool, IJsonModel<AzureAISearchTool>
     {
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/> for deserialization. </summary>
+        internal AzureAISearchTool()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -26,6 +31,19 @@ namespace Azure.AI.Projects.OpenAI
                     }
                 default:
                     throw new FormatException($"The model {nameof(AzureAISearchTool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureAISearchTool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,19 +120,6 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureAISearchTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureAISearchTool)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
