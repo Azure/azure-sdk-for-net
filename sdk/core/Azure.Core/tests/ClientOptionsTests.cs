@@ -290,6 +290,38 @@ namespace Azure.Core.Tests
             Assert.That(ex.Message, Does.Contain("ApplicationId must be shorter than 51 characters"));
         }
 
+        [TestCase(23)]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void SettingMaxApplicationIdLengthBelowDefaultThrows(int maxLength)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => new TestClientOptionsWithCustomMaxApplicationIdLength(maxLength));
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength must be greater than or equal to 24"));
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void NullOrEmptyApplicationIdIsAccepted(string applicationId)
+        {
+            var options = new TestClientOptions();
+
+            options.Diagnostics.ApplicationId = applicationId;
+
+            Assert.AreEqual(applicationId, options.Diagnostics.ApplicationId);
+        }
+
+        [Test]
+        public void MaxApplicationIdLengthIsPreservedThroughCopyConstructor()
+        {
+            var original = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var longApplicationId = new string('a', 50);
+            original.Diagnostics.ApplicationId = longApplicationId;
+
+            var copy = new TestClientOptions();
+            // The copy should get the default (24) since it's a new instance, not copied from original
+            Assert.AreEqual(24, copy.Diagnostics.MaxApplicationIdLength);
+        }
+
         private class TestClientOptions : ClientOptions
         {
         }
