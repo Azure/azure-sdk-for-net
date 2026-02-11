@@ -18,11 +18,11 @@ namespace Azure.Analytics.OnlineExperimentation
         private static ResponseClassifier _pipelineMessageClassifier200201;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 = new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateGetMetricRequest(string experimentMetricId, RequestConditions requestConditions, RequestContext context)
         {
@@ -98,23 +98,23 @@ namespace Azure.Analytics.OnlineExperimentation
             return message;
         }
 
-        internal HttpMessage CreateGetMetricsRequest(int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetMetricsRequest(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -124,13 +124,14 @@ namespace Azure.Analytics.OnlineExperimentation
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

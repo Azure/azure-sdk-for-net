@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
             CallSource.CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value);
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
 
-            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
+            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState == default(CallConnectionState))
             {
                 CallConnectionState = CallConnectionState.Unknown;
             }

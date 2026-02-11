@@ -15,6 +15,10 @@ namespace _Type.Model.Empty
 {
     public partial class EmptyInputOutput : IJsonModel<EmptyInputOutput>
     {
+        protected virtual EmptyInputOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator EmptyInputOutput(Response response) => throw null;
+
         void IJsonModel<EmptyInputOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,13 +33,9 @@ namespace _Type.Model.Empty
 
         EmptyInputOutput IPersistableModel<EmptyInputOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual EmptyInputOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<EmptyInputOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="emptyInputOutput"> The <see cref="EmptyInputOutput"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(EmptyInputOutput emptyInputOutput) => throw null;
-
-        public static explicit operator EmptyInputOutput(Response response) => throw null;
     }
 }

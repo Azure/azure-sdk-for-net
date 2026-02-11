@@ -126,16 +126,16 @@ namespace Azure.Storage.Blobs.Models
             bool isServerEncrypted,
             string encryptionKeySha256)
             => new BlobAppendInfo()
-                {
-                    ETag = eTag,
-                    LastModified = lastModified,
-                    ContentHash = contentHash,
-                    ContentCrc64 = contentCrc64,
-                    BlobAppendOffset = blobAppendOffset,
-                    BlobCommittedBlockCount = blobCommittedBlockCount,
-                    IsServerEncrypted = isServerEncrypted,
-                    EncryptionKeySha256 = encryptionKeySha256
-                };
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                BlobAppendOffset = blobAppendOffset,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256
+            };
         #endregion
 
         #region BlobProperties
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset createdOn,
             bool isSealed,
             string rehydratePriority,
-            byte[] contentHash ,
+            byte[] contentHash,
             DateTimeOffset lastAccessed)
                 => new BlobProperties(
                     lastModified: lastModified,
@@ -858,7 +858,7 @@ namespace Azure.Storage.Blobs.Models
             string contentType,
             string contentEncoding,
             string contentLanguage,
-            byte[] contentHash ,
+            byte[] contentHash,
             string contentDisposition,
             string cacheControl,
             long? blobSequenceNumber,
@@ -933,8 +933,8 @@ namespace Azure.Storage.Blobs.Models
             string contentLanguage,
             byte[] contentHash,
             string contentDisposition,
-            string cacheControl ,
-            long? blobSequenceNumber ,
+            string cacheControl,
+            long? blobSequenceNumber,
             BlobType? blobType,
             LeaseStatus? leaseStatus,
             LeaseState? leaseState,

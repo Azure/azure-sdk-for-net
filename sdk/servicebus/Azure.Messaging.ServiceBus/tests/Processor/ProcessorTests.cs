@@ -481,7 +481,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public async Task CloseRespectsCancellationToken()
         {
-            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            var mockProcessor = new Mock<ServiceBusProcessor>() { CallBase = true };
             mockProcessor.Setup(
                 p => p.IsProcessing).Returns(true);
             var cts = new CancellationTokenSource();

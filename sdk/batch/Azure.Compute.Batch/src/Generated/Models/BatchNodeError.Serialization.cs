@@ -15,6 +15,23 @@ namespace Azure.Compute.Batch
     /// <summary> An error encountered by a Compute Node. </summary>
     public partial class BatchNodeError : IJsonModel<BatchNodeError>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchNodeError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchNodeError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchNodeError)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchNodeError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,23 +169,6 @@ namespace Azure.Compute.Batch
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BatchNodeError IPersistableModel<BatchNodeError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchNodeError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeError>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchNodeError(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchNodeError)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchNodeError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

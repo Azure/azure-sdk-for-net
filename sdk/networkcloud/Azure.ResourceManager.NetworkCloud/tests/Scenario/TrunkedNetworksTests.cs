@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class TrunkedNetworksTests : NetworkCloudManagementTestBase
     {
-        public TrunkedNetworksTests   (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public TrunkedNetworksTests  (bool isAsync) : base(isAsync) {}
+        public TrunkedNetworksTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public TrunkedNetworksTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
-            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
+            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable
@@ -175,7 +176,8 @@ namespace Azure.ResourceManager.Network.Tests
             var routeTableCollection = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation =
                 await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
-            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
+            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable

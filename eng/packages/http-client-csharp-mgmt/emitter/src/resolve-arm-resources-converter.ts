@@ -45,6 +45,11 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
+import {
+  extensionResourceOperationName,
+  legacyExtensionResourceOperationName,
+  legacyResourceOperationName
+} from "./sdk-context-options.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -111,7 +116,9 @@ export function resolveArmResources(
   // In this case, parent information comes from ResolvedResource objects
   // Build validResourceMap once for efficient lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
-  for (const r of resources.filter(r => r.metadata.resourceIdPattern !== "")) {
+  for (const r of resources.filter(
+    (r) => r.metadata.resourceIdPattern !== ""
+  )) {
     const resolvedR = schemaToResolvedResource.get(r);
     if (resolvedR) {
       validResourceMap.set(resolvedR.resourceInstancePath, r);
@@ -119,14 +126,18 @@ export function resolveArmResources(
   }
 
   const parentLookup: ParentResourceLookupContext = {
-    getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
+    getParentResource: (
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined => {
       const resolved = schemaToResolvedResource.get(resource);
       if (!resolved) return undefined;
 
       // Walk up the parent chain to find a valid parent
       let parent = resolved.parent;
       while (parent) {
-        const parentResource = validResourceMap.get(parent.resourceInstancePath);
+        const parentResource = validResourceMap.get(
+          parent.resourceInstancePath
+        );
         if (parentResource) {
           return parentResource;
         }
@@ -183,7 +194,7 @@ export function resolveArmResources(
     for (const method of client.methods) {
       const methodId = method.crossLanguageDefinitionId;
       const operation = method.operation;
-      
+
       // Skip if already included
       if (includedOperationIds.has(methodId)) {
         continue;
@@ -340,6 +351,15 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
+  // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
+  // The spec should always define unique resource names for extension resources targeting
+  // different parent types — the emitter should not auto-generate disambiguated names.
+  let resourceName = resolvedResource.resourceName;
+  const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
+  if (explicitName) {
+    resourceName = explicitName;
+  }
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -353,7 +373,7 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resolvedResource.resourceName
+    resourceName: resourceName
   };
 }
 
@@ -423,8 +443,21 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
     )
   ) {
     return ResourceScope.ManagementGroup;
+  } else if (hasMultipleProviderSegments(path)) {
+    // Paths with multiple /providers/ segments indicate extension resources
+    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
+    return ResourceScope.Extension;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
+}
+
+/**
+ * Check if a path has multiple /providers/ segments, indicating an extension resource
+ * that extends another ARM resource.
+ */
+function hasMultipleProviderSegments(path: string): boolean {
+  const providerMatches = path.match(/\/providers\//gi);
+  return providerMatches !== null && providerMatches.length > 1;
 }
 
 /**
@@ -450,7 +483,6 @@ function extractSingletonName(path: string): string | undefined {
   return undefined;
 }
 
-
 function calculateResourceScope(
   operationPath: string,
   resolvedResource: ResolvedResource
@@ -465,6 +497,57 @@ function calculateResourceScope(
       return parent.resourceInstancePath;
     }
     parent = parent.parent;
+  }
+
+  return undefined;
+}
+
+/**
+ * Extracts the explicit resource name from a resolved resource's operations.
+ * Checks the CRUD operations' decorators for OverrideResourceName parameters
+ * set via @extensionResourceOperation or @legacyExtensionResourceOperation.
+ */
+function getExplicitResourceNameFromOperations(
+  resolvedResource: ResolvedResource
+): string | undefined {
+  const lifecycle = resolvedResource.operations.lifecycle;
+  if (!lifecycle) return undefined;
+
+  // Check all CRUD operations for an explicit resource name
+  const operations: Operation[] = [];
+  if (lifecycle.read) {
+    for (const op of lifecycle.read) operations.push(op.operation);
+  }
+  if (lifecycle.createOrUpdate) {
+    for (const op of lifecycle.createOrUpdate) operations.push(op.operation);
+  }
+  if (lifecycle.delete) {
+    for (const op of lifecycle.delete) operations.push(op.operation);
+  }
+
+  for (const operation of operations) {
+    const decorators = operation.decorators;
+    for (const decorator of decorators) {
+      const name = decorator.definition?.name;
+      if (
+        name === extensionResourceOperationName ||
+        name === legacyExtensionResourceOperationName ||
+        name === legacyResourceOperationName
+      ) {
+        // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
+        // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
+        const argIndex =
+          name === extensionResourceOperationName ? 3 : 2;
+        if (
+          decorator.args.length > argIndex &&
+          decorator.args[argIndex].jsValue &&
+          typeof decorator.args[argIndex].jsValue === "string" &&
+          (decorator.args[argIndex].jsValue as string).length > 0
+        ) {
+          return decorator.args[argIndex].jsValue as string;
+        }
+      }
+    }
   }
 
   return undefined;

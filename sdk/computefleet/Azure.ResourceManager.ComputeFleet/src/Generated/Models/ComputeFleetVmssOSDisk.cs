@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssOSDisk"/>. </summary>
         /// <param name="createOption">
         /// Specifies how the virtual machines in the scale set should be created. The only
-        /// allowed value is: **FromImage.** This value is used when you are using an image
+        /// allowed value is: <b>FromImage.</b> This value is used when you are using an image
         /// to create the virtual machine. If you are using a platform image, you also use
         /// the imageReference element described above. If you are using a marketplace
         /// image, you  also use the plan element previously described.
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssOSDisk"/>. </summary>
         /// <param name="name"> The disk name. </param>
         /// <param name="caching">
-        /// Specifies the caching requirements. Possible values are: **None,**
-        /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
+        /// Specifies the caching requirements. Possible values are: <b>None,</b>
+        /// <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </param>
         /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="createOption">
         /// Specifies how the virtual machines in the scale set should be created. The only
-        /// allowed value is: **FromImage.** This value is used when you are using an image
+        /// allowed value is: <b>FromImage.</b> This value is used when you are using an image
         /// to create the virtual machine. If you are using a platform image, you also use
         /// the imageReference element described above. If you are using a marketplace
         /// image, you  also use the plan element previously described.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="osType">
         /// This property allows you to specify the type of the OS that is included in the
         /// disk if creating a VM from user-image or a specialized VHD. Possible values
-        /// are: **Windows,** **Linux.**
+        /// are: <b>Windows,</b> <b>Linux.</b>
         /// </param>
         /// <param name="image"> Specifies information about the unmanaged user image to base the scale set on. </param>
         /// <param name="vhdContainers">
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="deleteOption">
         /// Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion
         /// (This feature is available for VMSS with Flexible OrchestrationMode only).
-        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS
-        /// disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value
+        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS
+        /// disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value
         /// is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The
-        /// default value is set to **Delete**. For an Ephemeral OS Disk, the default value
-        /// is set to **Delete**. User cannot change the delete option for Ephemeral OS
+        /// default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value
+        /// is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS
         /// Disk.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Specifies the caching requirements. Possible values are: **None,**
-        /// **ReadOnly,** **ReadWrite.** The default values are: **None for Standard
+        /// Specifies the caching requirements. Possible values are: <b>None,</b>
+        /// <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: **None for Standard
         /// storage. ReadOnly for Premium storage.**
         /// </summary>
         public ComputeFleetCachingType? Caching { get; set; }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary>
         /// Specifies how the virtual machines in the scale set should be created. The only
-        /// allowed value is: **FromImage.** This value is used when you are using an image
+        /// allowed value is: <b>FromImage.</b> This value is used when you are using an image
         /// to create the virtual machine. If you are using a platform image, you also use
         /// the imageReference element described above. If you are using a marketplace
         /// image, you  also use the plan element previously described.
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary>
         /// This property allows you to specify the type of the OS that is included in the
         /// disk if creating a VM from user-image or a specialized VHD. Possible values
-        /// are: **Windows,** **Linux.**
+        /// are: <b>Windows,</b> <b>Linux.</b>
         /// </summary>
         public ComputeFleetOperatingSystemType? OSType { get; set; }
 
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary>
         /// Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion
         /// (This feature is available for VMSS with Flexible OrchestrationMode only).
-        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS
-        /// disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value
+        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS
+        /// disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value
         /// is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The
-        /// default value is set to **Delete**. For an Ephemeral OS Disk, the default value
-        /// is set to **Delete**. User cannot change the delete option for Ephemeral OS
+        /// default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value
+        /// is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS
         /// Disk.
         /// </summary>
         public ComputeFleetDiskDeleteOptionType? DeleteOption { get; set; }

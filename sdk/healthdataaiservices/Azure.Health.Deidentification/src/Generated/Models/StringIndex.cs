@@ -20,12 +20,10 @@ namespace Azure.Health.Deidentification
         /// <param name="utf8"> The offset or length of the substring in UTF-8 encoding. </param>
         /// <param name="utf16">
         /// The offset or length of the substring in UTF-16 encoding.
-        /// 
         /// Primary encoding used by .NET, Java, and JavaScript.
         /// </param>
         /// <param name="codePoint">
         /// The offset or length of the substring in CodePoint encoding.
-        /// 
         /// Primary encoding used by Python.
         /// </param>
         internal StringIndex(int utf8, int utf16, int codePoint)
@@ -39,12 +37,10 @@ namespace Azure.Health.Deidentification
         /// <param name="utf8"> The offset or length of the substring in UTF-8 encoding. </param>
         /// <param name="utf16">
         /// The offset or length of the substring in UTF-16 encoding.
-        /// 
         /// Primary encoding used by .NET, Java, and JavaScript.
         /// </param>
         /// <param name="codePoint">
         /// The offset or length of the substring in CodePoint encoding.
-        /// 
         /// Primary encoding used by Python.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -61,14 +57,12 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// The offset or length of the substring in UTF-16 encoding.
-        /// 
         /// Primary encoding used by .NET, Java, and JavaScript.
         /// </summary>
         public int Utf16 { get; }
 
         /// <summary>
         /// The offset or length of the substring in CodePoint encoding.
-        /// 
         /// Primary encoding used by Python.
         /// </summary>
         public int CodePoint { get; }

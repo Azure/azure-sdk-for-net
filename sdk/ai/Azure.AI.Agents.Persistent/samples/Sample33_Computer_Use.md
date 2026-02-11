@@ -303,7 +303,7 @@ ListRunSteps(steps);
 
 Asynchronous sample:
 ```C# Snippet:ComputerUse_ListSteps_Async
-IEnumerable <RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
+IEnumerable<RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
 ListRunSteps(steps);
 ```
 

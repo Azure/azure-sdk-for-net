@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static JobDefinitionData JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, IEnumerable<SourceTargetMap> sourceTargetMapValue, StorageMoverProvisioningState? provisioningState)
-            => JobDefinitionData(id, name, resourceType, systemData, description, jobType, copyMode, sourceName, sourceResourceId, sourceSubpath, targetName, targetResourceId, targetSubpath, latestJobRunName, latestJobRunResourceId, latestJobRunStatus, agentName, agentResourceId,  provisioningState, null, null, sourceTargetMapValue);
+            => JobDefinitionData(id, name, resourceType, systemData, description, jobType, copyMode, sourceName, sourceResourceId, sourceSubpath, targetName, targetResourceId, targetSubpath, latestJobRunName, latestJobRunResourceId, latestJobRunStatus, agentName, agentResourceId, provisioningState, null, null, sourceTargetMapValue);
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.JobRunData"/>. </summary>
         /// <param name="id"> The id. </param>

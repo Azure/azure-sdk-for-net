@@ -12,61 +12,34 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Base class for a long-running conversation input task.
-    /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="SummarizationOperationAction"/>, and <see cref="PiiOperationAction"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationOperationAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationAction"/>. </summary>
-        protected AnalyzeConversationOperationAction()
+        /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
+        private protected AnalyzeConversationOperationAction(AnalyzeConversationOperationActionKind kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeConversationOperationAction(string name, AnalyzeConversationOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> task name. </summary>
         public string Name { get; set; }
+
         /// <summary> Enumeration of supported analysis tasks on a collection of conversations. </summary>
         internal AnalyzeConversationOperationActionKind Kind { get; set; }
     }

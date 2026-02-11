@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
-                shapeFamily.ToString(),
+                shapeFamily?.ToString(),
                 zone,
                 context), data => new OracleGIMinorVersionResource(Client, data));
         }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
-                shapeFamily.ToString(),
+                shapeFamily?.ToString(),
                 zone,
                 context), data => new OracleGIMinorVersionResource(Client, data));
         }

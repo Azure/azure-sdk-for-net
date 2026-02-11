@@ -10,18 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Unknown version of AnalyzeConversationActionResult. </summary>
     internal partial class UnknownAnalyzeConversationActionResult : AnalyzeConversationActionResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationActionResult"/>. </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationActionResult"/> for deserialization. </summary>
-        internal UnknownAnalyzeConversationActionResult()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

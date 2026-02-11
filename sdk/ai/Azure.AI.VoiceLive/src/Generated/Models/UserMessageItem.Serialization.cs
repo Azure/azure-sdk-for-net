@@ -20,6 +20,23 @@ namespace Azure.AI.VoiceLive
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ConversationRequestItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UserMessageItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUserMessageItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserMessageItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserMessageItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -141,23 +158,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         UserMessageItem IPersistableModel<UserMessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (UserMessageItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConversationRequestItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UserMessageItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUserMessageItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UserMessageItem)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UserMessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

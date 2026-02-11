@@ -17,14 +17,14 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpgradePolicy"/>. </summary>
-        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; **Rolling** - Scale set performs updates in batches with an optional pause time in between. </param>
+        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; <b>Rolling</b> - Scale set performs updates in batches with an optional pause time in between. </param>
         public UpgradePolicy(UpgradeMode mode)
         {
             Mode = mode;
         }
 
         /// <summary> Initializes a new instance of <see cref="UpgradePolicy"/>. </summary>
-        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; **Rolling** - Scale set performs updates in batches with an optional pause time in between. </param>
+        /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; <b>Rolling</b> - Scale set performs updates in batches with an optional pause time in between. </param>
         /// <param name="automaticOsUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. The configuration parameters used for performing automatic OS upgrade. </param>
         /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; **Rolling** - Scale set performs updates in batches with an optional pause time in between. </summary>
+        /// <summary> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; <b>Rolling</b> - Scale set performs updates in batches with an optional pause time in between. </summary>
         public UpgradeMode Mode { get; set; }
 
         /// <summary> Configuration parameters used for performing automatic OS Upgrade. The configuration parameters used for performing automatic OS upgrade. </summary>

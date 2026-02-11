@@ -94,7 +94,7 @@ public class BicepDictionary<T> :
 
     private BicepValueReference? GetItemSelf(string key) =>
         _self is not null
-            ? new BicepDictionaryValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), key)
+            ? new BicepDictionaryValueReference(_self.Construct, $"{_self.PropertyName}[{key}]", _self.BicepPath?.ToArray(), key)
             : null;
 
     private void SetSelfForItem(BicepValue<T> item, string key)

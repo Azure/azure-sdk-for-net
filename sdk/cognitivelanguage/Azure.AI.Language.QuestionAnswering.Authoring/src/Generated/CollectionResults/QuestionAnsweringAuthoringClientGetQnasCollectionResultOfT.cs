@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     {
         private readonly QuestionAnsweringAuthoringClient _client;
         private readonly string _projectName;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly string _source;
@@ -26,16 +26,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClientGetQnasCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuestionAnsweringAuthoringClient client used to send requests. </param>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuestionAnsweringAuthoringClientGetQnasCollectionResultOfT(QuestionAnsweringAuthoringClient client, string projectName, int? top, int? skip, int? maxpagesize, string source, RequestContext context) : base(context?.CancellationToken ?? default)
+        public QuestionAnsweringAuthoringClientGetQnasCollectionResultOfT(QuestionAnsweringAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _source = source;
@@ -71,7 +71,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetQnasRequest(nextLink, _projectName, _top, _skip, _maxpagesize, _source, _context) : _client.CreateGetQnasRequest(_projectName, _top, _skip, _maxpagesize, _source, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetQnasRequest(nextLink, _projectName, _maxCount, _skip, _maxpagesize, _source, _context) : _client.CreateGetQnasRequest(_projectName, _maxCount, _skip, _maxpagesize, _source, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetQnas");
             scope.Start();
             try

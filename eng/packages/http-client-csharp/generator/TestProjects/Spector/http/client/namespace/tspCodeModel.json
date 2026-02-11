@@ -79,6 +79,11 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.FirstModel.FirstClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstClientResult"
+        }
+      },
       "properties": [
         {
           "$id": "9",
@@ -115,6 +120,11 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondClientResult"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -173,7 +183,26 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept"
+                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "17",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "4"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -198,25 +227,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst",
-            "decorators": []
+            "decorators": [],
+            "namespace": "ClientNameSpaceClient"
           },
           "parameters": [
             {
-              "$id": "17",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "4"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "17"
             }
           ],
           "response": {
@@ -300,7 +316,26 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept"
+                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "25",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "6"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -325,25 +360,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond",
-            "decorators": []
+            "decorators": [],
+            "namespace": "client.clientnamespace.second"
           },
           "parameters": [
             {
-              "$id": "25",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "6"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "25"
             }
           ],
           "response": {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// Describes the parameters of ephemeral disk settings that can be specified for
-    /// operating system disk. **Note:** The ephemeral disk settings can only be
+    /// operating system disk. <b>Note:</b> The ephemeral disk settings can only be
     /// specified for managed disk.
     /// </summary>
     public partial class ComputeFleetDiffDiskSettings : IJsonModel<ComputeFleetDiffDiskSettings>

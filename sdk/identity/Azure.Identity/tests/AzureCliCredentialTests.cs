@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzureCliCredentialTests : CredentialTestBase<AzureCliCredentialOptions>
+    internal class AzureCliCredentialTests : CredentialTestBase<AzureCliCredentialOptions>
     {
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -42,6 +42,56 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azCliOptions));
         }
 
+        #region Virtual Factory Methods
+        protected virtual TokenCredential CreateCredential(IProcessService processService, string tenantId = null, string subscription = null, bool addTenantIdHint = false)
+        {
+            var options = new AzureCliCredentialOptions { TenantId = tenantId };
+            if (addTenantIdHint)
+            {
+                options.AdditionallyAllowedTenants.Add(TenantIdHint);
+            }
+            if (subscription != null)
+            {
+                options.Subscription = subscription;
+            }
+            return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), processService, options));
+        }
+
+        protected virtual TokenCredential CreateCredentialWithTimeout(IProcessService processService, TimeSpan timeout, bool isChained = false)
+        {
+            var options = new AzureCliCredentialOptions { ProcessTimeout = timeout, IsChainedCredential = isChained };
+            return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), processService, options));
+        }
+
+        protected virtual TokenCredential CreateCredentialWithChainedOption(IProcessService processService, bool isChained)
+        {
+            var options = new AzureCliCredentialOptions { IsChainedCredential = isChained };
+            return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), processService, options));
+        }
+
+        protected virtual TokenCredential CreateBareCredential()
+        {
+            return InstrumentClient(new AzureCliCredential());
+        }
+
+        /// <summary>
+        /// Creates a credential with only a tenant ID for construction validation tests.
+        /// No instrumentation needed since the credential is never used to get a token.
+        /// </summary>
+        protected virtual void CreateCredentialForTenantValidation(string tenantId)
+        {
+            new AzureCliCredential(new AzureCliCredentialOptions { TenantId = tenantId });
+        }
+
+        /// <summary>
+        /// Returns the expected exception type for error scenarios.
+        /// Base: AuthenticationFailedException when not chained, CredentialUnavailableException when chained.
+        /// ConfigurableCredential always wraps in DefaultAzureCredential (chained), so always CredentialUnavailableException.
+        /// </summary>
+        protected virtual Type GetExpectedExceptionType(bool isChained)
+            => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
+        #endregion
+
         [Test]
         public async Task AuthenticateWithCliCredential(
             [Values(null, TenantIdHint)] string tenantId,
@@ -50,18 +100,12 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext([Scope], tenantId: tenantId);
-            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
-            if (subscription != null)
-            {
-                options.Subscription = subscription;
-            }
             string expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };
-            AzureCliCredential credential =
-                InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
-            AccessToken actualToken = await credential.GetTokenAsync(context);
+            var credential = CreateCredential(new TestProcessService(testProcess, true), tenantId: explicitTenantId, subscription: subscription, addTenantIdHint: true);
+            AccessToken actualToken = await credential.GetTokenAsync(context, default);
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
@@ -87,7 +131,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AzureCliCredentialOptionsValidatesSubscriptionOption()
+        public virtual void AzureCliCredentialOptionsValidatesSubscriptionOption()
         {
             Assert.Throws<ArgumentException>(() => new AzureCliCredentialOptions { Subscription = "My Subscription Name with a quote \"" });
             new AzureCliCredentialOptions { Subscription = "My Subscription Name -_" };
@@ -103,15 +147,15 @@ namespace Azure.Identity.Tests
             var (expectedToken2, processOutput2) = CredentialTestHelpers.CreateTokenForAzureCliExpiresOn(expectedExpiresOn, false);
 
             var testProcess = new TestProcess { Output = processOutput1 };
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
             Assert.AreEqual(expectedToken1, actualToken1.Token, "The tokens should match.");
             Assert.AreEqual(expectedExpiresOn, actualToken1.ExpiresOn, "The expires on value should be the same for token1.");
 
             testProcess = new TestProcess { Output = processOutput2 };
-            credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            credential = CreateCredential(new TestProcessService(testProcess));
+            AccessToken actualToken2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
             Assert.AreEqual(expectedToken2, actualToken2.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken2.ExpiresOn, "The expires on value should be the same for token2.");
@@ -125,8 +169,9 @@ namespace Azure.Identity.Tests
             string jsonContent)
         {
             var testProcess = new TestProcess { Output = jsonContent };
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
         }
 
         private const string RefreshTokenExpiredError = "Azure CLI authentication failed due to an unknown error. ERROR: Get Token request returned http error: 400 and server response: {\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70008: The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
@@ -134,52 +179,54 @@ namespace Azure.Identity.Tests
         public static IEnumerable<object[]> AzureCliExceptionScenarios()
         {
             // params
-            // az thrown Exception message, expected message, expected  exception
-            yield return new object[] { null, AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "az: command not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
-            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", typeof(AuthenticationFailedException) };
-            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure CLI authentication timed out.", typeof(AuthenticationFailedException) };
-            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", typeof(AuthenticationFailedException) };
+            // az thrown Exception message, expected message, expected  exception isChained
+            yield return new object[] { null, AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, true };
+            yield return new object[] { null, "az: command not found", AzureCliCredential.AzureCLINotInstalled, true };
+            yield return new object[] { null, "az: not found", AzureCliCredential.AzureCLINotInstalled, true };
+            yield return new object[] { null, AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, true };
+            yield return new object[] { null, RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", false };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", false };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure CLI authentication timed out.", false };
+            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", false };
         }
 
         public static IEnumerable<object[]> AzureCliExceptionScenarios_IsChained()
         {
             // params
-            // az thrown Exception message, expected message, expected  exception
-            yield return new object[] { null, AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "az: command not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(CredentialUnavailableException) };
-            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", typeof(CredentialUnavailableException) };
-            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure CLI authentication timed out.", typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", typeof(CredentialUnavailableException) };
+            // az thrown Exception message, expected message, expected  exception isChained
+            yield return new object[] { null, AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, true };
+            yield return new object[] { null, "az: command not found", AzureCliCredential.AzureCLINotInstalled, true };
+            yield return new object[] { null, "az: not found", AzureCliCredential.AzureCLINotInstalled, true };
+            yield return new object[] { null, AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, true };
+            yield return new object[] { null, RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", true };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", true };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure CLI authentication timed out.", true };
+            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", true };
         }
 
         [Test]
         [TestCaseSource(nameof(AzureCliExceptionScenarios))]
-        public void AuthenticateWithCliCredential_ExceptionScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, Type exceptionType)
+        public void AuthenticateWithCliCredential_ExceptionScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
         {
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync(exceptionType, async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(expectedMessage));
         }
 
         [Test]
         [TestCaseSource(nameof(AzureCliExceptionScenarios_IsChained))]
-        public void AuthenticateWithCliCredential_ExceptionScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, Type exceptionType)
+        public void AuthenticateWithCliCredential_ExceptionScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
         {
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess), new AzureCliCredentialOptions() { IsChainedCredential = true }));
-            var ex = Assert.ThrowsAsync(exceptionType, async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChained: true);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(expectedMessage));
         }
 
@@ -189,28 +236,18 @@ namespace Azure.Identity.Tests
             var cts = new CancellationTokenSource();
             var testProcess = new TestProcess { Timeout = 10000 };
             testProcess.Started += (o, e) => cts.Cancel();
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            var ex = Assert.CatchAsync<Exception>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
+            Assert.That(ex.Message, Does.Contain("canceled").IgnoreCase);
         }
 
         [Test]
         public void ConfigureCliProcessTimeout_ProcessTimeout([Values(true, false)] bool isChainedCredential)
         {
             var testProcess = new TestProcess { Timeout = 10000 };
-            AzureCliCredential credential = InstrumentClient(
-                new AzureCliCredential(CredentialPipeline.GetInstance(null),
-                    new TestProcessService(testProcess),
-                    new AzureCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero, IsChainedCredential = isChainedCredential }));
-
-            Exception ex = null;
-            if (isChainedCredential)
-            {
-                ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            }
-            else
-            {
-                ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            }
+            var credential = CreateCredentialWithTimeout(new TestProcessService(testProcess), TimeSpan.Zero, isChainedCredential);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChainedCredential),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(AzureCliCredential.AzureCliTimeoutError));
         }
 
@@ -225,14 +262,14 @@ namespace Azure.Identity.Tests
 
                 tenantIdBuilder.Insert(i, testChar);
 
-                Assert.Throws<ArgumentException>(() => new AzureCliCredential(new AzureCliCredentialOptions { TenantId = tenantIdBuilder.ToString() }), Validations.InvalidTenantIdErrorMessage);
+                Assert.Throws<ArgumentException>(() => CreateCredentialForTenantValidation(tenantIdBuilder.ToString()), Validations.InvalidTenantIdErrorMessage);
             }
         }
 
         [TestCaseSource(nameof(NegativeTestCharacters))]
         public void VerifyGetTokenTenantIdValidation(char testChar)
         {
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential());
+            var credential = CreateBareCredential();
 
             string tenantId = Guid.NewGuid().ToString();
 
@@ -244,14 +281,15 @@ namespace Azure.Identity.Tests
 
                 var tokenRequestContext = new TokenRequestContext(MockScopes.Default, tenantId: tenantIdBuilder.ToString());
 
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), Validations.InvalidTenantIdErrorMessage);
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), Validations.InvalidTenantIdErrorMessage);
             }
         }
 
         [TestCaseSource(nameof(NegativeTestCharacters))]
         public void VerifyGetTokenScopeValidation(char testChar)
         {
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential());
+            var credential = CreateBareCredential();
 
             string scope = MockScopes.Default.ToString();
 
@@ -263,7 +301,8 @@ namespace Azure.Identity.Tests
 
                 var tokenRequestContext = new TokenRequestContext(new string[] { scopeBuilder.ToString() });
 
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), ScopeUtilities.InvalidScopeMessage);
             }
         }
 
@@ -275,11 +314,11 @@ namespace Azure.Identity.Tests
 
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
 
-            // Act + Assert: AuthenticationFailedException with az login guidance containing claims
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
-                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+            // Act + Assert
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims), default));
 
             Assert.That(ex.Message, Does.Contain("Azure CLI authentication requires multi-factor authentication or additional claims."));
             Assert.That(ex.Message, Does.Contain($"az login --claims-challenge {claims}"));
@@ -292,19 +331,17 @@ namespace Azure.Identity.Tests
         {
             // Arrange: claims challenge provided with tenant
             var claims = "test-claims-challenge";
-            var tenant = TenantId;
 
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
-            var options = new AzureCliCredentialOptions { TenantId = tenant };
-            var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
+            var credential = CreateCredential(new TestProcessService(testProcess, true), tenantId: TenantId);
 
-            // Act + Assert: AuthenticationFailedException with az login guidance containing tenant and claims
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
-                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+            // Act + Assert
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims), default));
 
             Assert.That(ex.Message, Does.Contain("Azure CLI authentication requires multi-factor authentication or additional claims."));
-            Assert.That(ex.Message, Does.Contain($"az login --tenant {tenant} --claims-challenge {claims}"));
+            Assert.That(ex.Message, Does.Contain($"az login --tenant {TenantId} --claims-challenge {claims}"));
         }
 
         [Test]
@@ -315,9 +352,9 @@ namespace Azure.Identity.Tests
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
 
-            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims), default);
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
         }

@@ -152,6 +152,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -202,6 +203,7 @@ namespace Azure.ResourceManager.EdgeActions
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -224,6 +226,7 @@ namespace Azure.ResourceManager.EdgeActions
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
             return message;
         }
     }

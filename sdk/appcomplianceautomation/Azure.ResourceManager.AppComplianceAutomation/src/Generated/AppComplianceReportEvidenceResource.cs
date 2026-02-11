@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
-    /// A Class representing an AppComplianceReportEvidence along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppComplianceReportEvidenceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAppComplianceReportEvidenceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppComplianceReportResource"/> using the GetAppComplianceReportEvidence method.
+    /// A class representing a AppComplianceReportEvidence along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AppComplianceReportEvidenceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppComplianceReportResource"/> using the GetAppComplianceReportEvidences method.
     /// </summary>
     public partial class AppComplianceReportEvidenceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppComplianceReportEvidenceResource"/> instance. </summary>
-        /// <param name="reportName"> The reportName. </param>
-        /// <param name="evidenceName"> The evidenceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string reportName, string evidenceName)
-        {
-            var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _appComplianceReportEvidenceEvidenceClientDiagnostics;
-        private readonly EvidenceRestOperations _appComplianceReportEvidenceEvidenceRestClient;
+        private readonly ClientDiagnostics _evidenceClientDiagnostics;
+        private readonly Evidence _evidenceRestClient;
         private readonly AppComplianceReportEvidenceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports/evidences";
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportEvidenceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppComplianceReportEvidenceResource for mocking. </summary>
         protected AppComplianceReportEvidenceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportEvidenceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppComplianceReportEvidenceResource(ArmClient client, AppComplianceReportEvidenceData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportEvidenceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppComplianceReportEvidenceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appComplianceReportEvidenceEvidenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appComplianceReportEvidenceEvidenceApiVersion);
-            _appComplianceReportEvidenceEvidenceRestClient = new EvidenceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportEvidenceEvidenceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string appComplianceReportEvidenceApiVersion);
+            _evidenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
+            _evidenceRestClient = new Evidence(_evidenceClientDiagnostics, Pipeline, Endpoint, appComplianceReportEvidenceApiVersion ?? "2024-06-27");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppComplianceReportEvidenceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="reportName"> The reportName. </param>
+        /// <param name="evidenceName"> The evidenceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string reportName, string evidenceName)
+        {
+            string resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the evidence metadata
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppComplianceReportEvidenceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Get");
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Get");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportEvidenceEvidenceRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportEvidenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the evidence metadata
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppComplianceReportEvidenceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Get");
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Get");
             scope.Start();
             try
             {
-                var response = _appComplianceReportEvidenceEvidenceRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportEvidenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Delete an existent evidence from a specified report
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +211,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Delete");
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportEvidenceEvidenceRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _appComplianceReportEvidenceEvidenceRestClient.CreateDeleteRequestUri(Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppComplianceAutomationArmOperation operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Delete an existent evidence from a specified report
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,116 +262,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Delete");
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Delete");
             scope.Start();
             try
             {
-                var response = _appComplianceReportEvidenceEvidenceRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _appComplianceReportEvidenceEvidenceRestClient.CreateDeleteRequestUri(Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppComplianceAutomationArmOperation operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or Update an evidence a specified report
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters for the create or update operation. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppComplianceReportEvidenceResource>> UpdateAsync(WaitUntil waitUntil, AppComplianceReportEvidenceData data, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _appComplianceReportEvidenceEvidenceRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, offerGuid, reportCreatorTenantId, cancellationToken).ConfigureAwait(false);
-                var uri = _appComplianceReportEvidenceEvidenceRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Name, Id.Name, data, offerGuid, reportCreatorTenantId);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportEvidenceResource>(Response.FromValue(new AppComplianceReportEvidenceResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or Update an evidence a specified report
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters for the create or update operation. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AppComplianceReportEvidenceResource> Update(WaitUntil waitUntil, AppComplianceReportEvidenceData data, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _appComplianceReportEvidenceEvidenceRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, offerGuid, reportCreatorTenantId, cancellationToken);
-                var uri = _appComplianceReportEvidenceEvidenceRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Name, Id.Name, data, offerGuid, reportCreatorTenantId);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportEvidenceResource>(Response.FromValue(new AppComplianceReportEvidenceResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -359,20 +292,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Download evidence file.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_Download</description>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Download. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,11 +316,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Download");
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Download");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportEvidenceEvidenceRestClient.DownloadAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EvidenceFileDownloadResult> response = Response.FromValue(EvidenceFileDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -401,20 +344,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Download evidence file.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Evidence_Download</description>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_Download. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportEvidenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,12 +368,138 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _appComplianceReportEvidenceEvidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Download");
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Download");
             scope.Start();
             try
             {
-                var response = _appComplianceReportEvidenceEvidenceRestClient.Download(Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EvidenceFileDownloadResult> response = Response.FromValue(EvidenceFileDownloadResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a AppComplianceReportEvidence.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters for the create or update operation. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AppComplianceReportEvidenceResource>> UpdateAsync(WaitUntil waitUntil, AppComplianceReportEvidenceData data, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppComplianceAutomationArmOperation<AppComplianceReportEvidenceResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportEvidenceResource>(Response.FromValue(new AppComplianceReportEvidenceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a AppComplianceReportEvidence.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Evidence_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppComplianceReportEvidenceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters for the create or update operation. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AppComplianceReportEvidenceResource> Update(WaitUntil waitUntil, AppComplianceReportEvidenceData data, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _evidenceClientDiagnostics.CreateScope("AppComplianceReportEvidenceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppComplianceAutomationArmOperation<AppComplianceReportEvidenceResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportEvidenceResource>(Response.FromValue(new AppComplianceReportEvidenceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

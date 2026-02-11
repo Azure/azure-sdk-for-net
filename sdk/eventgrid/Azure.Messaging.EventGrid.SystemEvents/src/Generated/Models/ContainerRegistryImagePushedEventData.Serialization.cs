@@ -22,6 +22,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ContainerRegistryEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerRegistryImagePushedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryImagePushedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerRegistryImagePushedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -182,23 +199,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ContainerRegistryImagePushedEventData IPersistableModel<ContainerRegistryImagePushedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerRegistryImagePushedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ContainerRegistryEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContainerRegistryImagePushedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImagePushedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContainerRegistryImagePushedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

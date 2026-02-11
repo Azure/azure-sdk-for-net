@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// Specifies the EncryptionType of the managed disk.
-    /// **Note:** It can be set for only Confidential VMs.
+    /// <b>Note:</b> It can be set for only Confidential VMs.
     /// </summary>
     public readonly partial struct ComputeFleetSecurityEncryptionType : IEquatable<ComputeFleetSecurityEncryptionType>
     {

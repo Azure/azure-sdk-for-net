@@ -83,7 +83,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations.getAdminInfo",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient"
               },
               "parameters": [],
               "response": {},
@@ -120,7 +121,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.deleteUser",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient"
               },
               "parameters": [],
               "response": {},
@@ -205,7 +207,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.getUser",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient"
               },
               "parameters": [],
               "response": {},

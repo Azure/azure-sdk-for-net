@@ -16,6 +16,30 @@ namespace Azure.Compute.Batch
     /// <summary> The result of listing the Jobs in an Account. </summary>
     internal partial class BatchJobListResult : IJsonModel<BatchJobListResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchJobListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchJobListResult"/> from. </param>
+        public static explicit operator BatchJobListResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBatchJobListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,31 +171,7 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         BatchJobListResult IPersistableModel<BatchJobListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchJobListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchJobListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchJobListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJobListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchJobListResult"/> from. </param>
-        public static explicit operator BatchJobListResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchJobListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

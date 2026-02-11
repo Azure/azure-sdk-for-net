@@ -5,15 +5,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.TestFramework;
-
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {

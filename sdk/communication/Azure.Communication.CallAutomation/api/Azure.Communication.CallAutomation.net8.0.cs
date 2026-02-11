@@ -333,6 +333,7 @@ namespace Azure.Communication.CallAutomation
     public partial class CallInvite
     {
         public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
+        public CallInvite(Azure.Communication.MicrosoftTeamsAppIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
         public CallInvite(Azure.Communication.TeamsExtensionUserIdentifier targetIdentity) { }
@@ -1627,6 +1628,7 @@ namespace Azure.Communication.CallAutomation
     public partial class TransferToParticipantOptions
     {
         public TransferToParticipantOptions(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
+        public TransferToParticipantOptions(Azure.Communication.MicrosoftTeamsAppIdentifier targetIdentity) { }
         public TransferToParticipantOptions(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public TransferToParticipantOptions(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity) { }
         public TransferToParticipantOptions(Azure.Communication.TeamsExtensionUserIdentifier targetIdentity) { }

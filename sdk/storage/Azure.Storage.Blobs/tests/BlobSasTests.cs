@@ -2095,7 +2095,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync();
-            BlockBlobClient BlockBlobClient = (BlockBlobClient) await GetNewBlobClient(test.Container, blobName);
+            BlockBlobClient BlockBlobClient = (BlockBlobClient)await GetNewBlobClient(test.Container, blobName);
             Response<BlobSnapshotInfo> createSnapshotResponse = await BlockBlobClient.CreateSnapshotAsync();
 
             // Use UriBuilder over ShareUriBuilder to apply custom SAS, ShareUriBuilder requires SasQueryParameters

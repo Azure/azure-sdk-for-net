@@ -29,13 +29,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
         /// |requestSubmitTime | ge, le, eq, gt, lt
         /// |provisioningState eq {QuotaRequestState}
         /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
-        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skiptoken"> The <b>Skiptoken</b> parameter is used only if a previous operation returned a partial result. If a previous response contains a <b>nextLink</b> element, its value includes a <b>skiptoken</b> parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public QuotaRequestStatusGetAllCollectionResultOfT(QuotaRequestStatus client, string scope, string filter, int? top, string skiptoken, RequestContext context) : base(context?.CancellationToken ?? default)
         {

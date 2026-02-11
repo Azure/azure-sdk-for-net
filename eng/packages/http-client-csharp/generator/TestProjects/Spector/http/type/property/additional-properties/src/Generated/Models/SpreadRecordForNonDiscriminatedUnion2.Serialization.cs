@@ -17,6 +17,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal SpreadRecordForNonDiscriminatedUnion2() => throw null;
 
+        protected virtual SpreadRecordForNonDiscriminatedUnion2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator SpreadRecordForNonDiscriminatedUnion2(Response response) => throw null;
+
         void IJsonModel<SpreadRecordForNonDiscriminatedUnion2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Property.AdditionalProperties
 
         SpreadRecordForNonDiscriminatedUnion2 IPersistableModel<SpreadRecordForNonDiscriminatedUnion2>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual SpreadRecordForNonDiscriminatedUnion2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<SpreadRecordForNonDiscriminatedUnion2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="spreadRecordForNonDiscriminatedUnion2"> The <see cref="SpreadRecordForNonDiscriminatedUnion2"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SpreadRecordForNonDiscriminatedUnion2 spreadRecordForNonDiscriminatedUnion2) => throw null;
-
-        public static explicit operator SpreadRecordForNonDiscriminatedUnion2(Response response) => throw null;
     }
 }

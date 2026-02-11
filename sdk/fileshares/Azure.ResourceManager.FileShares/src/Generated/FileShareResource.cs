@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(ResourceType, out string fileShareApiVersion);
             _fileSharesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", ResourceType.Namespace, Diagnostics);
-            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-06-01-preview");
+            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -710,6 +710,72 @@ namespace Azure.ResourceManager.FileShares
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetFileShareSnapshots().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FileSharePrivateEndpointConnections in the <see cref="FileShareResource"/>. </summary>
+        /// <returns> An object representing collection of FileSharePrivateEndpointConnections and their operations over a FileSharePrivateEndpointConnectionResource. </returns>
+        public virtual FileSharePrivateEndpointConnectionCollection GetFileSharePrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new FileSharePrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the file share. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FileSharePrivateEndpointConnectionResource>> GetFileSharePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetFileSharePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the file share. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FileSharePrivateEndpointConnectionResource> GetFileSharePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetFileSharePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FileSharePrivateLinkResources in the <see cref="FileShareResource"/>. </summary>
+        /// <returns> An object representing collection of FileSharePrivateLinkResources and their operations over a FileSharePrivateLinkResource. </returns>
+        public virtual FileSharePrivateLinkResourceCollection GetFileSharePrivateLinkResources()
+        {
+            return GetCachedClient(client => new FileSharePrivateLinkResourceCollection(client, Id));
+        }
+
+        /// <summary> Gets the private link resources that need to be created for a file share. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FileSharePrivateLinkResource>> GetFileSharePrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetFileSharePrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the private link resources that need to be created for a file share. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FileSharePrivateLinkResource> GetFileSharePrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetFileSharePrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
     }
 }

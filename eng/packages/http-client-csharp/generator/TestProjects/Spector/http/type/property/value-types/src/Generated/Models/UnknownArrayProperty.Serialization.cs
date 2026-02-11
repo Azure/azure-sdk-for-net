@@ -17,6 +17,10 @@ namespace _Type.Property.ValueTypes
     {
         internal UnknownArrayProperty() => throw null;
 
+        protected virtual UnknownArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator UnknownArrayProperty(Response response) => throw null;
+
         void IJsonModel<UnknownArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Property.ValueTypes
 
         UnknownArrayProperty IPersistableModel<UnknownArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UnknownArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<UnknownArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="unknownArrayProperty"> The <see cref="UnknownArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnknownArrayProperty unknownArrayProperty) => throw null;
-
-        public static explicit operator UnknownArrayProperty(Response response) => throw null;
     }
 }

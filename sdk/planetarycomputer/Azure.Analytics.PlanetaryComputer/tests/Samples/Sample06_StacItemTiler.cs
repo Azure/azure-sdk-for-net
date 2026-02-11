@@ -24,17 +24,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetTileMatrixDefinitions
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Get tile matrix definitions for WebMercatorQuad
@@ -57,17 +57,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_ListTileMatrices
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // List all available tile matrix sets
@@ -88,17 +88,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetItemAssets
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -125,17 +125,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetBounds
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -159,17 +159,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetPreview
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -200,17 +200,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetInfo
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -234,17 +234,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetStatistics
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -268,17 +268,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetAssetStatistics
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -302,17 +302,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetWmtsCapabilities
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -342,17 +342,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_CropGeoJson
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -395,17 +395,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_CropWithDimensions
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -450,17 +450,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetGeoJsonStatistics
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -501,17 +501,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetPart
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -541,17 +541,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetPartWithDimensions
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -583,17 +583,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetPoint
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -619,17 +619,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetTileJson
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -660,17 +660,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_GetTile
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";
@@ -701,17 +701,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample06_CompleteTilerWorkflow
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             string collectionId = "naip";

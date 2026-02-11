@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.AppPlatform.Models;
-using NUnit.Framework;
 using System;
 using System.Text.Json;
+using Azure.ResourceManager.AppPlatform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Tests
 {

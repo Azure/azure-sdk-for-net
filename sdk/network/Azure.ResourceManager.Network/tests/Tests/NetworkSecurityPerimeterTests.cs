@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var nspName = Recording.GenerateAssetName(_nspNamePrefix);
             var createNspReqData = new NetworkSecurityPerimeterData(TestEnvironment.Location);
-            return  (await _resourceGroup.GetNetworkSecurityPerimeters().CreateOrUpdateAsync(WaitUntil.Completed, nspName, createNspReqData)).Value;
+            return (await _resourceGroup.GetNetworkSecurityPerimeters().CreateOrUpdateAsync(WaitUntil.Completed, nspName, createNspReqData)).Value;
         }
 
         private async Task<NetworkSecurityPerimeterProfileResource> CreateRandomProfile(NetworkSecurityPerimeterResource nsp)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Delete Association
             await association.DeleteAsync(WaitUntil.Completed);
 
-            associationsList =  await nsp.GetNetworkSecurityPerimeterAssociations().GetAllAsync().ToEnumerableAsync();
+            associationsList = await nsp.GetNetworkSecurityPerimeterAssociations().GetAllAsync().ToEnumerableAsync();
             Assert.That(associationsList, Has.Count.EqualTo(0));
         }
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network.Tests
             //List Link & Link references
             var linksList = await nsp.GetNetworkSecurityPerimeterLinks().GetAllAsync().ToEnumerableAsync();
 
-            Assert.That(linksList,Has.Count.EqualTo(1));
+            Assert.That(linksList, Has.Count.EqualTo(1));
 
             var linkReferencesList = await remoteNsp.GetNetworkSecurityPerimeterLinkReferences().GetAllAsync().ToEnumerableAsync();
             Assert.That(linkReferencesList, Has.Count.EqualTo(1));

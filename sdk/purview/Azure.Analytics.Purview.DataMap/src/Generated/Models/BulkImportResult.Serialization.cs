@@ -16,6 +16,30 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> Bulk import result. </summary>
     public partial class BulkImportResult : IJsonModel<BulkImportResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BulkImportResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BulkImportResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBulkImportResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BulkImportResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BulkImportResult"/> from. </param>
+        public static explicit operator BulkImportResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBulkImportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BulkImportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,31 +181,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         BulkImportResult IPersistableModel<BulkImportResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkImportResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkImportResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBulkImportResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BulkImportResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BulkImportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BulkImportResult"/> from. </param>
-        public static explicit operator BulkImportResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBulkImportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

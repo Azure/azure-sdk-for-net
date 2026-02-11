@@ -15,6 +15,8 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     {
         internal BaseModel() => throw null;
 
+        protected virtual BaseModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BaseModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
