@@ -1,0 +1,6 @@
+{
+  "trackingDefault": "https://github.com/Azure/azure-sdk-for-net/issues/55312",
+  "justificationDefault": "Any changes to NoWarn usage under sdk/ must be reviewed/approved by the SDK team.",
+  "entries": []
+}
+

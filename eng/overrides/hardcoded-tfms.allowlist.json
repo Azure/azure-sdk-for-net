@@ -1,0 +1,6 @@
+{
+  "trackingDefault": "https://github.com/Azure/azure-sdk-for-net/issues/55313",
+  "justificationDefault": "Hardcoded TFMs under sdk/ require SDK team review; prefer central RequiredTargetFrameworks/TargetFrameworks conventions.",
+  "entries": []
+}
+

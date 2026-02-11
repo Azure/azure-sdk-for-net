@@ -167,6 +167,10 @@ dist/
 node_modules/
 eng/packages/**/*.tgz
 
+# Python cache files
+**/__pycache__/
+*.pyc
+
 # MSBuild binary log files
 msbuild.binlog
 

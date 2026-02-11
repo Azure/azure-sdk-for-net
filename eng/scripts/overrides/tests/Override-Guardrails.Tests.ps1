@@ -22,6 +22,35 @@ if (-not $python)
     throw "python executable not found on PATH. These tests require python."
 }
 
+function Initialize-GitRepo([string]$repoRoot)
+{
+    $git = (Get-Command git -ErrorAction SilentlyContinue)
+    if (-not $git) { throw "git executable not found on PATH. These tests require git." }
+
+    Push-Location $repoRoot
+    try {
+        & git init | Out-Null
+        & git config user.email "test@example.com" | Out-Null
+        & git config user.name "Override Guardrails Tests" | Out-Null
+        & git config commit.gpgsign false | Out-Null
+    }
+    finally {
+        Pop-Location
+    }
+}
+
+function Git-CommitAll([string]$repoRoot, [string]$message)
+{
+    Push-Location $repoRoot
+    try {
+        & git add -A | Out-Null
+        & git commit -m $message | Out-Null
+    }
+    finally {
+        Pop-Location
+    }
+}
+
 function New-TestRepoRoot
 {
     $repoRoot = Join-Path $TestDrive "repo"
@@ -185,6 +214,144 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
         $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 2 NoWarn\\(AZC\\) entries found"
+    }
+
+    It "check_nowarn_changes fails when NoWarn is changed without allowlisting" {
+        $repoRoot = New-TestRepoRoot
+        Initialize-GitRepo $repoRoot
+
+        $csprojPath = Join-Path $repoRoot "sdk/svc/pkg/src/pkg.csproj"
+        Write-TextFile $csprojPath @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+</Project>
+"@
+
+        Git-CommitAll $repoRoot "baseline"
+        Push-Location $repoRoot
+        try {
+            $baseRef = (& git rev-parse HEAD).Trim()
+        }
+        finally {
+            Pop-Location
+        }
+
+        # Change NoWarn.
+        Write-TextFile $csprojPath @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
+  </PropertyGroup>
+</Project>
+"@
+        Git-CommitAll $repoRoot "add nowarn"
+
+        $allowlistPath = Join-Path $repoRoot "eng/overrides/nowarn-changes.allowlist.json"
+        Write-TextFile $allowlistPath @"
+{ "trackingDefault": "t", "justificationDefault": "j", "entries": [] }
+"@
+
+        $scriptPath = Join-Path $PSScriptRoot ".." "check_nowarn_changes.py"
+        $output = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 1
+        $output | Should -Match "NoWarn changes"
+        $output | Should -Match "sdk/svc/pkg/src/pkg.csproj"
+
+        # Allowlist the file -> should pass.
+        Write-TextFile $allowlistPath @"
+{ "trackingDefault": "t", "justificationDefault": "j", "entries": [ { "file": "sdk/svc/pkg/src/pkg.csproj", "tracking": "t", "justification": "j" } ] }
+"@
+        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output2 | Should -Match "OK:"
+    }
+
+    It "check_hardcoded_tfms_changes fails when hardcoded TargetFramework is introduced without allowlisting" {
+        $repoRoot = New-TestRepoRoot
+        Initialize-GitRepo $repoRoot
+
+        $csprojPath = Join-Path $repoRoot "sdk/svc/pkg/src/pkg.csproj"
+        Write-TextFile $csprojPath @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+</Project>
+"@
+        Git-CommitAll $repoRoot "baseline"
+
+        Push-Location $repoRoot
+        try { $baseRef = (& git rev-parse HEAD).Trim() }
+        finally { Pop-Location }
+
+        # Introduce hardcoded TFM.
+        Write-TextFile $csprojPath @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+</Project>
+"@
+        Git-CommitAll $repoRoot "introduce hardcoded tfm"
+
+        $allowlistPath = Join-Path $repoRoot "eng/overrides/hardcoded-tfms.allowlist.json"
+        Write-TextFile $allowlistPath @"
+{ "trackingDefault": "t", "justificationDefault": "j", "entries": [] }
+"@
+
+        $scriptPath = Join-Path $PSScriptRoot ".." "check_hardcoded_tfms_changes.py"
+        $output = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 1
+        $output | Should -Match "hardcoded TargetFramework"
+        $output | Should -Match "net10.0"
+
+        # Allowlist exact tuple -> should pass.
+        Write-TextFile $allowlistPath @"
+{ "trackingDefault": "t", "justificationDefault": "j", "entries": [ { "file": "sdk/svc/pkg/src/pkg.csproj", "property": "TargetFramework", "value": "net10.0", "tracking": "t", "justification": "j" } ] }
+"@
+        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output2 | Should -Match "OK:"
+    }
+
+    It "check_added_assets fails when a new SessionRecords file is added without allowlisting" {
+        $repoRoot = New-TestRepoRoot
+        Initialize-GitRepo $repoRoot
+
+        # baseline commit
+        $baselineFile = Join-Path $repoRoot "sdk/svc/pkg/README.md"
+        Write-TextFile $baselineFile "baseline"
+        Git-CommitAll $repoRoot "baseline"
+
+        Push-Location $repoRoot
+        try { $baseRef = (& git rev-parse HEAD).Trim() }
+        finally { Pop-Location }
+
+        # add a new recording asset under SessionRecords
+        $assetPath = Join-Path $repoRoot "sdk/svc/pkg/SessionRecords/test.json"
+        Write-TextFile $assetPath "{ ""recording"": true }"
+        Git-CommitAll $repoRoot "add asset"
+
+        $allowlistPath = Join-Path $repoRoot "eng/overrides/added-assets.allowlist.json"
+        Write-TextFile $allowlistPath @"
+{ "trackingDefault": "t", "justificationDefault": "j", "entries": [] }
+"@
+
+        $scriptPath = Join-Path $PSScriptRoot ".." "check_added_assets.py"
+        $output = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 1
+        $output | Should -Match "SessionRecords"
+
+        # allowlist file -> should pass
+        Write-TextFile $allowlistPath @"
+{ "trackingDefault": "t", "justificationDefault": "j", "entries": [ { "file": "sdk/svc/pkg/SessionRecords/test.json", "tracking": "t", "justification": "j" } ] }
+"@
+        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output2 | Should -Match "OK:"
     }
 
     It "check_matrix_overrides detects MatrixConfigs and Name entries" {

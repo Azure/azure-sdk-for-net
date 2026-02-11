@@ -1,0 +1,6 @@
+{
+  "trackingDefault": "https://github.com/Azure/azure-sdk-for-net/issues/55314",
+  "justificationDefault": "Binary assets and recordings should not be pushed to this repo; use azure-sdk-assets via assets.json/test-proxy flow where applicable.",
+  "entries": []
+}
+

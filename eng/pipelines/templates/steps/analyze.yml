@@ -73,6 +73,18 @@ steps:
     displayName: 'Verify Directory.Build.props NoWarn(AZC) allowlist (eng/overrides)'
 
   - script: |
+      python eng/scripts/overrides/check_nowarn_changes.py --repoRoot "$(Build.SourcesDirectory)" --baseRef origin/main --allowlist eng/overrides/nowarn-changes.allowlist.json
+    displayName: 'Verify NoWarn change allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_hardcoded_tfms_changes.py --repoRoot "$(Build.SourcesDirectory)" --baseRef origin/main --allowlist eng/overrides/hardcoded-tfms.allowlist.json
+    displayName: 'Verify hardcoded TFM change allowlist (eng/overrides)'
+
+  - script: |
+      python eng/scripts/overrides/check_added_assets.py --repoRoot "$(Build.SourcesDirectory)" --baseRef origin/main --allowlist eng/overrides/added-assets.allowlist.json
+    displayName: 'Verify added assets allowlist (eng/overrides)'
+
+  - script: |
       python eng/scripts/overrides/check_matrix_overrides.py --repoRoot "$(Build.SourcesDirectory)" --searchPath sdk --allowlist eng/overrides/matrix-overrides.allowlist.json
     displayName: 'Verify matrix overrides allowlist (eng/overrides)'
 

@@ -107,6 +107,46 @@ Run locally:
 python3 eng/scripts/overrides/check_nowarn_directory_overrides.py --repoRoot . --searchPath sdk --allowlist eng/overrides/nowarn-directory-overrides.allowlist.json
 ```
 
+## NoWarn change allowlist (any NoWarn usage)
+
+- **Allowlist file**: `eng/overrides/nowarn-changes.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_nowarn_changes.py`
+- **What is checked**: changes to `<NoWarn>...</NoWarn>` in MSBuild files under `sdk/` (e.g., `.csproj`, `.props`, `.targets`). This guardrail is **diff-based** and only fails PRs that *change* NoWarn usage.
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_nowarn_changes.py --repoRoot . --baseRef origin/main --allowlist eng/overrides/nowarn-changes.allowlist.json
+```
+
+## Hardcoded TFM change allowlist
+
+- **Allowlist file**: `eng/overrides/hardcoded-tfms.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_hardcoded_tfms_changes.py`
+- **What is checked**: additions of hardcoded `<TargetFramework>` / `<TargetFrameworks>` values in MSBuild files under `sdk/`. This guardrail is **diff-based** and only fails PRs that introduce a new hardcoded TFM value (values containing `net` but not using MSBuild properties like `$(RequiredTargetFrameworks)`).
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_hardcoded_tfms_changes.py --repoRoot . --baseRef origin/main --allowlist eng/overrides/hardcoded-tfms.allowlist.json
+```
+
+## Added assets allowlist
+
+- **Allowlist file**: `eng/overrides/added-assets.allowlist.json`
+- **Checker**: `eng/scripts/overrides/check_added_assets.py`
+- **What is checked**: new files added in the PR that look like assets/recordings:
+  - any new file under a `SessionRecords` directory
+  - binary file extensions added under `sdk/` (e.g., images, archives, executables)
+
+This guardrail is **diff-based** and only fails PRs that add new assets.
+
+Run locally:
+
+```bash
+python3 eng/scripts/overrides/check_added_assets.py --repoRoot . --baseRef origin/main --allowlist eng/overrides/added-assets.allowlist.json
+```
+
 ## Matrix overrides allowlist
 
 - **Allowlist file**: `eng/overrides/matrix-overrides.allowlist.json`
