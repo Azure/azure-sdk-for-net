@@ -61,5 +61,34 @@ namespace Azure.Identity.Samples
                 });
             #endregion
         }
+
+        [Test]
+        public void WorkloadIdentityCredentialWithIdentityBinding()
+        {
+            #region Snippet:WorkloadIdentityCredentialWithIdentityBinding
+            var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+            {
+                IsAzureProxyEnabled = true  // Enable identity binding mode
+            });
+            #endregion
+        }
+
+        [Test]
+        public void MigrationToWorkloadIdentityCredential()
+        {
+            // Verify commented code compiles.
+            var fooCredential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+
+            #region Snippet:MigrationToWorkloadIdentityCredential
+            // Before (no identity binding support):
+            // var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+
+            // After (with identity binding support):
+            var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+            {
+                IsAzureProxyEnabled = true
+            });
+            #endregion
+        }
     }
 }

@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="isEnabled"> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </param>
         /// <param name="clientAppGroupIdentifier"> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </param>
         /// <param name="policies">
@@ -69,17 +70,19 @@ namespace Azure.ResourceManager.EventHubs
         /// Please note <see cref="EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventHubsThrottlingPolicy"/>.
         /// </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string clientAppGroupIdentifier, IList<EventHubsApplicationGroupPolicy> policies, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isEnabled, string clientAppGroupIdentifier, IList<EventHubsApplicationGroupPolicy> policies, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Location = location;
             IsEnabled = isEnabled;
             ClientAppGroupIdentifier = clientAppGroupIdentifier;
             Policies = policies;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </summary>
         [WirePath("properties.isEnabled")]
         public bool? IsEnabled { get; set; }
@@ -93,8 +96,5 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         [WirePath("properties.policies")]
         public IList<EventHubsApplicationGroupPolicy> Policies { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
     }
 }

@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing an AvsPureStoragePolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPureStoragePolicyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAvsPureStoragePolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPureStoragePolicy method.
+    /// A class representing a AvsPureStoragePolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AvsPureStoragePolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPureStoragePolicies method.
     /// </summary>
     public partial class AvsPureStoragePolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AvsPureStoragePolicyResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="storagePolicyName"> The storagePolicyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string storagePolicyName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics;
-        private readonly PureStoragePoliciesRestOperations _avsPureStoragePolicyPureStoragePoliciesRestClient;
+        private readonly ClientDiagnostics _pureStoragePoliciesClientDiagnostics;
+        private readonly PureStoragePolicies _pureStoragePoliciesRestClient;
         private readonly AvsPureStoragePolicyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/pureStoragePolicies";
 
-        /// <summary> Initializes a new instance of the <see cref="AvsPureStoragePolicyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AvsPureStoragePolicyResource for mocking. </summary>
         protected AvsPureStoragePolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvsPureStoragePolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPureStoragePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPureStoragePolicyResource(ArmClient client, AvsPureStoragePolicyData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvsPureStoragePolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPureStoragePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AvsPureStoragePolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string avsPureStoragePolicyPureStoragePoliciesApiVersion);
-            _avsPureStoragePolicyPureStoragePoliciesRestClient = new PureStoragePoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, avsPureStoragePolicyPureStoragePoliciesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string avsPureStoragePolicyApiVersion);
+            _pureStoragePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _pureStoragePoliciesRestClient = new PureStoragePolicies(_pureStoragePoliciesClientDiagnostics, Pipeline, Endpoint, avsPureStoragePolicyApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AvsPureStoragePolicyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="storagePolicyName"> The storagePolicyName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string storagePolicyName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a PureStoragePolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PureStoragePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPureStoragePolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AvsPureStoragePolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Get");
+            using DiagnosticScope scope = _pureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _avsPureStoragePolicyPureStoragePoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pureStoragePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsPureStoragePolicyData> response = Response.FromValue(AvsPureStoragePolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AvsPureStoragePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Avs
         /// Get a PureStoragePolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PureStoragePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPureStoragePolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AvsPureStoragePolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Get");
+            using DiagnosticScope scope = _pureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _avsPureStoragePolicyPureStoragePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pureStoragePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsPureStoragePolicyData> response = Response.FromValue(AvsPureStoragePolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AvsPureStoragePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Avs
         /// Delete a PureStoragePolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PureStoragePolicies_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPureStoragePolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Delete");
+            using DiagnosticScope scope = _pureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _avsPureStoragePolicyPureStoragePoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_avsPureStoragePolicyPureStoragePoliciesClientDiagnostics, Pipeline, _avsPureStoragePolicyPureStoragePoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pureStoragePoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation operation = new AvsArmOperation(_pureStoragePoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Avs
         /// Delete a PureStoragePolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PureStoragePolicies_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPureStoragePolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Delete");
+            using DiagnosticScope scope = _pureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = _avsPureStoragePolicyPureStoragePoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_avsPureStoragePolicyPureStoragePoliciesClientDiagnostics, Pipeline, _avsPureStoragePolicyPureStoragePoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pureStoragePoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation operation = new AvsArmOperation(_pureStoragePoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create a PureStoragePolicy
+        /// Update a AvsPureStoragePolicy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PureStoragePolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPureStoragePolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Update");
+            using DiagnosticScope scope = _pureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _avsPureStoragePolicyPureStoragePoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<AvsPureStoragePolicyResource>(new AvsPureStoragePolicyOperationSource(Client), _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics, Pipeline, _avsPureStoragePolicyPureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPureStoragePolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
+                    new AvsPureStoragePolicyOperationSource(Client),
+                    _pureStoragePoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create a PureStoragePolicy
+        /// Update a AvsPureStoragePolicy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PureStoragePolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPureStoragePolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Update");
+            using DiagnosticScope scope = _pureStoragePoliciesClientDiagnostics.CreateScope("AvsPureStoragePolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _avsPureStoragePolicyPureStoragePoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<AvsPureStoragePolicyResource>(new AvsPureStoragePolicyOperationSource(Client), _avsPureStoragePolicyPureStoragePoliciesClientDiagnostics, Pipeline, _avsPureStoragePolicyPureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPureStoragePolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
+                    new AvsPureStoragePolicyOperationSource(Client),
+                    _pureStoragePoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

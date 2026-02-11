@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Base type for destination rules. </summary>
     public partial class CommunityEndpointDestinationRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommunityEndpointDestinationRule"/>. </summary>
         public CommunityEndpointDestinationRule()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="endpointRuleName"> Endpoint Rule Name. </param>
         /// <param name="destination"> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </param>
         /// <param name="ports"> Port. Can include multiple ports separated by commas or a range indicated by a hyphen. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityEndpointDestinationRule(CommunityEndpointDestinationType? destinationType, IList<CommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommunityEndpointDestinationRule(CommunityEndpointDestinationType? destinationType, IList<CommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationType = destinationType;
             Protocols = protocols;
@@ -68,19 +40,24 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             EndpointRuleName = endpointRuleName;
             Destination = destination;
             Ports = ports;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Destination Type. </summary>
         public CommunityEndpointDestinationType? DestinationType { get; set; }
+
         /// <summary> Protocols. Options specified by Endpoint Protocol Enum. </summary>
         public IList<CommunityEndpointProtocol> Protocols { get; }
+
         /// <summary> Transit Hub Resource Id. </summary>
         public ResourceIdentifier TransitHubResourceId { get; set; }
+
         /// <summary> Endpoint Rule Name. </summary>
         public string EndpointRuleName { get; set; }
+
         /// <summary> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </summary>
         public string Destination { get; set; }
+
         /// <summary> Port. Can include multiple ports separated by commas or a range indicated by a hyphen. </summary>
         public string Ports { get; set; }
     }

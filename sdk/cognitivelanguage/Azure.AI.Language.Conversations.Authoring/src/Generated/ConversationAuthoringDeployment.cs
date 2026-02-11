@@ -23,6 +23,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _projectName;
+        private readonly string _deploymentName;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -42,18 +44,566 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ConversationAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string projectName, string deploymentName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            _projectName = projectName;
+            _deploymentName = deploymentName;
             _apiVersion = apiVersion;
         }
 
-        internal HttpMessage CreateGetDeploymentRequest(string projectName, string deploymentName, RequestContext context)
+        /// <summary> Gets the details of a deployment. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConversationAuthoringProjectDeployment>> GetDeploymentAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeploymentAsync(context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringProjectDeployment.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the details of a deployment. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConversationAuthoringProjectDeployment> GetDeployment(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeployment(context);
+            return Response.FromValue(ConversationAuthoringProjectDeployment.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDeploymentAsync(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeployment(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDeployment(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringDeploymentDeleteFromResourcesState>> GetDeploymentDeleteFromResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeploymentDeleteFromResourcesStatusAsync(jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringDeploymentDeleteFromResourcesState> GetDeploymentDeleteFromResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeploymentDeleteFromResourcesStatus(jobId, context);
+            return Response.FromValue(ConversationAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing delete deployment from specific resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentDeleteFromResourcesStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentDeleteFromResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing delete deployment from specific resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentDeleteFromResourcesStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDeploymentDeleteFromResourcesStatus(string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentDeleteFromResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing deployment job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringDeploymentState>> GetDeploymentStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeploymentStatusAsync(jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringDeploymentState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing deployment job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringDeploymentState> GetDeploymentStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeploymentStatus(jobId, context);
+            return Response.FromValue(ConversationAuthoringDeploymentState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDeploymentStatusAsync(string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentStatusRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDeploymentStatus(string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.GetDeploymentStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentStatusRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new deployment or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,ConversationAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeployProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeployProjectRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new deployment or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeployProject(WaitUntil,ConversationAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeployProject(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeployProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeployProjectRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentRequest(context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteDeployment(WaitUntil waitUntil, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentRequest(context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a deployment from the specified project-assigned resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="details"> The Language or AIService resource list for deleting the deployment.\r\n            The deployment will only be deleted from the specified resources, and will remain for the rest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, ConversationAuthoringProjectResourceIds details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await DeleteDeploymentFromResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Deletes a deployment from the specified project-assigned resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="details"> The Language or AIService resource list for deleting the deployment.\r\n            The deployment will only be deleted from the specified resources, and will remain for the rest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, ConversationAuthoringProjectResourceIds details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return DeleteDeploymentFromResources(waitUntil, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a deployment from the specified project-assigned resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil,ConversationAuthoringProjectResourceIds,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeploymentFromResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a deployment from the specified project-assigned resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,ConversationAuthoringProjectResourceIds,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeployment.DeleteDeploymentFromResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetDeploymentRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -62,16 +612,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(_projectName, true);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
+            uri.AppendPath(_deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeployProjectRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -80,9 +630,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(_projectName, true);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
+            uri.AppendPath(_deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -90,7 +640,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateDeleteDeploymentRequest(string projectName, string deploymentName, RequestContext context)
+        internal HttpMessage CreateDeleteDeploymentRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -99,15 +649,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(_projectName, true);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
+            uri.AppendPath(_deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
         }
 
-        internal HttpMessage CreateDeleteDeploymentFromResourcesRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeleteDeploymentFromResourcesRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -116,9 +666,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(_projectName, true);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
+            uri.AppendPath(_deploymentName, true);
             uri.AppendPath("/:delete-from-resources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -127,7 +677,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentDeleteFromResourcesStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
+        internal HttpMessage CreateGetDeploymentDeleteFromResourcesStatusRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -136,9 +686,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(_projectName, true);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
+            uri.AppendPath(_deploymentName, true);
             uri.AppendPath("/delete-from-resources/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -147,7 +697,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
+        internal HttpMessage CreateGetDeploymentStatusRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -156,9 +706,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(_projectName, true);
             uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
+            uri.AppendPath(_deploymentName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);

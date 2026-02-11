@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageActions
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             if (filter != null)
             {
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

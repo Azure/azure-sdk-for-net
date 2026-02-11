@@ -56,7 +56,7 @@ public class StorageAccountFeature : AzureProjectFeature
 public class BlobServiceFeature : AzureProjectFeature
 {
     public BlobServiceFeature()
-    {}
+    { }
 
     public StorageAccountFeature? Account { get; set; }
 

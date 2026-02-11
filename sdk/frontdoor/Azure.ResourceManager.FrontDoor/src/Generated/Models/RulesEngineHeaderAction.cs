@@ -76,10 +76,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Which type of manipulation to apply to the header. </summary>
+        [WirePath("headerActionType")]
         public RulesEngineHeaderActionType HeaderActionType { get; set; }
         /// <summary> The name of the header this action will apply to. </summary>
+        [WirePath("headerName")]
         public string HeaderName { get; set; }
         /// <summary> The value to update the given header name with. This value is not used if the actionType is Delete. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

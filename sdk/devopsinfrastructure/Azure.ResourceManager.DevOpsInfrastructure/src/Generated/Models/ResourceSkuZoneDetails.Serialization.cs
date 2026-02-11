@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    public partial class ResourceSkuZoneDetails : IUtf8JsonSerializable, IJsonModel<ResourceSkuZoneDetails>
+    /// <summary> Describes The zonal capabilities of a SKU. </summary>
+    public partial class ResourceSkuZoneDetails : IJsonModel<ResourceSkuZoneDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSkuZoneDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/> for deserialization. </summary>
+        internal ResourceSkuZoneDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceSkuZoneDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,35 +34,39 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceSkuZoneDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStartArray();
-            foreach (var item in Name)
+            foreach (string item in Name)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("capabilities"u8);
             writer.WriteStartArray();
-            foreach (var item in Capabilities)
+            foreach (ResourceSkuCapabilities item in Capabilities)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,46 +75,57 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        ResourceSkuZoneDetails IJsonModel<ResourceSkuZoneDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceSkuZoneDetails IJsonModel<ResourceSkuZoneDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceSkuZoneDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceSkuZoneDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceSkuZoneDetails(document.RootElement, options);
         }
 
-        internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<string> name = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<string> name = default;
+            IList<ResourceSkuCapabilities> capabilities = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     name = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"u8))
+                if (prop.NameEquals("capabilities"u8))
                 {
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item, options));
                     }
@@ -113,17 +134,19 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceSkuZoneDetails(name, capabilities, serializedAdditionalRawData);
+            return new ResourceSkuZoneDetails(name, capabilities, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ResourceSkuZoneDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceSkuZoneDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -133,15 +156,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        ResourceSkuZoneDetails IPersistableModel<ResourceSkuZoneDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceSkuZoneDetails IPersistableModel<ResourceSkuZoneDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceSkuZoneDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceSkuZoneDetails(document.RootElement, options);
                     }
                 default:
@@ -149,6 +177,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceSkuZoneDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

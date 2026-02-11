@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
-    internal class NginxCertificateOperationSource : IOperationSource<NginxCertificateResource>
+    /// <summary></summary>
+    internal partial class NginxCertificateOperationSource : IOperationSource<NginxCertificateResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NginxCertificateOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NginxCertificateResource IOperationSource<NginxCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NginxCertificateData data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NginxCertificateResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NginxCertificateResource> IOperationSource<NginxCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
-            return await Task.FromResult(new NginxCertificateResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NginxCertificateData data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NginxCertificateResource(_client, data);
         }
     }
 }

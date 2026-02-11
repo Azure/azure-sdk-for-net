@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    internal partial class DevOpsNetworkProfile : IUtf8JsonSerializable, IJsonModel<DevOpsNetworkProfile>
+    /// <summary> The network profile of the machines in the pool. </summary>
+    public partial class DevOpsNetworkProfile : IJsonModel<DevOpsNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +29,45 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsNetworkProfile)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(SubnetId))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("subnetId"u8);
+                writer.WriteStringValue(SubnetId);
+            }
+            if (Optional.IsDefined(StaticIPAddressCount))
+            {
+                writer.WritePropertyName("staticIpAddressCount"u8);
+                writer.WriteNumberValue(StaticIPAddressCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
+            {
+                writer.WritePropertyName("ipAddresses"u8);
+                writer.WriteStartArray();
+                foreach (string item in IPAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,49 +76,87 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        DevOpsNetworkProfile IJsonModel<DevOpsNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsNetworkProfile IJsonModel<DevOpsNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevOpsNetworkProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsNetworkProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevOpsNetworkProfile(document.RootElement, options);
         }
 
-        internal static DevOpsNetworkProfile DeserializeDevOpsNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DevOpsNetworkProfile DeserializeDevOpsNetworkProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string subnetId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            int? staticIPAddressCount = default;
+            IReadOnlyList<string> ipAddresses = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"u8))
+                if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("staticIpAddressCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staticIPAddressCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("ipAddresses"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    ipAddresses = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DevOpsNetworkProfile(subnetId, serializedAdditionalRawData);
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DevOpsNetworkProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevOpsNetworkProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -105,15 +166,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        DevOpsNetworkProfile IPersistableModel<DevOpsNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsNetworkProfile IPersistableModel<DevOpsNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevOpsNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsNetworkProfile(document.RootElement, options);
                     }
                 default:
@@ -121,6 +187,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevOpsNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

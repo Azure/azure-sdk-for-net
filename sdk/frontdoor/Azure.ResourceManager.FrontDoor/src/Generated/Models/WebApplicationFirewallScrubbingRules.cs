@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The variable to be scrubbed from the logs. </summary>
+        [WirePath("matchVariable")]
         public ScrubbingRuleEntryMatchVariable MatchVariable { get; set; }
         /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </summary>
+        [WirePath("selectorMatchOperator")]
         public ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get; set; }
         /// <summary> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
         /// <summary> Defines the state of a log scrubbing rule. Default value is enabled. </summary>
+        [WirePath("state")]
         public ScrubbingRuleEntryState? State { get; set; }
     }
 }

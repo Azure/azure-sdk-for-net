@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a HciVmInstance along with the instance operations that can be performed on it.
@@ -49,7 +49,7 @@ namespace MgmtTypeSpec
         internal HciVmInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string hciVmInstanceApiVersion);
-            _hciVmInstancesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _hciVmInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _hciVmInstancesRestClient = new HciVmInstances(_hciVmInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -88,7 +88,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets a virtual machine instance. </summary>
+        /// <summary>
+        /// Gets a virtual machine instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/virtualMachineInstances/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HciVmInstances_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciVmInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciVmInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -116,7 +136,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets a virtual machine instance. </summary>
+        /// <summary>
+        /// Gets a virtual machine instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/virtualMachineInstances/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HciVmInstances_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciVmInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciVmInstanceResource> Get(CancellationToken cancellationToken = default)
         {

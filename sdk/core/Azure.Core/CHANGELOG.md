@@ -1,6 +1,36 @@
 # Release History
 
-## 1.50.0-beta.1 (Unreleased)
+## 1.52.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
+
+### Other Changes
+
+## 1.51.1 (2026-02-04)
+
+### Features Added
+
+- Update the APIs for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection to enable Azure.Identity use cases.
+- Updated BCL dependencies to 10.x.
+
+## 1.51.0 (2026-01-29)
+
+### Features Added
+
+- Added core support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Implements support for client certificate rotation in the Azure.Core transport layer to enable dynamic token binding scenarios. The changes allow transport instances to be updated with new client certificate configurations at runtime without requiring full pipeline reconstruction.
+
+### Bugs Fixed
+
+- Fixed `NullReferenceException` when calling `GetHashCode()` on `default(AzureLocation)`.
+
+## 1.50.0 (2025-11-05)
 
 ### Acknowledgments
 
@@ -10,9 +40,7 @@ Thank you to our developer community members who helped to make the Azure.Core l
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Adopt System.ClientModel 1.8.0
 
 ### Other Changes
 

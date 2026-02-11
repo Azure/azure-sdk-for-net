@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Tests
             return lro.Value;
         }
 
-        protected async Task<DeviceProvisioningServiceResource> CreateDefaultDps(ResourceGroupResource resourceGroup,string dpsName)
+        protected async Task<DeviceProvisioningServiceResource> CreateDefaultDps(ResourceGroupResource resourceGroup, string dpsName)
         {
             var properties = new DeviceProvisioningServiceProperties()
             {

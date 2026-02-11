@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppProvisioningState.Accepted => "Accepted",
             NetAppProvisioningState.Creating => "Creating",
             NetAppProvisioningState.Patching => "Patching",
+            NetAppProvisioningState.Updating => "Updating",
             NetAppProvisioningState.Deleting => "Deleting",
             NetAppProvisioningState.Moving => "Moving",
             NetAppProvisioningState.Failed => "Failed",
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return NetAppProvisioningState.Accepted;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return NetAppProvisioningState.Creating;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Patching")) return NetAppProvisioningState.Patching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return NetAppProvisioningState.Updating;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return NetAppProvisioningState.Deleting;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Moving")) return NetAppProvisioningState.Moving;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return NetAppProvisioningState.Failed;

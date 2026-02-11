@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Properties of a storage pool. </summary>
     public partial class PureStoragePoolProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStoragePoolProperties"/>. </summary>
         /// <param name="availabilityZone"> Azure Availability Zone the Pool is located in. </param>
@@ -74,8 +46,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS connection state summary. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, PureStoragePoolVnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, PureStorageProvisioningState? provisioningState, ResourceIdentifier reservationResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, PureStoragePoolVnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, PureStorageProvisioningState? provisioningState, ResourceIdentifier reservationResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StoragePoolInternalId = storagePoolInternalId;
             AvailabilityZone = availabilityZone;
@@ -86,30 +58,33 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             Avs = avs;
             ProvisioningState = provisioningState;
             ReservationResourceId = reservationResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PureStoragePoolProperties"/> for deserialization. </summary>
-        internal PureStoragePoolProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pure Storage's internal ID of the storage pool. </summary>
         public string StoragePoolInternalId { get; }
+
         /// <summary> Azure Availability Zone the Pool is located in. </summary>
         public string AvailabilityZone { get; set; }
+
         /// <summary> Network properties of the storage pool. </summary>
         public PureStoragePoolVnetInjection VnetInjection { get; set; }
+
         /// <summary> How long a destroyed object is kept before being eradicated, in seconds. </summary>
         public long? DataRetentionPeriod { get; }
+
         /// <summary> Total bandwidth provisioned for the pool, in MB/s. </summary>
         public long ProvisionedBandwidthMbPerSec { get; set; }
+
         /// <summary> Total I/O operations per second (IOPS) provisioned for the pool. </summary>
         public long? ProvisionedIops { get; }
+
         /// <summary> AVS connection state summary. </summary>
         public PureStorageAvs Avs { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public PureStorageProvisioningState? ProvisioningState { get; }
+
         /// <summary> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </summary>
         public ResourceIdentifier ReservationResourceId { get; set; }
     }

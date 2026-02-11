@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class OccurrenceDelayContent : IUtf8JsonSerializable, IJsonModel<OccurrenceDelayContent>
+    /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (ACST) 2025-05-30T22:03:00+09:30, (PST) 2025-05-30T06:35:00-07:00. </summary>
+    public partial class OccurrenceDelayContent : IJsonModel<OccurrenceDelayContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OccurrenceDelayContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OccurrenceDelayContent"/> for deserialization. </summary>
+        internal OccurrenceDelayContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OccurrenceDelayContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +35,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("delay"u8);
             writer.WriteStringValue(Delay, "O");
             writer.WritePropertyName("resourceIds"u8);
             writer.WriteStartArray();
-            foreach (var item in ResourceIds)
+            foreach (ResourceIdentifier item in ResourceIds)
             {
                 if (item == null)
                 {
@@ -48,15 +54,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,41 +71,45 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        OccurrenceDelayContent IJsonModel<OccurrenceDelayContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OccurrenceDelayContent IJsonModel<OccurrenceDelayContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OccurrenceDelayContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOccurrenceDelayContent(document.RootElement, options);
         }
 
-        internal static OccurrenceDelayContent DeserializeOccurrenceDelayContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OccurrenceDelayContent DeserializeOccurrenceDelayContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset delay = default;
             IList<ResourceIdentifier> resourceIds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("delay"u8))
+                if (prop.NameEquals("delay"u8))
                 {
-                    delay = property.Value.GetDateTimeOffset("O");
+                    delay = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resourceIds"u8))
+                if (prop.NameEquals("resourceIds"u8))
                 {
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -115,17 +125,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new OccurrenceDelayContent(delay, resourceIds, serializedAdditionalRawData);
+            return new OccurrenceDelayContent(delay, resourceIds, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<OccurrenceDelayContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OccurrenceDelayContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -135,15 +147,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        OccurrenceDelayContent IPersistableModel<OccurrenceDelayContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OccurrenceDelayContent IPersistableModel<OccurrenceDelayContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OccurrenceDelayContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOccurrenceDelayContent(document.RootElement, options);
                     }
                 default:
@@ -151,6 +168,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OccurrenceDelayContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="occurrenceDelayContent"> The <see cref="OccurrenceDelayContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(OccurrenceDelayContent occurrenceDelayContent)
+        {
+            if (occurrenceDelayContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(occurrenceDelayContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

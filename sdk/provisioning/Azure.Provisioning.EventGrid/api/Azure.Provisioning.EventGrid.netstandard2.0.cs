@@ -6,7 +6,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<string> Key { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum AlternativeAuthenticationNameSource
     {
         ClientCertificateSubject = 0,
@@ -16,7 +15,6 @@ namespace Azure.Provisioning.EventGrid
         ClientCertificateIP = 3,
         ClientCertificateEmail = 4,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureADPartnerClientAuthentication : Azure.Provisioning.EventGrid.PartnerClientAuthentication
     {
         public AzureADPartnerClientAuthentication() { }
@@ -74,7 +72,6 @@ namespace Azure.Provisioning.EventGrid
         Failed = 5,
         Deleted = 6,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ClientAuthenticationSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ClientAuthenticationSettings() { }
@@ -138,7 +135,6 @@ namespace Azure.Provisioning.EventGrid
         Approved = 1,
         ErrorRetrievingDnsRecord = 2,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class CustomJwtAuthenticationManagedIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CustomJwtAuthenticationManagedIdentity() { }
@@ -146,13 +142,11 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<string> UserAssignedIdentity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum CustomJwtAuthenticationManagedIdentityType
     {
         SystemAssigned = 0,
         UserAssigned = 1,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class CustomJwtAuthenticationSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CustomJwtAuthenticationSettings() { }
@@ -247,7 +241,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventGrid.DomainTopic FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -330,11 +323,8 @@ namespace Azure.Provisioning.EventGrid
         public static Azure.Provisioning.EventGrid.EventGridBuiltInRole EventGridEventSubscriptionContributor { get { throw null; } }
         public static Azure.Provisioning.EventGrid.EventGridBuiltInRole EventGridEventSubscriptionReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.EventGrid.EventGridBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.EventGrid.EventGridBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.EventGrid.EventGridBuiltInRole left, Azure.Provisioning.EventGrid.EventGridBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.EventGrid.EventGridBuiltInRole (string value) { throw null; }
@@ -362,13 +352,11 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventGrid.EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridDomainProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridSku> SkuName { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventGrid.EventGridDomain FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -603,7 +591,6 @@ namespace Azure.Provisioning.EventGrid
     {
         Enabled = 0,
         Disabled = 1,
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         SecuredByPerimeter = 2,
     }
     public enum EventGridResourceProvisioningState
@@ -615,7 +602,6 @@ namespace Azure.Provisioning.EventGrid
         Canceled = 4,
         Failed = 5,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum EventGridSku
     {
         Basic = 0,
@@ -631,7 +617,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.DataResidencyBoundary> DataResidencyBoundary { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Endpoint { get { throw null; } }
         public Azure.Provisioning.EventGrid.PartnerTopicEventTypeInfo EventTypeInfo { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Resources.ExtendedAzureLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -639,7 +624,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridInputSchema> InputSchema { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventGridInputSchemaMapping InputSchemaMapping { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsLocalAuthDisabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.ResourceKind> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MetricResourceId { get { throw null; } }
@@ -648,13 +632,11 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventGrid.EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridTopicProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridSku> SkuName { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventGrid.EventGridTopic FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -731,7 +713,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<string> Topic { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventGrid.EventSubscription FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -832,7 +813,6 @@ namespace Azure.Provisioning.EventGrid
         public IsNullOrUndefinedFilter() { }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class IssuerCertificateInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public IssuerCertificateInfo() { }
@@ -1042,7 +1022,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<int> DefaultMaximumExpirationTimeInDays { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class PartnerClientAuthentication : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PartnerClientAuthentication() { }
@@ -1075,7 +1054,6 @@ namespace Azure.Provisioning.EventGrid
         Canceled = 4,
         Failed = 5,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class PartnerDestination : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PartnerDestination(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1094,13 +1072,11 @@ namespace Azure.Provisioning.EventGrid
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventGrid.PartnerDestination FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum PartnerDestinationActivationState
     {
         NeverActivated = 0,
         Activated = 1,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class PartnerDestinationInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PartnerDestinationInfo() { }
@@ -1111,7 +1087,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventGrid.ResourceMoveChangeHistory> ResourceMoveChangeHistory { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum PartnerDestinationProvisioningState
     {
         Creating = 0,
@@ -1122,7 +1097,6 @@ namespace Azure.Provisioning.EventGrid
         Failed = 5,
         IdleDueToMirroredChannelResourceDeletion = 6,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class PartnerEventSubscriptionDestination : Azure.Provisioning.EventGrid.EventSubscriptionDestination
     {
         public PartnerEventSubscriptionDestination() { }
@@ -1163,7 +1137,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<string> MessageForActivation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.PartnerNamespace? Parent { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.EventGrid.PartnerDestinationInfo PartnerDestinationInfo { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.PartnerTopicInfo PartnerTopicInfo { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.PartnerNamespaceChannelProvisioningState> ProvisioningState { get { throw null; } set { } }
@@ -1186,13 +1159,11 @@ namespace Azure.Provisioning.EventGrid
         Canceled = 4,
         Failed = 5,
         IdleDueToMirroredPartnerTopicDeletion = 6,
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         IdleDueToMirroredPartnerDestinationDeletion = 7,
     }
     public enum PartnerNamespaceChannelType
     {
         PartnerTopic = 0,
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         PartnerDestination = 1,
     }
     public enum PartnerNamespaceProvisioningState
@@ -1363,13 +1334,11 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<int> ReceiveLockDurationInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum ResourceKind
     {
         Azure = 0,
         AzureArc = 1,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ResourceMoveChangeHistory : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ResourceMoveChangeHistory() { }
@@ -1682,7 +1651,6 @@ namespace Azure.Provisioning.EventGrid
     public partial class TopicSpacesConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public TopicSpacesConfiguration() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.EventGrid.ClientAuthenticationSettings ClientAuthentication { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventGrid.CustomDomainConfiguration> CustomDomains { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Hostname { get { throw null; } }
@@ -1712,7 +1680,6 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<string> UriOrAzureActiveDirectoryApplicationId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class WebhookPartnerDestinationInfo : Azure.Provisioning.EventGrid.PartnerDestinationInfo
     {
         public WebhookPartnerDestinationInfo() { }

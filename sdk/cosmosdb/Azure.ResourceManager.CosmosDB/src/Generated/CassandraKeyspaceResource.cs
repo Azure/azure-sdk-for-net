@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,75 +166,6 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCassandraTables().Get(tableName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CassandraViewGetResultResources in the CassandraKeyspace. </summary>
-        /// <returns> An object representing collection of CassandraViewGetResultResources and their operations over a CassandraViewGetResultResource. </returns>
-        public virtual CassandraViewGetResultCollection GetCassandraViewGetResults()
-        {
-            return GetCachedClient(client => new CassandraViewGetResultCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the Cassandra view under an existing Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraResources_GetCassandraView</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraViewGetResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="viewName"> Cosmos DB view name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CassandraViewGetResultResource>> GetCassandraViewGetResultAsync(string viewName, CancellationToken cancellationToken = default)
-        {
-            return await GetCassandraViewGetResults().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Cassandra view under an existing Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraResources_GetCassandraView</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraViewGetResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="viewName"> Cosmos DB view name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CassandraViewGetResultResource> GetCassandraViewGetResult(string viewName, CancellationToken cancellationToken = default)
-        {
-            return GetCassandraViewGetResults().Get(viewName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the provided name.
         /// <list type="bullet">
@@ -248,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,7 +301,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,7 +343,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -458,7 +389,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -504,7 +435,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -566,7 +497,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,7 +559,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -685,7 +616,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -742,7 +673,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -802,7 +733,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
-    /// Serialized Name: MatchProcessingBehavior
-    /// </summary>
+    /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
     public readonly partial struct MatchProcessingBehavior : IEquatable<MatchProcessingBehavior>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ContinueValue = "Continue";
         private const string StopValue = "Stop";
 
-        /// <summary>
-        /// Continue
-        /// Serialized Name: MatchProcessingBehavior.Continue
-        /// </summary>
+        /// <summary> Continue. </summary>
         public static MatchProcessingBehavior Continue { get; } = new MatchProcessingBehavior(ContinueValue);
-        /// <summary>
-        /// Stop
-        /// Serialized Name: MatchProcessingBehavior.Stop
-        /// </summary>
+        /// <summary> Stop. </summary>
         public static MatchProcessingBehavior Stop { get; } = new MatchProcessingBehavior(StopValue);
         /// <summary> Determines if two <see cref="MatchProcessingBehavior"/> values are the same. </summary>
         public static bool operator ==(MatchProcessingBehavior left, MatchProcessingBehavior right) => left.Equals(right);

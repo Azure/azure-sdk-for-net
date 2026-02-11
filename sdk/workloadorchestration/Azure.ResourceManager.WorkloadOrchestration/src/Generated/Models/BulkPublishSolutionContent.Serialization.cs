@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class BulkPublishSolutionContent : IUtf8JsonSerializable, IJsonModel<BulkPublishSolutionContent>
+    /// <summary> Bulk publish solution parameter. </summary>
+    public partial class BulkPublishSolutionContent : IJsonModel<BulkPublishSolutionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BulkPublishSolutionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BulkPublishSolutionContent"/> for deserialization. </summary>
+        internal BulkPublishSolutionContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BulkPublishSolutionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +35,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BulkPublishSolutionContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
-            foreach (var item in Targets)
+            foreach (BulkPublishTargetDetails item in Targets)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -50,21 +56,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("solutionDependencies"u8);
                 writer.WriteStartArray();
-                foreach (var item in SolutionDependencies)
+                foreach (EdgeSolutionDependencyContent item in SolutionDependencies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,22 +79,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        BulkPublishSolutionContent IJsonModel<BulkPublishSolutionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BulkPublishSolutionContent IJsonModel<BulkPublishSolutionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BulkPublishSolutionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BulkPublishSolutionContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBulkPublishSolutionContent(document.RootElement, options);
         }
 
-        internal static BulkPublishSolutionContent DeserializeBulkPublishSolutionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BulkPublishSolutionContent DeserializeBulkPublishSolutionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,33 +107,32 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             IList<BulkPublishTargetDetails> targets = default;
             string solutionInstanceName = default;
             IList<EdgeSolutionDependencyContent> solutionDependencies = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("targets"u8))
+                if (prop.NameEquals("targets"u8))
                 {
                     List<BulkPublishTargetDetails> array = new List<BulkPublishTargetDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BulkPublishTargetDetails.DeserializeBulkPublishTargetDetails(item, options));
                     }
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("solutionInstanceName"u8))
+                if (prop.NameEquals("solutionInstanceName"u8))
                 {
-                    solutionInstanceName = property.Value.GetString();
+                    solutionInstanceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("solutionDependencies"u8))
+                if (prop.NameEquals("solutionDependencies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EdgeSolutionDependencyContent> array = new List<EdgeSolutionDependencyContent>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EdgeSolutionDependencyContent.DeserializeEdgeSolutionDependencyContent(item, options));
                     }
@@ -131,17 +141,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), serializedAdditionalRawData);
+            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BulkPublishSolutionContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BulkPublishSolutionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -151,15 +163,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        BulkPublishSolutionContent IPersistableModel<BulkPublishSolutionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BulkPublishSolutionContent IPersistableModel<BulkPublishSolutionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BulkPublishSolutionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BulkPublishSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBulkPublishSolutionContent(document.RootElement, options);
                     }
                 default:
@@ -167,6 +184,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BulkPublishSolutionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="bulkPublishSolutionContent"> The <see cref="BulkPublishSolutionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BulkPublishSolutionContent bulkPublishSolutionContent)
+        {
+            if (bulkPublishSolutionContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(bulkPublishSolutionContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Connected Partner Resource Properties. </summary>
     public partial class ConnectedPartnerResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourceProperties"/>. </summary>
         internal ConnectedPartnerResourceProperties()
@@ -52,27 +23,35 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourceProperties"/>. </summary>
-        /// <param name="partnerDeploymentName"> Elastic deployment name. </param>
-        /// <param name="partnerDeploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
-        /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
-        /// <param name="location"> The location of the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="partnerDeploymentName"> Elastic resource name. </param>
+        /// <param name="partnerDeploymentUri"> URL of the resource in Elastic cloud. </param>
+        /// <param name="azureResourceId"> The azure resource Id of the resource. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="connectedPartnerResourcePropertiesType"> The hosting type of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location, string connectedPartnerResourcePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerDeploymentName = partnerDeploymentName;
             PartnerDeploymentUri = partnerDeploymentUri;
             AzureResourceId = azureResourceId;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ConnectedPartnerResourcePropertiesType = connectedPartnerResourcePropertiesType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Elastic deployment name. </summary>
+        /// <summary> Elastic resource name. </summary>
         public string PartnerDeploymentName { get; }
-        /// <summary> Deployment URL of the elasticsearch in Elastic cloud deployment. </summary>
+
+        /// <summary> URL of the resource in Elastic cloud. </summary>
         public Uri PartnerDeploymentUri { get; }
-        /// <summary> The azure resource Id of the deployment. </summary>
+
+        /// <summary> The azure resource Id of the resource. </summary>
         public ResourceIdentifier AzureResourceId { get; }
-        /// <summary> The location of the deployment. </summary>
+
+        /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; }
+
+        /// <summary> The hosting type of the resource. </summary>
+        public string ConnectedPartnerResourcePropertiesType { get; }
     }
 }

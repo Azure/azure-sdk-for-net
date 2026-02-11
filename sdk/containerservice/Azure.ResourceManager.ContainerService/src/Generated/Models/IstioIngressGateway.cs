@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Istio ingress gateway configuration. For now, we support up to one external ingress gateway named `aks-istio-ingressgateway-external` and one internal ingress gateway named `aks-istio-ingressgateway-internal`. </summary>
+    /// <summary>
+    /// Istio ingress gateway configuration. For now, we support up to one external ingress gateway named `aks-istio-ingressgateway-external` and one internal ingress gateway named `aks-istio-ingressgateway-internal`.
+    /// Serialized Name: IstioIngressGateway
+    /// </summary>
     public partial class IstioIngressGateway
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IstioIngressGateway"/>. </summary>
-        /// <param name="mode"> Mode of an ingress gateway. </param>
-        /// <param name="isEnabled"> Whether to enable the ingress gateway. </param>
+        /// <param name="mode">
+        /// Mode of an ingress gateway.
+        /// Serialized Name: IstioIngressGateway.mode
+        /// </param>
+        /// <param name="isEnabled">
+        /// Whether to enable the ingress gateway.
+        /// Serialized Name: IstioIngressGateway.enabled
+        /// </param>
         public IstioIngressGateway(IstioIngressGatewayMode mode, bool isEnabled)
         {
             Mode = mode;
@@ -55,8 +64,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioIngressGateway"/>. </summary>
-        /// <param name="mode"> Mode of an ingress gateway. </param>
-        /// <param name="isEnabled"> Whether to enable the ingress gateway. </param>
+        /// <param name="mode">
+        /// Mode of an ingress gateway.
+        /// Serialized Name: IstioIngressGateway.mode
+        /// </param>
+        /// <param name="isEnabled">
+        /// Whether to enable the ingress gateway.
+        /// Serialized Name: IstioIngressGateway.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IstioIngressGateway(IstioIngressGatewayMode mode, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,10 +85,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Mode of an ingress gateway. </summary>
+        /// <summary>
+        /// Mode of an ingress gateway.
+        /// Serialized Name: IstioIngressGateway.mode
+        /// </summary>
         [WirePath("mode")]
         public IstioIngressGatewayMode Mode { get; set; }
-        /// <summary> Whether to enable the ingress gateway. </summary>
+        /// <summary>
+        /// Whether to enable the ingress gateway.
+        /// Serialized Name: IstioIngressGateway.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }
     }

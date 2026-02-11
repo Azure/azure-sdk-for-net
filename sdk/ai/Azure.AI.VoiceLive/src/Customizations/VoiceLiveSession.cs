@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.AI.VoiceLive.Diagnostics;
 
 namespace Azure.AI.VoiceLive
 {
@@ -40,6 +41,10 @@ namespace Azure.AI.VoiceLive
         private bool _isSendingAudioStream = false;
         private bool _disposed = false;
 
+        // WebSocket content logging
+        private readonly VoiceLiveWebSocketContentLogger _contentLogger;
+        private readonly string _connectionId;
+
         /// <summary>
         /// Gets or sets a value indicating whether turn response data should be buffered.
         /// </summary>
@@ -54,14 +59,9 @@ namespace Azure.AI.VoiceLive
         protected internal VoiceLiveSession(
             VoiceLiveClient parentClient,
             Uri endpoint,
-            AzureKeyCredential credential)
+            AzureKeyCredential credential) : this(parentClient, endpoint)
         {
-            Argument.AssertNotNull(parentClient, nameof(parentClient));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-
-            _parentClient = parentClient;
-            _endpoint = endpoint;
             _credential = credential;
         }
 
@@ -74,15 +74,25 @@ namespace Azure.AI.VoiceLive
         protected internal VoiceLiveSession(
             VoiceLiveClient parentClient,
             Uri endpoint,
-            TokenCredential credential)
+            TokenCredential credential) : this(parentClient, endpoint)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            _tokenCredential = credential;
+        }
+
+        private VoiceLiveSession(
+                    VoiceLiveClient parentClient,
+                    Uri endpoint)
         {
             Argument.AssertNotNull(parentClient, nameof(parentClient));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             _parentClient = parentClient;
             _endpoint = endpoint;
-            _tokenCredential = credential;
+
+            // Initialize content logging
+            _connectionId = Guid.NewGuid().ToString("N").Substring(0, 8); // Short connection ID
+            _contentLogger = new VoiceLiveWebSocketContentLogger(parentClient.Options.Diagnostics);
         }
 
         /// <summary>
@@ -172,12 +182,21 @@ namespace Azure.AI.VoiceLive
             await _clientSendSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
+                // Log before sending
+                _contentLogger.LogSentMessage(_connectionId, messageBytes, isText: true);
+
                 await WebSocket.SendAsync(
                     messageBytes,
                     WebSocketMessageType.Text,
                     endOfMessage: true,
                     cancellationToken)
                         .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Log send error
+                _contentLogger.LogError(_connectionId, $"Send error: {ex.Message}", messageBytes, isText: true);
+                throw;
             }
             finally
             {
@@ -216,7 +235,7 @@ namespace Azure.AI.VoiceLive
 
             lock (_singleReceiveLock)
             {
-                _receiveCollectionResult ??= new(WebSocket, cancellationToken);
+                _receiveCollectionResult ??= new(WebSocket, _contentLogger, _connectionId, cancellationToken);
             }
 
             await foreach (BinaryData message in _receiveCollectionResult.WithCancellation(cancellationToken))

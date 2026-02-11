@@ -28,10 +28,8 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual Azure.Response<bool> Exists(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource> Get(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as it never works, it will be removed in a future release", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete as it never works, it will be removed in a future release", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource>> GetAsync(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -404,10 +402,8 @@ namespace Azure.ResourceManager.AppConfiguration
         protected DeletedAppConfigurationStoreResource() { }
         public virtual Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string configStoreName) { throw null; }
@@ -415,16 +411,12 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PurgeDeleted(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeDeletedAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -477,9 +469,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired None { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired Recreate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired (string value) { throw null; }
@@ -577,9 +567,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus (string value) { throw null; }
@@ -599,9 +587,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState (string value) { throw null; }
@@ -617,9 +603,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess (string value) { throw null; }
@@ -649,9 +633,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState (string value) { throw null; }
@@ -666,9 +648,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public AppConfigurationResourceType(string value) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType MicrosoftAppConfigurationConfigurationStores { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType (string value) { throw null; }
@@ -697,9 +677,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus Provisioning { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus Ready { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus (string value) { throw null; }
@@ -752,7 +730,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.AppConfigurationSnapshotData AppConfigurationSnapshotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string snapshotType = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState?), Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus? status = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSnapshotStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.SnapshotKeyValueFilter> filters = null, Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType? compositionType = default(Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), long? retentionPeriod = default(long?), long? size = default(long?), long? itemsCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationStoreApiKey AppConfigurationStoreApiKey(string id = null, string name = null, string value = null, string connectionString = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData AppConfigurationStoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string endpoint = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess?), bool? disableLocalAuth = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), Azure.ResourceManager.AppConfiguration.Models.AppConfigurationDataPlaneProxyProperties dataPlaneProxy = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode? createMode = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData AppConfigurationStoreData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string skuName, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState? provisioningState, System.DateTimeOffset? createdOn, string endpoint, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode? createMode) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreData DeletedAppConfigurationStoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier configurationStoreId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, bool? isPurgeProtectionEnabled = default(bool?)) { throw null; }
     }
@@ -765,9 +742,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyAuthenticationMode Local { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyAuthenticationMode PassThrough { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyAuthenticationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyAuthenticationMode left, Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyAuthenticationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyAuthenticationMode (string value) { throw null; }
@@ -783,9 +758,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation Disabled { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation left, Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation (string value) { throw null; }
@@ -801,9 +774,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType Key { get { throw null; } }
         public static Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType KeyLabel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType left, Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType (string value) { throw null; }

@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The virtual machine instance resource definition. </summary>
     public partial class HciVmInstanceData : ResourceData, IJsonModel<HciVmInstanceData>
@@ -108,7 +108,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -144,7 +144,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HciVmInstanceData)} does not support writing '{options.Format}' format.");
             }
@@ -162,7 +162,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeHciVmInstanceData(document.RootElement, options);
                     }
@@ -174,11 +174,10 @@ namespace MgmtTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="HciVmInstanceData"/> from. </param>
-        internal static HciVmInstanceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmInstanceData"/> from. </param>
+        internal static HciVmInstanceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHciVmInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

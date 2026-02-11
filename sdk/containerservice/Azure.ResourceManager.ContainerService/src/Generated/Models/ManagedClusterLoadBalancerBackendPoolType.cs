@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The type of the managed inbound Load Balancer BackendPool. </summary>
+    /// <summary>
+    /// The type of the managed inbound Load Balancer BackendPool.
+    /// Serialized Name: BackendPoolType
+    /// </summary>
     public readonly partial struct ManagedClusterLoadBalancerBackendPoolType : IEquatable<ManagedClusterLoadBalancerBackendPoolType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string NodeIPConfigurationValue = "NodeIPConfiguration";
         private const string NodeIPValue = "NodeIP";
 
-        /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
+        /// <summary>
+        /// The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend.
+        /// Serialized Name: BackendPoolType.NodeIPConfiguration
+        /// </summary>
         public static ManagedClusterLoadBalancerBackendPoolType NodeIPConfiguration { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPConfigurationValue);
-        /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
+        /// <summary>
+        /// The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend.
+        /// Serialized Name: BackendPoolType.NodeIP
+        /// </summary>
         public static ManagedClusterLoadBalancerBackendPoolType NodeIP { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPValue);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancerBackendPoolType"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterLoadBalancerBackendPoolType left, ManagedClusterLoadBalancerBackendPoolType right) => left.Equals(right);

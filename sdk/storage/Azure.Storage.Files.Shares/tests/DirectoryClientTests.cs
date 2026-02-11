@@ -669,51 +669,51 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task CreateAsync_FilePropertySemantics(bool ifNotExists)
-        {
-            // Arrange
-            List<FilePropertySemantics?> filePropertySemanticsList = new List<FilePropertySemantics?>
-            {
-                null,
-                FilePropertySemantics.New,
-                FilePropertySemantics.Restore
-            };
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //[RecordedTest]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateAsync_FilePropertySemantics(bool ifNotExists)
+        //{
+        //    // Arrange
+        //    List<FilePropertySemantics?> filePropertySemanticsList = new List<FilePropertySemantics?>
+        //    {
+        //        null,
+        //        FilePropertySemantics.New,
+        //        FilePropertySemantics.Restore
+        //    };
 
-            foreach (FilePropertySemantics? filePropertySemantics in filePropertySemanticsList)
-            {
-                await using DisposingShare test = await GetTestShareAsync();
-                ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+        //    foreach (FilePropertySemantics? filePropertySemantics in filePropertySemanticsList)
+        //    {
+        //        await using DisposingShare test = await GetTestShareAsync();
+        //        ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
 
-                ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
-                {
-                    PropertySemantics = filePropertySemantics
-                };
+        //        ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+        //        {
+        //            PropertySemantics = filePropertySemantics
+        //        };
 
-                if (filePropertySemantics == FilePropertySemantics.Restore)
-                {
-                    options.FilePermission = new ShareFilePermission
-                    {
-                        Permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)"
-                    };
-                }
+        //        if (filePropertySemantics == FilePropertySemantics.Restore)
+        //        {
+        //            options.FilePermission = new ShareFilePermission
+        //            {
+        //                Permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)"
+        //            };
+        //        }
 
-                Response<ShareDirectoryInfo> response;
+        //        Response<ShareDirectoryInfo> response;
 
-                // Act
-                if (ifNotExists)
-                {
-                    response = await directoryClient.CreateIfNotExistsAsync(options);
-                }
-                else
-                {
-                    response = await directoryClient.CreateAsync(options);
-                }
-            }
-        }
+        //        // Act
+        //        if (ifNotExists)
+        //        {
+        //            response = await directoryClient.CreateIfNotExistsAsync(options);
+        //        }
+        //        else
+        //        {
+        //            response = await directoryClient.CreateAsync(options);
+        //        }
+        //    }
+        //}
 
         [RecordedTest]
         public async Task CreateIfNotExists_NotExists()

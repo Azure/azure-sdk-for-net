@@ -52,13 +52,15 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of <see cref="RetentionDescription"/>. </summary>
         /// <param name="cleanupPolicy"> Enumerates the possible values for cleanup policy. </param>
-        /// <param name="retentionTimeInHours"> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compact the returned value of this property is Long.MaxValue. </param>
-        /// <param name="tombstoneRetentionTimeInHours"> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </param>
+        /// <param name="retentionTimeInHours"> Number of hours to retain the events for this Event Hub. This should be positive value upto namespace SKU max. -1 is a special case where retention time is infinite, but the size of an entity is restricted and its size depends on namespace SKU type. </param>
+        /// <param name="minCompactionLagTimeInMinutes"> The minimum time a message will remain ineligible for compaction in the log. This value is used when cleanupPolicy is Compact or DeleteOrCompact. </param>
+        /// <param name="tombstoneRetentionTimeInHours"> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is used when cleanupPolicy is Compact or DeleteOrCompact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, int? tombstoneRetentionTimeInHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, long? minCompactionLagTimeInMinutes, int? tombstoneRetentionTimeInHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CleanupPolicy = cleanupPolicy;
             RetentionTimeInHours = retentionTimeInHours;
+            MinCompactionLagTimeInMinutes = minCompactionLagTimeInMinutes;
             TombstoneRetentionTimeInHours = tombstoneRetentionTimeInHours;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -66,10 +68,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Enumerates the possible values for cleanup policy. </summary>
         [WirePath("cleanupPolicy")]
         public CleanupPolicyRetentionDescription? CleanupPolicy { get; set; }
-        /// <summary> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compact the returned value of this property is Long.MaxValue. </summary>
+        /// <summary> Number of hours to retain the events for this Event Hub. This should be positive value upto namespace SKU max. -1 is a special case where retention time is infinite, but the size of an entity is restricted and its size depends on namespace SKU type. </summary>
         [WirePath("retentionTimeInHours")]
         public long? RetentionTimeInHours { get; set; }
-        /// <summary> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </summary>
+        /// <summary> The minimum time a message will remain ineligible for compaction in the log. This value is used when cleanupPolicy is Compact or DeleteOrCompact. </summary>
+        [WirePath("minCompactionLagTimeInMinutes")]
+        public long? MinCompactionLagTimeInMinutes { get; set; }
+        /// <summary> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is used when cleanupPolicy is Compact or DeleteOrCompact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </summary>
         [WirePath("tombstoneRetentionTimeInHours")]
         public int? TombstoneRetentionTimeInHours { get; set; }
     }

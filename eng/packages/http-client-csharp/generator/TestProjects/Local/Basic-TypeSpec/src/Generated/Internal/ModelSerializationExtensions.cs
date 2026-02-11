@@ -10,7 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace BasicTypeSpec
 {
@@ -254,5 +256,29 @@ namespace BasicTypeSpec
         {
             writer.WriteObjectValue<object>(value, options);
         }
+
+        public static BinaryData GetUtf8Bytes(this JsonElement element)
+        {
+#if NET9_0_OR_GREATER
+            return new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(element).ToArray());
+#else
+            return BinaryData.FromString(element.GetRawText());
+#endif
+        }
+
+        public static DateTimeOffset GetDateTimeOffset(this XElement element, string format) => format switch
+        {
+            "U" => DateTimeOffset.FromUnixTimeSeconds((long)element),
+            _ => TypeFormatters.ParseDateTimeOffset(element.Value, format)
+        };
+
+        public static TimeSpan GetTimeSpan(this XElement element, string format) => TypeFormatters.ParseTimeSpan(element.Value, format);
+
+        public static byte[] GetBytesFromBase64(this XElement element, string format) => format switch
+        {
+            "U" => TypeFormatters.FromBase64UrlString(element.Value),
+            "D" => Convert.FromBase64String(element.Value),
+            _ => throw new ArgumentException("Format is not supported: ", nameof(format))
+        };
     }
 }

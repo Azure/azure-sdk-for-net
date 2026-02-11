@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, IList<string> linkedDomains) : base(tags, serializedAdditionalRawData)
+        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="disableLocalAuth"> Disable local authentication for the CommunicationService. </param>
+        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, IList<string> linkedDomains, CommunicationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             LinkedDomains = linkedDomains;
+            PublicNetworkAccess = publicNetworkAccess;
+            DisableLocalAuth = disableLocalAuth;
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
@@ -37,5 +41,11 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> List of email Domain resource Ids. </summary>
         [WirePath("properties.linkedDomains")]
         public IList<string> LinkedDomains { get; }
+        /// <summary> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public CommunicationPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Disable local authentication for the CommunicationService. </summary>
+        [WirePath("properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
     }
 }

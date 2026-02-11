@@ -8,8 +8,9 @@ azure-arm: true
 csharp: true
 library-name: ResourceGraph
 namespace: Azure.ResourceManager.ResourceGraph
+require: https://github.com/Azure/azure-rest-api-specs/blob/1bd335533d57d11a33d41be9b5841e6986ec3567/specification/resourcegraph/resource-manager/readme.md
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/resourcegraph/resource-manager/readme.md
+tag: 2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +21,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 rename-mapping:
   ErrorDetails: FacetErrorDetails
   QueryRequest: ResourceQueryContent
@@ -27,6 +31,8 @@ rename-mapping:
   QueryResponse: ResourceQueryResult
   DateTimeInterval.start: StartOn
   DateTimeInterval.end: EndOn
+  GraphQueryResource: ResourceGraphQuery
+  GraphQueryResource.properties.timeModified: ModifiedOn
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -37,7 +43,7 @@ format-by-name-rules:
 
 override-operation-name:
   Resources: GetResources
-  ResourcesHistory: GetResourceHistory
+  # ResourcesHistory: GetResourceHistory
 
 acronym-mapping:
   CPU: Cpu
@@ -62,4 +68,20 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  # Remove resourceshistory.json and resourcechanges.json since these 2 are preview
+  - from: resourceshistory.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: resourcechanges.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
 ```

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LoggingDirection. </summary>
+    /// <summary> The direction. </summary>
     public readonly partial struct LoggingDirection : IEquatable<LoggingDirection>
     {
         private readonly string _value;

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The DeliveryRuleActionParametersType.
-    /// Serialized Name: DeliveryRuleActionParametersType
-    /// </summary>
+    /// <summary> The DeliveryRuleActionParametersType. </summary>
     internal readonly partial struct DeliveryRuleActionParametersType : IEquatable<DeliveryRuleActionParametersType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeliveryRuleCacheKeyQueryStringBehaviorActionParametersValue = "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters";
         private const string DeliveryRuleRouteConfigurationOverrideActionParametersValue = "DeliveryRuleRouteConfigurationOverrideActionParameters";
 
-        /// <summary>
-        /// DeliveryRuleUrlRedirectActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleUrlRedirectActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlRedirectActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleUriRedirectActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUriRedirectActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleUrlSigningActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlSigningActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleUriSigningActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUriSigningActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleOriginGroupOverrideActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleOriginGroupOverrideActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleOriginGroupOverrideActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleOriginGroupOverrideActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleUrlRewriteActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleUrlRewriteActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlRewriteActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleUriRewriteActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUriRewriteActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleHeaderActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleHeaderActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleHeaderActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleHeaderActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleCacheExpirationActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleCacheExpirationActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleCacheExpirationActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleCacheExpirationActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleCacheExpirationActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleCacheKeyQueryStringBehaviorActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleCacheKeyQueryStringBehaviorActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleCacheKeyQueryStringBehaviorActionParametersValue);
-        /// <summary>
-        /// DeliveryRuleRouteConfigurationOverrideActionParameters
-        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRouteConfigurationOverrideActionParameters. </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleRouteConfigurationOverrideActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleRouteConfigurationOverrideActionParametersValue);
         /// <summary> Determines if two <see cref="DeliveryRuleActionParametersType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleActionParametersType left, DeliveryRuleActionParametersType right) => left.Equals(right);

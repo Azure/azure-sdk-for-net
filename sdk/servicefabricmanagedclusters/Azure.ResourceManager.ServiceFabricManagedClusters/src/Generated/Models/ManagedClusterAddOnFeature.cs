@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterAddOnFeature : IEquatable<ManagedClusterAddOnFeature>
     {
         private readonly string _value;
+        /// <summary> Dns service. </summary>
+        private const string DnsServiceValue = "DnsService";
+        /// <summary> Backup and restore service. </summary>
+        private const string BackupRestoreServiceValue = "BackupRestoreService";
+        /// <summary> Resource monitor service. </summary>
+        private const string ResourceMonitorServiceValue = "ResourceMonitorService";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAddOnFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterAddOnFeature(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DnsServiceValue = "DnsService";
-        private const string BackupRestoreServiceValue = "BackupRestoreService";
-        private const string ResourceMonitorServiceValue = "ResourceMonitorService";
+            _value = value;
+        }
 
         /// <summary> Dns service. </summary>
         public static ManagedClusterAddOnFeature DnsService { get; } = new ManagedClusterAddOnFeature(DnsServiceValue);
+
         /// <summary> Backup and restore service. </summary>
         public static ManagedClusterAddOnFeature BackupRestoreService { get; } = new ManagedClusterAddOnFeature(BackupRestoreServiceValue);
+
         /// <summary> Resource monitor service. </summary>
         public static ManagedClusterAddOnFeature ResourceMonitorService { get; } = new ManagedClusterAddOnFeature(ResourceMonitorServiceValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterAddOnFeature"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterAddOnFeature left, ManagedClusterAddOnFeature right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterAddOnFeature"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterAddOnFeature left, ManagedClusterAddOnFeature right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterAddOnFeature"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterAddOnFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterAddOnFeature(string value) => new ManagedClusterAddOnFeature(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterAddOnFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterAddOnFeature?(string value) => value == null ? null : new ManagedClusterAddOnFeature(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterAddOnFeature other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterAddOnFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

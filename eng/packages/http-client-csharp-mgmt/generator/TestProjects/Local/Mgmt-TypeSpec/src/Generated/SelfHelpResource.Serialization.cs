@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class SelfHelpResource : IJsonModel<SelfHelpResourceData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         SelfHelpResourceData IJsonModel<SelfHelpResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SelfHelpResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpResourceData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<SelfHelpResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelfHelpResourceData IPersistableModel<SelfHelpResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpResourceData>(data, options, MgmtTypeSpecContext.Default);
+        SelfHelpResourceData IPersistableModel<SelfHelpResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SelfHelpResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

@@ -38,14 +38,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> A custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path. </summary>
+        [WirePath("customForwardingPath")]
         public string CustomForwardingPath { get; set; }
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        [WirePath("forwardingProtocol")]
         public FrontDoorForwardingProtocol? ForwardingProtocol { get; set; }
         /// <summary> The caching configuration associated with this rule. </summary>
+        [WirePath("cacheConfiguration")]
         public FrontDoorCacheConfiguration CacheConfiguration { get; set; }
         /// <summary> A reference to the BackendPool which this rule routes to. </summary>
         internal WritableSubResource BackendPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("backendPool.id")]
         public ResourceIdentifier BackendPoolId
         {
             get => BackendPool is null ? default : BackendPool.Id;

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DurableTask.Models
     public readonly partial struct DurableTaskPurgeableOrchestrationState : IEquatable<DurableTaskPurgeableOrchestrationState>
     {
         private readonly string _value;
+        /// <summary> The orchestration is completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> The orchestration is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The orchestration is terminated. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> The orchestration is canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="DurableTaskPurgeableOrchestrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DurableTaskPurgeableOrchestrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string TerminatedValue = "Terminated";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> The orchestration is completed. </summary>
         public static DurableTaskPurgeableOrchestrationState Completed { get; } = new DurableTaskPurgeableOrchestrationState(CompletedValue);
+
         /// <summary> The orchestration is failed. </summary>
         public static DurableTaskPurgeableOrchestrationState Failed { get; } = new DurableTaskPurgeableOrchestrationState(FailedValue);
+
         /// <summary> The orchestration is terminated. </summary>
         public static DurableTaskPurgeableOrchestrationState Terminated { get; } = new DurableTaskPurgeableOrchestrationState(TerminatedValue);
+
         /// <summary> The orchestration is canceled. </summary>
         public static DurableTaskPurgeableOrchestrationState Canceled { get; } = new DurableTaskPurgeableOrchestrationState(CanceledValue);
+
         /// <summary> Determines if two <see cref="DurableTaskPurgeableOrchestrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DurableTaskPurgeableOrchestrationState left, DurableTaskPurgeableOrchestrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DurableTaskPurgeableOrchestrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DurableTaskPurgeableOrchestrationState left, DurableTaskPurgeableOrchestrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DurableTaskPurgeableOrchestrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DurableTaskPurgeableOrchestrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DurableTaskPurgeableOrchestrationState(string value) => new DurableTaskPurgeableOrchestrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DurableTaskPurgeableOrchestrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DurableTaskPurgeableOrchestrationState?(string value) => value == null ? null : new DurableTaskPurgeableOrchestrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DurableTaskPurgeableOrchestrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DurableTaskPurgeableOrchestrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

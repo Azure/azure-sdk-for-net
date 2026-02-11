@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
@@ -51,18 +50,12 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
-            [
-                new("Azure.Core"),
-                new("Azure.ResourceManager"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
-            ];
+            [];
 
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
-            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
+            return base.CreateClientCore(inputClient);
         }
 
         /// <inheritdoc/>
@@ -95,7 +88,7 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
@@ -104,7 +97,7 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
             {
-                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+                return serializationExpression(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
             }
 
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
@@ -113,7 +106,7 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(
-            Type valueType,
+            CSharpType valueType,
             ScopedApi<JsonElement> element,
             ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,

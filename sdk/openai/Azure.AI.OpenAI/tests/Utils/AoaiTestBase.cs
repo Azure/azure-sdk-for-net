@@ -53,7 +53,15 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
 
     public AzureTestEnvironment TestEnvironment { get; }
 
-    protected AoaiTestBase(bool isAsync) : this(isAsync, null, null)
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
+    protected AoaiTestBase(bool isAsync) : this(isAsync: isAsync, mode: GetRecordedTestMode(), automaticRecord: null)
     { }
 
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null, bool? automaticRecord = null)
@@ -407,8 +415,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ImageClient):
                 clientObject = topLevelClient.GetImageClient(getDeployment());
                 break;
-            case nameof(OpenAIResponseClient):
-                clientObject = topLevelClient.GetOpenAIResponseClient(getDeployment());
+            case nameof(ResponsesClient):
+                clientObject = topLevelClient.GetResponsesClient(getDeployment());
                 break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();

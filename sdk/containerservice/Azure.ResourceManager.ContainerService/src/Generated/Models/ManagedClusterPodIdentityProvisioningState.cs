@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The current provisioning state of the pod identity. </summary>
+    /// <summary>
+    /// The current provisioning state of the pod identity.
+    /// Serialized Name: ManagedClusterPodIdentityProvisioningState
+    /// </summary>
     public readonly partial struct ManagedClusterPodIdentityProvisioningState : IEquatable<ManagedClusterPodIdentityProvisioningState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Assigned. </summary>
+        /// <summary>
+        /// Assigned
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Assigned
+        /// </summary>
         public static ManagedClusterPodIdentityProvisioningState Assigned { get; } = new ManagedClusterPodIdentityProvisioningState(AssignedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Canceled
+        /// </summary>
         public static ManagedClusterPodIdentityProvisioningState Canceled { get; } = new ManagedClusterPodIdentityProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Deleting
+        /// </summary>
         public static ManagedClusterPodIdentityProvisioningState Deleting { get; } = new ManagedClusterPodIdentityProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Failed
+        /// </summary>
         public static ManagedClusterPodIdentityProvisioningState Failed { get; } = new ManagedClusterPodIdentityProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Succeeded
+        /// </summary>
         public static ManagedClusterPodIdentityProvisioningState Succeeded { get; } = new ManagedClusterPodIdentityProvisioningState(SucceededValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Updating
+        /// </summary>
         public static ManagedClusterPodIdentityProvisioningState Updating { get; } = new ManagedClusterPodIdentityProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterPodIdentityProvisioningState left, ManagedClusterPodIdentityProvisioningState right) => left.Equals(right);

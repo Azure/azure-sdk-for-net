@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeLambdaTestHyperExecuteUserDetails(document.RootElement, options);
                     }

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -8,85 +8,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeDeploymentInstanceHistoryResource"/> and their operations.
     /// Each <see cref="EdgeDeploymentInstanceHistoryResource"/> in the collection will belong to the same instance of <see cref="EdgeDeploymentInstanceResource"/>.
-    /// To get an <see cref="EdgeDeploymentInstanceHistoryCollection"/> instance call the GetEdgeDeploymentInstanceHistories method from an instance of <see cref="EdgeDeploymentInstanceResource"/>.
+    /// To get a <see cref="EdgeDeploymentInstanceHistoryCollection"/> instance call the GetEdgeDeploymentInstanceHistories method from an instance of <see cref="EdgeDeploymentInstanceResource"/>.
     /// </summary>
     public partial class EdgeDeploymentInstanceHistoryCollection : ArmCollection, IEnumerable<EdgeDeploymentInstanceHistoryResource>, IAsyncEnumerable<EdgeDeploymentInstanceHistoryResource>
     {
-        private readonly ClientDiagnostics _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics;
-        private readonly InstanceHistoriesRestOperations _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient;
+        private readonly ClientDiagnostics _instanceHistoriesClientDiagnostics;
+        private readonly InstanceHistories _instanceHistoriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeDeploymentInstanceHistoryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeDeploymentInstanceHistoryCollection for mocking. </summary>
         protected EdgeDeploymentInstanceHistoryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeDeploymentInstanceHistoryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeDeploymentInstanceHistoryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeDeploymentInstanceHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDeploymentInstanceHistoryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeDeploymentInstanceHistoryResource.ResourceType, out string edgeDeploymentInstanceHistoryInstanceHistoriesApiVersion);
-            _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient = new InstanceHistoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDeploymentInstanceHistoryInstanceHistoriesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeDeploymentInstanceHistoryResource.ResourceType, out string edgeDeploymentInstanceHistoryApiVersion);
+            _instanceHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDeploymentInstanceHistoryResource.ResourceType.Namespace, Diagnostics);
+            _instanceHistoriesRestClient = new InstanceHistories(_instanceHistoriesClientDiagnostics, Pipeline, Endpoint, edgeDeploymentInstanceHistoryApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeDeploymentInstanceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeDeploymentInstanceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeDeploymentInstanceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get InstanceHistory Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceHistoryName"> Name of the instance history. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeDeploymentInstanceHistoryResource>> GetAsync(string instanceHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceHistoryName, nameof(instanceHistoryName));
 
-            using var scope = _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Get");
+            using DiagnosticScope scope = _instanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instanceHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeDeploymentInstanceHistoryData> response = Response.FromValue(EdgeDeploymentInstanceHistoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDeploymentInstanceHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get InstanceHistory Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceHistoryName"> Name of the instance history. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeDeploymentInstanceHistoryResource> Get(string instanceHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceHistoryName, nameof(instanceHistoryName));
 
-            using var scope = _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Get");
+            using DiagnosticScope scope = _instanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instanceHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeDeploymentInstanceHistoryData> response = Response.FromValue(EdgeDeploymentInstanceHistoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDeploymentInstanceHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,51 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List InstanceHistory Resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_ListByInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_ListByInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeDeploymentInstanceHistoryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeDeploymentInstanceHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeDeploymentInstanceHistoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeDeploymentInstanceHistoryResource(Client, EdgeDeploymentInstanceHistoryData.DeserializeEdgeDeploymentInstanceHistoryData(e)), _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics, Pipeline, "EdgeDeploymentInstanceHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeDeploymentInstanceHistoryData, EdgeDeploymentInstanceHistoryResource>(new InstanceHistoriesGetByInstanceAsyncCollectionResultOfT(
+                _instanceHistoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new EdgeDeploymentInstanceHistoryResource(Client, data));
         }
 
         /// <summary>
         /// List InstanceHistory Resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_ListByInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_ListByInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +208,68 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeDeploymentInstanceHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeDeploymentInstanceHistoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeDeploymentInstanceHistoryResource(Client, EdgeDeploymentInstanceHistoryData.DeserializeEdgeDeploymentInstanceHistoryData(e)), _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics, Pipeline, "EdgeDeploymentInstanceHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeDeploymentInstanceHistoryData, EdgeDeploymentInstanceHistoryResource>(new InstanceHistoriesGetByInstanceCollectionResultOfT(
+                _instanceHistoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new EdgeDeploymentInstanceHistoryResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceHistoryName"> Name of the instance history. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string instanceHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceHistoryName, nameof(instanceHistoryName));
 
-            using var scope = _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Exists");
+            using DiagnosticScope scope = _instanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instanceHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeDeploymentInstanceHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDeploymentInstanceHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDeploymentInstanceHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +283,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceHistoryName"> Name of the instance history. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string instanceHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceHistoryName, nameof(instanceHistoryName));
 
-            using var scope = _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Exists");
+            using DiagnosticScope scope = _instanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instanceHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeDeploymentInstanceHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDeploymentInstanceHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDeploymentInstanceHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +340,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceHistoryName"> Name of the instance history. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeDeploymentInstanceHistoryResource>> GetIfExistsAsync(string instanceHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceHistoryName, nameof(instanceHistoryName));
 
-            using var scope = _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.GetIfExists");
+            using DiagnosticScope scope = _instanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instanceHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeDeploymentInstanceHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDeploymentInstanceHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDeploymentInstanceHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeDeploymentInstanceHistoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDeploymentInstanceHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +401,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}/histories/{instanceHistoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InstanceHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceHistoryName"> Name of the instance history. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceHistoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeDeploymentInstanceHistoryResource> GetIfExists(string instanceHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceHistoryName, nameof(instanceHistoryName));
 
-            using var scope = _edgeDeploymentInstanceHistoryInstanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.GetIfExists");
+            using DiagnosticScope scope = _instanceHistoriesClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeDeploymentInstanceHistoryInstanceHistoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instanceHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, instanceHistoryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeDeploymentInstanceHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeDeploymentInstanceHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeDeploymentInstanceHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeDeploymentInstanceHistoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeDeploymentInstanceHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +468,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeDeploymentInstanceHistoryResource> IAsyncEnumerable<EdgeDeploymentInstanceHistoryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

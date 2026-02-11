@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
         {
-            Response result = Receive(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Receive(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.ToRequestContext());
             return Response.FromValue((ReceiveResult)result, result);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ReceiveResult>> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
         {
-            Response result = await ReceiveAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReceiveAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ReceiveResult)result, result);
         }
 
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = Acknowledge(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Acknowledge(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((AcknowledgeResult)result, result);
         }
 
@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await AcknowledgeAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await AcknowledgeAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AcknowledgeResult)result, result);
         }
 
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
             ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((ReleaseResult)result, result);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
             ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ReleaseResult)result, result);
         }
 
@@ -373,7 +373,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = Reject(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Reject(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((RejectResult)result, result);
         }
 
@@ -386,7 +386,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual async Task<Response<RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await RejectAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await RejectAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RejectResult)result, result);
         }
 
@@ -459,7 +459,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = RenewLocks(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = RenewLocks(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((RenewLocksResult)result, result);
         }
 
@@ -472,7 +472,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await RenewLocksAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await RenewLocksAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RenewLocksResult)result, result);
         }
     }

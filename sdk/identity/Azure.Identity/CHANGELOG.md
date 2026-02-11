@@ -1,14 +1,40 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.18.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Renamed `WorkloadIdentityCredentialOptions.IsAzureKubernetesTokenProxyEnabled` to `IsAzureProxyEnabled` to follow .NET naming conventions for boolean properties.
+
 ### Bugs Fixed
 
+- Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
+
 ### Other Changes
+
+## 1.18.0-beta.2 (2025-11-19)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
+
+## 1.17.1 (2025-11-18)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
+
+## 1.18.0-beta.1 (2025-11-14)
+
+### Features Added
+
+- Added Kubernetes token proxy support (identity binding mode) to `WorkloadIdentityCredential`. When enabled via the `IsAzureKubernetesTokenProxyEnabled` option, the credential redirects token requests to an AKS-provided proxy to support scenarios exceeding the [20 federated identity credential limit](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#use-managed-identity-as-a-federated-identity-credential-fic-on-an-entra-id-app) per Entra ID application. This feature is opt-in and only available when using `WorkloadIdentityCredential` directly (not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`).
+
+### Other Changes
+
+- Deprecated legacy `ManagedIdentityCredential` constructors. Use `ManagedIdentityCredential(ManagedIdentityId id)` or `ManagedIdentityCredential(ManagedIdentityCredentialOptions options)` instead for clearer intent when specifying system-assigned or user-assigned managed identity. ([#53800](https://github.com/Azure/azure-sdk-for-net/issues/53800))
 
 ## 1.17.0 (2025-10-07)
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct ChartAggregationType : IEquatable<ChartAggregationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ChartAggregationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ChartAggregationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SumValue = "Sum";
         private const string AvgValue = "Avg";
         private const string CountValue = "Count";
         private const string MinValue = "Min";
         private const string MaxValue = "Max";
 
-        /// <summary> Sum. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChartAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ChartAggregationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Sum. </summary>
         public static ChartAggregationType Sum { get; } = new ChartAggregationType(SumValue);
-        /// <summary> Avg. </summary>
+
+        /// <summary> Gets the Avg. </summary>
         public static ChartAggregationType Avg { get; } = new ChartAggregationType(AvgValue);
-        /// <summary> Count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public static ChartAggregationType Count { get; } = new ChartAggregationType(CountValue);
-        /// <summary> Min. </summary>
+
+        /// <summary> Gets the Min. </summary>
         public static ChartAggregationType Min { get; } = new ChartAggregationType(MinValue);
-        /// <summary> Max. </summary>
+
+        /// <summary> Gets the Max. </summary>
         public static ChartAggregationType Max { get; } = new ChartAggregationType(MaxValue);
+
         /// <summary> Determines if two <see cref="ChartAggregationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChartAggregationType left, ChartAggregationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ChartAggregationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChartAggregationType left, ChartAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ChartAggregationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ChartAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ChartAggregationType(string value) => new ChartAggregationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ChartAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ChartAggregationType?(string value) => value == null ? null : new ChartAggregationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChartAggregationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ChartAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

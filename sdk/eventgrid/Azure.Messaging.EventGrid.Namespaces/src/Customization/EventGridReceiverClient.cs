@@ -8,13 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential))]
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridReceiverClientOptions))]
-    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridReceiverClientOptions))]
+    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridNamespacesClientOptions))]
+    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridNamespacesClientOptions))]
     public partial class EventGridReceiverClient
     {
         private readonly string _topicName;

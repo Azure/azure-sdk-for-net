@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCost"/>. </summary>
-        /// <param name="meterId"></param>
+        /// <param name="meterId"> The meter id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="meterId"/> is null. </exception>
         public ResourceTypeSkuCost(string meterId)
         {
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCost"/>. </summary>
-        /// <param name="meterId"></param>
-        /// <param name="quantity"></param>
-        /// <param name="extendedUnit"></param>
+        /// <param name="meterId"> The meter id. </param>
+        /// <param name="quantity"> The quantity. </param>
+        /// <param name="extendedUnit"> The extended unit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeSkuCost(string meterId, int? quantity, string extendedUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the meter id. </summary>
+        /// <summary> The meter id. </summary>
         public string MeterId { get; set; }
-        /// <summary> Gets or sets the quantity. </summary>
+        /// <summary> The quantity. </summary>
         public int? Quantity { get; set; }
-        /// <summary> Gets or sets the extended unit. </summary>
+        /// <summary> The extended unit. </summary>
         public string ExtendedUnit { get; set; }
     }
 }

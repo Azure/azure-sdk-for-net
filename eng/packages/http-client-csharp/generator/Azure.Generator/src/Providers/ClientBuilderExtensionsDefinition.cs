@@ -8,12 +8,12 @@ using System.IO;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Extensions;
+using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Azure.Generator.Visitors.Utilities;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -76,8 +76,10 @@ namespace Azure.Generator.Providers
                         continue;
                     }
 
-                    // only add overloads for the full constructors that include the client options parameter
-                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Equals(client.ClientOptionsParameter.Type) != true)
+                    // Only add overloads for the full constructors that include the client options parameter
+                    // Check that the name of the last parameter matches the client options parameter as the namespace will not be resolved for
+                    // customized constructors. This is safe as we don't allow multiple types types with the same name in an Azure library.
+                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Name.Equals(client.ClientOptionsParameter.Type.Name) != true)
                     {
                         continue;
                     }

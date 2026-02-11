@@ -7,8 +7,19 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a bug where polling for new blobs could permanently miss blobs that were created or modified while a multi-request blob listing scan was in progress (#51030).
+- Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
 
 ### Other Changes
+
+## 5.3.7 (2025-10-29)
+
+### Other Changes
+- The following optimizations were added to Blob Trigger processing:
+  - Exclude containers that are not intended for monitoring.
+  - Do not perform unnecessary scanning for container(s) detected during the initial write log.
+  - Cache recently found write entry to avoid analyzing log blobs again.
+  - Migrate ScaleMonitor to TargetScaler.
 
 ## 5.3.6 (2025-09-09)
 

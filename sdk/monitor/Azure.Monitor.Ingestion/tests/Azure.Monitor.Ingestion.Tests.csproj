@@ -11,13 +11,13 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Monitor.Ingestion.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Azure.Monitor.Query" />
+    <PackageReference Include="Azure.Monitor.Query.Logs" />
   </ItemGroup>
 
   <ItemGroup>

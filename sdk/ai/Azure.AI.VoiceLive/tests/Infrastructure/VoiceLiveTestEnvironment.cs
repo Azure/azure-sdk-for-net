@@ -20,18 +20,13 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// Voice Live Service endpoint URL.
         /// Example: https://my-resource.cognitiveservices.azure.com
         /// </summary>
-        public string Endpoint => GetOptionalVariable("VOICELIVE_ENDPOINT") ?? "https://changfu-azure-ai-service.services.ai.azure.com";
+        public string Endpoint => GetVariable("AI_SERVICES_ENDPOINT");
 
         /// <summary>
         /// API key for authentication (alternative to Azure AD).
         /// Keep secret and never record.
         /// </summary>
-        public string ApiKey => GetOptionalVariable("VOICELIVE_API_KEY");
-
-        /// <summary>
-        /// Azure region for the service.
-        /// </summary>
-        public string Region => GetOptionalVariable("VOICELIVE_REGION") ?? "eastus";
+        public string ApiKey => GetOptionalVariable("AI_SERVICES_KEY");
 
         // ===== Model Configuration =====
 

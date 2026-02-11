@@ -31,6 +31,8 @@ model BarProperties {
 
 @armResourceOperations
 interface Bars {
+  list is ArmResourceListByParent<Bar>;
+
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Bar>;
 
   get is ArmResourceRead<Bar>;
@@ -38,9 +40,9 @@ interface Bars {
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
   update is ArmCustomPatchSync<Bar, Bar>;
-
-  list is ArmResourceListByParent<Bar>;
 }
+
+@@Azure.ResourceManager.Legacy.renamePathParameter(Bars.list, "fooName", "name");
 
 @singleton("current")
 @parentResource(Bar)
@@ -52,6 +54,7 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   anotherProperty: BarQuotaProperties;
   flattenedNestedProperty: BarNestedQuotaProperties;
   optionalFlattenProperty?: optionalFlattenPropertyType;
+  discriminatorProperty: LimitJsonObject;
 }
 
 @parentResource(Bar)
@@ -76,6 +79,26 @@ model optionalFlattenPropertyType {
 model BarDeeplyNestedQuotaProperties {
   innerProp1?: int32;
   innerProp2: string;
+}
+
+/**
+ * LimitJson abstract class.
+ */
+@discriminator("limitObjectType")
+model LimitJsonObject {
+  /**
+   * The limit object type.
+   */
+  limitObjectType: LimitType;
+}
+
+/**
+ * The limit object type.
+ */
+union LimitType {
+  string,
+  #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+  LimitValue: "LimitValue",
 }
 
 model BarQuotaProperties {
@@ -108,4 +131,24 @@ interface BarSettingsOperations {
 interface BarQuotaOperations {
   get is ArmResourceRead<BarQuotaResource>;
   update is ArmCustomPatchAsync<BarQuotaResource, BarQuotaResource>;
+}
+
+/** An Employee resource */
+@parentResource(Bar)
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+@armResourceOperations
+interface Employees {
+  listByParent is ArmResourceListByParent<Employee>;
 }

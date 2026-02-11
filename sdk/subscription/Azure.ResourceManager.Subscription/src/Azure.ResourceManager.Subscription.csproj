@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Subscription</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Subscription.</Description>
     <PackageTags>azure;management;arm;resource manager;subscription</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

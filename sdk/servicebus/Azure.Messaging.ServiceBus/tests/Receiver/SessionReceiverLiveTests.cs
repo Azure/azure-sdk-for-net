@@ -88,9 +88,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Assert.That(
                     async () =>
-                    await CreateNoRetryClient().AcceptSessionAsync(
-                        scope.QueueName,
-                        sessionId),
+                    {
+                        await using var noRetryClient = CreateNoRetryClient();
+                        await noRetryClient.AcceptSessionAsync(
+                            scope.QueueName,
+                            sessionId);
+                    },
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
             }
         }

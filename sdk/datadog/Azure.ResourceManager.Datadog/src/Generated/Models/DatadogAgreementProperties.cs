@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="privacyPolicyLink"> Link to the privacy policy of the publisher. </param>
         /// <param name="retrieveDatetime"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
         /// <param name="signature"> Terms signature. </param>
-        /// <param name="accepted"> If any version of the terms have been accepted, otherwise false. </param>
+        /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogAgreementProperties(string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatadogAgreementProperties(string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? isAccepted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Publisher = publisher;
             Product = product;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             PrivacyPolicyLink = privacyPolicyLink;
             RetrieveDatetime = retrieveDatetime;
             Signature = signature;
-            Accepted = accepted;
+            IsAccepted = isAccepted;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,6 +88,6 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Terms signature. </summary>
         public string Signature { get; set; }
         /// <summary> If any version of the terms have been accepted, otherwise false. </summary>
-        public bool? Accepted { get; set; }
+        public bool? IsAccepted { get; set; }
     }
 }

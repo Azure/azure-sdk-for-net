@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class PureStorageMarketplaceDetails : IUtf8JsonSerializable, IJsonModel<PureStorageMarketplaceDetails>
+    /// <summary> Marketplace details. </summary>
+    public partial class PureStorageMarketplaceDetails : IJsonModel<PureStorageMarketplaceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageMarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PureStorageMarketplaceDetails"/> for deserialization. </summary>
+        internal PureStorageMarketplaceDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageMarketplaceDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
@@ -46,15 +51,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             writer.WritePropertyName("offerDetails"u8);
             writer.WriteObjectValue(OfferDetails, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +68,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageMarketplaceDetails IJsonModel<PureStorageMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageMarketplaceDetails IJsonModel<PureStorageMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageMarketplaceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageMarketplaceDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageMarketplaceDetails(document.RootElement, options);
         }
 
-        internal static PureStorageMarketplaceDetails DeserializePureStorageMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PureStorageMarketplaceDetails DeserializePureStorageMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,42 +96,43 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             string subscriptionId = default;
             PureStorageMarketplaceSubscriptionStatus? subscriptionStatus = default;
             PureStorageOfferDetails offerDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionStatus"u8))
+                if (prop.NameEquals("subscriptionStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subscriptionStatus = new PureStorageMarketplaceSubscriptionStatus(property.Value.GetString());
+                    subscriptionStatus = new PureStorageMarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("offerDetails"u8))
+                if (prop.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = PureStorageOfferDetails.DeserializePureStorageOfferDetails(property.Value, options);
+                    offerDetails = PureStorageOfferDetails.DeserializePureStorageOfferDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData);
+            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PureStorageMarketplaceDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PureStorageMarketplaceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +142,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageMarketplaceDetails IPersistableModel<PureStorageMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageMarketplaceDetails IPersistableModel<PureStorageMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageMarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePureStorageMarketplaceDetails(document.RootElement, options);
                     }
                 default:
@@ -147,6 +163,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PureStorageMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

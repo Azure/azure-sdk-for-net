@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Unit of the usage. e.g. count.
-    /// Serialized Name: ResourceUsageUnit
-    /// </summary>
+    /// <summary> Unit of the usage. e.g. count. </summary>
     public readonly partial struct CdnUsageUnit : IEquatable<CdnUsageUnit>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CountValue = "count";
 
-        /// <summary>
-        /// count
-        /// Serialized Name: ResourceUsageUnit.count
-        /// </summary>
+        /// <summary> count. </summary>
         public static CdnUsageUnit Count { get; } = new CdnUsageUnit(CountValue);
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are the same. </summary>
         public static bool operator ==(CdnUsageUnit left, CdnUsageUnit right) => left.Equals(right);

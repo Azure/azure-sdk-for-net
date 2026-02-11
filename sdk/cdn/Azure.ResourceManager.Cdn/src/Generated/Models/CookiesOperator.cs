@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: CookiesOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct CookiesOperator : IEquatable<CookiesOperator>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary>
-        /// Any
-        /// Serialized Name: CookiesOperator.Any
-        /// </summary>
+        /// <summary> Any. </summary>
         public static CookiesOperator Any { get; } = new CookiesOperator(AnyValue);
-        /// <summary>
-        /// Equal
-        /// Serialized Name: CookiesOperator.Equal
-        /// </summary>
+        /// <summary> Equal. </summary>
         public static CookiesOperator Equal { get; } = new CookiesOperator(EqualValue);
-        /// <summary>
-        /// Contains
-        /// Serialized Name: CookiesOperator.Contains
-        /// </summary>
+        /// <summary> Contains. </summary>
         public static CookiesOperator Contains { get; } = new CookiesOperator(ContainsValue);
-        /// <summary>
-        /// BeginsWith
-        /// Serialized Name: CookiesOperator.BeginsWith
-        /// </summary>
+        /// <summary> BeginsWith. </summary>
         public static CookiesOperator BeginsWith { get; } = new CookiesOperator(BeginsWithValue);
-        /// <summary>
-        /// EndsWith
-        /// Serialized Name: CookiesOperator.EndsWith
-        /// </summary>
+        /// <summary> EndsWith. </summary>
         public static CookiesOperator EndsWith { get; } = new CookiesOperator(EndsWithValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: CookiesOperator.LessThan
-        /// </summary>
+        /// <summary> LessThan. </summary>
         public static CookiesOperator LessThan { get; } = new CookiesOperator(LessThanValue);
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: CookiesOperator.LessThanOrEqual
-        /// </summary>
+        /// <summary> LessThanOrEqual. </summary>
         public static CookiesOperator LessThanOrEqual { get; } = new CookiesOperator(LessThanOrEqualValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: CookiesOperator.GreaterThan
-        /// </summary>
+        /// <summary> GreaterThan. </summary>
         public static CookiesOperator GreaterThan { get; } = new CookiesOperator(GreaterThanValue);
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: CookiesOperator.GreaterThanOrEqual
-        /// </summary>
+        /// <summary> GreaterThanOrEqual. </summary>
         public static CookiesOperator GreaterThanOrEqual { get; } = new CookiesOperator(GreaterThanOrEqualValue);
-        /// <summary>
-        /// RegEx
-        /// Serialized Name: CookiesOperator.RegEx
-        /// </summary>
+        /// <summary> RegEx. </summary>
         public static CookiesOperator RegEx { get; } = new CookiesOperator(RegExValue);
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are the same. </summary>
         public static bool operator ==(CookiesOperator left, CookiesOperator right) => left.Equals(right);

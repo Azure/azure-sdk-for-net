@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="radiusClientRootCertificates"> Radius client root certificate of VpnServerConfiguration. </param>
         /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for VpnServerConfiguration. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </param>
-        /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. </param>
+        /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets. </param>
         /// <param name="radiusServers"> Multiple Radius Server configuration for VpnServerConfiguration. </param>
         /// <param name="aadAuthenticationParameters"> The set of aad vpn authentication parameters. </param>
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </summary>
         [WirePath("properties.radiusServerAddress")]
         public string RadiusServerAddress { get; set; }
-        /// <summary> The radius secret property of the VpnServerConfiguration resource for point to site client connection. </summary>
+        /// <summary> The radius secret property of the VpnServerConfiguration resource for point to site client connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets. </summary>
         [WirePath("properties.radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
         /// <summary> Multiple Radius Server configuration for VpnServerConfiguration. </summary>

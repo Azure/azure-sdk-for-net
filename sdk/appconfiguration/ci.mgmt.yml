@@ -1,18 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/appconfiguration/ci.mgmt.yml
-    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
-
 # These comments should stay.
 
 extends:
@@ -23,7 +11,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppConfiguration
       safeName: AzureResourceManagerAppConfiguration
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.AppConfiguration
-      ExpectedWarningsFilepath: None

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
     /// <summary> Defines the certificate revocation properties. </summary>
     public partial class RevokeCertificateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RevokeCertificateContent"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
@@ -69,30 +41,29 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
         /// <param name="reason"> Reason for the revocation. </param>
         /// <param name="remarks"> Remarks for the revocation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RevokeCertificateContent(string serialNumber, string thumbprint, DateTimeOffset effectiveOn, string reason, string remarks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RevokeCertificateContent(string serialNumber, string thumbprint, DateTimeOffset effectiveOn, string reason, string remarks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SerialNumber = serialNumber;
             Thumbprint = thumbprint;
             EffectiveOn = effectiveOn;
             Reason = reason;
             Remarks = remarks;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RevokeCertificateContent"/> for deserialization. </summary>
-        internal RevokeCertificateContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Serial number of the certificate. </summary>
         public string SerialNumber { get; }
+
         /// <summary> Thumbprint of the certificate. </summary>
         public string Thumbprint { get; }
+
         /// <summary> The timestamp when the revocation is effective. </summary>
         public DateTimeOffset EffectiveOn { get; }
+
         /// <summary> Reason for the revocation. </summary>
         public string Reason { get; }
+
         /// <summary> Remarks for the revocation. </summary>
         public string Remarks { get; set; }
     }

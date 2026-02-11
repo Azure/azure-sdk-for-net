@@ -13,42 +13,13 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Request body for calling post-action. </summary>
     public partial class ApprovalCallbackContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApprovalCallbackContent"/>. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </param>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
-        public ApprovalCallbackContent(PostActionResourceRequestAction resourceRequestAction, PostActionCallbackApprovalStatus approvalStatus)
+        public ApprovalCallbackContent(PostActionResourceActionType resourceRequestAction, PostActionCallbackApprovalStatus approvalStatus)
         {
             ResourceRequestAction = resourceRequestAction;
             ApprovalStatus = approvalStatus;
@@ -58,24 +29,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </param>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <param name="approvalCallbackPayload"> Payload requested by client upon approval action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalCallbackContent(PostActionResourceRequestAction resourceRequestAction, PostActionCallbackApprovalStatus approvalStatus, string approvalCallbackPayload, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApprovalCallbackContent(PostActionResourceActionType resourceRequestAction, PostActionCallbackApprovalStatus approvalStatus, string approvalCallbackPayload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceRequestAction = resourceRequestAction;
             ApprovalStatus = approvalStatus;
             ApprovalCallbackPayload = approvalCallbackPayload;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApprovalCallbackContent"/> for deserialization. </summary>
-        internal ApprovalCallbackContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </summary>
-        public PostActionResourceRequestAction ResourceRequestAction { get; }
+        public PostActionResourceActionType ResourceRequestAction { get; }
+
         /// <summary> Approval status indicating 'Approved' or 'Rejected'. </summary>
         public PostActionCallbackApprovalStatus ApprovalStatus { get; }
+
         /// <summary> Payload requested by client upon approval action. </summary>
         public string ApprovalCallbackPayload { get; set; }
     }

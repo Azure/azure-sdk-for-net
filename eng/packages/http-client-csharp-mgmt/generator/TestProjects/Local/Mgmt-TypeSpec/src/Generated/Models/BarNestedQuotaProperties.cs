@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarNestedQuotaProperties. </summary>
     internal partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties
@@ -47,9 +47,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
         public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets or sets the Prop2. </summary>
+        [WirePath("prop2")]
         public int Prop2 { get; set; }
     }
 }

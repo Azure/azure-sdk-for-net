@@ -9,11 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The BarQuotaProperties. </summary>
     internal partial class BarQuotaProperties : IJsonModel<BarQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/> for deserialization. </summary>
@@ -40,7 +39,7 @@ namespace MgmtTypeSpec.Models
                 throw new FormatException($"The model {nameof(BarQuotaProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("left"u8);
-            writer.WriteNumberValue(Left);
+            writer.WriteStringValue(Left);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -83,13 +82,13 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            int left = default;
+            string left = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("left"u8))
                 {
-                    left = prop.Value.GetInt32();
+                    left = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +109,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BarQuotaProperties)} does not support writing '{options.Format}' format.");
             }
@@ -128,7 +127,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBarQuotaProperties(document.RootElement, options);
                     }

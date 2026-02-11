@@ -22,6 +22,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
+        [Ignore("Service issue 27040")]
         [LiveOnly]
         [TestCase]
         public async Task BadModelName()
@@ -45,6 +46,7 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionUpdated = await GetNextUpdate<SessionUpdateError>(updatesEnum, false).ConfigureAwait(false);
         }
 
+        [Ignore("Service error bug 27040")]
         [LiveOnly]
         [TestCase]
         public async Task BadVoiceName()

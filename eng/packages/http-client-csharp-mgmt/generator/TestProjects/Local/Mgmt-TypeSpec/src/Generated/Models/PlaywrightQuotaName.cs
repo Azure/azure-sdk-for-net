@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Playwright quota names. </summary>
     public readonly partial struct PlaywrightQuotaName : IEquatable<PlaywrightQuotaName>

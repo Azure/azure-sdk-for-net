@@ -97,10 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var exportedActivities = new List<Activity>();
             using (var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSqlClientInstrumentation(options =>
-                {
-                    options.SetDbStatementForText = true;
-                })
+                .AddSqlClientInstrumentation()
                 .AddInMemoryExporter(exportedActivities)
                 .Build())
             {
@@ -171,7 +168,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             using (var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSqlClientInstrumentation(options =>
                 {
-                    options.SetDbStatementForText = true;
                     options.RecordException = recordException;
                 })
                 .AddInMemoryExporter(exportedActivities)

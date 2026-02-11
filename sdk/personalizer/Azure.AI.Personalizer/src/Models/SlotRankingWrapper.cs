@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Rl.Net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Rl.Net;
 
 namespace Azure.AI.Personalizer
 {
@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Initializes a new instance of SlotRankingResponseWrapper. </summary>
         public SlotRankingWrapper()
-        {}
+        { }
 
         /// <summary> Initializes a new instance of SlotRankingResponseWrapper. </summary>
         public SlotRankingWrapper(SlotRanking slotRanking)

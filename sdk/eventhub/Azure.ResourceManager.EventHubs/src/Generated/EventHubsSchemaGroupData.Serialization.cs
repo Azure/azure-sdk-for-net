@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 updatedAtUtc,
                 createdAtUtc,
                 eTag,
                 groupProperties ?? new ChangeTrackingDictionary<string, string>(),
                 schemaCompatibility,
                 schemaType,
-                location,
                 serializedAdditionalRawData);
         }
 

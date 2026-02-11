@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -45,7 +46,7 @@ namespace Azure.AI.VoiceLive.Tests
                 InputAudioFormat = InputAudioFormat.Pcm16
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -62,7 +63,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.AreEqual(sessionCreated.Session.InputAudioEchoCancellation, sessionUpdated.Session?.InputAudioEchoCancellation);
 
             // Flow audio to the service.
-            await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
+            var (silenceTask, cts) = await SendAudioAsync(session, "What is the weather like?", TimeoutToken).ConfigureAwait(false);
 
             // Now we get a speech started
             var speechStarted = await GetNextUpdate<SessionUpdateInputAudioBufferSpeechStarted>(updatesEnum).ConfigureAwait(false);
@@ -98,6 +99,8 @@ namespace Azure.AI.VoiceLive.Tests
 
             var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
 
+            cts.Cancel();
+
             Assert.IsTrue(responseItems.Count() > 0);
 
             responseItems.Insert(0, responseCreated);
@@ -119,7 +122,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             options.Tools.Add(FunctionCalls.AdditionDefinition);
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -186,7 +189,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             options.Tools.Add(FunctionCalls.AdditionDefinition);
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -255,7 +258,7 @@ namespace Azure.AI.VoiceLive.Tests
                 Modalities = { InteractionModality.Text }
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -323,7 +326,7 @@ namespace Azure.AI.VoiceLive.Tests
                 TurnDetection = new AzureSemanticVadTurnDetectionEn()
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -351,7 +354,7 @@ namespace Azure.AI.VoiceLive.Tests
                 Instructions = "Your name is Frank. Never forget that!"
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -432,7 +435,7 @@ namespace Azure.AI.VoiceLive.Tests
                 TurnDetection = new NoTurnDetection()
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -460,7 +463,7 @@ namespace Azure.AI.VoiceLive.Tests
                 TurnDetection = new AzureSemanticVadTurnDetectionMultilingual()
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -488,7 +491,7 @@ namespace Azure.AI.VoiceLive.Tests
                 TurnDetection = new NoTurnDetection()
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -497,10 +500,15 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
             // Now send audio:
-            await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
+            var (silenceTask1, cts1) = await SendAudioAsync(session, "What is the weather like?", TimeoutToken).ConfigureAwait(false);
+            cts1.Cancel();
+            await silenceTask1.ConfigureAwait(false);
+
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
-            await SendAudioAsync(session, "kws_howoldareyou.wav").ConfigureAwait(false);
+            var (silenceTask2, cts2) = await SendAudioAsync(session, "Computer, how old are you?", TimeoutToken).ConfigureAwait(false);
+            cts2.Cancel();
+            await silenceTask2.ConfigureAwait(false);
 
             await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
             await GetNextUpdate<SessionUpdateInputAudioBufferCommitted>(updatesEnum).ConfigureAwait(false);
@@ -508,6 +516,7 @@ namespace Azure.AI.VoiceLive.Tests
             await session.StartResponseAsync(TimeoutToken).ConfigureAwait(false);
 
             var responses = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
+
             Assert.IsTrue(responses.Count > 0);
 
             var responseDone = responses.Where((r) => r is SessionUpdateResponseDone);
@@ -540,7 +549,7 @@ namespace Azure.AI.VoiceLive.Tests
                 TurnDetection = new NoTurnDetection()
             };
 
-            var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+            await using var session = await vlc.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
 
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
@@ -556,7 +565,9 @@ namespace Azure.AI.VoiceLive.Tests
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
             // Now send audio:
-            await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
+            var (silenceTask, cts) = await SendAudioAsync(session, "What is the weather like?", TimeoutToken).ConfigureAwait(false);
+            cts.Cancel();
+            await silenceTask.ConfigureAwait(false);
 
             await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
             await GetNextUpdate<SessionUpdateInputAudioBufferCommitted>(updatesEnum).ConfigureAwait(false);

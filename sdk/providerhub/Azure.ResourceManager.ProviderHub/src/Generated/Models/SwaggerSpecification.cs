@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SwaggerSpecification"/>. </summary>
-        /// <param name="apiVersions"></param>
-        /// <param name="swaggerSpecFolderUri"></param>
+        /// <param name="apiVersions"> The api versions. </param>
+        /// <param name="swaggerSpecFolderUri"> The swagger spec folder uri. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the api versions. </summary>
+        /// <summary> The api versions. </summary>
         public IList<string> ApiVersions { get; }
-        /// <summary> Gets or sets the swagger spec folder uri. </summary>
+        /// <summary> The swagger spec folder uri. </summary>
         public Uri SwaggerSpecFolderUri { get; set; }
     }
 }

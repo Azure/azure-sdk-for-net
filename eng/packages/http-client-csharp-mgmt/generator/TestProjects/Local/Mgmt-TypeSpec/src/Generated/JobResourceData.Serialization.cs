@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class JobResourceData : TrackedResourceData, IJsonModel<JobResourceData>
@@ -112,7 +112,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -172,7 +172,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(JobResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -190,7 +190,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeJobResourceData(document.RootElement, options);
                     }
@@ -202,11 +202,22 @@ namespace MgmtTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="JobResourceData"/> from. </param>
-        internal static JobResourceData FromResponse(Response result)
+        /// <param name="jobResourceData"> The <see cref="JobResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(JobResourceData jobResourceData)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            if (jobResourceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(jobResourceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="JobResourceData"/> from. </param>
+        internal static JobResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeJobResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

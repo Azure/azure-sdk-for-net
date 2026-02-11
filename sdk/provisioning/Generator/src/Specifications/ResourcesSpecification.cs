@@ -76,14 +76,6 @@ public class ResourcesSpecification : Specification
         AddNameRequirements<TemplateSpecResource>(min: 1, max: 90, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
     }
 
-    private void RemoveProperties<T>(params string[] propertyNames)
-    {
-        foreach (string propertyName in propertyNames)
-        {
-            RemoveProperty<T>(propertyName);
-        }
-    }
-
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         var result = base.FindConstructibleResources();

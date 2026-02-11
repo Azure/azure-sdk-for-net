@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -13,8 +14,6 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
-
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01;
 
         /// <summary>
         /// Gets the <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when

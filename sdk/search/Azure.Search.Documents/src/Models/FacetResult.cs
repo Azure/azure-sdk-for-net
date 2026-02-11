@@ -14,7 +14,22 @@ namespace Azure.Search.Documents.Models
         /// particular field value and Range facets count documents with a
         /// field value in a particular range.
         /// </summary>
-        public FacetType FacetType => (Value != null) ? FacetType.Value : FacetType.Range;
+        public FacetType FacetType
+        {
+            get
+            {
+                if (Value != null) return FacetType.Value;
+                if (From != null || To != null) return FacetType.Range;
+                if (Sum.HasValue) return FacetType.Sum;
+                if (Avg.HasValue) return FacetType.Average;
+                if (Min.HasValue) return FacetType.Minimum;
+                if (Max.HasValue) return FacetType.Maximum;
+                if (Cardinality.HasValue) return FacetType.Cardinality;
+
+                // Default to Value if no specific facet type can be determined
+                return FacetType.Value;
+            }
+        }
 
         /// <summary>
         /// Gets the value of the facet, or the inclusive lower bound if it's

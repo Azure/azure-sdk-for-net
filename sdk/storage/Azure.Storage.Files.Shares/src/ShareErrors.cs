@@ -17,7 +17,6 @@ namespace Azure.Storage.Files.Shares
             string fileClient,
             string shareClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {fileClient} or {shareClient}");
-
         public static void AssertAlgorithmSupport(StorageChecksumAlgorithm? algorithm)
         {
             StorageChecksumAlgorithm resolved = (algorithm ?? StorageChecksumAlgorithm.None).ResolveAuto();
@@ -25,9 +24,8 @@ namespace Azure.Storage.Files.Shares
             {
                 case StorageChecksumAlgorithm.None:
                 case StorageChecksumAlgorithm.MD5:
-                    return;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    throw new ArgumentException("Azure File Shares do not support CRC-64.");
+                    return;
                 default:
                     throw new ArgumentException($"{nameof(StorageChecksumAlgorithm)} does not support value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved) ?? ((int)resolved).ToString(CultureInfo.InvariantCulture)}.");
             }

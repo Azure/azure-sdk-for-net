@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
@@ -25,51 +26,53 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     /// </summary>
     public partial class DevOpsPoolCollection : ArmCollection, IEnumerable<DevOpsPoolResource>, IAsyncEnumerable<DevOpsPoolResource>
     {
-        private readonly ClientDiagnostics _devOpsPoolPoolsClientDiagnostics;
-        private readonly PoolsRestOperations _devOpsPoolPoolsRestClient;
+        private readonly ClientDiagnostics _poolsClientDiagnostics;
+        private readonly Pools _poolsRestClient;
+        private readonly ClientDiagnostics _resourceDetailsClientDiagnostics;
+        private readonly ResourceDetails _resourceDetailsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevOpsPoolCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevOpsPoolCollection for mocking. </summary>
         protected DevOpsPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevOpsPoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevOpsPoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevOpsPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devOpsPoolPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevOpsPoolResource.ResourceType, out string devOpsPoolPoolsApiVersion);
-            _devOpsPoolPoolsRestClient = new PoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsPoolPoolsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DevOpsPoolResource.ResourceType, out string devOpsPoolApiVersion);
+            _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            _resourceDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
+            _resourceDetailsRestClient = new ResourceDetails(_resourceDetailsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +80,34 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DevOpsPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, DevOpsPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _devOpsPoolPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, poolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(new DevOpsPoolOperationSource(Client), _devOpsPoolPoolsClientDiagnostics, Pipeline, _devOpsPoolPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, DevOpsPoolData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
+                    new DevOpsPoolOperationSource(Client),
+                    _poolsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +121,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// Create a Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +138,34 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DevOpsPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, DevOpsPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _devOpsPoolPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, poolName, data, cancellationToken);
-                var operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(new DevOpsPoolOperationSource(Client), _devOpsPoolPoolsClientDiagnostics, Pipeline, _devOpsPoolPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, DevOpsPoolData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
+                    new DevOpsPoolOperationSource(Client),
+                    _poolsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +179,42 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// Get a Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DevOpsPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Get");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devOpsPoolPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, poolName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +228,42 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// Get a Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DevOpsPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Get");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = _devOpsPoolPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, poolName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +277,44 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// List Pool resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevOpsPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevOpsPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevOpsPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devOpsPoolPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devOpsPoolPoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevOpsPoolResource(Client, DevOpsPoolData.DeserializeDevOpsPoolData(e)), _devOpsPoolPoolsClientDiagnostics, Pipeline, "DevOpsPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
         /// List Pool resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +322,61 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <returns> A collection of <see cref="DevOpsPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevOpsPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devOpsPoolPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devOpsPoolPoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevOpsPoolResource(Client, DevOpsPoolData.DeserializeDevOpsPoolData(e)), _devOpsPoolPoolsClientDiagnostics, Pipeline, "DevOpsPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Exists");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devOpsPoolPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, poolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevOpsPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevOpsPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +390,50 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Exists");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devOpsPoolPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, poolName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevOpsPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevOpsPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +447,54 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DevOpsPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devOpsPoolPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, poolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevOpsPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevOpsPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevOpsPoolResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +508,54 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DevOpsPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _poolsClientDiagnostics.CreateScope("DevOpsPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devOpsPoolPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, poolName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevOpsPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevOpsPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevOpsPoolResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +575,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DevOpsPoolResource> IAsyncEnumerable<DevOpsPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

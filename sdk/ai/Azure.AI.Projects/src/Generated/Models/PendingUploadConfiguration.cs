@@ -14,13 +14,8 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadConfiguration"/>. </summary>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pendingUploadType"/> is null. </exception>
-        public PendingUploadConfiguration(PendingUploadType pendingUploadType)
+        public PendingUploadConfiguration()
         {
-            Argument.AssertNotNull(pendingUploadType, nameof(pendingUploadType));
-
-            PendingUploadType = pendingUploadType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadConfiguration"/>. </summary>

@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 switch (discriminator.GetString())
                 {
                     case "Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria": return MetricAlertMultipleResourceMultipleMetricCriteria.DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(element, options);
+                    case "Microsoft.Azure.Monitor.PromQLCriteria": return PromQLCriteria.DeserializePromQLCriteria(element, options);
                     case "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria": return MetricAlertSingleResourceMultipleMetricCriteria.DeserializeMetricAlertSingleResourceMultipleMetricCriteria(element, options);
                     case "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria": return WebtestLocationAvailabilityCriteria.DeserializeWebtestLocationAvailabilityCriteria(element, options);
                 }

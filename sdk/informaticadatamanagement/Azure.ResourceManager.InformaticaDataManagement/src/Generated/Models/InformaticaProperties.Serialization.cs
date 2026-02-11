@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    singleSignOnUri = new Uri(prop.Value.GetString());
+                    singleSignOnUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeInformaticaProperties(document.RootElement, options);
                     }

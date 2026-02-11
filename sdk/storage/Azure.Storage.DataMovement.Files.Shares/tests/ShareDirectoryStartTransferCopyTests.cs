@@ -223,6 +223,26 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
         }
 
+        protected async Task VerifyFileContentsAndPropertiesAsync(
+            string sourceFileName,
+            string destinationFileName,
+            ShareDirectoryClient sourceDirectory,
+            ShareDirectoryClient destinationDirectory,
+            TransferPropertiesTestType propertiesTestType,
+            CancellationToken cancellationToken)
+        {
+            // Assert file and file contents
+            ShareFileClient sourceClient = sourceDirectory.GetFileClient(sourceFileName);
+            ShareFileClient destinationClient = destinationDirectory.GetFileClient(destinationFileName);
+            using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
+            using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
+            await VerifyPropertiesCopyAsync(
+                propertiesTestType,
+                sourceClient,
+                destinationClient);
+        }
+
         private bool StreamsAreEqual(Stream s1, Stream s2)
         {
             if (s1.Length != s2.Length)
@@ -2216,6 +2236,163 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationContainer: destination.Container,
                 destinationPrefix: destPrefix,
                 propertiesTestType: testType);
+        }
+
+        [RecordedTest]
+        public async Task ShareDirectoryToShareDirectory_SkipIfExists_ExistingDirectoriesTransferFiles()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            int size = DataMovementTestConstants.KB;
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            // Source directory metadata and properties
+            ShareDirectoryCreateOptions sourceDirOptions = new ShareDirectoryCreateOptions()
+            {
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileChangedOn = _defaultFileChangedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+            };
+
+            // Destination directory metadata and properties (DIFFERENT from source)
+            ShareDirectoryCreateOptions destDirOptions = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.System, // Different attributes
+                    FileCreatedOn = new DateTimeOffset(2021, 8, 1, 9, 5, 55, default), // Different timestamp
+                    FileChangedOn = new DateTimeOffset(2021, 9, 1, 9, 5, 55, default),
+                    FileLastWrittenOn = new DateTimeOffset(2021, 10, 1, 9, 5, 55, default),
+                },
+            };
+
+            // Setup SOURCE: Create directory structure WITH files
+            await CreateDirectoryAsync(source.Container, sourcePrefix, sourceDirOptions);
+            await CreateDirectoryTreeSmbAsync(source.Container, sourcePrefix, sourceDirOptions, size);
+            // This creates:
+            // sourceFolder/
+            // ├── item1 (file)
+            // ├── item2 (file)
+            // ├── bar/
+            // │   └── item3 (file)
+            // └── pik/
+            //     └── item4 (file)
+
+            // Setup DESTINATION: Create EMPTY directory structure with DIFFERENT properties
+            await CreateDirectoryAsync(destination.Container, destPrefix, destDirOptions);
+            string destSubDir1 = string.Join("/", destPrefix, "bar");
+            await CreateDirectoryAsync(destination.Container, destSubDir1, destDirOptions);
+            string destSubDir2 = string.Join("/", destPrefix, "pik");
+            await CreateDirectoryAsync(destination.Container, destSubDir2, destDirOptions);
+            // Destination has the directories but NO files
+
+            // Store original destination directory properties to verify they weren't changed
+            ShareDirectoryClient destBarDir = destination.Container.GetDirectoryClient(destSubDir1);
+            ShareDirectoryProperties originalBarProps = await destBarDir.GetPropertiesAsync();
+
+            // Create storage resource containers
+            ShareDirectoryClient sourceDirectory = source.Container.GetDirectoryClient(sourcePrefix);
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                sourceDirectory,
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb });
+
+            ShareDirectoryClient destinationDirectory = destination.Container.GetDirectoryClient(destPrefix);
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destinationDirectory,
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb });
+
+            TransferOptions options = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.SkipIfExists
+            };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            TransferManager transferManager = new TransferManager();
+
+            // Act
+            TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert: Transfer should complete successfully
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Verify FILES were transferred
+            ShareDirectoryClient destDirectory = destination.Container.GetDirectoryClient(destPrefix);
+
+            // Check root level files
+            string itemName1 = "item1";
+            ShareFileClient destFile1 = destDirectory.GetFileClient("item1");
+            Assert.IsTrue(await destFile1.ExistsAsync());
+            await VerifyFileContentsAndPropertiesAsync(
+                sourceFileName: itemName1,
+                destinationFileName: itemName1,
+                sourceDirectory: sourceDirectory,
+                destinationDirectory: destinationDirectory,
+                propertiesTestType: TransferPropertiesTestType.Default,
+                cancellationToken: CancellationToken.None);
+
+            string itemName2 = "item2";
+            ShareFileClient destFile2 = destDirectory.GetFileClient(itemName2);
+            Assert.IsTrue(await destFile2.ExistsAsync());
+            await VerifyFileContentsAndPropertiesAsync(
+                sourceFileName: itemName2,
+                destinationFileName: itemName2,
+                sourceDirectory: sourceDirectory,
+                destinationDirectory: destinationDirectory,
+                propertiesTestType: TransferPropertiesTestType.Default,
+                cancellationToken: CancellationToken.None);
+
+            // Check files in subdirectories
+            string itemName3 = "bar/item3";
+            ShareDirectoryClient destBarDirClient = destDirectory.GetSubdirectoryClient("bar");
+            ShareFileClient destFile3 = destBarDirClient.GetFileClient("item3");
+            Assert.IsTrue(await destFile3.ExistsAsync());
+            await VerifyFileContentsAndPropertiesAsync(
+                sourceFileName: itemName3,
+                destinationFileName: itemName3,
+                sourceDirectory: sourceDirectory,
+                destinationDirectory: destinationDirectory,
+                propertiesTestType: TransferPropertiesTestType.Default,
+                cancellationToken: CancellationToken.None);
+
+            string itemName4 = "pik/item4";
+            ShareDirectoryClient destPikDirClient = destDirectory.GetSubdirectoryClient("pik");
+            ShareFileClient destFile4 = destPikDirClient.GetFileClient("item4");
+            Assert.IsTrue(await destFile4.ExistsAsync());
+            await VerifyFileContentsAndPropertiesAsync(
+                sourceFileName: itemName4,
+                destinationFileName: itemName4,
+                sourceDirectory: sourceDirectory,
+                destinationDirectory: destinationDirectory,
+                propertiesTestType: TransferPropertiesTestType.Default,
+                cancellationToken: CancellationToken.None);
+
+            // Assert: Verify directory properties were NOT changed (directory was skipped)
+            ShareDirectoryProperties currentBarProps = await destBarDir.GetPropertiesAsync();
+
+            // Directory should retain its ORIGINAL properties (not source properties)
+            Assert.That(originalBarProps.Metadata, Is.EqualTo(currentBarProps.Metadata),
+                "Directory metadata should not change when skipped");
+            Assert.AreEqual(originalBarProps.SmbProperties.FileAttributes, currentBarProps.SmbProperties.FileAttributes,
+                "Directory attributes should not change when skipped");
+            Assert.AreEqual(originalBarProps.SmbProperties.FileCreatedOn, currentBarProps.SmbProperties.FileCreatedOn,
+                "Directory FileCreatedOn should not change when skipped");
         }
     }
 }

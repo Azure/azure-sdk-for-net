@@ -13,57 +13,29 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> Specifies the hardware settings for the Azure Large Instance. </summary>
     public partial class LargeInstanceHardwareProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceHardwareProfile"/>. </summary>
-        internal LargeInstanceHardwareProfile()
+        public LargeInstanceHardwareProfile()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceHardwareProfile"/>. </summary>
         /// <param name="hardwareType"> Name of the hardware type (vendor and/or their product name). </param>
-        /// <param name="azureLargeInstanceSize"> Specifies the Azure Large Instance SKU. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceHardwareProfile(LargeInstanceHardwareTypeName? hardwareType, LargeInstanceSizeName? azureLargeInstanceSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="largeInstanceSize"> Specifies the Azure Large Instance SKU. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LargeInstanceHardwareProfile(LargeInstanceHardwareTypeName? hardwareType, LargeInstanceSizeName? largeInstanceSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareType = hardwareType;
-            AzureLargeInstanceSize = azureLargeInstanceSize;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LargeInstanceSize = largeInstanceSize;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the hardware type (vendor and/or their product name). </summary>
-        public LargeInstanceHardwareTypeName? HardwareType { get; }
+        public LargeInstanceHardwareTypeName? HardwareType { get; set; }
+
         /// <summary> Specifies the Azure Large Instance SKU. </summary>
-        public LargeInstanceSizeName? AzureLargeInstanceSize { get; }
+        public LargeInstanceSizeName? LargeInstanceSize { get; set; }
     }
 }

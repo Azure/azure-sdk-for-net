@@ -141,6 +141,16 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
+            if (Optional.IsDefined(PlatformCapabilities))
+            {
+                writer.WritePropertyName("platformCapabilities"u8);
+                writer.WriteObjectValue(PlatformCapabilities, options);
+            }
+            if (Optional.IsDefined(GeoDataReplication))
+            {
+                writer.WritePropertyName("geoDataReplication"u8);
+                writer.WriteObjectValue(GeoDataReplication, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -189,6 +199,8 @@ namespace Azure.ResourceManager.EventHubs
             IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? disableLocalAuth = default;
             string alternateName = default;
+            PlatformCapabilities platformCapabilities = default;
+            NamespaceGeoDataReplicationProperties geoDataReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -401,6 +413,24 @@ namespace Azure.ResourceManager.EventHubs
                             alternateName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("platformCapabilities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            platformCapabilities = PlatformCapabilities.DeserializePlatformCapabilities(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("geoDataReplication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoDataReplication = NamespaceGeoDataReplicationProperties.DeserializeNamespaceGeoDataReplicationProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -436,6 +466,8 @@ namespace Azure.ResourceManager.EventHubs
                 privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>(),
                 disableLocalAuth,
                 alternateName,
+                platformCapabilities,
+                geoDataReplication,
                 serializedAdditionalRawData);
         }
 
@@ -890,6 +922,43 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         builder.AppendLine($"'{AlternateName}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConfidentialComputeMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    platformCapabilities: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      platformCapabilities: {");
+                builder.AppendLine("        confidentialCompute: {");
+                builder.Append("          mode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("        }");
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PlatformCapabilities))
+                {
+                    builder.Append("    platformCapabilities: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PlatformCapabilities, options, 4, false, "    platformCapabilities: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoDataReplication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoDataReplication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoDataReplication))
+                {
+                    builder.Append("    geoDataReplication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GeoDataReplication, options, 4, false, "    geoDataReplication: ");
                 }
             }
 

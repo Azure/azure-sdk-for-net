@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -92,6 +94,38 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetErrorDetails(code, message, additionalProperties);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceGraph.ResourceGraphQueryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this graph query definition. </param>
+        /// <param name="description"> The description of a graph query. </param>
+        /// <param name="query"> KQL query that will be graph. </param>
+        /// <param name="resultKind"> Enum indicating a type of graph query. </param>
+        /// <param name="etag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
+        /// <returns> A new <see cref="ResourceGraph.ResourceGraphQueryData"/> instance for mocking. </returns>
+        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? modifiedOn = null, string description = null, string query = null, ResultKind? resultKind = null, ETag? etag = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ResourceGraphQueryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                modifiedOn,
+                description,
+                query,
+                resultKind,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.FacetResult"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>
@@ -118,6 +152,33 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             errors ??= new List<FacetErrorDetails>();
 
             return new FacetError(expression, "FacetError", serializedAdditionalRawData: null, errors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesHistoryRequestOptions"/>. </summary>
+        /// <param name="interval"> The time interval used to fetch history. </param>
+        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
+        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        /// <param name="resultFormat"> Defines in which format query result returned. </param>
+        /// <returns> A new <see cref="Models.ResourcesHistoryRequestOptions"/> instance for mocking. </returns>
+        public static ResourcesHistoryRequestOptions ResourcesHistoryRequestOptions(DateTimeInterval interval = null, int? top = null, int? skip = null, string skipToken = null, ResultFormat? resultFormat = null)
+        {
+            return new ResourcesHistoryRequestOptions(
+                interval,
+                top,
+                skip,
+                skipToken,
+                resultFormat,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DateTimeInterval"/>. </summary>
+        /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`**`start`**`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
+        /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `**`end`**`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
+        /// <returns> A new <see cref="Models.DateTimeInterval"/> instance for mocking. </returns>
+        public static DateTimeInterval DateTimeInterval(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
+        {
+            return new DateTimeInterval(startOn, endOn, serializedAdditionalRawData: null);
         }
     }
 }

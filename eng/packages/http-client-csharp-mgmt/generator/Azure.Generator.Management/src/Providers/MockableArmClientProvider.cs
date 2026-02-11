@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -16,15 +17,31 @@ namespace Azure.Generator.Management.Providers
 {
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
-        // TODO -- we also need to put operations here when we want to support scope resources/operations https://github.com/Azure/azure-sdk-for-net/issues/51821
-        public MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources)
-            : base(typeof(ArmClient), RequestPathPattern.Tenant, resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), [])
+        private MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : base(typeof(ArmClient), OperationContext.Create(RequestPathPattern.Tenant), resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), nonResourceMethods)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="MockableArmClientProvider"/> if there are resources or non-resource methods to generate methods for.
+        /// </summary>
+        /// <param name="resources">The resources to generate methods for.</param>
+        /// <param name="nonResourceMethods">The non-resource methods to generate methods for.</param>
+        /// <returns>A new instance of <see cref="MockableArmClientProvider"/> if there are resources or non-resource methods, otherwise null.</returns>
+        public static MockableArmClientProvider? TryCreate(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        {
+            if (resources.Count == 0 && nonResourceMethods.Count == 0)
+            {
+                return null;
+            }
+            return new MockableArmClientProvider(resources, nonResourceMethods);
         }
 
         protected override MethodProvider[] BuildMethods()
         {
-            var methods = new List<MethodProvider>(_resources.Count);
+            var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
+
+            // Build methods for extension resources
             foreach (var resource in _resources)
             {
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
@@ -39,6 +56,14 @@ namespace Azure.Generator.Management.Providers
                         methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
                     }
                 }
+            }
+
+            // Build methods for non-resource extension operations
+            foreach (var method in _nonResourceMethods)
+            {
+                // Process both async and sync method variants
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];

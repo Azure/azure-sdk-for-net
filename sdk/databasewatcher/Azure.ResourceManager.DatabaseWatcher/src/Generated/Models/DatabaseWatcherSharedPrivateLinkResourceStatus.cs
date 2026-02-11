@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     public readonly partial struct DatabaseWatcherSharedPrivateLinkResourceStatus : IEquatable<DatabaseWatcherSharedPrivateLinkResourceStatus>
     {
         private readonly string _value;
+        /// <summary> The shared private link connection request was not yet authorized by the resource owner. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The shared private link connection request was approved by the resource owner. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> The shared private link connection request was rejected by the resource owner. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> The shared private link connection request was disconnected by the resource owner. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseWatcherSharedPrivateLinkResourceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> The shared private link connection request was not yet authorized by the resource owner. </summary>
         public static DatabaseWatcherSharedPrivateLinkResourceStatus Pending { get; } = new DatabaseWatcherSharedPrivateLinkResourceStatus(PendingValue);
+
         /// <summary> The shared private link connection request was approved by the resource owner. </summary>
         public static DatabaseWatcherSharedPrivateLinkResourceStatus Approved { get; } = new DatabaseWatcherSharedPrivateLinkResourceStatus(ApprovedValue);
+
         /// <summary> The shared private link connection request was rejected by the resource owner. </summary>
         public static DatabaseWatcherSharedPrivateLinkResourceStatus Rejected { get; } = new DatabaseWatcherSharedPrivateLinkResourceStatus(RejectedValue);
+
         /// <summary> The shared private link connection request was disconnected by the resource owner. </summary>
         public static DatabaseWatcherSharedPrivateLinkResourceStatus Disconnected { get; } = new DatabaseWatcherSharedPrivateLinkResourceStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatabaseWatcherSharedPrivateLinkResourceStatus left, DatabaseWatcherSharedPrivateLinkResourceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatabaseWatcherSharedPrivateLinkResourceStatus left, DatabaseWatcherSharedPrivateLinkResourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatabaseWatcherSharedPrivateLinkResourceStatus(string value) => new DatabaseWatcherSharedPrivateLinkResourceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatabaseWatcherSharedPrivateLinkResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatabaseWatcherSharedPrivateLinkResourceStatus?(string value) => value == null ? null : new DatabaseWatcherSharedPrivateLinkResourceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatabaseWatcherSharedPrivateLinkResourceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatabaseWatcherSharedPrivateLinkResourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointProvisioningStepStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointProvisioningStepStatus>
+    /// <summary> Server endpoint provisioning step status object. </summary>
+    public partial class ServerEndpointProvisioningStepStatus : IJsonModel<ServerEndpointProvisioningStepStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointProvisioningStepStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerEndpointProvisioningStepStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerEndpointProvisioningStepStatus)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -76,19 +76,24 @@ namespace Azure.ResourceManager.StorageSync.Models
                 foreach (var item in AdditionalInformation)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,129 +102,142 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        ServerEndpointProvisioningStepStatus IJsonModel<ServerEndpointProvisioningStepStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerEndpointProvisioningStepStatus IJsonModel<ServerEndpointProvisioningStepStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerEndpointProvisioningStepStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerEndpointProvisioningStepStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServerEndpointProvisioningStepStatus(document.RootElement, options);
         }
 
-        internal static ServerEndpointProvisioningStepStatus DeserializeServerEndpointProvisioningStepStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServerEndpointProvisioningStepStatus DeserializeServerEndpointProvisioningStepStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string status = default;
-            DateTimeOffset? startTime = default;
+            DateTimeOffset? startOn = default;
             int? minutesLeft = default;
             int? progressPercentage = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? endOn = default;
             int? errorCode = default;
             IReadOnlyDictionary<string, string> additionalInformation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("minutesLeft"u8))
+                if (prop.NameEquals("minutesLeft"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minutesLeft = property.Value.GetInt32();
+                    minutesLeft = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("progressPercentage"u8))
+                if (prop.NameEquals("progressPercentage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    progressPercentage = property.Value.GetInt32();
+                    progressPercentage = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endTime"u8))
+                if (prop.NameEquals("endTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errorCode"u8))
+                if (prop.NameEquals("errorCode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorCode = property.Value.GetInt32();
+                    errorCode = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("additionalInformation"u8))
+                if (prop.NameEquals("additionalInformation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     additionalInformation = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServerEndpointProvisioningStepStatus(
                 name,
                 status,
-                startTime,
+                startOn,
                 minutesLeft,
                 progressPercentage,
-                endTime,
+                endOn,
                 errorCode,
                 additionalInformation ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ServerEndpointProvisioningStepStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServerEndpointProvisioningStepStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -229,15 +247,20 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        ServerEndpointProvisioningStepStatus IPersistableModel<ServerEndpointProvisioningStepStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerEndpointProvisioningStepStatus IPersistableModel<ServerEndpointProvisioningStepStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerEndpointProvisioningStepStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStepStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServerEndpointProvisioningStepStatus(document.RootElement, options);
                     }
                 default:
@@ -245,6 +268,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerEndpointProvisioningStepStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

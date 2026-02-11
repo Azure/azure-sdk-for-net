@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -24,12 +25,8 @@ namespace Samples
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="myToken"> myToken description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::System.ArgumentNullException"> <paramref name="myToken"/> is null. </exception>
-        /// <exception cref="global::System.ArgumentException"> <paramref name="myToken"/> is an empty string, and was expected to be non-empty. </exception>
         public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNullOrEmpty(myToken, nameof(myToken));
-
             _client = client;
             _myToken = myToken;
             _context = context;
@@ -53,7 +50,7 @@ namespace Samples
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
                 nextPage = result.NextPage;

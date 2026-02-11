@@ -75,9 +75,9 @@ namespace Microsoft.Extensions.Hosting
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IWebJobsBuilder AddAzureStorageBlobsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider =>
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider =>
             {
-                return new BlobScalerMonitorProvider(serviceProvider, triggerMetadata);
+                return new ZeroToOneTargetScalerProvider(serviceProvider, triggerMetadata);
             });
 
             return builder;

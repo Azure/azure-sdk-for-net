@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for HostName match conditions
-    /// Serialized Name: HostNameMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for HostName match conditions. </summary>
     public partial class HostNameMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
-        /// <param name="hostNameOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: HostNameMatchConditionParameters.operator
-        /// </param>
+        /// <param name="hostNameOperator"> Describes operator to be matched. </param>
         public HostNameMatchCondition(HostNameOperator hostNameOperator)
         {
             HostNameOperator = hostNameOperator;
@@ -30,24 +24,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="hostNameOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: HostNameMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: HostNameMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: HostNameMatchConditionParameters.matchValues
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: HostNameMatchConditionParameters.transforms
-        /// </param>
+        /// <param name="hostNameOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        /// <param name="transforms"> List of transforms. </param>
         internal HostNameMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HostNameOperator hostNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             HostNameOperator = hostNameOperator;
@@ -62,25 +44,17 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: HostNameMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Describes operator to be matched. </summary>
+        [WirePath("operator")]
         public HostNameOperator HostNameOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: HostNameMatchConditionParameters.negateCondition
-        /// </summary>
+        /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: HostNameMatchConditionParameters.matchValues
-        /// </summary>
+        /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: HostNameMatchConditionParameters.transforms
-        /// </summary>
+        /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

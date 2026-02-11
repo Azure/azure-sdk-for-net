@@ -20,8 +20,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
     {
         private ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
         private MarketplaceAgreementsRestOperations _marketplaceAgreementsRestClient;
-        private ClientDiagnostics _datadogMonitorResourceMonitorsClientDiagnostics;
-        private MonitorsRestOperations _datadogMonitorResourceMonitorsRestClient;
+        private ClientDiagnostics _datadogMonitorMonitorsClientDiagnostics;
+        private MonitorsRestOperations _datadogMonitorMonitorsRestClient;
+        private ClientDiagnostics _creationSupportedClientDiagnostics;
+        private CreationSupportedRestOperations _creationSupportedRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDatadogSubscriptionResource"/> class for mocking. </summary>
         protected MockableDatadogSubscriptionResource()
@@ -37,8 +39,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MarketplaceAgreementsRestOperations MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DatadogMonitorResourceMonitorsClientDiagnostics => _datadogMonitorResourceMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations DatadogMonitorResourceMonitorsRestClient => _datadogMonitorResourceMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatadogMonitorResource.ResourceType));
+        private ClientDiagnostics DatadogMonitorMonitorsClientDiagnostics => _datadogMonitorMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
+        private MonitorsRestOperations DatadogMonitorMonitorsRestClient => _datadogMonitorMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatadogMonitorResource.ResourceType));
+        private ClientDiagnostics CreationSupportedClientDiagnostics => _creationSupportedClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CreationSupportedRestOperations CreationSupportedRestClient => _creationSupportedRestClient ??= new CreationSupportedRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -59,17 +63,17 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogAgreementResourceProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatadogAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatadogAgreement> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogAgreement.DeserializeDatadogAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,17 +89,17 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogAgreementResourceProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatadogAgreementResourceProperties> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatadogAgreement> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogAgreement.DeserializeDatadogAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,13 +115,13 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The <see cref="DatadogAgreementResourceProperties"/> to use. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreement body = null, CancellationToken cancellationToken = default)
         {
             using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement");
             scope.Start();
@@ -146,13 +150,13 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The <see cref="DatadogAgreementResourceProperties"/> to use. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
+        public virtual Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(DatadogAgreement body = null, CancellationToken cancellationToken = default)
         {
             using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement");
             scope.Start();
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,11 +195,11 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatadogMonitorResource> GetDatadogMonitorResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatadogMonitorResource> GetDatadogMonitorsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorData.DeserializeDatadogMonitorData(e)), DatadogMonitorMonitorsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetDatadogMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,11 +225,147 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatadogMonitorResource> GetDatadogMonitorResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<DatadogMonitorResource> GetDatadogMonitors(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorData.DeserializeDatadogMonitorData(e)), DatadogMonitorMonitorsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetDatadogMonitors", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Informs if the current subscription is being already monitored for selected Datadog organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/subscriptionStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CreationSupported_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-11</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datadogOrganizationId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DatadogSubscriptionStatusResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatadogSubscriptionStatusResult> GetSubscriptionStatusesAsync(string datadogOrganizationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datadogOrganizationId, nameof(datadogOrganizationId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreationSupportedRestClient.CreateListRequest(Id.SubscriptionId, datadogOrganizationId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreationSupportedRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, datadogOrganizationId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogSubscriptionStatusResult.DeserializeDatadogSubscriptionStatusResult(e), CreationSupportedClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Informs if the current subscription is being already monitored for selected Datadog organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/subscriptionStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CreationSupported_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-11</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datadogOrganizationId"/> is null. </exception>
+        /// <returns> A collection of <see cref="DatadogSubscriptionStatusResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatadogSubscriptionStatusResult> GetSubscriptionStatuses(string datadogOrganizationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datadogOrganizationId, nameof(datadogOrganizationId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreationSupportedRestClient.CreateListRequest(Id.SubscriptionId, datadogOrganizationId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreationSupportedRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, datadogOrganizationId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogSubscriptionStatusResult.DeserializeDatadogSubscriptionStatusResult(e), CreationSupportedClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Informs if the current subscription is being already monitored for selected Datadog organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/subscriptionStatuses/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CreationSupported_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-11</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datadogOrganizationId"/> is null. </exception>
+        public virtual async Task<Response<DatadogSubscriptionStatusResult>> GetSubscriptionStatusAsync(string datadogOrganizationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datadogOrganizationId, nameof(datadogOrganizationId));
+
+            using var scope = CreationSupportedClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.GetSubscriptionStatus");
+            scope.Start();
+            try
+            {
+                var response = await CreationSupportedRestClient.GetAsync(Id.SubscriptionId, datadogOrganizationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Informs if the current subscription is being already monitored for selected Datadog organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/subscriptionStatuses/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CreationSupported_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-11</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datadogOrganizationId"/> is null. </exception>
+        public virtual Response<DatadogSubscriptionStatusResult> GetSubscriptionStatus(string datadogOrganizationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datadogOrganizationId, nameof(datadogOrganizationId));
+
+            using var scope = CreationSupportedClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.GetSubscriptionStatus");
+            scope.Start();
+            try
+            {
+                var response = CreationSupportedRestClient.Get(Id.SubscriptionId, datadogOrganizationId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

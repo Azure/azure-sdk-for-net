@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_08_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_11_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public partial class VectorSemanticHybridSearch : SearchTestBase
     {
         public VectorSemanticHybridSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)

@@ -192,7 +192,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus MoverOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResourceMover.Models.MoverOperationStatusError error = null, System.BinaryData properties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverOperationStatusError MoverOperationStatusError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatusError> details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverOperationErrorAdditionalInfo> additionalInfo = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.MoverResourceData MoverResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency MoverResourceDependency(Azure.Core.ResourceIdentifier id, string resolutionStatus, Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType? resolutionType, Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? dependencyType, Azure.Core.ResourceIdentifier manualResolutionTargetId, Azure.Core.ResourceIdentifier automaticResolutionResourceId, bool? isOptional) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency MoverResourceDependency(Azure.Core.ResourceIdentifier id = null, string resolutionStatus = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType? resolutionType = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType?), Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? dependencyType = default(Azure.ResourceManager.ResourceMover.Models.MoverDependencyType?), Azure.Core.ResourceIdentifier manualResolutionTargetId = null, Azure.Core.ResourceIdentifier automaticResolutionResourceId = null, string isDependencyOptional = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceJobStatus MoverResourceJobStatus(Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName? jobName = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName?), string jobProgress = null) { throw null; }
@@ -207,7 +206,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class DiskEncryptionSetResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.DiskEncryptionSetResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.DiskEncryptionSetResourceSettings>
     {
         public DiskEncryptionSetResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public DiskEncryptionSetResourceSettings(string targetResourceName) { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceMover.Models.DiskEncryptionSetResourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.DiskEncryptionSetResourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -219,7 +217,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class KeyVaultResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.KeyVaultResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.KeyVaultResourceSettings>
     {
         public KeyVaultResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public KeyVaultResourceSettings(string targetResourceName) { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceMover.Models.KeyVaultResourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.KeyVaultResourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,7 +250,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         public LoadBalancerFrontendIPConfigurationResourceSettings() { }
         public string Name { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string PrivateIPAddressStringValue { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
@@ -279,7 +275,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class LoadBalancerResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.LoadBalancerResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.LoadBalancerResourceSettings>
     {
         public LoadBalancerResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public LoadBalancerResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerBackendAddressPoolResourceSettings> BackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerFrontendIPConfigurationResourceSettings> FrontendIPConfigurations { get { throw null; } }
@@ -296,7 +291,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverAvailabilitySetResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.MoverAvailabilitySetResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.MoverAvailabilitySetResourceSettings>
     {
         public MoverAvailabilitySetResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MoverAvailabilitySetResourceSettings(string targetResourceName) { }
         public int? FaultDomain { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -343,9 +337,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel Descendant { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel Direct { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel left, Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel (string value) { throw null; }
@@ -361,9 +353,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverDependencyType RequiredForMove { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverDependencyType RequiredForPrepare { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverDependencyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverDependencyType left, Azure.ResourceManager.ResourceMover.Models.MoverDependencyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverDependencyType (string value) { throw null; }
@@ -479,9 +469,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState left, Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState (string value) { throw null; }
@@ -495,7 +483,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.ResourceManager.ResourceMover.Models.MoverDependencyType? DependencyType { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string IsDependencyOptional { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsOptional { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManualResolutionTargetId { get { throw null; } }
         public string ResolutionStatus { get { throw null; } }
@@ -528,9 +515,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType MoverResourceId { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType MoverResourceSourceId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType left, Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverResourceInputType (string value) { throw null; }
@@ -545,9 +530,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public MoverResourceJobName(string value) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName InitialSync { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName left, Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverResourceJobName (string value) { throw null; }
@@ -601,9 +584,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState PreparePending { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState ResourceMoveCompleted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState left, Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState (string value) { throw null; }
@@ -661,9 +642,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType Automatic { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType left, Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverResourceResolutionType (string value) { throw null; }
@@ -691,10 +670,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.ResourceManager.ResourceMover.Models.MoveType? MoveType { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.AzureLocation? SourceLocation { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
         public Azure.Core.AzureLocation? TargetLocation { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -707,7 +684,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public abstract partial class MoverResourceSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings>
     {
         protected MoverResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected MoverResourceSettings(string targetResourceName) { }
         public string TargetResourceGroupName { get { throw null; } set { } }
         public string TargetResourceName { get { throw null; } set { } }
@@ -742,9 +718,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone Three { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone Two { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone left, Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone (string value) { throw null; }
@@ -766,7 +740,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverVirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.MoverVirtualNetworkResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.MoverVirtualNetworkResourceSettings>
     {
         public MoverVirtualNetworkResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MoverVirtualNetworkResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
@@ -789,9 +762,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoveType RegionToRegion { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.MoveType RegionToZone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.MoveType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.MoveType left, Azure.ResourceManager.ResourceMover.Models.MoveType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.MoveType (string value) { throw null; }
@@ -801,7 +772,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.NetworkInterfaceResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.NetworkInterfaceResourceSettings>
     {
         public NetworkInterfaceResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetworkInterfaceResourceSettings(string targetResourceName) { }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.NicIPConfigurationResourceSettings> IPConfigurations { get { throw null; } }
@@ -816,7 +786,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class NetworkSecurityGroupResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.NetworkSecurityGroupResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.NetworkSecurityGroupResourceSettings>
     {
         public NetworkSecurityGroupResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetworkSecurityGroupResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.NetworkSecurityGroupSecurityRule> SecurityRules { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -854,7 +823,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string PrivateIPAddressStringValue { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
@@ -881,7 +849,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class PublicIPAddressResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.PublicIPAddressResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.PublicIPAddressResourceSettings>
     {
         public PublicIPAddressResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public PublicIPAddressResourceSettings(string targetResourceName) { }
         public string DomainNameLabel { get { throw null; } set { } }
         public string Fqdn { get { throw null; } set { } }
@@ -910,7 +877,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class ResourceGroupResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.ResourceGroupResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.ResourceGroupResourceSettings>
     {
         public ResourceGroupResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ResourceGroupResourceSettings(string targetResourceName) { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceMover.Models.ResourceGroupResourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.ResourceGroupResourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -928,9 +894,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting Disable { get { throw null; } }
         public static Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting left, Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting (string value) { throw null; }
@@ -940,7 +904,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class SqlDatabaseResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.SqlDatabaseResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.SqlDatabaseResourceSettings>
     {
         public SqlDatabaseResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public SqlDatabaseResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting? ZoneRedundant { get { throw null; } set { } }
@@ -954,7 +917,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class SqlElasticPoolResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.SqlElasticPoolResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.SqlElasticPoolResourceSettings>
     {
         public SqlElasticPoolResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public SqlElasticPoolResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting? ZoneRedundant { get { throw null; } set { } }
@@ -968,7 +930,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class SqlServerResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.SqlServerResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.SqlServerResourceSettings>
     {
         public SqlServerResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public SqlServerResourceSettings(string targetResourceName) { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceMover.Models.SqlServerResourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.SqlServerResourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1003,7 +964,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class VirtualMachineResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.Models.VirtualMachineResourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.Models.VirtualMachineResourceSettings>
     {
         public VirtualMachineResourceSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public VirtualMachineResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetAvailabilitySetId { get { throw null; } set { } }

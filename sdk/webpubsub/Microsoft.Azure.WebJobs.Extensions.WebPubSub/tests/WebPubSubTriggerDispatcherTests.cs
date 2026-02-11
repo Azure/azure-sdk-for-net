@@ -27,7 +27,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private const string TestEvent = Constants.Events.ConnectedEvent;
         private static string TestConnectionString = $"Endpoint=http://{TestOrigin};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;";
 
-        private static readonly WebPubSubValidationOptions TestValidationOption = new(TestConnectionString);
         private static readonly string[] ValidSignature = new string[] { TestKey.Signature };
 
         [TestCase]
@@ -309,15 +308,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerAcceptedClientProtocols clientProtocol = WebPubSubTriggerAcceptedClientProtocols.All)
         {
             var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol).ToLower();
-            var wpsOptions = new WebPubSubFunctionsOptions
+            var options = new WebPubSubServiceAccessOptions
             {
-                ConnectionString = connectionString
+                WebPubSubAccess = string.IsNullOrEmpty(connectionString)
+                    ? null
+                    : WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString),
+                Hub = hub,
             };
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, wpsOptions);
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, options);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
-            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, new WebPubSubValidationOptions(connectionString));
+            var validator = new RequestValidator(string.IsNullOrEmpty(connectionString)
+                ? null
+                : [WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString)]);
+            var listener = new WebPubSubListener(executor.Object, funcName, dispatcher, validator);
 
             dispatcher.AddListener(funcName, listener);
 

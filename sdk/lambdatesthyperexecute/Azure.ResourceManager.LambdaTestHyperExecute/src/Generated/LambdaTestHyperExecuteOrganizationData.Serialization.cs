@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeLambdaTestHyperExecuteOrganizationData(document.RootElement, options);
                     }
@@ -237,11 +237,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="LambdaTestHyperExecuteOrganizationData"/> from. </param>
-        internal static LambdaTestHyperExecuteOrganizationData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LambdaTestHyperExecuteOrganizationData"/> from. </param>
+        internal static LambdaTestHyperExecuteOrganizationData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLambdaTestHyperExecuteOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

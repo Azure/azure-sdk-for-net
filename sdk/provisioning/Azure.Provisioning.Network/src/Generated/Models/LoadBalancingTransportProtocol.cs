@@ -24,4 +24,9 @@ public enum LoadBalancingTransportProtocol
     /// All.
     /// </summary>
     All,
+
+    /// <summary>
+    /// Quic.
+    /// </summary>
+    Quic,
 }

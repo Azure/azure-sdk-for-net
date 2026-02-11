@@ -155,6 +155,123 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrivateLinkId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLink: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLink))
+                {
+                    builder.Append("  privateLink: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrivateLink, options, 2, false, "  privateLink: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLinkLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkLocation))
+                {
+                    builder.Append("  privateLinkLocation: ");
+                    if (PrivateLinkLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateLinkLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateLinkLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  groupId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
+                {
+                    builder.Append("  groupId: ");
+                    if (GroupId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GroupId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GroupId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestMessage))
+                {
+                    builder.Append("  requestMessage: ");
+                    if (RequestMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RequestMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RequestMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SharedPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharedPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +280,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SharedPrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }

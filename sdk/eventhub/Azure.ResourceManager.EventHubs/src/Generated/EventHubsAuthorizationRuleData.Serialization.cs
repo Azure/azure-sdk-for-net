@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
-                rights ?? new ChangeTrackingList<EventHubsAccessRight>(),
                 location,
+                rights ?? new ChangeTrackingList<EventHubsAccessRight>(),
                 serializedAdditionalRawData);
         }
 

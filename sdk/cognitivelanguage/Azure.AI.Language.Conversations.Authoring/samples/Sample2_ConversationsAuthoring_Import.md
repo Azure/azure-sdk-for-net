@@ -9,7 +9,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -28,6 +28,7 @@ ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
+    projectName: projectName,
     language: "en"
 )
 {
@@ -169,12 +170,12 @@ string projectName = "{projectName}";
 // Create metadata
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
+    projectName: projectName,
     language: "en-us")
 {
     Settings = new ConversationAuthoringProjectSettings(0.7F),
     Multilingual = true,
     Description = "Trying out CLU",
-    ProjectName = projectName
 };
 
 // Define intents and entities
@@ -261,6 +262,7 @@ ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
+    projectName: projectName,
     language: "en"
 )
 {
@@ -402,12 +404,12 @@ string projectName = "{projectName}";
 // Define project metadata
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
+    projectName: projectName,
     language: "en-us")
 {
     Settings = new ConversationAuthoringProjectSettings(0.7F),
     Multilingual = true,
     Description = "Trying out CLU",
-    ProjectName = projectName
 };
 
 // Define project assets

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSkus_SKUListWithLocationInfo()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/SKUListWithLocationInfo.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/SKUListWithLocationInfo.json
             // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSkus_SkuList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/SKUList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/SKUList.json
             // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckStorageAccountNameAvailability_StorageAccountCheckNameAvailability()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountCheckNameAvailability.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/StorageAccountCheckNameAvailability.json
             // this example is just showing the usage of "StorageAccounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStorageAccounts_StorageAccountList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/StorageAccountList.json
             // this example is just showing the usage of "StorageAccounts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDeletedAccounts_DeletedAccountList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/DeletedAccountList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/DeletedAccountList.json
             // this example is just showing the usage of "DeletedAccounts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsagesByLocation_UsageList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountListLocationUsage.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-06-01/examples/StorageAccountListLocationUsage.json
             // this example is just showing the usage of "Usages_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -91,6 +91,7 @@ namespace Azure.Communication.JobRouter
         private JobRouterClient(string endpoint, TokenCredential tokenCredential, JobRouterClientOptions options)
             : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(tokenCredential), options)
         {
+            _tokenCredential = tokenCredential;
         }
 
         private JobRouterClient(string endpoint, AzureKeyCredential keyCredential, JobRouterClientOptions options)

@@ -17,6 +17,7 @@
 
     <AssemblyName>Azure.Analytics.Synapse.Spark</AssemblyName>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />

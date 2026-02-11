@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockablePlaywrightArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePlaywrightArmClient for mocking. </summary>
         protected MockablePlaywrightArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePlaywrightArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePlaywrightArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockablePlaywrightArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PlaywrightWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlaywrightWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PlaywrightWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PlaywrightWorkspaceResource"/> object. </returns>
         public virtual PlaywrightWorkspaceResource GetPlaywrightWorkspaceResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return new PlaywrightWorkspaceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlaywrightQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
         public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return new PlaywrightQuotaResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PlaywrightWorkspaceQuotaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlaywrightWorkspaceQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightWorkspaceQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PlaywrightWorkspaceQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PlaywrightWorkspaceQuotaResource"/> object. </returns>
         public virtual PlaywrightWorkspaceQuotaResource GetPlaywrightWorkspaceQuotaResource(ResourceIdentifier id)

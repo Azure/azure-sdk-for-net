@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
+    /// <summary>
+    /// Mesh upgrade profile properties for a major.minor release.
+    /// Serialized Name: MeshUpgradeProfileProperties
+    /// </summary>
     public partial class MeshUpgradeProfileProperties : MeshRevision
     {
         /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileProperties"/>. </summary>
@@ -19,9 +22,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileProperties"/>. </summary>
-        /// <param name="revision"> The revision of the mesh release. </param>
-        /// <param name="upgrades"> List of revisions available for upgrade of a specific mesh revision. </param>
-        /// <param name="compatibleWith"> List of items this revision of service mesh is compatible with, and their associated versions. </param>
+        /// <param name="revision">
+        /// The revision of the mesh release.
+        /// Serialized Name: MeshRevision.revision
+        /// </param>
+        /// <param name="upgrades">
+        /// List of revisions available for upgrade of a specific mesh revision
+        /// Serialized Name: MeshRevision.upgrades
+        /// </param>
+        /// <param name="compatibleWith">
+        /// List of items this revision of service mesh is compatible with, and their associated versions.
+        /// Serialized Name: MeshRevision.compatibleWith
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshUpgradeProfileProperties(string revision, IList<string> upgrades, IList<CompatibleVersions> compatibleWith, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(revision, upgrades, compatibleWith, serializedAdditionalRawData)
         {

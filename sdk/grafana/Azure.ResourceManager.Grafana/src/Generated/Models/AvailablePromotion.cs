@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The AvailablePromotion. </summary>
+    /// <summary></summary>
     public readonly partial struct AvailablePromotion : IEquatable<AvailablePromotion>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AvailablePromotion"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AvailablePromotion(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string FreeTrialValue = "FreeTrial";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePromotion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AvailablePromotion(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static AvailablePromotion None { get; } = new AvailablePromotion(NoneValue);
-        /// <summary> FreeTrial. </summary>
+
+        /// <summary> Gets the FreeTrial. </summary>
         public static AvailablePromotion FreeTrial { get; } = new AvailablePromotion(FreeTrialValue);
+
         /// <summary> Determines if two <see cref="AvailablePromotion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailablePromotion left, AvailablePromotion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvailablePromotion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailablePromotion left, AvailablePromotion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailablePromotion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvailablePromotion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvailablePromotion(string value) => new AvailablePromotion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvailablePromotion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvailablePromotion?(string value) => value == null ? null : new AvailablePromotion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailablePromotion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvailablePromotion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

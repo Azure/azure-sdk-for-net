@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class EdgeSolutionTemplateVersionWithUpdateType : IUtf8JsonSerializable, IJsonModel<EdgeSolutionTemplateVersionWithUpdateType>
+    /// <summary> Solution Template Version With Update Type. </summary>
+    public partial class EdgeSolutionTemplateVersionWithUpdateType : IJsonModel<EdgeSolutionTemplateVersionWithUpdateType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeSolutionTemplateVersionWithUpdateType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionTemplateVersionWithUpdateType"/> for deserialization. </summary>
+        internal EdgeSolutionTemplateVersionWithUpdateType()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSolutionTemplateVersionWithUpdateType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionTemplateVersionWithUpdateType)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
@@ -46,15 +52,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             writer.WritePropertyName("solutionTemplateVersion"u8);
             writer.WriteObjectValue(SolutionTemplateVersion, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +69,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        EdgeSolutionTemplateVersionWithUpdateType IJsonModel<EdgeSolutionTemplateVersionWithUpdateType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionTemplateVersionWithUpdateType IJsonModel<EdgeSolutionTemplateVersionWithUpdateType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSolutionTemplateVersionWithUpdateType JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionTemplateVersionWithUpdateType)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeSolutionTemplateVersionWithUpdateType(document.RootElement, options);
         }
 
-        internal static EdgeSolutionTemplateVersionWithUpdateType DeserializeEdgeSolutionTemplateVersionWithUpdateType(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EdgeSolutionTemplateVersionWithUpdateType DeserializeEdgeSolutionTemplateVersionWithUpdateType(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,42 +97,43 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             EdgeUpdateType? updateType = default;
             string version = default;
             EdgeSolutionTemplateVersionData solutionTemplateVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("updateType"u8))
+                if (prop.NameEquals("updateType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updateType = new EdgeUpdateType(property.Value.GetString());
+                    updateType = new EdgeUpdateType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("solutionTemplateVersion"u8))
+                if (prop.NameEquals("solutionTemplateVersion"u8))
                 {
-                    solutionTemplateVersion = EdgeSolutionTemplateVersionData.DeserializeEdgeSolutionTemplateVersionData(property.Value, options);
+                    solutionTemplateVersion = EdgeSolutionTemplateVersionData.DeserializeEdgeSolutionTemplateVersionData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeSolutionTemplateVersionWithUpdateType(updateType, version, solutionTemplateVersion, serializedAdditionalRawData);
+            return new EdgeSolutionTemplateVersionWithUpdateType(updateType, version, solutionTemplateVersion, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +143,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        EdgeSolutionTemplateVersionWithUpdateType IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionTemplateVersionWithUpdateType IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSolutionTemplateVersionWithUpdateType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeSolutionTemplateVersionWithUpdateType(document.RootElement, options);
                     }
                 default:
@@ -147,6 +164,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSolutionTemplateVersionWithUpdateType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="edgeSolutionTemplateVersionWithUpdateType"> The <see cref="EdgeSolutionTemplateVersionWithUpdateType"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EdgeSolutionTemplateVersionWithUpdateType edgeSolutionTemplateVersionWithUpdateType)
+        {
+            if (edgeSolutionTemplateVersionWithUpdateType == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(edgeSolutionTemplateVersionWithUpdateType, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

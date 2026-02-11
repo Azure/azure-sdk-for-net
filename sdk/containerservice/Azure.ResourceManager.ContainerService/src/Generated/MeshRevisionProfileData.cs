@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the MeshRevisionProfile data model.
     /// Mesh revision profile for a mesh.
+    /// Serialized Name: MeshRevisionProfile
     /// </summary>
     public partial class MeshRevisionProfileData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Mesh revision profile properties for a mesh. </param>
+        /// <param name="properties">
+        /// Mesh revision profile properties for a mesh
+        /// Serialized Name: MeshRevisionProfile.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshRevisionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MeshRevisionProfileProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,9 +73,12 @@ namespace Azure.ResourceManager.ContainerService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Mesh revision profile properties for a mesh. </summary>
+        /// <summary>
+        /// Mesh revision profile properties for a mesh
+        /// Serialized Name: MeshRevisionProfile.properties
+        /// </summary>
         internal MeshRevisionProfileProperties Properties { get; set; }
-        /// <summary> Gets the mesh revisions. </summary>
+        /// <summary> Serialized Name: MeshRevisionProfileProperties.meshRevisions. </summary>
         [WirePath("properties.meshRevisions")]
         public IList<MeshRevision> MeshRevisions
         {

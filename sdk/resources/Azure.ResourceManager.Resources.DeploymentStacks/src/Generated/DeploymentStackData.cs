@@ -7,251 +7,354 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
-    /// <summary>
-    /// A class representing the DeploymentStack data model.
-    /// Deployment stack object.
-    /// </summary>
+    /// <summary> Deployment stack object. </summary>
     public partial class DeploymentStackData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
         public DeploymentStackData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Parameters = new ChangeTrackingDictionary<string, DeploymentParameter>();
-            DetachedResources = new ChangeTrackingList<SubResource>();
-            DeletedResources = new ChangeTrackingList<SubResource>();
-            FailedResources = new ChangeTrackingList<ResourceReferenceExtended>();
-            Resources = new ChangeTrackingList<ManagedResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the Deployment stack. It cannot be changed after creation. It must be one of the supported Azure locations. </param>
-        /// <param name="tags"> Deployment stack resource tags. </param>
-        /// <param name="error"> The error detail. </param>
-        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
-        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
-        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. Use this element when providing the parameter values directly in the request, rather than linking to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. </param>
-        /// <param name="parametersLink"> The URI of parameters file. Use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
-        /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
-        /// <param name="debugSetting"> The debug setting of the deployment. </param>
-        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
-        /// <param name="deploymentScope"> The scope at which the initial deployment should be created. If a scope is not specified, it will default to the scope of the deployment stack. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'). </param>
-        /// <param name="description"> Deployment stack description. Max length of 4096 characters. </param>
-        /// <param name="denySettings"> Defines how resources deployed by the stack are locked. </param>
-        /// <param name="provisioningState"> State of the deployment stack. </param>
-        /// <param name="correlationId"> The correlation id of the last Deployment stack upsert or delete operation. It is in GUID format and is used for tracing. </param>
-        /// <param name="detachedResources"> An array of resources that were detached during the most recent Deployment stack update. Detached means that the resource was removed from the template, but no relevant deletion operations were specified. So, the resource still exists while no longer being associated with the stack. </param>
-        /// <param name="deletedResources"> An array of resources that were deleted during the most recent Deployment stack update. Deleted means that the resource was removed from the template and relevant deletion operations were specified. </param>
-        /// <param name="failedResources"> An array of resources that failed to reach goal state during the most recent update. Each resourceId is accompanied by an error message. </param>
-        /// <param name="resources"> An array of resources currently managed by the deployment stack. </param>
-        /// <param name="deploymentId"> The resourceId of the deployment resource created by the deployment stack. </param>
-        /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
-        /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ResponseError error, BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, DeploymentStacksDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Deployment stack properties. </param>
+        /// <param name="location"> The geo-location where the resource lives. Required for subscription and management group scoped stacks. The location is inherited from the resource group for resource group scoped stacks. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeploymentStackProperties properties, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
             Tags = tags;
-            Error = error;
-            Template = template;
-            TemplateLink = templateLink;
-            Parameters = parameters;
-            ParametersLink = parametersLink;
-            ActionOnUnmanage = actionOnUnmanage;
-            DebugSetting = debugSetting;
-            BypassStackOutOfSyncError = bypassStackOutOfSyncError;
-            DeploymentScope = deploymentScope;
-            Description = description;
-            DenySettings = denySettings;
-            ProvisioningState = provisioningState;
-            CorrelationId = correlationId;
-            DetachedResources = detachedResources;
-            DeletedResources = deletedResources;
-            FailedResources = failedResources;
-            Resources = resources;
-            DeploymentId = deploymentId;
-            Outputs = outputs;
-            Duration = duration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The location of the Deployment stack. It cannot be changed after creation. It must be one of the supported Azure locations. </summary>
-        [WirePath("location")]
+        /// <summary> Deployment stack properties. </summary>
+        internal DeploymentStackProperties Properties { get; set; }
+
+        /// <summary> The geo-location where the resource lives. Required for subscription and management group scoped stacks. The location is inherited from the resource group for resource group scoped stacks. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Deployment stack resource tags. </summary>
-        [WirePath("tags")]
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The error detail. </summary>
-        [WirePath("properties.error")]
-        public ResponseError Error { get; set; }
-        /// <summary>
-        /// The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.template")]
-        public BinaryData Template { get; set; }
-        /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
-        [WirePath("properties.templateLink")]
-        public DeploymentStacksTemplateLink TemplateLink { get; set; }
-        /// <summary> Name and value pairs that define the deployment parameters for the template. Use this element when providing the parameter values directly in the request, rather than linking to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. </summary>
-        [WirePath("properties.parameters")]
-        public IDictionary<string, DeploymentParameter> Parameters { get; }
-        /// <summary> The URI of parameters file. Use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
-        [WirePath("properties.parametersLink")]
-        public DeploymentStacksParametersLink ParametersLink { get; set; }
-        /// <summary> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </summary>
-        [WirePath("properties.actionOnUnmanage")]
-        public ActionOnUnmanage ActionOnUnmanage { get; set; }
-        /// <summary> The debug setting of the deployment. </summary>
-        internal DeploymentStacksDebugSetting DebugSetting { get; set; }
-        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </summary>
-        [WirePath("properties.debugSetting.detailLevel")]
-        public string DebugSettingDetailLevel
+        public ResponseError Error
         {
-            get => DebugSetting is null ? default : DebugSetting.DetailLevel;
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </summary>
+        public BinaryData Template
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Template;
+            }
             set
             {
-                if (DebugSetting is null)
-                    DebugSetting = new DeploymentStacksDebugSetting();
-                DebugSetting.DetailLevel = value;
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.Template = value;
+            }
+        }
+
+        /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
+        public DeploymentStacksTemplateLink TemplateLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TemplateLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.TemplateLink = value;
+            }
+        }
+
+        /// <summary> Name and value pairs that define the deployment parameters for the template. Use this element when providing the parameter values directly in the request, rather than linking to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. </summary>
+        public IDictionary<string, DeploymentParameterItem> Parameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Parameters;
+            }
+        }
+
+        /// <summary> The URI of parameters file. Use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
+        public DeploymentStacksParametersLink ParametersLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ParametersLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.ParametersLink = value;
+            }
+        }
+
+        /// <summary> The deployment extension configs. Keys of this object are extension aliases as defined in the deployment template. </summary>
+        public IDictionary<string, DeploymentExtensionConfig> ExtensionConfigs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionConfigs;
+            }
+        }
+
+        /// <summary> External input values, used by external tooling for parameter evaluation. </summary>
+        public IDictionary<string, DeploymentExternalInput> ExternalInputs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalInputs;
+            }
+        }
+
+        /// <summary> External input definitions, used by external tooling to define expected external input values. </summary>
+        public IDictionary<string, DeploymentExternalInputDefinition> ExternalInputDefinitions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalInputDefinitions;
+            }
+        }
+
+        /// <summary> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </summary>
+        public ActionOnUnmanage ActionOnUnmanage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActionOnUnmanage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.ActionOnUnmanage = value;
+            }
+        }
+
+        /// <summary> The scope at which the initial deployment should be created. If a scope is not specified, it will default to the scope of the deployment stack. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'). </summary>
+        public string DeploymentScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.DeploymentScope = value;
+            }
+        }
+
+        /// <summary> Deployment stack description. Max length of 4096 characters. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Defines how resources deployed by the stack are locked. </summary>
+        public DeploymentStackDenySettings DenySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DenySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.DenySettings = value;
+            }
+        }
+
+        /// <summary> State of the deployment stack. </summary>
+        public DeploymentStackProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The correlation id of the last Deployment stack upsert or delete operation. It is in GUID format and is used for tracing. </summary>
+        public string CorrelationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorrelationId;
+            }
+        }
+
+        /// <summary> The validation level of the deployment stack. </summary>
+        public DeploymentStackValidationLevel? ValidationLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.ValidationLevel = value.Value;
             }
         }
 
         /// <summary> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </summary>
-        [WirePath("properties.bypassStackOutOfSyncError")]
-        public bool? BypassStackOutOfSyncError { get; set; }
-        /// <summary> The scope at which the initial deployment should be created. If a scope is not specified, it will default to the scope of the deployment stack. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'). </summary>
-        [WirePath("properties.deploymentScope")]
-        public string DeploymentScope { get; set; }
-        /// <summary> Deployment stack description. Max length of 4096 characters. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> Defines how resources deployed by the stack are locked. </summary>
-        [WirePath("properties.denySettings")]
-        public DenySettings DenySettings { get; set; }
-        /// <summary> State of the deployment stack. </summary>
-        [WirePath("properties.provisioningState")]
-        public DeploymentStackProvisioningState? ProvisioningState { get; }
-        /// <summary> The correlation id of the last Deployment stack upsert or delete operation. It is in GUID format and is used for tracing. </summary>
-        [WirePath("properties.correlationId")]
-        public string CorrelationId { get; }
+        public bool? BypassStackOutOfSyncError
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BypassStackOutOfSyncError;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.BypassStackOutOfSyncError = value.Value;
+            }
+        }
+
         /// <summary> An array of resources that were detached during the most recent Deployment stack update. Detached means that the resource was removed from the template, but no relevant deletion operations were specified. So, the resource still exists while no longer being associated with the stack. </summary>
-        [WirePath("properties.detachedResources")]
-        public IReadOnlyList<SubResource> DetachedResources { get; }
+        public IReadOnlyList<DeploymentStackResourceReference> DetachedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetachedResources;
+            }
+        }
+
         /// <summary> An array of resources that were deleted during the most recent Deployment stack update. Deleted means that the resource was removed from the template and relevant deletion operations were specified. </summary>
-        [WirePath("properties.deletedResources")]
-        public IReadOnlyList<SubResource> DeletedResources { get; }
+        public IReadOnlyList<DeploymentStackResourceReference> DeletedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedResources;
+            }
+        }
+
         /// <summary> An array of resources that failed to reach goal state during the most recent update. Each resourceId is accompanied by an error message. </summary>
-        [WirePath("properties.failedResources")]
-        public IReadOnlyList<ResourceReferenceExtended> FailedResources { get; }
+        public IReadOnlyList<DeploymentStackResourceReferenceExtended> FailedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailedResources;
+            }
+        }
+
         /// <summary> An array of resources currently managed by the deployment stack. </summary>
-        [WirePath("properties.resources")]
-        public IReadOnlyList<ManagedResourceReference> Resources { get; }
+        public IReadOnlyList<DeploymentStackManagedResourceReference> Resources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Resources;
+            }
+        }
+
+        /// <summary> The extensions used during deployment. Contains extension data for all extensible resources managed by the stack. </summary>
+        public IReadOnlyList<DeploymentExtension> DeploymentExtensions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentExtensions;
+            }
+        }
+
         /// <summary> The resourceId of the deployment resource created by the deployment stack. </summary>
-        [WirePath("properties.deploymentId")]
-        public string DeploymentId { get; }
-        /// <summary>
-        /// The outputs of the deployment resource created by the deployment stack.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.outputs")]
-        public BinaryData Outputs { get; }
+        public string DeploymentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentId;
+            }
+        }
+
+        /// <summary> The outputs of the deployment resource created by the deployment stack. </summary>
+        public BinaryData Outputs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Outputs;
+            }
+        }
+
         /// <summary> The duration of the last successful Deployment stack update. </summary>
-        [WirePath("properties.duration")]
-        public TimeSpan? Duration { get; }
+        public TimeSpan? Duration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Duration;
+            }
+        }
+
+        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </summary>
+        public string DebugSettingDetailLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DebugSettingDetailLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentStackProperties();
+                }
+                Properties.DebugSettingDetailLevel = value;
+            }
+        }
     }
 }

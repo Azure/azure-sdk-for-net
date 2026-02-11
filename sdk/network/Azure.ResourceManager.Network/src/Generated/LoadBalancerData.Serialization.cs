@@ -136,6 +136,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -176,6 +181,7 @@ namespace Azure.ResourceManager.Network
             IList<OutboundRuleData> outboundRules = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
+            LoadBalancerScope? scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -378,6 +384,15 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("scope"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scope = new LoadBalancerScope(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -405,7 +420,8 @@ namespace Azure.ResourceManager.Network
                 inboundNatPools ?? new ChangeTrackingList<LoadBalancerInboundNatPool>(),
                 outboundRules ?? new ChangeTrackingList<OutboundRuleData>(),
                 resourceGuid,
-                provisioningState);
+                provisioningState,
+                scope);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -744,6 +760,21 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
+                {
+                    builder.Append("    scope: ");
+                    builder.AppendLine($"'{Scope.Value.ToString()}'");
                 }
             }
 

@@ -10,11 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary>
-    /// The IP allocation mechanism for the virtual machine.
-    /// Dynamic and Static are only valid for l3Network which may also specify Disabled.
-    /// Otherwise, Disabled is the only permitted value.
-    /// </summary>
+    /// <summary> The IP allocation mechanism for the virtual machine. Dynamic and Static are only valid for l3Network which may also specify Disabled. Otherwise, Disabled is the only permitted value. </summary>
     public readonly partial struct VirtualMachineIPAllocationMethod : IEquatable<VirtualMachineIPAllocationMethod>
     {
         private readonly string _value;

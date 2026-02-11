@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Details of the Compute Fleet. </summary>
     public partial class ComputeFleetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetProperties"/>. </summary>
         /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
@@ -69,8 +41,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="mode"> Mode of the Fleet. </param>
+        /// <param name="capacityType">
+        /// Specifies capacity type for Fleet Regular and Spot priority profiles.
+        /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
+        /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
+        /// </param>
+        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -81,38 +60,50 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeProfile = computeProfile;
             CreatedOn = createdOn;
             UniqueId = uniqueId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetProperties"/> for deserialization. </summary>
-        internal ComputeFleetProperties()
-        {
+            Mode = mode;
+            CapacityType = capacityType;
+            ZoneAllocationPolicy = zoneAllocationPolicy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the last operation. </summary>
         public ComputeFleetProvisioningState? ProvisioningState { get; }
+
         /// <summary> Configuration Options for Spot instances in Compute Fleet. </summary>
         public SpotPriorityProfile SpotPriorityProfile { get; set; }
+
         /// <summary> Configuration Options for Regular instances in Compute Fleet. </summary>
         public RegularPriorityProfile RegularPriorityProfile { get; set; }
+
         /// <summary> List of VM sizes supported for Compute Fleet. </summary>
         public IList<ComputeFleetVmSizeProfile> VmSizesProfile { get; }
+
         /// <summary> Attribute based Fleet. </summary>
         public ComputeFleetVmAttributes VmAttributes { get; set; }
+
         /// <summary> Represents the configuration for additional locations where Fleet resources may be deployed. </summary>
         internal AdditionalLocationsProfile AdditionalLocationsProfile { get; set; }
-        /// <summary> The list of location profiles. </summary>
-        public IList<LocationProfile> AdditionalLocationsLocationProfiles
-        {
-            get => AdditionalLocationsProfile is null ? default : AdditionalLocationsProfile.LocationProfiles;
-            set => AdditionalLocationsProfile = new AdditionalLocationsProfile(value);
-        }
 
         /// <summary> Compute Profile to use for running user's workloads. </summary>
         public ComputeFleetComputeProfile ComputeProfile { get; set; }
+
         /// <summary> Specifies the time at which the Compute Fleet is created. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Specifies the ID which uniquely identifies a Compute Fleet. </summary>
         public string UniqueId { get; }
+
+        /// <summary> Mode of the Fleet. </summary>
+        public ComputeFleetMode? Mode { get; set; }
+
+        /// <summary>
+        /// Specifies capacity type for Fleet Regular and Spot priority profiles.
+        /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
+        /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
+        /// </summary>
+        public ComputeFleetCapacityType? CapacityType { get; set; }
+
+        /// <summary> Zone Allocation Policy for Fleet. </summary>
+        public ComputeFleetZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
     }
 }

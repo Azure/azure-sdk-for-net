@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct VolumeExpansion : IEquatable<VolumeExpansion>
     {
         private readonly string _value;
+        /// <summary> Allow volume expansion. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> Disallow volume expansion. </summary>
+        private const string DisallowValue = "Disallow";
 
         /// <summary> Initializes a new instance of <see cref="VolumeExpansion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VolumeExpansion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "Allow";
-        private const string DisallowValue = "Disallow";
+            _value = value;
+        }
 
         /// <summary> Allow volume expansion. </summary>
         public static VolumeExpansion Allow { get; } = new VolumeExpansion(AllowValue);
+
         /// <summary> Disallow volume expansion. </summary>
         public static VolumeExpansion Disallow { get; } = new VolumeExpansion(DisallowValue);
+
         /// <summary> Determines if two <see cref="VolumeExpansion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeExpansion left, VolumeExpansion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VolumeExpansion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeExpansion left, VolumeExpansion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeExpansion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VolumeExpansion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VolumeExpansion(string value) => new VolumeExpansion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VolumeExpansion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VolumeExpansion?(string value) => value == null ? null : new VolumeExpansion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VolumeExpansion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VolumeExpansion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

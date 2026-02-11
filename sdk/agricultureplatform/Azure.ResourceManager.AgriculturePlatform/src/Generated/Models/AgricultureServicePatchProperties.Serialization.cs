@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AgriculturePlatform;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
-    public partial class AgricultureServicePatchProperties : IUtf8JsonSerializable, IJsonModel<AgricultureServicePatchProperties>
+    /// <summary> The updatable properties of the AgriServiceResource. </summary>
+    public partial class AgricultureServicePatchProperties : IJsonModel<AgricultureServicePatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgricultureServicePatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgricultureServicePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgricultureServicePatchProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 writer.WritePropertyName("dataConnectorCredentials"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataConnectorCredentials)
+                foreach (DataConnectorCredentialMap item in DataConnectorCredentials)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             {
                 writer.WritePropertyName("installedSolutions"u8);
                 writer.WriteStartArray();
-                foreach (var item in InstalledSolutions)
+                foreach (InstalledSolutionMap item in InstalledSolutions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +76,27 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
-        AgricultureServicePatchProperties IJsonModel<AgricultureServicePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgricultureServicePatchProperties IJsonModel<AgricultureServicePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgricultureServicePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgricultureServicePatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAgricultureServicePatchProperties(document.RootElement, options);
         }
 
-        internal static AgricultureServicePatchProperties DeserializeAgricultureServicePatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AgricultureServicePatchProperties DeserializeAgricultureServicePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,41 +104,40 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             AgricultureServiceConfig config = default;
             IList<DataConnectorCredentialMap> dataConnectorCredentials = default;
             IList<InstalledSolutionMap> installedSolutions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("config"u8))
+                if (prop.NameEquals("config"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    config = AgricultureServiceConfig.DeserializeAgricultureServiceConfig(property.Value, options);
+                    config = AgricultureServiceConfig.DeserializeAgricultureServiceConfig(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataConnectorCredentials"u8))
+                if (prop.NameEquals("dataConnectorCredentials"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataConnectorCredentialMap> array = new List<DataConnectorCredentialMap>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataConnectorCredentialMap.DeserializeDataConnectorCredentialMap(item, options));
                     }
                     dataConnectorCredentials = array;
                     continue;
                 }
-                if (property.NameEquals("installedSolutions"u8))
+                if (prop.NameEquals("installedSolutions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InstalledSolutionMap> array = new List<InstalledSolutionMap>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InstalledSolutionMap.DeserializeInstalledSolutionMap(item, options));
                     }
@@ -142,17 +146,19 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AgricultureServicePatchProperties(config, dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>(), installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>(), serializedAdditionalRawData);
+            return new AgricultureServicePatchProperties(config, dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>(), installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AgricultureServicePatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgricultureServicePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -162,15 +168,20 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
-        AgricultureServicePatchProperties IPersistableModel<AgricultureServicePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgricultureServicePatchProperties IPersistableModel<AgricultureServicePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgricultureServicePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAgricultureServicePatchProperties(document.RootElement, options);
                     }
                 default:
@@ -178,6 +189,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgricultureServicePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

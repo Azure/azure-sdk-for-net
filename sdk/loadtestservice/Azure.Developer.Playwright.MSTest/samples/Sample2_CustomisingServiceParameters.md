@@ -25,7 +25,7 @@ public class PlaywrightServiceMSTestSetup
     [AssemblyInitialize]
     public static async Task AssemblyInitialize(TestContext testContext)
     {
-        playwrightClient = new PlaywrightServiceBrowserMSTest(credential: new ManagedIdentityCredential(), options: new Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions()
+        playwrightClient = new PlaywrightServiceBrowserMSTest(credential: new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned), options: new Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions()
         {
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",

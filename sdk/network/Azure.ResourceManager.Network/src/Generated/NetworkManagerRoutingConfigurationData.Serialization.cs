@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
+            if (Optional.IsDefined(RouteTableUsageMode))
+            {
+                writer.WritePropertyName("routeTableUsageMode"u8);
+                writer.WriteStringValue(RouteTableUsageMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.Network
             string description = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
+            RouteTableUsageMode? routeTableUsageMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,6 +166,15 @@ namespace Azure.ResourceManager.Network
                             resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("routeTableUsageMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            routeTableUsageMode = new RouteTableUsageMode(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -177,6 +192,7 @@ namespace Azure.ResourceManager.Network
                 description,
                 provisioningState,
                 resourceGuid,
+                routeTableUsageMode,
                 etag,
                 serializedAdditionalRawData);
         }
@@ -312,6 +328,21 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    resourceGuid: ");
                     builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteTableUsageMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routeTableUsageMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RouteTableUsageMode))
+                {
+                    builder.Append("    routeTableUsageMode: ");
+                    builder.AppendLine($"'{RouteTableUsageMode.Value.ToString()}'");
                 }
             }
 

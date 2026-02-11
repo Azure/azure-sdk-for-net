@@ -49,7 +49,7 @@ namespace Azure.AI.Inference
         /// <param name="embeddingsOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        /// <include file="../Generated/Docs/EmbeddingsClient.xml" path="doc/members/member[@name='EmbedAsync(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
+        /// <include file="./Docs/EmbeddingsClient.xml" path="doc/members/member[@name='EmbedAsync(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
         public virtual async Task<Response<EmbeddingsResult>> EmbedAsync(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
@@ -75,7 +75,7 @@ namespace Azure.AI.Inference
         /// <param name="embeddingsOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        /// <include file="../Generated/Docs/EmbeddingsClient.xml" path="doc/members/member[@name='Embed(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
+        /// <include file="./Docs/EmbeddingsClient.xml" path="doc/members/member[@name='Embed(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
         public virtual Response<EmbeddingsResult> Embed(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));

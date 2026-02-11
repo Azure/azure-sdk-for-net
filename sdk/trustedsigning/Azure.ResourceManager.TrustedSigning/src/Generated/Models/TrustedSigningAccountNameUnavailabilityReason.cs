@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public readonly partial struct TrustedSigningAccountNameUnavailabilityReason : IEquatable<TrustedSigningAccountNameUnavailabilityReason>
     {
         private readonly string _value;
+        /// <summary> Account name is invalid. </summary>
+        private const string AccountNameInvalidValue = "AccountNameInvalid";
+        /// <summary> Account name already exists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameUnavailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TrustedSigningAccountNameUnavailabilityReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AccountNameInvalidValue = "AccountNameInvalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> Account name is invalid. </summary>
         public static TrustedSigningAccountNameUnavailabilityReason AccountNameInvalid { get; } = new TrustedSigningAccountNameUnavailabilityReason(AccountNameInvalidValue);
+
         /// <summary> Account name already exists. </summary>
         public static TrustedSigningAccountNameUnavailabilityReason AlreadyExists { get; } = new TrustedSigningAccountNameUnavailabilityReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="TrustedSigningAccountNameUnavailabilityReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrustedSigningAccountNameUnavailabilityReason left, TrustedSigningAccountNameUnavailabilityReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrustedSigningAccountNameUnavailabilityReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrustedSigningAccountNameUnavailabilityReason left, TrustedSigningAccountNameUnavailabilityReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedSigningAccountNameUnavailabilityReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrustedSigningAccountNameUnavailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrustedSigningAccountNameUnavailabilityReason(string value) => new TrustedSigningAccountNameUnavailabilityReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrustedSigningAccountNameUnavailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrustedSigningAccountNameUnavailabilityReason?(string value) => value == null ? null : new TrustedSigningAccountNameUnavailabilityReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrustedSigningAccountNameUnavailabilityReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrustedSigningAccountNameUnavailabilityReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

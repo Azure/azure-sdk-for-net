@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TemplateDeploymentPreflightOption. </summary>
+    /// <summary> The preflight options. </summary>
     public readonly partial struct TemplateDeploymentPreflightOption : IEquatable<TemplateDeploymentPreflightOption>
     {
         private readonly string _value;

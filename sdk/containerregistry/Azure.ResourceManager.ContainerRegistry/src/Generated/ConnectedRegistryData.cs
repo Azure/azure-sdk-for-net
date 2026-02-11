@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="version"> The current version of ACR runtime on the connected registry. </param>
         /// <param name="connectionState"> The current connection state of the connected registry. </param>
         /// <param name="lastActivityOn"> The last activity time of the connected registry. </param>
-        /// <param name="activation"></param>
-        /// <param name="parent"> The properties of the connected registry parent. </param>
+        /// <param name="activation"> The activation properties of the connected registry. </param>
+        /// <param name="parent"> The parent of the connected registry. </param>
         /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
         /// <param name="loginServer"> The login server properties of the connected registry. </param>
         /// <param name="logging"> The logging properties of the connected registry. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
         /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode? mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ConnectedRegistryPropertiesActivation activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode? mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ConnectedRegistryActivation activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Mode = mode;
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The last activity time of the connected registry. </summary>
         [WirePath("properties.lastActivityTime")]
         public DateTimeOffset? LastActivityOn { get; }
-        /// <summary> Gets the activation. </summary>
-        internal ConnectedRegistryPropertiesActivation Activation { get; }
+        /// <summary> The activation properties of the connected registry. </summary>
+        internal ConnectedRegistryActivation Activation { get; }
         /// <summary> The activation status of the connected registry. </summary>
         [WirePath("properties.activation.status")]
         public ConnectedRegistryActivationStatus? ActivationStatus
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             get => Activation?.Status;
         }
 
-        /// <summary> The properties of the connected registry parent. </summary>
+        /// <summary> The parent of the connected registry. </summary>
         [WirePath("properties.parent")]
         public ConnectedRegistryParent Parent { get; set; }
         /// <summary> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </summary>

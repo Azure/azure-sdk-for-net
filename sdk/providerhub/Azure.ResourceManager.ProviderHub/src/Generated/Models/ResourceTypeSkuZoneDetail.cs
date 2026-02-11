@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuZoneDetail"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="capabilities"></param>
+        /// <param name="name"> The name. </param>
+        /// <param name="capabilities"> The capabilities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeSkuZoneDetail(IList<string> name, IList<ResourceSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The name. </summary>
         public IList<string> Name { get; }
-        /// <summary> Gets the capabilities. </summary>
+        /// <summary> The capabilities. </summary>
         public IList<ResourceSkuCapability> Capabilities { get; }
     }
 }

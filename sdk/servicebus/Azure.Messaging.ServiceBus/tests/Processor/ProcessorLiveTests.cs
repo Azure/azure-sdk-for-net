@@ -453,7 +453,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await tcs.Task;
 
-                var receiver = CreateNoRetryClient().CreateReceiver(scope.QueueName);
+                await using var noRetryClient = CreateNoRetryClient();
+                await using var receiver = noRetryClient.CreateReceiver(scope.QueueName);
                 var receivedMessages = await receiver.ReceiveMessagesAsync(numMessages);
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync, but we can at least verify that there are remaining messages

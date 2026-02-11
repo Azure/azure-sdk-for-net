@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
     /// <summary>
-    /// A Class representing a DatabaseWatcherHealthValidation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseWatcherHealthValidationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseWatcherHealthValidationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseWatcherResource"/> using the GetDatabaseWatcherHealthValidation method.
+    /// A class representing a DatabaseWatcherHealthValidation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseWatcherHealthValidationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DatabaseWatcherResource"/> using the GetDatabaseWatcherHealthValidations method.
     /// </summary>
     public partial class DatabaseWatcherHealthValidationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatabaseWatcherHealthValidationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="watcherName"> The watcherName. </param>
-        /// <param name="healthValidationName"> The healthValidationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string watcherName, string healthValidationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _databaseWatcherHealthValidationHealthValidationsClientDiagnostics;
-        private readonly HealthValidationsRestOperations _databaseWatcherHealthValidationHealthValidationsRestClient;
+        private readonly ClientDiagnostics _healthValidationsClientDiagnostics;
+        private readonly HealthValidations _healthValidationsRestClient;
         private readonly DatabaseWatcherHealthValidationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DatabaseWatcher/watchers/healthValidations";
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherHealthValidationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DatabaseWatcherHealthValidationResource for mocking. </summary>
         protected DatabaseWatcherHealthValidationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherHealthValidationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherHealthValidationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseWatcherHealthValidationResource(ArmClient client, DatabaseWatcherHealthValidationData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.DatabaseWatcher
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherHealthValidationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherHealthValidationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseWatcherHealthValidationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseWatcherHealthValidationHealthValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string databaseWatcherHealthValidationHealthValidationsApiVersion);
-            _databaseWatcherHealthValidationHealthValidationsRestClient = new HealthValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherHealthValidationHealthValidationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string databaseWatcherHealthValidationApiVersion);
+            _healthValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
+            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DatabaseWatcherHealthValidationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="watcherName"> The watcherName. </param>
+        /// <param name="healthValidationName"> The healthValidationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string watcherName, string healthValidationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a HealthValidation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthValidation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthValidations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherHealthValidationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherHealthValidationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DatabaseWatcherHealthValidationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherHealthValidationHealthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.Get");
+            using DiagnosticScope scope = _healthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.Get");
             scope.Start();
             try
             {
-                var response = await _databaseWatcherHealthValidationHealthValidationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatabaseWatcherHealthValidationData> response = Response.FromValue(DatabaseWatcherHealthValidationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatabaseWatcherHealthValidationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Get a HealthValidation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthValidation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthValidations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherHealthValidationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherHealthValidationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseWatcherHealthValidationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherHealthValidationHealthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.Get");
+            using DiagnosticScope scope = _healthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.Get");
             scope.Start();
             try
             {
-                var response = _databaseWatcherHealthValidationHealthValidationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatabaseWatcherHealthValidationData> response = Response.FromValue(DatabaseWatcherHealthValidationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatabaseWatcherHealthValidationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Starts health validation for a watcher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}/startValidation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}/startValidation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthValidations_StartValidation</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthValidations_StartValidation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherHealthValidationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherHealthValidationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,27 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<DatabaseWatcherHealthValidationResource>> StartValidationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherHealthValidationHealthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.StartValidation");
+            using DiagnosticScope scope = _healthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.StartValidation");
             scope.Start();
             try
             {
-                var response = await _databaseWatcherHealthValidationHealthValidationsRestClient.StartValidationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(new DatabaseWatcherHealthValidationOperationSource(Client), _databaseWatcherHealthValidationHealthValidationsClientDiagnostics, Pipeline, _databaseWatcherHealthValidationHealthValidationsRestClient.CreateStartValidationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthValidationsRestClient.CreateStartValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(
+                    new DatabaseWatcherHealthValidationOperationSource(Client),
+                    _healthValidationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +246,20 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Starts health validation for a watcher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}/startValidation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/healthValidations/{healthValidationName}/startValidation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthValidations_StartValidation</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthValidations_StartValidation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherHealthValidationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseWatcherHealthValidationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +267,27 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<DatabaseWatcherHealthValidationResource> StartValidation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseWatcherHealthValidationHealthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.StartValidation");
+            using DiagnosticScope scope = _healthValidationsClientDiagnostics.CreateScope("DatabaseWatcherHealthValidationResource.StartValidation");
             scope.Start();
             try
             {
-                var response = _databaseWatcherHealthValidationHealthValidationsRestClient.StartValidation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(new DatabaseWatcherHealthValidationOperationSource(Client), _databaseWatcherHealthValidationHealthValidationsClientDiagnostics, Pipeline, _databaseWatcherHealthValidationHealthValidationsRestClient.CreateStartValidationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _healthValidationsRestClient.CreateStartValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(
+                    new DatabaseWatcherHealthValidationOperationSource(Client),
+                    _healthValidationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

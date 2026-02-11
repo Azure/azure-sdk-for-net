@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowGraph destination node settings. </summary>
     public partial class DataflowGraphDestinationNodeSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphDestinationNodeSettings"/>. </summary>
         /// <param name="endpointRef"> The name of the DataflowEndpoint resource . </param>
@@ -56,31 +28,29 @@ namespace Azure.ResourceManager.IotOperations.Models
 
             EndpointRef = endpointRef;
             DataDestination = dataDestination;
+            Headers = new ChangeTrackingList<DataflowGraphDestinationHeaderAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphDestinationNodeSettings"/>. </summary>
         /// <param name="endpointRef"> The name of the DataflowEndpoint resource . </param>
         /// <param name="dataDestination"> Data destination at the endpoint. </param>
-        /// <param name="outputSchemaSettings"> Output schema settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowGraphDestinationNodeSettings(string endpointRef, string dataDestination, DataflowGraphDestinationSchemaSettings outputSchemaSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="headers"> Headers for the output data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowGraphDestinationNodeSettings(string endpointRef, string dataDestination, IList<DataflowGraphDestinationHeaderAction> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointRef = endpointRef;
             DataDestination = dataDestination;
-            OutputSchemaSettings = outputSchemaSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowGraphDestinationNodeSettings"/> for deserialization. </summary>
-        internal DataflowGraphDestinationNodeSettings()
-        {
+            Headers = headers;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the DataflowEndpoint resource . </summary>
         public string EndpointRef { get; set; }
+
         /// <summary> Data destination at the endpoint. </summary>
         public string DataDestination { get; set; }
-        /// <summary> Output schema settings. </summary>
-        public DataflowGraphDestinationSchemaSettings OutputSchemaSettings { get; set; }
+
+        /// <summary> Headers for the output data. </summary>
+        public IList<DataflowGraphDestinationHeaderAction> Headers { get; }
     }
 }

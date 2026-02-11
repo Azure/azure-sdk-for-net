@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class DeployJobStepStatistics : IUtf8JsonSerializable, IJsonModel<DeployJobStepStatistics>
+    /// <summary> Deploy statistics for a job step, including total, success, and failed counts. </summary>
+    public partial class DeployJobStepStatistics : EdgeJobStepStatistics, IJsonModel<DeployJobStepStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeployJobStepStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeployJobStepStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeployJobStepStatistics)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TotalCount))
             {
@@ -52,79 +52,85 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        DeployJobStepStatistics IJsonModel<DeployJobStepStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeployJobStepStatistics IJsonModel<DeployJobStepStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeployJobStepStatistics)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EdgeJobStepStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeployJobStepStatistics)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeployJobStepStatistics(document.RootElement, options);
         }
 
-        internal static DeployJobStepStatistics DeserializeDeployJobStepStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeployJobStepStatistics DeserializeDeployJobStepStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            EdgeJobType statisticsType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? totalCount = default;
             int? successCount = default;
             int? failedCount = default;
-            EdgeJobType statisticsType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("totalCount"u8))
+                if (prop.NameEquals("statisticsType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    statisticsType = new EdgeJobType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("totalCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalCount = property.Value.GetInt32();
+                    totalCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("successCount"u8))
+                if (prop.NameEquals("successCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    successCount = property.Value.GetInt32();
+                    successCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedCount"u8))
+                if (prop.NameEquals("failedCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failedCount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("statisticsType"u8))
-                {
-                    statisticsType = new EdgeJobType(property.Value.GetString());
+                    failedCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeployJobStepStatistics(statisticsType, serializedAdditionalRawData, totalCount, successCount, failedCount);
+            return new DeployJobStepStatistics(statisticsType, additionalBinaryDataProperties, totalCount, successCount, failedCount);
         }
 
-        BinaryData IPersistableModel<DeployJobStepStatistics>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeployJobStepStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -134,15 +140,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        DeployJobStepStatistics IPersistableModel<DeployJobStepStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeployJobStepStatistics IPersistableModel<DeployJobStepStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeployJobStepStatistics)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EdgeJobStepStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeployJobStepStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeployJobStepStatistics(document.RootElement, options);
                     }
                 default:
@@ -150,6 +161,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeployJobStepStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

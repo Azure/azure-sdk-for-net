@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Input;
@@ -30,6 +31,13 @@ namespace Azure.Generator.Management.Utilities
 
         public static CSharpType? GetResponseBodyType(this InputServiceMethod method)
         {
+            // For long-running operations, get the response body type from LongRunningServiceMetadata.ReturnType
+            if (method is InputLongRunningServiceMethod lroMethod)
+            {
+                var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+                return returnType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
+            }
+
             var operationResponses = method.Operation.Responses;
             var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
             var responseBodyType = response?.BodyType;

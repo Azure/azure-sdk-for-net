@@ -13,6 +13,7 @@
             SA1402; <!-- Webjobs sources package has files with multiple types -->
         </NoWarn>
         <InheritDocTrimLevel>internal</InheritDocTrimLevel>
+        <AotCompatOptOut>true</AotCompatOptOut>
     </PropertyGroup>
 
     <ItemGroup>

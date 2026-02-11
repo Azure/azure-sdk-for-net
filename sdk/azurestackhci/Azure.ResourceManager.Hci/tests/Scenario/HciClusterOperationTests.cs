@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Tests
 {
-    public class HciClusterOperationTests: HciManagementTestBase
+    public class HciClusterOperationTests : HciManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private HciClusterResource _cluster;

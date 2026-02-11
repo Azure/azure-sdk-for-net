@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies set of extensions that should be installed onto the virtual machines. </summary>
     public partial class NodeTypeVmssExtension
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
@@ -59,130 +31,195 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(typeHandlerVersion, nameof(typeHandlerVersion));
 
             Name = name;
-            Publisher = publisher;
-            VmssExtensionPropertiesType = vmssExtensionPropertiesType;
-            TypeHandlerVersion = typeHandlerVersion;
-            ProvisionAfterExtensions = new ChangeTrackingList<string>();
-            SetupOrder = new ChangeTrackingList<VmssExtensionSetupOrder>();
+            Properties = new VmssExtensionProperties(publisher, vmssExtensionPropertiesType, typeHandlerVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IList<VmssExtensionSetupOrder> setupOrder, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeVmssExtension(string name, VmssExtensionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Publisher = publisher;
-            VmssExtensionPropertiesType = vmssExtensionPropertiesType;
-            TypeHandlerVersion = typeHandlerVersion;
-            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
-            Settings = settings;
-            ProtectedSettings = protectedSettings;
-            ForceUpdateTag = forceUpdateTag;
-            ProvisionAfterExtensions = provisionAfterExtensions;
-            ProvisioningState = provisioningState;
-            IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
-            SetupOrder = setupOrder;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/> for deserialization. </summary>
-        internal NodeTypeVmssExtension()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the extension. </summary>
         public string Name { get; set; }
+
+        /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
+        internal VmssExtensionProperties Properties { get; set; }
+
         /// <summary> The name of the extension handler publisher. </summary>
-        public string Publisher { get; set; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Publisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.Publisher = value;
+            }
+        }
+
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string VmssExtensionPropertiesType { get; set; }
+        public string VmssExtensionPropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmssExtensionPropertiesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.VmssExtensionPropertiesType = value;
+            }
+        }
+
         /// <summary> Specifies the version of the script handler. </summary>
-        public string TypeHandlerVersion { get; set; }
+        public string TypeHandlerVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeHandlerVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.TypeHandlerVersion = value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
-        public bool? AutoUpgradeMinorVersion { get; set; }
-        /// <summary>
-        /// Json formatted public settings for the extension.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Settings { get; set; }
-        /// <summary>
-        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ProtectedSettings { get; set; }
+        public bool? AutoUpgradeMinorVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoUpgradeMinorVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.AutoUpgradeMinorVersion = value.Value;
+            }
+        }
+
+        /// <summary> Json formatted public settings for the extension. </summary>
+        public BinaryData Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Settings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.Settings = value;
+            }
+        }
+
+        /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
+        public BinaryData ProtectedSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectedSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.ProtectedSettings = value;
+            }
+        }
+
         /// <summary> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </summary>
-        public string ForceUpdateTag { get; set; }
+        public string ForceUpdateTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceUpdateTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.ForceUpdateTag = value;
+            }
+        }
+
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
-        public IList<string> ProvisionAfterExtensions { get; }
+        public IList<string> ProvisionAfterExtensions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                return Properties.ProvisionAfterExtensions;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
-        public bool? IsAutomaticUpgradeEnabled { get; set; }
+        public bool? IsAutomaticUpgradeEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutomaticUpgradeEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                Properties.IsAutomaticUpgradeEnabled = value.Value;
+            }
+        }
+
         /// <summary> Indicates the setup order for the extension. </summary>
-        public IList<VmssExtensionSetupOrder> SetupOrder { get; }
+        public IList<VmssExtensionSetupOrder> SetupOrder
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmssExtensionProperties();
+                }
+                return Properties.SetupOrder;
+            }
+        }
     }
 }

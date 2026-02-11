@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRestorableOn))
-            {
-                writer.WritePropertyName("oldestRestorableTime"u8);
-                writer.WriteStringValue(OldestRestorableOn.Value, "O");
-            }
             if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            if (Optional.IsDefined(OldestRestorableOn))
+            {
+                writer.WritePropertyName("oldestRestorableTime"u8);
+                writer.WriteStringValue(OldestRestorableOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ApiType))
             {
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.CosmosDB
             SystemData systemData = default;
             string accountName = default;
             DateTimeOffset? creationTime = default;
-            DateTimeOffset? oldestRestorableTime = default;
             DateTimeOffset? deletionTime = default;
+            DateTimeOffset? oldestRestorableTime = default;
             CosmosDBApiType? apiType = default;
             IReadOnlyList<RestorableLocationResourceInfo> restorableLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -175,15 +175,6 @@ namespace Azure.ResourceManager.CosmosDB
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("oldestRestorableTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            oldestRestorableTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("deletionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -191,6 +182,15 @@ namespace Azure.ResourceManager.CosmosDB
                                 continue;
                             }
                             deletionTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("oldestRestorableTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            oldestRestorableTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("apiType"u8))
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.CosmosDB
                 location,
                 accountName,
                 creationTime,
-                oldestRestorableTime,
                 deletionTime,
+                oldestRestorableTime,
                 apiType,
                 restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>(),
                 serializedAdditionalRawData);
@@ -360,22 +360,6 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OldestRestorableOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    oldestRestorableTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OldestRestorableOn))
-                {
-                    builder.Append("    oldestRestorableTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(OldestRestorableOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeletedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -388,6 +372,22 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     builder.Append("    deletionTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OldestRestorableOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    oldestRestorableTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OldestRestorableOn))
+                {
+                    builder.Append("    oldestRestorableTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(OldestRestorableOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

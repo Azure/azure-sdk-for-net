@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
@@ -63,12 +61,18 @@ namespace Azure.AI.VoiceLive
                     // On Net4.x you can't set the UserAgent for a websocket connection
                 }
 
+                _contentLogger.LogConnectionOpening(_connectionId, $"{_endpoint}");
+
                 await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
 
                 WebSocket = clientWebSocket;
+
+                // Log successful connection
+                _contentLogger.LogConnectionOpened(_connectionId);
             }
-            catch
+            catch (Exception ex)
             {
+                _contentLogger.LogError(_connectionId, ex);
                 clientWebSocket?.Dispose();
                 throw;
             }
@@ -85,14 +89,23 @@ namespace Azure.AI.VoiceLive
             {
                 try
                 {
+                    var closeCode = WebSocketCloseStatus.NormalClosure;
+                    var reason = "Client initiated close";
+
+                    // Log successful close
+                    _contentLogger.LogConnectionClosing(_connectionId, (int)closeCode, reason);
+
                     await WebSocket.CloseAsync(
-                        WebSocketCloseStatus.NormalClosure,
-                        "Client initiated close",
+                        closeCode,
+                        reason,
                         cancellationToken).ConfigureAwait(false);
+
+                    _contentLogger.LogConnectionClosed(_connectionId);
                 }
-                catch (WebSocketException)
+                catch (WebSocketException ex)
                 {
-                    // Ignore WebSocket exceptions during close
+                    // Log close error and ignore WebSocket exceptions during close
+                    _contentLogger.LogError(_connectionId, $"WebSocket close error: {ex.Message}");
                 }
             }
         }

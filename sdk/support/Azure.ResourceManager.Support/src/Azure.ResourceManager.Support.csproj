@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Support</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Support.</Description>
     <PackageTags>azure;management;arm;resource manager;support</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

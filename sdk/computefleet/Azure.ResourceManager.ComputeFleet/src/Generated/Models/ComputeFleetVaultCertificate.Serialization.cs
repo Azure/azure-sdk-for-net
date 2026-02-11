@@ -9,14 +9,18 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVaultCertificate : IUtf8JsonSerializable, IJsonModel<ComputeFleetVaultCertificate>
+    /// <summary>
+    /// Describes a single certificate reference in a Key Vault, and where the
+    /// certificate should reside on the VM.
+    /// </summary>
+    public partial class ComputeFleetVaultCertificate : IJsonModel<ComputeFleetVaultCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVaultCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVaultCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +32,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVaultCertificate)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl"u8);
@@ -44,15 +47,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("certificateStore"u8);
                 writer.WriteStringValue(CertificateStore);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,59 +64,65 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVaultCertificate IJsonModel<ComputeFleetVaultCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVaultCertificate IJsonModel<ComputeFleetVaultCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVaultCertificate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVaultCertificate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVaultCertificate(document.RootElement, options);
         }
 
-        internal static ComputeFleetVaultCertificate DeserializeComputeFleetVaultCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetVaultCertificate DeserializeComputeFleetVaultCertificate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri certificateUrl = default;
+            Uri certificateUri = default;
             string certificateStore = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateUrl"u8))
+                if (prop.NameEquals("certificateUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateUrl = new Uri(property.Value.GetString());
+                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateStore"u8))
+                if (prop.NameEquals("certificateStore"u8))
                 {
-                    certificateStore = property.Value.GetString();
+                    certificateStore = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeFleetVaultCertificate(certificateUrl, certificateStore, serializedAdditionalRawData);
+            return new ComputeFleetVaultCertificate(certificateUri, certificateStore, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetVaultCertificate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetVaultCertificate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -123,15 +132,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVaultCertificate IPersistableModel<ComputeFleetVaultCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVaultCertificate IPersistableModel<ComputeFleetVaultCertificate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVaultCertificate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVaultCertificate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetVaultCertificate(document.RootElement, options);
                     }
                 default:
@@ -139,6 +153,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVaultCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

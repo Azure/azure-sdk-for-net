@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class IotOperationsRegistryEndpointProperties : IUtf8JsonSerializable, IJsonModel<IotOperationsRegistryEndpointProperties>
+    /// <summary> RegistryEndpoint properties. </summary>
+    public partial class IotOperationsRegistryEndpointProperties : IJsonModel<IotOperationsRegistryEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotOperationsRegistryEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IotOperationsRegistryEndpointProperties"/> for deserialization. </summary>
+        internal IotOperationsRegistryEndpointProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsRegistryEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotOperationsRegistryEndpointProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
             writer.WritePropertyName("authentication"u8);
@@ -43,20 +48,30 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(TrustSettings))
+            if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
-                writer.WritePropertyName("trustSettings"u8);
-                writer.WriteObjectValue(TrustSettings, options);
+                writer.WritePropertyName("healthState"u8);
+                writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(CodeSigningCas))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("codeSigningCas"u8);
+                writer.WriteStartArray();
+                foreach (RegistryEndpointTrustedSigningKey item in CodeSigningCas)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,22 +80,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        IotOperationsRegistryEndpointProperties IJsonModel<IotOperationsRegistryEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsRegistryEndpointProperties IJsonModel<IotOperationsRegistryEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotOperationsRegistryEndpointProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotOperationsRegistryEndpointProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotOperationsRegistryEndpointProperties(document.RootElement, options);
         }
 
-        internal static IotOperationsRegistryEndpointProperties DeserializeIotOperationsRegistryEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotOperationsRegistryEndpointProperties DeserializeIotOperationsRegistryEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,52 +108,74 @@ namespace Azure.ResourceManager.IotOperations.Models
             string host = default;
             RegistryEndpointAuthentication authentication = default;
             IotOperationsProvisioningState? provisioningState = default;
-            RegistryEndpointTrustedSettings trustSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceHealthState? healthState = default;
+            IList<RegistryEndpointTrustedSigningKey> codeSigningCas = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("host"u8))
+                if (prop.NameEquals("host"u8))
                 {
-                    host = property.Value.GetString();
+                    host = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    authentication = RegistryEndpointAuthentication.DeserializeRegistryEndpointAuthentication(property.Value, options);
+                    authentication = RegistryEndpointAuthentication.DeserializeRegistryEndpointAuthentication(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new IotOperationsProvisioningState(property.Value.GetString());
+                    provisioningState = new IotOperationsProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trustSettings"u8))
+                if (prop.NameEquals("healthState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trustSettings = RegistryEndpointTrustedSettings.DeserializeRegistryEndpointTrustedSettings(property.Value, options);
+                    healthState = new ResourceHealthState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("codeSigningCas"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RegistryEndpointTrustedSigningKey> array = new List<RegistryEndpointTrustedSigningKey>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RegistryEndpointTrustedSigningKey.DeserializeRegistryEndpointTrustedSigningKey(item, options));
+                    }
+                    codeSigningCas = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IotOperationsRegistryEndpointProperties(host, authentication, provisioningState, trustSettings, serializedAdditionalRawData);
+            return new IotOperationsRegistryEndpointProperties(
+                host,
+                authentication,
+                provisioningState,
+                healthState,
+                codeSigningCas ?? new ChangeTrackingList<RegistryEndpointTrustedSigningKey>(),
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<IotOperationsRegistryEndpointProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotOperationsRegistryEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -143,15 +185,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        IotOperationsRegistryEndpointProperties IPersistableModel<IotOperationsRegistryEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsRegistryEndpointProperties IPersistableModel<IotOperationsRegistryEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotOperationsRegistryEndpointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsRegistryEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotOperationsRegistryEndpointProperties(document.RootElement, options);
                     }
                 default:
@@ -159,6 +206,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IotOperationsRegistryEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

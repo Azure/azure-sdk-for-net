@@ -2,10 +2,11 @@
   <PropertyGroup>
     <Version>1.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.4.0</ApiCompatVersion>
+    <ApiCompatVersion>1.4.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.FrontDoor</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Network Front Door.</Description>
     <PackageTags>azure;management;arm;resource manager;frontdoor</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

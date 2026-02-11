@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class Zoos
     {
@@ -142,6 +142,7 @@ namespace MgmtTypeSpec
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,6 +171,7 @@ namespace MgmtTypeSpec
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,7 +194,7 @@ namespace MgmtTypeSpec
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

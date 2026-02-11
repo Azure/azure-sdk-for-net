@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderType. </summary>
+    /// <summary> The provider type. </summary>
     public readonly partial struct ResourceProviderType : IEquatable<ResourceProviderType>
     {
         private readonly string _value;

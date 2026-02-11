@@ -206,14 +206,14 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         public async Task ListExperimentMetricsWithTopParameter()
         {
             const int numMetrics = 5;
-            const int topCount = 2;
+            const int maxCount = 2;
 
             for (int i = 0; i < numMetrics; i++)
             {
                 await SetupTestMetricAsync($"test_metric_list_{i}");
             }
 
-            List<ExperimentMetric> metrics = await _client.GetMetricsAsync(maxCount: topCount).ToEnumerableAsync();
+            List<ExperimentMetric> metrics = await _client.GetMetricsAsync(maxCount: maxCount).ToEnumerableAsync();
 
             Assert.That(metrics.Count, Is.GreaterThanOrEqualTo(numMetrics));
         }

@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ArmOperation<GroupQuotasEnforcementStatusResource> lro = await groupQuotaEnforcementStatusCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceProviderName, location, data);
             GroupQuotasEnforcementStatusResource result = lro.Value;
 
-            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(QuotaRequestStatus.Succeeded));
+            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded));
             Assert.IsTrue(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled));
             Assert.IsTrue(result.Data.Name.Equals(location));
 
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotasEnforcementStatusResource result = await collection.GetAsync(resourceProviderName, location);
 
             Assert.IsNotNull(result.Data);
-            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(QuotaRequestStatus.Succeeded));
+            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded));
             Assert.IsTrue(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled));
             Assert.IsTrue(result.Data.Name.Equals(location.Name));
         }

@@ -57,7 +57,7 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.TryAddSingleton<IQueueProcessorFactory, DefaultQueueProcessorFactory>();
 
             builder.Services.AddOptions<QueuesOptions>()
-                .Configure<IHostingEnvironment>((options, env) =>
+                .Configure<IHostEnvironment>((options, env) =>
                 {
                     if (env.IsDevelopment() && options.MaxPollingInterval == QueuePollingIntervals.DefaultMaximum)
                     {

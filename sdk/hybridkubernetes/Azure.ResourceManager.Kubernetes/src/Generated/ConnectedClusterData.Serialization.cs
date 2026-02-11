@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Kubernetes
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeConnectedClusterData(document.RootElement, options);
                     }
@@ -239,11 +239,10 @@ namespace Azure.ResourceManager.Kubernetes
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ConnectedClusterData"/> from. </param>
-        internal static ConnectedClusterData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectedClusterData"/> from. </param>
+        internal static ConnectedClusterData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeConnectedClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
