@@ -262,17 +262,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void DerivedOptionsCanSetCustomMaxApplicationIdLength()
+        public void CanSetCustomMaxApplicationIdLength()
         {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var options = new TestClientOptions();
+            options.Diagnostics.MaxApplicationIdLength = 50;
 
-            Assert.AreEqual(50, options.GetMaxApplicationIdLength());
+            Assert.AreEqual(50, options.Diagnostics.MaxApplicationIdLength);
         }
 
         [Test]
         public void CustomMaxApplicationIdLengthAllowsLongerApplicationId()
         {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var options = new TestClientOptions();
+            options.Diagnostics.MaxApplicationIdLength = 50;
             var longApplicationId = new string('a', 50);
 
             options.Diagnostics.ApplicationId = longApplicationId;
@@ -283,7 +285,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CustomMaxApplicationIdLengthStillEnforcesLimit()
         {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var options = new TestClientOptions();
+            options.Diagnostics.MaxApplicationIdLength = 50;
             var tooLongApplicationId = new string('a', 51);
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => options.Diagnostics.ApplicationId = tooLongApplicationId);
@@ -295,8 +298,28 @@ namespace Azure.Core.Tests
         [TestCase(-1)]
         public void SettingMaxApplicationIdLengthBelowDefaultThrows(int maxLength)
         {
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => new TestClientOptionsWithCustomMaxApplicationIdLength(maxLength));
-            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength must be greater than or equal to 24"));
+            var options = new TestClientOptions();
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => options.Diagnostics.MaxApplicationIdLength = maxLength);
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength must be between 24 and 300"));
+        }
+
+        [Test]
+        public void SettingMaxApplicationIdLengthAboveAbsoluteMaxThrows()
+        {
+            var options = new TestClientOptions();
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => options.Diagnostics.MaxApplicationIdLength = 301);
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength must be between 24 and 300"));
+        }
+
+        [Test]
+        public void SettingMaxApplicationIdLengthToAbsoluteMaxSucceeds()
+        {
+            var options = new TestClientOptions();
+            options.Diagnostics.MaxApplicationIdLength = 300;
+
+            Assert.AreEqual(300, options.Diagnostics.MaxApplicationIdLength);
         }
 
         [TestCase(null)]
@@ -313,7 +336,8 @@ namespace Azure.Core.Tests
         [Test]
         public void MaxApplicationIdLengthIsPreservedThroughCopyConstructor()
         {
-            var original = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
+            var original = new TestClientOptions();
+            original.Diagnostics.MaxApplicationIdLength = 50;
             var longApplicationId = new string('a', 50);
             original.Diagnostics.ApplicationId = longApplicationId;
 
@@ -324,16 +348,6 @@ namespace Azure.Core.Tests
 
         private class TestClientOptions : ClientOptions
         {
-        }
-
-        private class TestClientOptionsWithCustomMaxApplicationIdLength : ClientOptions
-        {
-            public TestClientOptionsWithCustomMaxApplicationIdLength(int maxApplicationIdLength)
-            {
-                MaxApplicationIdLength = maxApplicationIdLength;
-            }
-
-            public int GetMaxApplicationIdLength() => MaxApplicationIdLength;
         }
 
         private class TestDiagnosticsOptions : DiagnosticsOptions

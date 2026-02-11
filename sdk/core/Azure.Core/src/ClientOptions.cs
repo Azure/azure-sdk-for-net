@@ -110,20 +110,6 @@ namespace Azure.Core
         public DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
-        /// Gets or sets the maximum allowed length for <see cref="DiagnosticsOptions.ApplicationId"/>.
-        /// </summary>
-        /// <remarks>
-        /// The default value is 24 characters. Derived client options classes can set this property
-        /// to allow longer application IDs. Values less than 24 are not permitted.
-        /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is less than 24.</exception>
-        protected int MaxApplicationIdLength
-        {
-            get => Diagnostics.MaxApplicationIdLength;
-            set => Diagnostics.MaxApplicationIdLength = value;
-        }
-
-        /// <summary>
         /// Gets the client retry options.
         /// </summary>
         public RetryOptions Retry { get; }
