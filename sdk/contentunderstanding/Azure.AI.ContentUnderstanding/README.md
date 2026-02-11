@@ -11,7 +11,7 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs across all four modalities (documents, video, audio, and images)
 * **Classify documents and video** - Automatically categorize and extract information from documents and video by type
 
-[Source code][source_code] | [Package (NuGet)] | [API reference documentation] | [Product documentation][product_docs]
+[Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -20,7 +20,7 @@ Use the client library for Azure AI Content Understanding to:
 Install the client library for .NET with [NuGet][nuget]:
 
 ```bash
-dotnet add package Azure.AI.ContentUnderstanding --prerelease
+dotnet add package Azure.AI.ContentUnderstanding
 ```
 
 ### Prerequisites
@@ -245,7 +245,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding
-
+[nuget_package]: https://www.nuget.org/packages/Azure.AI.ContentUnderstanding
+[api_reference]: https://learn.microsoft.com/dotnet/api/azure.ai.contentunderstanding
 [product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [nuget]: https://www.nuget.org/
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
