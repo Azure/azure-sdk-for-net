@@ -201,7 +201,7 @@ Once uploaded, the file ID can then be provided to create a vector store for it
 // Create a vector store with the file and wait for it to be processed.
 // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
 PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
-    fileIds:  new List<string> { uploadedAgentFile.Id },
+    fileIds: new List<string> { uploadedAgentFile.Id },
     name: "my_vector_store");
 ```
 
@@ -235,7 +235,7 @@ var ds = new VectorStoreDataSource(
 PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
-        dataSources: [ ds ]
+        dataSources: [ds]
     )
 );
 
@@ -265,7 +265,7 @@ PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVector
 
 VectorStoreFileBatch vctFile = await client.VectorStores.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
-    dataSources: [ ds ]
+    dataSources: [ds]
 );
 Console.WriteLine($"Created vector store file batch, vector store file batch ID: {vctFile.Id}");
 
@@ -279,7 +279,7 @@ To attach a file with the context to the message, use the `MessageAttachment` cl
 Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:AgentsCreateAgentWithInterpreterTool
-List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
 // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
@@ -307,7 +307,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
-    attachments: [ attachment ]
+    attachments: [attachment]
 );
 ```
 
@@ -343,7 +343,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
-   tools: [ bingGroundingTool ]);
+   tools: [bingGroundingTool]);
 ```
 
 #### Create Agent with Azure AI Search
@@ -375,7 +375,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
-   tools: [ new AzureAISearchToolDefinition() ],
+   tools: [new AzureAISearchToolDefinition()],
    toolResources: toolResource);
 ```
 
@@ -509,7 +509,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
             + "nicknames for cities whenever possible.",
-    tools: [ getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool ]
+    tools: [getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool]
     );
 ```
 
@@ -773,7 +773,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
         + "the function, ALWAYS specify the output queue uri parameter as "
         + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
         + "\"Foo says\" and then the response from the tool.",
-    tools: [ azureFnTool ]
+    tools: [azureFnTool]
     );
 ```
 
@@ -906,7 +906,7 @@ OpenApiToolDefinition openapiTool = new(
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
     openApiAuthentication: oaiAuth,
-    defaultParams: [ "format" ]
+    defaultParams: ["format"]
 );
 
 // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
@@ -914,7 +914,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful agent.",
-    tools: [ openapiTool ]
+    tools: [openapiTool]
 );
 ```
 

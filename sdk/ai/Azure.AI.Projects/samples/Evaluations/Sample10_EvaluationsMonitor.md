@@ -126,11 +126,12 @@ private static BinaryData GetEvaluationCriteria(string[] names, string modelDepl
     object[] testingCriteria = new object[names.Length];
     for (int i = 0; i < names.Length; i++)
     {
-        testingCriteria[i] = new {
+        testingCriteria[i] = new
+        {
             type = "azure_ai_evaluator",
             name = names[i],
             evaluator_name = $"builtin.{names[i]}",
-            data_mapping = new { query = "{{query}}", response = "{{response}}", tool_definitions= "{{tool_definitions}}" },
+            data_mapping = new { query = "{{query}}", response = "{{response}}", tool_definitions = "{{tool_definitions}}" },
             initialization_parameters = new { deployment_name = modelDeploymentName },
         };
     }
