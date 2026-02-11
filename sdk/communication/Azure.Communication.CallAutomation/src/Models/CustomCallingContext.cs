@@ -48,14 +48,24 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="key">custom calling context sip X header's key.</param>
         /// <param name="value">custom calling context sip X header's value.</param>
+        public void AddSipX(string key, string value)
+        {
+            AddSipX(key, value, SipHeaderPrefix.XmsCustom);
+        }
+
+        /// <summary>
+        /// Add a custom calling context sip X header. The provided key is appended to such as 'X-MS-Custom-{key}'
+        /// </summary>
+        /// <param name="key">custom calling context sip X header's key.</param>
+        /// <param name="value">custom calling context sip X header's value.</param>
         /// <param name="prefix">prefix to be used for SIP X headers.</param>
-        public void AddSipX(string key, string value, SipHeaderPrefix prefix = SipHeaderPrefix.XMSCustom)
+        public void AddSipX(string key, string value, SipHeaderPrefix prefix)
         {
             if (SipHeaders == null)
             {
                 throw new InvalidOperationException("Cannot add sip X header, SipHeaders is null.");
             }
-            if (prefix == SipHeaderPrefix.XMSCustom)
+            if (prefix == SipHeaderPrefix.XmsCustom)
             {
                 SipHeaders.Add("X-MS-Custom-" + key, value);
             }
@@ -88,22 +98,6 @@ namespace Azure.Communication.CallAutomation
         {
             Argument.AssertNotNull(teamsPhoneCallDetails, nameof(teamsPhoneCallDetails));
             TeamsPhoneCallDetails = teamsPhoneCallDetails;
-        }
-
-        /// <summary>
-        /// Enum representing the prefix to be used for SIP X headers.
-        /// </summary>
-        public enum SipHeaderPrefix
-        {
-            /// <summary>
-            /// Use the legacy "X-MS-Custom-" prefix.
-            /// </summary>
-            XMSCustom = 0,
-
-            /// <summary>
-            /// Use the generic "X-" prefix.
-            /// </summary>
-            X = 1
         }
     }
 }

@@ -670,5 +670,17 @@ namespace Azure.Communication.CallAutomation
             var createdCallFailedInternal = new CreateCallFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
             return new CreateCallFailed(createdCallFailedInternal);
         }
+
+        /// <summary>
+        /// Initializes a new instance of ResultInformation.
+        /// </summary>
+        /// <param name="code">The result code.</param>
+        /// <param name="subCode">The result sub-code.</param>
+        /// <param name="message">The result message.</param>
+        /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        {
+            return new ResultInformation(code, subCode, message, sipDetails: null, q850Details: null);
+        }
     }
 }

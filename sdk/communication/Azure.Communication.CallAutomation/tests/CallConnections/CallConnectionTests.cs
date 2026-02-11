@@ -843,7 +843,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier_MS()
         {
             var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
-            callInvite.CustomCallingContext.AddSipX("key1", "value1", SipHeaderPrefix.XmsCustom);
+            callInvite.CustomCallingContext.AddSipX("key1", "value1", SipHeaderPrefix.X);
             return new[]
             {
                 new object?[]
@@ -855,7 +855,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier()
         {
             var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
-            callInvite.CustomCallingContext.AddSipX("key1", "value1", SipHeaderPrefix.X);
+            callInvite.CustomCallingContext.AddSipX("key1", "value1");
             return new[]
             {
                 new object?[]
