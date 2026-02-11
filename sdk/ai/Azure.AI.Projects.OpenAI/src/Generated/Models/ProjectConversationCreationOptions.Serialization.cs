@@ -14,11 +14,6 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The ProjectConversationCreationOptions. </summary>
     public partial class ProjectConversationCreationOptions : IJsonModel<ProjectConversationCreationOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/> for deserialization. </summary>
-        internal ProjectConversationCreationOptions()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectConversationCreationOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -54,7 +49,7 @@ namespace Azure.AI.Projects.OpenAI
         void IJsonModel<ProjectConversationCreationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 

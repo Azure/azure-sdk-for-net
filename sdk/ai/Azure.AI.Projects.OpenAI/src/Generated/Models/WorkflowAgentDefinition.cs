@@ -11,6 +11,11 @@ namespace Azure.AI.Projects.OpenAI
     public partial class WorkflowAgentDefinition : AgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>
+        public WorkflowAgentDefinition() : base(AgentKind.Workflow)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

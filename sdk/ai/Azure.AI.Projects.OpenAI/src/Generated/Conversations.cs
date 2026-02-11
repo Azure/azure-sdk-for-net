@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.OpenAI
@@ -106,36 +105,6 @@ namespace Azure.AI.Projects.OpenAI
         {
             using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Update a conversation. </summary>
-        /// <param name="conversationId"> The id of the conversation to update. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
-        {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
-            ClientResult result = UpdateConversation(conversationId, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
-        }
-
-        /// <summary> Update a conversation. </summary>
-        /// <param name="conversationId"> The id of the conversation to update. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
-        {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
-            ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
     }
 }

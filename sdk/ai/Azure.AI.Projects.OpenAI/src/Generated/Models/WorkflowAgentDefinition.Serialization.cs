@@ -12,11 +12,6 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The workflow agent definition. </summary>
     public partial class WorkflowAgentDefinition : AgentDefinition, IJsonModel<WorkflowAgentDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/> for deserialization. </summary>
-        internal WorkflowAgentDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

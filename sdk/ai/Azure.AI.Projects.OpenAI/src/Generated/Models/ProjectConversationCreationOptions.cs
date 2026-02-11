@@ -15,6 +15,12 @@ namespace Azure.AI.Projects.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/>. </summary>
+        internal ProjectConversationCreationOptions()
+        {
+            Items = new ChangeTrackingList<global::OpenAI.Responses.ResponseItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/>. </summary>
         /// <param name="internalMetadata"></param>
         /// <param name="items"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
