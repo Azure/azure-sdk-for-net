@@ -1224,7 +1224,6 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 throw new AggregateException(capturedExceptions);
             }
-            ;
         }
 
         /// <summary>
@@ -1987,7 +1986,6 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 throw new AggregateException(capturedExceptions);
             }
-            ;
         }
 
         /// <summary>
@@ -2368,7 +2366,6 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 _partitions = queriedPartitions;
                 _partitionHash = new HashSet<string>(queriedPartitions);
-                ;
             }
         }
 

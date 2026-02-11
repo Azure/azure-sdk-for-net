@@ -585,7 +585,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                         CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
-            ;
 
             var session = default(AmqpSession);
             var link = default(RequestResponseAmqpLink);

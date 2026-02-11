@@ -218,7 +218,6 @@ public static class EventTracking
         // Partition Checks
         var hasPartition = eventData.Properties.TryGetValue(PartitionPropertyName, out var partitionProperty);
         var publisherSetPartitionProperty = partitionProperty?.ToString();
-        ;
 
         if (partitionReceivedFrom != publisherSetPartitionProperty || !hasPartition)
         {

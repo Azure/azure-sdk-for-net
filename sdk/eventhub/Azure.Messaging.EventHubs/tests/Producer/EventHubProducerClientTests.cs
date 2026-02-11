@@ -1663,7 +1663,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new MockConnection(() => mockTransport.Object);
 
             using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = expectedPartition });
-            ;
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
