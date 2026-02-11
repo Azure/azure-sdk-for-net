@@ -323,6 +323,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new BestPracticeVersionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BestPracticeVersionDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BestPracticeVersionDetailResource"/> object. </returns>
+        public virtual BestPracticeVersionDetailResource GetBestPracticeVersionDetailResource(ResourceIdentifier id)
+        {
+            BestPracticeVersionDetailResource.ValidateResourceId(id);
+            return new BestPracticeVersionDetailResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ResourceTypeTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceTypeTestResource"/> object. </returns>

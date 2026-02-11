@@ -47,6 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(BestPracticeResource))]
     [ModelReaderWriterBuildable(typeof(BestPracticeUpdate))]
     [ModelReaderWriterBuildable(typeof(BestPracticeUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(BestPracticeVersionDetailResource))]
     [ModelReaderWriterBuildable(typeof(BestPracticeVersionResource))]
     [ModelReaderWriterBuildable(typeof(CapacityReservationProfile))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityRequest))]

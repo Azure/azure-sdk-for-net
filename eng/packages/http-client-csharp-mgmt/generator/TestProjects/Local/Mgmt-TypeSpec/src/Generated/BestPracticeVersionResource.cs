@@ -391,5 +391,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of BestPracticeVersionDetails in the <see cref="BestPracticeVersionResource"/>. </summary>
+        /// <returns> An object representing collection of BestPracticeVersionDetails and their operations over a BestPracticeVersionDetailResource. </returns>
+        public virtual BestPracticeVersionDetailCollection GetBestPracticeVersionDetails()
+        {
+            return GetCachedClient(client => new BestPracticeVersionDetailCollection(client, Id));
+        }
+
+        /// <summary> Get a BestPractice. </summary>
+        /// <param name="detailName"> The name of the detail. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detailName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detailName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BestPracticeVersionDetailResource>> GetBestPracticeVersionDetailAsync(string detailName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detailName, nameof(detailName));
+
+            return await GetBestPracticeVersionDetails().GetAsync(detailName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a BestPractice. </summary>
+        /// <param name="detailName"> The name of the detail. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detailName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detailName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BestPracticeVersionDetailResource> GetBestPracticeVersionDetail(string detailName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detailName, nameof(detailName));
+
+            return GetBestPracticeVersionDetails().Get(detailName, cancellationToken);
+        }
     }
 }

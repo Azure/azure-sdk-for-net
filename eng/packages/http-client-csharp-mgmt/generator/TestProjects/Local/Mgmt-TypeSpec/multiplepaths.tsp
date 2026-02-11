@@ -102,3 +102,43 @@ interface BestPracticeVersions {
   delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
   list is BestPracticesVersionOps.List<BestPractice>;
 }
+
+// 3rd level: version details nested under versions.
+// Tests that the parent detection uses the longest prefix match (BestPracticeVersion)
+// instead of the first prefix match (which could be BestPractice).
+alias BestPracticesVersionDetailOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+
+    /** The name of the best practice */
+    @segment("bestPractices")
+    @key
+    @path
+    bestPracticeName: string;
+
+    /** The name of the version */
+    @segment("versions")
+    @key
+    @path
+    versionName: string;
+  },
+  {
+    /** The name of the detail */
+    @segment("details")
+    @key
+    @path
+    detailName: string;
+  },
+  ErrorResponse,
+  "BestPracticeVersionDetail"
+>;
+
+/** Best practice version detail operations on /bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName} */
+@armResourceOperations
+interface BestPracticeVersionDetails {
+  get is BestPracticesVersionDetailOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionDetailOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticesVersionDetailOps.DeleteSync<BestPractice>;
+  list is BestPracticesVersionDetailOps.List<BestPractice>;
+}
