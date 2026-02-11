@@ -20,12 +20,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The call locator. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
         /// <param name="callConnectionId"> The call connection Id. (Only one of callLocator or callConnectionId to be used). </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="recordingContentType"> The content type of call recording. </param>
-        /// <param name="recordingChannelType"> The channel type of call recording. </param>
-        /// <param name="recordingFormatType"> The format type of call recording. </param>
+        /// <param name="recordingChannelType"> Defines the channel type of call recording. </param>
+        /// <param name="recordingFormatType"> Defines the format type of call recording. </param>
         /// <param name="audioChannelParticipantOrdering">
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
         /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </param>
         /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
-        /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
+        /// <param name="externalStorage"></param>
         internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
         {
             CallLocator = callLocator;
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
             ExternalStorage = externalStorage;
         }
 
-        /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
+        /// <summary> The locator used for joining or taking action on a call. </summary>
         public CallLocatorInternal CallLocator { get; set; }
         /// <summary> The call connection Id. (Only one of callLocator or callConnectionId to be used). </summary>
         public string CallConnectionId { get; set; }
@@ -62,9 +62,9 @@ namespace Azure.Communication.CallAutomation
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>
         public RecordingContent? RecordingContentType { get; set; }
-        /// <summary> The channel type of call recording. </summary>
+        /// <summary> Defines the channel type of call recording. </summary>
         public RecordingChannel? RecordingChannelType { get; set; }
-        /// <summary> The format type of call recording. </summary>
+        /// <summary> Defines the format type of call recording. </summary>
         public RecordingFormat? RecordingFormatType { get; set; }
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
         /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
         public bool? PauseOnStart { get; set; }
-        /// <summary> Optional property to specify location where recording will be stored. </summary>
+        /// <summary> Gets or sets the external storage. </summary>
         public RecordingStorageInternal ExternalStorage { get; set; }
     }
 }

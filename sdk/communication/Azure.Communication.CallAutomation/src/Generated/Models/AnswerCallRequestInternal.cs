@@ -30,14 +30,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
+        /// <param name="answeredBy"> A user that got created with an Azure Communication Services resource. </param>
         /// <param name="mediaStreamingOptions">
-        /// Media Streaming Options.
+        /// Options for media streaming.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </param>
         /// <param name="transcriptionOptions">
-        /// Transcription Options.
+        /// Options for live transcription.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </param>
@@ -60,16 +60,16 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> The identifier of the call automation entity which answers the call. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
         /// <summary>
-        /// Media Streaming Options.
+        /// Options for media streaming.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </summary>
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
         /// <summary>
-        /// Transcription Options.
+        /// Options for live transcription.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </summary>

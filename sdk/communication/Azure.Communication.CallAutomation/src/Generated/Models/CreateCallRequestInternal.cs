@@ -29,26 +29,23 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="CreateCallRequestInternal"/>. </summary>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </param>
+        /// <param name="sourceCallerIdNumber"> A phone number. </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
-        /// <param name="source"> The identifier of the source of the call. </param>
+        /// <param name="source"> A user that got created with an Azure Communication Services resource. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="mediaStreamingOptions">
-        /// Media Streaming Options.
+        /// Options for media streaming.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </param>
         /// <param name="transcriptionOptions">
-        /// Transcription Options.
+        /// Options for live transcription.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </param>
-        /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
+        /// <param name="teamsAppSource"> A Microsoft Teams application. </param>
         internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource)
         {
             Targets = targets;
@@ -65,14 +62,11 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary>
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </summary>
+        /// <summary> A phone number. </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; set; }
-        /// <summary> The identifier of the source of the call. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel Source { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
@@ -81,18 +75,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary>
-        /// Media Streaming Options.
+        /// Options for media streaming.
         /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
         /// </summary>
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
         /// <summary>
-        /// Transcription Options.
+        /// Options for live transcription.
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
-        /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
+        /// <summary> A Microsoft Teams application. </summary>
         public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of <see cref="RedirectCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <param name="target"> The target identity to redirect the call to. </param>
+        /// <param name="target"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
         public RedirectCallRequestInternal(string incomingCallContext, CommunicationIdentifierModel target)
         {
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The target identity to redirect the call to. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Target { get; }
     }
 }
