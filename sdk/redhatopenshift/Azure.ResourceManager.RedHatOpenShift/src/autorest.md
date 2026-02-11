@@ -1,24 +1,6 @@
-# Azure Red Hat OpenShift
+# AutoRest Configuration
 
-> see https://aka.ms/autorest
-
-This is the AutoRest configuration file for Azure Red Hat OpenShift.
-
-## Getting Started
-
-To build the SDK for Red Hat OpenShift, simply [Install AutoRest](https://github.com/Azure/autorest/blob/main/docs/install/readme.md) and in this folder, run:
-
-> `autorest`
-
-To see additional help and options, run:
-
-> `autorest --help`
-
-## Configuration
-
-### Basic Information
-
-These are the global settings for the Azure Red Hat OpenShift API.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 title: RedHatOpenShiftManagementClient
@@ -28,7 +10,7 @@ azure-arm: true
 csharp: true
 library-name: RedHatOpenShift
 namespace: Azure.ResourceManager.RedHatOpenShift
-require: https://github.com/Azure/azure-rest-api-specs/tree/886e1a5fb328ebe056e7ba64892d8c665e079355/specification/redhatopenshift/resource-manager/Microsoft.RedHatOpenShift/OpenShiftClusters#readme
+require: https://github.com/Azure/azure-rest-api-specs/blob/d45f04200fe13e29863dd7669adb05a2639af64d/specification/redhatopenshift/resource-manager/Microsoft.RedHatOpenShift/OpenShiftClusters/readme.md
 tag: package-2025-07-25
 output-folder: Generated/
 clear-output-folder: true
@@ -45,13 +27,4 @@ directive:
     where: $.definitions
     transform: >
       $.OpenShiftCluster.properties.properties['x-ms-client-flatten'] = true;
-```
-
-### Tag: package-2025-07-25
-
-These settings apply only when `--tag=package-2025-07-25` is specified on the command line.
-
-```yaml $(tag) == 'package-2025-07-25'
-input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/main/specification/redhatopenshift/resource-manager/Microsoft.RedHatOpenShift/stable/2025-07-25/redhatopenshift.json
 ```
