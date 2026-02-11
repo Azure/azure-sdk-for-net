@@ -14,7 +14,7 @@ When asked to review an Azure SDK .NET management-plane library PR (packages und
 1. Fetch PR details and diff using GitHub MCP tools
 2. Examine API surface files (api/*.cs) for public API
 3. Check Generated models and resources in src/Generated/
-4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`) or `autorest.md` for legacy specs
+4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`)
 5. Add review comments directly to the PR using GitHub MCP tools
 
 ## Review Checklist
@@ -66,8 +66,8 @@ When asked to review an Azure SDK .NET management-plane library PR (packages und
 | Contains `size` | Consider `int`/`long` instead of string |
 
 ### Duration/Interval Format
-- ISO 8601 duration (P1DT2H59M59S): use `duration` scalar in TypeSpec (or `format: duration` in legacy autorest.md)
-- ISO 8601 constant (2.2:59:59.5000000): use `@encode(DurationConstant)` in TypeSpec (or `x-ms-format: duration-constant` in legacy autorest.md)
+- ISO 8601 duration (P1DT2H59M59S): use `duration` scalar in TypeSpec
+- ISO 8601 constant (2.2:59:59.5000000): use `@encode(DurationConstant)` in TypeSpec
 
 ### CheckNameAvailability Operation
 - Method: `Check[Resource/RP name]NameAvailability`
