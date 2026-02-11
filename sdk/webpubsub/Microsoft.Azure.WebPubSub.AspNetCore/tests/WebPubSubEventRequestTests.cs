@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         public async Task TestParseGroupEventRequest(string eventName, Type expectedType)
         {
             var body = "{\"group\":\"mygroup\"}";
-            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, eventName, body: body);
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.GroupPresence, eventName, body: body);
 
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
 
@@ -499,9 +499,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
         private static string GetFormedType(WebPubSubEventType type, string eventName)
         {
-            return type == WebPubSubEventType.User ?
-                $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}" :
-                $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}";
+            if (type == WebPubSubEventType.User)
+            {
+                return $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}";
+            }
+            if (type == WebPubSubEventType.GroupPresence)
+            {
+                return $"{Constants.Headers.CloudEvents.TypeGroupPresencePrefix}{eventName}";
+            }
+            else
+            {
+                return $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}";
+            }
         }
     }
 }
