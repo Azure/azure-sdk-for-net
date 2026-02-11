@@ -540,7 +540,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new IssueTestResourcePatch(tags, displayName is null && status is null && innerValue is null && innerFlag is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, default, status, null, updateOnlyValue), additionalBinaryDataProperties: null);
+            return new IssueTestResourcePatch(tags, displayName is null && status is null && innerValue is null && innerFlag is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, new IssueTestNestedConfig(innerValue, innerFlag, null), status, null, updateOnlyValue), additionalBinaryDataProperties: null);
         }
 
         /// <param name="displayName"> Simple property. </param>
@@ -1172,8 +1172,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 highAvailability is null && minimumTlsVersion is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && customerManagedKeyEncryption is null && maintenanceWindows is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
                     highAvailability,
                     minimumTlsVersion,
-                    default,
-                    default,
+                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, null),
+                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), null),
                     hostName,
                     provisioningState,
                     redundancyMode,
