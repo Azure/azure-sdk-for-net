@@ -60,7 +60,7 @@ Use **explore** agents in parallel to gather information:
    - `tsp-location.yaml` → already migrated (may just need version bump)
    - `src/autorest.md` → legacy Swagger-based, needs migration
 3. **Inventory existing csharp customizations in spec**: Search all `.tsp` files in the spec directory for `@clientName("...", "csharp")` and `@@clientName` decorators. Also check for `back-compatible.tsp`. These are already applied and must not be duplicated when adding renames later.
-4. **Review naming conventions**: Consult the [azure-sdk-mgmt-pr-review](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/azure-sdk-mgmt-pr-review/SKILL.md) skill for naming review rules.
+4. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill for naming review rules.
 
 Present a summary plan and **ask the user** to confirm before proceeding.
 
@@ -138,7 +138,7 @@ sdk/<service>/<PACKAGE_NAME>/
 
 ## Phase 5 — Customization (Naming Review)
 
-Apply naming rules from the [azure-sdk-mgmt-pr-review](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/azure-sdk-mgmt-pr-review/SKILL.md) skill. Use **Customization/*.cs** partial classes for .NET-side fixes:
+Apply naming rules from the `azure-sdk-mgmt-pr-review` skill. Use **Customization/*.cs** partial classes for .NET-side fixes:
 
 ### Customization Patterns
 
