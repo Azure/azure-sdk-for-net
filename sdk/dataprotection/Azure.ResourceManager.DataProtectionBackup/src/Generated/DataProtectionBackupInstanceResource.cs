@@ -319,11 +319,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> AdhocBackupAsync(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerAdhocBackupAsync(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.AdhocBackup");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerAdhocBackup");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> AdhocBackup(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerAdhocBackup(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.AdhocBackup");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerAdhocBackup");
             scope.Start();
             try
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -1049,11 +1049,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> TriggerRehydrateAsync(WaitUntil waitUntil, BackupRehydrationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> TriggerRehydrationAsync(WaitUntil waitUntil, BackupRehydrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRehydrate");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRehydration");
             scope.Start();
             try
             {
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1102,11 +1102,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation TriggerRehydrate(WaitUntil waitUntil, BackupRehydrationContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation TriggerRehydration(WaitUntil waitUntil, BackupRehydrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRehydrate");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRehydration");
             scope.Start();
             try
             {
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1381,11 +1381,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateForRestoreAsync(WaitUntil waitUntil, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateRestoreAsync(WaitUntil waitUntil, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.ValidateForRestore");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.ValidateRestore");
             scope.Start();
             try
             {
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateForRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -1440,11 +1440,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateForRestore(WaitUntil waitUntil, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateRestore(WaitUntil waitUntil, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.ValidateForRestore");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.ValidateRestore");
             scope.Start();
             try
             {
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateForRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),

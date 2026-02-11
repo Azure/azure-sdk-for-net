@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataStoreSettings(string objectType, DataStoreTypes dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", dataStoreType, additionalBinaryDataProperties)
+        internal UnknownDataStoreSettings(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", dataStoreType, additionalBinaryDataProperties)
         {
         }
     }

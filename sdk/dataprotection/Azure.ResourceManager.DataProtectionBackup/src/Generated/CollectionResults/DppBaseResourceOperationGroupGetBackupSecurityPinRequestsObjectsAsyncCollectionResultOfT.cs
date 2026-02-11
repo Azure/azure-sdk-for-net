@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal partial class DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT : AsyncPageable<DppBaseResource>
+    internal partial class DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT : AsyncPageable<ResourceGuardProtectedObjectData>
     {
         private readonly DppBaseResourceOperationGroup _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DppBaseResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ResourceGuardProtectedObjectData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 DppBaseResourceList result = DppBaseResourceList.FromResponse(response);
-                yield return Page<DppBaseResource>.FromValues((IReadOnlyList<DppBaseResource>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceGuardProtectedObjectData>.FromValues((IReadOnlyList<ResourceGuardProtectedObjectData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

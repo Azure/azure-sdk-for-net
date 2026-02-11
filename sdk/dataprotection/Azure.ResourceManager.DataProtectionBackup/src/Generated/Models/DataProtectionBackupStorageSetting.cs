@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataStoreType"> Gets or sets the type of the datastore. </param>
         /// <param name="type"> Gets or sets the type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupStorageSetting(StorageSettingStoreTypes? dataStoreType, StorageSettingTypes? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupStorageSetting(StorageSettingStoreType? dataStoreType, StorageSettingType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataStoreType = dataStoreType;
             Type = @type;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets or sets the type of the datastore. </summary>
-        public StorageSettingStoreTypes? DataStoreType { get; set; }
+        public StorageSettingStoreType? DataStoreType { get; set; }
 
         /// <summary> Gets or sets the type. </summary>
-        public StorageSettingTypes? Type { get; set; }
+        public StorageSettingType? Type { get; set; }
     }
 }

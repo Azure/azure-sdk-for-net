@@ -12,17 +12,17 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Gets or sets the type of the datastore. </summary>
-    public readonly partial struct StorageSettingStoreTypes : IEquatable<StorageSettingStoreTypes>
+    public readonly partial struct StorageSettingStoreType : IEquatable<StorageSettingStoreType>
     {
         private readonly string _value;
         private const string ArchiveStoreValue = "ArchiveStore";
         private const string OperationalStoreValue = "OperationalStore";
         private const string VaultStoreValue = "VaultStore";
 
-        /// <summary> Initializes a new instance of <see cref="StorageSettingStoreTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSettingStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageSettingStoreTypes(string value)
+        public StorageSettingStoreType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets the ArchiveStore. </summary>
-        public static StorageSettingStoreTypes ArchiveStore { get; } = new StorageSettingStoreTypes(ArchiveStoreValue);
+        public static StorageSettingStoreType ArchiveStore { get; } = new StorageSettingStoreType(ArchiveStoreValue);
 
         /// <summary> Gets the OperationalStore. </summary>
-        public static StorageSettingStoreTypes OperationalStore { get; } = new StorageSettingStoreTypes(OperationalStoreValue);
+        public static StorageSettingStoreType OperationalStore { get; } = new StorageSettingStoreType(OperationalStoreValue);
 
         /// <summary> Gets the VaultStore. </summary>
-        public static StorageSettingStoreTypes VaultStore { get; } = new StorageSettingStoreTypes(VaultStoreValue);
+        public static StorageSettingStoreType VaultStore { get; } = new StorageSettingStoreType(VaultStoreValue);
 
-        /// <summary> Determines if two <see cref="StorageSettingStoreTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageSettingStoreTypes left, StorageSettingStoreTypes right) => left.Equals(right);
+        public static bool operator ==(StorageSettingStoreType left, StorageSettingStoreType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageSettingStoreTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageSettingStoreTypes left, StorageSettingStoreTypes right) => !left.Equals(right);
+        public static bool operator !=(StorageSettingStoreType left, StorageSettingStoreType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageSettingStoreTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageSettingStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSettingStoreTypes(string value) => new StorageSettingStoreTypes(value);
+        public static implicit operator StorageSettingStoreType(string value) => new StorageSettingStoreType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageSettingStoreTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageSettingStoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSettingStoreTypes?(string value) => value == null ? null : new StorageSettingStoreTypes(value);
+        public static implicit operator StorageSettingStoreType?(string value) => value == null ? null : new StorageSettingStoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageSettingStoreTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageSettingStoreType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageSettingStoreTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageSettingStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

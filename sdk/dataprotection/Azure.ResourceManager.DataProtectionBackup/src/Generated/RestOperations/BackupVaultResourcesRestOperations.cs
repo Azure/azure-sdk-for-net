@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateValidateForBackupRequest(Guid subscriptionId, string resourceGroupName, string vaultName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateAdhocBackupRequest(Guid subscriptionId, string resourceGroupName, string vaultName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateTriggerRequest(Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context)
+        internal HttpMessage CreateTriggerExportJobRequest(Guid subscriptionId, string resourceGroupName, string vaultName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

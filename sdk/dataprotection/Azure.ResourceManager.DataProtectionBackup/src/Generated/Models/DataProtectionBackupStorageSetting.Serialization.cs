@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            StorageSettingStoreTypes? dataStoreType = default;
-            StorageSettingTypes? @type = default;
+            StorageSettingStoreType? dataStoreType = default;
+            StorageSettingType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    dataStoreType = new StorageSettingStoreTypes(prop.Value.GetString());
+                    dataStoreType = new StorageSettingStoreType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    @type = new StorageSettingTypes(prop.Value.GetString());
+                    @type = new StorageSettingType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

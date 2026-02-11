@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateAdhocBackupRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateTriggerAdhocBackupRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateTriggerRehydrateRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateTriggerRehydrationRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateValidateForRestoreRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateRestoreRequest(Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

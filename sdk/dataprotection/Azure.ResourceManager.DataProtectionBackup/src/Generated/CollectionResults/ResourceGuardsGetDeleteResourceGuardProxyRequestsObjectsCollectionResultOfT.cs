@@ -14,7 +14,7 @@ using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal partial class ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT : Pageable<DppBaseResource>
+    internal partial class ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT : Pageable<ResourceGuardProtectedObjectData>
     {
         private readonly ResourceGuards _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DppBaseResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ResourceGuardProtectedObjectData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 DppBaseResourceList result = DppBaseResourceList.FromResponse(response);
-                yield return Page<DppBaseResource>.FromValues((IReadOnlyList<DppBaseResource>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceGuardProtectedObjectData>.FromValues((IReadOnlyList<ResourceGuardProtectedObjectData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

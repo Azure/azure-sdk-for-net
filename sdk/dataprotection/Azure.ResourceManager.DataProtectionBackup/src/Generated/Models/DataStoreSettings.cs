@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
-        private protected DataStoreSettings(string objectType, DataStoreTypes dataStoreType)
+        private protected DataStoreSettings(string objectType, DataStoreType dataStoreType)
         {
             ObjectType = objectType;
             DataStoreType = dataStoreType;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataStoreSettings(string objectType, DataStoreTypes dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataStoreSettings(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectType = objectType;
             DataStoreType = dataStoreType;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         internal string ObjectType { get; set; }
 
         /// <summary> type of datastore; Operational/Vault/Archive. </summary>
-        public DataStoreTypes DataStoreType { get; set; }
+        public DataStoreType DataStoreType { get; set; }
     }
 }

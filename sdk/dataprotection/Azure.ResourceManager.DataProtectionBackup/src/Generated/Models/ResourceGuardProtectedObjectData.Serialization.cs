@@ -18,11 +18,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Base resource under Microsoft.DataProtection provider namespace. </summary>
-    public partial class DppBaseResource : ResourceData, IJsonModel<DppBaseResource>
+    public partial class ResourceGuardProtectedObjectData : ResourceData, IJsonModel<ResourceGuardProtectedObjectData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DppBaseResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceGuardProtectedObjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,34 +33,34 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DppBaseResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProtectedObjectData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DppBaseResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProtectedObjectData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DppBaseResource IJsonModel<DppBaseResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DppBaseResource)JsonModelCreateCore(ref reader, options);
+        ResourceGuardProtectedObjectData IJsonModel<ResourceGuardProtectedObjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResourceGuardProtectedObjectData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DppBaseResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProtectedObjectData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DppBaseResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProtectedObjectData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDppBaseResource(document.RootElement, options);
+            return DeserializeResourceGuardProtectedObjectData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DppBaseResource DeserializeDppBaseResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceGuardProtectedObjectData DeserializeResourceGuardProtectedObjectData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,54 +110,54 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DppBaseResource(id, name, resourceType, systemData, additionalBinaryDataProperties);
+            return new ResourceGuardProtectedObjectData(id, name, resourceType, systemData, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DppBaseResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceGuardProtectedObjectData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DppBaseResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProtectedObjectData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DppBaseResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProtectedObjectData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DppBaseResource IPersistableModel<DppBaseResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (DppBaseResource)PersistableModelCreateCore(data, options);
+        ResourceGuardProtectedObjectData IPersistableModel<ResourceGuardProtectedObjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGuardProtectedObjectData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DppBaseResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProtectedObjectData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDppBaseResource(document.RootElement, options);
+                        return DeserializeResourceGuardProtectedObjectData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DppBaseResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProtectedObjectData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DppBaseResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceGuardProtectedObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DppBaseResource"/> from. </param>
-        internal static DppBaseResource FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceGuardProtectedObjectData"/> from. </param>
+        internal static ResourceGuardProtectedObjectData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDppBaseResource(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeResourceGuardProtectedObjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

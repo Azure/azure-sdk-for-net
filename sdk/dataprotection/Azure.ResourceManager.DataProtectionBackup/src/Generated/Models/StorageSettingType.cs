@@ -12,17 +12,17 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Gets or sets the type. </summary>
-    public readonly partial struct StorageSettingTypes : IEquatable<StorageSettingTypes>
+    public readonly partial struct StorageSettingType : IEquatable<StorageSettingType>
     {
         private readonly string _value;
         private const string GeoRedundantValue = "GeoRedundant";
         private const string LocallyRedundantValue = "LocallyRedundant";
         private const string ZoneRedundantValue = "ZoneRedundant";
 
-        /// <summary> Initializes a new instance of <see cref="StorageSettingTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageSettingTypes(string value)
+        public StorageSettingType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets the GeoRedundant. </summary>
-        public static StorageSettingTypes GeoRedundant { get; } = new StorageSettingTypes(GeoRedundantValue);
+        public static StorageSettingType GeoRedundant { get; } = new StorageSettingType(GeoRedundantValue);
 
         /// <summary> Gets the LocallyRedundant. </summary>
-        public static StorageSettingTypes LocallyRedundant { get; } = new StorageSettingTypes(LocallyRedundantValue);
+        public static StorageSettingType LocallyRedundant { get; } = new StorageSettingType(LocallyRedundantValue);
 
         /// <summary> Gets the ZoneRedundant. </summary>
-        public static StorageSettingTypes ZoneRedundant { get; } = new StorageSettingTypes(ZoneRedundantValue);
+        public static StorageSettingType ZoneRedundant { get; } = new StorageSettingType(ZoneRedundantValue);
 
-        /// <summary> Determines if two <see cref="StorageSettingTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageSettingType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageSettingTypes left, StorageSettingTypes right) => left.Equals(right);
+        public static bool operator ==(StorageSettingType left, StorageSettingType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageSettingTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageSettingType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageSettingTypes left, StorageSettingTypes right) => !left.Equals(right);
+        public static bool operator !=(StorageSettingType left, StorageSettingType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageSettingTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSettingTypes(string value) => new StorageSettingTypes(value);
+        public static implicit operator StorageSettingType(string value) => new StorageSettingType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageSettingTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageSettingTypes?(string value) => value == null ? null : new StorageSettingTypes(value);
+        public static implicit operator StorageSettingType?(string value) => value == null ? null : new StorageSettingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageSettingTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageSettingType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageSettingTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageSettingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

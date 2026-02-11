@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            DataStoreTypes dataStoreType = default;
+            DataStoreType dataStoreType = default;
             string objectType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dataStoreType"u8))
                 {
-                    dataStoreType = new DataStoreTypes(prop.Value.GetString());
+                    dataStoreType = new DataStoreType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("objectType"u8))
