@@ -218,7 +218,8 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
         $scriptPath = Join-Path $PSScriptRoot ".." "check_nowarn_directory_overrides.py"
         $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
-        $output | Should -Match "OK: 2 NoWarn\\(AZC\\) entries found"
+        # PowerShell strings do not treat '\' as an escape character; use single backslashes for regex escaping.
+        $output | Should -Match "OK: 2 NoWarn\(AZC\) entries found"
     }
 
     It "check_nowarn_changes fails when NoWarn is changed without allowlisting" {
