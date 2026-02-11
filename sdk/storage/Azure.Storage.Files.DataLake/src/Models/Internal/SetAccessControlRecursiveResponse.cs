@@ -7,8 +7,8 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class SetAccessControlRecursiveResponse
     {
-        public int? DirectoriesSuccessful { get; set;  }
-        public int? FilesSuccessful { get; set;  }
+        public int? DirectoriesSuccessful { get; set; }
+        public int? FilesSuccessful { get; set; }
         public int? FailureCount { get; set; }
         public IReadOnlyList<AclFailedEntry> FailedEntries { get; set; }
     }

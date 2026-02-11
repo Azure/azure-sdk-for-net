@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial struct BlobExpiryOptions {}
+    internal partial struct BlobExpiryOptions { }
 }
