@@ -236,8 +236,8 @@ namespace Azure.Core.Tests
         [Test]
         public void DefaultMaxApplicationIdLengthIs24()
         {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(24);
-            Assert.AreEqual(24, options.GetMaxApplicationIdLength());
+            var options = new TestClientOptions();
+            Assert.AreEqual(24, options.Diagnostics.MaxApplicationIdLength);
         }
 
         [Test]

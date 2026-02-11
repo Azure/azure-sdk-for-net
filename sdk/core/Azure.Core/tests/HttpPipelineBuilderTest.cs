@@ -175,6 +175,22 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task CreateTelemetryPolicyHonorsCustomMaxApplicationIdLength()
+        {
+            var longApplicationId = new string('a', 50);
+            var options = new TestOptionsWithCustomMaxApplicationIdLength(50);
+            options.Diagnostics.ApplicationId = longApplicationId;
+
+            var transport = new MockTransport(new MockResponse(200));
+            var telemetryPolicy = HttpPipelineBuilder.CreateTelemetryPolicy(options);
+
+            await SendGetRequest(transport, telemetryPolicy);
+
+            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+            StringAssert.StartsWith(longApplicationId + " ", userAgent);
+        }
+
+        [Test]
         public async Task CustomClientRequestIdAvailableInPerCallPolicies()
         {
             var policy = new Mock<HttpPipelineSynchronousPolicy>();
@@ -335,6 +351,15 @@ namespace Azure.Core.Tests
             public TestOptions()
             {
                 Retry.Delay = TimeSpan.Zero;
+            }
+        }
+
+        private class TestOptionsWithCustomMaxApplicationIdLength : ClientOptions
+        {
+            public TestOptionsWithCustomMaxApplicationIdLength(int maxApplicationIdLength)
+            {
+                Retry.Delay = TimeSpan.Zero;
+                MaxApplicationIdLength = maxApplicationIdLength;
             }
         }
 
