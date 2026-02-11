@@ -13,66 +13,64 @@ Then invoke tests with:
 `Invoke-Pester ./Override-Guardrails.Tests.ps1 -Tag UnitTest`
 #>
 
-try
-{
-    Import-Module Pester -MinimumVersion 5.3.3 -ErrorAction Stop | Out-Null
-}
-catch
-{
-    throw "Pester >= 5.3.3 is required to run these tests. Ensure Pester is available on the machine running CI."
-}
-
-$python = (Get-Command python -ErrorAction SilentlyContinue)
-if (-not $python)
-{
-    throw "python executable not found on PATH. These tests require python."
-}
-
-function Initialize-GitRepo([string]$repoRoot)
-{
-    $git = (Get-Command git -ErrorAction SilentlyContinue)
-    if (-not $git) { throw "git executable not found on PATH. These tests require git." }
-
-    Push-Location $repoRoot
-    try {
-        & git init | Out-Null
-        & git config user.email "test@example.com" | Out-Null
-        & git config user.name "Override Guardrails Tests" | Out-Null
-        & git config commit.gpgsign false | Out-Null
-    }
-    finally {
-        Pop-Location
-    }
-}
-
-function Git-CommitAll([string]$repoRoot, [string]$message)
-{
-    Push-Location $repoRoot
-    try {
-        & git add -A | Out-Null
-        & git commit -m $message | Out-Null
-    }
-    finally {
-        Pop-Location
-    }
-}
-
-function New-TestRepoRoot
-{
-    $repoRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("override-guardrails-" + [Guid]::NewGuid().ToString("n"))
-    New-Item -ItemType Directory -Force -Path $repoRoot | Out-Null
-    New-Item -ItemType Directory -Force -Path (Join-Path $repoRoot "sdk") | Out-Null
-    return $repoRoot
-}
-
-function Write-TextFile([string]$path, [string]$content)
-{
-    $dir = Split-Path -Parent $path
-    if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
-    Set-Content -Path $path -Value $content -Encoding UTF8
-}
-
 Describe "Overrides guardrail checkers" -Tag "UnitTest" {
+    BeforeAll {
+        # NOTE: Pester v5 uses AST-based discovery; do not rely on top-level code execution.
+        # Ensure all test helpers are defined in BeforeAll so they exist at runtime in CI.
+
+        $script:python = (Get-Command python -ErrorAction SilentlyContinue)
+        if (-not $script:python)
+        {
+            throw "python executable not found on PATH. These tests require python."
+        }
+
+        $script:git = (Get-Command git -ErrorAction SilentlyContinue)
+        if (-not $script:git)
+        {
+            throw "git executable not found on PATH. These tests require git."
+        }
+
+        function script:Initialize-GitRepo([string]$repoRoot)
+        {
+            Push-Location $repoRoot
+            try {
+                & git init | Out-Null
+                & git config user.email "test@example.com" | Out-Null
+                & git config user.name "Override Guardrails Tests" | Out-Null
+                & git config commit.gpgsign false | Out-Null
+            }
+            finally {
+                Pop-Location
+            }
+        }
+
+        function script:Git-CommitAll([string]$repoRoot, [string]$message)
+        {
+            Push-Location $repoRoot
+            try {
+                & git add -A | Out-Null
+                & git commit -m $message | Out-Null
+            }
+            finally {
+                Pop-Location
+            }
+        }
+
+        function script:New-TestRepoRoot
+        {
+            $repoRoot = Join-Path $TestDrive ("repo-" + [Guid]::NewGuid().ToString("n"))
+            New-Item -ItemType Directory -Force -Path $repoRoot | Out-Null
+            New-Item -ItemType Directory -Force -Path (Join-Path $repoRoot "sdk") | Out-Null
+            return $repoRoot
+        }
+
+        function script:Write-TextFile([string]$path, [string]$content)
+        {
+            $dir = Split-Path -Parent $path
+            if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+            Set-Content -Path $path -Value $content -Encoding UTF8
+        }
+    }
 
     It "check_version_overrides passes when allowlisted and fails when not allowlisted" {
         $repoRoot = New-TestRepoRoot
@@ -98,7 +96,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_version_overrides.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 2 VersionOverride entries found"
 
@@ -108,7 +106,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
   { "project": "sdk/svc/pkg/src/pkg.csproj", "packageId": "Example.A", "versionOverride": "1.2.3", "referenceKind": "Include", "condition": "'$(TargetFramework)' == 'net10.0'", "tracking": "t", "justification": "j" }
 ]
 "@
-        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output2 = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
         $output2 | Should -Match "not present in allowlist"
         $output2 | Should -Match "Example.B"
@@ -134,7 +132,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_projectrefconversion_exclusions.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 1 ExcludeFromProjectReferenceToConversion entry"
     }
@@ -157,7 +155,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_aot_optouts.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 1 AOT opt-out entry"
     }
@@ -175,7 +173,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_apicompat_baselines.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 1 ApiCompatBaseline.txt entry"
     }
@@ -193,7 +191,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_global_suppressions.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 1 GlobalSuppressions.cs file"
     }
@@ -218,7 +216,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_nowarn_directory_overrides.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 2 NoWarn\\(AZC\\) entries found"
     }
@@ -262,7 +260,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_nowarn_changes.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
         $output | Should -Match "NoWarn changes"
         $output | Should -Match "sdk/svc/pkg/src/pkg.csproj"
@@ -271,7 +269,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
         Write-TextFile $allowlistPath @"
 { "trackingDefault": "t", "justificationDefault": "j", "entries": [ { "file": "sdk/svc/pkg/src/pkg.csproj", "tracking": "t", "justification": "j" } ] }
 "@
-        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $output2 = & $script:python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output2 | Should -Match "OK:"
     }
@@ -310,7 +308,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_hardcoded_tfms_changes.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
         $output | Should -Match "hardcoded TargetFramework"
         $output | Should -Match "net10.0"
@@ -319,7 +317,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
         Write-TextFile $allowlistPath @"
 { "trackingDefault": "t", "justificationDefault": "j", "entries": [ { "file": "sdk/svc/pkg/src/pkg.csproj", "property": "TargetFramework", "value": "net10.0", "tracking": "t", "justification": "j" } ] }
 "@
-        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $output2 = & $script:python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output2 | Should -Match "OK:"
     }
@@ -348,7 +346,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_added_assets.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
         $output | Should -Match "SessionRecords"
 
@@ -356,7 +354,7 @@ Describe "Overrides guardrail checkers" -Tag "UnitTest" {
         Write-TextFile $allowlistPath @"
 { "trackingDefault": "t", "justificationDefault": "j", "entries": [ { "file": "sdk/svc/pkg/SessionRecords/test.json", "tracking": "t", "justification": "j" } ] }
 "@
-        $output2 = & $python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
+        $output2 = & $script:python.Source $scriptPath --repoRoot $repoRoot --baseRef $baseRef --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output2 | Should -Match "OK:"
     }
@@ -379,7 +377,7 @@ MatrixConfigs:
 "@
 
         $scriptPath = Join-Path $PSScriptRoot ".." "check_matrix_overrides.py"
-        $output = & $python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
+        $output = & $script:python.Source $scriptPath --repoRoot $repoRoot --searchPath sdk --allowlist $allowlistPath 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match "OK: 2 matrix override entries found"
     }
