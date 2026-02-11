@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.RedHatOpenShift
     {
         private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetClientDiagnostics;
         private readonly PlatformWorkloadIdentityRoleSetRestOperations _platformWorkloadIdentityRoleSetRestClient;
-        private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetClientDiagnostics0;
-        private readonly PlatformWorkloadIdentityRoleSetsRestOperations _platformWorkloadIdentityRoleSetRestClient0;
         private readonly string _location;
 
         /// <summary> Initializes a new instance of the <see cref="PlatformWorkloadIdentityRoleSetCollection"/> class for mocking. </summary>
@@ -48,9 +46,6 @@ namespace Azure.ResourceManager.RedHatOpenShift
             _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", PlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PlatformWorkloadIdentityRoleSetResource.ResourceType, out string platformWorkloadIdentityRoleSetApiVersion);
             _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, platformWorkloadIdentityRoleSetApiVersion);
-            _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", PlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PlatformWorkloadIdentityRoleSetResource.ResourceType, out string platformWorkloadIdentityRoleSetApiVersion);
-            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, platformWorkloadIdentityRoleSetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -161,7 +156,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PlatformWorkloadIdentityRoleSets_List</description>
+        /// <description>PlatformWorkloadIdentityRoleSet_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -191,7 +186,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PlatformWorkloadIdentityRoleSets_List</description>
+        /// <description>PlatformWorkloadIdentityRoleSet_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

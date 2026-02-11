@@ -24,6 +24,12 @@ override-client-name: RedHatOpenShiftManagementClient
 
 directive:
   - from: swagger-document
+    where: $.paths[*][*]
+    transform: >
+      if ($.operationId && $.operationId.startsWith("PlatformWorkloadIdentityRoleSets_")) {
+        $.operationId = $.operationId.replace("PlatformWorkloadIdentityRoleSets_", "PlatformWorkloadIdentityRoleSet_");
+      }
+  - from: swagger-document
     where: $.definitions
     transform: >
       $.OpenShiftCluster.properties.properties['x-ms-client-flatten'] = true;
