@@ -132,7 +132,6 @@ namespace Azure.Generator.Management.Utilities
                 return null;
             }
 
-            var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);
 
@@ -141,7 +140,7 @@ namespace Azure.Generator.Management.Utilities
                 {
                         internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
                 });
-            setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
+            setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
             return setter;
         }
 
