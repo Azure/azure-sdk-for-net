@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
     /// <summary> ClusterProfile represents a cluster profile. </summary>
     public partial class ClusterProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         public ClusterProfile()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="resourceGroupId"> The ID of the cluster resource group. </param>
         /// <param name="fipsValidatedModules"> If FIPS validated crypto modules are used. </param>
         /// <param name="oidcIssuer"> The URL of the managed OIDC issuer in a workload identity cluster. </param>
-        internal ClusterProfile(string pullSecret, string domain, string version, string resourceGroupId, FipsValidatedModule? fipsValidatedModules, string oidcIssuer)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterProfile(string pullSecret, string domain, string version, string resourceGroupId, FipsValidatedModule? fipsValidatedModules, string oidcIssuer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PullSecret = pullSecret;
             Domain = domain;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             ResourceGroupId = resourceGroupId;
             FipsValidatedModules = fipsValidatedModules;
             OidcIssuer = oidcIssuer;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The pull secret for the cluster. </summary>

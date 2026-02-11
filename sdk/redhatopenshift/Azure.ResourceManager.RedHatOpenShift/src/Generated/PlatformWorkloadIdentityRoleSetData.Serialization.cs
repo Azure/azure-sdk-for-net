@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,11 +16,28 @@ using Azure.ResourceManager.RedHatOpenShift.Models;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    public partial class PlatformWorkloadIdentityRoleSetData : IUtf8JsonSerializable
+    public partial class PlatformWorkloadIdentityRoleSetData : IUtf8JsonSerializable, IJsonModel<PlatformWorkloadIdentityRoleSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlatformWorkloadIdentityRoleSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PlatformWorkloadIdentityRoleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OpenShiftVersion))
@@ -31,16 +51,29 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 writer.WriteStartArray();
                 foreach (var item in PlatformWorkloadIdentityRoles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static PlatformWorkloadIdentityRoleSetData DeserializePlatformWorkloadIdentityRoleSetData(JsonElement element)
+        PlatformWorkloadIdentityRoleSetData IJsonModel<PlatformWorkloadIdentityRoleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlatformWorkloadIdentityRoleSetData(document.RootElement, options);
+        }
+
+        internal static PlatformWorkloadIdentityRoleSetData DeserializePlatformWorkloadIdentityRoleSetData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +84,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
             SystemData systemData = default;
             string openShiftVersion = default;
             IList<PlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -74,7 +109,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedHatOpenShiftContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -100,7 +135,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             List<PlatformWorkloadIdentityRole> array = new List<PlatformWorkloadIdentityRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlatformWorkloadIdentityRole.DeserializePlatformWorkloadIdentityRole(item));
+                                array.Add(PlatformWorkloadIdentityRole.DeserializePlatformWorkloadIdentityRole(item, options));
                             }
                             platformWorkloadIdentityRoles = array;
                             continue;
@@ -108,14 +143,51 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PlatformWorkloadIdentityRoleSetData(
                 id,
                 name,
                 type,
                 systemData,
                 openShiftVersion,
-                platformWorkloadIdentityRoles ?? new ChangeTrackingList<PlatformWorkloadIdentityRole>());
+                platformWorkloadIdentityRoles ?? new ChangeTrackingList<PlatformWorkloadIdentityRole>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PlatformWorkloadIdentityRoleSetData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PlatformWorkloadIdentityRoleSetData IPersistableModel<PlatformWorkloadIdentityRoleSetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlatformWorkloadIdentityRoleSetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePlatformWorkloadIdentityRoleSetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlatformWorkloadIdentityRoleSetData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

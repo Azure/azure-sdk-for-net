@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     /// <summary> OpenShiftCluster represents an Azure Red Hat OpenShift cluster. </summary>
     public partial class OpenShiftClusterPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterPatch"/>. </summary>
         public OpenShiftClusterPatch()
         {
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
         /// <param name="apiserverProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
-        internal OpenShiftClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ProvisioningState? provisioningState, ClusterProfile clusterProfile, ConsoleProfile consoleProfile, ServicePrincipalProfile servicePrincipalProfile, PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, NetworkProfile networkProfile, MasterProfile masterProfile, IList<WorkerProfile> workerProfiles, IReadOnlyList<WorkerProfile> workerProfilesStatus, APIServerProfile apiserverProfile, IList<IngressProfile> ingressProfiles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OpenShiftClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ProvisioningState? provisioningState, ClusterProfile clusterProfile, ConsoleProfile consoleProfile, ServicePrincipalProfile servicePrincipalProfile, PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, NetworkProfile networkProfile, MasterProfile masterProfile, IList<WorkerProfile> workerProfiles, IReadOnlyList<WorkerProfile> workerProfilesStatus, APIServerProfile apiserverProfile, IList<IngressProfile> ingressProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
@@ -51,6 +85,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             WorkerProfilesStatus = workerProfilesStatus;
             ApiserverProfile = apiserverProfile;
             IngressProfiles = ingressProfiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource tags. </summary>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 return null;
             }
-            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json);
+            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerRedHatOpenShiftContext.Default);
             using var document = JsonDocument.Parse(data);
             var lroDetails = document.RootElement;
             return lroDetails.GetProperty("id").GetString();

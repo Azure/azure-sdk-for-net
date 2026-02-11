@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
     /// <summary> WorkerProfile represents a worker profile. </summary>
     public partial class WorkerProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WorkerProfile"/>. </summary>
         public WorkerProfile()
         {
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="count"> The number of worker VMs. </param>
         /// <param name="encryptionAtHost"> Whether master virtual machines are encrypted at host. </param>
         /// <param name="diskEncryptionSetId"> The resource ID of an associated DiskEncryptionSet, if applicable. </param>
-        internal WorkerProfile(string name, string vmSize, int? diskSizeGB, string subnetId, int? count, EncryptionAtHost? encryptionAtHost, string diskEncryptionSetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkerProfile(string name, string vmSize, int? diskSizeGB, string subnetId, int? count, EncryptionAtHost? encryptionAtHost, string diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             VmSize = vmSize;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             Count = count;
             EncryptionAtHost = encryptionAtHost;
             DiskEncryptionSetId = diskEncryptionSetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The worker profile name. </summary>

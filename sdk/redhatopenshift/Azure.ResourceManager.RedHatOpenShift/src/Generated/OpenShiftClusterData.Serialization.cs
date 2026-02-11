@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,29 +16,33 @@ using Azure.ResourceManager.RedHatOpenShift.Models;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    public partial class OpenShiftClusterData : IUtf8JsonSerializable
+    public partial class OpenShiftClusterData : IUtf8JsonSerializable, IJsonModel<OpenShiftClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenShiftClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OpenShiftClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OpenShiftClusterData)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -46,32 +53,32 @@ namespace Azure.ResourceManager.RedHatOpenShift
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                writer.WriteObjectValue(ClusterProfile, options);
             }
             if (Optional.IsDefined(ConsoleProfile))
             {
                 writer.WritePropertyName("consoleProfile"u8);
-                writer.WriteObjectValue(ConsoleProfile);
+                writer.WriteObjectValue(ConsoleProfile, options);
             }
             if (Optional.IsDefined(ServicePrincipalProfile))
             {
                 writer.WritePropertyName("servicePrincipalProfile"u8);
-                writer.WriteObjectValue(ServicePrincipalProfile);
+                writer.WriteObjectValue(ServicePrincipalProfile, options);
             }
             if (Optional.IsDefined(PlatformWorkloadIdentityProfile))
             {
                 writer.WritePropertyName("platformWorkloadIdentityProfile"u8);
-                writer.WriteObjectValue(PlatformWorkloadIdentityProfile);
+                writer.WriteObjectValue(PlatformWorkloadIdentityProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(MasterProfile))
             {
                 writer.WritePropertyName("masterProfile"u8);
-                writer.WriteObjectValue(MasterProfile);
+                writer.WriteObjectValue(MasterProfile, options);
             }
             if (Optional.IsCollectionDefined(WorkerProfiles))
             {
@@ -79,14 +86,24 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 writer.WriteStartArray();
                 foreach (var item in WorkerProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(WorkerProfilesStatus))
+            {
+                writer.WritePropertyName("workerProfilesStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in WorkerProfilesStatus)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ApiserverProfile))
             {
                 writer.WritePropertyName("apiserverProfile"u8);
-                writer.WriteObjectValue(ApiserverProfile);
+                writer.WriteObjectValue(ApiserverProfile, options);
             }
             if (Optional.IsCollectionDefined(IngressProfiles))
             {
@@ -94,16 +111,29 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 writer.WriteStartArray();
                 foreach (var item in IngressProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static OpenShiftClusterData DeserializeOpenShiftClusterData(JsonElement element)
+        OpenShiftClusterData IJsonModel<OpenShiftClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OpenShiftClusterData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOpenShiftClusterData(document.RootElement, options);
+        }
+
+        internal static OpenShiftClusterData DeserializeOpenShiftClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,6 +156,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
             IReadOnlyList<WorkerProfile> workerProfilesStatus = default;
             APIServerProfile apiserverProfile = default;
             IList<IngressProfile> ingressProfiles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -134,7 +166,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerRedHatOpenShiftContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -177,7 +209,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedHatOpenShiftContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +236,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            clusterProfile = ClusterProfile.DeserializeClusterProfile(property0.Value);
+                            clusterProfile = ClusterProfile.DeserializeClusterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("consoleProfile"u8))
@@ -213,7 +245,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            consoleProfile = ConsoleProfile.DeserializeConsoleProfile(property0.Value);
+                            consoleProfile = ConsoleProfile.DeserializeConsoleProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalProfile"u8))
@@ -222,7 +254,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            servicePrincipalProfile = ServicePrincipalProfile.DeserializeServicePrincipalProfile(property0.Value);
+                            servicePrincipalProfile = ServicePrincipalProfile.DeserializeServicePrincipalProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("platformWorkloadIdentityProfile"u8))
@@ -231,7 +263,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            platformWorkloadIdentityProfile = PlatformWorkloadIdentityProfile.DeserializePlatformWorkloadIdentityProfile(property0.Value);
+                            platformWorkloadIdentityProfile = PlatformWorkloadIdentityProfile.DeserializePlatformWorkloadIdentityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -240,7 +272,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("masterProfile"u8))
@@ -249,7 +281,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            masterProfile = MasterProfile.DeserializeMasterProfile(property0.Value);
+                            masterProfile = MasterProfile.DeserializeMasterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workerProfiles"u8))
@@ -261,7 +293,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             List<WorkerProfile> array = new List<WorkerProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkerProfile.DeserializeWorkerProfile(item));
+                                array.Add(WorkerProfile.DeserializeWorkerProfile(item, options));
                             }
                             workerProfiles = array;
                             continue;
@@ -275,7 +307,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             List<WorkerProfile> array = new List<WorkerProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkerProfile.DeserializeWorkerProfile(item));
+                                array.Add(WorkerProfile.DeserializeWorkerProfile(item, options));
                             }
                             workerProfilesStatus = array;
                             continue;
@@ -286,7 +318,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            apiserverProfile = APIServerProfile.DeserializeAPIServerProfile(property0.Value);
+                            apiserverProfile = APIServerProfile.DeserializeAPIServerProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingressProfiles"u8))
@@ -298,7 +330,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             List<IngressProfile> array = new List<IngressProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IngressProfile.DeserializeIngressProfile(item));
+                                array.Add(IngressProfile.DeserializeIngressProfile(item, options));
                             }
                             ingressProfiles = array;
                             continue;
@@ -306,7 +338,12 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new OpenShiftClusterData(
                 id,
                 name,
@@ -325,7 +362,39 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 workerProfiles ?? new ChangeTrackingList<WorkerProfile>(),
                 workerProfilesStatus ?? new ChangeTrackingList<WorkerProfile>(),
                 apiserverProfile,
-                ingressProfiles ?? new ChangeTrackingList<IngressProfile>());
+                ingressProfiles ?? new ChangeTrackingList<IngressProfile>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OpenShiftClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OpenShiftClusterData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OpenShiftClusterData IPersistableModel<OpenShiftClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenShiftClusterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeOpenShiftClusterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenShiftClusterData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OpenShiftClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

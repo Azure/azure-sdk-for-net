@@ -5,34 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
-    public partial class LoadBalancerProfile : IUtf8JsonSerializable
+    public partial class LoadBalancerProfile : IUtf8JsonSerializable, IJsonModel<LoadBalancerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoadBalancerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedOutboundIps))
-            {
-                writer.WritePropertyName("managedOutboundIps"u8);
-                writer.WriteObjectValue(ManagedOutboundIps);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerProfile DeserializeLoadBalancerProfile(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerProfile)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(ManagedOutboundIps))
+            {
+                writer.WritePropertyName("managedOutboundIps"u8);
+                writer.WriteObjectValue(ManagedOutboundIps, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveOutboundIps))
+            {
+                writer.WritePropertyName("effectiveOutboundIps"u8);
+                writer.WriteStartArray();
+                foreach (var item in EffectiveOutboundIps)
+                {
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        LoadBalancerProfile IJsonModel<LoadBalancerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerProfile(document.RootElement, options);
+        }
+
+        internal static LoadBalancerProfile DeserializeLoadBalancerProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManagedOutboundIPs managedOutboundIPs = default;
             IReadOnlyList<SubResource> effectiveOutboundIPs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIps"u8))
@@ -41,7 +100,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                     {
                         continue;
                     }
-                    managedOutboundIPs = ManagedOutboundIPs.DeserializeManagedOutboundIPs(property.Value);
+                    managedOutboundIPs = ManagedOutboundIPs.DeserializeManagedOutboundIPs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("effectiveOutboundIps"u8))
@@ -53,13 +112,49 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerRedHatOpenShiftContext.Default));
                     }
                     effectiveOutboundIPs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerProfile(managedOutboundIPs, effectiveOutboundIPs ?? new ChangeTrackingList<SubResource>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoadBalancerProfile(managedOutboundIPs, effectiveOutboundIPs ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoadBalancerProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoadBalancerProfile IPersistableModel<LoadBalancerProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLoadBalancerProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadBalancerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

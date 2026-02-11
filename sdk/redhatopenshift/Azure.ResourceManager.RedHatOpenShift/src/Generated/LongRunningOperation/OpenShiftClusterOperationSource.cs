@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
 
         OpenShiftClusterResource IOperationSource<OpenShiftClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            var data = OpenShiftClusterData.DeserializeOpenShiftClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<OpenShiftClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedHatOpenShiftContext.Default);
             return new OpenShiftClusterResource(_client, data);
         }
 
         async ValueTask<OpenShiftClusterResource> IOperationSource<OpenShiftClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            var data = OpenShiftClusterData.DeserializeOpenShiftClusterData(document.RootElement);
-            return new OpenShiftClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<OpenShiftClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedHatOpenShiftContext.Default);
+            return await Task.FromResult(new OpenShiftClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }
