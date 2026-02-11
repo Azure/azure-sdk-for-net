@@ -9,7 +9,7 @@ Review Azure SDK for .NET management library pull requests against the official 
 
 ## Instructions
 
-When asked to review an Azure SDK .NET management-plane library PR (packages under `Azure.ResourceManager.*`):
+When asked to review an Azure SDK .NET management-plane library PR (packages `Azure.ResourceManager` and `Azure.ResourceManager.*`):
 
 1. Fetch PR details and diff using GitHub MCP tools
 2. Examine API surface files (api/*.cs) for public API
@@ -56,14 +56,19 @@ When asked to review an Azure SDK .NET management-plane library PR (packages und
 - Numeric version enums should use underscore: `Tls1_0`, `Ver5_6`
 
 ### Type Formatting
+
+The following table applies to the **generated C# API surface** (public types/properties in `api/*.cs`).
+
 | Property Pattern | Expected Type |
 |------------------|---------------|
-| Ends with `Id`/`Guid` with UUID value | `uuid` |
+| Ends with `Id`/`Guid` with UUID value | `Guid` |
 | Ends with `Id` with ARM resource ID | `ResourceIdentifier` |
 | Named `ResourceType` or ends with `Type` for resource types | `ResourceType` |
 | Named `etag` | `ETag` |
 | Contains `location`/`locations` | Consider `AzureLocation` |
 | Contains `size` | Consider `int`/`long` instead of string |
+
+For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to `Guid` in the generated .NET SDK.
 
 ### Duration/Interval Format
 - ISO 8601 duration (P1DT2H59M59S): use `duration` scalar in TypeSpec
