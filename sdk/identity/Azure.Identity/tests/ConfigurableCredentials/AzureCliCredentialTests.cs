@@ -78,11 +78,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
             => typeof(CredentialUnavailableException);
 
         protected override void CreateCredentialForTenantValidation(string tenantId)
-        {
-            IConfiguration config = _helper.GetConfiguration();
-            config["MyClient:Credential:TenantId"] = tenantId;
-            _helper.GetCredentialFromConfig(config);
-        }
+            => _helper.CreateCredentialForTenantValidation(tenantId);
 
         // Tests that validate AzureCliCredentialOptions directly need configurable equivalents.
 

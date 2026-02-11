@@ -291,7 +291,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
     }
 
-      /// <summary>
+    /// <summary>
     /// Creates a TestRunUpdateClient with configured retry policy
     /// </summary>
     /// <param name="endpoint">API endpoint URI</param>

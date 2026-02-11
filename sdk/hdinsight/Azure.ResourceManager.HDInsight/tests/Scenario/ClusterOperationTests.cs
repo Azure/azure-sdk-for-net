@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
-                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage","/HDInsight")
+                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage", "/HDInsight")
             };
             properties.ClusterVersion = "5.1";
             var data = new HDInsightClusterCreateOrUpdateContent()
@@ -612,7 +612,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.ClusterVersion = "5.1";
             properties.StorageAccounts.Clear();
             var msiId = new ResourceIdentifier(msi);
-            var hdis =new HDInsightStorageAccountInfo() {
+            var hdis = new HDInsightStorageAccountInfo()
+            {
                 Name = $"{_storageAccountName}.blob.core.windows.net",
                 ResourceId = new ResourceIdentifier(resourceId),
                 IsDefault = true,
@@ -647,7 +648,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.ClusterVersion = "5.1";
             properties.StorageAccounts.Clear();
             var msiId = new ResourceIdentifier(msi);
-            var hdis =  new HDInsightStorageAccountInfo()
+            var hdis = new HDInsightStorageAccountInfo()
             {
                 Name = $"{_storageAccountName}.dfs.core.windows.net",
                 ResourceId = new ResourceIdentifier(resourceId),
@@ -676,7 +677,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string clusterName = "hdi-entra";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterVersion = "5.1";
-            properties.ClusterDefinition =  new HDInsightClusterDefinition()
+            properties.ClusterDefinition = new HDInsightClusterDefinition()
             {
                 Kind = "Hadoop",
                 Configurations = new BinaryData(@"{
@@ -709,7 +710,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                     Upn = "user@microsoft.com"
                 }
                }
-             };
+            };
             var updateOperation = await cluster.Value.UpdateGatewaySettingsAsync(WaitUntil.Completed, updateContent);
             Assert.IsTrue(updateOperation.HasCompleted);
             var updatedSettings = await cluster.Value.GetGatewaySettingsAsync();

@@ -119,6 +119,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             return new ConfigurableCredential(new DefaultAzureCredentialOptions(new CredentialSettings(credentialSection), credentialSection));
         }
 
+        public void CreateCredentialForTenantValidation(string tenantId)
+        {
+            IConfiguration config = GetConfiguration();
+            config["MyClient:Credential:TenantId"] = tenantId;
+            GetCredentialFromConfig(config);
+        }
+
         private IConfiguration GetConfigurationFromCommonCredentialTestConfig<TCredOptions>(
             CredentialTestBase<TCredOptions>.CommonCredentialTestConfig config)
             where TCredOptions : TokenCredentialOptions

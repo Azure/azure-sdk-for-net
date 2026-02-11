@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             List<Task<ArmOperation<VirtualApplicationGroupResource>>> createTaskList = new List<Task<ArmOperation<VirtualApplicationGroupResource>>>();
 
-            for (int i=0; i<numberOfApplicationGroups; i++)
+            for (int i = 0; i < numberOfApplicationGroups; i++)
             {
                 createTaskList.Add(agCollection.CreateOrUpdateAsync(
                     WaitUntil.Started,

@@ -139,7 +139,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // CosmosDBSqlDatabaseResourceInfo resource = new CosmosDBSqlDatabaseResourceInfo(_databaseName, RestoreParameters, CosmosDBAccountCreateMode.Restore);
             //CosmosDBSqlContainerData resource = new CosmosDBSqlContainerData()
-            CosmosDBSqlContainerResourceInfo resource = new CosmosDBSqlContainerResourceInfo(container.Data.Name) {
+            CosmosDBSqlContainerResourceInfo resource = new CosmosDBSqlContainerResourceInfo(container.Data.Name)
+            {
                 RestoreParameters = RestoreParameters,
                 CreateMode = CosmosDBAccountCreateMode.Restore
             };

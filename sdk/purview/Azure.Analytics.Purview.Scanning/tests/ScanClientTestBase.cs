@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
         {
             this.AddPurviewSanitizers();
         }
-        public PurviewScanClient GetPurviewScanClient(string dataSourceName,string scanName)
+        public PurviewScanClient GetPurviewScanClient(string dataSourceName, string scanName)
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>

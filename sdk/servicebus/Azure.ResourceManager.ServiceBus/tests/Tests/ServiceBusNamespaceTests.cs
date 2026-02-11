@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {

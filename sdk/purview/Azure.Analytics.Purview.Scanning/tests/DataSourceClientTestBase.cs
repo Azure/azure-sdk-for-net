@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 return true;
             };
             var options = new PurviewScanningServiceClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            return InstrumentClient(new PurviewDataSourceClient(TestEnvironment.Endpoint,dataSourceName,TestEnvironment.Credential, InstrumentClientOptions(options)));
+            return InstrumentClient(new PurviewDataSourceClient(TestEnvironment.Endpoint, dataSourceName, TestEnvironment.Credential, InstrumentClientOptions(options)));
         }
     }
 }

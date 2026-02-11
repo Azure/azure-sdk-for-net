@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Text.Json;
-using System.IO;
 
 namespace Azure.Analytics.Purview.Administration.Tests
 {
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Administration.Tests
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("policy_dotnetLLCPurviewAccount", fetchBodyJson.GetProperty("name").GetString());
-            Assert.GreaterOrEqual(fetchBodyJson.GetProperty("properties").GetProperty("attributeRules").GetArrayLength(),1);
+            Assert.GreaterOrEqual(fetchBodyJson.GetProperty("properties").GetProperty("attributeRules").GetArrayLength(), 1);
         }
 
         private static BinaryData GetContentFromResponse(Response r)

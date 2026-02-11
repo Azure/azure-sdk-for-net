@@ -86,7 +86,8 @@ namespace Azure.Communication.CallingServer
             try
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                var source = new CallSource(user) {
+                var source = new CallSource(user)
+                {
                     CallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber)
                 };
 

@@ -1122,6 +1122,142 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetDuplicatePropertyTests().Get(duplicatePropertyTestName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of PolicyVmAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="vmName"> The vmName for the resource. </param>
+        /// <returns> An object representing collection of PolicyVmAssignments and their operations over a PolicyVmAssignmentResource. </returns>
+        public virtual PolicyVmAssignmentCollection GetPolicyVmAssignments(string vmName)
+        {
+            return GetCachedClient(client => new PolicyVmAssignmentCollection(client, Id, vmName));
+        }
+
+        /// <summary>
+        /// Get a PolicyAssignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyVmAssignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmName"> The vmName for the resource. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyVmAssignmentResource>> GetPolicyVmAssignmentAsync(string vmName, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return await GetPolicyVmAssignments(vmName).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PolicyAssignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyVmAssignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmName"> The vmName for the resource. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyVmAssignmentResource> GetPolicyVmAssignment(string vmName, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return GetPolicyVmAssignments(vmName).Get(policyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PolicyArcAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="machineName"> The machineName for the resource. </param>
+        /// <returns> An object representing collection of PolicyArcAssignments and their operations over a PolicyArcAssignmentResource. </returns>
+        public virtual PolicyArcAssignmentCollection GetPolicyArcAssignments(string machineName)
+        {
+            return GetCachedClient(client => new PolicyArcAssignmentCollection(client, Id, machineName));
+        }
+
+        /// <summary>
+        /// Get a PolicyAssignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyArcAssignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="machineName"> The machineName for the resource. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyArcAssignmentResource>> GetPolicyArcAssignmentAsync(string machineName, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return await GetPolicyArcAssignments(machineName).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PolicyAssignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyArcAssignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="machineName"> The machineName for the resource. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyArcAssignmentResource> GetPolicyArcAssignment(string machineName, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return GetPolicyArcAssignments(machineName).Get(policyAssignmentName, cancellationToken);
+        }
+
         /// <summary>
         /// list private links on the given resource
         /// <list type="bullet">

@@ -440,6 +440,96 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetServiceGroupSites(scope).GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="VmConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmConfigurationAssignmentResource"/> object. </returns>
+        public virtual VmConfigurationAssignmentResource GetVmConfigurationAssignmentResource(ResourceIdentifier id)
+        {
+            VmConfigurationAssignmentResource.ValidateResourceId(id);
+            return new VmConfigurationAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="VmConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="VmConfigurationAssignmentResource"/> objects. </returns>
+        public virtual VmConfigurationAssignmentCollection GetVmConfigurationAssignments(ResourceIdentifier scope)
+        {
+            return new VmConfigurationAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get a VM configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="vmConfigAssignmentName"> The name of the VmConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmConfigAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmConfigAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VmConfigurationAssignmentResource> GetVmConfigurationAssignment(ResourceIdentifier scope, string vmConfigAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmConfigAssignmentName, nameof(vmConfigAssignmentName));
+
+            return GetVmConfigurationAssignments(scope).Get(vmConfigAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get a VM configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="vmConfigAssignmentName"> The name of the VmConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmConfigAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmConfigAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VmConfigurationAssignmentResource>> GetVmConfigurationAssignmentAsync(ResourceIdentifier scope, string vmConfigAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmConfigAssignmentName, nameof(vmConfigAssignmentName));
+
+            return await GetVmConfigurationAssignments(scope).GetAsync(vmConfigAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HcrpConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HcrpConfigurationAssignmentResource"/> object. </returns>
+        public virtual HcrpConfigurationAssignmentResource GetHcrpConfigurationAssignmentResource(ResourceIdentifier id)
+        {
+            HcrpConfigurationAssignmentResource.ValidateResourceId(id);
+            return new HcrpConfigurationAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="HcrpConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="HcrpConfigurationAssignmentResource"/> objects. </returns>
+        public virtual HcrpConfigurationAssignmentCollection GetHcrpConfigurationAssignments(ResourceIdentifier scope)
+        {
+            return new HcrpConfigurationAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get an HCRP configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hcrpConfigAssignmentName"> The name of the HcrpConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcrpConfigAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hcrpConfigAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HcrpConfigurationAssignmentResource> GetHcrpConfigurationAssignment(ResourceIdentifier scope, string hcrpConfigAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hcrpConfigAssignmentName, nameof(hcrpConfigAssignmentName));
+
+            return GetHcrpConfigurationAssignments(scope).Get(hcrpConfigAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get an HCRP configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hcrpConfigAssignmentName"> The name of the HcrpConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hcrpConfigAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hcrpConfigAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HcrpConfigurationAssignmentResource>> GetHcrpConfigurationAssignmentAsync(ResourceIdentifier scope, string hcrpConfigAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hcrpConfigAssignmentName, nameof(hcrpConfigAssignmentName));
+
+            return await GetHcrpConfigurationAssignments(scope).GetAsync(hcrpConfigAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="MultiFlattenTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MultiFlattenTestResource"/> object. </returns>
@@ -447,6 +537,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             MultiFlattenTestResource.ValidateResourceId(id);
             return new MultiFlattenTestResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyVmAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyVmAssignmentResource"/> object. </returns>
+        public virtual PolicyVmAssignmentResource GetPolicyVmAssignmentResource(ResourceIdentifier id)
+        {
+            PolicyVmAssignmentResource.ValidateResourceId(id);
+            return new PolicyVmAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyArcAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyArcAssignmentResource"/> object. </returns>
+        public virtual PolicyArcAssignmentResource GetPolicyArcAssignmentResource(ResourceIdentifier id)
+        {
+            PolicyArcAssignmentResource.ValidateResourceId(id);
+            return new PolicyArcAssignmentResource(Client, id);
         }
 
         /// <summary>
