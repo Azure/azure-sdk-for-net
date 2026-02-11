@@ -83,7 +83,7 @@
 ####################
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                           @dargilco @glharper @nick863 @trangevi
+/sdk/ai/                                                           @dargilco @glharper @nick863 @trangevi @trrwilson
 
 # PRLabel: %AI Model Inference
 /sdk/ai/Azure.AI.Inference                                         @dargilco @glharper @trangevi
@@ -92,7 +92,7 @@
 # ServiceOwners:                                                   @dargilco @glharper @trangevi
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @dargilco @nick863 @trangevi
+/sdk/ai/Azure.AI.Projects                                          @dargilco @nick863 @trangevi @trrwilson
 
 # ServiceLabel: %AI Projects
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
