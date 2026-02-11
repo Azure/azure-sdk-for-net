@@ -13,7 +13,7 @@ Then invoke tests with:
 `Invoke-Pester ./Override-Guardrails.Tests.ps1 -Tag UnitTest`
 #>
 
-. (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" "PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" "PSModule-Helpers.ps1")
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
 $python = (Get-Command python -ErrorAction SilentlyContinue)
