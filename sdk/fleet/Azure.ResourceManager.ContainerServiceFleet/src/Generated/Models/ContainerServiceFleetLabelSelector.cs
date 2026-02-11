@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects. </summary>
-    public partial class LabelSelector
+    public partial class ContainerServiceFleetLabelSelector
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelector"/>. </summary>
-        public LabelSelector()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelector"/>. </summary>
+        public ContainerServiceFleetLabelSelector()
         {
             MatchLabels = new ChangeTrackingDictionary<string, string>();
-            MatchExpressions = new ChangeTrackingList<LabelSelectorRequirement>();
+            MatchExpressions = new ChangeTrackingList<ContainerServiceFleetLabelSelectorRequirement>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelector"/>. </summary>
         /// <param name="matchLabels"> matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed. </param>
         /// <param name="matchExpressions"> matchExpressions is a list of label selector requirements. The requirements are ANDed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabelSelector(IDictionary<string, string> matchLabels, IList<LabelSelectorRequirement> matchExpressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetLabelSelector(IDictionary<string, string> matchLabels, IList<ContainerServiceFleetLabelSelectorRequirement> matchExpressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchLabels = matchLabels;
             MatchExpressions = matchExpressions;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public IDictionary<string, string> MatchLabels { get; }
 
         /// <summary> matchExpressions is a list of label selector requirements. The requirements are ANDed. </summary>
-        public IList<LabelSelectorRequirement> MatchExpressions { get; }
+        public IList<ContainerServiceFleetLabelSelectorRequirement> MatchExpressions { get; }
     }
 }

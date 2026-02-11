@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="labelSelector"> LabelSelector is a label query over all the joined member clusters. Clusters matching the query are selected. If you specify both label and property selectors in the same term, the results are AND'd. </param>
         /// <param name="propertySelector"> PropertySelector is a property query over all joined member clusters. Clusters matching the query are selected. If you specify both label and property selectors in the same term, the results are AND'd. At this moment, PropertySelector can only be used with `RequiredDuringSchedulingIgnoredDuringExecution` affinity terms. This field is beta-level; it is for the property-based scheduling feature and is only functional when a property provider is enabled in the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetClusterSelectorTerm(LabelSelector labelSelector, PropertySelector propertySelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetClusterSelectorTerm(ContainerServiceFleetLabelSelector labelSelector, PropertySelector propertySelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LabelSelector = labelSelector;
             PropertySelector = propertySelector;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> LabelSelector is a label query over all the joined member clusters. Clusters matching the query are selected. If you specify both label and property selectors in the same term, the results are AND'd. </summary>
-        public LabelSelector LabelSelector { get; set; }
+        public ContainerServiceFleetLabelSelector LabelSelector { get; set; }
 
         /// <summary> PropertySelector is a property query over all joined member clusters. Clusters matching the query are selected. If you specify both label and property selectors in the same term, the results are AND'd. At this moment, PropertySelector can only be used with `RequiredDuringSchedulingIgnoredDuringExecution` affinity terms. This field is beta-level; it is for the property-based scheduling feature and is only functional when a property provider is enabled in the deployment. </summary>
         internal PropertySelector PropertySelector { get; set; }

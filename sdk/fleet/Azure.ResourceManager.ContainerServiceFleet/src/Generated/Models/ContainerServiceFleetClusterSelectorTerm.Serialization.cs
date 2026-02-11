@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            LabelSelector labelSelector = default;
+            ContainerServiceFleetLabelSelector labelSelector = default;
             PropertySelector propertySelector = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    labelSelector = LabelSelector.DeserializeLabelSelector(prop.Value, options);
+                    labelSelector = ContainerServiceFleetLabelSelector.DeserializeContainerServiceFleetLabelSelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("propertySelector"u8))

@@ -12,16 +12,16 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values. </summary>
-    public partial class LabelSelectorRequirement
+    public partial class ContainerServiceFleetLabelSelectorRequirement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorRequirement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelectorRequirement"/>. </summary>
         /// <param name="key"> key is the label key that the selector applies to. </param>
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public LabelSelectorRequirement(string key, LabelSelectorOperator @operator)
+        public ContainerServiceFleetLabelSelectorRequirement(string key, ContainerServiceFleetLabelSelectorOperator @operator)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorRequirement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelectorRequirement"/>. </summary>
         /// <param name="key"> key is the label key that the selector applies to. </param>
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabelSelectorRequirement(string key, LabelSelectorOperator @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetLabelSelectorRequirement(string key, ContainerServiceFleetLabelSelectorOperator @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Operator = @operator;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public string Key { get; set; }
 
         /// <summary> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </summary>
-        public LabelSelectorOperator Operator { get; set; }
+        public ContainerServiceFleetLabelSelectorOperator Operator { get; set; }
 
         /// <summary> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </summary>
         public IList<string> Values { get; }

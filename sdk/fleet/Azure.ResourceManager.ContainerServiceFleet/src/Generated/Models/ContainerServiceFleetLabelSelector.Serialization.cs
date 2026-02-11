@@ -14,11 +14,11 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects. </summary>
-    public partial class LabelSelector : IJsonModel<LabelSelector>
+    public partial class ContainerServiceFleetLabelSelector : IJsonModel<ContainerServiceFleetLabelSelector>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LabelSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetLabelSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelSelector)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelector)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(MatchLabels))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("matchExpressions"u8);
                 writer.WriteStartArray();
-                foreach (LabelSelectorRequirement item in MatchExpressions)
+                foreach (ContainerServiceFleetLabelSelectorRequirement item in MatchExpressions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -79,31 +79,31 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LabelSelector IJsonModel<LabelSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceFleetLabelSelector IJsonModel<ContainerServiceFleetLabelSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LabelSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetLabelSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelSelector)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelector)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLabelSelector(document.RootElement, options);
+            return DeserializeContainerServiceFleetLabelSelector(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LabelSelector DeserializeLabelSelector(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceFleetLabelSelector DeserializeContainerServiceFleetLabelSelector(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> matchLabels = default;
-            IList<LabelSelectorRequirement> matchExpressions = default;
+            IList<ContainerServiceFleetLabelSelectorRequirement> matchExpressions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<LabelSelectorRequirement> array = new List<LabelSelectorRequirement>();
+                    List<ContainerServiceFleetLabelSelectorRequirement> array = new List<ContainerServiceFleetLabelSelectorRequirement>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LabelSelectorRequirement.DeserializeLabelSelectorRequirement(item, options));
+                        array.Add(ContainerServiceFleetLabelSelectorRequirement.DeserializeContainerServiceFleetLabelSelectorRequirement(item, options));
                     }
                     matchExpressions = array;
                     continue;
@@ -147,47 +147,47 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), matchExpressions ?? new ChangeTrackingList<LabelSelectorRequirement>(), additionalBinaryDataProperties);
+            return new ContainerServiceFleetLabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), matchExpressions ?? new ChangeTrackingList<ContainerServiceFleetLabelSelectorRequirement>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LabelSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceFleetLabelSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LabelSelector)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LabelSelector IPersistableModel<LabelSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceFleetLabelSelector IPersistableModel<ContainerServiceFleetLabelSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LabelSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetLabelSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLabelSelector(document.RootElement, options);
+                        return DeserializeContainerServiceFleetLabelSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelSelector)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelector)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LabelSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetLabelSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
