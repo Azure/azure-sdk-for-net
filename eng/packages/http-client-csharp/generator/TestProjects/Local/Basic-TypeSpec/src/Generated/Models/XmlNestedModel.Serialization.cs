@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> A nested model for XML testing. </summary>
-    public partial class XmlNestedModel : IPersistableModel<XmlNestedModel>
+    public partial class XmlNestedModel : IPersistableModel<XmlNestedModel>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/> for deserialization. </summary>
         internal XmlNestedModel()
@@ -146,5 +147,9 @@ namespace BasicTypeSpec
             }
             return new XmlNestedModel(value, nestedId, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

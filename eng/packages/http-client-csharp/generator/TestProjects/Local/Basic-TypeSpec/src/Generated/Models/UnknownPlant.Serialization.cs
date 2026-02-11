@@ -12,10 +12,11 @@ using System.IO;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    internal partial class UnknownPlant : Plant, IJsonModel<Plant>
+    internal partial class UnknownPlant : Plant, IJsonModel<Plant>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPlant"/> for deserialization. </summary>
         internal UnknownPlant()
@@ -224,5 +225,9 @@ namespace BasicTypeSpec
             }
             return new UnknownPlant(species, id, height, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

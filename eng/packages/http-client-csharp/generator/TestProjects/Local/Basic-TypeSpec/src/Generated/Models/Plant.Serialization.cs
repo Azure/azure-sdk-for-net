@@ -11,6 +11,7 @@ using System.IO;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
@@ -19,7 +20,7 @@ namespace BasicTypeSpec
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Tree"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownPlant))]
-    public abstract partial class Plant : IJsonModel<Plant>
+    public abstract partial class Plant : IJsonModel<Plant>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="Plant"/> for deserialization. </summary>
         internal Plant()
@@ -223,5 +224,9 @@ namespace BasicTypeSpec
             }
             return UnknownPlant.DeserializeUnknownPlant(element, options);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

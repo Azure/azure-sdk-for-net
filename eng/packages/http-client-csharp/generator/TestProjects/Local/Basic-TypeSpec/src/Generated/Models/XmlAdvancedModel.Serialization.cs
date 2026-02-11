@@ -12,11 +12,12 @@ using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> An advanced XML model for testing various property types and XML features. </summary>
-    public partial class XmlAdvancedModel : IPersistableModel<XmlAdvancedModel>
+    public partial class XmlAdvancedModel : IPersistableModel<XmlAdvancedModel>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="XmlAdvancedModel"/> for deserialization. </summary>
         internal XmlAdvancedModel()
@@ -76,6 +77,18 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<XmlAdvancedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="xmlAdvancedModel"> The <see cref="XmlAdvancedModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(XmlAdvancedModel xmlAdvancedModel)
+        {
+            if (xmlAdvancedModel == null)
+            {
+                return null;
+            }
+            XmlWriterContent content = new XmlWriterContent();
+            content.XmlWriter.WriteObjectValue(xmlAdvancedModel, ModelSerializationExtensions.WireOptions, "AdvancedXmlModel");
+            return content;
+        }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="XmlAdvancedModel"/> from. </param>
         public static explicit operator XmlAdvancedModel(Response response)
@@ -744,5 +757,9 @@ namespace BasicTypeSpec
                 listOfDictionaryFoo,
                 additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

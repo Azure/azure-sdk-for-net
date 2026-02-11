@@ -16,6 +16,7 @@ using System.Text;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
@@ -311,10 +312,13 @@ namespace BasicTypeSpec
             writer.WriteValue(TypeFormatters.ToString(value, format));
         }
 
-        public static void WriteObjectValue<T>(this XmlWriter writer, T value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue<T>(this XmlWriter writer, T value, ModelReaderWriterOptions options = null, string nameHint = null)
         {
             switch (value)
             {
+                case IXmlSerializable xmlSerializable:
+                    xmlSerializable.Write(writer, nameHint);
+                    break;
                 case IPersistableModel<T> persistableModel:
                     BinaryData data = ModelReaderWriter.Write(persistableModel, options ?? WireOptions, BasicTypeSpecContext.Default);
                     using (Stream stream = data.ToStream())

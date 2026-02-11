@@ -29,5 +29,20 @@ namespace BasicTypeSpec
             request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
+
+        internal HttpMessage CreateUpdateTreeRequest(RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/plants/tree/as-plant", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/xml");
+            request.Headers.SetValue("Accept", "application/xml");
+            request.Content = content;
+            return message;
+        }
     }
 }

@@ -13,11 +13,12 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using Azure;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> Tree is a specific type of plant. </summary>
-    public partial class Tree : Plant, IJsonModel<Tree>
+    public partial class Tree : Plant, IJsonModel<Tree>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="Tree"/> for deserialization. </summary>
         internal Tree()
@@ -84,6 +85,16 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<Tree>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="tree"> The <see cref="Tree"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Tree tree)
+        {
+            if (tree == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(tree, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Tree"/> from. </param>
         public static explicit operator Tree(Response response)
@@ -262,5 +273,9 @@ namespace BasicTypeSpec
             }
             return new Tree(species, id, height, additionalBinaryDataProperties, age);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

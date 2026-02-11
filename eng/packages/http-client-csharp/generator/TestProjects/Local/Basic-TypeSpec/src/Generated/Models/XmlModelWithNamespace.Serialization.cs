@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> The XmlModelWithNamespace. </summary>
-    public partial class XmlModelWithNamespace : IPersistableModel<XmlModelWithNamespace>
+    public partial class XmlModelWithNamespace : IPersistableModel<XmlModelWithNamespace>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="XmlModelWithNamespace"/> for deserialization. </summary>
         internal XmlModelWithNamespace()
@@ -132,5 +133,9 @@ namespace BasicTypeSpec
             }
             return new XmlModelWithNamespace(foo, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }
