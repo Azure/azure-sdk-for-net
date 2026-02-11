@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.RedHatOpenShift
 {
+    public partial class AzureResourceManagerRedHatOpenShiftContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerRedHatOpenShiftContext() { }
+        public static Azure.ResourceManager.RedHatOpenShift.AzureResourceManagerRedHatOpenShiftContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class OpenShiftClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>, System.Collections.IEnumerable
     {
         protected OpenShiftClusterCollection() { }
@@ -17,7 +23,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OpenShiftClusterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class OpenShiftClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>
     {
         public OpenShiftClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile ApiserverProfile { get { throw null; } set { } }
@@ -32,8 +38,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile ServicePrincipalProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> WorkerProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> WorkerProfilesStatus { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenShiftClusterResource : Azure.ResourceManager.ArmResource
+    public partial class OpenShiftClusterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected OpenShiftClusterResource() { }
@@ -54,6 +66,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -72,12 +89,18 @@ namespace Azure.ResourceManager.RedHatOpenShift
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OpenShiftVersionData : Azure.ResourceManager.Models.ResourceData
+    public partial class OpenShiftVersionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>
     {
         public OpenShiftVersionData() { }
         public string Version { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenShiftVersionResource : Azure.ResourceManager.ArmResource
+    public partial class OpenShiftVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected OpenShiftVersionResource() { }
@@ -86,6 +109,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string openShiftVersion) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PlatformWorkloadIdentityRoleSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>, System.Collections.IEnumerable
     {
@@ -102,13 +130,19 @@ namespace Azure.ResourceManager.RedHatOpenShift
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PlatformWorkloadIdentityRoleSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class PlatformWorkloadIdentityRoleSetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>
     {
         public PlatformWorkloadIdentityRoleSetData() { }
         public string OpenShiftVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlatformWorkloadIdentityRoleSetResource : Azure.ResourceManager.ArmResource
+    public partial class PlatformWorkloadIdentityRoleSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PlatformWorkloadIdentityRoleSetResource() { }
@@ -117,6 +151,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string openShiftMinorVersion) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class RedHatOpenShiftExtensions
     {
@@ -167,12 +206,18 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
 }
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
-    public partial class APIServerProfile
+    public partial class APIServerProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>
     {
         public APIServerProfile() { }
         public string Ip { get { throw null; } }
         public string Url { get { throw null; } }
         public Azure.ResourceManager.RedHatOpenShift.Models.Visibility? Visibility { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmRedHatOpenShiftModelFactory
     {
@@ -183,11 +228,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig OpenShiftClusterAdminKubeconfig(string kubeconfig = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials OpenShiftClusterCredentials(string kubeadminUsername = null, string kubeadminPassword = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData OpenShiftClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.RedHatOpenShift.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.RedHatOpenShift.Models.ProvisioningState?), Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile clusterProfile = null, string consoleUrl = null, Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile servicePrincipalProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile networkProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile masterProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> workerProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> workerProfilesStatus = null, Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile apiserverProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile> ingressProfiles = null) { throw null; }
+        public static Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch OpenShiftClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.RedHatOpenShift.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.RedHatOpenShift.Models.ProvisioningState?), Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile clusterProfile = null, string consoleUrl = null, Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile servicePrincipalProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile networkProfile = null, Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile masterProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> workerProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> workerProfilesStatus = null, Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile apiserverProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile> ingressProfiles = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData OpenShiftVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity PlatformWorkloadIdentity(string resourceId = null, string clientId = null, string objectId = null) { throw null; }
         public static Azure.ResourceManager.RedHatOpenShift.PlatformWorkloadIdentityRoleSetData PlatformWorkloadIdentityRoleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string openShiftVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = null) { throw null; }
     }
-    public partial class ClusterProfile
+    public partial class ClusterProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>
     {
         public ClusterProfile() { }
         public string Domain { get { throw null; } set { } }
@@ -196,6 +242,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public string PullSecret { get { throw null; } set { } }
         public string ResourceGroupId { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ClusterProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionAtHost : System.IEquatable<Azure.ResourceManager.RedHatOpenShift.Models.EncryptionAtHost>
@@ -229,28 +281,46 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public static bool operator !=(Azure.ResourceManager.RedHatOpenShift.Models.FipsValidatedModule left, Azure.ResourceManager.RedHatOpenShift.Models.FipsValidatedModule right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IngressProfile
+    public partial class IngressProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>
     {
         public IngressProfile() { }
         public string Ip { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.Visibility? Visibility { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.IngressProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LoadBalancerProfile
+    public partial class LoadBalancerProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>
     {
         public LoadBalancerProfile() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> EffectiveOutboundIps { get { throw null; } }
         public int? ManagedOutboundIpsCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MasterProfile
+    public partial class MasterProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>
     {
         public MasterProfile() { }
         public string DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.EncryptionAtHost? EncryptionAtHost { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.MasterProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkProfile
+    public partial class NetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>
     {
         public NetworkProfile() { }
         public Azure.ResourceManager.RedHatOpenShift.Models.LoadBalancerProfile LoadBalancerProfile { get { throw null; } set { } }
@@ -258,19 +328,37 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public string PodCidr { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.PreconfiguredNSG? PreconfiguredNSG { get { throw null; } set { } }
         public string ServiceCidr { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.NetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenShiftClusterAdminKubeconfig
+    public partial class OpenShiftClusterAdminKubeconfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>
     {
         internal OpenShiftClusterAdminKubeconfig() { }
         public string Kubeconfig { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenShiftClusterCredentials
+    public partial class OpenShiftClusterCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>
     {
         internal OpenShiftClusterCredentials() { }
         public string KubeadminPassword { get { throw null; } }
         public string KubeadminUsername { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenShiftClusterPatch
+    public partial class OpenShiftClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>
     {
         public OpenShiftClusterPatch() { }
         public Azure.ResourceManager.RedHatOpenShift.Models.APIServerProfile ApiserverProfile { get { throw null; } set { } }
@@ -286,6 +374,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> WorkerProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile> WorkerProfilesStatus { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OutboundType : System.IEquatable<Azure.ResourceManager.RedHatOpenShift.Models.OutboundType>
@@ -303,25 +397,43 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public static bool operator !=(Azure.ResourceManager.RedHatOpenShift.Models.OutboundType left, Azure.ResourceManager.RedHatOpenShift.Models.OutboundType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PlatformWorkloadIdentity
+    public partial class PlatformWorkloadIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>
     {
         public PlatformWorkloadIdentity() { }
         public string ClientId { get { throw null; } }
         public string ObjectId { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlatformWorkloadIdentityProfile
+    public partial class PlatformWorkloadIdentityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>
     {
         public PlatformWorkloadIdentityProfile() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentity> PlatformWorkloadIdentities { get { throw null; } }
         public string UpgradeableTo { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlatformWorkloadIdentityRole
+    public partial class PlatformWorkloadIdentityRole : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>
     {
         public PlatformWorkloadIdentityRole() { }
         public string OperatorName { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
         public string RoleDefinitionName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.PlatformWorkloadIdentityRole>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PreconfiguredNSG : System.IEquatable<Azure.ResourceManager.RedHatOpenShift.Models.PreconfiguredNSG>
@@ -360,11 +472,17 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public static bool operator !=(Azure.ResourceManager.RedHatOpenShift.Models.ProvisioningState left, Azure.ResourceManager.RedHatOpenShift.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServicePrincipalProfile
+    public partial class ServicePrincipalProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>
     {
         public ServicePrincipalProfile() { }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.ServicePrincipalProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Visibility : System.IEquatable<Azure.ResourceManager.RedHatOpenShift.Models.Visibility>
@@ -382,7 +500,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public static bool operator !=(Azure.ResourceManager.RedHatOpenShift.Models.Visibility left, Azure.ResourceManager.RedHatOpenShift.Models.Visibility right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WorkerProfile
+    public partial class WorkerProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>
     {
         public WorkerProfile() { }
         public int? Count { get { throw null; } set { } }
@@ -392,5 +510,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public string Name { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.WorkerProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
