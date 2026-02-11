@@ -8,12 +8,6 @@
 - Added support for `clientRequestId` parameter in Analyze and AnalyzeBinary operations
 - Updated to latest service API version `2025-11-01`
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.1 (2026-01-08)
 
 ### Features Added
