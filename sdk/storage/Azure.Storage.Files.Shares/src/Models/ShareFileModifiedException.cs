@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Gets the URI of the resurce that has been modified.
         /// </summary>
-        public Uri ResourceUri { get;  }
+        public Uri ResourceUri { get; }
 
         /// <summary>
         /// Gets the ETag value that was expected during the read.

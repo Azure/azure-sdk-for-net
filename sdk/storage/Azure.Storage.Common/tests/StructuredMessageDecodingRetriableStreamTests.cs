@@ -222,7 +222,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             stream = new StructuredMessageEncodingStream(stream, segmentLen, StructuredMessage.Flags.StorageCrc64);
             if (faulty)
             {
-                stream  = new FaultyStream(stream, interruptPos, 1, new Exception(), () => { });
+                stream = new FaultyStream(stream, interruptPos, 1, new Exception(), () => { });
             }
             return StructuredMessageDecodingStream.WrapStream(stream);
         }
