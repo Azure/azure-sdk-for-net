@@ -32,6 +32,11 @@ Key concepts of the Azure SDK for .NET are:
 
 ### Create a Red Hat OpenShift cluster
 
+## Troubleshooting
+
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+
 ## Next steps
 
 For more information on Azure SDK, see [Azure SDK Releases](https://azure.github.io/azure-sdk/).
