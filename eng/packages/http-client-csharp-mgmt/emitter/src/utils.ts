@@ -11,18 +11,25 @@ export function isVariableSegment(segment: string): boolean {
 }
 
 /**
+ * Returns the number of non-empty segments in a path
+ * @param path the path
+ * @returns
+ */
+export function getSegmentCount(path: string): number {
+  return path.split("/").filter((s) => s.length > 0).length;
+}
+
+/**
  * Returns true if left path is a prefix of right path
  * @param left the first path
  * @param right the second path
  * @returns
  */
 export function isPrefix(left: string, right: string): boolean {
-  const leftSegments = left.split("/").filter((s) => s.length > 0);
-  const rightSegments = right.split("/").filter((s) => s.length > 0);
+  const leftCount = getSegmentCount(left);
+  const rightCount = getSegmentCount(right);
   const sharedCount = getSharedSegmentCount(left, right);
-  return (
-    sharedCount === leftSegments.length && sharedCount <= rightSegments.length
-  );
+  return sharedCount === leftCount && sharedCount <= rightCount;
 }
 
 /**

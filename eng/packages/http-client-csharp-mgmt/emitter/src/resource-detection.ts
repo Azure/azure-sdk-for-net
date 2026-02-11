@@ -55,7 +55,7 @@ import {
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { getSharedSegmentCount, isPrefix } from "./utils.js";
+import { getSegmentCount, getSharedSegmentCount } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
@@ -187,12 +187,20 @@ export function buildArmProviderSchema(
               0,
               existingPath.lastIndexOf("/")
             );
-            if (isPrefix(existingParentPath, operationPath)) {
+            const parentSegmentCount = getSegmentCount(existingParentPath);
+            const sharedCount = getSharedSegmentCount(
+              existingParentPath,
+              operationPath
+            );
+            if (
+              sharedCount === parentSegmentCount &&
+              sharedCount <= getSegmentCount(operationPath)
+            ) {
               // Score based on how many segments match (longer prefix = better match)
-              const score = existingParentPath
-                .split("/")
-                .filter((s) => s.length > 0).length;
-              prefixMatchCandidates.push({ existingPath, matchScore: score });
+              prefixMatchCandidates.push({
+                existingPath,
+                matchScore: parentSegmentCount
+              });
             }
           }
         }
@@ -390,17 +398,20 @@ export function buildArmProviderSchema(
           const potentialParentPath = otherMetadata.resourceIdPattern;
 
           // The child path should start with the parent path followed by a "/"
+          const parentSegmentCount = getSegmentCount(potentialParentPath);
+          const childSegmentCount = getSegmentCount(thisPath);
+          const sharedCount = getSharedSegmentCount(
+            potentialParentPath,
+            thisPath
+          );
+          // potentialParentPath is a strict prefix of thisPath when all parent segments match
+          // and the child has more segments
           if (
-            isPrefix(potentialParentPath, thisPath) &&
-            !isPrefix(thisPath, potentialParentPath)
+            sharedCount === parentSegmentCount &&
+            parentSegmentCount < childSegmentCount
           ) {
-            // Use getSharedSegmentCount to get the segment count without redundant splitting
-            const segmentCount = getSharedSegmentCount(
-              potentialParentPath,
-              thisPath
-            );
-            if (segmentCount > longestParentSegmentCount) {
-              longestParentSegmentCount = segmentCount;
+            if (sharedCount > longestParentSegmentCount) {
+              longestParentSegmentCount = sharedCount;
               longestParentPath = potentialParentPath;
             }
           }
