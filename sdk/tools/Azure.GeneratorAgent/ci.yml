@@ -30,10 +30,7 @@ extends:
     - name: Azure.GeneratorAgent
       safeName: AzureGeneratorAgent
     MatrixConfigs:
-    - Name: NET10_Only_Custom
-      Matrix:
-        Windows_NET10:
-          Pool: env:WINDOWSPOOL
-          OSVmImage: env:WINDOWSVMIMAGE
-          TestTargetFramework: net10.0
+    - Name: NET10_CrossPlatform
+      Path: sdk/tools/Azure.GeneratorAgent/platform-matrix.json
+      Selection: sparse
       GenerateVMJobs: true
