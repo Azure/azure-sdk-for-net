@@ -65,5 +65,23 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         {
             return Task.CompletedTask;
         }
+
+        /// <summary>
+        /// Connection joined group event method.
+        /// </summary>
+        /// <param name="request"><see cref="JoinedGroupEventRequest"/> to get client joined group information.</param>
+        public virtual Task OnJoinedGroupAsync(JoinedGroupEventRequest request)
+        {
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Connection left group event method.
+        /// </summary>
+        /// <param name="request"><see cref="LeftGroupEventRequest"/> to get client left group request information.</param>
+        public virtual Task OnLeftGroupAsync(LeftGroupEventRequest request)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

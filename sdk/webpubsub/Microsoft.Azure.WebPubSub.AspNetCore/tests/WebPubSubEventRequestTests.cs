@@ -172,6 +172,26 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.AreEqual(TestUri.Host, connectRequest.ConnectionContext.Origin);
         }
 
+        [TestCase(Constants.Events.JoinedGroupEvent, typeof(JoinedGroupEventRequest))]
+        [TestCase(Constants.Events.LeftGroupEvent, typeof(LeftGroupEventRequest))]
+        public async Task TestParseGroupEventRequest(string eventName, Type expectedType)
+        {
+            var body = "{\"group\":\"mygroup\"}";
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, eventName, body: body);
+
+            var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
+
+            Assert.AreEqual(expectedType, request.GetType());
+            var group = request switch
+            {
+                JoinedGroupEventRequest joined => joined.Group,
+                LeftGroupEventRequest left => left.Group,
+                _ => null
+            };
+            Assert.AreEqual("mygroup", group);
+            Assert.AreEqual(eventName, request.ConnectionContext.EventName);
+        }
+
         [TestCase(MqttProtocolVersion.V311)]
         [TestCase(MqttProtocolVersion.V500)]
         public async Task TestParseMqttConnectRequest(MqttProtocolVersion protocolVersion)

@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
@@ -201,6 +202,52 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate message response matched it's defined in TestHub.Message()
             Assert.AreEqual("ACK", response);
+        }
+
+        [Test]
+        public async Task TestHandleJoinedGroupEvent()
+        {
+            var groupName = "group1";
+            var connectionId = "joined-connection";
+            var body = JsonSerializer.Serialize(new { group = groupName });
+            var clientMock = new Mock<WebPubSubServiceClient<TestGroupHub>>();
+            clientMock.Setup(c => c.SendToGroupAsync(groupName, $"{connectionId} joined", default))
+                .ReturnsAsync(new Mock<Response>().Object);
+            _adaptor.RegisterHub(nameof(TestGroupHub), new TestGroupHub(clientMock.Object));
+
+            var context = PrepareHttpContext(type: WebPubSubEventType.GroupPresence,
+                eventName: Constants.Events.JoinedGroupEvent,
+                body: body,
+                contentType: Constants.ContentTypes.JsonContentType,
+                hub: nameof(TestGroupHub),
+                connectionId: connectionId);
+
+            await _adaptor.HandleRequest(context);
+
+            clientMock.Verify(c => c.SendToGroupAsync(groupName, $"{connectionId} joined", default), Times.Once);
+        }
+
+        [Test]
+        public async Task TestHandleLeftGroupEvent()
+        {
+            var groupName = "group1";
+            var connectionId = "left-connection";
+            var body = JsonSerializer.Serialize(new { group = groupName });
+            var clientMock = new Mock<WebPubSubServiceClient<TestGroupHub>>();
+            clientMock.Setup(c => c.SendToGroupAsync(groupName, $"{connectionId} left", default))
+                .ReturnsAsync(new Mock<Response>().Object);
+            _adaptor.RegisterHub(nameof(TestGroupHub), new TestGroupHub(clientMock.Object));
+
+            var context = PrepareHttpContext(type: WebPubSubEventType.GroupPresence,
+                eventName: Constants.Events.LeftGroupEvent,
+                body: body,
+                contentType: Constants.ContentTypes.JsonContentType,
+                hub: nameof(TestGroupHub),
+                connectionId: connectionId);
+
+            await _adaptor.HandleRequest(context);
+
+            clientMock.Verify(c => c.SendToGroupAsync(groupName, $"{connectionId} left", default), Times.Once);
         }
 
         [Test]
@@ -403,9 +450,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
         private static string GetFormedType(WebPubSubEventType type, string eventName)
         {
-            return type == WebPubSubEventType.User ?
-                $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}" :
-                $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}";
+            return type switch
+            {
+                WebPubSubEventType.User => $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}",
+                WebPubSubEventType.GroupPresence => $"{Constants.Headers.CloudEvents.TypeGroupPresencePrefix}{eventName}",
+                _ => $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}"
+            };
         }
 
         private sealed class TestHub : WebPubSubHub
@@ -467,6 +517,26 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         // Test default return correct
         private sealed class TestDefaultHub : WebPubSubHub
         {
+        }
+
+        private sealed class TestGroupHub : WebPubSubHub
+        {
+            private readonly WebPubSubServiceClient<TestGroupHub> _client;
+
+            public TestGroupHub(WebPubSubServiceClient<TestGroupHub> client)
+            {
+                _client = client;
+            }
+
+            public override Task OnJoinedGroupAsync(JoinedGroupEventRequest request)
+            {
+                return _client.SendToGroupAsync(request.Group, $"{request.ConnectionContext.ConnectionId} joined");
+            }
+
+            public override Task OnLeftGroupAsync(LeftGroupEventRequest request)
+            {
+                return _client.SendToGroupAsync(request.Group, $"{request.ConnectionContext.ConnectionId} left");
+            }
         }
 
         // Test error cases.
