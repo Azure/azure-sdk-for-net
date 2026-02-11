@@ -12,6 +12,11 @@ namespace Azure.AI.Speech.Transcription
     /// <summary> Metadata for a transcription request. </summary>
     public partial class TranscriptionOptions : IJsonModel<TranscriptionOptions>
     {
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/> for deserialization. </summary>
+        internal TranscriptionOptions()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TranscriptionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -26,6 +31,19 @@ namespace Azure.AI.Speech.Transcription
                     }
                 default:
                     throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,19 +304,6 @@ namespace Azure.AI.Speech.Transcription
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TranscriptionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

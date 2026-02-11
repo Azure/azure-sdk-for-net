@@ -14,24 +14,15 @@ namespace Azure.AI.Speech.Transcription
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/> with an audio URI. </summary>
         /// <param name="audioUri"> The URL of the audio to be transcribed. </param>
-        public TranscriptionOptions(Uri audioUri) : this()
+        public TranscriptionOptions(Uri audioUri) : this(audioUri, new ChangeTrackingList<string>(), new ChangeTrackingDictionary<string, Uri>(), null, null, new ChangeTrackingList<int>(), null, null, null)
         {
-            AudioUri = audioUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/> with an audio stream. </summary>
         /// <param name="audioStream"> The audio stream to be transcribed. </param>
-        public TranscriptionOptions(Stream audioStream) : this()
+        public TranscriptionOptions(Stream audioStream) : this(null, new ChangeTrackingList<string>(), new ChangeTrackingDictionary<string, Uri>(), null, null, new ChangeTrackingList<int>(), null, null, null)
         {
             AudioStream = audioStream;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
-        public TranscriptionOptions()
-        {
-            Locales = new ChangeTrackingList<string>();
-            Models = new ChangeTrackingDictionary<string, Uri>();
-            ActiveChannels = new ChangeTrackingList<int>();
         }
 
         /// <summary> The URL of the audio to be transcribed. The audio must be shorter than 2 hours in audio duration and smaller than 250 MB in size. If both Audio and AudioUrl are provided, Audio is used. </summary>
