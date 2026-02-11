@@ -494,9 +494,12 @@ namespace Azure.Generator.Management.Providers
                             var collectionSignature = collectionMethodProvider.Signature;
                             var getMethodName = $"Get{childResource.ResourceName}{suffix}";
 
+                            // Create a more specific description that references the actual child resource being returned
+                            FormattableString description = $"Get a {childResource.ResourceName}";
+
                             var getSignature = new MethodSignature(
                                 getMethodName,
-                                collectionSignature.Description,
+                                description,
                                 collectionSignature.Modifiers,
                                 collectionSignature.ReturnType,
                                 collectionSignature.ReturnDescription,

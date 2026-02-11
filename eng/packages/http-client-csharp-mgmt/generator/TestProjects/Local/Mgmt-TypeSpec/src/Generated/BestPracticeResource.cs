@@ -399,7 +399,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetCachedClient(client => new BestPracticeVersionCollection(client, Id));
         }
 
-        /// <summary> Get a BestPractice. </summary>
+        /// <summary> Get a BestPracticeVersion. </summary>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
@@ -412,7 +412,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetBestPracticeVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a BestPractice. </summary>
+        /// <summary> Get a BestPracticeVersion. </summary>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>

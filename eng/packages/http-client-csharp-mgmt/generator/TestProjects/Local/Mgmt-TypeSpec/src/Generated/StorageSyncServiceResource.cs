@@ -194,7 +194,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
         }
 
-        /// <summary> Gets the specified private endpoint connection associated with the storage sync service. </summary>
+        /// <summary> Get a PrivateEndpointConnection. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -207,7 +207,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the specified private endpoint connection associated with the storage sync service. </summary>
+        /// <summary> Get a PrivateEndpointConnection. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
