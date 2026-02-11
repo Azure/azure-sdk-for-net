@@ -34,7 +34,7 @@
 - Added support for the StartFrom parameter on DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
 
 ### Breaking Changes
-- All parameters for the existing DataLakeFileSystemClient.GetPaths() and .GetPathsAsync() overloads are now required, as these overloads are depricated.  We recommend switching to the new overloads taking optional DataLakeGetPathsOptions.
+- All parameters for the existing DataLakeFileSystemClient.GetPaths() and .GetPathsAsync() overloads are now required, as these overloads are deprecated.  We recommend switching to the new overloads taking optional DataLakeGetPathsOptions.
 
 ## 12.24.0 (2025-10-13)
 
