@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Synapse;
@@ -9,10 +13,6 @@ using Azure.ResourceManager.Synapse.Tests;
 using Azure.ResourceManager.Synapse.Tests.Helpers;
 using NUnit;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Tests
             var kustoDatabasesFromPool = kustoPoolDatabaseCollection.GetAllAsync();
             var kustoDatabaseList = await kustoDatabasesFromPool.ToEnumerableAsync();
             var kustoDatabaseCount = kustoDatabaseList.Count();
-            var expectedKustoDatabaseName = GetFullKustoDatabaseName(workspaceName,kustoPoolName,kustoDatabaseName);
+            var expectedKustoDatabaseName = GetFullKustoDatabaseName(workspaceName, kustoPoolName, kustoDatabaseName);
             var kustoDatabase = kustoDatabaseList.Single(database => database.Data.Name == expectedKustoDatabaseName);
 
             Assert.True(kustoDatabase != null, string.Format("kusto Database created earlier is not found when listing all in kusto pool {0}", kustoPoolName));

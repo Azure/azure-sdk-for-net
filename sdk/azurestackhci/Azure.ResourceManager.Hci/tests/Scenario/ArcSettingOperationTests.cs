@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Tests
 {
-    public class ArcSettingOperationTests: HciManagementTestBase
+    public class ArcSettingOperationTests : HciManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ArcSettingResource _arcSetting;

@@ -150,7 +150,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        List<PersistentThreadMessage> messagesList = [..client.Messages.GetMessages(thread.Id)];
+        List<PersistentThreadMessage> messagesList = [.. client.Messages.GetMessages(thread.Id)];
         Assert.AreEqual(message.Id, messagesList[0].Id);
 
         // Step 4: Run the agent

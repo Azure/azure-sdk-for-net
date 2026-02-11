@@ -22,7 +22,7 @@ namespace Azure.SdkAnalyzers
             // Detect path separator from the entire path
             char pathSeparator = filePath.IndexOf('/') >= 0 ? '/' : '\\';
 
-            int generatedIndex = filePath.IndexOf([.."Generated", pathSeparator], StringComparison.Ordinal);
+            int generatedIndex = filePath.IndexOf([.. "Generated", pathSeparator], StringComparison.Ordinal);
 
             if (generatedIndex > 0 && filePath[generatedIndex - 1] != pathSeparator)
             {

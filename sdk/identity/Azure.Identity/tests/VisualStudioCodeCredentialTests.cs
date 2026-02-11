@@ -171,24 +171,48 @@ namespace Azure.Identity.Tests
             Assert.IsNull(authRecord, "Authentication record should be null when file doesn't exist");
         }
 
+        #region Virtual Factory Methods
+        /// <summary>
+        /// Creates a VisualStudioCodeCredential with null options.
+        /// </summary>
+        protected virtual void CreateBareCredential()
+        {
+            new VisualStudioCodeCredential(null);
+        }
+
+        /// <summary>
+        /// Creates a VisualStudioCodeCredential with the specified options.
+        /// </summary>
+        protected virtual void CreateCredentialWithOptions(string tenantId = null, Uri authorityHost = null, bool isUnsafeSupportLoggingEnabled = false)
+        {
+            var options = new VisualStudioCodeCredentialOptions
+            {
+                TenantId = tenantId,
+                IsUnsafeSupportLoggingEnabled = isUnsafeSupportLoggingEnabled
+            };
+
+            if (authorityHost != null)
+            {
+                options.AuthorityHost = authorityHost;
+            }
+
+            new VisualStudioCodeCredential(options);
+        }
+        #endregion
+
         [Test]
         public void Constructor_WithNullOptions_Succeeds()
         {
-            Assert.DoesNotThrow(() => new VisualStudioCodeCredential(null));
+            Assert.DoesNotThrow(() => CreateBareCredential());
         }
 
         [Test]
         public void Constructor_WithValidOptions_TransfersProperties()
         {
-            var options = new VisualStudioCodeCredentialOptions
-            {
-                TenantId = "test-tenant",
-                AuthorityHost = new Uri("https://login.microsoftonline.us"),
-                IsUnsafeSupportLoggingEnabled = true
-            };
-
-            // Constructor should succeed and not throw
-            Assert.DoesNotThrow(() => new VisualStudioCodeCredential(options));
+            Assert.DoesNotThrow(() => CreateCredentialWithOptions(
+                tenantId: "test-tenant",
+                authorityHost: new Uri("https://login.microsoftonline.us"),
+                isUnsafeSupportLoggingEnabled: true));
         }
     }
 }

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>
+      The official .NET library for extended OpenAI API capabilities in Microsoft Foundry, including those used by the Foundry Agents Service.
+
+      This library features derived clients, new compatible types, and a variety of extension elements that facilitate easier use of new Microsoft
+      Foundry API surfaces. It depends on and builds from the official OpenAI library for .NET to maintain rapid upstream feature propagation and
+      ongoing forward compatibility.
+    </Description>
+    <AssemblyTitle>Microsoft Foundry OpenAI .NET Extensions</AssemblyTitle>
+    <Version>1.0.0-beta.6</Version>
+    <PackageTags>Azure.AI.Projects.OpenAI</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Acknowledge experimental OpenAI features -->
+    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
+    <!-- Temporary suppression of XML doc requirement -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Ignore ModelFactory error (applied to externally originating types) -->
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenAI" />
+  </ItemGroup>
+</Project>

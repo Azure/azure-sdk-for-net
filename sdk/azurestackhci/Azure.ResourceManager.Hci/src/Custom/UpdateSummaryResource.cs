@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(ResourceType, out string updateSummaryApiVersion);
             _updateSummaryRestClient = new UpdateSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, updateSummaryApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

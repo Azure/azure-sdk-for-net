@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SSL profile of an application gateway. </summary>
     public partial class ApplicationGatewaySslProfile : NetworkResourceData
     {
-         /// <summary> Verify client certificate issuer name on the application gateway. </summary>
-         [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> Verify client certificate issuer name on the application gateway. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public bool? VerifyClientCertIssuerDN
         {

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, ifMatch:null, cancellationToken:cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, ifMatch: null, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, ifMatch:null, cancellationToken:cancellationToken);
+            => Delete(waitUntil, ifMatch: null, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken) => await DeleteAsync(waitUntil, ifMatch:null, cancellationToken:cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken) => await DeleteAsync(waitUntil, ifMatch: null, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken) => Delete(waitUntil, ifMatch:null, cancellationToken:cancellationToken);
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken) => Delete(waitUntil, ifMatch: null, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Updates tags on a managed cluster.

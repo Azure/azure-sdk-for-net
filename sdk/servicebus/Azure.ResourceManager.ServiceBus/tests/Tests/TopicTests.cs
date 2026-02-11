@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private ServiceBusTopicCollection _topicCollection;
-        public TopicTests(bool isAsync): base(isAsync)
+        public TopicTests(bool isAsync) : base(isAsync)
         {
         }
 

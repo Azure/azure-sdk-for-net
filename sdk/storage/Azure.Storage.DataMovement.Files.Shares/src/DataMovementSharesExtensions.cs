@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static string GetPermission(
             this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
-                ? (string) permission
+                ? (string)permission
                 : default;
 
         public static FileSmbProperties GetFileSmbProperties(
@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
                 permissionKeyValue = setPermissions
                     ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
-                        ? (string) permissionKeyObject
+                        ? (string)permissionKeyObject
                         : default
                     : default;
             }
@@ -223,7 +223,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             return rawProperties?.TryGetValue(propertyKey, out object value) == true
-                   ? (T?) value
+                   ? (T?)value
                    : default;
         }
 

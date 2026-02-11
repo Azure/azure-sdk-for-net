@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;

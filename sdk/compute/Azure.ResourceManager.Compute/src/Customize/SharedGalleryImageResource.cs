@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(ResourceType, out string sharedGalleryImageApiVersion);
             _sharedGalleryImageRestClient = new SharedGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryImageApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

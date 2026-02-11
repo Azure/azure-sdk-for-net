@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-                [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_DefaultAudience()
         {
             // Arrange
@@ -2760,7 +2760,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             });
 
-            Response<ShareFileProperties> sourceProperties =  await source.File.GetPropertiesAsync();
+            Response<ShareFileProperties> sourceProperties = await source.File.GetPropertiesAsync();
 
             string owner;
             string group;
@@ -3393,7 +3393,8 @@ namespace Azure.Storage.Files.Shares.Tests
             var actual = new MemoryStream();
             await TestHelper.AssertExpectedExceptionAsync<ShareFileModifiedException>(
                 downloadInfo.Content.CopyToAsync(actual, 4 * Constants.KB),
-                e => {
+                e =>
+                {
                     Assert.AreEqual(e.ResourceUri, file.Uri);
                     Assert.AreNotEqual(e.ExpectedETag, e.ActualETag);
                     Assert.IsNotNull(e.Range);
@@ -4819,7 +4820,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 .GetFileClient(fileName));
 
             // Act
-            Response<ShareFileUploadInfo> response =  await destFile.UploadRangeFromUriAsync(
+            Response<ShareFileUploadInfo> response = await destFile.UploadRangeFromUriAsync(
                 sourceUri: sasFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange);

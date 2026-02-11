@@ -8,16 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
-    internal partial class DeploymentStacksDebugSetting : IUtf8JsonSerializable, IJsonModel<DeploymentStacksDebugSetting>
+    /// <summary> The debug setting. </summary>
+    internal partial class DeploymentStacksDebugSetting : IJsonModel<DeploymentStacksDebugSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentStacksDebugSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentStacksDebugSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,26 +29,25 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentStacksDebugSetting)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DetailLevel))
             {
                 writer.WritePropertyName("detailLevel"u8);
                 writer.WriteStringValue(DetailLevel);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -57,107 +56,78 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        DeploymentStacksDebugSetting IJsonModel<DeploymentStacksDebugSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentStacksDebugSetting IJsonModel<DeploymentStacksDebugSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentStacksDebugSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentStacksDebugSetting)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentStacksDebugSetting(document.RootElement, options);
         }
 
-        internal static DeploymentStacksDebugSetting DeserializeDeploymentStacksDebugSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentStacksDebugSetting DeserializeDeploymentStacksDebugSetting(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string detailLevel = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("detailLevel"u8))
+                if (prop.NameEquals("detailLevel"u8))
                 {
-                    detailLevel = property.Value.GetString();
+                    detailLevel = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentStacksDebugSetting(detailLevel, serializedAdditionalRawData);
+            return new DeploymentStacksDebugSetting(detailLevel, additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentStacksDebugSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetailLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  detailLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DetailLevel))
-                {
-                    builder.Append("  detailLevel: ");
-                    if (DetailLevel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DetailLevel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DetailLevel}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentStacksDebugSetting>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentStacksDebugSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeploymentStacksDebugSetting IPersistableModel<DeploymentStacksDebugSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentStacksDebugSetting IPersistableModel<DeploymentStacksDebugSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentStacksDebugSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStacksDebugSetting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeploymentStacksDebugSetting(document.RootElement, options);
                     }
                 default:
@@ -165,6 +135,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeploymentStacksDebugSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -227,10 +227,10 @@
 # ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @jrjrguo @SG-MS
+/sdk/translation/                                                  @jrjrguo
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @jrjrguo @SG-MS
+# ServiceOwners:                                                   @jrjrguo
 
 # PRLabel: %Communication
 /sdk/communication/                                                @acsdevx-msft
@@ -492,6 +492,12 @@
 
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @JialinXin @vicancy @Y-Sindo
+
+# PRLabel: %Speech Transcription
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
+
+# ServiceLabel: %Speech Transcription
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
