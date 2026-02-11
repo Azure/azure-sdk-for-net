@@ -229,7 +229,6 @@ namespace Azure.Storage.Internal.Avro
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     items.Add(item);
                 }
-                ;
             }
             return items;
         }

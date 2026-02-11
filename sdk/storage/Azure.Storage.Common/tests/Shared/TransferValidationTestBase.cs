@@ -204,7 +204,6 @@ namespace Azure.Storage.Test.Shared
                     Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
                 }
             }
-            ;
 
             return request =>
             {
@@ -286,7 +285,6 @@ namespace Azure.Storage.Test.Shared
                     Assert.Fail($"{headerName} expected on response but was not found.");
                 }
             }
-            ;
 
             return response =>
             {

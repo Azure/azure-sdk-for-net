@@ -122,7 +122,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 default:
                     throw Errors.InvalidArgument(nameof(mode));
             }
-            ;
         }
         #endregion
 
