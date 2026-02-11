@@ -150,12 +150,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         }
                     case JoinedGroupEventRequest joinedGroupEvent:
                         {
-                            _ = hub.OnJoinedGroupAsync(joinedGroupEvent).ConfigureAwait(false);
+                            _ = hub.OnGroupJoinedAsync(joinedGroupEvent).ConfigureAwait(false);
                             break;
                         }
                     case LeftGroupEventRequest leftGroupEvent:
                         {
-                            _ = hub.OnLeftGroupAsync(leftGroupEvent).ConfigureAwait(false);
+                            _ = hub.OnGroupLeftAsync(leftGroupEvent).ConfigureAwait(false);
                             break;
                         }
                     default:

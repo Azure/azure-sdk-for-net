@@ -217,7 +217,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 contentType: Constants.ContentTypes.JsonContentType,
                 hub: hubName);
             var hubMock = new Mock<WebPubSubHub>();
-            hubMock.Setup(h => h.OnJoinedGroupAsync(It.IsAny<JoinedGroupEventRequest>())).Callback<JoinedGroupEventRequest>(request =>
+            hubMock.Setup(h => h.OnGroupJoinedAsync(It.IsAny<JoinedGroupEventRequest>())).Callback<JoinedGroupEventRequest>(request =>
             {
                 AssertJoinedGroupEventRequest(request, context, groupName, TestConnectionId, hubName);
             }).Returns(Task.CompletedTask);
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            hubMock.Verify(h => h.OnJoinedGroupAsync(It.IsAny<JoinedGroupEventRequest>()), Times.Once);
+            hubMock.Verify(h => h.OnGroupJoinedAsync(It.IsAny<JoinedGroupEventRequest>()), Times.Once);
         }
 
         [Test]
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 contentType: Constants.ContentTypes.JsonContentType,
                 hub: hubName);
             var hubMock = new Mock<WebPubSubHub>();
-            hubMock.Setup(h => h.OnLeftGroupAsync(It.IsAny<LeftGroupEventRequest>())).Callback<LeftGroupEventRequest>(request =>
+            hubMock.Setup(h => h.OnGroupLeftAsync(It.IsAny<LeftGroupEventRequest>())).Callback<LeftGroupEventRequest>(request =>
             {
                 AssertLeftGroupEventRequest(request, context, groupName, TestConnectionId, hubName);
             }).Returns(Task.CompletedTask);
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            hubMock.Verify(h => h.OnLeftGroupAsync(It.IsAny<LeftGroupEventRequest>()), Times.Once);
+            hubMock.Verify(h => h.OnGroupLeftAsync(It.IsAny<LeftGroupEventRequest>()), Times.Once);
         }
 
         [Test]
