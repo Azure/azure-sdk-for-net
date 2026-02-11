@@ -82,6 +82,32 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(fileUriBuilder.Sas);
             Assert.AreEqual(443, fileUriBuilder.Port);
             Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://md-d3rqxhqbxbwq.file.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.file.core.windows.net/", "md-ssd-bndub02px100c21")]
+        public void FileUriBuilder_InternalAccounts(string uriString, string actualAccountName)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual(actualAccountName, fileUriBuilder.AccountName);
+            Assert.AreEqual("", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
             Assert.AreEqual(originalUri, newUri);
         }
 

@@ -107,6 +107,34 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
             Assert.IsNull(dataLakeUriBuilder.Sas);
             Assert.AreEqual(443, dataLakeUriBuilder.Port);
+            Assert.AreEqual("", dataLakeUriBuilder.Query);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [TestCase("https://md-d3rqxhqbxbwq.blob.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.blob.core.windows.net/", "md-ssd-bndub02px100c21")]
+        [TestCase("https://md-d3rqxhqbxbwq.dfs.core.windows.net/", "md-d3rqxhqbxbwq")]
+        [TestCase("https://md-ssd-bndub02px100c21.dfs.core.windows.net/", "md-ssd-bndub02px100c21")]
+        public void DataLakeUriBuilder_InternalAccounts(string uriString, string actualAccountName)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var dataLakeUriBuilder = new DataLakeUriBuilder(originalUri.Uri);
+            Uri newUri = dataLakeUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", dataLakeUriBuilder.Scheme);
+            Assert.AreEqual(actualAccountName, dataLakeUriBuilder.AccountName);
+            Assert.AreEqual("", dataLakeUriBuilder.FileSystemName);
+            Assert.AreEqual("", dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual("", dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", dataLakeUriBuilder.Snapshot);
+            Assert.IsNull(dataLakeUriBuilder.Sas);
+            Assert.AreEqual(443, dataLakeUriBuilder.Port);
+            Assert.AreEqual("", dataLakeUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 
