@@ -250,8 +250,9 @@ namespace Azure.AI.VoiceLive
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
             BinaryData fillerResponse = default;
-            BinaryData turnDetection = default;
+            RespondingAgentOptions agent = default;
             string id = default;
+            BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -433,7 +434,15 @@ namespace Azure.AI.VoiceLive
                     fillerResponse = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-
+                if (prop.NameEquals("agent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agent = RespondingAgentOptions.DeserializeRespondingAgentOptions(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
@@ -473,6 +482,7 @@ namespace Azure.AI.VoiceLive
                 maxResponseOutputTokens,
                 reasoningEffort,
                 fillerResponse,
+                agent,
                 id,
                 turnDetection,
                 additionalBinaryDataProperties);

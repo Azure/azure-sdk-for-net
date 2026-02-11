@@ -68,7 +68,7 @@ namespace Azure.AI.VoiceLive
     [ModelReaderWriterBuildable(typeof(RequestAudioContentPart))]
     [ModelReaderWriterBuildable(typeof(RequestImageContentPart))]
     [ModelReaderWriterBuildable(typeof(RequestTextContentPart))]
-
+    [ModelReaderWriterBuildable(typeof(RespondingAgentOptions))]
     [ModelReaderWriterBuildable(typeof(ResponseAudioContentPart))]
     [ModelReaderWriterBuildable(typeof(ResponseCancelledDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseCreateParams))]
@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive
     [ModelReaderWriterBuildable(typeof(ResponseTokenStatistics))]
     [ModelReaderWriterBuildable(typeof(ServerVadTurnDetection))]
     [ModelReaderWriterBuildable(typeof(SessionResponse))]
-
+    [ModelReaderWriterBuildable(typeof(SessionResponseFoundryAgentCallItem))]
     [ModelReaderWriterBuildable(typeof(SessionResponseItem))]
     [ModelReaderWriterBuildable(typeof(SessionResponseMcpApprovalRequestItem))]
     [ModelReaderWriterBuildable(typeof(SessionResponseMcpApprovalResponseItem))]
@@ -120,11 +120,11 @@ namespace Azure.AI.VoiceLive
     [ModelReaderWriterBuildable(typeof(SessionUpdateResponseContentPartDone))]
     [ModelReaderWriterBuildable(typeof(SessionUpdateResponseCreated))]
     [ModelReaderWriterBuildable(typeof(SessionUpdateResponseDone))]
-
-
-
-
-
+    [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFoundryAgentCallArgumentsDelta))]
+    [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFoundryAgentCallArgumentsDone))]
+    [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFoundryAgentCallCompleted))]
+    [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFoundryAgentCallFailed))]
+    [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFoundryAgentCallInProgress))]
     [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFunctionCallArgumentsDelta))]
     [ModelReaderWriterBuildable(typeof(SessionUpdateResponseFunctionCallArgumentsDone))]
     [ModelReaderWriterBuildable(typeof(SessionUpdateResponseMcpCallArgumentsDelta))]
@@ -164,7 +164,6 @@ namespace Azure.AI.VoiceLive
     [ModelReaderWriterBuildable(typeof(VoiceLiveContentPart))]
     [ModelReaderWriterBuildable(typeof(VoiceLiveErrorDetails))]
     [ModelReaderWriterBuildable(typeof(VoiceLiveFoundryAgentDefinition))]
-
     [ModelReaderWriterBuildable(typeof(VoiceLiveFunctionDefinition))]
     [ModelReaderWriterBuildable(typeof(VoiceLiveMcpServerDefinition))]
     [ModelReaderWriterBuildable(typeof(VoiceLiveMcpTool))]
