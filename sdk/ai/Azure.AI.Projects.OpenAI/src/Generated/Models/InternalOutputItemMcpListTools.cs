@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -13,7 +14,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpListTools"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        internal InternalOutputItemMcpListTools(string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(AgentResponseItemKind.McpListTools)
+        internal InternalOutputItemMcpListTools(string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(AgentResponseItemKind.McpListTools)
         {
             ServerLabel = serverLabel;
             Tools = tools.ToList();
@@ -28,7 +29,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal InternalOutputItemMcpListTools(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<MCPListToolsTool> tools, string error) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemMcpListTools(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Tools = tools;
@@ -39,7 +40,7 @@ namespace Azure.AI.Projects.OpenAI
         public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<MCPListToolsTool> Tools { get; }
+        public IList<InternalMCPListToolsTool> Tools { get; }
 
         /// <summary> Gets the Error. </summary>
         public string Error { get; }

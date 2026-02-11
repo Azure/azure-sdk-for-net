@@ -15,6 +15,23 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Configurations for a Function App using Flex Consumption Plan. </summary>
     public partial class FunctionFlexConsumptionTargetResourceConfigurations : TargetResourceConfigurations, IJsonModel<FunctionFlexConsumptionTargetResourceConfigurations>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TargetResourceConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionTargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionFlexConsumptionTargetResourceConfigurations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionFlexConsumptionTargetResourceConfigurations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionFlexConsumptionTargetResourceConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,23 +140,6 @@ namespace Azure.Developer.LoadTesting
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FunctionFlexConsumptionTargetResourceConfigurations IPersistableModel<FunctionFlexConsumptionTargetResourceConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options) => (FunctionFlexConsumptionTargetResourceConfigurations)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TargetResourceConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionTargetResourceConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFunctionFlexConsumptionTargetResourceConfigurations(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionFlexConsumptionTargetResourceConfigurations)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FunctionFlexConsumptionTargetResourceConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

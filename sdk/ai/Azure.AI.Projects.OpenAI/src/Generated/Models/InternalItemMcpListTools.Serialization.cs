@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -58,7 +59,7 @@ namespace Azure.AI.Projects.OpenAI
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (MCPListToolsTool item in Tools)
+            foreach (InternalMCPListToolsTool item in Tools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -99,7 +100,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string serverLabel = default;
-            IList<MCPListToolsTool> tools = default;
+            IList<InternalMCPListToolsTool> tools = default;
             string error = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,10 +121,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<MCPListToolsTool> array = new List<MCPListToolsTool>();
+                    List<InternalMCPListToolsTool> array = new List<InternalMCPListToolsTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MCPListToolsTool.DeserializeMCPListToolsTool(item, options));
+                        array.Add(InternalMCPListToolsTool.DeserializeInternalMCPListToolsTool(item, options));
                     }
                     tools = array;
                     continue;

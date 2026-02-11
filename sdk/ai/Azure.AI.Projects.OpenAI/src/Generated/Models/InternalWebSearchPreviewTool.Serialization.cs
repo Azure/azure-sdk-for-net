@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -86,7 +87,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ApproximateLocation userLocation = default;
+            InternalApproximateLocation userLocation = default;
             SearchContextSize? searchContextSize = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -102,7 +103,7 @@ namespace Azure.AI.Projects.OpenAI
                         userLocation = null;
                         continue;
                     }
-                    userLocation = ApproximateLocation.DeserializeApproximateLocation(prop.Value, options);
+                    userLocation = InternalApproximateLocation.DeserializeInternalApproximateLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))

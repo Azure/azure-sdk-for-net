@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        public InternalItemComputerToolCall(string id, string callId, ComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(ItemType.ComputerCall)
+        public InternalItemComputerToolCall(string id, string callId, InternalComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(ItemType.ComputerCall)
         {
             Id = id;
             CallId = callId;
@@ -39,7 +40,7 @@ namespace Azure.AI.Projects.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalItemComputerToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        internal InternalItemComputerToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -55,7 +56,7 @@ namespace Azure.AI.Projects.OpenAI
         public string CallId { get; }
 
         /// <summary> Gets the Action. </summary>
-        public ComputerAction Action { get; }
+        public InternalComputerAction Action { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
         public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }

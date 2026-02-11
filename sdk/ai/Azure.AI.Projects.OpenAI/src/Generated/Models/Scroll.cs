@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Scroll. </summary>
-    internal partial class Scroll : ComputerAction
+    internal partial class Scroll : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Scroll"/>. </summary>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>

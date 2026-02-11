@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -25,7 +26,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
-        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, RankingOptions rankingOptions, BinaryData filters) : base(@type, additionalBinaryDataProperties)
+        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters) : base(@type, additionalBinaryDataProperties)
         {
             VectorStoreIds = vectorStoreIds;
             MaxNumResults = maxNumResults;
@@ -40,7 +41,7 @@ namespace Azure.AI.Projects.OpenAI
         public long? MaxNumResults { get; set; }
 
         /// <summary> Ranking options for search. </summary>
-        public RankingOptions RankingOptions { get; set; }
+        public InternalRankingOptions RankingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the Filters.

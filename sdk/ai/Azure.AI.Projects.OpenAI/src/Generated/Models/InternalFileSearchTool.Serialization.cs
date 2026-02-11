@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -117,7 +118,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> vectorStoreIds = default;
             long? maxNumResults = default;
-            RankingOptions rankingOptions = default;
+            InternalRankingOptions rankingOptions = default;
             BinaryData filters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +159,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    rankingOptions = RankingOptions.DeserializeRankingOptions(prop.Value, options);
+                    rankingOptions = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

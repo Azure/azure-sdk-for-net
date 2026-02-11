@@ -15,6 +15,23 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents a list of synonyms inside a list component. </summary>
     public partial class TextAuthoringExportedEntityListSynonym : IJsonModel<TextAuthoringExportedEntityListSynonym>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TextAuthoringExportedEntityListSynonym PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedEntityListSynonym>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTextAuthoringExportedEntityListSynonym(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringExportedEntityListSynonym)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextAuthoringExportedEntityListSynonym>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -153,23 +170,6 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TextAuthoringExportedEntityListSynonym IPersistableModel<TextAuthoringExportedEntityListSynonym>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TextAuthoringExportedEntityListSynonym PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedEntityListSynonym>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTextAuthoringExportedEntityListSynonym(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringExportedEntityListSynonym)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TextAuthoringExportedEntityListSynonym>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

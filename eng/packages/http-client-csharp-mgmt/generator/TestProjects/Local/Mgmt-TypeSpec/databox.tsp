@@ -41,6 +41,26 @@ interface JobResources {
     },
   >;
 
+  /**
+   * Creates or updates a job resource.
+   */
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<
+    JobResource,
+    Parameters = {
+      /**
+       * Defines the If-Match condition. The operation will be performed only if the ETag of the job on the server matches this value.
+       */
+      @header("If-Match")
+      `If-Match`?: string;
+
+      /**
+       * Defines the If-None-Match condition. The operation will be performed only if the ETag of the job on the server does not match this value.
+       */
+      @header("If-None-Match")
+      `If-None-Match`?: string;
+    }
+  >;
+
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-patch" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @patch(#{ implicitOptionality: false })
   update is ArmCustomPatchAsync<

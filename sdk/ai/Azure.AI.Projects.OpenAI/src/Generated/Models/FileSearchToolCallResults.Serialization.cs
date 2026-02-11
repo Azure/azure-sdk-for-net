@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -117,7 +118,7 @@ namespace Azure.AI.Projects.OpenAI
             string fileId = default;
             string text = default;
             string filename = default;
-            VectorStoreFileAttributes attributes = default;
+            InternalVectorStoreFileAttributes attributes = default;
             float? score = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.AI.Projects.OpenAI
                         attributes = null;
                         continue;
                     }
-                    attributes = VectorStoreFileAttributes.DeserializeVectorStoreFileAttributes(prop.Value, options);
+                    attributes = InternalVectorStoreFileAttributes.DeserializeInternalVectorStoreFileAttributes(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("score"u8))

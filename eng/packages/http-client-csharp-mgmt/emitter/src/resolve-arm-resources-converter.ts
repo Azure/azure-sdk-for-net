@@ -45,6 +45,11 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
+import {
+  extensionResourceOperationName,
+  legacyExtensionResourceOperationName,
+  legacyResourceOperationName
+} from "./sdk-context-options.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -261,10 +266,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
-              createOp.path,
-              resolvedResource
-            )
+            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
           });
         }
       }
@@ -282,10 +284,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
-              updateOp.path,
-              resolvedResource
-            )
+            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
           });
         }
       }
@@ -303,10 +302,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
-              deleteOp.path,
-              resolvedResource
-            )
+            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
           });
         }
       }
@@ -355,6 +351,15 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
+  // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
+  // The spec should always define unique resource names for extension resources targeting
+  // different parent types — the emitter should not auto-generate disambiguated names.
+  let resourceName = resolvedResource.resourceName;
+  const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
+  if (explicitName) {
+    resourceName = explicitName;
+  }
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -368,7 +373,7 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resolvedResource.resourceName
+    resourceName: resourceName
   };
 }
 
@@ -492,6 +497,57 @@ function calculateResourceScope(
       return parent.resourceInstancePath;
     }
     parent = parent.parent;
+  }
+
+  return undefined;
+}
+
+/**
+ * Extracts the explicit resource name from a resolved resource's operations.
+ * Checks the CRUD operations' decorators for OverrideResourceName parameters
+ * set via @extensionResourceOperation or @legacyExtensionResourceOperation.
+ */
+function getExplicitResourceNameFromOperations(
+  resolvedResource: ResolvedResource
+): string | undefined {
+  const lifecycle = resolvedResource.operations.lifecycle;
+  if (!lifecycle) return undefined;
+
+  // Check all CRUD operations for an explicit resource name
+  const operations: Operation[] = [];
+  if (lifecycle.read) {
+    for (const op of lifecycle.read) operations.push(op.operation);
+  }
+  if (lifecycle.createOrUpdate) {
+    for (const op of lifecycle.createOrUpdate) operations.push(op.operation);
+  }
+  if (lifecycle.delete) {
+    for (const op of lifecycle.delete) operations.push(op.operation);
+  }
+
+  for (const operation of operations) {
+    const decorators = operation.decorators;
+    for (const decorator of decorators) {
+      const name = decorator.definition?.name;
+      if (
+        name === extensionResourceOperationName ||
+        name === legacyExtensionResourceOperationName ||
+        name === legacyResourceOperationName
+      ) {
+        // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
+        // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
+        const argIndex =
+          name === extensionResourceOperationName ? 3 : 2;
+        if (
+          decorator.args.length > argIndex &&
+          decorator.args[argIndex].jsValue &&
+          typeof decorator.args[argIndex].jsValue === "string" &&
+          (decorator.args[argIndex].jsValue as string).length > 0
+        ) {
+          return decorator.args[argIndex].jsValue as string;
+        }
+      }
+    }
   }
 
   return undefined;

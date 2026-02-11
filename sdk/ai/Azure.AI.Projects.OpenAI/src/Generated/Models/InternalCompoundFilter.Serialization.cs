@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -52,7 +53,7 @@ namespace Azure.AI.Projects.OpenAI
                 throw new FormatException($"The model {nameof(InternalCompoundFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("filters"u8);
             writer.WriteStartArray();
             foreach (BinaryData item in Filters)
@@ -121,7 +122,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToCompoundFilterType();
+                    @type = new CompoundFilterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

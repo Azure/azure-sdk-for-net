@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -52,7 +53,7 @@ namespace Azure.AI.Projects.OpenAI
                 throw new FormatException($"The model {nameof(InternalComparisonFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
@@ -114,7 +115,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToComparisonFilterType();
+                    @type = new ComparisonFilterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("key"u8))

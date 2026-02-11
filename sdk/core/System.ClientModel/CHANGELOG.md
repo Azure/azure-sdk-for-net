@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
+
 ### Breaking Changes
 
 ### Bugs Fixed

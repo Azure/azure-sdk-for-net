@@ -15,6 +15,23 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ObservedBoolean. </summary>
     public partial class ObservedBoolean : ObservedValue, IJsonModel<ObservedBoolean>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ObservedValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ObservedBoolean>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeObservedBoolean(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ObservedBoolean)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ObservedBoolean>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -178,23 +195,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ObservedBoolean IPersistableModel<ObservedBoolean>.Create(BinaryData data, ModelReaderWriterOptions options) => (ObservedBoolean)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ObservedValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ObservedBoolean>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeObservedBoolean(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ObservedBoolean)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ObservedBoolean>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -57,7 +58,7 @@ namespace Azure.AI.Projects.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (Annotation item in Annotations)
+            foreach (InternalAnnotation item in Annotations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -66,7 +67,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteStartArray();
-                foreach (LogProb item in Logprobs)
+                foreach (InternalLogProb item in Logprobs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -102,8 +103,8 @@ namespace Azure.AI.Projects.OpenAI
             MessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<Annotation> annotations = default;
-            IList<LogProb> logprobs = default;
+            IList<InternalAnnotation> annotations = default;
+            IList<InternalLogProb> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,10 +119,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<Annotation> array = new List<Annotation>();
+                    List<InternalAnnotation> array = new List<InternalAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item, options));
+                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
                     }
                     annotations = array;
                     continue;
@@ -132,10 +133,10 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    List<LogProb> array = new List<LogProb>();
+                    List<InternalLogProb> array = new List<InternalLogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogProb.DeserializeLogProb(item, options));
+                        array.Add(InternalLogProb.DeserializeInternalLogProb(item, options));
                     }
                     logprobs = array;
                     continue;
@@ -145,7 +146,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<LogProb>());
+            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<InternalLogProb>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

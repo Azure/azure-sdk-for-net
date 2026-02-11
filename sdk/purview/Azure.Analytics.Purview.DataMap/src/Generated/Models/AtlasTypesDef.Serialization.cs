@@ -17,6 +17,30 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The definitions of types. </summary>
     public partial class AtlasTypesDef : IJsonModel<AtlasTypesDef>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasTypesDef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasTypesDef>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAtlasTypesDef(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasTypesDef"/> from. </param>
+        public static explicit operator AtlasTypesDef(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAtlasTypesDef(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasTypesDef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -291,23 +315,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         AtlasTypesDef IPersistableModel<AtlasTypesDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AtlasTypesDef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasTypesDef>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAtlasTypesDef(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasTypesDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -321,13 +328,6 @@ namespace Azure.Analytics.Purview.DataMap
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(atlasTypesDef, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasTypesDef"/> from. </param>
-        public static explicit operator AtlasTypesDef(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasTypesDef(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

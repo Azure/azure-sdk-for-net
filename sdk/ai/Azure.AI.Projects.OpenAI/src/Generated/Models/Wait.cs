@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Wait. </summary>
-    internal partial class Wait : ComputerAction
+    internal partial class Wait : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Wait"/>. </summary>
         public Wait() : base(ComputerActionType.Wait)
