@@ -19,6 +19,8 @@ namespace _Type.Property.ValueTypes
 
         protected virtual UnknownDictProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator UnknownDictProperty(Response response) => throw null;
 
         void IJsonModel<UnknownDictProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Property.ValueTypes
         protected virtual UnknownDictProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<UnknownDictProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         UnknownDictProperty IPersistableModel<UnknownDictProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
