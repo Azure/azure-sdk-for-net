@@ -13,7 +13,7 @@
 
 ### Breaking Changes
 
-- Added nullability annotations to implicit conversion operator parameters for `Response<T>`, `AzureLocation`, `ContentType`, `ResourceType`, `RequestContent`, and `DynamicData` to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/operator-overloads).
+- Added nullability annotations to implicit conversion operator parameters for `Response<T>`, `AzureLocation`, `ContentType`, `ResourceType`, `RequestContent`, and `DynamicData` to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/operator-overloads).
 - Updated `RequestContent` implicit conversion operators to return nullable `RequestContent?` to accurately reflect that null inputs produce null outputs.
 
 ## 1.51.1 (2026-02-04)
