@@ -1,6 +1,6 @@
 ---
-name: azure-sdk-pr-review
-description: Review Azure SDK pull requests, check naming conventions, API compatibility, and code quality.
+name: azure-sdk-mgmt-pr-review
+description: Review Azure SDK management-plane pull requests, check naming conventions, API compatibility, and code quality.
 ---
 
 # Azure .NET Mgmt SDK PR Review
@@ -9,13 +9,13 @@ Review Azure SDK for .NET management library pull requests against the official 
 
 ## Instructions
 
-When asked to review an Azure SDK .NET management library PR:
+When asked to review an Azure SDK .NET management-plane library PR (packages under `Azure.ResourceManager.*`):
 
 1. Fetch PR details and diff using GitHub MCP tools
 2. Examine API surface files (api/*.cs) for public API
 3. Check Generated models and resources in src/Generated/
-4. Review autorest.md for customizations
-5. Provide actionable comments with direct GitHub file links for inline review
+4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`) or `autorest.md` for legacy specs
+5. Add review comments directly to the PR using GitHub MCP tools
 
 ## Review Checklist
 
@@ -66,8 +66,8 @@ When asked to review an Azure SDK .NET management library PR:
 | Contains `size` | Consider `int`/`long` instead of string |
 
 ### Duration/Interval Format
-- ISO 8601 duration (P1DT2H59M59S): add `format: duration` in autorest.md
-- ISO 8601 constant (2.2:59:59.5000000): add `x-ms-format: duration-constant`
+- ISO 8601 duration (P1DT2H59M59S): use `duration` scalar in TypeSpec (or `format: duration` in legacy autorest.md)
+- ISO 8601 constant (2.2:59:59.5000000): use `@encode(DurationConstant)` in TypeSpec (or `x-ms-format: duration-constant` in legacy autorest.md)
 
 ### CheckNameAvailability Operation
 - Method: `Check[Resource/RP name]NameAvailability`
@@ -81,7 +81,6 @@ When asked to review an Azure SDK .NET management library PR:
 
 ## Output Format
 
-Provide review as:
-1. Summary of what passes review
-2. Action items table with: Issue, Location (file link), Recommendation
-3. Formatted comments ready to paste into GitHub PR
+1. Summarize what passes review
+2. For each issue found, add a review comment directly to the PR on the relevant file and line using GitHub MCP tools
+3. Provide a final summary of all comments added
