@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         OperationStatusResult IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())),  ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+            return ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         async ValueTask<OperationStatusResult> IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())),  ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+            return ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
         }
     }
 }

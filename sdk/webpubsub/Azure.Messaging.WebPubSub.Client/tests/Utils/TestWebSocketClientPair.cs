@@ -4,12 +4,12 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using System.Text;
-using Azure.Messaging.WebPubSub.Clients;
-using Moq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net.WebSockets;
+using Azure.Messaging.WebPubSub.Clients;
+using Moq;
 
 namespace Azure.Messaging.WebPubSub.Client.Tests.Utils
 {

@@ -16,7 +16,8 @@ namespace Azure.Communication.Messages
     {
         /// <summary> The latitude of the location. </summary>
         [CodeGenMember("Latitude")]
-        internal double LatitudeInternal {
+        internal double LatitudeInternal
+        {
             get
             {
                 return Position.Latitude;

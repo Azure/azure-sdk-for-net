@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Text.Json;
-using Azure.Core;
-using System.IO;
 
 namespace Azure.Analytics.Purview.Administration.Tests
 {
-    public class CollectionsClientTest: CollectionsClientTestBase
+    public class CollectionsClientTest : CollectionsClientTestBase
     {
         public CollectionsClientTest(bool isAsync) : base(isAsync)
         {

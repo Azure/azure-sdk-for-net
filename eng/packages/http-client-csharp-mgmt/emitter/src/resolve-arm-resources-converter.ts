@@ -100,9 +100,6 @@ export function resolveArmResources(
         resolvedResource
       );
 
-      // Debug log after conversion
-      console.log(`[DEBUG] Converted resourceName: ${metadata.resourceName}`);
-
       const resource = {
         resourceModelId: modelId,
         metadata
@@ -247,8 +244,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Read,
             operationPath: readOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(readOp.path, resolvedResource),
-            parentResourceType: extractParentResourceTypeFromPath(readOp.path)
+            resourceScope: calculateResourceScope(readOp.path, resolvedResource)
           });
           // Use the first read operation's path as the resource ID pattern
           if (!resourceIdPattern) {
@@ -270,8 +266,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(createOp.path, resolvedResource),
-            parentResourceType: extractParentResourceTypeFromPath(createOp.path)
+            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
           });
         }
       }
@@ -289,8 +284,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(updateOp.path, resolvedResource),
-            parentResourceType: extractParentResourceTypeFromPath(updateOp.path)
+            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
           });
         }
       }
@@ -308,8 +302,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource),
-            parentResourceType: extractParentResourceTypeFromPath(deleteOp.path)
+            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
           });
         }
       }
@@ -328,8 +321,7 @@ function convertResolvedResourceToMetadata(
           // TODO: resolveArmResources is not returning the operation scope for list operations, so we calculate it from the path.
           operationScope: getOperationScopeFromPath(listOp.path),
           // TODO: resolveArmResources is not returning the resource scope for list operations, so this should be populated later.
-          resourceScope: undefined,
-          parentResourceType: extractParentResourceTypeFromPath(listOp.path)
+          resourceScope: undefined
         });
       }
     }
@@ -345,8 +337,7 @@ function convertResolvedResourceToMetadata(
           kind: ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
-          resourceScope: calculateResourceScope(actionOp.path, resolvedResource),
-          parentResourceType: extractParentResourceTypeFromPath(actionOp.path)
+          resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
         });
       }
     }
@@ -360,25 +351,13 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
-  // Generate unique resource name for extension resources
-  // If this resource has a parent resource type (extension resource pattern),
-  // append a discriminator to make the name unique — unless an explicit ResourceName
-  // was provided via the OverrideResourceName template parameter.
+  // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
+  // The spec should always define unique resource names for extension resources targeting
+  // different parent types — the emitter should not auto-generate disambiguated names.
   let resourceName = resolvedResource.resourceName;
   const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
   if (explicitName) {
     resourceName = explicitName;
-  } else {
-    const parentResourceType = extractParentResourceTypeFromPath(
-      resolvedResource.resourceInstancePath
-    );
-    if (parentResourceType) {
-      // Extract the resource type name (e.g., "virtualMachines" -> "VirtualMachine")
-      const discriminator = getParentTypeDiscriminator(parentResourceType);
-      if (discriminator) {
-        resourceName = `${resourceName}For${discriminator}`;
-      }
-    }
   }
 
   return {
@@ -521,90 +500,6 @@ function calculateResourceScope(
   }
 
   return undefined;
-}
-
-/**
- * Extracts the parent resource type from an extension resource operation path.
- * For paths like /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...
- * returns "Microsoft.Compute/virtualMachines"
- */
-export function extractParentResourceTypeFromPath(
-  operationPath: string
-): string | undefined {
-  // Split the path and find providers segments
-  const segments = operationPath.split("/").filter((s) => s.length > 0);
-  
-  // Find all "providers" occurrences
-  const providerIndices: number[] = [];
-  for (let i = 0; i < segments.length; i++) {
-    if (segments[i] === "providers") {
-      providerIndices.push(i);
-    }
-  }
-  
-  // If there are at least 2 provider segments (parent resource and extension resource),
-  // extract the parent type from the first non-core provider
-  if (providerIndices.length >= 2) {
-    // Find the first provider that isn't the extension resource provider
-    // Start from the first providers segment after resourceGroups
-    const rgIndex = segments.findIndex((s) => s === "resourceGroups");
-    if (rgIndex >= 0) {
-      // Look for the first provider after resourceGroups that has a complete resource path
-      for (let i = 0; i < providerIndices.length - 1; i++) {
-        const providerIdx = providerIndices[i];
-        // Skip if before resourceGroups
-        if (providerIdx <= rgIndex) continue;
-        
-        // Provider namespace is at providerIdx + 1
-        // Resource type is at providerIdx + 2
-        if (providerIdx + 2 < segments.length) {
-          const namespace = segments[providerIdx + 1];
-          const resourceType = segments[providerIdx + 2];
-          
-          // Skip if the next segment is a variable (meaning this is a valid parent)
-          if (providerIdx + 3 < segments.length && isVariableSegment(segments[providerIdx + 3])) {
-            return `${namespace}/${resourceType}`;
-          }
-        }
-      }
-    }
-  }
-  
-  return undefined;
-}
-
-/**
- * Converts a parent resource type to a discriminator suitable for appending to resource names.
- * E.g., "Microsoft.Compute/virtualMachines" -> "VirtualMachines"
- *       "Microsoft.HybridCompute/machines" -> "Machines"
- */
-export function getParentTypeDiscriminator(parentResourceType: string): string {
-  // Known mappings for common parent resource types
-  const knownMappings: Record<string, string> = {
-    "Microsoft.Compute/virtualMachines": "VirtualMachine",
-    "Microsoft.HybridCompute/machines": "Machine",
-    "Microsoft.Compute/virtualMachineScaleSets": "VirtualMachineScaleSet",
-    "Microsoft.ConnectedVMwarevSphere/virtualMachines": "VMwarevSphereVirtualMachine"
-  };
-
-  const mapped = knownMappings[parentResourceType];
-  if (mapped) {
-    return mapped;
-  }
-
-  // Generic fallback: extract the resource type name and convert to PascalCase singular
-  const parts = parentResourceType.split("/");
-  if (parts.length >= 2) {
-    const resourceTypeName = parts[1];
-    // Convert to PascalCase and singularize (remove trailing 's' if present)
-    let result = resourceTypeName.charAt(0).toUpperCase() + resourceTypeName.slice(1);
-    if (result.endsWith("s") && result.length > 1) {
-      result = result.slice(0, -1);
-    }
-    return result;
-  }
-
-  return "";
 }
 
 /**

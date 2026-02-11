@@ -212,103 +212,11 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _nonResourceMethods)
             {
                 // Process both async and sync method variants
-                // Pass the input client name to generate unique method names when multiple non-resource methods
-                // target different parent resource types (e.g., GetAll on VM vs HCRP vs VMSS assignments)
-                var methodName = GetNonResourceMethodName(method, true);
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true, methodName));
-                methodName = GetNonResourceMethodName(method, false);
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false, methodName));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];
-        }
-
-        /// <summary>
-        /// Gets a unique method name for a non-resource method by incorporating the parent resource type
-        /// from the operation path. This avoids duplicate method signatures when multiple extension
-        /// resources target different parent types (e.g., VM vs HCRP vs VMSS).
-        /// </summary>
-        /// <param name="method">The non-resource method.</param>
-        /// <param name="isAsync">Whether this is an async method.</param>
-        /// <returns>The unique method name with discriminator, or null if no disambiguation is needed.</returns>
-        private string? GetNonResourceMethodName(NonResourceMethod method, bool isAsync)
-        {
-            var clientName = method.InputClient.Name;
-            var operationPath = new RequestPathPattern(method.InputMethod.Operation.Path);
-
-            // Extract a discriminator from the path
-            var discriminator = ExtractResourceTypeDiscriminator(clientName, operationPath);
-
-            // If we found a discriminator, always use it (safer approach)
-            if (!string.IsNullOrEmpty(discriminator))
-            {
-                // Get the rest client info for this method
-                var clientInfo = _clientInfos[method.InputClient];
-
-                // Get the base method name from the convenience method
-                var convenienceMethod = clientInfo.RestClientProvider
-                    .GetConvenienceMethodByOperation(method.InputMethod.Operation, isAsync);
-                var baseMethodName = convenienceMethod.Signature.Name;
-
-                // Build the disambiguated method name
-                // e.g., "GetAll" + "Vm" -> "GetAllVm" / "GetAllVmAsync"
-                var suffix = isAsync ? "Async" : string.Empty;
-                var baseName = baseMethodName.EndsWith("Async") ? baseMethodName[..^5] : baseMethodName;
-
-                return $"{baseName}{discriminator}{suffix}";
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Extracts a resource type discriminator from the operation path.
-        /// </summary>
-        private static string ExtractResourceTypeDiscriminator(string clientName, RequestPathPattern operationPath)
-        {
-            // Try to extract the parent resource type from the operation path
-            // The path pattern for extension resources typically looks like:
-            // /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...
-            // /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/...
-
-            // Count the number of providers segments - extension resources have at least 2
-            int providerCount = 0;
-            for (int i = 0; i < operationPath.Count; i++)
-            {
-                if (operationPath[i].IsProvidersSegment)
-                    providerCount++;
-            }
-
-            // Only apply disambiguation for extension resources (paths with multiple provider segments)
-            if (providerCount < 2)
-                return string.Empty;
-
-            // Find the first (parent) provider segment to identify the target resource type
-            for (int i = 0; i < operationPath.Count - 1; i++)
-            {
-                if (operationPath[i].IsProvidersSegment && i + 2 < operationPath.Count)
-                {
-                    var providerNamespace = operationPath[i + 1];
-                    var resourceTypeSegment = operationPath[i + 2];
-
-                    // Skip if this is not a constant segment (e.g., {scope})
-                    if (!providerNamespace.IsConstant || !resourceTypeSegment.IsConstant)
-                        continue;
-
-                    var namespaceValue = providerNamespace.Value;
-                    var resourceType = resourceTypeSegment.Value;
-
-                    // Check if the next segment is a variable (indicating this is a parent resource)
-                    if (i + 3 < operationPath.Count && !operationPath[i + 3].IsConstant)
-                    {
-                        // Build the full parent resource type and use the shared helper
-                        var parentResourceType = $"{namespaceValue}/{resourceType}";
-                        return ResourceHelpers.GetParentTypeDiscriminator(parentResourceType);
-                    }
-                }
-            }
-
-            return string.Empty;
         }
 
         private IEnumerable<MethodProvider> BuildMethodsForResource(ResourceClientProvider resource)
@@ -394,10 +302,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
         {
-            // Use parent resource type for disambiguation when available (for specific extension resources)
-            var methodName = resourceMethod.ParentResourceType != null
-                ? ResourceHelpers.GetExtensionOperationMethodNameWithParentType(resourceMethod.Kind, resource.ResourceName, resourceMethod.ParentResourceType, isAsync)
-                : ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
+            var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
             // Only fall back to the raw SDK method name when no standard name was generated.
             // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to

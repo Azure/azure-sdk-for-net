@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("DataBoxEdgeSkuName")]
+[assembly: CodeGenSuppressType("DataBoxEdgeSkuName")]
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The Sku name. </summary>

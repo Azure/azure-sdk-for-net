@@ -2,25 +2,24 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
 using BaseShares::Azure.Storage.Files.Shares.Specialized;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.Test;
-using NUnit.Framework;
-using System.Threading;
-using Azure.Core;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
-using Azure.Core.TestFramework;
-using System.Text.RegularExpressions;
+using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -2035,7 +2034,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, FilePermissions = filePermissions });
 
             // Create Transfer Manager with single threaded operation
-            TransferManagerOptions managerOptions = new TransferManagerOptions(){ MaximumConcurrency = 1 };
+            TransferManagerOptions managerOptions = new TransferManagerOptions() { MaximumConcurrency = 1 };
             TransferManager transferManager = new TransferManager(managerOptions);
 
             if (filePermissions == true)
@@ -2117,7 +2116,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
 
             // Create Transfer Manager with single threaded operation
-            TransferManagerOptions managerOptions = new TransferManagerOptions(){ MaximumConcurrency = 1 };
+            TransferManagerOptions managerOptions = new TransferManagerOptions() { MaximumConcurrency = 1 };
             TransferManager transferManager = new TransferManager(managerOptions);
 
             if (filePermissions == true)

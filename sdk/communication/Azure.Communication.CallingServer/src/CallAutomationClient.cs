@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Communication.Pipeline;
 
 namespace Azure.Communication.CallingServer
 {
@@ -131,7 +131,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
@@ -172,7 +173,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
@@ -383,7 +385,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
                 sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
@@ -436,7 +439,7 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient,_clientDiagnostics);
+                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {

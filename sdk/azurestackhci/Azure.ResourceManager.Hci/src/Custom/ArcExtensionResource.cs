@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer work in all API versions.", false)]
         public virtual async Task<ArmOperation<ArcExtensionResource>> UpdateAsync(WaitUntil waitUntil, ArcExtensionData data, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, new ArcExtensionPatch(new ArcExtensionPatchContent() { TypeHandlerVersion = data.TypeHandlerVersion, Settings =  data.Settings, ProtectedSettings = data.ProtectedSettings }, null), cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, new ArcExtensionPatch(new ArcExtensionPatchContent() { TypeHandlerVersion = data.TypeHandlerVersion, Settings = data.Settings, ProtectedSettings = data.ProtectedSettings }, null), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Update Extension for HCI cluster.
@@ -138,6 +138,6 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer work in all API versions.", false)]
         public virtual ArmOperation<ArcExtensionResource> Update(WaitUntil waitUntil, ArcExtensionData data1, CancellationToken cancellationToken = default)
-            => Update(waitUntil, new ArcExtensionPatch(new ArcExtensionPatchContent() { TypeHandlerVersion = data1.TypeHandlerVersion, Settings =  data1.Settings, ProtectedSettings = data1.ProtectedSettings }, null), cancellationToken);
+            => Update(waitUntil, new ArcExtensionPatch(new ArcExtensionPatchContent() { TypeHandlerVersion = data1.TypeHandlerVersion, Settings = data1.Settings, ProtectedSettings = data1.ProtectedSettings }, null), cancellationToken);
     }
 }

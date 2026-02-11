@@ -21,6 +21,7 @@ import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
+import "./redisenterprise.tsp";
 import "./propertyoverride.tsp";
 import "./sitemanager.tsp";
 import "./extensionresources.tsp";

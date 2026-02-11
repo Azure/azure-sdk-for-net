@@ -3,11 +3,11 @@
 
 #nullable enable
 
+using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using System;
-using System.ComponentModel;
 
 namespace Azure.Provisioning.AppService;
 

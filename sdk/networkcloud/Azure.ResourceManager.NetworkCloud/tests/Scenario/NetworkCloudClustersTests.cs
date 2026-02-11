@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class NetworkCloudClustersTests : NetworkCloudManagementTestBase
     {
-        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public NetworkCloudClustersTests(bool isAsync) : base(isAsync) {}
+        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public NetworkCloudClustersTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudClusterCollection clusterCollection = ResourceGroupResource.GetNetworkCloudClusters();
 
             // Create
-            var createCreds = new AdministrativeCredentials("password","username", null);
+            var createCreds = new AdministrativeCredentials("password", "username", null);
             NetworkCloudClusterData data = new NetworkCloudClusterData
             (
                 new AzureLocation(TestEnvironment.Location),
@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             )
             {
                 AnalyticsWorkspaceId = new ResourceIdentifier(TestEnvironment.LawId),
-                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000"){
+                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000")
+                {
                     Password = "password"
                 },
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listBySubscription);
 
             // Patch Upgrade Strategy
-             NetworkCloudClusterPatch patch2 = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch2 = new NetworkCloudClusterPatch()
             {
                 Tags =
                 {
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
             }
 
-             // Continue Cluster Update Version
+            // Continue Cluster Update Version
             try
             {
                 ClusterContinueUpdateVersionContent continueUpdateContent = new ClusterContinueUpdateVersionContent

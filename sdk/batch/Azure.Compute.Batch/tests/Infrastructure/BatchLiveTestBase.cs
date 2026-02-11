@@ -7,13 +7,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Compute.Batch;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using Azure.Compute.Batch;
-using System.Threading;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {

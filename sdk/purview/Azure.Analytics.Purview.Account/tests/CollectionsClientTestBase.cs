@@ -14,7 +14,7 @@ using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Account.Tests
 {
-    public class CollectionsClientTestBase: RecordedTestBase<PurviewCollectionTestEnvironment>
+    public class CollectionsClientTestBase : RecordedTestBase<PurviewCollectionTestEnvironment>
     {
         public CollectionsClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {

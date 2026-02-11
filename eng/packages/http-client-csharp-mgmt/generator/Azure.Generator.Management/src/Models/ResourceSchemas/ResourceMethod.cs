@@ -13,8 +13,7 @@ internal record ResourceMethod(
     string OperationPath,
     ResourceScope OperationScope,
     string? ResourceScope,
-    InputClient InputClient,
-    string? ParentResourceType = null)
+    InputClient InputClient)
 {
     internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
     {
@@ -23,7 +22,6 @@ internal record ResourceMethod(
         string? operationPath = null;
         ResourceScope? operationScope = null;
         string? resourceScope = null;
-        string? parentResourceType = null;
         foreach (var prop in element.EnumerateObject())
         {
             if (prop.NameEquals("methodId"u8))
@@ -47,10 +45,6 @@ internal record ResourceMethod(
             {
                 resourceScope = prop.Value.GetString();
             }
-            if (prop.NameEquals("parentResourceType"u8))
-            {
-                parentResourceType = prop.Value.GetString();
-            }
         }
         var inputMethod = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("id cannot be null"));
         var inputClient = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(inputMethod ?? throw new JsonException($"cannot find InputServiceMethod {methodId}"));
@@ -61,7 +55,6 @@ internal record ResourceMethod(
             operationPath ?? throw new JsonException("operationPath cannot be null"),
             operationScope ?? throw new JsonException("operationScope cannot be null"),
             resourceScope,
-            inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"),
-            parentResourceType);
+            inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
     }
 }

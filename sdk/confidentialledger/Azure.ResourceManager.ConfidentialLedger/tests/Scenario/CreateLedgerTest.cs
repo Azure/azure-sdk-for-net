@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         /// <returns></returns>
         private async Task<ConfidentialLedgerNameAvailabilityResult> GetLedgerNameAvailability(string ledgerName)
         {
-            ConfidentialLedgerNameAvailabilityContent ledgerNameAvailabilityContent = new() {
+            ConfidentialLedgerNameAvailabilityContent ledgerNameAvailabilityContent = new()
+            {
                 Name = ledgerName,
                 ResourceType = new ResourceType("Microsoft.ConfidentialLedger/ledgers")
             };

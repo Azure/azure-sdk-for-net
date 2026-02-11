@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
-using Azure.ResourceManager.Resources;
 using System.ComponentModel;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration
 {

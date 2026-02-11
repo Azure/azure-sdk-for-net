@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.ResourceManager.NetApp.Tests.Helpers;
-using Azure.ResourceManager.NetApp.Models;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using FluentAssertions;
-using Polly.Contrib.WaitAndRetry;
-using Polly;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.NetApp.Models;
+using Azure.ResourceManager.NetApp.Tests.Helpers;
+using FluentAssertions;
+using NUnit.Framework;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task SetUp()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            _resourceGroup = await CreateResourceGroupAsync(location:_defaultLocation);
+            _resourceGroup = await CreateResourceGroupAsync(location: _defaultLocation);
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, _defaultLocation);
-            _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location:_defaultLocation))).Value;
+            _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location: _defaultLocation))).Value;
 
             CapacityPoolData capactiyPoolData = new(_defaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            await CreateVirtualNetwork(location:_defaultLocation);
+            await CreateVirtualNetwork(location: _defaultLocation);
             _volumeResource = await CreateVolume(_defaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
             _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
             _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(getVolumeResource2022_05.Data.DataProtection);
             Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Snapshot);
             Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Replication);
-           // Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
+            // Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
             Assert.AreEqual(backupConfiguration.IsBackupEnabled, getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
 
             //Validate volume is backup enabled, api-version 2022-09-01
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 maxDelay = TimeSpan.FromMilliseconds(50);
             }
             Console.WriteLine($"...decorrelated maxdelay {maxDelay}");
-            IEnumerable <TimeSpan> delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(20), retryCount: 500)
+            IEnumerable<TimeSpan> delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(20), retryCount: 500)
                     .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount)
 
             Polly.Retry.AsyncRetryPolicy<bool> retryPolicy = Policy
