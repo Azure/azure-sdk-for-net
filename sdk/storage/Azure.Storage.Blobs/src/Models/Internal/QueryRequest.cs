@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The query type.
         /// </summary>
-        public string QueryType { get; set;  }
+        public string QueryType { get; set; }
 
         /// <summary>
         /// A query statement.

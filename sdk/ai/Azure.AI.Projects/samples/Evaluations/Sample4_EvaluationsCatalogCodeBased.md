@@ -40,7 +40,8 @@ private EvaluatorVersion GetCodeEvaluatorVersion()
                 }
             ),
             dataSchema: BinaryData.FromObjectAsJson(
-                new {
+                new
+                {
                     required = new[] { "item" },
                     type = "object",
                     properties = new
@@ -108,7 +109,8 @@ object[] testingCriteria = [
 
 Data source configuration and `evaluationData` object:
 ```C# Snippet:Sample_CreateData_EvaluationsCatalogCodeBased
-object dataSourceConfig = new {
+object dataSourceConfig = new
+{
     type = "custom",
     item_schema = new
     {
@@ -239,8 +241,10 @@ BinaryData runData = BinaryData.FromObjectAsJson(
         eval_id = evaluationId,
         name = "Eval Run for Sample Prompt Based Custom Evaluator",
         data_source = dataSource,
-        metadata = new {
-            team = "eval-exp", scenario = "inline-data-v1"
+        metadata = new
+        {
+            team = "eval-exp",
+            scenario = "inline-data-v1"
         }
     }
 );

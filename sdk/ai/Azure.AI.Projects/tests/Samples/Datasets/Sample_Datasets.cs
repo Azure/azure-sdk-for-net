@@ -11,10 +11,10 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
-using Azure.Storage.Blobs;
-using NUnit.Framework;
 using Azure.Identity;
+using Azure.Storage.Blobs;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples;
 
@@ -374,6 +374,6 @@ public class Sample_Datasets : SamplesBase
         projectClient.Datasets.Delete(datasetName, datasetVersion);
     }
 
-    public Sample_Datasets(bool isAsync): base(isAsync)
+    public Sample_Datasets(bool isAsync) : base(isAsync)
     { }
 }

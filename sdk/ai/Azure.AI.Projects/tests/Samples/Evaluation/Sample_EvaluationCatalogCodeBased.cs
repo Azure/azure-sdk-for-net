@@ -207,7 +207,8 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
                     }
                 ),
                 dataSchema: BinaryData.FromObjectAsJson(
-                    new {
+                    new
+                    {
                         required = new[] { "item" },
                         type = "object",
                         properties = new
@@ -272,7 +273,8 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         ];
         #endregion
         #region Snippet:Sample_CreateData_EvaluationsCatalogCodeBased
-        object dataSourceConfig = new {
+        object dataSourceConfig = new
+        {
             type = "custom",
             item_schema = new
             {
@@ -349,8 +351,10 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
                 eval_id = evaluationId,
                 name = "Eval Run for Sample Prompt Based Custom Evaluator",
                 data_source = dataSource,
-                metadata = new {
-                    team = "eval-exp", scenario = "inline-data-v1"
+                metadata = new
+                {
+                    team = "eval-exp",
+                    scenario = "inline-data-v1"
                 }
             }
         );

@@ -1136,7 +1136,7 @@ namespace Azure.Storage.Blobs
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 scope.Start();
 
-                Response <BlobContainerInfo> response;
+                Response<BlobContainerInfo> response;
 
                 try
                 {
@@ -1692,7 +1692,7 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    Response<BlobContainerProperties> response =  await GetPropertiesInternal(
+                    Response<BlobContainerProperties> response = await GetPropertiesInternal(
                         conditions: null,
                         async: async,
                         cancellationToken: cancellationToken)

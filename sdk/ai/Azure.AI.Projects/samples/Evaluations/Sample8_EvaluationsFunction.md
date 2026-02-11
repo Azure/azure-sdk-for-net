@@ -246,7 +246,8 @@ private static BinaryData GetRunData(string agentName, string responseId, string
     object dataSource = new
     {
         type = "azure_ai_responses",
-        item_generation_params = new {
+        item_generation_params = new
+        {
             type = "response_retrieval",
             data_mapping = new { response_id = "{{item.resp_id}}" },
             source = new

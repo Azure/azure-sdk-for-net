@@ -89,7 +89,7 @@ public class Sample_EvaluationRules : SamplesBase
     }
     #endregion
     #region Snippet:Sample_GetRunIDs_EvaluationRules_Async
-    private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus=default)
+    private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus = default)
     {
         Dictionary<string, (string, string)> runIDs = [];
         bool hasMore = false;
@@ -215,7 +215,7 @@ public class Sample_EvaluationRules : SamplesBase
     }
     #endregion
     #region Snippet:Sample_CreateData_EvaluationRules
-    private BinaryData evaluationConfig =  BinaryData.FromObjectAsJson(
+    private BinaryData evaluationConfig = BinaryData.FromObjectAsJson(
         new
         {
             name = "Continuous Evaluation",

@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Network;
-using Newtonsoft.Json.Bson;
-using NUnit.Framework;
-using Azure.Core;
-using Azure.ResourceManager.HardwareSecurityModules.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Newtonsoft.Json.Bson;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
 {

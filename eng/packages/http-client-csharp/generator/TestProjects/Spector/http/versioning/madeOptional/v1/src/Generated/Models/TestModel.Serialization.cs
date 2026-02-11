@@ -19,6 +19,8 @@ namespace Versioning.MadeOptional
 
         protected virtual TestModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator TestModel(Response response) => throw null;
 
         void IJsonModel<TestModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Versioning.MadeOptional
         protected virtual TestModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<TestModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         TestModel IPersistableModel<TestModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Threading;
-using System.ComponentModel;
 using NUnit.Framework.Internal;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return databaseLro.Value;
         }
 
-        internal async Task<CosmosDBSqlContainerResource> CreateSqlContainer(string containerName, CosmosDBSqlDatabaseResource database,  AutoscaleSettings autoscale)
+        internal async Task<CosmosDBSqlContainerResource> CreateSqlContainer(string containerName, CosmosDBSqlDatabaseResource database, AutoscaleSettings autoscale)
         {
             return await CreateSqlContainer(containerName, autoscale, database.GetCosmosDBSqlContainers());
         }

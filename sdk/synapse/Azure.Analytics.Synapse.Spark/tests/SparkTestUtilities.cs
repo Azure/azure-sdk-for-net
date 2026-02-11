@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Analytics.Synapse.Tests;
 using Azure.Core.TestFramework;
-using Azure.Analytics.Synapse.Spark;
 
 namespace Azure.Analytics.Synapse.Tests
 {

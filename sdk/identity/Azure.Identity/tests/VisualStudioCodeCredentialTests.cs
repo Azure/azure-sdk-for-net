@@ -132,7 +132,8 @@ namespace Azure.Identity.Tests
                     }
                     return false;
                 },
-                GetFileStreamHandler = _ => {
+                GetFileStreamHandler = _ =>
+                {
                     var tempFilePath = Path.GetTempFileName();
                     File.WriteAllText(tempFilePath, validJson);
                     return new FileStream(tempFilePath, FileMode.Open, FileAccess.Read);

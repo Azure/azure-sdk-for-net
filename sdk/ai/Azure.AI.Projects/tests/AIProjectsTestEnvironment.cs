@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using System;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -62,6 +62,7 @@ namespace Azure.AI.Projects.Tests
         public string APPLICATIONINSIGHTS_RESOURCE_ID => GetRecordedVariable(nameof(APPLICATIONINSIGHTS_RESOURCE_ID));
         public string AGENT_ID => GetRecordedVariable(nameof(AGENT_ID));
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
+        public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

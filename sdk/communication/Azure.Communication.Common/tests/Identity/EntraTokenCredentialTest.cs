@@ -145,7 +145,7 @@ namespace Azure.Communication.Identity
             // Arrange
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
             var options = CreateEntraTokenCredentialOptions(scopes);
-            var mockTransport = (MockTransport) CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
+            var mockTransport = (MockTransport)CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
             var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act

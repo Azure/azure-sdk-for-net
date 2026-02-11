@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             {
                 Properties = new IotHubCertificateProperties()
                 {
-                    Certificate =  BinaryData.FromString(_certificationContent)
+                    Certificate = BinaryData.FromString(_certificationContent)
                 }
             };
             var cert = await iothub.GetIotHubCertificateDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, certName, data);

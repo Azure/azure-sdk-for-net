@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
-using OpenTelemetry;
 using System.Diagnostics;
+using OpenTelemetry;
 
 namespace Azure.AI.Projects.Tests.Utils
 {

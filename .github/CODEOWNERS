@@ -98,10 +98,10 @@
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms
+/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms
+# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms @linglingye001
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @Azure/azure-sdk-write-attestation @gkostal
@@ -492,6 +492,12 @@
 
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @JialinXin @vicancy @Y-Sindo
+
+# PRLabel: %Speech Transcription
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
+
+# ServiceLabel: %Speech Transcription
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft

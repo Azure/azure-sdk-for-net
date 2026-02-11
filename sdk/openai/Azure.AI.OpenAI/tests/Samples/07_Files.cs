@@ -20,10 +20,10 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
-        #pragma warning restore AOAI001
+#pragma warning restore AOAI001
 
         // Create sample data for upload
         string fileContent = "Sample data for processing:\n" +
@@ -31,15 +31,15 @@ public partial class AzureOpenAISamples
                            "Answer: Machine learning is a method of data analysis that automates analytical model building.\n" +
                            "Question: What is AI?\n" +
                            "Answer: AI is intelligence demonstrated by machines.";
-        
+
         BinaryData data = BinaryData.FromString(fileContent);
-        
+
         // Upload file for use with assistants
         OpenAIFile uploadedFile = fileClient.UploadFile(
-            data, 
-            "sample_qa_data.txt", 
+            data,
+            "sample_qa_data.txt",
             FileUploadPurpose.Assistants);
-        
+
         Console.WriteLine($"File uploaded successfully:");
         Console.WriteLine($"  ID: {uploadedFile.Id}");
         Console.WriteLine($"  Filename: {uploadedFile.Filename}");
@@ -53,10 +53,10 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable AOAI001
+
+#pragma warning disable AOAI001
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
-        #pragma warning restore AOAI001
+#pragma warning restore AOAI001
 
         #region Snippet:FileUploadForBatch
         // Create JSONL content for batch processing
@@ -66,13 +66,13 @@ public partial class AzureOpenAISamples
         batchRequests.AppendLine("{\"custom_id\": \"request-3\", \"method\": \"POST\", \"url\": \"/v1/chat/completions\", \"body\": {\"model\": \"gpt-35-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"Explain photosynthesis in one sentence.\"}]}}");
 
         BinaryData batchData = BinaryData.FromString(batchRequests.ToString());
-        
+
         // Upload file for batch processing
         OpenAIFile batchFile = fileClient.UploadFile(
-            batchData, 
-            "batch_requests.jsonl", 
+            batchData,
+            "batch_requests.jsonl",
             FileUploadPurpose.Batch);
-        
+
         Console.WriteLine($"Batch file uploaded:");
         Console.WriteLine($"  ID: {batchFile.Id}");
         Console.WriteLine($"  Filename: {batchFile.Filename}");
@@ -85,16 +85,16 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable AOAI001
+
+#pragma warning disable AOAI001
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
-        #pragma warning restore AOAI001
+#pragma warning restore AOAI001
 
         #region Snippet:FileManagement
         // List all uploaded files
         Console.WriteLine("Listing all uploaded files:");
         OpenAIFileCollection files = fileClient.GetFiles();
-        
+
         foreach (OpenAIFile file in files)
         {
             Console.WriteLine($"  {file.Id}: {file.Filename} ({file.SizeInBytes} bytes, {file.Purpose})");
@@ -103,12 +103,12 @@ public partial class AzureOpenAISamples
         // Upload a sample file for demonstration
         string sampleContent = "This is a sample file for management demonstration.";
         BinaryData sampleData = BinaryData.FromString(sampleContent);
-        
+
         OpenAIFile newFile = fileClient.UploadFile(
-            sampleData, 
-            "management_demo.txt", 
+            sampleData,
+            "management_demo.txt",
             FileUploadPurpose.Assistants);
-        
+
         Console.WriteLine($"\nUploaded new file: {newFile.Id}");
 
         // Retrieve specific file information
@@ -135,33 +135,33 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable AOAI001
+
+#pragma warning disable AOAI001
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
-        #pragma warning restore AOAI001
+#pragma warning restore AOAI001
 
         #region Snippet:DocumentProcessingWorkflow
         // Scenario: Process multiple documents for an AI assistant
-        
+
         // Sample documents with different types of content
         var documents = new Dictionary<string, string>
         {
-            ["company_policies.txt"] = 
+            ["company_policies.txt"] =
                 "Employee Handbook\n" +
                 "1. Work Hours: 9 AM to 5 PM\n" +
                 "2. Remote Work: Available 2 days per week\n" +
                 "3. Vacation Policy: 20 days annually\n" +
                 "4. Dress Code: Business casual",
-                
-            ["product_specs.txt"] = 
+
+            ["product_specs.txt"] =
                 "Product Specifications\n" +
                 "Model: CloudWidget Pro\n" +
                 "CPU: 8-core processor\n" +
                 "Memory: 16GB RAM\n" +
                 "Storage: 512GB SSD\n" +
                 "Operating System: Windows 11",
-                
-            ["faq_responses.txt"] = 
+
+            ["faq_responses.txt"] =
                 "Frequently Asked Questions\n" +
                 "Q: How do I reset my password?\n" +
                 "A: Use the 'Forgot Password' link on the login page.\n" +
@@ -179,12 +179,12 @@ public partial class AzureOpenAISamples
         {
             Console.WriteLine($"Uploading {doc.Key}...");
             BinaryData docData = BinaryData.FromString(doc.Value);
-            
+
             OpenAIFile uploadedFile = fileClient.UploadFile(
-                docData, 
-                doc.Key, 
+                docData,
+                doc.Key,
                 FileUploadPurpose.Assistants);
-            
+
             uploadedFiles.Add(uploadedFile);
             Console.WriteLine($"  Uploaded: {uploadedFile.Id}");
         }
@@ -202,13 +202,13 @@ public partial class AzureOpenAISamples
         // Step 3: Create a summary of uploaded content
         Console.WriteLine("\nDocument processing summary:");
         Console.WriteLine($"Total files uploaded: {uploadedFiles.Count}");
-        
+
         long totalSize = 0;
         foreach (var file in uploadedFiles)
         {
             totalSize += file.SizeInBytes ?? 0; // Handle nullable SizeInBytes
         }
-        
+
         Console.WriteLine($"Total storage used: {totalSize} bytes");
         Console.WriteLine("\nFiles are now ready for use with:");
         Console.WriteLine("- AI Assistants for Q&A");
@@ -217,7 +217,7 @@ public partial class AzureOpenAISamples
 
         // Note: In a real scenario, you might not delete these files immediately
         // as they would be used by assistants or other AI services
-        
+
         Console.WriteLine("\nWorkflow complete! Files available for AI processing.");
         #endregion
     }
@@ -227,14 +227,14 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable AOAI001
+
+#pragma warning disable AOAI001
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
-        #pragma warning restore AOAI001
+#pragma warning restore AOAI001
 
         #region Snippet:FileContentPreparation
         // Best practices for preparing file content for AI processing
-        
+
         Console.WriteLine("Demonstrating file content preparation best practices...");
 
         // 1. Structured text data for better AI comprehension
@@ -254,8 +254,8 @@ public partial class AzureOpenAISamples
 
         BinaryData structuredData = BinaryData.FromString(structuredContent.ToString());
         OpenAIFile structuredFile = fileClient.UploadFile(
-            structuredData, 
-            "structured_kb.md", 
+            structuredData,
+            "structured_kb.md",
             FileUploadPurpose.Assistants);
 
         Console.WriteLine($"Uploaded structured content: {structuredFile.Id}");
@@ -270,8 +270,8 @@ public partial class AzureOpenAISamples
 
         BinaryData csvData = BinaryData.FromString(csvContent.ToString());
         OpenAIFile csvFile = fileClient.UploadFile(
-            csvData, 
-            "product_catalog.csv", 
+            csvData,
+            "product_catalog.csv",
             FileUploadPurpose.Assistants);
 
         Console.WriteLine($"Uploaded CSV data: {csvFile.Id}");
@@ -305,8 +305,8 @@ public partial class AzureOpenAISamples
 
         BinaryData jsonData = BinaryData.FromString(jsonContent);
         OpenAIFile jsonFile = fileClient.UploadFile(
-            jsonData, 
-            "app_config.json", 
+            jsonData,
+            "app_config.json",
             FileUploadPurpose.Assistants);
 
         Console.WriteLine($"Uploaded JSON configuration: {jsonFile.Id}");

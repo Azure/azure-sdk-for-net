@@ -18,6 +18,8 @@ namespace Client.Clientnamespace.First
 
         protected virtual FirstClientResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator FirstClientResult(Response response) => throw null;
 
         void IJsonModel<FirstClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace Client.Clientnamespace.First
         protected virtual FirstClientResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<FirstClientResult>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         FirstClientResult IPersistableModel<FirstClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

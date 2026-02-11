@@ -170,13 +170,13 @@ internal class PartitionPublisher
 
         foreach (var currentEvent in events)
         {
-            var currentIndexNumber = _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v + 1);
+            var currentIndexNumber = _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k, v) => v + 1);
             Console.WriteLine(currentIndexNumber);
             EventTracking.AugmentEvent(currentEvent, _testParameters.Sha256Hash, currentIndexNumber, partitionId);
 
             if (!batch.TryAdd(currentEvent))
             {
-                _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v--);
+                _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k, v) => v--);
                 break;
             }
 

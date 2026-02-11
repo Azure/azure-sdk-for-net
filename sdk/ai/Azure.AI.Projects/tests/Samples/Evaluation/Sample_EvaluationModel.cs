@@ -204,7 +204,8 @@ public class Sample_EvaluationsModel : SamplesBase
                 data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
             },
         ];
-        object dataSourceConfig = new {
+        object dataSourceConfig = new
+        {
             type = "custom",
             item_schema = new
             {

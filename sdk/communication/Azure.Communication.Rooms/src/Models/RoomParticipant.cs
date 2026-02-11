@@ -32,7 +32,7 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
-        public CommunicationIdentifier CommunicationIdentifier { get;}
+        public CommunicationIdentifier CommunicationIdentifier { get; }
 
         /// <summary> Role Name. </summary>
         public ParticipantRole Role { get; set; } = ParticipantRole.Attendee;

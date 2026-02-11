@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 ClientId = clientId
             };
 
-            var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, openIdNoSecret,openIdConnectCreateParameters)).Value;
+            var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, openIdNoSecret, openIdConnectCreateParameters)).Value;
 
             Assert.NotNull(createResponse);
             Assert.AreEqual(openIdProviderName, createResponse.Data.DisplayName);

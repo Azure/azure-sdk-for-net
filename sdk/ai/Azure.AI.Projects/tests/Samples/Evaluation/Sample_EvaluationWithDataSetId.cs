@@ -20,7 +20,7 @@ using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationsWithDataSetID: SamplesBase
+public class Sample_EvaluationsWithDataSetID : SamplesBase
 {
     #region Snippet:Sampple_GetError_EvaluationsWithDataSetID
     private static string GetErrorMessageOrEmpty(ClientResult result)
@@ -231,7 +231,8 @@ public class Sample_EvaluationsWithDataSetID: SamplesBase
                 initialization_parameters = new { deployment_name = modelDeploymentName},
             },
         ];
-        object dataSourceConfig = new {
+        object dataSourceConfig = new
+        {
             type = "custom",
             item_schema = new
             {

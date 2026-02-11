@@ -83,7 +83,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            ClusterProperties properties = default;
+            ClusterCreateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = ClusterProperties.DeserializeClusterProperties(prop.Value, options);
+                    properties = ClusterCreateProperties.DeserializeClusterCreateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

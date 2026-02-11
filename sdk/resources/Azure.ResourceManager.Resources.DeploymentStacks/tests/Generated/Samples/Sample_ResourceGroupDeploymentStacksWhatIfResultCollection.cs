@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Samples
             {
                 Location = new AzureLocation("eastus"),
                 Properties = new DeploymentStackWhatIfResultProperties(new ActionOnUnmanage(UnmanageActionResourceMode.Delete)
-                    {
-                        ResourceGroups = UnmanageActionResourceGroupMode.Delete,
-                        ManagementGroups = UnmanageActionManagementGroupMode.Detach,
-                    },
+                {
+                    ResourceGroups = UnmanageActionResourceGroupMode.Delete,
+                    ManagementGroups = UnmanageActionManagementGroupMode.Detach,
+                },
                     new DeploymentStackDenySettings(DeploymentStackDenySettingsMode.None)
                     {
                         ApplyToChildScopes = false,

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Spark
         public virtual SparkSessionOperation StartCreateSparkSession(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
             => StartCreateSparkSessionInternal(false, sparkSessionOptions, detailed, cancellationToken).EnsureCompleted();
 
-        private async Task<SparkSessionOperation> StartCreateSparkSessionInternal (bool async, SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
+        private async Task<SparkSessionOperation> StartCreateSparkSessionInternal(bool async, SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.{nameof(StartCreateSparkSession)}");
             scope.Start();
@@ -47,12 +47,12 @@ namespace Azure.Analytics.Synapse.Spark
         }
 
         public virtual async Task<SparkStatementOperation> StartCreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-            => await StartCreateSparkStatementInternal (true, sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
+            => await StartCreateSparkStatementInternal(true, sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
 
         public virtual SparkStatementOperation StartCreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-            => StartCreateSparkStatementInternal (false, sessionId, sparkStatementOptions, cancellationToken).EnsureCompleted();
+            => StartCreateSparkStatementInternal(false, sessionId, sparkStatementOptions, cancellationToken).EnsureCompleted();
 
-        private async Task<SparkStatementOperation> StartCreateSparkStatementInternal (bool async, int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
+        private async Task<SparkStatementOperation> StartCreateSparkStatementInternal(bool async, int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SparkSessionClient)}.{nameof(StartCreateSparkStatement)}");
             scope.Start();

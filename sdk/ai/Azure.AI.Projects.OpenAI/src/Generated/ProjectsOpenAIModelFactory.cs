@@ -509,10 +509,8 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <returns> A new <see cref="OpenAI.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
         {
-            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-
             return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
         }
 

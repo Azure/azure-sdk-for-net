@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudKubernetesClusterFeatureResource> GetAllAsync(CancellationToken cancellationToken)
-       		=> GetAllAsync(null, null, cancellationToken);
+               => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of features for the provided Kubernetes cluster.
@@ -124,6 +124,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudKubernetesClusterFeatureResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
+            => GetAll(null, null, cancellationToken);
     }
 }

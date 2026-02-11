@@ -34,7 +34,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterCreateProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,6 +42,156 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public ClusterProperties Properties { get; set; }
+        internal ClusterCreateProperties Properties { get; set; }
+
+        /// <summary> Enabled by default. If highAvailability is disabled, the data set is not replicated. </summary>
+        [WirePath("properties.highAvailability")]
+        public HighAvailability? HighAvailability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                Properties.HighAvailability = value.Value;
+            }
+        }
+
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+        [WirePath("properties.minimumTlsVersion")]
+        public TlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
+        }
+
+        /// <summary> DNS name of the cluster endpoint. </summary>
+        [WirePath("properties.hostName")]
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+        }
+
+        /// <summary> Current provisioning status of the cluster. </summary>
+        [WirePath("properties.provisioningState")]
+        public ProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Explains the current redundancy strategy of the cluster. </summary>
+        [WirePath("properties.redundancyMode")]
+        public RedundancyMode? RedundancyMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedundancyMode;
+            }
+        }
+
+        /// <summary> Current resource status of the cluster. </summary>
+        [WirePath("properties.resourceState")]
+        public ResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
+        [WirePath("properties.redisVersion")]
+        public string RedisVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedisVersion;
+            }
+        }
+
+        /// <summary> List of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IReadOnlyList<RedisPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [WirePath("properties.encryption.customerManagedKeyEncryption")]
+        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                Properties.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> Gets the MaintenanceWindows. </summary>
+        [WirePath("properties.maintenanceConfiguration.maintenanceWindows")]
+        public IList<MaintenanceWindow> MaintenanceWindows
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                return Properties.MaintenanceWindows;
+            }
+        }
+
+        /// <summary> Whether or not public network traffic can access the Redis cluster. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public PublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }
