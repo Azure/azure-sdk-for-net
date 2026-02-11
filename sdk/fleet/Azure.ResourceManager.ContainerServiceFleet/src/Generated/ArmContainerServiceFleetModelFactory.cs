@@ -103,11 +103,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.FleetCredentialResult"/> instance for mocking. </returns>
-        public static FleetCredentialResult FleetCredentialResult(string name = default, IEnumerable<BinaryData> value = default)
+        public static FleetCredentialResult FleetCredentialResult(string name = default, byte[] value = default)
         {
-            value ??= new ChangeTrackingList<BinaryData>();
-
-            return new FleetCredentialResult(name, value.ToList(), additionalBinaryDataProperties: null);
+            return new FleetCredentialResult(name, value, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -560,48 +558,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 etag);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the AutoUpgradeProfile resource. </param>
-        /// <param name="updateStrategyId"> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </param>
-        /// <param name="disabled">
-        /// If set to False: the auto upgrade has effect - target managed clusters will be upgraded on schedule.
-        /// If set to True: the auto upgrade has no effect - no upgrade will be run on the target managed clusters.
-        /// This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
-        /// By default, this is set to False.
-        /// </param>
-        /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
-        /// <param name="targetKubernetesVersion">
-        ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
-        ///   By default, this is empty.
-        ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
-        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
-        /// </param>
-        /// <param name="longTermSupport">
-        ///   If upgrade channel is not TargetKubernetesVersion, this field must be False.
-        ///   If set to True: Fleet auto upgrade will continue generate update runs for patches of minor versions earlier than N-2 
-        ///   (where N is the latest supported minor version) if those minor versions support Long-Term Support (LTS).
-        ///   By default, this is set to False.
-        ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
-        /// </param>
-        /// <param name="selectionType"> The node image upgrade type. </param>
-        /// <param name="channel"> Configures how auto-upgrade will be run. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/> instance for mocking. </returns>
-        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutoUpgradeProfileProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = default, bool? disabled = default, AutoUpgradeProfileStatus autoUpgradeProfileStatus = default, string targetKubernetesVersion = default, bool? longTermSupport = default, AutoUpgradeNodeImageSelectionType? selectionType = default, ContainerServiceFleetUpgradeChannel? channel = default, ETag? etag = default)
-        {
-            return new AutoUpgradeProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && updateStrategyId is null && disabled is null && autoUpgradeProfileStatus is null && targetKubernetesVersion is null && longTermSupport is null && selectionType is null && channel is null ? default : new AutoUpgradeProfileProperties(provisioningState, updateStrategyId, channel, null),
-                etag);
-        }
-
         /// <summary> AutoUpgradeProfileStatus is the status of an auto upgrade profile. </summary>
         /// <param name="lastTriggeredOn"> The UTC time of the last attempt to automatically create and start an UpdateRun as triggered by the release of new versions. </param>
         /// <param name="lastTriggerStatus"> The status of the last AutoUpgrade trigger. </param>
@@ -652,37 +608,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 default,
                 eTag,
                 identity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="provisioningState"> The provisioning state of the AutoUpgradeProfile resource. </param>
-        /// <param name="updateStrategyId"> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </param>
-        /// <param name="channel"> Configures how auto-upgrade will be run. </param>
-        /// <param name="selectionType"> The node image upgrade to be applied to the target clusters in auto upgrade. </param>
-        /// <param name="disabled">
-        /// If set to False: the auto upgrade has effect - target managed clusters will be upgraded on schedule.
-        ///             If set to True: the auto upgrade has no effect - no upgrade will be run on the target managed clusters.
-        ///             This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
-        ///             By default, this is set to False.
-        /// </param>
-        /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelectionType? selectionType, bool? disabled, AutoUpgradeProfileStatus autoUpgradeProfileStatus)
-        {
-            return new AutoUpgradeProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default,
-                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/>. </summary>

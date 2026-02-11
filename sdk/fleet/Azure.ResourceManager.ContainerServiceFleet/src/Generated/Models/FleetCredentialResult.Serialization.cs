@@ -39,18 +39,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (BinaryData item in Value)
+                foreach (byte item in Value)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteBase64StringValue(item.ToArray(), "D");
+                    writer.WriteNumberValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             string name = default;
-            IReadOnlyList<BinaryData> value = default;
+            byte[] value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -108,23 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromBytes(item.GetBytesFromBase64("D")));
-                        }
-                    }
-                    value = array;
+                    DeserializeValue(prop, ref value);
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,7 +111,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FleetCredentialResult(name, value ?? new ChangeTrackingList<BinaryData>(), additionalBinaryDataProperties);
+            return new FleetCredentialResult(name, value, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

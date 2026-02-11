@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -20,14 +19,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="FleetCredentialResult"/>. </summary>
         internal FleetCredentialResult()
         {
-            Value = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetCredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetCredentialResult(string name, IReadOnlyList<BinaryData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetCredentialResult(string name, byte[] value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
@@ -36,23 +34,5 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The name of the credential. </summary>
         public string Name { get; }
-
-        /// <summary>
-        /// Base64-encoded Kubernetes configuration file.
-        /// <para>
-        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyList<BinaryData> Value { get; }
     }
 }
