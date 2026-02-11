@@ -16,7 +16,7 @@ using Azure;
 namespace BasicTypeSpec
 {
     /// <summary> An advanced XML model for testing various property types and XML features. </summary>
-    public partial class XmlAdvancedModel
+    public partial class XmlAdvancedModel : IPersistableModel<XmlAdvancedModel>
     {
         /// <summary> Initializes a new instance of <see cref="XmlAdvancedModel"/> for deserialization. </summary>
         internal XmlAdvancedModel()
@@ -66,6 +66,16 @@ namespace BasicTypeSpec
                     throw new FormatException($"The model {nameof(XmlAdvancedModel)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<XmlAdvancedModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        XmlAdvancedModel IPersistableModel<XmlAdvancedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<XmlAdvancedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="XmlAdvancedModel"/> from. </param>
         public static explicit operator XmlAdvancedModel(Response response)
