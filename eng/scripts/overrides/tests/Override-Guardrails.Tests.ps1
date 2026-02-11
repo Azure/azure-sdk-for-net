@@ -59,7 +59,7 @@ function Git-CommitAll([string]$repoRoot, [string]$message)
 
 function New-TestRepoRoot
 {
-    $repoRoot = Join-Path $TestDrive "repo"
+    $repoRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("override-guardrails-" + [Guid]::NewGuid().ToString("n"))
     New-Item -ItemType Directory -Force -Path $repoRoot | Out-Null
     New-Item -ItemType Directory -Force -Path (Join-Path $repoRoot "sdk") | Out-Null
     return $repoRoot
@@ -73,6 +73,7 @@ function Write-TextFile([string]$path, [string]$content)
 }
 
 Describe "Overrides guardrail checkers" -Tag "UnitTest" {
+
     It "check_version_overrides passes when allowlisted and fails when not allowlisted" {
         $repoRoot = New-TestRepoRoot
 
