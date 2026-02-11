@@ -19,6 +19,8 @@ namespace Client.Naming.EnumConflict.SecondNamespace
 
         protected virtual SecondModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator SecondModel(Response response) => throw null;
 
         void IJsonModel<SecondModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Client.Naming.EnumConflict.SecondNamespace
         protected virtual SecondModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<SecondModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         SecondModel IPersistableModel<SecondModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
