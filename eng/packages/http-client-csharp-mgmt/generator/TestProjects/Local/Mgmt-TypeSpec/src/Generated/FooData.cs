@@ -123,7 +123,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.BoolValue = value;
+                Properties.BoolValue = value.Value;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.FloatValue = value;
+                Properties.FloatValue = value.Value;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.DoubleValue = value;
+                Properties.DoubleValue = value.Value;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.ETag = value;
+                Properties.ETag = value.Value;
             }
         }
 

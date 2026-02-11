@@ -58,7 +58,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new ClusterCreateProperties();
                 }
-                Properties.HighAvailability = value;
+                Properties.HighAvailability = value.Value;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new ClusterCreateProperties();
                 }
-                Properties.MinimumTlsVersion = value;
+                Properties.MinimumTlsVersion = value.Value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new ClusterCreateProperties();
                 }
-                Properties.PublicNetworkAccess = value;
+                Properties.PublicNetworkAccess = value.Value;
             }
         }
     }

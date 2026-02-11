@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 {
                     NestedConfig = new IssueTestNestedConfig();
                 }
-                NestedConfig.InnerFlag = value;
+                NestedConfig.InnerFlag = value.Value;
             }
         }
     }
