@@ -49,6 +49,26 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Insight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Insight IPersistableModel<Insight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Insight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="insight"> The <see cref="Insight"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(Insight insight)
+        {
+            if (insight == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(insight, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Insight"/> from. </param>
         public static explicit operator Insight(ClientResult result)
         {
@@ -197,26 +217,6 @@ namespace Azure.AI.Projects
                 request,
                 result,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Insight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Insight IPersistableModel<Insight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Insight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="insight"> The <see cref="Insight"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(Insight insight)
-        {
-            if (insight == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(insight, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomToolParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomToolParam IPersistableModel<CustomToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomToolParam)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomToolParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,15 +153,5 @@ namespace Azure.AI.Projects
             }
             return new CustomToolParam(@type, additionalBinaryDataProperties, name, description, format);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomToolParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomToolParam IPersistableModel<CustomToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomToolParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

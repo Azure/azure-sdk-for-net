@@ -51,6 +51,16 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ListWithHeaderNextLinkWithMaxPageResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ListWithHeaderNextLinkWithMaxPageResponse IPersistableModel<ListWithHeaderNextLinkWithMaxPageResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ListWithHeaderNextLinkWithMaxPageResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListWithHeaderNextLinkWithMaxPageResponse"/> from. </param>
         public static explicit operator ListWithHeaderNextLinkWithMaxPageResponse(Response response)
         {
@@ -146,15 +156,5 @@ namespace BasicTypeSpec
             }
             return new ListWithHeaderNextLinkWithMaxPageResponse(things, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListWithHeaderNextLinkWithMaxPageResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ListWithHeaderNextLinkWithMaxPageResponse IPersistableModel<ListWithHeaderNextLinkWithMaxPageResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListWithHeaderNextLinkWithMaxPageResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
