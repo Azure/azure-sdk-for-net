@@ -184,6 +184,34 @@ The `[CodeGenType("...")]` attribute takes the **original TypeSpec model name** 
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
 ```
 
+## Phase 5b — Extension Resources
+
+Extension resources (deployed onto parent resources from different providers) require special handling:
+
+### Parameterized Scopes
+When the same resource type can be deployed onto multiple parent types (e.g., VM, HCRP, VMSS), use `OverrideResourceName` with parameterized scopes. Each scope generates a separate SDK resource type. The generator may produce duplicate `GetXxxResource()` methods in `MockableArmClient` when multiple entries exist for the same resource — this is a known generator bug requiring deduplication.
+
+### Sub-Resource Operations: Avoid `Read<>` / `Extension.Read<>` for Non-Lifecycle Ops
+When a sub-resource operation (e.g., getting a report under an assignment) uses `Read<>` or `Extension.Read<>` templates, the ARM library treats it as a **lifecycle read** operation. This causes:
+- The resource's `resourceType` and `resourceIdPattern` to be set to the sub-resource path
+- Collections using the wrong REST client
+- Compile errors: CS1729 (wrong constructor), CS0029 (type mismatch), CS1503 (wrong argument)
+
+**Fix**: Change sub-resource Get operations from `Read<>` to `ActionSync<>` (or `Extension.ActionSync<>` for extension resources) with a `@get` decorator:
+```typespec
+// WRONG — ARM library treats this as lifecycle Read
+reportGet is Ops.Read<Resource, Response = ArmResponse<Report>, ...>;
+
+// CORRECT — ActionSync with @get avoids lifecycle misclassification
+@get reportGet is Ops.ActionSync<Resource, void, Response = ArmResponse<Report>, ...>;
+```
+
+### `@@alternateType` Decorator
+When the spec uses older common types that generate incorrect C# types (e.g., `string` instead of `ResourceIdentifier` for ID properties), use `@@alternateType`:
+```typespec
+@@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
+```
+
 ## Phase 6 — Code Generation
 
 **IMPORTANT**: Always use `dotnet build /t:GenerateCode` for SDK code generation. Do NOT use `tsp-client update` — it can produce different output and `@@clientName`/`@@access` decorators may not take effect with it.
@@ -200,6 +228,15 @@ After generation:
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
 3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped.
 4. Run existing tests if available: `dotnet test`.
+5. Check ApiCompat with `dotnet pack --no-restore` — ApiCompat errors only surface during pack, not during build.
+
+### Using `RegenSdkLocal.ps1` for Generator Fixes
+
+When you've made local changes to the generator under `eng/packages/http-client-csharp-mgmt/`, use:
+```powershell
+pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 <PACKAGE_NAME>
+```
+**Important**: This still fetches the spec commit from GitHub, so the commit in `tsp-location.yaml` must be pushed to remote. Use `dotnet build /t:GenerateCode` for normal iteration (NPM-published emitter).
 
 ### Handling ApiCompat Errors
 
@@ -284,8 +321,21 @@ For each build error, determine the root cause:
 | **CS0234** | Type name changed due to missing `@@clientName` rename | Add `@@clientName(SpecType, "OldSdkName", "csharp")` in `client.tsp`, regenerate |
 | **CS0051** | Type became `internal` but Custom code references it publicly | First try `@@access(SpecType, Access.public, "csharp")` in `client.tsp`. If that doesn't work (common for nested/wrapper types), use `[CodeGenType("OriginalSpecName")]` in Custom code to override accessibility |
 | **CS0246** | Type removed or restructured | Check if type was flattened, merged, or renamed. May need Custom code update |
+| **CS0111** | Duplicate method/type definitions | For extension resources with parameterized scopes, check for duplicate resource entries. May need generator dedup fix |
+| **CS1729/CS0029/CS1503** | Wrong REST client or type mismatch in collections | Sub-resource ops using `Read<>` template cause lifecycle misclassification. Fix by changing to `ActionSync<>` in spec (see Phase 5b) |
 | **AZC0030** | Model name has forbidden suffix (`Request`, `Response`, `Parameters`) | Add `@@clientName` rename. Check old autorest SDK API surface for the **original name** to maintain backward compatibility, rather than inventing a new name |
 | **AZC0032** | Model name has forbidden suffix (`Data`) not inheriting `ResourceData` | Add `@@clientName` rename to remove or replace the suffix |
+
+#### Common ApiCompat Error Patterns
+
+ApiCompat errors surface via `dotnet pack` (not `dotnet build`). **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes** — mitigate them with custom code instead.
+
+| ApiCompat Error | Cause | Fix |
+|----------------|-------|-----|
+| **MembersMustExist** (method with different return type) | Generated method has different return type than old API (e.g., `Response<ReportList>` vs `Pageable<Report>`) | Use `[CodeGenSuppress("MethodName", typeof(ParamType))]` on the partial class to suppress the generated method, then provide a custom implementation with the old return type |
+| **MembersMustExist** (missing extension method) | Old API had `GetXxx(ArmClient, ResourceIdentifier scope, string name)` but new only has `GetXxxResource(ArmClient, ResourceIdentifier id)` | Add custom extension methods that delegate to collection Get |
+| **TypesMustExist** | Old API had a type that no longer exists (e.g., base class removed) | Create the type in Custom code with matching properties and `IJsonModel<>`/`IPersistableModel<>` serialization |
+| **MembersMustExist** (property setter missing) | Generated property is get-only but old API had setter | Use `[CodeGenSuppress("PropertyName")]` and re-declare with `{ get; set; }` in custom partial class |
 
 ### Step 3 — Fix Based on Root Cause
 
@@ -365,6 +415,18 @@ Execute these in order after planning:
 - After each agent completes, verify output before launching dependent agents.
 - Use `ask_user` for any destructive changes or ambiguous naming decisions.
 
+## Phase 10 — Retrospective: Update This Skill File
+
+After completing (or making significant progress on) a migration, review what was learned and update this skill file:
+
+1. **New error patterns**: Did you encounter build errors (CS*, AZC*) not listed in the Common Error Patterns table? Add them.
+2. **New workarounds**: Did you discover a workaround for a generator limitation? Document it in the relevant phase.
+3. **New decorators or TypeSpec patterns**: Did you use decorators not mentioned here? Add them to Phase 5 or Phase 5b.
+4. **Generator bugs fixed**: If you filed or fixed generator bugs, add a note about the symptom and fix.
+5. **Common pitfalls**: Did you waste time on something avoidable? Add it to the Common Pitfalls section.
+
+> **Goal**: Each migration should leave this skill file slightly better than it was before.
+
 ## Common Pitfalls
 
 1. **Do NOT use `tsp-client update` for code generation.** Use `dotnet build /t:GenerateCode`. The former can produce different output and `@@clientName`/`@@access` decorators may not take effect.
@@ -380,6 +442,14 @@ Execute these in order after planning:
 6. **Custom code (`src/Custom/`) often references old type names.** After migration, scan Custom code for references to renamed or removed types. Common fixes: update type references, or add `@@clientName` to preserve the old name.
 
 7. **Build errors cascade.** A single missing rename can cause dozens of errors. Fix one error at a time, rebuild, and re-assess — many errors may resolve together.
+
+8. **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes.** Always mitigate breaking changes with custom code (`[CodeGenSuppress]`, partial classes, wrapper methods). The baseline should only be used as a last resort for changes that are truly impossible to fix.
+
+9. **Use `dotnet pack` (not just `dotnet build`) to check ApiCompat errors.** API compatibility checks only run during pack. Run `dotnet pack --no-restore` to catch breaking changes early.
+
+10. **Check the custom code folder name.** Different SDKs use different conventions: `Custom/`, `Customized/`, or `Customization/`. Always match the existing convention in the package.
+
+11. **Sub-resource operations must NOT use `Read<>` template.** When a TypeSpec spec defines sub-resource Get operations using `Read<>` or `Extension.Read<>`, the ARM library treats them as lifecycle read operations, causing wrong REST client selection. Use `ActionSync<>` with `@get` instead. See Phase 5b.
 
 ## Safety Rules
 
