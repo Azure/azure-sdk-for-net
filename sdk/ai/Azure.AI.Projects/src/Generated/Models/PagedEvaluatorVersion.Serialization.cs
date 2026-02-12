@@ -49,6 +49,16 @@ namespace Azure.Core
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedEvaluatorVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedEvaluatorVersion IPersistableModel<PagedEvaluatorVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedEvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedEvaluatorVersion"/> from. </param>
         public static explicit operator PagedEvaluatorVersion(ClientResult result)
         {
@@ -160,15 +170,5 @@ namespace Azure.Core
             }
             return new PagedEvaluatorVersion(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedEvaluatorVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedEvaluatorVersion IPersistableModel<PagedEvaluatorVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedEvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

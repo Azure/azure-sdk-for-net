@@ -42,6 +42,16 @@ namespace OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalImageGenTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalImageGenTool IPersistableModel<InternalImageGenTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalImageGenTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalImageGenTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalImageGenTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -267,15 +277,5 @@ namespace OpenAI
                 inputImageMask,
                 partialImages);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalImageGenTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalImageGenTool IPersistableModel<InternalImageGenTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalImageGenTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalImageGenTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
