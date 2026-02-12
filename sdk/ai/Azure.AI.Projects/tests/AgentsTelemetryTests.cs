@@ -43,7 +43,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         _exporter = new MemoryTraceExporter();
 
         _tracesEnabledInitialValue = string.Equals(
-            Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable),
+            Environment.GetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable),
             "true",
             StringComparison.OrdinalIgnoreCase);
 
@@ -74,7 +74,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             _contentRecordingEnabledInitialValue.ToString(),
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(
-            TraceContentsEnvironmentVariable,
+            EnableOpenTelemetryEnvironmentVariable,
             _tracesEnabledInitialValue.ToString(),
             EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(

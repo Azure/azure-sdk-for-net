@@ -9,6 +9,7 @@
 ### Breaking Changes
 
 - Tracing: gen_ai.system.instructions event changed to gen_ai.system_instructions attribute.
+- Tracing: provider name change from "azure.ai.agents" to "microsoft.foundry".
 
 ### Sample Updates
 - Added Evaluation sample.
