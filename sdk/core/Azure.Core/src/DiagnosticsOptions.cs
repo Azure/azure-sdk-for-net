@@ -212,7 +212,7 @@ namespace Azure.Core
         /// than 300 are not permitted.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24 or greater than 300.</exception>
-        public int MaxApplicationIdLength
+        internal int MaxApplicationIdLength
         {
             get => _maxApplicationIdLength;
             set

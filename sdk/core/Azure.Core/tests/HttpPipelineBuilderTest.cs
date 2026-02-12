@@ -178,8 +178,7 @@ namespace Azure.Core.Tests
         public async Task CreateTelemetryPolicyHonorsCustomMaxApplicationIdLength()
         {
             var longApplicationId = new string('a', 50);
-            var options = new TestOptions();
-            options.Diagnostics.MaxApplicationIdLength = 50;
+            var options = new TestOptionsWithCustomMaxApplicationIdLength(50);
             options.Diagnostics.ApplicationId = longApplicationId;
 
             var transport = new MockTransport(new MockResponse(200));
@@ -351,6 +350,15 @@ namespace Azure.Core.Tests
         {
             public TestOptions()
             {
+                Retry.Delay = TimeSpan.Zero;
+            }
+        }
+
+        private class TestOptionsWithCustomMaxApplicationIdLength : ClientOptions
+        {
+            public TestOptionsWithCustomMaxApplicationIdLength(int maxApplicationIdLength)
+            {
+                MaxApplicationIdLength = maxApplicationIdLength;
                 Retry.Delay = TimeSpan.Zero;
             }
         }
