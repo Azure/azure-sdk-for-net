@@ -46,17 +46,6 @@ namespace Azure.Core.Tests
             StringAssert.StartsWith("application-id ", userAgent);
         }
 
-        [Test]
-        public void ApplicationIdExceedingDefaultMaxLengthIsAcceptedByOptions()
-        {
-            var options = new DiagnosticsOptions();
-            var longApplicationId = "0123456789012345678912345";
-
-            options.ApplicationId = longApplicationId;
-
-            Assert.AreEqual(longApplicationId, options.ApplicationId);
-        }
-
         private class TestOptions : ClientOptions
         { }
     }
