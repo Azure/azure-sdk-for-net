@@ -12,6 +12,11 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class AzureAISearchTool : AgentTool, IJsonModel<AzureAISearchTool>
     {
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/> for deserialization. </summary>
+        internal AzureAISearchTool()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -41,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
                     throw new FormatException($"The model {nameof(AzureAISearchTool)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureAISearchTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureAISearchTool IPersistableModel<AzureAISearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAISearchTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureAISearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -112,15 +127,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new AzureAISearchTool(@type, additionalBinaryDataProperties, options0);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAISearchTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAISearchTool IPersistableModel<AzureAISearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAISearchTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAISearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

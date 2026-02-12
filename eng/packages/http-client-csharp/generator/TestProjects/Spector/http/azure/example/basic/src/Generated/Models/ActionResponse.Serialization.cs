@@ -20,6 +20,12 @@ namespace Specs.Azure.Example.Basic
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
+        BinaryData IPersistableModel<ActionResponse>.Write(ModelReaderWriterOptions options) => throw null;
+
+        ActionResponse IPersistableModel<ActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<ActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator ActionResponse(Response response) => throw null;
 
         void IJsonModel<ActionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,11 +35,5 @@ namespace Specs.Azure.Example.Basic
         ActionResponse IJsonModel<ActionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ActionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ActionResponse>.Write(ModelReaderWriterOptions options) => throw null;
-
-        ActionResponse IPersistableModel<ActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<ActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

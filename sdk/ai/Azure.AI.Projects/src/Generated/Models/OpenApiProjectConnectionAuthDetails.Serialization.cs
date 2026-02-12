@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OpenApiProjectConnectionAuthDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OpenApiProjectConnectionAuthDetails IPersistableModel<OpenApiProjectConnectionAuthDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenApiProjectConnectionAuthDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OpenApiProjectConnectionAuthDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenApiProjectConnectionAuthDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects
             }
             return new OpenApiProjectConnectionAuthDetails(@type, additionalBinaryDataProperties, securityScheme);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenApiProjectConnectionAuthDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiProjectConnectionAuthDetails IPersistableModel<OpenApiProjectConnectionAuthDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenApiProjectConnectionAuthDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenApiProjectConnectionAuthDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
