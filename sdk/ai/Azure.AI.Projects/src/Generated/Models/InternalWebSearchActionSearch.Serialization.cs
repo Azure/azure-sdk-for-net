@@ -47,6 +47,16 @@ namespace OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalWebSearchActionSearch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalWebSearchActionSearch IPersistableModel<InternalWebSearchActionSearch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalWebSearchActionSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalWebSearchActionSearch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -195,15 +205,5 @@ namespace OpenAI
             }
             return new InternalWebSearchActionSearch(@type, query, queries ?? new ChangeTrackingList<string>(), sources ?? new ChangeTrackingList<WebSearchActionSearchSources>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalWebSearchActionSearch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalWebSearchActionSearch IPersistableModel<InternalWebSearchActionSearch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalWebSearchActionSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

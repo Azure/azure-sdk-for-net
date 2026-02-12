@@ -48,6 +48,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UrlCitationBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UrlCitationBody IPersistableModel<UrlCitationBody>.Create(BinaryData data, ModelReaderWriterOptions options) => (UrlCitationBody)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UrlCitationBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UrlCitationBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,15 +158,5 @@ namespace Azure.AI.Projects
                 endIndex,
                 title);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UrlCitationBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UrlCitationBody IPersistableModel<UrlCitationBody>.Create(BinaryData data, ModelReaderWriterOptions options) => (UrlCitationBody)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UrlCitationBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

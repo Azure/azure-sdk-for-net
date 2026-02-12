@@ -48,6 +48,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MemoryUpdateResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MemoryUpdateResult IPersistableModel<MemoryUpdateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MemoryUpdateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryUpdateResult"/> from. </param>
         public static explicit operator MemoryUpdateResult(ClientResult result)
         {
@@ -189,15 +199,5 @@ namespace Azure.AI.Projects
                 internalError,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryUpdateResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryUpdateResult IPersistableModel<MemoryUpdateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryUpdateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

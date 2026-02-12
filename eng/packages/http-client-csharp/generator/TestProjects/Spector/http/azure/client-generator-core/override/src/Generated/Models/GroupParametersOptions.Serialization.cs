@@ -19,6 +19,12 @@ namespace Customization
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
+        BinaryData IPersistableModel<GroupParametersOptions>.Write(ModelReaderWriterOptions options) => throw null;
+
+        GroupParametersOptions IPersistableModel<GroupParametersOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<GroupParametersOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<GroupParametersOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,11 +32,5 @@ namespace Customization
         GroupParametersOptions IJsonModel<GroupParametersOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual GroupParametersOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<GroupParametersOptions>.Write(ModelReaderWriterOptions options) => throw null;
-
-        GroupParametersOptions IPersistableModel<GroupParametersOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<GroupParametersOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

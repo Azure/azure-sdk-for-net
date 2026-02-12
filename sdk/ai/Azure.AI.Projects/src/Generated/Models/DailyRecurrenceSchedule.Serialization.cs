@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DailyRecurrenceSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DailyRecurrenceSchedule IPersistableModel<DailyRecurrenceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => (DailyRecurrenceSchedule)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DailyRecurrenceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DailyRecurrenceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -127,15 +137,5 @@ namespace Azure.AI.Projects
             }
             return new DailyRecurrenceSchedule(@type, additionalBinaryDataProperties, hours);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DailyRecurrenceSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DailyRecurrenceSchedule IPersistableModel<DailyRecurrenceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => (DailyRecurrenceSchedule)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DailyRecurrenceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,7 @@ using System.Xml.Linq;
 namespace BasicTypeSpec
 {
     /// <summary> An item model for XML array testing. </summary>
-    public partial class XmlItem
+    public partial class XmlItem : IPersistableModel<XmlItem>
     {
         /// <summary> Initializes a new instance of <see cref="XmlItem"/> for deserialization. </summary>
         internal XmlItem()
@@ -65,6 +65,16 @@ namespace BasicTypeSpec
                     throw new FormatException($"The model {nameof(XmlItem)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<XmlItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        XmlItem IPersistableModel<XmlItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<XmlItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
