@@ -104,7 +104,8 @@ If `src/autorest.md` exists:
 When adding `@@clientName` or `@@access` decorators to `client.tsp` in the spec repo, follow this cycle:
 
 1. Edit `client.tsp` in the spec repo.
-2. Commit (or `git commit --amend`) and push to the spec branch.
+2. Run `npx tsp format "**/*.tsp"` in the spec directory to fix formatting (CI enforces this).
+3. Commit (or `git commit --amend`) and push to the spec branch.
 3. Copy the new spec commit SHA.
 4. Update `tsp-location.yaml` in the SDK repo with the new `commit` hash.
 5. Regenerate: `dotnet build /t:GenerateCode` in the SDK package `src/` folder.
