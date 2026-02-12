@@ -382,6 +382,12 @@ model XmlAdvancedModel {
 
   @unwrapped
   unwrappedModelsWithNamespaces: XmlModelWithNamespace[];
+
+  listOfListFoo: XmlItem[][];
+  dictionaryFoo: Record<XmlItem>;
+  dictionaryOfDictionaryFoo: Record<Record<XmlItem>>;
+  dictionaryListFoo: Record<XmlItem[]>;
+  listOfDictionaryFoo: Record<XmlItem>[];
 }
 
 @doc("A nested model for XML testing")

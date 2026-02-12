@@ -19,6 +19,8 @@ namespace Encode.Bytes
 
         protected virtual Base64BytesProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Base64BytesProperty(Response response) => throw null;
 
         void IJsonModel<Base64BytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Encode.Bytes
         protected virtual Base64BytesProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Base64BytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Base64BytesProperty IPersistableModel<Base64BytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

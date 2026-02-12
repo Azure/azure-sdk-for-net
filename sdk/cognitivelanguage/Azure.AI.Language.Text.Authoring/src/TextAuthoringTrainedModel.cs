@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using Azure.Core;
-using System.Threading.Tasks;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -208,7 +208,7 @@ namespace Azure.AI.Language.Text.Authoring
             int? maxpagesize = null,
             CancellationToken cancellationToken = default)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(this,  _projectName,  _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(this, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. </summary>
@@ -224,7 +224,7 @@ namespace Azure.AI.Language.Text.Authoring
             int? maxpagesize = null,
             CancellationToken cancellationToken = default)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(this,  _projectName,  _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(this, _projectName, _trainedModelLabel, stringIndexType.ToString(), maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -242,7 +242,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             using RequestContent content = details;
             RequestContext context = cancellationToken.ToRequestContext();
-            Operation<BinaryData> response = await EvaluateModelAsync(waitUntil,content, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, TextAuthoringEvaluationJobResult.FromLroResponse, ClientDiagnostics, "TextAuthoringTrainedModel.EvaluateModel");
         }
 
@@ -647,7 +647,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(this,  _projectName,  _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(this, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetModelEvaluationResults(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(this,  _projectName,  _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(this, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -697,7 +697,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation<BinaryData>> EvaluateModelAsync(WaitUntil waitUntil,RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> EvaluateModelAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));

@@ -18,7 +18,7 @@ public class EventProducerTest : TestScenario
     public override string Name { get; } = "EventProducerTest";
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.Publisher, Role.Publisher};
+    public override Role[] Roles { get; } = { Role.Publisher, Role.Publisher };
 
     /// <summary>
     ///  Initializes a new <see cref="EventProducerTest"/> instance.

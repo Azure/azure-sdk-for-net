@@ -18,6 +18,8 @@ namespace _Type.Model.Usage
 
         protected virtual OutputRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator OutputRecord(Response response) => throw null;
 
         void IJsonModel<OutputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace _Type.Model.Usage
         protected virtual OutputRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<OutputRecord>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         OutputRecord IPersistableModel<OutputRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

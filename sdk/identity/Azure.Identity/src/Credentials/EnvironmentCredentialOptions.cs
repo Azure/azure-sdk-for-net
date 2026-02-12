@@ -53,12 +53,12 @@ namespace Azure.Identity
         /// <summary>
         /// MSAL client to be used for testing.
         /// </summary>
-        internal MsalConfidentialClient MsalConfidentialClient { get; set;}
+        internal MsalConfidentialClient MsalConfidentialClient { get; set; }
 
         /// <summary>
         /// MSAL client to be used for testing.
         /// </summary>
-        internal MsalPublicClient MsalPublicClient { get; set;}
+        internal MsalPublicClient MsalPublicClient { get; set; }
 
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
