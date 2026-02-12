@@ -180,9 +180,25 @@ The `[CodeGenType("...")]` attribute takes the **original TypeSpec model name** 
 // Rename path parameter
 @@Azure.ResourceManager.Legacy.renamePathParameter(Resources.list, "fooName", "name");
 
+// Mark a non-pageable list operation as pageable (returns Pageable<T> instead of Response<ListType>)
+// Requires: using Azure.ClientGenerator.Core.Legacy;
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
+@@markAsPageable(InterfaceName.operationName, "csharp");
+
 // Suppress warning
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
 ```
+
+#### When to use `@@markAsPageable`
+When the old SDK returned `Pageable<T>` / `AsyncPageable<T>` for a list operation, but the TypeSpec spec defines the operation as non-pageable (returns a wrapper list type like `FooList`), use `@@markAsPageable` to make the generator produce pageable methods. This is **preferred over** writing custom `SinglePagePageable<T>` wrapper code because:
+- It reduces custom code that must be maintained
+- The generated pageable implementation handles diagnostics, cancellation, and error handling correctly
+- It keeps the SDK surface consistent with other generated methods
+
+**Requirements:**
+1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
+2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"` before each `@@markAsPageable` call
+3. After adding the decorator, regenerate and remove any custom `[CodeGenSuppress]` + `SinglePagePageable` wrapper code
 
 ## Phase 5b — Extension Resources
 
@@ -456,6 +472,8 @@ After completing (or making significant progress on) a migration, review what wa
 10. **Check the custom code folder name.** Different SDKs use different conventions: `Custom/`, `Customized/`, or `Customization/`. Always match the existing convention in the package.
 
 11. **Sub-resource operations must NOT use `Read<>` template.** When a TypeSpec spec defines sub-resource Get operations using `Read<>` or `Extension.Read<>`, the ARM library treats them as lifecycle read operations, causing wrong REST client selection. Use `ActionSync<>` with `@get` instead. See Phase 5b.
+
+12. **Use `@@markAsPageable` instead of custom `SinglePagePageable` wrappers.** When the old SDK returned `Pageable<T>` for a non-pageable list operation, prefer adding `@@markAsPageable(Interface.operation, "csharp")` in `client.tsp` over writing custom `[CodeGenSuppress]` + `SinglePagePageable<T>` wrapper code. This reduces custom code and produces a cleaner generated implementation.
 
 ## Safety Rules
 
