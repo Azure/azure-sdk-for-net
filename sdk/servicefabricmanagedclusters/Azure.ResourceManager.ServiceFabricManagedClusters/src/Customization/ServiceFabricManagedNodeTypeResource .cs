@@ -3,9 +3,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ServiceFabricManagedClusters

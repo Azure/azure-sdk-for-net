@@ -30,9 +30,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             methodName: isAsync ? "GetIfExistsAsync" : "GetIfExists",
             description: $"Tries to get details for this resource from the service.")
     {
+        // Use collection's resource if _returnBodyResourceClient is null (handles cases where data type doesn't match exactly)
+        private ResourceClientProvider EffectiveResourceClient => _returnBodyResourceClient ?? collection.Resource;
+
         protected override CSharpType BuildReturnType()
         {
-            return new CSharpType(typeof(NullableResponse<>), _returnBodyType!).WrapAsync(_isAsync);
+            return new CSharpType(typeof(NullableResponse<>), EffectiveResourceClient.Type).WrapAsync(_isAsync);
         }
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
@@ -44,14 +47,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 {
                     Return(
                         New.Instance(
-                            new CSharpType(typeof(NoValueResponse<>), _returnBodyResourceClient!.Type),
+                            new CSharpType(typeof(NoValueResponse<>), EffectiveResourceClient.Type),
                             responseVariable.GetRawResponse()
                         )
                     )
                 }
             ];
 
-            var returnValueExpression = New.Instance(_returnBodyResourceClient.Type, This.As<ArmResource>().Client(), responseVariable.Value());
+            var returnValueExpression = New.Instance(EffectiveResourceClient.Type, This.As<ArmResource>().Client(), responseVariable.Value());
             statements.Add(
                 Return(
                     ResponseSnippets.FromValue(

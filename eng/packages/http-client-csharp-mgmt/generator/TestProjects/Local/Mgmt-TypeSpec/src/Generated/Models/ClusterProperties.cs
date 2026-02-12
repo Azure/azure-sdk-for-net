@@ -12,7 +12,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The ClusterProperties. </summary>
-    public partial class ClusterProperties
+    internal partial class ClusterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -100,7 +100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> List of private endpoint connections. </summary>
         [WirePath("privateEndpointConnections")]
-        public IReadOnlyList<RedisPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<RedisPrivateEndpointConnection> PrivateEndpointConnections { get; } = new ChangeTrackingList<RedisPrivateEndpointConnection>();
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
         [WirePath("encryption.customerManagedKeyEncryption")]

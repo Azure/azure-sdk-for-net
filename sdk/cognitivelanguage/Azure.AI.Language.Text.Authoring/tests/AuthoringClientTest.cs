@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Authoring.Tests
 {
-    public class AuthoringClientTest: RecordedTestBase<AuthoringClientTestEnvironment>
+    public class AuthoringClientTest : RecordedTestBase<AuthoringClientTestEnvironment>
     {
         public AuthoringClientTest(bool isAsync) : base(isAsync)
         {

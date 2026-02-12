@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
             Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0,0,0), sampleAsDateTimeOffset.Offset);
+            Assert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
         }
 
         [Test]

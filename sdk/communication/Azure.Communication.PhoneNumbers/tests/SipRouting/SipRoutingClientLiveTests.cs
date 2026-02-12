@@ -65,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             var client = CreateClientWithTokenCredential();
 
-            var response = await client.SetTrunkAsync(new SipTrunk(TestData!.TrunkList[0].Fqdn,5555)).ConfigureAwait(false);
+            var response = await client.SetTrunkAsync(new SipTrunk(TestData!.TrunkList[0].Fqdn, 5555)).ConfigureAwait(false);
             Assert.AreEqual(200, response.Status);
         }
 
@@ -152,7 +152,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             await client.DeleteTrunkAsync(TestData!.TrunkList[1].Fqdn).ConfigureAwait(false);
 
             var finalTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
-            Assert.AreEqual(TestData!.TrunkList.Count-1, finalTrunks.Value.Count());
+            Assert.AreEqual(TestData!.TrunkList.Count - 1, finalTrunks.Value.Count());
             Assert.IsNull(finalTrunks.Value.FirstOrDefault(x => x.Fqdn == TestData!.TrunkList[1].Fqdn));
         }
 

@@ -5,18 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Threading;
 
 namespace Azure.Storage.Blobs.Samples
 {
@@ -221,13 +221,13 @@ namespace Azure.Storage.Blobs.Samples
 
             try
             {
-            #region Snippet:SampleSnippetsBlobMigration_CreateContainerShortcut
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-            BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
-            #endregion
+                #region Snippet:SampleSnippetsBlobMigration_CreateContainerShortcut
+                BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+                BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
+                #endregion
 
-            // pass if success
-            containerClient.GetProperties();
+                // pass if success
+                containerClient.GetProperties();
             }
             finally
             {
@@ -509,7 +509,7 @@ namespace Azure.Storage.Blobs.Samples
                 // set this to already existing continuation token to pick up where you previously left off
                 string initialContinuationToken = null;
                 AsyncPageable<BlobItem> results = containerClient.GetBlobsAsync();
-                IAsyncEnumerable<Page<BlobItem>> pages =  results.AsPages(initialContinuationToken);
+                IAsyncEnumerable<Page<BlobItem>> pages = results.AsPages(initialContinuationToken);
 
                 // the foreach loop requests the next page of results every loop
                 // you do not need to explicitly access the continuation token just to get the next page

@@ -67,7 +67,8 @@ namespace Azure.AI.VoiceLive.Tests
             }));
 
             // Dispose other docs not used further
-            foreach (var d in updateMessages.Where(d => d != last)) d.Dispose();
+            foreach (var d in updateMessages.Where(d => d != last))
+                d.Dispose();
         }
 
         [Test]
@@ -111,11 +112,13 @@ namespace Azure.AI.VoiceLive.Tests
             for (int i = 0; i < sent.Count; i++)
             {
                 var msg = sent[i];
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     using var doc = JsonDocument.Parse(msg);
-                    if (!doc.RootElement.TryGetProperty("type", out var tProp) || tProp.ValueKind != JsonValueKind.String) continue;
+                    if (!doc.RootElement.TryGetProperty("type", out var tProp) || tProp.ValueKind != JsonValueKind.String)
+                        continue;
                     var typeVal = tProp.GetString();
                     if (typeVal == "conversation.item.create" && createIndex == -1)
                     {

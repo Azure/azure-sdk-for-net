@@ -19,6 +19,8 @@ namespace _Type.Property.ValueTypes
 
         protected virtual DictionaryStringProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator DictionaryStringProperty(Response response) => throw null;
 
         void IJsonModel<DictionaryStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Property.ValueTypes
         protected virtual DictionaryStringProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<DictionaryStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         DictionaryStringProperty IPersistableModel<DictionaryStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

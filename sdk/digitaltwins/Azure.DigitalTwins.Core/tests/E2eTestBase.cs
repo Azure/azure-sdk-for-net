@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             if (options == null)
             {
-                options = new DigitalTwinsClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}};
+                options = new DigitalTwinsClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } };
             }
 
             return InstrumentClient(

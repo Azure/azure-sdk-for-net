@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Learning settings specifying how to train the model. </summary>
     [CodeGenModel("PolicyContract")]
-    public partial class PersonalizerPolicy {}
+    public partial class PersonalizerPolicy { }
 }

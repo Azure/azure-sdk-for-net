@@ -19,6 +19,8 @@ namespace Encode.Datetime
 
         protected virtual DefaultDatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator DefaultDatetimeProperty(Response response) => throw null;
 
         void IJsonModel<DefaultDatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Encode.Datetime
         protected virtual DefaultDatetimeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<DefaultDatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         DefaultDatetimeProperty IPersistableModel<DefaultDatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

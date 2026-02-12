@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,10 +11,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
-using BaseShares::Azure.Storage.Files.Shares;
-using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using NUnit.Framework;
 
@@ -59,7 +58,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         // When the file is created, the last modified time is set to the current time.
         // We need to set the last modified time to a fixed value to make the test recordable/predictable.
         private readonly DateTimeOffset? _defaultFileLastWrittenOn = new DateTimeOffset(2024, 11, 24, 11, 23, 45, TimeSpan.FromHours(10));
-        private readonly Dictionary<string,string> _defaultMetadata = DataProvider.BuildMetadata();
+        private readonly Dictionary<string, string> _defaultMetadata = DataProvider.BuildMetadata();
 
         public ShareDirectoryStartTransferUploadTests(bool async, ShareClientOptions.ServiceVersion serviceVersion, bool useNonRootDirectory)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)

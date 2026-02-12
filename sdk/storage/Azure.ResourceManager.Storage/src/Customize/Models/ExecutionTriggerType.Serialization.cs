@@ -18,8 +18,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static ExecutionTriggerType ToExecutionTriggerType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RunOnce")) return ExecutionTriggerType.RunOnce;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OnSchedule")) return ExecutionTriggerType.OnSchedule;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RunOnce"))
+                return ExecutionTriggerType.RunOnce;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OnSchedule"))
+                return ExecutionTriggerType.OnSchedule;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ExecutionTriggerType value.");
         }
     }

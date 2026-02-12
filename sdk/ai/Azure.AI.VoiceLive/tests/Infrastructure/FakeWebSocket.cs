@@ -39,7 +39,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <param name="json">The textual payload (typically JSON) to deliver to the client.</param>
         public void EnqueueTextMessage(string json)
         {
-            if (json == null) throw new ArgumentNullException(nameof(json));
+            if (json == null)
+                throw new ArgumentNullException(nameof(json));
             ThrowIfDisposed();
             _inboundQueue.Enqueue(json);
         }
@@ -61,8 +62,10 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <exception cref="TimeoutException">Thrown if the condition is not satisfied within the timeout.</exception>
         public async Task WaitForAtLeastAsync(int count, TimeSpan timeout)
         {
-            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-            if (timeout <= TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(timeout));
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count));
+            if (timeout <= TimeSpan.Zero)
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             ThrowIfDisposed();
 
             var deadline = DateTime.UtcNow + timeout;
@@ -112,7 +115,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <inheritdoc />
         public override void Abort()
         {
-            if (_state == WebSocketState.Aborted || _state == WebSocketState.Closed) return;
+            if (_state == WebSocketState.Aborted || _state == WebSocketState.Closed)
+                return;
             _state = WebSocketState.Aborted;
             _lifecycleCts.Cancel();
         }
@@ -120,7 +124,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <inheritdoc />
         public override Task CloseAsync(WebSocketCloseStatus closeStatus, string? statusDescription, CancellationToken cancellationToken)
         {
-            if (_state == WebSocketState.Closed) return Task.CompletedTask;
+            if (_state == WebSocketState.Closed)
+                return Task.CompletedTask;
             _closeStatus = closeStatus;
             _closeStatusDescription = statusDescription;
             _state = WebSocketState.Closed;
@@ -131,7 +136,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <inheritdoc />
         public override Task CloseOutputAsync(WebSocketCloseStatus closeStatus, string? statusDescription, CancellationToken cancellationToken)
         {
-            if (_state == WebSocketState.Closed || _state == WebSocketState.CloseSent) return Task.CompletedTask;
+            if (_state == WebSocketState.Closed || _state == WebSocketState.CloseSent)
+                return Task.CompletedTask;
             _closeStatus = closeStatus;
             _closeStatusDescription = statusDescription;
             _state = WebSocketState.CloseSent;
@@ -142,7 +148,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public override async Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
-            if (buffer.Array == null) throw new ArgumentException("Buffer must have a backing array", nameof(buffer));
+            if (buffer.Array == null)
+                throw new ArgumentException("Buffer must have a backing array", nameof(buffer));
 
             while (true)
             {
@@ -189,7 +196,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
 
             if (messageType == WebSocketMessageType.Text)
             {
-                if (buffer.Array == null) throw new ArgumentException("Buffer must have a backing array", nameof(buffer));
+                if (buffer.Array == null)
+                    throw new ArgumentException("Buffer must have a backing array", nameof(buffer));
                 var text = Encoding.UTF8.GetString(buffer.Array, buffer.Offset, buffer.Count);
                 lock (_sentLock)
                 {
@@ -204,7 +212,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <inheritdoc />
         public override void Dispose()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) == 1) return;
+            if (Interlocked.Exchange(ref _disposed, 1) == 1)
+                return;
             _state = WebSocketState.Closed;
             _lifecycleCts.Cancel();
             _lifecycleCts.Dispose();

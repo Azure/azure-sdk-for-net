@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class ClusterManagersTests : NetworkCloudManagementTestBase
     {
-        public ClusterManagersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public ClusterManagersTests(bool isAsync) : base(isAsync) {}
+        public ClusterManagersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public ClusterManagersTests(bool isAsync) : base(isAsync) { }
 
         // updated from Test to RecordedTest per pipeline recommendation
         [RecordedTest]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(createResult.Value.Data.Tags["DisableFabricIntegration"], createData.Tags["DisableFabricIntegration"]);
 
             // Get
-            var getResult =await clusterManagerCollection.GetAsync(clusterManagerName);
+            var getResult = await clusterManagerCollection.GetAsync(clusterManagerName);
             Assert.AreEqual(getResult.Value.Data.Name, clusterManagerName);
             NetworkCloudClusterManagerResource clusterManagerResource = Client.GetNetworkCloudClusterManagerResource(getResult.Value.Data.Id);
 

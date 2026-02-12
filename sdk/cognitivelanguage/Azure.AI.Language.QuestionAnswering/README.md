@@ -188,14 +188,16 @@ To create a new project, you must specify the project's name and a create a `Req
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
-    new {
+    new
+    {
         description = "This is the description for a test project",
         language = "en",
         multilingualResource = false,
-        settings = new {
+        settings = new
+        {
             defaultAnswer = "No answer found for your question."
-            }
         }
+    }
     );
 
 Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);

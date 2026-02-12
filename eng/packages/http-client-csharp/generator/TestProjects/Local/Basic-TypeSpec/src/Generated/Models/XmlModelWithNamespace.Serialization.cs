@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace BasicTypeSpec
@@ -36,6 +37,66 @@ namespace BasicTypeSpec
                 default:
                     throw new FormatException($"The model {nameof(XmlModelWithNamespace)} does not support reading '{options.Format}' format.");
             }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            Write(writer, options, "XmlModelWithNamespace");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(XmlModelWithNamespace)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void Write(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement("ns1", nameHint, "http://www.example.com/namespace");
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(XmlModelWithNamespace)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("foo");
+            writer.WriteValue(Foo);
+            writer.WriteEndElement();
         }
 
         /// <param name="element"> The xml element to deserialize. </param>

@@ -4,10 +4,10 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             #endregion
 
             #region Snippet:GetSparkBatchJobAsync
-            SparkBatchJob retrievedJob = await client.GetSparkBatchJobAsync (jobCreated.Id);
+            SparkBatchJob retrievedJob = await client.GetSparkBatchJobAsync(jobCreated.Id);
             Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
             #endregion
 
