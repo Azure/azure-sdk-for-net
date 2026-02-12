@@ -195,6 +195,8 @@ When the old SDK returned `Pageable<T>` / `AsyncPageable<T>` for a list operatio
 - The generated pageable implementation handles diagnostics, cancellation, and error handling correctly
 - It keeps the SDK surface consistent with other generated methods
 
+**Do NOT use `@@markAsPageable` if the operation is already marked with `@list`** — the `@list` decorator already makes the operation pageable, and adding `@@markAsPageable` will cause a compile error. Check the spec's operation definition before adding the decorator.
+
 **Requirements:**
 1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
 2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"` before each `@@markAsPageable` call
@@ -474,6 +476,27 @@ After completing (or making significant progress on) a migration, review what wa
 11. **Sub-resource operations must NOT use `Read<>` template.** When a TypeSpec spec defines sub-resource Get operations using `Read<>` or `Extension.Read<>`, the ARM library treats them as lifecycle read operations, causing wrong REST client selection. Use `ActionSync<>` with `@get` instead. See Phase 5b.
 
 12. **Use `@@markAsPageable` instead of custom `SinglePagePageable` wrappers.** When the old SDK returned `Pageable<T>` for a non-pageable list operation, prefer adding `@@markAsPageable(Interface.operation, "csharp")` in `client.tsp` over writing custom `[CodeGenSuppress]` + `SinglePagePageable<T>` wrapper code. This reduces custom code and produces a cleaner generated implementation.
+
+13. **File name casing mismatches between Windows and Linux CI.** The TypeSpec code generator may produce file names with different casing than what git tracks (e.g., `GuestConfigurationHcrpAssignmentsRestOperations.cs` in git vs `GuestConfigurationHCRPAssignmentsRestOperations.cs` on disk). On Windows (case-insensitive) this is invisible, but on Linux CI these are treated as **different files** — CI sees the old lowercase file as "deleted" and the new uppercase file as "untracked", causing the "Generated code is not up to date" error. **Fix**: After code generation, check for casing mismatches with:
+    ```powershell
+    git ls-files "sdk/<service>/<PACKAGE_NAME>/src/Generated/" | ForEach-Object {
+        $filename = Split-Path $_ -Leaf
+        $dir = Split-Path $_ -Parent
+        $diskFile = Get-ChildItem -LiteralPath (Join-Path (Get-Location) $dir) -Filter $filename -ErrorAction SilentlyContinue
+        if ($diskFile -and ($diskFile.Name -cne $filename)) {
+            Write-Host "MISMATCH: git='$filename' disk='$($diskFile.Name)' in $dir"
+        }
+    }
+    ```
+    Fix each mismatch with `git rm --cached <old-cased-path>` then `git add <new-cased-path>`.
+
+14. **`@@markAsPageable` is ineffective on operations already marked with `@list`.** If a TypeSpec operation is already decorated with `@list` (making it pageable), adding `@@markAsPageable` is redundant and will cause a compile error: `@markAsPageable decorator is ineffective since this operation is already marked as pageable with @list decorator`. Before adding `@@markAsPageable`, check whether the target operation already has `@list` in its spec definition. Only add `@@markAsPageable` for operations that are truly non-pageable in the spec.
+
+15. **Always run `CodeChecks.ps1` locally before pushing.** The CI "Verify Generated Code" step runs `eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>`, which regenerates code, updates snippets, re-exports API, and does `git diff --exit-code`. Run this locally to catch issues before CI:
+    ```powershell
+    pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>
+    ```
+    This is the single most reliable way to verify your changes will pass the "Build Analyze PRBatch" CI check.
 
 ## Safety Rules
 
