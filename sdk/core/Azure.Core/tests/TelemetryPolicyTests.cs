@@ -47,10 +47,14 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ApplicationIdLimitedTo24Chars()
+        public void ApplicationIdExceedingDefaultMaxLengthIsAcceptedByOptions()
         {
             var options = new DiagnosticsOptions();
-            Assert.Throws<ArgumentOutOfRangeException>(() => options.ApplicationId = "0123456789012345678912345");
+            var longApplicationId = "0123456789012345678912345";
+
+            options.ApplicationId = longApplicationId;
+
+            Assert.AreEqual(longApplicationId, options.ApplicationId);
         }
 
         private class TestOptions : ClientOptions
