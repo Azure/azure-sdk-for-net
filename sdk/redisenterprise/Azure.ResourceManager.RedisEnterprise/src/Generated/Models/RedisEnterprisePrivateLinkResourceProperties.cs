@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class RedisEnterprisePrivateLinkResourceProperties
+    internal partial class RedisEnterprisePrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> The private link resource required member names. </summary>
         [WirePath("requiredMembers")]
-        public IReadOnlyList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link resource private link DNS zone name. </summary>
         [WirePath("requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

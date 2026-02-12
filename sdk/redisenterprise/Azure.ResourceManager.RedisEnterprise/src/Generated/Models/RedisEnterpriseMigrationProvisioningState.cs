@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Current provisioning status. </summary>
-    public readonly partial struct MigrationProvisioningState : IEquatable<MigrationProvisioningState>
+    public readonly partial struct RedisEnterpriseMigrationProvisioningState : IEquatable<RedisEnterpriseMigrationProvisioningState>
     {
         private readonly string _value;
         /// <summary> The request has been accepted and the migration operation is being initialized. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> The migration operation has been cancelled. </summary>
         private const string CancelledValue = "Cancelled";
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MigrationProvisioningState(string value)
+        public RedisEnterpriseMigrationProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The request has been accepted and the migration operation is being initialized. </summary>
-        public static MigrationProvisioningState Accepted { get; } = new MigrationProvisioningState(AcceptedValue);
+        public static RedisEnterpriseMigrationProvisioningState Accepted { get; } = new RedisEnterpriseMigrationProvisioningState(AcceptedValue);
 
         /// <summary> The migration operation is in progress. </summary>
-        public static MigrationProvisioningState InProgress { get; } = new MigrationProvisioningState(InProgressValue);
+        public static RedisEnterpriseMigrationProvisioningState InProgress { get; } = new RedisEnterpriseMigrationProvisioningState(InProgressValue);
 
         /// <summary> The migration operation has completed transferring data and is ready for DNS switch. </summary>
-        public static MigrationProvisioningState ReadyForDnsSwitch { get; } = new MigrationProvisioningState(ReadyForDnsSwitchValue);
+        public static RedisEnterpriseMigrationProvisioningState ReadyForDnsSwitch { get; } = new RedisEnterpriseMigrationProvisioningState(ReadyForDnsSwitchValue);
 
         /// <summary> The migration operation has completed successfully. </summary>
-        public static MigrationProvisioningState Succeeded { get; } = new MigrationProvisioningState(SucceededValue);
+        public static RedisEnterpriseMigrationProvisioningState Succeeded { get; } = new RedisEnterpriseMigrationProvisioningState(SucceededValue);
 
         /// <summary> The migration operation has failed. </summary>
-        public static MigrationProvisioningState Failed { get; } = new MigrationProvisioningState(FailedValue);
+        public static RedisEnterpriseMigrationProvisioningState Failed { get; } = new RedisEnterpriseMigrationProvisioningState(FailedValue);
 
         /// <summary> The migration operation is being cancelled. </summary>
-        public static MigrationProvisioningState Cancelling { get; } = new MigrationProvisioningState(CancellingValue);
+        public static RedisEnterpriseMigrationProvisioningState Cancelling { get; } = new RedisEnterpriseMigrationProvisioningState(CancellingValue);
 
         /// <summary> The migration operation has been cancelled. </summary>
-        public static MigrationProvisioningState Cancelled { get; } = new MigrationProvisioningState(CancelledValue);
+        public static RedisEnterpriseMigrationProvisioningState Cancelled { get; } = new RedisEnterpriseMigrationProvisioningState(CancelledValue);
 
-        /// <summary> Determines if two <see cref="MigrationProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RedisEnterpriseMigrationProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MigrationProvisioningState left, MigrationProvisioningState right) => left.Equals(right);
+        public static bool operator ==(RedisEnterpriseMigrationProvisioningState left, RedisEnterpriseMigrationProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MigrationProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RedisEnterpriseMigrationProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MigrationProvisioningState left, MigrationProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(RedisEnterpriseMigrationProvisioningState left, RedisEnterpriseMigrationProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MigrationProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseMigrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationProvisioningState(string value) => new MigrationProvisioningState(value);
+        public static implicit operator RedisEnterpriseMigrationProvisioningState(string value) => new RedisEnterpriseMigrationProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="MigrationProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseMigrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MigrationProvisioningState?(string value) => value == null ? null : new MigrationProvisioningState(value);
+        public static implicit operator RedisEnterpriseMigrationProvisioningState?(string value) => value == null ? null : new RedisEnterpriseMigrationProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MigrationProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is RedisEnterpriseMigrationProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MigrationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RedisEnterpriseMigrationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

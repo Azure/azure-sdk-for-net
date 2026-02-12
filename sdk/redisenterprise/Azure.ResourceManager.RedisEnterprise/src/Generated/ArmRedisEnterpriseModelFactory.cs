@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<MaintenanceWindow> maintenanceWindows = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default, RedisEnterpriseKind? kind = default, RedisEnterpriseSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default, RedisEnterpriseKind? kind = default, RedisEnterpriseSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     highAvailability,
                     minimumTlsVersion,
                     new ClusterPropertiesEncryption(customerManagedKeyEncryption, null),
-                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), null),
+                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), null),
                     hostName,
                     provisioningState,
                     redundancyMode,
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseClusterPatch"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<MaintenanceWindow> maintenanceWindows = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 highAvailability,
                 minimumTlsVersion,
                 new ClusterPropertiesEncryption(customerManagedKeyEncryption, null),
-                new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), null),
+                new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), null),
                 hostName,
                 provisioningState,
                 redundancyMode,
@@ -292,14 +292,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseSkuDetails(name, sizeInGB, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Resource properties. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkResource"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateLinkResource RedisEnterprisePrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterprisePrivateLinkResourceProperties properties = default)
+        public static RedisEnterprisePrivateLinkResource RedisEnterprisePrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             return new RedisEnterprisePrivateLinkResource(
                 id,
@@ -307,20 +308,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateLinkResourceProperties RedisEnterprisePrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new RedisEnterprisePrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new RedisEnterprisePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -348,10 +336,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the migration operation. </param>
-        /// <returns> A new <see cref="RedisEnterprise.MigrationData"/> instance for mocking. </returns>
-        public static MigrationData MigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MigrationProperties properties = default)
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseMigrationData"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationData RedisEnterpriseMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseMigrationProperties properties = default)
         {
-            return new MigrationData(
+            return new RedisEnterpriseMigrationData(
                 id,
                 name,
                 resourceType,
@@ -370,10 +358,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
-        /// <returns> A new <see cref="Models.MigrationProperties"/> instance for mocking. </returns>
-        public static MigrationProperties MigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, MigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationProperties"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
         {
-            return new UnknownMigrationProperties(
+            return new UnknownRedisEnterpriseMigrationProperties(
                 new SourceType(sourceType),
                 targetResourceId,
                 provisioningState,
@@ -390,10 +378,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
-        /// <param name="switchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
-        /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
+        /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
         /// <returns> A new <see cref="Models.AzureCacheForRedisMigrationProperties"/> instance for mocking. </returns>
-        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, MigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool switchDns = default, bool skipDataMigration = default)
+        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default)
         {
             return new AzureCacheForRedisMigrationProperties(
                 SourceType.AzureCacheForRedis,
@@ -404,8 +392,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 lastModifiedOn,
                 additionalBinaryDataProperties: null,
                 sourceResourceId,
-                switchDns,
-                skipDataMigration);
+                isSwitchDns,
+                isSkipDataMigration);
         }
 
         /// <param name="id"> The operation's unique id. </param>
@@ -511,30 +499,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             modules ??= new ChangeTrackingList<RedisEnterpriseModule>();
 
             return new RedisEnterpriseDatabasePatch(default, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterprisePrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterprisePrivateLinkResource RedisEnterprisePrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new RedisEnterprisePrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseClusterData"/>. </summary>

@@ -909,11 +909,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetRedisEnterprisePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a <see cref="MigrationResource"/> along with the instance operations that can be performed on it in the <see cref="RedisEnterpriseClusterResource"/>. </summary>
-        /// <returns> Returns a <see cref="MigrationResource"/> object. </returns>
-        public virtual MigrationResource GetMigration()
+        /// <summary> Gets an object representing a <see cref="RedisEnterpriseMigrationResource"/> along with the instance operations that can be performed on it in the <see cref="RedisEnterpriseClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
+        public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigration()
         {
-            return new MigrationResource(Client, Id.AppendChildResource("migrations", "default"));
+            return new RedisEnterpriseMigrationResource(Client, Id.AppendChildResource("migrations", "default"));
         }
     }
 }

@@ -14,24 +14,24 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary> Describes the current migration operation on a Redis Enterprise cluster. </summary>
-    public partial class MigrationData : ResourceData
+    public partial class RedisEnterpriseMigrationData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationData"/>. </summary>
-        public MigrationData()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationData"/>. </summary>
+        public RedisEnterpriseMigrationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the migration operation. </param>
-        internal MigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MigrationProperties properties) : base(id, name, resourceType, systemData)
+        internal RedisEnterpriseMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisEnterpriseMigrationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary> Properties of the migration operation. </summary>
         [WirePath("properties")]
-        public MigrationProperties Properties { get; set; }
+        public RedisEnterpriseMigrationProperties Properties { get; set; }
     }
 }

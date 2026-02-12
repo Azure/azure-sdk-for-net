@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            MaintenanceDayOfWeek? dayOfWeek = default;
+            RedisEnterpriseMaintenanceDayOfWeek? dayOfWeek = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    dayOfWeek = new MaintenanceDayOfWeek(prop.Value.GetString());
+                    dayOfWeek = new RedisEnterpriseMaintenanceDayOfWeek(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

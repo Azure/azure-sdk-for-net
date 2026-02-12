@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowSchedule"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. Required when the maintenance window type is 'Weekly'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowSchedule(MaintenanceDayOfWeek? dayOfWeek, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceWindowSchedule(RedisEnterpriseMaintenanceDayOfWeek? dayOfWeek, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DayOfWeek = dayOfWeek;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
         [WirePath("dayOfWeek")]
-        public MaintenanceDayOfWeek? DayOfWeek { get; set; }
+        public RedisEnterpriseMaintenanceDayOfWeek? DayOfWeek { get; set; }
     }
 }

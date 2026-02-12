@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class RedisEnterprisePrivateLinkResourceProperties : IJsonModel<RedisEnterprisePrivateLinkResourceProperties>
+    internal partial class RedisEnterprisePrivateLinkResourceProperties : IJsonModel<RedisEnterprisePrivateLinkResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

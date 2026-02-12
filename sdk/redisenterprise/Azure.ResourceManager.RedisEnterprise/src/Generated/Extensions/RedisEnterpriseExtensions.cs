@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RedisEnterpriseMigrationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedisEnterpriseArmClient.GetMigrationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedisEnterpriseArmClient.GetRedisEnterpriseMigrationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationResource"/> object. </returns>
-        public static MigrationResource GetMigrationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
+        public static RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRedisEnterpriseArmClient(client).GetMigrationResource(id);
+            return GetMockableRedisEnterpriseArmClient(client).GetRedisEnterpriseMigrationResource(id);
         }
 
         /// <summary>

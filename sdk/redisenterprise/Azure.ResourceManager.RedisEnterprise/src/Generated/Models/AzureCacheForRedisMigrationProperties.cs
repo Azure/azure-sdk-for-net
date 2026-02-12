@@ -13,20 +13,20 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties for Redis Enterprise migration operation for Azure Cache for Redis. </summary>
-    public partial class AzureCacheForRedisMigrationProperties : MigrationProperties
+    public partial class AzureCacheForRedisMigrationProperties : RedisEnterpriseMigrationProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureCacheForRedisMigrationProperties"/>. </summary>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
-        /// <param name="switchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
-        /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
+        /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> is null. </exception>
-        public AzureCacheForRedisMigrationProperties(ResourceIdentifier sourceResourceId, bool switchDns, bool skipDataMigration) : base(SourceType.AzureCacheForRedis)
+        public AzureCacheForRedisMigrationProperties(ResourceIdentifier sourceResourceId, bool isSwitchDns, bool isSkipDataMigration) : base(SourceType.AzureCacheForRedis)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
 
             SourceResourceId = sourceResourceId;
-            SwitchDns = switchDns;
-            SkipDataMigration = skipDataMigration;
+            IsSwitchDns = isSwitchDns;
+            IsSkipDataMigration = isSkipDataMigration;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCacheForRedisMigrationProperties"/>. </summary>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
-        /// <param name="switchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
-        /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
-        internal AzureCacheForRedisMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, MigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sourceResourceId, bool switchDns, bool skipDataMigration) : base(sourceType, targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, additionalBinaryDataProperties)
+        /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
+        internal AzureCacheForRedisMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sourceResourceId, bool isSwitchDns, bool isSkipDataMigration) : base(sourceType, targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
-            SwitchDns = switchDns;
-            SkipDataMigration = skipDataMigration;
+            IsSwitchDns = isSwitchDns;
+            IsSkipDataMigration = isSkipDataMigration;
         }
 
         /// <summary> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </summary>
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </summary>
         [WirePath("switchDns")]
-        public bool SwitchDns { get; set; }
+        public bool IsSwitchDns { get; set; }
 
         /// <summary> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </summary>
         [WirePath("skipDataMigration")]
-        public bool SkipDataMigration { get; set; }
+        public bool IsSkipDataMigration { get; set; }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary></summary>
-    internal partial class MigrationOperationSource : IOperationSource<MigrationResource>
+    internal partial class RedisEnterpriseMigrationOperationSource : IOperationSource<RedisEnterpriseMigrationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal MigrationOperationSource(ArmClient client)
+        internal RedisEnterpriseMigrationOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MigrationResource IOperationSource<MigrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RedisEnterpriseMigrationResource IOperationSource<RedisEnterpriseMigrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MigrationData data = MigrationData.DeserializeMigrationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MigrationResource(_client, data);
+            RedisEnterpriseMigrationData data = RedisEnterpriseMigrationData.DeserializeRedisEnterpriseMigrationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RedisEnterpriseMigrationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MigrationResource> IOperationSource<MigrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RedisEnterpriseMigrationResource> IOperationSource<RedisEnterpriseMigrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MigrationData data = MigrationData.DeserializeMigrationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MigrationResource(_client, data);
+            RedisEnterpriseMigrationData data = RedisEnterpriseMigrationData.DeserializeRedisEnterpriseMigrationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RedisEnterpriseMigrationResource(_client, data);
         }
     }
 }

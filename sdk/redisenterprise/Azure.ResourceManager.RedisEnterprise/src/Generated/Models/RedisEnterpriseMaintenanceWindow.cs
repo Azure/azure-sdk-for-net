@@ -12,17 +12,17 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> A single custom maintenance window. </summary>
-    public partial class MaintenanceWindow
+    public partial class RedisEnterpriseMaintenanceWindow
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMaintenanceWindow"/>. </summary>
         /// <param name="type"> Maintenance window type. </param>
         /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
         /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="duration"/> is null. </exception>
-        public MaintenanceWindow(MaintenanceWindowType @type, string duration, int startHourUtc)
+        public RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type, string duration, int startHourUtc)
         {
             Argument.AssertNotNull(duration, nameof(duration));
 
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             StartHourUtc = startHourUtc;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMaintenanceWindow"/>. </summary>
         /// <param name="type"> Maintenance window type. </param>
         /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
         /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
         /// <param name="schedule"> Recurring schedule for the maintenance window. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindow(MaintenanceWindowType @type, string duration, int startHourUtc, MaintenanceWindowSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type, string duration, int startHourUtc, MaintenanceWindowSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Duration = duration;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Maintenance window type. </summary>
         [WirePath("type")]
-        public MaintenanceWindowType Type { get; set; }
+        public RedisEnterpriseMaintenanceWindowType Type { get; set; }
 
         /// <summary> Duration in ISO-8601 format, for example 'PT5H'. </summary>
         [WirePath("duration")]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
         [WirePath("schedule.dayOfWeek")]
-        public MaintenanceDayOfWeek? ScheduleDayOfWeek
+        public RedisEnterpriseMaintenanceDayOfWeek? ScheduleDayOfWeek
         {
             get
             {

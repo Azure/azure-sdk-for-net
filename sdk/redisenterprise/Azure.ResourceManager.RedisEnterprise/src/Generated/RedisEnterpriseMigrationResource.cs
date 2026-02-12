@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
-    /// A class representing a Migration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MigrationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RedisEnterpriseClusterResource"/> using the GetMigration method.
+    /// A class representing a RedisEnterpriseMigration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisEnterpriseMigrationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RedisEnterpriseClusterResource"/> using the GetRedisEnterpriseMigration method.
     /// </summary>
-    public partial class MigrationResource : ArmResource
+    public partial class RedisEnterpriseMigrationResource : ArmResource
     {
         private readonly ClientDiagnostics _migrationClientDiagnostics;
         private readonly Migration _migrationRestClient;
-        private readonly MigrationData _data;
+        private readonly RedisEnterpriseMigrationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/migrations";
 
-        /// <summary> Initializes a new instance of MigrationResource for mocking. </summary>
-        protected MigrationResource()
+        /// <summary> Initializes a new instance of RedisEnterpriseMigrationResource for mocking. </summary>
+        protected RedisEnterpriseMigrationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MigrationResource(ArmClient client, MigrationData data) : this(client, data.Id)
+        internal RedisEnterpriseMigrationResource(ArmClient client, RedisEnterpriseMigrationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MigrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RedisEnterpriseMigrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string migrationApiVersion);
+            TryGetApiVersion(ResourceType, out string redisEnterpriseMigrationApiVersion);
             _migrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Endpoint, migrationApiVersion ?? "2025-08-01-preview");
+            _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MigrationData Data
+        public virtual RedisEnterpriseMigrationData Data
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MigrationResource"/>. </description>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="data"> Parameters supplied to start a migration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MigrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MigrationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RedisEnterpriseMigrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RedisEnterpriseMigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("MigrationResource.CreateOrUpdate");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MigrationData.ToRequestContent(data), context);
+                HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RedisEnterpriseArmOperation<MigrationResource> operation = new RedisEnterpriseArmOperation<MigrationResource>(
-                    new MigrationOperationSource(Client),
+                RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
+                    new RedisEnterpriseMigrationOperationSource(Client),
                     _migrationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MigrationResource"/>. </description>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="data"> Parameters supplied to start a migration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MigrationResource> CreateOrUpdate(WaitUntil waitUntil, MigrationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RedisEnterpriseMigrationResource> CreateOrUpdate(WaitUntil waitUntil, RedisEnterpriseMigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("MigrationResource.CreateOrUpdate");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MigrationData.ToRequestContent(data), context);
+                HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RedisEnterpriseArmOperation<MigrationResource> operation = new RedisEnterpriseArmOperation<MigrationResource>(
-                    new MigrationOperationSource(Client),
+                RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
+                    new RedisEnterpriseMigrationOperationSource(Client),
                     _migrationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MigrationResource"/>. </description>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MigrationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisEnterpriseMigrationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("MigrationResource.Get");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Get");
             scope.Start();
             try
             {
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.RedisEnterprise
                 };
                 HttpMessage message = _migrationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MigrationData> response = Response.FromValue(MigrationData.FromResponse(result), result);
+                Response<RedisEnterpriseMigrationData> response = Response.FromValue(RedisEnterpriseMigrationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MigrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseMigrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,14 +273,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MigrationResource"/>. </description>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MigrationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<RedisEnterpriseMigrationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("MigrationResource.Get");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Get");
             scope.Start();
             try
             {
@@ -290,12 +290,12 @@ namespace Azure.ResourceManager.RedisEnterprise
                 };
                 HttpMessage message = _migrationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MigrationData> response = Response.FromValue(MigrationData.FromResponse(result), result);
+                Response<RedisEnterpriseMigrationData> response = Response.FromValue(RedisEnterpriseMigrationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MigrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseMigrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MigrationResource"/>. </description>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("MigrationResource.Cancel");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Cancel");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MigrationResource"/>. </description>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("MigrationResource.Cancel");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Cancel");
             scope.Start();
             try
             {

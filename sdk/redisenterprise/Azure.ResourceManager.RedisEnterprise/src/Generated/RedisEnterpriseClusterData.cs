@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary> Custom maintenance windows that apply to the cluster. </summary>
         [WirePath("properties.maintenanceConfiguration.maintenanceWindows")]
-        public IList<MaintenanceWindow> MaintenanceWindows
+        public IList<RedisEnterpriseMaintenanceWindow> MaintenanceWindows
         {
             get
             {

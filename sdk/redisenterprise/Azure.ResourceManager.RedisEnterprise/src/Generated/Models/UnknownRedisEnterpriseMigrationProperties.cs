@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    internal partial class UnknownMigrationProperties : MigrationProperties
+    internal partial class UnknownRedisEnterpriseMigrationProperties : RedisEnterpriseMigrationProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMigrationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRedisEnterpriseMigrationProperties"/>. </summary>
         /// <param name="sourceType"> Describes the source of the migration operation. </param>
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, MigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceType != default ? sourceType : "unknown", targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, additionalBinaryDataProperties)
+        internal UnknownRedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceType != default ? sourceType : "unknown", targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, additionalBinaryDataProperties)
         {
         }
     }

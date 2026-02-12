@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 writer.WritePropertyName("maintenanceWindows"u8);
                 writer.WriteStartArray();
-                foreach (MaintenanceWindow item in MaintenanceWindows)
+                foreach (RedisEnterpriseMaintenanceWindow item in MaintenanceWindows)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            IList<MaintenanceWindow> maintenanceWindows = default;
+            IList<RedisEnterpriseMaintenanceWindow> maintenanceWindows = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    List<MaintenanceWindow> array = new List<MaintenanceWindow>();
+                    List<RedisEnterpriseMaintenanceWindow> array = new List<RedisEnterpriseMaintenanceWindow>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceWindow.DeserializeMaintenanceWindow(item, options));
+                        array.Add(RedisEnterpriseMaintenanceWindow.DeserializeRedisEnterpriseMaintenanceWindow(item, options));
                     }
                     maintenanceWindows = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceConfiguration(maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>(), additionalBinaryDataProperties);
+            return new MaintenanceConfiguration(maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

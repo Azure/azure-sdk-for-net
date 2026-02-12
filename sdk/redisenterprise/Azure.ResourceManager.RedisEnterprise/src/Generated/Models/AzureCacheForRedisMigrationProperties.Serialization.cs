@@ -15,7 +15,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties for Redis Enterprise migration operation for Azure Cache for Redis. </summary>
-    public partial class AzureCacheForRedisMigrationProperties : MigrationProperties, IJsonModel<AzureCacheForRedisMigrationProperties>
+    public partial class AzureCacheForRedisMigrationProperties : RedisEnterpriseMigrationProperties, IJsonModel<AzureCacheForRedisMigrationProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureCacheForRedisMigrationProperties"/> for deserialization. </summary>
         internal AzureCacheForRedisMigrationProperties()
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WritePropertyName("sourceResourceId"u8);
             writer.WriteStringValue(SourceResourceId);
             writer.WritePropertyName("switchDns"u8);
-            writer.WriteBooleanValue(SwitchDns);
+            writer.WriteBooleanValue(IsSwitchDns);
             writer.WritePropertyName("skipDataMigration"u8);
-            writer.WriteBooleanValue(SkipDataMigration);
+            writer.WriteBooleanValue(IsSkipDataMigration);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MigrationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RedisEnterpriseMigrationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCacheForRedisMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             SourceType sourceType = default;
             ResourceIdentifier targetResourceId = default;
-            MigrationProvisioningState? provisioningState = default;
+            RedisEnterpriseMigrationProvisioningState? provisioningState = default;
             string statusDetails = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
-            bool switchDns = default;
-            bool skipDataMigration = default;
+            bool isSwitchDns = default;
+            bool isSkipDataMigration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    provisioningState = new MigrationProvisioningState(prop.Value.GetString());
+                    provisioningState = new RedisEnterpriseMigrationProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusDetails"u8))
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("switchDns"u8))
                 {
-                    switchDns = prop.Value.GetBoolean();
+                    isSwitchDns = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("skipDataMigration"u8))
                 {
-                    skipDataMigration = prop.Value.GetBoolean();
+                    isSkipDataMigration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 lastModifiedOn,
                 additionalBinaryDataProperties,
                 sourceResourceId,
-                switchDns,
-                skipDataMigration);
+                isSwitchDns,
+                isSkipDataMigration);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MigrationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RedisEnterpriseMigrationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCacheForRedisMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

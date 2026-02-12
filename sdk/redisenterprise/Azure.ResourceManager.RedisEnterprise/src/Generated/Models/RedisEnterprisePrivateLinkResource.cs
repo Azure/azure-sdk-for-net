@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResource"/>. </summary>
-        internal RedisEnterprisePrivateLinkResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResource"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,6 +34,36 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        public RedisEnterprisePrivateLinkResourceProperties Properties { get; }
+        internal RedisEnterprisePrivateLinkResourceProperties Properties { get; }
+
+        /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
+        public string GroupId
+        {
+            get
+            {
+                return Properties.GroupId;
+            }
+        }
+
+        /// <summary> The private link resource required member names. </summary>
+        [WirePath("properties.requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers
+        {
+            get
+            {
+                return Properties.RequiredMembers;
+            }
+        }
+
+        /// <summary> The private link resource private link DNS zone name. </summary>
+        [WirePath("properties.requiredZoneNames")]
+        public IList<string> RequiredZoneNames
+        {
+            get
+            {
+                return Properties.RequiredZoneNames;
+            }
+        }
     }
 }
