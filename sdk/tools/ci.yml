@@ -33,3 +33,8 @@ extends:
       safeName: AzureSdkAnalyzers
     - name: Azure.GeneratorAgent
       safeName: AzureGeneratorAgent
+    MatrixConfigs:
+    - Name: Tools_Selective_Frameworks
+      Path: sdk/tools/platform-matrix.json
+      Selection: sparse
+      GenerateVMJobs: true
