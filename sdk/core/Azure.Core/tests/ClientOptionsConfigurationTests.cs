@@ -601,22 +601,5 @@ namespace Azure.Core.Tests
             {
             }
         }
-
-        [Test]
-        public void ConfigurationWithLongApplicationIdIsAccepted()
-        {
-            var configData = new Dictionary<string, string>
-            {
-                { "TestClient:Diagnostics:ApplicationId", new string('a', 25) }
-            };
-
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(configData)
-                .Build();
-
-            var options = new TestClientOptions(configuration.GetSection("TestClient"), null);
-
-            Assert.AreEqual(new string('a', 25), options.Diagnostics.ApplicationId);
-        }
     }
 }

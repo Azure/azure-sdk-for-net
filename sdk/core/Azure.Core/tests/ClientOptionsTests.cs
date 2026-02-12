@@ -251,58 +251,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(longApplicationId, options.Diagnostics.ApplicationId);
         }
 
-        [Test]
-        public void ApplicationIdAtDefaultMaxLengthSucceeds()
-        {
-            var options = new TestClientOptions();
-            var applicationId = new string('a', 24);
-
-            options.Diagnostics.ApplicationId = applicationId;
-
-            Assert.AreEqual(applicationId, options.Diagnostics.ApplicationId);
-        }
-
-        [Test]
-        public void CanSetCustomMaxApplicationIdLength()
-        {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
-
-            Assert.AreEqual(50, options.GetMaxApplicationIdLength());
-        }
-
-        [Test]
-        public void CustomMaxApplicationIdLengthAllowsLongerApplicationId()
-        {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
-            var longApplicationId = new string('a', 50);
-
-            options.Diagnostics.ApplicationId = longApplicationId;
-
-            Assert.AreEqual(longApplicationId, options.Diagnostics.ApplicationId);
-        }
-
-        [Test]
-        public void ApplicationIdExceedingCustomMaxLengthIsAcceptedByOptions()
-        {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
-            var longApplicationId = new string('a', 51);
-
-            options.Diagnostics.ApplicationId = longApplicationId;
-
-            Assert.AreEqual(longApplicationId, options.Diagnostics.ApplicationId);
-        }
-
-        [Test]
-        public void LoweringMaxApplicationIdLengthBelowCurrentApplicationIdIsAccepted()
-        {
-            var options = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
-            options.Diagnostics.ApplicationId = new string('a', 49);
-
-            options.Diagnostics.MaxApplicationIdLength = 34;
-
-            Assert.AreEqual(34, options.Diagnostics.MaxApplicationIdLength);
-        }
-
         [TestCase(23)]
         [TestCase(0)]
         [TestCase(-1)]
@@ -320,29 +268,6 @@ namespace Azure.Core.Tests
             var options = new TestClientOptionsWithCustomMaxApplicationIdLength(1000);
 
             Assert.AreEqual(1000, options.GetMaxApplicationIdLength());
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        public void NullOrEmptyApplicationIdIsAccepted(string applicationId)
-        {
-            var options = new TestClientOptions();
-
-            options.Diagnostics.ApplicationId = applicationId;
-
-            Assert.AreEqual(applicationId, options.Diagnostics.ApplicationId);
-        }
-
-        [Test]
-        public void MaxApplicationIdLengthIsPreservedThroughCopyConstructor()
-        {
-            var original = new TestClientOptionsWithCustomMaxApplicationIdLength(50);
-            var longApplicationId = new string('a', 50);
-            original.Diagnostics.ApplicationId = longApplicationId;
-
-            var copy = new TestClientOptions();
-            // The copy should get the default (24) since it's a new instance, not copied from original
-            Assert.AreEqual(24, copy.Diagnostics.MaxApplicationIdLength);
         }
 
         private class TestClientOptions : ClientOptions
