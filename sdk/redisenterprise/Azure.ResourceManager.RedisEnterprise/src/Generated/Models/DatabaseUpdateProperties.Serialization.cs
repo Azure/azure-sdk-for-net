@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(DatabaseUpdateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AccessKeysAuthentication))
-            {
-                writer.WritePropertyName("accessKeysAuthentication"u8);
-                writer.WriteStringValue(AccessKeysAuthentication.Value.ToString());
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -78,8 +73,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseDatabaseGeoReplication geoReplication = default;
             string redisVersion = default;
             DeferUpgradeSetting? deferUpgrade = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AccessKeysAuthentication? accessKeysAuthentication = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientProtocol"u8))
@@ -208,8 +203,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 geoReplication,
                 redisVersion,
                 deferUpgrade,
-                additionalBinaryDataProperties,
-                accessKeysAuthentication);
+                accessKeysAuthentication,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

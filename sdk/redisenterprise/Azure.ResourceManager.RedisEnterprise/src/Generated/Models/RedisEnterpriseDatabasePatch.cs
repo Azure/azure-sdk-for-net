@@ -222,23 +222,5 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 Properties.AccessKeysAuthentication = value.Value;
             }
         }
-
-        /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. Default is Disabled. </summary>
-        [WirePath("properties.accessKeysAuthentication")]
-        public override AccessKeysAuthentication? AccessKeysAuthentication
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AccessKeysAuthentication;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseUpdateProperties();
-                }
-                Properties.AccessKeysAuthentication = value.Value;
-            }
-        }
     }
 }

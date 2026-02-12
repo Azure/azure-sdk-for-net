@@ -110,42 +110,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Encryption-at-rest configuration for the cluster. </summary>
-        [WirePath("properties.encryption")]
-        public ClusterPropertiesEncryption Encryption
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Encryption;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterCreateProperties();
-                }
-                Properties.Encryption = value;
-            }
-        }
-
-        /// <summary> Cluster-level maintenance configuration. </summary>
-        [WirePath("properties.maintenanceConfiguration")]
-        public MaintenanceConfiguration MaintenanceConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MaintenanceConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterCreateProperties();
-                }
-                Properties.MaintenanceConfiguration = value;
-            }
-        }
-
         /// <summary> DNS name of the cluster endpoint. </summary>
         [WirePath("properties.hostName")]
         public string HostName
@@ -207,6 +171,38 @@ namespace Azure.ResourceManager.RedisEnterprise
                     Properties = new ClusterCreateProperties();
                 }
                 return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("properties.encryption.customerManagedKeyEncryption")]
+        public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                Properties.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> Custom maintenance windows that apply to the cluster. </summary>
+        [WirePath("properties.maintenanceConfiguration.maintenanceWindows")]
+        public IList<MaintenanceWindow> MaintenanceWindows
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterCreateProperties();
+                }
+                return Properties.MaintenanceWindows;
             }
         }
 

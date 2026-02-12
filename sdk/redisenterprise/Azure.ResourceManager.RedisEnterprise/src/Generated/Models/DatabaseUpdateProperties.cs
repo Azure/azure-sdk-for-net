@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -31,14 +30,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="geoReplication"> Optional set of properties to configure geo replication for this database. </param>
         /// <param name="redisVersion"> Version of Redis the database is running on, e.g. '6.0'. </param>
         /// <param name="deferUpgrade"> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </param>
+        /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. Default is Disabled. </param>
-        internal DatabaseUpdateProperties(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, IDictionary<string, BinaryData> additionalBinaryDataProperties, AccessKeysAuthentication? accessKeysAuthentication) : base(clientProtocol, port, provisioningState, resourceState, clusteringPolicy, evictionPolicy, persistence, modules, geoReplication, redisVersion, deferUpgrade, accessKeysAuthentication, additionalBinaryDataProperties)
+        internal DatabaseUpdateProperties(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(clientProtocol, port, provisioningState, resourceState, clusteringPolicy, evictionPolicy, persistence, modules, geoReplication, redisVersion, deferUpgrade, accessKeysAuthentication, additionalBinaryDataProperties)
         {
         }
-
-        /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. Default is Disabled. </summary>
-        [WirePath("accessKeysAuthentication")]
-        public override AccessKeysAuthentication? AccessKeysAuthentication { get; set; }
     }
 }

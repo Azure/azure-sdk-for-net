@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redisEnterpriseDatabasePatch"> Parameters supplied to the create or update database operation. </param>
+        /// <param name="patch"> Parameters supplied to the create or update database operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redisEnterpriseDatabasePatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisEnterpriseDatabaseResource>> UpdateAsync(WaitUntil waitUntil, RedisEnterpriseDatabasePatch redisEnterpriseDatabasePatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<RedisEnterpriseDatabaseResource>> UpdateAsync(WaitUntil waitUntil, RedisEnterpriseDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redisEnterpriseDatabasePatch, nameof(redisEnterpriseDatabasePatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseDatabasePatch.ToRequestContent(redisEnterpriseDatabasePatch), context);
+                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(
                     new RedisEnterpriseDatabaseOperationSource(Client),
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redisEnterpriseDatabasePatch"> Parameters supplied to the create or update database operation. </param>
+        /// <param name="patch"> Parameters supplied to the create or update database operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redisEnterpriseDatabasePatch"/> is null. </exception>
-        public virtual ArmOperation<RedisEnterpriseDatabaseResource> Update(WaitUntil waitUntil, RedisEnterpriseDatabasePatch redisEnterpriseDatabasePatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<RedisEnterpriseDatabaseResource> Update(WaitUntil waitUntil, RedisEnterpriseDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redisEnterpriseDatabasePatch, nameof(redisEnterpriseDatabasePatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Update");
             scope.Start();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseDatabasePatch.ToRequestContent(redisEnterpriseDatabasePatch), context);
+                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(
                     new RedisEnterpriseDatabaseOperationSource(Client),
@@ -426,12 +426,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportRedisEnterpriseDatabaseContent"> Storage information for exporting into the cluster. </param>
+        /// <param name="content"> Storage information for exporting into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportRedisEnterpriseDatabaseContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExportAsync(WaitUntil waitUntil, ExportRedisEnterpriseDatabaseContent exportRedisEnterpriseDatabaseContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ExportAsync(WaitUntil waitUntil, ExportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportRedisEnterpriseDatabaseContent, nameof(exportRedisEnterpriseDatabaseContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Export");
             scope.Start();
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExportRedisEnterpriseDatabaseContent.ToRequestContent(exportRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExportRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -479,12 +479,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportRedisEnterpriseDatabaseContent"> Storage information for exporting into the cluster. </param>
+        /// <param name="content"> Storage information for exporting into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportRedisEnterpriseDatabaseContent"/> is null. </exception>
-        public virtual ArmOperation Export(WaitUntil waitUntil, ExportRedisEnterpriseDatabaseContent exportRedisEnterpriseDatabaseContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Export(WaitUntil waitUntil, ExportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportRedisEnterpriseDatabaseContent, nameof(exportRedisEnterpriseDatabaseContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Export");
             scope.Start();
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExportRedisEnterpriseDatabaseContent.ToRequestContent(exportRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExportRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="flushRedisEnterpriseDatabaseContent"> Information identifying the databases to be flushed. </param>
+        /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent flushRedisEnterpriseDatabaseContent = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
             scope.Start();
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateFlushRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FlushRedisEnterpriseDatabaseContent.ToRequestContent(flushRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateFlushRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FlushRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -582,9 +582,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="flushRedisEnterpriseDatabaseContent"> Information identifying the databases to be flushed. </param>
+        /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Flush(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent flushRedisEnterpriseDatabaseContent = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Flush(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
             scope.Start();
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateFlushRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FlushRedisEnterpriseDatabaseContent.ToRequestContent(flushRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateFlushRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FlushRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -632,12 +632,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceLinkContent"> Information identifying the database to be unlinked. </param>
+        /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forceLinkContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> ForceLinkToReplicationGroupAsync(WaitUntil waitUntil, ForceLinkContent forceLinkContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ForceLinkToReplicationGroupAsync(WaitUntil waitUntil, ForceLinkContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(forceLinkContent, nameof(forceLinkContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceLinkToReplicationGroup");
             scope.Start();
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateForceLinkToReplicationGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceLinkContent.ToRequestContent(forceLinkContent), context);
+                HttpMessage message = _databasesRestClient.CreateForceLinkToReplicationGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceLinkContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -685,12 +685,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceLinkContent"> Information identifying the database to be unlinked. </param>
+        /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forceLinkContent"/> is null. </exception>
-        public virtual ArmOperation ForceLinkToReplicationGroup(WaitUntil waitUntil, ForceLinkContent forceLinkContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ForceLinkToReplicationGroup(WaitUntil waitUntil, ForceLinkContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(forceLinkContent, nameof(forceLinkContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceLinkToReplicationGroup");
             scope.Start();
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateForceLinkToReplicationGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceLinkContent.ToRequestContent(forceLinkContent), context);
+                HttpMessage message = _databasesRestClient.CreateForceLinkToReplicationGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceLinkContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -738,12 +738,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceUnlinkRedisEnterpriseDatabaseContent"> Information identifying the database to be unlinked. </param>
+        /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forceUnlinkRedisEnterpriseDatabaseContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> ForceUnlinkAsync(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent forceUnlinkRedisEnterpriseDatabaseContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ForceUnlinkAsync(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(forceUnlinkRedisEnterpriseDatabaseContent, nameof(forceUnlinkRedisEnterpriseDatabaseContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
             scope.Start();
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateForceUnlinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceUnlinkRedisEnterpriseDatabaseContent.ToRequestContent(forceUnlinkRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateForceUnlinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceUnlinkRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -791,12 +791,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceUnlinkRedisEnterpriseDatabaseContent"> Information identifying the database to be unlinked. </param>
+        /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forceUnlinkRedisEnterpriseDatabaseContent"/> is null. </exception>
-        public virtual ArmOperation ForceUnlink(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent forceUnlinkRedisEnterpriseDatabaseContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ForceUnlink(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(forceUnlinkRedisEnterpriseDatabaseContent, nameof(forceUnlinkRedisEnterpriseDatabaseContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
             scope.Start();
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateForceUnlinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceUnlinkRedisEnterpriseDatabaseContent.ToRequestContent(forceUnlinkRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateForceUnlinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ForceUnlinkRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -844,12 +844,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="importRedisEnterpriseDatabaseContent"> Storage information for importing into the cluster. </param>
+        /// <param name="content"> Storage information for importing into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="importRedisEnterpriseDatabaseContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> ImportAsync(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent importRedisEnterpriseDatabaseContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ImportAsync(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(importRedisEnterpriseDatabaseContent, nameof(importRedisEnterpriseDatabaseContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
             scope.Start();
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportRedisEnterpriseDatabaseContent.ToRequestContent(importRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -897,12 +897,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="importRedisEnterpriseDatabaseContent"> Storage information for importing into the cluster. </param>
+        /// <param name="content"> Storage information for importing into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="importRedisEnterpriseDatabaseContent"/> is null. </exception>
-        public virtual ArmOperation Import(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent importRedisEnterpriseDatabaseContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Import(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(importRedisEnterpriseDatabaseContent, nameof(importRedisEnterpriseDatabaseContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
             scope.Start();
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportRedisEnterpriseDatabaseContent.ToRequestContent(importRedisEnterpriseDatabaseContent), context);
+                HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportRedisEnterpriseDatabaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1046,12 +1046,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redisEnterpriseRegenerateKeyContent"> Specifies which key to regenerate. </param>
+        /// <param name="content"> Specifies which key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redisEnterpriseRegenerateKeyContent"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisEnterpriseDataAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent redisEnterpriseRegenerateKeyContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<RedisEnterpriseDataAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redisEnterpriseRegenerateKeyContent, nameof(redisEnterpriseRegenerateKeyContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
             scope.Start();
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseRegenerateKeyContent.ToRequestContent(redisEnterpriseRegenerateKeyContent), context);
+                HttpMessage message = _databasesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys>(
                     new RedisEnterpriseDataAccessKeysOperationSource(),
@@ -1105,12 +1105,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redisEnterpriseRegenerateKeyContent"> Specifies which key to regenerate. </param>
+        /// <param name="content"> Specifies which key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redisEnterpriseRegenerateKeyContent"/> is null. </exception>
-        public virtual ArmOperation<RedisEnterpriseDataAccessKeys> RegenerateKey(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent redisEnterpriseRegenerateKeyContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<RedisEnterpriseDataAccessKeys> RegenerateKey(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redisEnterpriseRegenerateKeyContent, nameof(redisEnterpriseRegenerateKeyContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
             scope.Start();
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseRegenerateKeyContent.ToRequestContent(redisEnterpriseRegenerateKeyContent), context);
+                HttpMessage message = _databasesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDataAccessKeys>(
                     new RedisEnterpriseDataAccessKeysOperationSource(),
