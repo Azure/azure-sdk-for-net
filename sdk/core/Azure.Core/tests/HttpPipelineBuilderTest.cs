@@ -191,6 +191,28 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ApplicationIdExceedingDefaultMaxLengthThrowsAtPipelineBuild()
+        {
+            var options = new TestOptions();
+            options.Diagnostics.ApplicationId = new string('a', 25);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => HttpPipelineBuilder.Build(options));
+            Assert.That(ex.Message, Does.Contain("applicationId must be shorter than 25 characters"));
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength"));
+        }
+
+        [Test]
+        public void ApplicationIdExceedingCustomMaxLengthThrowsAtPipelineBuild()
+        {
+            var options = new TestOptionsWithCustomMaxApplicationIdLength(50);
+            options.Diagnostics.ApplicationId = new string('a', 51);
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => HttpPipelineBuilder.Build(options));
+            Assert.That(ex.Message, Does.Contain("applicationId must be shorter than 51 characters"));
+            Assert.That(ex.Message, Does.Contain("MaxApplicationIdLength"));
+        }
+
+        [Test]
         public async Task CustomClientRequestIdAvailableInPerCallPolicies()
         {
             var policy = new Mock<HttpPipelineSynchronousPolicy>();

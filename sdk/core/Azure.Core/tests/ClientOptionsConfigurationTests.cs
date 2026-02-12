@@ -622,7 +622,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ConfigurationWithLongApplicationIdButNoMaxLengthThrows()
+        public void ConfigurationWithLongApplicationIdButNoMaxLengthIsAccepted()
         {
             var configData = new Dictionary<string, string>
             {
@@ -633,7 +633,9 @@ namespace Azure.Core.Tests
                 .AddInMemoryCollection(configData)
                 .Build();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => new TestClientOptions(configuration.GetSection("TestClient"), null));
+            var options = new TestClientOptions(configuration.GetSection("TestClient"), null);
+
+            Assert.AreEqual(new string('a', 25), options.Diagnostics.ApplicationId);
         }
 
         [Test]

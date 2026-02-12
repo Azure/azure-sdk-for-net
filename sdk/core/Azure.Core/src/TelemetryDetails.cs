@@ -43,7 +43,7 @@ namespace Azure.Core
             Argument.AssertNotNull(assembly, nameof(assembly));
             if (applicationId?.Length > maxApplicationIdLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {maxApplicationIdLength + 1} characters");
+                throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {maxApplicationIdLength + 1} characters. To allow longer values, the SDK library author can increase MaxApplicationIdLength in their ClientOptions-derived constructor.");
             }
 
             Assembly = assembly;

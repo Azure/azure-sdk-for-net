@@ -113,10 +113,10 @@ namespace Azure.Core
         /// Gets or sets the maximum allowed length for <see cref="DiagnosticsOptions.ApplicationId"/>.
         /// </summary>
         /// <remarks>
-        /// The default value is 24 characters. SDK authors can increase this up to 300 characters
+        /// The default value is 24 characters. SDK authors can increase this
         /// in their derived <see cref="ClientOptions"/> constructor to accommodate longer application identifiers.
         /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24 or greater than 300.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the value is less than 24.</exception>
         protected int MaxApplicationIdLength
         {
             get => Diagnostics.MaxApplicationIdLength;
