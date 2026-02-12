@@ -29,12 +29,6 @@ namespace Azure.AI.Projects.OpenAI
         private const string McpListToolsValue = "mcp_list_tools";
         private const string McpApprovalRequestValue = "mcp_approval_request";
         private const string CustomToolCallValue = "custom_tool_call";
-        private const string MessageValue = "message";
-        private const string ComputerCallOutputValue = "computer_call_output";
-        private const string FunctionCallOutputValue = "function_call_output";
-        private const string LocalShellCallOutputValue = "local_shell_call_output";
-        private const string McpApprovalResponseValue = "mcp_approval_response";
-        private const string CustomToolCallOutputValue = "custom_tool_call_output";
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
@@ -103,24 +97,6 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Gets the CustomToolCall. </summary>
         public static AgentResponseItemKind CustomToolCall { get; } = new AgentResponseItemKind(CustomToolCallValue);
-
-        /// <summary> Gets the Message. </summary>
-        public static AgentResponseItemKind Message { get; } = new AgentResponseItemKind(MessageValue);
-
-        /// <summary> Gets the ComputerCallOutput. </summary>
-        public static AgentResponseItemKind ComputerCallOutput { get; } = new AgentResponseItemKind(ComputerCallOutputValue);
-
-        /// <summary> Gets the FunctionCallOutput. </summary>
-        public static AgentResponseItemKind FunctionCallOutput { get; } = new AgentResponseItemKind(FunctionCallOutputValue);
-
-        /// <summary> Gets the LocalShellCallOutput. </summary>
-        public static AgentResponseItemKind LocalShellCallOutput { get; } = new AgentResponseItemKind(LocalShellCallOutputValue);
-
-        /// <summary> Gets the McpApprovalResponse. </summary>
-        public static AgentResponseItemKind McpApprovalResponse { get; } = new AgentResponseItemKind(McpApprovalResponseValue);
-
-        /// <summary> Gets the CustomToolCallOutput. </summary>
-        public static AgentResponseItemKind CustomToolCallOutput { get; } = new AgentResponseItemKind(CustomToolCallOutputValue);
 
         /// <summary> Gets the StructuredOutputs. </summary>
         public static AgentResponseItemKind StructuredOutputs { get; } = new AgentResponseItemKind(StructuredOutputsValue);

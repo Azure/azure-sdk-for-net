@@ -12,55 +12,24 @@ namespace Azure.AI.Projects.OpenAI
     public static partial class ProjectsOpenAIModelFactory
     {
 
-        /// <summary> A retrieved memory item from memory search. </summary>
-        /// <param name="memoryItem"> Retrieved memory item. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchItem"/> instance for mocking. </returns>
-        public static MemorySearchItem MemorySearchItem(MemoryItem memoryItem = default)
+        /// <summary> The ProjectConversation. </summary>
+        /// <param name="id"> The unique ID of the conversation. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
+        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
+        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
         {
-            return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
-        }
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
-        /// <summary>
-        /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ChatSummaryMemoryItem"/>.
-        /// </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <param name="kind"> The kind of the memory item. </param>
-        /// <returns> A new <see cref="OpenAI.MemoryItem"/> instance for mocking. </returns>
-        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
-        {
-            return new UnknownMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                new MemoryItemKind(kind),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory item containing a summary extracted from conversations. </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <returns> A new <see cref="OpenAI.ChatSummaryMemoryItem"/> instance for mocking. </returns>
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
-        {
-            return new ChatSummaryMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                MemoryItemKind.ChatSummary,
-                additionalBinaryDataProperties: null);
+            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// The AgentResponseItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -98,7 +67,7 @@ namespace Azure.AI.Projects.OpenAI
                 output);
         }
 
-        /// <summary> The AgentWorkflowActionResponseItem. </summary>
+        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
@@ -107,10 +76,10 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <returns> A new <see cref="OpenAI.AgentWorkflowActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
+        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
+        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
         {
-            return new AgentWorkflowActionResponseItem(
+            return new AgentWorkflowPreviewActionResponseItem(
                 AgentResponseItemKind.WorkflowAction,
                 id,
                 agentReference,
@@ -164,6 +133,52 @@ namespace Azure.AI.Projects.OpenAI
                 additionalBinaryDataProperties: null,
                 status,
                 results.ToList());
+        }
+
+        /// <summary> A retrieved memory item from memory search. </summary>
+        /// <param name="memoryItem"> Retrieved memory item. </param>
+        /// <returns> A new <see cref="OpenAI.MemorySearchItem"/> instance for mocking. </returns>
+        public static MemorySearchItem MemorySearchItem(MemoryItem memoryItem = default)
+        {
+            return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A single memory item stored in the memory store, containing content and metadata.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ChatSummaryMemoryItem"/>.
+        /// </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <param name="kind"> The kind of the memory item. </param>
+        /// <returns> A new <see cref="OpenAI.MemoryItem"/> instance for mocking. </returns>
+        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        {
+            return new UnknownMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                new MemoryItemKind(kind),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item containing a summary extracted from conversations. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="OpenAI.ChatSummaryMemoryItem"/> instance for mocking. </returns>
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new ChatSummaryMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.ChatSummary,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -733,21 +748,6 @@ namespace Azure.AI.Projects.OpenAI
                 createdAt,
                 definition,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The conversation object. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
     }
 }

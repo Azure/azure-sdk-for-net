@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;

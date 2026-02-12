@@ -478,13 +478,12 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -493,7 +492,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -1275,8 +1275,8 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 string filePath = GetFile();
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIAnonymousAuthenticationDetails()
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
@@ -1313,8 +1313,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );

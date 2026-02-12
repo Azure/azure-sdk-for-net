@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Configuration (also known as server parameter).
-    /// Serialized Name: ConfigurationForUpdate
-    /// </summary>
+    /// <summary> Configuration (also known as server parameter). </summary>
     public partial class PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent
     {
         /// <summary>
@@ -54,50 +51,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent"/>. </summary>
-        /// <param name="value">
-        /// Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
-        /// Serialized Name: ConfigurationForUpdate.properties.value
-        /// </param>
-        /// <param name="description">
-        /// Description of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.description
-        /// </param>
-        /// <param name="defaultValue">
-        /// Value assigned by default to the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.defaultValue
-        /// </param>
-        /// <param name="dataType">
-        /// Data type of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.dataType
-        /// </param>
-        /// <param name="allowedValues">
-        /// Allowed values of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.allowedValues
-        /// </param>
-        /// <param name="source">
-        /// Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
-        /// Serialized Name: ConfigurationForUpdate.properties.source
-        /// </param>
-        /// <param name="isDynamicConfig">
-        /// Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect.
-        /// Serialized Name: ConfigurationForUpdate.properties.isDynamicConfig
-        /// </param>
-        /// <param name="isReadOnly">
-        /// Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.isReadOnly
-        /// </param>
-        /// <param name="isConfigPendingRestart">
-        /// Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect.
-        /// Serialized Name: ConfigurationForUpdate.properties.isConfigPendingRestart
-        /// </param>
-        /// <param name="unit">
-        /// Units in which the configuration (also known as server parameter) value is expressed.
-        /// Serialized Name: ConfigurationForUpdate.properties.unit
-        /// </param>
-        /// <param name="documentationLink">
-        /// Link pointing to the documentation of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.documentationLink
-        /// </param>
+        /// <param name="value"> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
+        /// <param name="description"> Description of the configuration (also known as server parameter). </param>
+        /// <param name="defaultValue"> Value assigned by default to the configuration (also known as server parameter). </param>
+        /// <param name="dataType"> Data type of the configuration (also known as server parameter). </param>
+        /// <param name="allowedValues"> Allowed values of the configuration (also known as server parameter). </param>
+        /// <param name="source"> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
+        /// <param name="isDynamicConfig"> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </param>
+        /// <param name="isReadOnly"> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </param>
+        /// <param name="isConfigPendingRestart"> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </param>
+        /// <param name="unit"> Units in which the configuration (also known as server parameter) value is expressed. </param>
+        /// <param name="documentationLink"> Link pointing to the documentation of the configuration (also known as server parameter). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent(string value, string description, string defaultValue, PostgreSqlFlexibleServerConfigurationDataType? dataType, string allowedValues, string source, bool? isDynamicConfig, bool? isReadOnly, bool? isConfigPendingRestart, string unit, string documentationLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -115,70 +79,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
-        /// Serialized Name: ConfigurationForUpdate.properties.value
-        /// </summary>
+        /// <summary> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Description of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.description
-        /// </summary>
+        /// <summary> Description of the configuration (also known as server parameter). </summary>
         [WirePath("properties.description")]
         public string Description { get; }
-        /// <summary>
-        /// Value assigned by default to the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.defaultValue
-        /// </summary>
+        /// <summary> Value assigned by default to the configuration (also known as server parameter). </summary>
         [WirePath("properties.defaultValue")]
         public string DefaultValue { get; }
-        /// <summary>
-        /// Data type of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.dataType
-        /// </summary>
+        /// <summary> Data type of the configuration (also known as server parameter). </summary>
         [WirePath("properties.dataType")]
         public PostgreSqlFlexibleServerConfigurationDataType? DataType { get; }
-        /// <summary>
-        /// Allowed values of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.allowedValues
-        /// </summary>
+        /// <summary> Allowed values of the configuration (also known as server parameter). </summary>
         [WirePath("properties.allowedValues")]
         public string AllowedValues { get; }
-        /// <summary>
-        /// Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
-        /// Serialized Name: ConfigurationForUpdate.properties.source
-        /// </summary>
+        /// <summary> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
         [WirePath("properties.source")]
         public string Source { get; set; }
-        /// <summary>
-        /// Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect.
-        /// Serialized Name: ConfigurationForUpdate.properties.isDynamicConfig
-        /// </summary>
+        /// <summary> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </summary>
         [WirePath("properties.isDynamicConfig")]
         public bool? IsDynamicConfig { get; }
-        /// <summary>
-        /// Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.isReadOnly
-        /// </summary>
+        /// <summary> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </summary>
         [WirePath("properties.isReadOnly")]
         public bool? IsReadOnly { get; }
-        /// <summary>
-        /// Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect.
-        /// Serialized Name: ConfigurationForUpdate.properties.isConfigPendingRestart
-        /// </summary>
+        /// <summary> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </summary>
         [WirePath("properties.isConfigPendingRestart")]
         public bool? IsConfigPendingRestart { get; }
-        /// <summary>
-        /// Units in which the configuration (also known as server parameter) value is expressed.
-        /// Serialized Name: ConfigurationForUpdate.properties.unit
-        /// </summary>
+        /// <summary> Units in which the configuration (also known as server parameter) value is expressed. </summary>
         [WirePath("properties.unit")]
         public string Unit { get; }
-        /// <summary>
-        /// Link pointing to the documentation of the configuration (also known as server parameter).
-        /// Serialized Name: ConfigurationForUpdate.properties.documentationLink
-        /// </summary>
+        /// <summary> Link pointing to the documentation of the configuration (also known as server parameter). </summary>
         [WirePath("properties.documentationLink")]
         public string DocumentationLink { get; }
     }

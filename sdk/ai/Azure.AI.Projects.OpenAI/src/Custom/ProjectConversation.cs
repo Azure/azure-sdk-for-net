@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("Conversation")]
+[CodeGenType("ConversationResource")]
 public partial class ProjectConversation
 {
     [CodeGenMember("Object")]

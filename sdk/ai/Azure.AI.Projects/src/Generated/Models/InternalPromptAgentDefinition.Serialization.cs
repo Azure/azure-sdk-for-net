@@ -163,7 +163,7 @@ namespace Azure.AI.Projects
             InternalReasoning reasoning = default;
             IList<InternalTool> tools = default;
             BinaryData toolChoice = default;
-            PromptAgentDefinitionText text = default;
+            PromptAgentDefinitionTextOptions text = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -255,7 +255,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    text = PromptAgentDefinitionText.DeserializePromptAgentDefinitionText(prop.Value, options);
+                    text = PromptAgentDefinitionTextOptions.DeserializePromptAgentDefinitionTextOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("structured_inputs"u8))

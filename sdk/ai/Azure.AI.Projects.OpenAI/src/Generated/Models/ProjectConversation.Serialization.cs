@@ -3,13 +3,14 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The conversation object. </summary>
+    /// <summary> The ProjectConversation. </summary>
     public partial class ProjectConversation : IJsonModel<ProjectConversation>
     {
         /// <summary> Initializes a new instance of <see cref="ProjectConversation"/> for deserialization. </summary>
@@ -45,6 +46,14 @@ namespace Azure.AI.Projects.OpenAI
                 default:
                     throw new FormatException($"The model {nameof(ProjectConversation)} does not support writing '{options.Format}' format.");
             }
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectConversation"/> from. </param>
+        public static explicit operator ProjectConversation(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProjectConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

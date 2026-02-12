@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.Core
 {
     /// <summary> Paged collection of EvaluationTaxonomy items. </summary>
     internal partial class PagedEvaluationTaxonomy : IJsonModel<PagedEvaluationTaxonomy>
@@ -131,7 +131,6 @@ namespace Azure.Core.Foundations
             }
             IList<EvaluationTaxonomy> value = default;
             Uri nextLink = default;
-            string clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +158,7 @@ namespace Azure.Core.Foundations
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedEvaluationTaxonomy(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedEvaluationTaxonomy(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

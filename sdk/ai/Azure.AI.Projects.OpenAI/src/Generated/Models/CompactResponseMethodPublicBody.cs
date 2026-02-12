@@ -51,7 +51,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="Item"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputItem"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

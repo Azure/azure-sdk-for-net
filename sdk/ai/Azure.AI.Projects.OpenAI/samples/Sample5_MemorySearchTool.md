@@ -1,8 +1,20 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Sample of using `MemorySearchTool` with Agent in Azure.AI.Projects.OpenAI.
+
+In this example we will demonstrate how to use `MemorySearchTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another Agent, capable to read it.
+=======
+=======
+>>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 # Sample of using `MemorySearchPreviewTool` with Agent in Azure.AI.Projects.OpenAI.
 
 In this example we will demonstrate how to use `MemorySearchPreviewTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another Agent, capable to read it. Before running the sample, please follow the [instructions](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/memory-usage) to set up required permissions.
 
 **Note:** This feature is in the preview.
+<<<<<<< HEAD
+>>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
+=======
+>>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
@@ -158,7 +170,15 @@ foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
 Console.WriteLine("==End of memory tool output.==");
 ```
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+8. Create another Agent capable to use `MemorySearchTool`.
+=======
 8. Create another Agent capable to use `MemorySearchPreviewTool`.
+>>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
+=======
+8. Create another Agent capable to use `MemorySearchPreviewTool`.
+>>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync

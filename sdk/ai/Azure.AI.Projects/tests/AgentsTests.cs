@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -16,7 +14,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -580,7 +577,7 @@ public class AgentsTests : AgentsTestBase
 
         Assert.That(response.OutputItems.Count, Is.GreaterThan(0));
         AgentResponseItem agentResponseItem = response.OutputItems[0].AsAgentResponseItem();
-        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowActionResponseItem>());
+        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowPreviewActionResponseItem>());
 
         // This line will fix the failure:
         // System.InvalidOperationException : Cannot write a JSON property within an array or as the first JSON token. Current token type is 'EndObject'.
@@ -607,13 +604,13 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
-        AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
+        AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
         await foreach (StreamingResponseUpdate responseUpdate in responseClient.CreateResponseStreamingAsync("Hello, agent!"))
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
-                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowActionResponseItem workflowActionItem)
+                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowPreviewActionResponseItem workflowActionItem)
                 {
                     streamedWorkflowActionItem = workflowActionItem;
                 }
@@ -1368,7 +1365,7 @@ public class AgentsTests : AgentsTestBase
                     ["can_delete_this"] = "true"
                 }
             },
-            cts.Token);
+            cancellationToken: cts.Token);
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion);
 
@@ -1485,7 +1482,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(agentDefinition));
-        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("ImageBasedHostedAgentDefinition"));
+        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("UnknownHostedAgentDefinition"));
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version));
     }

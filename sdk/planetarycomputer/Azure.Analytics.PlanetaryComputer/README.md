@@ -151,7 +151,7 @@ Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocata
 
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-                        StacClient stacClient = client.GetStacClient();
+StacClient stacClient = client.GetStacClient();
 
 // Search for items within a bounding box using CQL2-JSON
 var searchParams = new StacSearchParameters();
@@ -203,7 +203,7 @@ Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocata
 
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-                        StacClient stacClient = client.GetStacClient();
+StacClient stacClient = client.GetStacClient();
 
 // Get a specific item by ID
 string collectionId = "naip";
@@ -234,7 +234,7 @@ Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocata
 
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-                        StacClient stacClient = client.GetStacClient();
+StacClient stacClient = client.GetStacClient();
 
 // Define collection ID
 string collectionId = "my-test-collection";
@@ -285,7 +285,7 @@ Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocata
 
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-                        DataClient dataClient = client.GetDataClient();
+DataClient dataClient = client.GetDataClient();
 
 string collectionId = "naip";
 string itemId = "tx_m_2609719_se_14_060_20201216";
@@ -319,7 +319,7 @@ Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocata
 
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-                        IngestionClient ingestionClient = client.GetIngestionClient();
+IngestionClient ingestionClient = client.GetIngestionClient();
 
 string collectionId = "my-collection";
 string sourceCatalogUrl = "https://example.com/catalog.json";
@@ -370,7 +370,7 @@ Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocata
 
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-                        ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
+ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
 
 // Get a SAS token with default duration (24 hours)
 string collectionId = "naip";

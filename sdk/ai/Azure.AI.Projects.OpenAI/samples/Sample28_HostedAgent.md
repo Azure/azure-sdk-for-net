@@ -4,7 +4,15 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 
 ## Hosted Agent Deployment prerequisites
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+In this example we will use agent capable of doing product release defined [here](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/agent_framework/agents_in_workflow). The agent's logic is defined in the file [main.py](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent_framework/agents_in_workflow/main.py). Its [docker file](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent_framework/agents_in_workflow/Dockerfile) installs the required python dependencies, exposes 8088 port and runs `main.py`, which will serve agent on this port.
+=======
 In this example we will use agent capable of doing product release defined [here](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/agent-framework/agents-in-workflow). The agent's logic is defined in the file [main.py](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/agents-in-workflow/main.py). Its [docker file](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/agents-in-workflow/Dockerfile) installs the required python dependencies, exposes 8088 port and runs `main.py`, which will serve agent on this port.
+>>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
+=======
+In this example we will use agent capable of doing product release defined [here](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/agent-framework/agents-in-workflow). The agent's logic is defined in the file [main.py](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/agents-in-workflow/main.py). Its [docker file](https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/agents-in-workflow/Dockerfile) installs the required python dependencies, exposes 8088 port and runs `main.py`, which will serve agent on this port.
+>>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 As a prerequisite this sample will require [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli).
 
 ## Run the sample
@@ -64,13 +72,12 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new De
 2. For brevity we will create the method, returning the `ImageBasedHostedAgentDefinition` object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -79,7 +86,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -89,7 +97,7 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_HostedAgent_Sync
-ImageBasedHostedAgentDefinition agentDefinition = GetAgentDefinition(
+HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage,
     modelDeploymentName: modelDeploymentName,
     accountId: accountId,
@@ -103,7 +111,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_HostedAgent_Async
-ImageBasedHostedAgentDefinition agentDefinition = GetAgentDefinition(
+HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage,
     modelDeploymentName: modelDeploymentName,
     accountId: accountId,

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentResponseItem))]
     public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
@@ -134,13 +134,11 @@ namespace Azure.AI.Projects.OpenAI
                     case "structured_outputs":
                         return AgentStructuredOutputsResponseItem.DeserializeAgentStructuredOutputsResponseItem(element, options);
                     case "workflow_action":
-                        return AgentWorkflowActionResponseItem.DeserializeAgentWorkflowActionResponseItem(element, options);
+                        return AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
                     case "memory_search_call":
                         return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
-                    case "function_call_output":
-                        return InternalOutputItemFunctionToolCallOutputResource.DeserializeInternalOutputItemFunctionToolCallOutputResource(element, options);
                     case "output_message":
                         return InternalOutputItemOutputMessage.DeserializeInternalOutputItemOutputMessage(element, options);
                     case "file_search_call":
@@ -177,16 +175,6 @@ namespace Azure.AI.Projects.OpenAI
                         return InternalOutputItemMcpApprovalRequest.DeserializeInternalOutputItemMcpApprovalRequest(element, options);
                     case "custom_tool_call":
                         return InternalOutputItemCustomToolCall.DeserializeInternalOutputItemCustomToolCall(element, options);
-                    case "message":
-                        return InternalOutputItemMessage.DeserializeInternalOutputItemMessage(element, options);
-                    case "computer_call_output":
-                        return InternalOutputItemComputerToolCallOutputResource.DeserializeInternalOutputItemComputerToolCallOutputResource(element, options);
-                    case "local_shell_call_output":
-                        return InternalOutputItemLocalShellToolCallOutput.DeserializeInternalOutputItemLocalShellToolCallOutput(element, options);
-                    case "mcp_approval_response":
-                        return InternalOutputItemMcpApprovalResponseResource.DeserializeInternalOutputItemMcpApprovalResponseResource(element, options);
-                    case "custom_tool_call_output":
-                        return InternalOutputItemCustomToolCallOutput.DeserializeInternalOutputItemCustomToolCallOutput(element, options);
                 }
             }
             return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);
