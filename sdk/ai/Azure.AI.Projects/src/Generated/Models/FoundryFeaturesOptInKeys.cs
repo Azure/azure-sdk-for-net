@@ -15,6 +15,8 @@ namespace Azure.AI.Projects
         WorkflowAgentsV1Preview,
         /// <summary> EvaluationsV1Preview. </summary>
         EvaluationsV1Preview,
+        /// <summary> SchedulesV1Preview. </summary>
+        SchedulesV1Preview,
         /// <summary> RedTeamsV1Preview. </summary>
         RedTeamsV1Preview,
         /// <summary> InsightsV1Preview. </summary>

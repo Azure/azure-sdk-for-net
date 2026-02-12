@@ -17,16 +17,15 @@ public partial class RedTeams
     /// </list>
     /// </summary>
     /// <param name="redTeam"> Redteam to be run. </param>
-    /// <param name="foundryFeatures">Optional name of an experimental feature to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<RedTeam> Create(RedTeam redTeam, string foundryFeatures = default, RequestOptions options = null)
+    public virtual ClientResult<RedTeam> Create(RedTeam redTeam, RequestOptions options = null)
     {
         Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-        using PipelineMessage message = CreateCreateRequest(redTeam, foundryFeatures, options);
+        using PipelineMessage message = CreateCreateRequest(redTeam, options);
         ClientResult result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
     }
@@ -40,16 +39,15 @@ public partial class RedTeams
     /// </list>
     /// </summary>
     /// <param name="redTeam"> Redteam to be run. </param>
-    /// <param name="foundryFeatures">Optional name of an experimental feature to be used.</param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<RedTeam>> CreateAsync(RedTeam redTeam, string foundryFeatures = default, RequestOptions options = null)
+    public virtual async Task<ClientResult<RedTeam>> CreateAsync(RedTeam redTeam, RequestOptions options = null)
     {
         Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-        using PipelineMessage message = CreateCreateRequest(redTeam, foundryFeatures,options);
+        using PipelineMessage message = CreateCreateRequest(redTeam,options);
         ClientResult result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
     }

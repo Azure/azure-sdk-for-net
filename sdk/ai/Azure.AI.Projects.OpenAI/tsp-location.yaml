@@ -1,12 +1,12 @@
 repo: Azure/azure-rest-api-specs
-commit: 7299420c6d75812d5c82c11bf65523aeb160e64e
+commit: 720511ce5437a925d02f2710330799d412cf0389
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-projects-openai
 entrypointFile: client.tsp
 additionalDirectories:
   - specification/ai-foundry/data-plane/Foundry/src/agents
   - specification/ai-foundry/data-plane/Foundry/src/common
-  - specification/ai-foundry/data-plane/Foundry/src/evaluationrules
-  - specification/ai-foundry/data-plane/Foundry/src/memory_stores
+  - specification/ai-foundry/data-plane/Foundry/src/evaluation-rules
+  - specification/ai-foundry/data-plane/Foundry/src/memory-stores
   - specification/ai-foundry/data-plane/Foundry/src/openai-conversations
   - specification/ai-foundry/data-plane/Foundry/src/openai-evaluations
   - specification/ai-foundry/data-plane/Foundry/src/openai-responses
@@ -15,7 +15,7 @@ additionalDirectories:
   - specification/ai-foundry/data-plane/Foundry/src/indexes
   - specification/ai-foundry/data-plane/Foundry/src/deployments
   - specification/ai-foundry/data-plane/Foundry/src/red-teams
-  - specification/ai-foundry/data-plane/Foundry/src/evaluation_taxonomies
+  - specification/ai-foundry/data-plane/Foundry/src/evaluation-taxonomies
   - specification/ai-foundry/data-plane/Foundry/src/evaluators
   - specification/ai-foundry/data-plane/Foundry/src/insights
   - specification/ai-foundry/data-plane/Foundry/src/schedules

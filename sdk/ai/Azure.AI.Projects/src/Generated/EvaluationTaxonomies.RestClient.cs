@@ -32,7 +32,6 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
@@ -54,7 +53,6 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
@@ -67,7 +65,6 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
@@ -81,11 +78,10 @@ namespace Azure.AI.Projects
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
             message.Apply(options);
-            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal PipelineMessage CreateCreateRequest(string name, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -94,10 +90,6 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -105,7 +97,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateUpdateRequest(string name, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateUpdateRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -114,10 +106,6 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;

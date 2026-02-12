@@ -15,6 +15,7 @@ namespace Azure.AI.Projects
             FoundryFeaturesOptInKeys.HostedAgentsV1Preview => "HostedAgents=V1Preview",
             FoundryFeaturesOptInKeys.WorkflowAgentsV1Preview => "WorkflowAgents=V1Preview",
             FoundryFeaturesOptInKeys.EvaluationsV1Preview => "Evaluations=V1Preview",
+            FoundryFeaturesOptInKeys.SchedulesV1Preview => "Schedules=V1Preview",
             FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
@@ -39,6 +40,10 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Evaluations=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.EvaluationsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Schedules=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.SchedulesV1Preview;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedTeams=V1Preview"))
             {
