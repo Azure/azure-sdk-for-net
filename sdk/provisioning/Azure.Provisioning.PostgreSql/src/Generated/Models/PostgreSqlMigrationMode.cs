@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// There are two types of migration modes Online and Offline.
+/// Mode used to perform the migration: Online or Offline.
 /// </summary>
 public enum PostgreSqlMigrationMode
 {

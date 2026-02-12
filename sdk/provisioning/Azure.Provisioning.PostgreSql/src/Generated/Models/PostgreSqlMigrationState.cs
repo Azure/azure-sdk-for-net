@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Migration state.
+/// State of migration.
 /// </summary>
 public enum PostgreSqlMigrationState
 {

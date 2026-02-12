@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerHighAvailability : ProvisionableConstruct
 {
     /// <summary>
-    /// The HA mode for the server.
+    /// High availability mode for a server.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerHighAvailabilityMode> Mode 
     {
@@ -26,7 +26,8 @@ public partial class PostgreSqlFlexibleServerHighAvailability : ProvisionableCon
     private BicepValue<PostgreSqlFlexibleServerHighAvailabilityMode>? _mode;
 
     /// <summary>
-    /// A state of a HA server that is visible to user.
+    /// Possible states of the standby server created when high availability is
+    /// set to SameZone or ZoneRedundant.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerHAState> State 
     {
@@ -35,7 +36,8 @@ public partial class PostgreSqlFlexibleServerHighAvailability : ProvisionableCon
     private BicepValue<PostgreSqlFlexibleServerHAState>? _state;
 
     /// <summary>
-    /// availability zone information of the standby.
+    /// Availability zone associated to the standby server created when high
+    /// availability is set to SameZone or ZoneRedundant.
     /// </summary>
     public BicepValue<string> StandbyAvailabilityZone 
     {

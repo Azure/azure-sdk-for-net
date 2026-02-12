@@ -8,9 +8,12 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Migration source server type : OnPremises, AWS, GCP, AzureVM,
-/// PostgreSQLSingleServer, AWS_RDS, AWS_AURORA, AWS_EC2, GCP_CloudSQL,
-/// GCP_AlloyDB, GCP_Compute, or EDB.
+/// Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA,
+/// AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets,
+/// Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP,
+/// GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute,
+/// Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer,
+/// PostgreSQLSingleServer, or Supabase_PostgreSQL.
 /// </summary>
 public enum PostgreSqlFlexibleServersSourceType
 {
@@ -80,4 +83,74 @@ public enum PostgreSqlFlexibleServersSourceType
     /// EDB.
     /// </summary>
     EDB,
+
+    /// <summary>
+    /// EDB_Oracle_Server.
+    /// </summary>
+    [DataMember(Name = "EDB_Oracle_Server")]
+    EDBOracleServer,
+
+    /// <summary>
+    /// EDB_PostgreSQL.
+    /// </summary>
+    [DataMember(Name = "EDB_PostgreSQL")]
+    EDBPostgreSQL,
+
+    /// <summary>
+    /// PostgreSQLFlexibleServer.
+    /// </summary>
+    PostgreSQLFlexibleServer,
+
+    /// <summary>
+    /// PostgreSQLCosmosDB.
+    /// </summary>
+    PostgreSQLCosmosDB,
+
+    /// <summary>
+    /// Huawei_RDS.
+    /// </summary>
+    [DataMember(Name = "Huawei_RDS")]
+    HuaweiRDS,
+
+    /// <summary>
+    /// Huawei_Compute.
+    /// </summary>
+    [DataMember(Name = "Huawei_Compute")]
+    HuaweiCompute,
+
+    /// <summary>
+    /// Heroku_PostgreSQL.
+    /// </summary>
+    [DataMember(Name = "Heroku_PostgreSQL")]
+    HerokuPostgreSQL,
+
+    /// <summary>
+    /// Crunchy_PostgreSQL.
+    /// </summary>
+    [DataMember(Name = "Crunchy_PostgreSQL")]
+    CrunchyPostgreSQL,
+
+    /// <summary>
+    /// ApsaraDB_RDS.
+    /// </summary>
+    [DataMember(Name = "ApsaraDB_RDS")]
+    ApsaraDBRDS,
+
+    /// <summary>
+    /// Digital_Ocean_Droplets.
+    /// </summary>
+    [DataMember(Name = "Digital_Ocean_Droplets")]
+    DigitalOceanDroplets,
+
+    /// <summary>
+    /// Digital_Ocean_PostgreSQL.
+    /// </summary>
+    [DataMember(Name = "Digital_Ocean_PostgreSQL")]
+    DigitalOceanPostgreSQL,
+
+    /// <summary>
+    /// Supabase_PostgreSQL.
+    /// </summary>
+    [DataMember(Name = "Supabase_PostgreSQL")]
+    SupabasePostgreSQL,
 }

@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// If Enabled, Azure Active Directory authentication is enabled.
+/// Indicates if the server supports Microsoft Entra authentication.
 /// </summary>
 public enum PostgreSqlFlexibleServerActiveDirectoryAuthEnum
 {

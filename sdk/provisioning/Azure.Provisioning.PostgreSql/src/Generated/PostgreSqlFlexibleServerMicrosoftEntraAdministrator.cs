@@ -13,31 +13,31 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
+/// PostgreSqlFlexibleServerMicrosoftEntraAdministrator.
 /// </summary>
-public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : ProvisionableResource
+public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministrator : ProvisionableResource
 {
     /// <summary>
-    /// Gets or sets the Name.
+    /// Gets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Guid of the objectId for the administrator.
+    /// Object identifier of the Microsoft Entra principal.
     /// </summary>
     public BicepValue<string> ObjectId 
     {
         get { Initialize(); return _objectId!; }
+        set { Initialize(); _objectId!.Assign(value); }
     }
     private BicepValue<string>? _objectId;
 
     /// <summary>
-    /// Active Directory administrator principal name.
+    /// Name of the Microsoft Entra principal.
     /// </summary>
     public BicepValue<string> PrincipalName 
     {
@@ -47,8 +47,8 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     private BicepValue<string>? _principalName;
 
     /// <summary>
-    /// The principal type used to represent the type of Active Directory
-    /// Administrator.
+    /// Type of Microsoft Entra principal to which the server administrator is
+    /// associated.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerPrincipalType> PrincipalType 
     {
@@ -58,7 +58,7 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     private BicepValue<PostgreSqlFlexibleServerPrincipalType>? _principalType;
 
     /// <summary>
-    /// The tenantId of the Active Directory administrator.
+    /// Identifier of the tenant in which the Microsoft Entra principal exists.
     /// </summary>
     public BicepValue<Guid> TenantId 
     {
@@ -96,30 +96,30 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     private ResourceReference<PostgreSqlFlexibleServer>? _parent;
 
     /// <summary>
-    /// Creates a new PostgreSqlFlexibleServerActiveDirectoryAdministrator.
+    /// Creates a new PostgreSqlFlexibleServerMicrosoftEntraAdministrator.
     /// </summary>
     /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
-    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
+    /// PostgreSqlFlexibleServerMicrosoftEntraAdministrator resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
-    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string? resourceVersion = default)
+    /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerMicrosoftEntraAdministrator.</param>
+    public PostgreSqlFlexibleServerMicrosoftEntraAdministrator(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2025-08-01")
     {
     }
 
     /// <summary>
     /// Define all the provisionable properties of
-    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
+    /// PostgreSqlFlexibleServerMicrosoftEntraAdministrator.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _objectId = DefineProperty<string>("ObjectId", ["properties", "objectId"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _objectId = DefineProperty<string>("ObjectId", ["properties", "objectId"], isRequired: true);
         _principalName = DefineProperty<string>("PrincipalName", ["properties", "principalName"]);
         _principalType = DefineProperty<PostgreSqlFlexibleServerPrincipalType>("PrincipalType", ["properties", "principalType"]);
         _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
@@ -129,7 +129,7 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
     }
 
     /// <summary>
-    /// Supported PostgreSqlFlexibleServerActiveDirectoryAdministrator resource
+    /// Supported PostgreSqlFlexibleServerMicrosoftEntraAdministrator resource
     /// versions.
     /// </summary>
     public static class ResourceVersions
@@ -157,17 +157,17 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Prov
 
     /// <summary>
     /// Creates a reference to an existing
-    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
+    /// PostgreSqlFlexibleServerMicrosoftEntraAdministrator.
     /// </summary>
     /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
-    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
+    /// PostgreSqlFlexibleServerMicrosoftEntraAdministrator resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
-    /// <returns>The existing PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.</returns>
-    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerMicrosoftEntraAdministrator.</param>
+    /// <returns>The existing PostgreSqlFlexibleServerMicrosoftEntraAdministrator resource.</returns>
+    public static PostgreSqlFlexibleServerMicrosoftEntraAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

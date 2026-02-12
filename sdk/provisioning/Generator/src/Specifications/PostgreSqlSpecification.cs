@@ -9,6 +9,7 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 public class PostgreSqlSpecification() :
     Specification("PostgreSql", typeof(PostgreSqlExtensions))
 {

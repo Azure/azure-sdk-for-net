@@ -6,9 +6,9 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Supported SSL modes for migration. VerifyFull is the recommended SSL mode
-/// for Single server migration. Prefer, Require are recommended SSL modes for
-/// other source types.
+/// SSL mode used by a migration. Default SSL mode for
+/// &apos;PostgreSQLSingleServer&apos; is &apos;VerifyFull&apos;. Default SSL
+/// mode for other source types is &apos;Prefer&apos;.
 /// </summary>
 public enum PostgreSqlFlexibleServersSslMode
 {
