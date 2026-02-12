@@ -10,8 +10,6 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Update", typeof(PeeringResourceTagsPatch), typeof(CancellationToken))]
-    // [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("UpdateAsync", typeof(PeeringResourceTagsPatch), typeof(CancellationToken))]
     public partial class PeeringServiceResource
     {
         /// <summary>
