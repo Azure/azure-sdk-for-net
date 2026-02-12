@@ -37,10 +37,6 @@ namespace Azure.Core
                 return;
             }
 
-            if (int.TryParse(section["MaxApplicationIdLength"], out var maxApplicationIdLength))
-            {
-                MaxApplicationIdLength = maxApplicationIdLength;
-            }
             ApplicationId = section["ApplicationId"];
             if (bool.TryParse(section["IsLoggingEnabled"], out var isLoggingEnabled))
             {
