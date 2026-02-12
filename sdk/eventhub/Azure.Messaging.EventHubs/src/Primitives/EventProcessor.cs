@@ -592,7 +592,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => $"Event Processor<{ typeof(TPartition).Name }>: { Identifier }";
+        public override string ToString() => $"Event Processor<{typeof(TPartition).Name}>: {Identifier}";
 
         /// <summary>
         ///   Creates a diagnostic scope associated with a checkpointing activity.
@@ -808,7 +808,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, exclusive: true);
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{partition.PartitionId}-{Identifier}", startingPosition, connection, Options, exclusive: true);
 
                         // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
                         // in response to force-close the link and short-circuit any receive operation that is blocked and
@@ -934,7 +934,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         // which offers guidance for error handling in developer code.
 
                         var handlerException = new EventHubsException(false, EventHubName, Resources.DeveloperCodeEventProcessingError, EventHubsException.FailureReason.GeneralError, ex.InnerException);
-                        _  = InvokeOnProcessingErrorAsync(handlerException, partition, Resources.OperationEventProcessingDeveloperCode, CancellationToken.None);
+                        _ = InvokeOnProcessingErrorAsync(handlerException, partition, Resources.OperationEventProcessingDeveloperCode, CancellationToken.None);
 
                         // Discard the wrapper and propagate just the source exception from developer code.
 
@@ -1626,7 +1626,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                 foreach (var partitionId in ActivePartitionProcessors.Keys)
                 {
                     stopPartitionProcessingTasks[++index] = StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None);
-                };
+                }
+                ;
 
                 if (async)
                 {
@@ -1900,12 +1901,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 if (!LoadBalancer.IsPartitionOwned(partitionId))
                 {
-                   // The partition is no longer owned.  Stopping may take longer than a load balancing cycle
-                   // should run if event processing is active and chooses not to honor cancellation immediately, so
-                   // do not wait for the stop to complete.  Its continuation will ensure proper clean-up even when unobserved.
-                   // If the processor is stopped, the task will be awaited then to ensure that all processing is complete.
+                    // The partition is no longer owned.  Stopping may take longer than a load balancing cycle
+                    // should run if event processing is active and chooses not to honor cancellation immediately, so
+                    // do not wait for the stop to complete.  Its continuation will ensure proper clean-up even when unobserved.
+                    // If the processor is stopped, the task will be awaited then to ensure that all processing is complete.
 
-                   _ = StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken);
+                    _ = StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken);
                 }
             }
 
@@ -2269,7 +2270,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 TrackLastEnqueuedEventProperties = false
             };
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, options, exclusive: false);
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{Identifier}", EventPosition.Earliest, connection, options, exclusive: false);
 
             try
             {

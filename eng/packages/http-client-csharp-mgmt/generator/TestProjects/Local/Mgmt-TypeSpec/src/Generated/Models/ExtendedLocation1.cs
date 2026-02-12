@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {

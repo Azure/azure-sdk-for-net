@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParameters"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<string> Generatevpnclientpackage(WaitUntil waitUntil, VpnClientParameters vpnClientParameters, CancellationToken cancellationToken = default)  => GenerateVpnClientPackage(waitUntil, (VpnClientContent)vpnClientParameters, cancellationToken);
+        public virtual ArmOperation<string> Generatevpnclientpackage(WaitUntil waitUntil, VpnClientParameters vpnClientParameters, CancellationToken cancellationToken = default) => GenerateVpnClientPackage(waitUntil, (VpnClientContent)vpnClientParameters, cancellationToken);
 
         /// <summary>
         /// Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.

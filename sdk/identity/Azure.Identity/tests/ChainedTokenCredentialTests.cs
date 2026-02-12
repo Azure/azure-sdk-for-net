@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
-using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity.Tests.Mock;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
-using Azure.Core.Pipeline;
+using Azure.Identity.Tests.Mock;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com")}));
+            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com") }));
         }
 
         public class SimpleMockTokenCredential : TokenCredential

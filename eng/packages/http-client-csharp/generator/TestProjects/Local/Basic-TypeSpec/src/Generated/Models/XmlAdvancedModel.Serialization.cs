@@ -270,6 +270,66 @@ namespace BasicTypeSpec
                 writer.WriteObjectValue(item, options);
                 writer.WriteEndElement();
             }
+            writer.WriteStartElement("listOfListFoo");
+            foreach (IList<XmlItem> item in ListOfListFoo)
+            {
+                writer.WriteStartElement("Array");
+                foreach (XmlItem item0 in item)
+                {
+                    writer.WriteStartElement("XmlItem");
+                    writer.WriteObjectValue(item0, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("dictionaryFoo");
+            foreach (var pair in DictionaryFoo)
+            {
+                writer.WriteStartElement(pair.Key);
+                writer.WriteObjectValue(pair.Value, options);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("dictionaryOfDictionaryFoo");
+            foreach (var pair in DictionaryOfDictionaryFoo)
+            {
+                writer.WriteStartElement(pair.Key);
+                foreach (var pair0 in pair.Value)
+                {
+                    writer.WriteStartElement(pair0.Key);
+                    writer.WriteObjectValue(pair0.Value, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("dictionaryListFoo");
+            foreach (var pair in DictionaryListFoo)
+            {
+                writer.WriteStartElement(pair.Key);
+                foreach (XmlItem item in pair.Value)
+                {
+                    writer.WriteStartElement("XmlItem");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement("listOfDictionaryFoo");
+            foreach (IDictionary<string, XmlItem> item in ListOfDictionaryFoo)
+            {
+                writer.WriteStartElement("Record");
+                foreach (var pair in item)
+                {
+                    writer.WriteStartElement(pair.Key);
+                    writer.WriteObjectValue(pair.Value, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
             writer.WriteValue(Content);
         }
 
@@ -323,6 +383,11 @@ namespace BasicTypeSpec
             XmlNestedModel anotherModel = default;
             IList<XmlModelWithNamespace> modelsWithNamespaces = default;
             IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default;
+            IList<IList<XmlItem>> listOfListFoo = default;
+            IDictionary<string, XmlItem> dictionaryFoo = default;
+            IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default;
+            IDictionary<string, IList<XmlItem>> dictionaryListFoo = default;
+            IList<IDictionary<string, XmlItem>> listOfDictionaryFoo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
@@ -553,6 +618,76 @@ namespace BasicTypeSpec
                     unwrappedModelsWithNamespaces.Add(XmlModelWithNamespace.DeserializeXmlModelWithNamespace(child, options));
                     continue;
                 }
+                if (localName == "listOfListFoo")
+                {
+                    List<IList<XmlItem>> array = new List<IList<XmlItem>>();
+                    foreach (var e in child.Elements("Array"))
+                    {
+                        List<XmlItem> list = new List<XmlItem>();
+                        foreach (var item in e.Elements())
+                        {
+                            list.Add(XmlItem.DeserializeXmlItem(item, options));
+                        }
+                        array.Add(list);
+                    }
+                    listOfListFoo = array;
+                    continue;
+                }
+                if (localName == "dictionaryFoo")
+                {
+                    Dictionary<string, XmlItem> dictionary = new Dictionary<string, XmlItem>();
+                    foreach (var e in child.Elements())
+                    {
+                        dictionary.Add(e.Name.LocalName, XmlItem.DeserializeXmlItem(e, options));
+                    }
+                    dictionaryFoo = dictionary;
+                    continue;
+                }
+                if (localName == "dictionaryOfDictionaryFoo")
+                {
+                    Dictionary<string, IDictionary<string, XmlItem>> dictionary = new Dictionary<string, IDictionary<string, XmlItem>>();
+                    foreach (var e in child.Elements())
+                    {
+                        Dictionary<string, XmlItem> dict = new Dictionary<string, XmlItem>();
+                        foreach (var item in e.Elements())
+                        {
+                            dict.Add(item.Name.LocalName, XmlItem.DeserializeXmlItem(item, options));
+                        }
+                        dictionary.Add(e.Name.LocalName, dict);
+                    }
+                    dictionaryOfDictionaryFoo = dictionary;
+                    continue;
+                }
+                if (localName == "dictionaryListFoo")
+                {
+                    Dictionary<string, IList<XmlItem>> dictionary = new Dictionary<string, IList<XmlItem>>();
+                    foreach (var e in child.Elements())
+                    {
+                        List<XmlItem> list = new List<XmlItem>();
+                        foreach (var item in e.Elements())
+                        {
+                            list.Add(XmlItem.DeserializeXmlItem(item, options));
+                        }
+                        dictionary.Add(e.Name.LocalName, list);
+                    }
+                    dictionaryListFoo = dictionary;
+                    continue;
+                }
+                if (localName == "listOfDictionaryFoo")
+                {
+                    List<IDictionary<string, XmlItem>> array = new List<IDictionary<string, XmlItem>>();
+                    foreach (var e in child.Elements("Record"))
+                    {
+                        Dictionary<string, XmlItem> dict = new Dictionary<string, XmlItem>();
+                        foreach (var item in e.Elements())
+                        {
+                            dict.Add(item.Name.LocalName, XmlItem.DeserializeXmlItem(item, options));
+                        }
+                        array.Add(dict);
+                    }
+                    listOfDictionaryFoo = array;
+                    continue;
+                }
             }
             content = element.Value;
 
@@ -592,6 +727,11 @@ namespace BasicTypeSpec
                 anotherModel,
                 modelsWithNamespaces,
                 unwrappedModelsWithNamespaces,
+                listOfListFoo,
+                dictionaryFoo,
+                dictionaryOfDictionaryFoo,
+                dictionaryListFoo,
+                listOfDictionaryFoo,
                 additionalBinaryDataProperties);
         }
     }

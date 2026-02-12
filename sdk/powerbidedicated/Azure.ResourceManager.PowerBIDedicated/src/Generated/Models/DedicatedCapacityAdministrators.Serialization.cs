@@ -14,7 +14,7 @@ using Azure.ResourceManager.PowerBIDedicated;
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     /// <summary> An array of administrator user identities. </summary>
-    public partial class DedicatedCapacityAdministrators : IJsonModel<DedicatedCapacityAdministrators>
+    internal partial class DedicatedCapacityAdministrators : IJsonModel<DedicatedCapacityAdministrators>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

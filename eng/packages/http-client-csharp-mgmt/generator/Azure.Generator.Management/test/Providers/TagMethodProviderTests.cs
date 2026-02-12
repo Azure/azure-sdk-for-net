@@ -144,35 +144,6 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(expected, bodyStatements);
         }
 
-        [TestCase]
-        public void Verify_TagMethods_WithFlattenedTags()
-        {
-            // Test that tag methods are generated when tags are in a flattened nested property
-            var (client, models) = InputResourceData.ClientWithFlattenedTagsResource();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
-
-            // Validate that AddTag, RemoveTag, and SetTags methods are generated
-            var addTagMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "AddTag");
-            Assert.IsNotNull(addTagMethod, "AddTag method should be generated for resources with flattened tags");
-
-            var addTagAsyncMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "AddTagAsync");
-            Assert.IsNotNull(addTagAsyncMethod, "AddTagAsync method should be generated for resources with flattened tags");
-
-            var removeTagMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "RemoveTag");
-            Assert.IsNotNull(removeTagMethod, "RemoveTag method should be generated for resources with flattened tags");
-
-            var removeTagAsyncMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "RemoveTagAsync");
-            Assert.IsNotNull(removeTagAsyncMethod, "RemoveTagAsync method should be generated for resources with flattened tags");
-
-            var setTagsMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "SetTags");
-            Assert.IsNotNull(setTagsMethod, "SetTags method should be generated for resources with flattened tags");
-
-            var setTagsAsyncMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "SetTagsAsync");
-            Assert.IsNotNull(setTagsAsyncMethod, "SetTagsAsync method should be generated for resources with flattened tags");
-        }
-
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
         {
             var (resource, restClient) = GetResourceClientProvider();

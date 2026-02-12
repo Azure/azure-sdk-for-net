@@ -181,7 +181,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var eventHubName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            var eventHubName = $"{Guid.NewGuid().ToString("D").Substring(0, 13)}-{caller}";
             var groups = consumerGroups?.ToList() ?? new List<string>();
             var eventHub = await ResourceManager.CreateEventHubAsync(eventHubName, partitionCount, groups).ConfigureAwait(false);
 
