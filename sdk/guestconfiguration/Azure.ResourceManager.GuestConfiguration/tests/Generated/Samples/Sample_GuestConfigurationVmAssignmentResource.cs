@@ -149,8 +149,7 @@ Value = "NotePad,sql",
             GuestConfigurationVmAssignmentResource guestConfigurationVmAssignment = client.GetGuestConfigurationVmAssignmentResource(guestConfigurationVmAssignmentResourceId);
 
             // invoke the operation and iterate over the result
-            Response<GuestConfigurationAssignmentReportList> response = await guestConfigurationVmAssignment.GetReportsAsync();
-            foreach (GuestConfigurationAssignmentReport item in response.Value.Value)
+            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationVmAssignment.GetReportsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

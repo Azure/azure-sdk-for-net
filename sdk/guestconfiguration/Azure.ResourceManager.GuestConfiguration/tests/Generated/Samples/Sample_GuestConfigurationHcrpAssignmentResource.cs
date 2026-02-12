@@ -148,8 +148,7 @@ Value = "NotePad,sql",
             GuestConfigurationHcrpAssignmentResource guestConfigurationHcrpAssignment = client.GetGuestConfigurationHcrpAssignmentResource(guestConfigurationHcrpAssignmentResourceId);
 
             // invoke the operation and iterate over the result
-            Response<GuestConfigurationAssignmentReportList> response = await guestConfigurationHcrpAssignment.GetReportsAsync();
-            foreach (GuestConfigurationAssignmentReport item in response.Value.Value)
+            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationHcrpAssignment.GetReportsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

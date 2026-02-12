@@ -73,8 +73,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
             // Get reports
-            Response<GuestConfigurationAssignmentReportList> gcAssignmentReportsResponse = await guestAssignmentResourceRetrieved.GetReportsAsync();
-            foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsResponse.Value.Value)
+            await foreach (GuestConfigurationAssignmentReport gcReport in guestAssignmentResourceRetrieved.GetReportsAsync())
             {
                 Assert.NotNull(gcReport);
             }
