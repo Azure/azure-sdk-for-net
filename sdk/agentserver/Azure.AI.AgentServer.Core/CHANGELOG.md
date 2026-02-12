@@ -2,9 +2,9 @@
 
 ## 1.0.0-beta.8 (2026-02-11)
 
-### Other Changes
+### Bugs Fixed
 
-- Package version alignment only. No functional changes.
+- Make conversationId Optional
 
 ## 1.0.0-beta.7 (2026-02-10)
 
