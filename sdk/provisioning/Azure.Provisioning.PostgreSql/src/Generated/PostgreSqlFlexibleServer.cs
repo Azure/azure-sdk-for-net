@@ -295,11 +295,11 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     /// List of private endpoint connections associated with the specified
     /// server.
     /// </summary>
-    public BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections 
+    public BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnectionResources 
     {
-        get { Initialize(); return _privateEndpointConnections!; }
+        get { Initialize(); return _privateEndpointConnectionResources!; }
     }
-    private BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection>? _privateEndpointConnections;
+    private BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection>? _privateEndpointConnectionResources;
 
     /// <summary>
     /// Possible states of a server.
@@ -366,10 +366,13 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _minorVersion = DefineProperty<string>("MinorVersion", ["properties", "minorVersion"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<PostgreSqlFlexibleServersPrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _privateEndpointConnectionResources = DefineListProperty<PostgreSqlFlexibleServersPrivateEndpointConnection>("PrivateEndpointConnectionResources", ["properties", "privateEndpointConnections"], isOutput: true);
         _state = DefineProperty<PostgreSqlFlexibleServerState>("State", ["properties", "state"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported PostgreSqlFlexibleServer resource versions.

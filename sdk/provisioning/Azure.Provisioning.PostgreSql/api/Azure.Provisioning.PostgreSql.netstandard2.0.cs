@@ -133,7 +133,8 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerNetwork Network { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> PointInTimeUtc { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersReplica Replica { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ReplicaCapacity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerReplicationRole> ReplicationRole { get { throw null; } set { } }
@@ -470,6 +471,19 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2025_08_01;
         }
     }
+    public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PostgreSqlFlexibleServersPrivateEndpointConnectionData() { }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState
     {
         Succeeded = 0,
@@ -645,12 +659,12 @@ namespace Azure.Provisioning.PostgreSql
         Ver12 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="11")]
         Ver11 = 4,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="18")]
-        Eighteen = 5,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="17")]
-        Seventeen = 6,
         [System.Runtime.Serialization.DataMemberAttribute(Name="16")]
-        Sixteen = 7,
+        Sixteen = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="18")]
+        Eighteen = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="17")]
+        Seventeen = 7,
     }
     public enum PostgreSqlGeoRedundantBackup
     {

@@ -43,6 +43,12 @@ public enum PostgreSqlFlexibleServerVersion
     Ver11,
 
     /// <summary>
+    /// 16.
+    /// </summary>
+    [DataMember(Name = "16")]
+    Sixteen,
+
+    /// <summary>
     /// 18.
     /// </summary>
     [DataMember(Name = "18")]
@@ -53,10 +59,4 @@ public enum PostgreSqlFlexibleServerVersion
     /// </summary>
     [DataMember(Name = "17")]
     Seventeen,
-
-    /// <summary>
-    /// 16.
-    /// </summary>
-    [DataMember(Name = "16")]
-    Sixteen,
 }

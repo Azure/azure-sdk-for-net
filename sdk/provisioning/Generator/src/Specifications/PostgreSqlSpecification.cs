@@ -28,6 +28,14 @@ public class PostgreSqlSpecification() :
         CustomizeSimpleModel<PostgreSqlServerPropertiesForReplica>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Replica"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "PointInTimeRestore"; });
 
+        // Backward compatibility
+        CustomizeProperty<PostgreSqlFlexibleServerResource>("PrivateEndpointConnections", p => { p.Name = "PrivateEndpointConnectionResources"; });
+        CustomizeResource<PostgreSqlFlexibleServerResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
+        OrderEnum<PostgreSqlFlexibleServerVersion>("Ver15", "Ver14", "Ver13", "Ver12", "Ver11", "Sixteen", "Eighteen", "Seventeen");
+
         // Naming requirements
         AddNameRequirements<PostgreSqlServerResource>(min: 3, max: 63, lower: true, digits: true, hyphen: true);
         AddNameRequirements<PostgreSqlDatabaseResource>(min: 1, max: 63, lower: true, upper: true, digits: true, hyphen: true);
