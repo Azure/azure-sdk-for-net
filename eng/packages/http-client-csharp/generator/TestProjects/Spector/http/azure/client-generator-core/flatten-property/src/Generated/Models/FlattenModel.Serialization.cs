@@ -19,6 +19,8 @@ namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
 
         protected virtual FlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator FlattenModel(Response response) => throw null;
 
         void IJsonModel<FlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
         protected virtual FlattenModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<FlattenModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         FlattenModel IPersistableModel<FlattenModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

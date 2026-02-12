@@ -71,12 +71,12 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{index}");
         var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -104,12 +104,12 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{index}");
         var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -137,12 +137,12 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{index}");
         var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -222,12 +222,12 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
+        var eventBody = new BinaryData($"Event #{index}");
         var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 

@@ -51,6 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(CapacityReservationProfile))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityRequest))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResponse))]
+    [ModelReaderWriterBuildable(typeof(ClusterCreateProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterData))]
     [ModelReaderWriterBuildable(typeof(ClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterProperties))]

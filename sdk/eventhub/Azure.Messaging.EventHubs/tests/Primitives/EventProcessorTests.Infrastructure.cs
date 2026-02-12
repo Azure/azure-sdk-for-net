@@ -83,9 +83,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
                 .Returns(Mock.Of<SettableTransportConsumer>());
 
-             mockProcessor
-                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+            mockProcessor
+               .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
+               .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
@@ -206,13 +206,13 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(checkpointStore, Is.Not.Null, "The storage manager should have been created.");
 
             await checkpointStore.GetCheckpointAsync("na", "na", "na", "na", CancellationToken.None);
-            Assert.That(getCheckpointDelegated, Is.True, $"The call to { nameof(checkpointStore.GetCheckpointAsync) } should have been delegated.");
+            Assert.That(getCheckpointDelegated, Is.True, $"The call to {nameof(checkpointStore.GetCheckpointAsync)} should have been delegated.");
 
             await checkpointStore.ListOwnershipAsync("na", "na", "na", CancellationToken.None);
-            Assert.That(listOwnershipDelegated, Is.True, $"The call to { nameof(checkpointStore.ListOwnershipAsync) } should have been delegated.");
+            Assert.That(listOwnershipDelegated, Is.True, $"The call to {nameof(checkpointStore.ListOwnershipAsync)} should have been delegated.");
 
             await checkpointStore.ClaimOwnershipAsync(default(IEnumerable<EventProcessorPartitionOwnership>), CancellationToken.None);
-            Assert.That(claimOwnershipDelegated, Is.True, $"The call to { nameof(checkpointStore.ClaimOwnershipAsync) } should have been delegated.");
+            Assert.That(claimOwnershipDelegated, Is.True, $"The call to {nameof(checkpointStore.ClaimOwnershipAsync)} should have been delegated.");
         }
 
         /// <summary>

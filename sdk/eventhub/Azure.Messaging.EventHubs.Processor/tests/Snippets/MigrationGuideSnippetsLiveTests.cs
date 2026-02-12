@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake-hub";
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     metadata[sequenceKey] = checkpoint.SequenceNumber.Value.ToString(CultureInfo.InvariantCulture);
                 }
 
-                BlobClient blobClient = storageClient.GetBlobClient($"{ prefix }{ checkpoint.PartitionId }");
+                BlobClient blobClient = storageClient.GetBlobClient($"{prefix}{checkpoint.PartitionId}");
 
                 using var content = new MemoryStream(Array.Empty<byte>());
                 await blobClient.UploadAsync(content, metadata: metadata, cancellationToken: cancellationSource.Token);

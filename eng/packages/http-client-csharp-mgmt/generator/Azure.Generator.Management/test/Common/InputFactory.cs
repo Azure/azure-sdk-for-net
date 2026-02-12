@@ -157,7 +157,6 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="summary"></param>
         /// <param name="serializedName"></param>
         /// <param name="doc"></param>
-        /// <param name="decorators"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -171,10 +170,9 @@ namespace Azure.Generator.Management.Tests.Common
             string? wireName = null,
             string? summary = null,
             string? serializedName = null,
-            string? doc = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            string? doc = null)
         {
-            var property = new InputModelProperty(
+            return new InputModelProperty(
                 name: name,
                 summary: summary,
                 doc: doc ?? $"Description for {name}",
@@ -188,13 +186,6 @@ namespace Azure.Generator.Management.Tests.Common
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? wireName ?? name.ToVariableName(),
                 serializationOptions: new(json: new(wireName ?? name.ToVariableName())));
-            if (decorators is not null)
-            {
-                var decoratorProperty = typeof(InputModelProperty).GetProperty(nameof(InputModelProperty.Decorators));
-                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
-                setDecoratorMethod!.Invoke(property, [decorators]);
-            }
-            return property;
         }
 
         public static InputHeaderParameter HeaderParameter(

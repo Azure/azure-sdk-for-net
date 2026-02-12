@@ -519,35 +519,7 @@ namespace Azure.Generator.Management.Providers
 
         private bool HasTags()
         {
-            if (HasTagsInModel(_inputModel))
-            {
-                return true;
-            }
-
-            // Also check properties of flattened model types
-            var flattenMap = ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap;
             InputModelType? currentModel = _inputModel;
-            while (currentModel != null)
-            {
-                if (flattenMap.TryGetValue(currentModel, out var flattenedProperties))
-                {
-                    foreach (var flattenedProperty in flattenedProperties)
-                    {
-                        if (flattenedProperty.Type is InputModelType flattenedModel && HasTagsInModel(flattenedModel))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                currentModel = currentModel.BaseModel;
-            }
-
-            return false;
-        }
-
-        private static bool HasTagsInModel(InputModelType model)
-        {
-            InputModelType? currentModel = model;
             while (currentModel != null)
             {
                 foreach (var property in currentModel.Properties)
