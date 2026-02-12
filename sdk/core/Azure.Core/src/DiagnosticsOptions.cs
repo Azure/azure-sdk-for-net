@@ -38,6 +38,10 @@ namespace Azure.Core
                 return;
             }
 
+            if (int.TryParse(section["MaxApplicationIdLength"], out var maxApplicationIdLength))
+            {
+                MaxApplicationIdLength = maxApplicationIdLength;
+            }
             ApplicationId = section["ApplicationId"];
             if (bool.TryParse(section["IsLoggingEnabled"], out var isLoggingEnabled))
             {
@@ -216,6 +220,10 @@ namespace Azure.Core
                 if (value < DefaultMaxApplicationIdLength || value > AbsoluteMaxApplicationIdLength)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(MaxApplicationIdLength)} must be between {DefaultMaxApplicationIdLength} and {AbsoluteMaxApplicationIdLength}.");
+                }
+                if (_applicationId != null && _applicationId.Length > value)
+                {
+                    throw new InvalidOperationException($"Cannot set {nameof(MaxApplicationIdLength)} to {value} because the current {nameof(ApplicationId)} has a length of {_applicationId.Length}.");
                 }
                 _maxApplicationIdLength = value;
             }

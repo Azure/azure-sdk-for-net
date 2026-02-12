@@ -293,6 +293,17 @@ namespace Azure.Core.Tests
             Assert.That(ex.Message, Does.Contain("ApplicationId must be shorter than 51 characters"));
         }
 
+        [Test]
+        public void LoweringMaxApplicationIdLengthBelowCurrentApplicationIdThrows()
+        {
+            var options = new TestClientOptions();
+            options.Diagnostics.MaxApplicationIdLength = 50;
+            options.Diagnostics.ApplicationId = new string('a', 49);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => options.Diagnostics.MaxApplicationIdLength = 34);
+            Assert.That(ex.Message, Does.Contain("Cannot set MaxApplicationIdLength to 34 because the current ApplicationId has a length of 49"));
+        }
+
         [TestCase(23)]
         [TestCase(0)]
         [TestCase(-1)]
