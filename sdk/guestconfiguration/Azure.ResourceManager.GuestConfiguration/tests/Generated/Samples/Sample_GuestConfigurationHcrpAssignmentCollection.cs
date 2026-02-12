@@ -56,8 +56,6 @@ Value = "NotePad,sql",
                     },
                     Context = "Azure policy",
                 },
-                Name = "NotInstalledApplicationForWindows",
-                Location = new AzureLocation("westcentralus"),
             };
             ArmOperation<GuestConfigurationHcrpAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestConfigurationAssignmentName, data);
             GuestConfigurationHcrpAssignmentResource result = lro.Value;

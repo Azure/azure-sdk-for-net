@@ -57,8 +57,6 @@ Value = "NotePad,sql",
                     },
                     Context = "Azure policy",
                 },
-                Name = "NotInstalledApplicationForWindows",
-                Location = new AzureLocation("westcentralus"),
             };
             ArmOperation<GuestConfigurationVmssAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             GuestConfigurationVmssAssignmentResource result = lro.Value;

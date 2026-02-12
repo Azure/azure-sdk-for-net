@@ -116,8 +116,6 @@ Value = "NotePad,sql",
                     },
                     Context = "Azure policy",
                 },
-                Name = "NotInstalledApplicationForWindows",
-                Location = new AzureLocation("westcentralus"),
             };
             ArmOperation<GuestConfigurationVmAssignmentResource> lro = await guestConfigurationVmAssignment.UpdateAsync(WaitUntil.Completed, data);
             GuestConfigurationVmAssignmentResource result = lro.Value;
@@ -151,7 +149,8 @@ Value = "NotePad,sql",
             GuestConfigurationVmAssignmentResource guestConfigurationVmAssignment = client.GetGuestConfigurationVmAssignmentResource(guestConfigurationVmAssignmentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationVmAssignment.GetReportsAsync())
+            Response<GuestConfigurationAssignmentReportList> response = await guestConfigurationVmAssignment.GetReportsAsync();
+            foreach (GuestConfigurationAssignmentReport item in response.Value.Value)
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

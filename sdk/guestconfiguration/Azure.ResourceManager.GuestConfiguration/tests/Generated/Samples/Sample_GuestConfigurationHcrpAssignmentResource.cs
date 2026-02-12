@@ -115,8 +115,6 @@ Value = "NotePad,sql",
                     },
                     Context = "Azure policy",
                 },
-                Name = "NotInstalledApplicationForWindows",
-                Location = new AzureLocation("westcentralus"),
             };
             ArmOperation<GuestConfigurationHcrpAssignmentResource> lro = await guestConfigurationHcrpAssignment.UpdateAsync(WaitUntil.Completed, data);
             GuestConfigurationHcrpAssignmentResource result = lro.Value;
@@ -150,7 +148,8 @@ Value = "NotePad,sql",
             GuestConfigurationHcrpAssignmentResource guestConfigurationHcrpAssignment = client.GetGuestConfigurationHcrpAssignmentResource(guestConfigurationHcrpAssignmentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationHcrpAssignment.GetReportsAsync())
+            Response<GuestConfigurationAssignmentReportList> response = await guestConfigurationHcrpAssignment.GetReportsAsync();
+            foreach (GuestConfigurationAssignmentReport item in response.Value.Value)
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

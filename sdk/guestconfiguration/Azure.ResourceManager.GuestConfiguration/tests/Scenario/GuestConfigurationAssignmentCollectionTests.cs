@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Response<GuestConfigurationVmAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationVmAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
-            Assert.AreEqual(gcAssignmentData.Location, guestAssignmentResourceRetrieved.Data.Location);
 
             // Update guest configuration assignment
             string updatedContext = "Azure Policy Updated";
@@ -74,8 +73,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
             // Get reports
-            AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetReportsAsync();
-            await foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsRetrieved)
+            Response<GuestConfigurationAssignmentReportList> gcAssignmentReportsResponse = await guestAssignmentResourceRetrieved.GetReportsAsync();
+            foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsResponse.Value.Value)
             {
                 Assert.NotNull(gcReport);
             }

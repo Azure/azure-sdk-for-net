@@ -109,8 +109,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
 
             return new GuestConfigurationAssignmentData
             {
-                Name = GuestConfigurationManagementUtilities.DefaultAssignmentName,
-                Location = GuestConfigurationManagementUtilities.DefaultResourceLocation,
                 Properties = properties
             };
         }
