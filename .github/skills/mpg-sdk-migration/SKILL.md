@@ -229,6 +229,11 @@ After generation:
 3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped.
 4. Run existing tests if available: `dotnet test`.
 5. Check ApiCompat with `dotnet pack --no-restore` — ApiCompat errors only surface during pack, not during build.
+6. **Export the API surface** after all errors are fixed:
+   ```powershell
+   pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>
+   ```
+   Where `<SERVICE_NAME>` is the service folder name under `sdk/` (e.g., `guestconfiguration`). This updates the `api/*.cs` files. **CI will fail if the API surface files are not re-exported after migration.**
 
 ### Using `RegenSdkLocal.ps1` for Generator Fixes
 
@@ -249,8 +254,9 @@ ApiCompat compares the new generated API against the existing API surface files 
    - **Changed accessibility**: Use `@@access` or `[CodeGenType]` to restore public visibility.
 2. After fixing all breaking changes, re-export the API surface:
    ```powershell
-   dotnet build /t:ExportApi
+   pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>
    ```
+   Where `<SERVICE_NAME>` is the service folder name under `sdk/` (e.g., `guestconfiguration`, NOT the full package name).
 3. Verify the full build passes: `dotnet build`.
 
 ## Phase 7 — CI & Changelog
