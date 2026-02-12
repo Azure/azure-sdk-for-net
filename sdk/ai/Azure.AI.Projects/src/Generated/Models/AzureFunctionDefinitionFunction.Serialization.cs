@@ -17,6 +17,23 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureFunctionDefinitionFunction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureFunctionDefinitionFunction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureFunctionDefinitionFunction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureFunctionDefinitionFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -43,14 +60,25 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Parameters);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Parameters))
+            writer.WriteStartObject();
+            foreach (var item in Parameters)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -95,7 +123,7 @@ namespace Azure.AI.Projects
             }
             string name = default;
             string description = default;
-            BinaryData parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -111,7 +139,19 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    parameters = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,23 +181,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AzureFunctionDefinitionFunction IPersistableModel<AzureFunctionDefinitionFunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureFunctionDefinitionFunction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureFunctionDefinitionFunction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureFunctionDefinitionFunction)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureFunctionDefinitionFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -164,15 +164,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Create(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
+            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -185,41 +186,44 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
+            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Creates a redteam run. </summary>
         /// <param name="redTeam"> Redteam to be run. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<RedTeam> Create(RedTeam redTeam, CancellationToken cancellationToken = default)
+        public virtual ClientResult<RedTeam> Create(RedTeam redTeam, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-            ClientResult result = Create(redTeam, cancellationToken.ToRequestOptions());
+            ClientResult result = Create(redTeam, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a redteam run. </summary>
         /// <param name="redTeam"> Redteam to be run. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<RedTeam>> CreateAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<RedTeam>> CreateAsync(RedTeam redTeam, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-            ClientResult result = await CreateAsync(redTeam, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateAsync(redTeam, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
         }
     }

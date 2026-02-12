@@ -3,10 +3,10 @@
 
 #nullable enable
 
-using Azure.Core;
-using Azure.Provisioning.Primitives;
 using System;
 using System.ComponentModel;
+using Azure.Core;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventHubs;
 

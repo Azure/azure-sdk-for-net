@@ -19,8 +19,6 @@
       ;OPENAI001
       <!-- Temporary suppression of XML doc requirement -->
       ;CS1591
-      <!-- Suppress 'too generic of names' rule -->
-      ;AZC0012
     </NoWarn>
   </PropertyGroup>
 

@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.Tests
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
         /// <returns>A task that will (optionally) delay.</returns>
         /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
-        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan ? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
+        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
         {
             TimeSpan waitPeriod = TimeSpan.Zero;
 

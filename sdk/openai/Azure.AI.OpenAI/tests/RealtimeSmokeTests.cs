@@ -1,8 +1,8 @@
-﻿using OpenAI.Realtime;
-using System;
+﻿using System;
 using System.ClientModel.Primitives;
 using System.Linq;
 using System.Text.Json.Nodes;
+using OpenAI.Realtime;
 
 namespace Azure.AI.OpenAI.Tests;
 

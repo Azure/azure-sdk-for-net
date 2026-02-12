@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -14,6 +15,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/> for deserialization. </summary>
         internal InternalFileSearchTool()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalFileSearchTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalFileSearchTool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalFileSearchTool)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -100,7 +118,7 @@ namespace Azure.AI.Projects.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> vectorStoreIds = default;
             long? maxNumResults = default;
-            RankingOptions rankingOptions = default;
+            InternalRankingOptions rankingOptions = default;
             BinaryData filters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +159,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    rankingOptions = RankingOptions.DeserializeRankingOptions(prop.Value, options);
+                    rankingOptions = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -187,23 +205,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalFileSearchTool IPersistableModel<InternalFileSearchTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalFileSearchTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalFileSearchTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalFileSearchTool(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalFileSearchTool)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalFileSearchTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

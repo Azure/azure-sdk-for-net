@@ -20,6 +20,23 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEvaluatorDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EvaluatorDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -40,29 +57,51 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(InitParameters))
+            if (Optional.IsCollectionDefined(InitParameters))
             {
                 writer.WritePropertyName("init_parameters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(InitParameters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(InitParameters))
+                writer.WriteStartObject();
+                foreach (var item in InitParameters)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DataSchema))
+            if (Optional.IsCollectionDefined(DataSchema))
             {
                 writer.WritePropertyName("data_schema"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(DataSchema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(DataSchema))
+                writer.WriteStartObject();
+                foreach (var item in DataSchema)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -149,23 +188,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EvaluatorDefinition IPersistableModel<EvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEvaluatorDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EvaluatorDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

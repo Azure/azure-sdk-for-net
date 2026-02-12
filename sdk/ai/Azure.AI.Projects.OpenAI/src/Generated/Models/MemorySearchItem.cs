@@ -15,11 +15,8 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="memoryItem"/> is null. </exception>
-        public MemorySearchItem(MemoryItem memoryItem)
+        internal MemorySearchItem(MemoryItem memoryItem)
         {
-            Argument.AssertNotNull(memoryItem, nameof(memoryItem));
-
             MemoryItem = memoryItem;
         }
 

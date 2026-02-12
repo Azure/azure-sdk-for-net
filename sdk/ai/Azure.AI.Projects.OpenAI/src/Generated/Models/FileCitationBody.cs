@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> File citation. </summary>
-    internal partial class FileCitationBody : Annotation
+    internal partial class FileCitationBody : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="FileCitationBody"/>. </summary>
         /// <param name="fileId"> The ID of the file. </param>
@@ -39,12 +40,12 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
 
         /// <summary> The index of the file in the list of files. </summary>
-        public long Index { get; }
+        public long Index { get; set; }
 
         /// <summary> The filename of the file cited. </summary>
-        public string Filename { get; }
+        public string Filename { get; set; }
     }
 }

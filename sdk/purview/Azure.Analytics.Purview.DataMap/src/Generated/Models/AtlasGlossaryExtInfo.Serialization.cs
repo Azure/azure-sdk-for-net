@@ -16,6 +16,30 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The extended information of glossary. </summary>
     public partial class AtlasGlossaryExtInfo : IJsonModel<AtlasGlossaryExtInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasGlossaryExtInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAtlasGlossaryExtInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtlasGlossaryExtInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryExtInfo"/> from. </param>
+        public static explicit operator AtlasGlossaryExtInfo(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAtlasGlossaryExtInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasGlossaryExtInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -392,31 +416,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         AtlasGlossaryExtInfo IPersistableModel<AtlasGlossaryExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AtlasGlossaryExtInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAtlasGlossaryExtInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryExtInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasGlossaryExtInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryExtInfo"/> from. </param>
-        public static explicit operator AtlasGlossaryExtInfo(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasGlossaryExtInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

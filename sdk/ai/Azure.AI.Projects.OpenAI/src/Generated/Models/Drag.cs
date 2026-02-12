@@ -5,11 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Drag. </summary>
-    internal partial class Drag : ComputerAction
+    internal partial class Drag : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Drag"/>. </summary>
         /// <param name="path">

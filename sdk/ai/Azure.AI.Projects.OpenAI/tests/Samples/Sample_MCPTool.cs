@@ -60,7 +60,7 @@ public class Sample_MCPTool : ProjectsOpenAITestBase
                 {
                     nextResponseOptions = new CreateResponseOptions()
                     {
-                        PreviousResponseId = latestResponse.PreviousResponseId,
+                        PreviousResponseId = latestResponse.Id,
                     };
                     if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
                     {
@@ -130,7 +130,7 @@ public class Sample_MCPTool : ProjectsOpenAITestBase
                 {
                     nextResponseOptions = new CreateResponseOptions()
                     {
-                        PreviousResponseId = latestResponse.PreviousResponseId,
+                        PreviousResponseId = latestResponse.Id,
                     };
                     if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
                     {

@@ -20,6 +20,23 @@ namespace Azure.AI.VoiceLive
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateMcpListToolsInProgress>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSessionUpdateMcpListToolsInProgress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SessionUpdateMcpListToolsInProgress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateMcpListToolsInProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,23 +133,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SessionUpdateMcpListToolsInProgress IPersistableModel<SessionUpdateMcpListToolsInProgress>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateMcpListToolsInProgress)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SessionUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateMcpListToolsInProgress>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSessionUpdateMcpListToolsInProgress(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SessionUpdateMcpListToolsInProgress)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SessionUpdateMcpListToolsInProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

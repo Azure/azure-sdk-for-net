@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>
     internal partial class StructuredInputDefinition : IJsonModel<StructuredInputDefinition>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StructuredInputDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StructuredInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStructuredInputDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StructuredInputDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StructuredInputDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -47,17 +64,28 @@ namespace Azure.AI.Projects
                 }
 #endif
             }
-            if (Optional.IsDefined(Schema))
+            if (Optional.IsCollectionDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Schema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Schema))
+                writer.WriteStartObject();
+                foreach (var item in Schema)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Required))
             {
@@ -108,7 +136,7 @@ namespace Azure.AI.Projects
             }
             string description = default;
             BinaryData defaultValue = default;
-            BinaryData schema = default;
+            IDictionary<string, BinaryData> schema = default;
             bool? @required = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +161,19 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    schema = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("required"u8))
@@ -150,7 +190,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StructuredInputDefinition(description, defaultValue, schema, @required, additionalBinaryDataProperties);
+            return new StructuredInputDefinition(description, defaultValue, schema ?? new ChangeTrackingDictionary<string, BinaryData>(), @required, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -172,23 +212,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StructuredInputDefinition IPersistableModel<StructuredInputDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StructuredInputDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StructuredInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStructuredInputDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StructuredInputDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StructuredInputDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

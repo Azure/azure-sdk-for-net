@@ -29,15 +29,10 @@ namespace Azure.AI.Projects.OpenAI
         private const string McpListToolsValue = "mcp_list_tools";
         private const string McpApprovalRequestValue = "mcp_approval_request";
         private const string CustomToolCallValue = "custom_tool_call";
-        private const string MessageValue = "message";
-        private const string ComputerCallOutputValue = "computer_call_output";
-        private const string FunctionCallOutputValue = "function_call_output";
-        private const string LocalShellCallOutputValue = "local_shell_call_output";
-        private const string McpApprovalResponseValue = "mcp_approval_response";
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
-        private const string WorkflowPreviewActionValue = "workflow_preview_action";
+        private const string WorkflowActionValue = "workflow_action";
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -103,21 +98,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the CustomToolCall. </summary>
         public static AgentResponseItemKind CustomToolCall { get; } = new AgentResponseItemKind(CustomToolCallValue);
 
-        /// <summary> Gets the Message. </summary>
-        public static AgentResponseItemKind Message { get; } = new AgentResponseItemKind(MessageValue);
-
-        /// <summary> Gets the ComputerCallOutput. </summary>
-        public static AgentResponseItemKind ComputerCallOutput { get; } = new AgentResponseItemKind(ComputerCallOutputValue);
-
-        /// <summary> Gets the FunctionCallOutput. </summary>
-        public static AgentResponseItemKind FunctionCallOutput { get; } = new AgentResponseItemKind(FunctionCallOutputValue);
-
-        /// <summary> Gets the LocalShellCallOutput. </summary>
-        public static AgentResponseItemKind LocalShellCallOutput { get; } = new AgentResponseItemKind(LocalShellCallOutputValue);
-
-        /// <summary> Gets the McpApprovalResponse. </summary>
-        public static AgentResponseItemKind McpApprovalResponse { get; } = new AgentResponseItemKind(McpApprovalResponseValue);
-
         /// <summary> Gets the StructuredOutputs. </summary>
         public static AgentResponseItemKind StructuredOutputs { get; } = new AgentResponseItemKind(StructuredOutputsValue);
 
@@ -127,8 +107,8 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the MemorySearchCall. </summary>
         public static AgentResponseItemKind MemorySearchCall { get; } = new AgentResponseItemKind(MemorySearchCallValue);
 
-        /// <summary> Gets the WorkflowPreviewAction. </summary>
-        public static AgentResponseItemKind WorkflowPreviewAction { get; } = new AgentResponseItemKind(WorkflowPreviewActionValue);
+        /// <summary> Gets the WorkflowAction. </summary>
+        public static AgentResponseItemKind WorkflowAction { get; } = new AgentResponseItemKind(WorkflowActionValue);
 
         /// <summary> Determines if two <see cref="AgentResponseItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

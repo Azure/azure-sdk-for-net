@@ -121,7 +121,14 @@ namespace Azure.Generator.Management.Providers
                 {
                     throw new InvalidOperationException("Extension resource's IdPattern can't be empty or null.");
                 }
-                return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope, new RequestPathPattern(resourceMetadata.ResourceIdPattern));
+                // For extension resources, the contextual path is the parent of the resource ID pattern.
+                // This represents the scope that the extension resource is applied to.
+                // For example, for path /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}
+                // the contextual path is /providers/Microsoft.Management/serviceGroups/{servicegroupName}
+                // This ensures that servicegroupName is derived from the scope Id (id.Name) rather than being an extra constructor parameter.
+                // For specific extension resources (those targeting a known parent type like Microsoft.Compute/virtualMachines),
+                // the ParentResourceType property contains the explicit parent type for method name disambiguation.
+                return new RequestPathPattern(resourceMetadata.ResourceIdPattern).GetParent();
             }
 
             return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);

@@ -3,9 +3,9 @@
 
 #nullable enable
 
-using Azure.Provisioning.Primitives;
 using System;
 using System.ComponentModel;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService;
 

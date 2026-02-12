@@ -351,6 +351,124 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestConversationNoInput()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "TestPromptAgentFromDotnet",
+            options: new(agentDefinition));
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
+            new ProjectConversationCreationOptions()
+            {
+                Items = { ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.") },
+            });
+
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+
+        ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestConversationStructuralOutput()
+    {
+        BinaryData calendatSchema = BinaryData.FromObjectAsJson(
+            new
+            {
+                additionalProperties = false,
+                properties = new
+                {
+                    name = new
+                    {
+                        title = "Name",
+                        type = "string"
+                    },
+                    date = new
+                    {
+                        description = "Date in YYYY-MM-DD format",
+                        title = "Date",
+                        type = "string"
+                    },
+                    participants = new
+                    {
+                        items = new { type = "string" },
+                        title = "Participants",
+                        type = "array"
+                    }
+                },
+                required = new List<string> { "name", "date", "participants" },
+                title = "CalendarEvent",
+                type = "object",
+            }
+        );
+        AIProjectClient projectClient = GetTestProjectClient();
+        var textOptions = new ResponseTextOptions()
+        {
+            TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
+                jsonSchemaFormatName: "Calendar",
+                jsonSchema: calendatSchema
+            )
+        };
+        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
+                           "and returns it in the desired structured output format.",
+            TextOptions = textOptions
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "TestPromptAgentFromDotnet",
+            options: new(agentDefinition));
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
+            new ProjectConversationCreationOptions()
+            {
+                Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") },
+            });
+
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+
+        ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
+        string text = response.GetOutputText();
+        Assert.That(text, Is.Not.Null.And.Not.Empty);
+        // Validate the JSON
+        JsonDocument doc = JsonDocument.Parse(text);
+        bool hasName = false, hasDate = false, hasParticipants = false;
+        foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
+        {
+            if (prop.NameEquals("name"u8))
+            {
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.String), $"Incorrect value type for name: {prop.Value.ValueKind.ToString()}");
+                hasName = true;
+            }
+            else if (prop.NameEquals("date"u8))
+            {
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.String), $"Incorrect value type for date: {prop.Value.ValueKind.ToString()}");
+                hasDate = true;
+            }
+            else if (prop.NameEquals("participants"u8))
+            {
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.Array), $"Incorrect value type for partoicipants: {prop.Value.ValueKind.ToString()}");
+                HashSet<string> values = [];
+                foreach (JsonElement dataElement in prop.Value.EnumerateArray())
+                {
+                    Assert.That(dataElement.ValueKind, Is.EqualTo(JsonValueKind.String), $"Incorrect value type for partoicipants element: {dataElement.ValueKind.ToString()}");
+                    values.Add(dataElement.GetString());
+                }
+                Assert.That(values, Is.EqualTo(new HashSet<string> { "Alice", "Bob" }), $"Wrong participants array in {text}");
+                hasParticipants = true;
+            }
+        }
+        Assert.That(hasName, Is.True, "No name field in output.");
+        Assert.That(hasDate, Is.True, "No date field in output.");
+        Assert.That(hasParticipants, Is.True, $"No participants array in the output {text}.");
+    }
+
+    [RecordedTest]
     public async Task ErrorsGiveGoodExceptionMessages()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -458,7 +576,7 @@ public class AgentsTests : AgentsTestBase
 
         Assert.That(response.OutputItems.Count, Is.GreaterThan(0));
         AgentResponseItem agentResponseItem = response.OutputItems[0].AsAgentResponseItem();
-        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowActionResponseItem>());
+        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowPreviewActionResponseItem>());
 
         // This line will fix the failure:
         // System.InvalidOperationException : Cannot write a JSON property within an array or as the first JSON token. Current token type is 'EndObject'.
@@ -485,13 +603,13 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
-        AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
+        AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
         await foreach (StreamingResponseUpdate responseUpdate in responseClient.CreateResponseStreamingAsync("Hello, agent!"))
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
-                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowActionResponseItem workflowActionItem)
+                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowPreviewActionResponseItem workflowActionItem)
                 {
                     streamedWorkflowActionItem = workflowActionItem;
                 }
@@ -1244,7 +1362,7 @@ public class AgentsTests : AgentsTestBase
                     ["can_delete_this"] = "true"
                 }
             },
-            cts.Token);
+            cancellationToken: cts.Token);
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion);
 
@@ -1343,13 +1461,13 @@ public class AgentsTests : AgentsTestBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        ImageBasedHostedAgentDefinition agentDefinition = new(
+        HostedAgentDefinition agentDefinition = new(
             containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
             cpu: "1",
-            memory: "2Gi",
-            image: TestEnvironment.AGENT_DOCKER_IMAGE
+            memory: "2Gi"
         )
         {
+            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },

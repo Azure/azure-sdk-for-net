@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> Text format. </summary>
     internal partial class CustomTextFormatParam : CustomToolParamFormat, IJsonModel<CustomTextFormatParam>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomTextFormatParam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomTextFormatParam(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomTextFormatParam)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomTextFormatParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,23 +111,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CustomTextFormatParam IPersistableModel<CustomTextFormatParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomTextFormatParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomTextFormatParam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCustomTextFormatParam(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomTextFormatParam)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomTextFormatParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

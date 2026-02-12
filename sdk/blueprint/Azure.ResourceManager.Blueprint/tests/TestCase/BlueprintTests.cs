@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Blueprint.Models;
-using NUnit.Framework;
 using Azure.ResourceManager.Blueprint.Tests.Helpers;
-using System;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Tests
 {
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Blueprint.Tests
             //CreateOrUpdate
             BlueprintCollection collection = Client.GetBlueprints(scopeId);
             var input = ResourceDataHelpers.GetBlueprintData();
-            var blueprintResource =(await collection.CreateOrUpdateAsync(WaitUntil.Completed, printName, input)).Value;
+            var blueprintResource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, printName, input)).Value;
             Assert.AreEqual(printName, blueprintResource.Data.Name);
             //Get
-            var resource2 =(await collection.GetAsync(printName)).Value;
+            var resource2 = (await collection.GetAsync(printName)).Value;
             ResourceDataHelpers.AssertBlueprint(blueprintResource.Data, resource2.Data);
             //GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, printName2, input);

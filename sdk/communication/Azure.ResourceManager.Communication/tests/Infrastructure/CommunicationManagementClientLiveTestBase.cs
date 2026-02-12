@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Tests

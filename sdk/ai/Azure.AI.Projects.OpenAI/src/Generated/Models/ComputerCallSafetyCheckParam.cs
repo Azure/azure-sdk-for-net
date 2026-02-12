@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The ID of the pending safety check. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> Gets or sets the Code. </summary>
         public string Code { get; set; }

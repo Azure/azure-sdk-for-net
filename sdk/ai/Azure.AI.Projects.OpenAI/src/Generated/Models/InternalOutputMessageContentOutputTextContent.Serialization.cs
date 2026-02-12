@@ -6,14 +6,32 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    internal partial class InternalOutputMessageContentOutputTextContent : OutputMessageContent, IJsonModel<InternalOutputMessageContentOutputTextContent>
+    internal partial class InternalOutputMessageContentOutputTextContent : InternalOutputMessageContent, IJsonModel<InternalOutputMessageContentOutputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputMessageContentOutputTextContent"/> for deserialization. </summary>
         internal InternalOutputMessageContentOutputTextContent()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalOutputMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputMessageContentOutputTextContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalOutputMessageContentOutputTextContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalOutputMessageContentOutputTextContent)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -39,7 +57,7 @@ namespace Azure.AI.Projects.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (Annotation item in Annotations)
+            foreach (InternalAnnotation item in Annotations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -48,7 +66,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteStartArray();
-                foreach (LogProb item in Logprobs)
+                foreach (InternalLogProb item in Logprobs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -62,7 +80,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalOutputMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalOutputMessageContentOutputTextContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -84,8 +102,8 @@ namespace Azure.AI.Projects.OpenAI
             OutputMessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<Annotation> annotations = default;
-            IList<LogProb> logprobs = default;
+            IList<InternalAnnotation> annotations = default;
+            IList<InternalLogProb> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -100,10 +118,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<Annotation> array = new List<Annotation>();
+                    List<InternalAnnotation> array = new List<InternalAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item, options));
+                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
                     }
                     annotations = array;
                     continue;
@@ -114,10 +132,10 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    List<LogProb> array = new List<LogProb>();
+                    List<InternalLogProb> array = new List<InternalLogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogProb.DeserializeLogProb(item, options));
+                        array.Add(InternalLogProb.DeserializeInternalLogProb(item, options));
                     }
                     logprobs = array;
                     continue;
@@ -127,7 +145,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalOutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<LogProb>());
+            return new InternalOutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<InternalLogProb>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -149,23 +167,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalOutputMessageContentOutputTextContent IPersistableModel<InternalOutputMessageContentOutputTextContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputMessageContentOutputTextContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputMessageContentOutputTextContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalOutputMessageContentOutputTextContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalOutputMessageContentOutputTextContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalOutputMessageContentOutputTextContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -12,6 +12,23 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
     public partial class OpenAPIAnonymousAuthenticationDetails : OpenAPIAuthenticationDetails, IJsonModel<OpenAPIAnonymousAuthenticationDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override OpenAPIAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIAnonymousAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOpenAPIAnonymousAuthenticationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenAPIAnonymousAuthenticationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenAPIAnonymousAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,23 +111,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         OpenAPIAnonymousAuthenticationDetails IPersistableModel<OpenAPIAnonymousAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenAPIAnonymousAuthenticationDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OpenAPIAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIAnonymousAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOpenAPIAnonymousAuthenticationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OpenAPIAnonymousAuthenticationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OpenAPIAnonymousAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

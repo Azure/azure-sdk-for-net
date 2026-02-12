@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -15,6 +16,31 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalAgentObject"/> for deserialization. </summary>
         internal InternalAgentObject()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternalAgentObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentObject>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalAgentObject(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalAgentObject)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="InternalAgentObject"/> from. </param>
+        public static explicit operator InternalAgentObject(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeInternalAgentObject(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -36,7 +62,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(InternalAgentObject)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
@@ -85,7 +111,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @object = default;
+            AgentObjectType @object = default;
             string id = default;
             string name = default;
             AgentObjectVersions versions = default;
@@ -94,7 +120,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new AgentObjectType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -140,32 +166,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalAgentObject IPersistableModel<InternalAgentObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalAgentObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalAgentObject>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalAgentObject(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalAgentObject)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAgentObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="InternalAgentObject"/> from. </param>
-        public static explicit operator InternalAgentObject(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeInternalAgentObject(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

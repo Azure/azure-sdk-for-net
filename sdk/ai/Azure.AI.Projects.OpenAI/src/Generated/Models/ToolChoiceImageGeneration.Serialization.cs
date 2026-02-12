@@ -13,8 +13,25 @@ namespace Azure.AI.Projects.OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    public partial class ToolChoiceImageGeneration : ToolChoiceParam, IJsonModel<ToolChoiceImageGeneration>
+    internal partial class ToolChoiceImageGeneration : InternalToolChoiceParam, IJsonModel<ToolChoiceImageGeneration>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceImageGeneration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeToolChoiceImageGeneration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ToolChoiceImageGeneration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ToolChoiceImageGeneration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -42,7 +59,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceImageGeneration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -97,23 +114,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ToolChoiceImageGeneration IPersistableModel<ToolChoiceImageGeneration>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceImageGeneration)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceImageGeneration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeToolChoiceImageGeneration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ToolChoiceImageGeneration)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ToolChoiceImageGeneration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

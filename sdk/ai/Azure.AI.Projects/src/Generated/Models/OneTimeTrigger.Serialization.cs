@@ -17,6 +17,23 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Trigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OneTimeTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOneTimeTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OneTimeTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OneTimeTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,23 +135,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         OneTimeTrigger IPersistableModel<OneTimeTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (OneTimeTrigger)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OneTimeTrigger>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOneTimeTrigger(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OneTimeTrigger)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OneTimeTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

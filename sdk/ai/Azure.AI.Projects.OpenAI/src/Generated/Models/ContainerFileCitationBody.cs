@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Container file citation. </summary>
-    internal partial class ContainerFileCitationBody : Annotation
+    internal partial class ContainerFileCitationBody : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="ContainerFileCitationBody"/>. </summary>
         /// <param name="containerId"> The ID of the container file. </param>
@@ -48,18 +49,18 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The ID of the container file. </summary>
-        public string ContainerId { get; }
+        public string ContainerId { get; set; }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
 
         /// <summary> The index of the first character of the container file citation in the message. </summary>
-        public long StartIndex { get; }
+        public long StartIndex { get; set; }
 
         /// <summary> The index of the last character of the container file citation in the message. </summary>
-        public long EndIndex { get; }
+        public long EndIndex { get; set; }
 
         /// <summary> The filename of the container file cited. </summary>
-        public string Filename { get; }
+        public string Filename { get; set; }
     }
 }

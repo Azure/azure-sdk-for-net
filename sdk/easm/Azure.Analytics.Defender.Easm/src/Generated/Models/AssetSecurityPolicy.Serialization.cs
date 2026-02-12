@@ -15,6 +15,23 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The AssetSecurityPolicy. </summary>
     public partial class AssetSecurityPolicy : IJsonModel<AssetSecurityPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetSecurityPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetSecurityPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAssetSecurityPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssetSecurityPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssetSecurityPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -236,23 +253,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AssetSecurityPolicy IPersistableModel<AssetSecurityPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetSecurityPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetSecurityPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAssetSecurityPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AssetSecurityPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AssetSecurityPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

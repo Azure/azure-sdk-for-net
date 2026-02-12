@@ -275,6 +275,27 @@ namespace Azure.AI.Projects.Telemetry
                     new ActivityEvent(EventNameAgentWorkflow, tags: workflowTags)
                 );
             }
+            // Check for ImageBasedHostedAgentDefinition BEFORE checking for HostedAgentDefinition
+            // since ImageBasedHostedAgentDefinition inherits from HostedAgentDefinition
+            else if (agentDefinition is Azure.AI.Projects.OpenAI.HostedAgentDefinition imageBasedHostedAgentDefinition)
+            {
+                // Handle image-based hosted agent - add all hosted-specific attributes including image
+                scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
+                scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.Image);
+
+                // Extract protocol and version from ContainerProtocolVersions if available
+                if (imageBasedHostedAgentDefinition.ContainerProtocolVersions != null &&
+                    imageBasedHostedAgentDefinition.ContainerProtocolVersions.Count > 0)
+                {
+                    var protocolVersion = imageBasedHostedAgentDefinition.ContainerProtocolVersions[0];
+
+                    // Set protocol name (convert enum to lowercase string for consistency with Python)
+                    string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
+                    scope.SetTagMaybe(GenAiAgentHostedProtocol, protocolName);
+                    scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
+                }
+            }
             else if (agentDefinition is Azure.AI.Projects.OpenAI.HostedAgentDefinition hostedAgentDefinition)
             {
                 // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
@@ -330,7 +351,7 @@ namespace Azure.AI.Projects.Telemetry
             return AgentTypeUnknown;
         }
 
-        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName=null)
+        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null)
         {
             _scopeType = activityName switch
             {

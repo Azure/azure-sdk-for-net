@@ -5,7 +5,7 @@
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("WorkflowPreviewActionOutputItemResource")]
+[CodeGenType("WorkflowActionOutputItem")]
 public partial class AgentWorkflowPreviewActionResponseItem
 {
     [CodeGenMember("Status")]

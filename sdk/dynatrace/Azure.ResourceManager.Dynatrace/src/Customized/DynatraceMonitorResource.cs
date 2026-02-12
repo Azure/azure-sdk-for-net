@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
         // Add this custom code due to previous version didn't have request body parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken)=> GetMonitoredResourcesAsync(null, cancellationToken);
+        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken) => GetMonitoredResourcesAsync(null, cancellationToken);
 
         /// <summary>
         /// List the resources currently being monitored by the Dynatrace monitor resource.
@@ -121,6 +121,6 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
         // Add this custom code due to previous version didn't have request body parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(CancellationToken cancellationToken)=> GetMonitoredResources(null, cancellationToken);
+        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(CancellationToken cancellationToken) => GetMonitoredResources(null, cancellationToken);
     }
 }

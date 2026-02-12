@@ -12,6 +12,23 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> The sharepoint grounding tool parameters. </summary>
     public partial class SharePointGroundingToolOptions : IJsonModel<SharePointGroundingToolOptions>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SharePointGroundingToolOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharePointGroundingToolOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSharePointGroundingToolOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharePointGroundingToolOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SharePointGroundingToolOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -127,23 +144,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SharePointGroundingToolOptions IPersistableModel<SharePointGroundingToolOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SharePointGroundingToolOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SharePointGroundingToolOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSharePointGroundingToolOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SharePointGroundingToolOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SharePointGroundingToolOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

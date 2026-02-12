@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Click. </summary>
-    internal partial class ClickParam : ComputerAction
+    internal partial class ClickParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ClickParam"/>. </summary>
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
@@ -35,12 +36,12 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
-        public ClickButtonType Button { get; }
+        public ClickButtonType Button { get; set; }
 
         /// <summary> The x-coordinate where the click occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the click occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
     }
 }

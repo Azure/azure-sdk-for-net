@@ -17,6 +17,23 @@ namespace Azure.AI.Projects.OpenAI
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override OpenAPIAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOpenAPIProjectConnectionAuthenticationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenAPIProjectConnectionAuthenticationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenAPIProjectConnectionAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,23 +124,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         OpenAPIProjectConnectionAuthenticationDetails IPersistableModel<OpenAPIProjectConnectionAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenAPIProjectConnectionAuthenticationDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OpenAPIAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIProjectConnectionAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOpenAPIProjectConnectionAuthenticationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OpenAPIProjectConnectionAuthenticationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OpenAPIProjectConnectionAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

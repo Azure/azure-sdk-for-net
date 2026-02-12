@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 # Sample of using `MemorySearchTool` with Agent in Azure.AI.Projects.OpenAI.
 
 In this example we will demonstrate how to use `MemorySearchTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another Agent, capable to read it.
+=======
+# Sample of using `MemorySearchPreviewTool` with Agent in Azure.AI.Projects.OpenAI.
+
+In this example we will demonstrate how to use `MemorySearchPreviewTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another Agent, capable to read it. Before running the sample, please follow the [instructions](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/memory-usage) to set up required permissions.
+
+**Note:** This feature is in the preview.
+>>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
@@ -156,7 +164,11 @@ foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
 Console.WriteLine("==End of memory tool output.==");
 ```
 
+<<<<<<< HEAD
 8. Create another Agent capable to use `MemorySearchTool`.
+=======
+8. Create another Agent capable to use `MemorySearchPreviewTool`.
+>>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync
@@ -166,7 +178,7 @@ agentDefinition = new(model: modelDeploymentName)
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
-    agentName: "myAgent2",
+    agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
 
@@ -177,8 +189,8 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
-    agentName: "myAgent2",
+AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "agentVersionWithMemory",
     options: new(agentDefinition));
 ```
 
@@ -196,7 +208,7 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_AnotherConversation_MemoryTool_Async
-responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
+responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersionWithMemory.Name);
 
 response = await responseClient.CreateResponseAsync(
     "Please explain me the meaning of the joke from the previous conversation.");
@@ -217,5 +229,5 @@ Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryTool_Async
 await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
 await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
 ```

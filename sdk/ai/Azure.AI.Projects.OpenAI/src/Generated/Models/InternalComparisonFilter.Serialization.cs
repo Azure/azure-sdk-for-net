@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -14,6 +15,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/> for deserialization. </summary>
         internal InternalComparisonFilter()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternalComparisonFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalComparisonFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalComparisonFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalComparisonFilter)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -35,7 +53,7 @@ namespace Azure.AI.Projects.OpenAI
                 throw new FormatException($"The model {nameof(InternalComparisonFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
@@ -97,7 +115,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToComparisonFilterType();
+                    @type = new ComparisonFilterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("key"u8))
@@ -137,23 +155,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalComparisonFilter IPersistableModel<InternalComparisonFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalComparisonFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalComparisonFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalComparisonFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalComparisonFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalComparisonFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

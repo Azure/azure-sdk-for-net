@@ -15,9 +15,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         public InternalCreateAgentRequest(string name, Projects.OpenAI.AgentDefinition definition)
@@ -30,15 +28,12 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCreateAgentRequest"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
@@ -56,9 +51,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </summary>
         public string Name { get; }
 
@@ -66,7 +59,6 @@ namespace Azure.AI.Projects
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </summary>

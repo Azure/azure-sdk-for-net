@@ -5,8 +5,8 @@ using System;
 using System.IO;
 using System.Linq;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Moq;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {

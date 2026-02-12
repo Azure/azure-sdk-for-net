@@ -31,9 +31,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The type of the output. Always `logs`. </summary>
-        internal string Type { get; } = "logs";
+        public string Type { get; } = "logs";
 
         /// <summary> The logs output from the code interpreter. </summary>
-        public string Logs { get; }
+        public string Logs { get; set; }
     }
 }

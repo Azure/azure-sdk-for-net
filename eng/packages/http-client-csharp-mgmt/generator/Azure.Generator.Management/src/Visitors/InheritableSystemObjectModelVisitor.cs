@@ -31,6 +31,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             Update(baseSystemType, type);
         }
+        else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
+        {
+            // Handle regular model inheritance where a non-system model extends another non-system model.
+            // This fixes duplicate property generation when TypeSpec models redefine base model properties
+            // (e.g., to add default values or change descriptions). Without this, properties with the 'new'
+            // modifier would generate duplicates causing C# compilation errors.
+            UpdateRegularModelInheritance(type);
+        }
         return type;
     }
 
@@ -49,6 +57,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, model);
+        }
+        else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider)
+        {
+            // Handle regular model inheritance where a non-system model extends another non-system model.
+            // This fixes duplicate property generation when TypeSpec models redefine base model properties
+            // (e.g., to add default values or change descriptions). Without this, properties with the 'new'
+            // modifier would generate duplicates causing C# compilation errors.
+            UpdateRegularModelInheritance(model2);
         }
         return type;
     }
@@ -75,6 +91,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     }
 
     private HashSet<ModelProvider> _updated = new();
+    private HashSet<ModelProvider> _regularUpdated = new();
     private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
@@ -97,6 +114,26 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.Update(properties: properties, fields: [.. model.Fields, rawDataField]);
 
         _updated.Add(model);
+    }
+
+    private void UpdateRegularModelInheritance(ModelProvider model)
+    {
+        // Add cache to avoid duplicated updates
+        if (_regularUpdated.Contains(model))
+        {
+            return;
+        }
+
+        // If the model property modifiers contain 'new', we should drop it because the base type already has it.
+        model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
+
+        // Remove properties that have the same name as properties in the base model
+        var basePropertyNames = EnumerateRegularBaseModelProperties(model.BaseModelProvider!);
+        var properties = model.Properties.Where(prop => !basePropertyNames.Contains(prop.Name)).ToArray();
+
+        model.Update(properties: properties);
+
+        _regularUpdated.Add(model);
     }
 
     private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };
@@ -171,5 +208,20 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             baseModel = baseModel.BaseModelProvider;
         }
         return baseSystemPropertyNames;
+    }
+
+    private static HashSet<string> EnumerateRegularBaseModelProperties(ModelProvider baseModel)
+    {
+        var basePropertyNames = new HashSet<string>();
+        ModelProvider? currentModel = baseModel;
+        while (currentModel != null)
+        {
+            foreach (var property in currentModel.Properties)
+            {
+                basePropertyNames.Add(property.Name);
+            }
+            currentModel = currentModel.BaseModelProvider;
+        }
+        return basePropertyNames;
     }
 }

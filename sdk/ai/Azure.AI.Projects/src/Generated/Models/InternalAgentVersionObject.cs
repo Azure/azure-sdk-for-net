@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -17,7 +18,6 @@ namespace Azure.AI.Projects
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
@@ -41,7 +41,6 @@ namespace Azure.AI.Projects
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
@@ -53,7 +52,7 @@ namespace Azure.AI.Projects
         /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
         /// <param name="definition"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentVersionObject(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, InternalAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAgentVersionObject(IDictionary<string, string> metadata, AgentObjectType @object, string id, string name, string version, string description, DateTimeOffset createdAt, InternalAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Object = @object;
@@ -70,14 +69,13 @@ namespace Azure.AI.Projects
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> The object type, which is always 'agent.version'. </summary>
-        public string Object { get; } = "agent.version";
+        public AgentObjectType Object { get; } = "agent.version";
 
         /// <summary> The unique identifier of the agent version. </summary>
         public string Id { get; }

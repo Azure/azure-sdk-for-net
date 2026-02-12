@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.OracleDatabase.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 {
@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
                 await CreateCommonClient();
             }
         }
@@ -53,17 +54,20 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             await DeleteExadataInfrastructureScenario(_exaInfraResource);
         }
 
-        private async Task<List<string>> GetDbServerOcids(CloudExadataInfrastructureResource exaInfraResource) {
+        private async Task<List<string>> GetDbServerOcids(CloudExadataInfrastructureResource exaInfraResource)
+        {
             List<string> dbServerOcids = new();
             OracleDBServerCollection dbServerCollection = exaInfraResource.GetOracleDBServers();
             AsyncPageable<OracleDBServerResource> dbServers = dbServerCollection.GetAllAsync();
-            await foreach (OracleDBServerResource dbServer in dbServers) {
+            await foreach (OracleDBServerResource dbServer in dbServers)
+            {
                 dbServerOcids.Add(dbServer.Data.Properties.DBServerOcid);
             }
             return dbServerOcids;
         }
 
-        private async Task<CloudExadataInfrastructureResource> CreateExadataInfrastructureScenario() {
+        private async Task<CloudExadataInfrastructureResource> CreateExadataInfrastructureScenario()
+        {
             _exaInfraCollection = await GetCloudExadataInfrastructureCollectionAsync(DefaultResourceGroupName);
             _exadataInfraName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfraLa");
 
@@ -81,23 +85,28 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             return exaInfraResource;
         }
 
-        private async Task DeleteExadataInfrastructureScenario(CloudExadataInfrastructureResource exaInfraResource) {
-            if (exaInfraResource != null) {
+        private async Task DeleteExadataInfrastructureScenario(CloudExadataInfrastructureResource exaInfraResource)
+        {
+            if (exaInfraResource != null)
+            {
                 var deleteExaInfraOperation = await exaInfraResource.DeleteAsync(WaitUntil.Completed);
                 await deleteExaInfraOperation.WaitForCompletionResponseAsync();
                 Assert.IsTrue(deleteExaInfraOperation.HasCompleted);
             }
         }
 
-        private async Task DeleteVmClusterScenario(CloudVmClusterResource vmClusterResource) {
-            if (vmClusterResource != null) {
+        private async Task DeleteVmClusterScenario(CloudVmClusterResource vmClusterResource)
+        {
+            if (vmClusterResource != null)
+            {
                 var deleteVmClusterOperation = await vmClusterResource.DeleteAsync(WaitUntil.Completed);
                 await deleteVmClusterOperation.WaitForCompletionResponseAsync();
                 Assert.IsTrue(deleteVmClusterOperation.HasCompleted);
             }
         }
 
-        private async Task<CloudVmClusterResource> CreateVmClusterScenario() {
+        private async Task<CloudVmClusterResource> CreateVmClusterScenario()
+        {
             _vmClusterCollection = await GetCloudVmClusterCollectionAsync(DefaultResourceGroupName);
             _vmClusterName = Recording.GenerateAssetName("OFake_NetSdkTestVmCluster");
 
@@ -111,45 +120,54 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             return getVmClusterResponse.Value;
         }
 
-        private CloudExadataInfrastructureData GetDefaultExaInfraData(string exaInfraName) {
+        private CloudExadataInfrastructureData GetDefaultExaInfraData(string exaInfraName)
+        {
             string shape = "Exadata.X9M";
-            CloudExadataInfrastructureProperties exaInfraProperties = new CloudExadataInfrastructureProperties(shape, exaInfraName) {
+            CloudExadataInfrastructureProperties exaInfraProperties = new CloudExadataInfrastructureProperties(shape, exaInfraName)
+            {
                 ComputeCount = 2,
                 StorageCount = 3,
             };
-            return new CloudExadataInfrastructureData(_location, new List<string>{ "2" }) {
+            return new CloudExadataInfrastructureData(_location, new List<string> { "2" })
+            {
                 Properties = exaInfraProperties
             };
         }
 
-        private async Task<CloudVmClusterData> GetDefaultVmClusterData() {
+        private async Task<CloudVmClusterData> GetDefaultVmClusterData()
+        {
             CloudVmClusterProperties vmClusterProperties = GetDefaultVmClusterProperties();
 
             List<string> dbServerOcids = await GetDbServerOcids(_exaInfraResource);
             // A minimum of 2 database servers is required.
-            if (dbServerOcids[0] != null) {
+            if (dbServerOcids[0] != null)
+            {
                 vmClusterProperties.DBServerOcids.Add(dbServerOcids[0]);
             }
-            if (dbServerOcids[1] != null) {
+            if (dbServerOcids[1] != null)
+            {
                 vmClusterProperties.DBServerOcids.Add(dbServerOcids[1]);
             }
 
-            return new CloudVmClusterData(_location) {
+            return new CloudVmClusterData(_location)
+            {
                 Properties = vmClusterProperties
             };
         }
 
-        private CloudVmClusterProperties GetDefaultVmClusterProperties() {
+        private CloudVmClusterProperties GetDefaultVmClusterProperties()
+        {
             string hostName = "net-sdk-test";
             int cpuCoreCount = 4;
             ResourceIdentifier cloudExadataInfrastructureId = _exaInfraResource.Data.Id;
-            List<string> sshPublicKeys = new List<string>() {DefaultVmClusterKey};
+            List<string> sshPublicKeys = new List<string>() { DefaultVmClusterKey };
             string giVersion = "19.0.0.0";
             ResourceIdentifier vnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
             ResourceIdentifier subnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
             string displayName = _vmClusterName;
 
-            return new CloudVmClusterProperties(hostName, cpuCoreCount, cloudExadataInfrastructureId, sshPublicKeys, vnetId, giVersion, subnetId, displayName) {
+            return new CloudVmClusterProperties(hostName, cpuCoreCount, cloudExadataInfrastructureId, sshPublicKeys, vnetId, giVersion, subnetId, displayName)
+            {
                 LicenseModel = OracleLicenseModel.LicenseIncluded,
                 ClusterName = "TestVmClust",
                 MemorySizeInGbs = 90,

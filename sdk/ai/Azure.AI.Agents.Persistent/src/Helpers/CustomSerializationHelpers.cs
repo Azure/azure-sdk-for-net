@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent;
+
 internal static partial class CustomSerializationHelpers
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
     {
         internal WidgetData0() => throw null;
 
+        protected virtual WidgetData0 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<WidgetData0>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace _Type.Property.AdditionalProperties
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         WidgetData0 IPersistableModel<WidgetData0>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual WidgetData0 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<WidgetData0>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

@@ -20,6 +20,23 @@ namespace Azure.Analytics.Defender.Easm
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AssetResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PageAssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePageAssetResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PageAssetResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PageAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -249,23 +266,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PageAssetResource IPersistableModel<PageAssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PageAssetResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AssetResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PageAssetResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePageAssetResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PageAssetResource)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PageAssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

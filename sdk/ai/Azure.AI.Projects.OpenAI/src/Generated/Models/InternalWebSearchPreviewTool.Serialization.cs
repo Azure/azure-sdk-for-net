@@ -6,11 +6,29 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalWebSearchPreviewTool : AgentTool, IJsonModel<InternalWebSearchPreviewTool>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalWebSearchPreviewTool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalWebSearchPreviewTool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalWebSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -69,7 +87,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ApproximateLocation userLocation = default;
+            InternalApproximateLocation userLocation = default;
             SearchContextSize? searchContextSize = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -85,7 +103,7 @@ namespace Azure.AI.Projects.OpenAI
                         userLocation = null;
                         continue;
                     }
-                    userLocation = ApproximateLocation.DeserializeApproximateLocation(prop.Value, options);
+                    userLocation = InternalApproximateLocation.DeserializeInternalApproximateLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
@@ -124,23 +142,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalWebSearchPreviewTool IPersistableModel<InternalWebSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalWebSearchPreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalWebSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalWebSearchPreviewTool(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalWebSearchPreviewTool)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalWebSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

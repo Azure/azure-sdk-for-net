@@ -31,9 +31,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The type of the output. Always `image`. </summary>
-        internal string Type { get; } = "image";
+        public string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
     }
 }

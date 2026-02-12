@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -14,6 +15,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemComputerToolCall"/> for deserialization. </summary>
         internal InternalOutputItemComputerToolCall()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemComputerToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalOutputItemComputerToolCall(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalOutputItemComputerToolCall)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -81,7 +99,7 @@ namespace Azure.AI.Projects.OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            ComputerAction action = default;
+            InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
             OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -117,7 +135,7 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = ComputerAction.DeserializeComputerAction(prop.Value, options);
+                    action = InternalComputerAction.DeserializeInternalComputerAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
@@ -171,23 +189,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalOutputItemComputerToolCall IPersistableModel<InternalOutputItemComputerToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemComputerToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemComputerToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalOutputItemComputerToolCall(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemComputerToolCall)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalOutputItemComputerToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

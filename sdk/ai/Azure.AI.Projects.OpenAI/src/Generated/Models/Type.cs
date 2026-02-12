@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Type. </summary>
-    internal partial class Type : ComputerAction
+    internal partial class Type : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Type"/>. </summary>
         /// <param name="text"> The text to type. </param>
@@ -30,6 +31,6 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The text to type. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

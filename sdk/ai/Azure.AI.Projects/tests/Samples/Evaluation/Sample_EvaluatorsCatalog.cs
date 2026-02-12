@@ -20,8 +20,8 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         EvaluatorMetric metric = new() {
             Type = EvaluatorMetricType.Ordinal,
             DesirableDirection = EvaluatorMetricDirection.Increase,
-            MinValue=1,
-            MaxValue=5
+            MinValue = 1,
+            MaxValue = 5
         };
         return new(
             categories: [EvaluatorCategory.Quality],
@@ -45,29 +45,27 @@ public class Sample_EvaluatorsCatalog : SamplesBase
                     Response:
                     {response}
                     """,
-                initParameters: BinaryData.FromObjectAsJson(
-                    new
-                    {
-                        type = "object",
-                        properties = new
-                        {
+                initParameters: new Dictionary<string, BinaryData>
+                {
+                    { "type", BinaryData.FromString("\"object\"") },
+                    { "properties", BinaryData.FromObjectAsJson(new {
                             deployment_name = new { type = "string" },
                             threshold = new { rtpe = "number" },
-                        },
-                        required = new[] { "deployment_name", "threshold" }
-                    }
-                ),
-                dataSchema: BinaryData.FromObjectAsJson(
-                    new
+                        })
+                    },
+                    { "required", BinaryData.FromObjectAsJson(new[] { "deployment_name", "threshold" }) }
+                },
+                dataSchema: new Dictionary<string, BinaryData>{
+                    { "type", BinaryData.FromString("\"object\"") },
                     {
-                        type = "object",
-                        properties = new
+                        "properties",
+                        BinaryData.FromObjectAsJson(new
                         {
                             query = new { type = "string" },
                             response = new { type = "string" }
-                        }
+                        })
                     }
-                ),
+                },
                 metrics: new Dictionary<string, EvaluatorMetric> { { "score", metric } }
             ),
             evaluatorType: EvaluatorType.Custom
@@ -92,29 +90,27 @@ public class Sample_EvaluatorsCatalog : SamplesBase
             categories: [EvaluatorCategory.Quality],
             definition: new CodeBasedEvaluatorDefinition(
                 codeText: "def grade(sample, item):\n    return 1.0",
-                initParameters: BinaryData.FromObjectAsJson(
-                    new
-                    {
-                        type = "object",
-                        properties = new
+                initParameters: new Dictionary<string, BinaryData>
+                {
+                    { "type", BinaryData.FromString("\"object\"") },
+                    { "properties", BinaryData.FromObjectAsJson(new
                         {
                             deployment_name = new { type = "string" },
-                        },
-                        required = new[] { "deployment_name" },
-                    }
-                ),
-                dataSchema: BinaryData.FromObjectAsJson(
-                    new
-                    {
-                        type = "object",
-                        properties = new
+                        })
+                    },
+                    { "required", BinaryData.FromObjectAsJson(new[] { "deployment_name"}) },
+                },
+                dataSchema: new Dictionary<string, BinaryData>
+                {
+                    { "type", BinaryData.FromString("\"object\"") },
+                    { "properties", BinaryData.FromObjectAsJson(new
                         {
                             item = new { type = "string" },
                             response = new { type = "string" }
-                        },
-                        required = new[] { "query", "response" },
-                    }
-                ),
+                        })
+                    },
+                    { "required", BinaryData.FromObjectAsJson(new[] { "query", "response" }) },
+                },
                 metrics: new Dictionary<string, EvaluatorMetric> {
                     { "result", resultMetric }
                 }

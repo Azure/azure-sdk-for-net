@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -14,6 +15,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/> for deserialization. </summary>
         internal InternalCompoundFilter()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternalCompoundFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalCompoundFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalCompoundFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalCompoundFilter)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -35,7 +53,7 @@ namespace Azure.AI.Projects.OpenAI
                 throw new FormatException($"The model {nameof(InternalCompoundFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("filters"u8);
             writer.WriteStartArray();
             foreach (BinaryData item in Filters)
@@ -104,7 +122,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToCompoundFilterType();
+                    @type = new CompoundFilterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -151,23 +169,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalCompoundFilter IPersistableModel<InternalCompoundFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalCompoundFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCompoundFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalCompoundFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalCompoundFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalCompoundFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

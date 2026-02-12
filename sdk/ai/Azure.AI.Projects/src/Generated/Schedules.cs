@@ -226,7 +226,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update a schedule by id.
+        /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -250,7 +250,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update a schedule by id.
+        /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -273,9 +273,9 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create or update a schedule by id. </summary>
+        /// <summary> Create or update operation template. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="schedule"> Schedule resource. </param>
+        /// <param name="schedule"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="schedule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -289,9 +289,9 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
-        /// <summary> Create or update a schedule by id. </summary>
+        /// <summary> Create or update operation template. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="schedule"> Schedule resource. </param>
+        /// <param name="schedule"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="schedule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -313,8 +313,8 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -337,8 +337,8 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -354,8 +354,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a schedule run by id. </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -370,8 +370,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a schedule run by id. </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
-        /// <param name="runId"> Identifier of the schedule run. </param>
+        /// <param name="scheduleId"> The unique identifier of the schedule. </param>
+        /// <param name="runId"> The unique identifier of the schedule run. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>

@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;

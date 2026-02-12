@@ -262,12 +262,12 @@ namespace Azure.Messaging.ServiceBus
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
             IsSessionProcessor = isSessionEntity;
-           _clientDiagnostics = new MessagingClientDiagnostics(
-                DiagnosticProperty.DiagnosticNamespace,
-                DiagnosticProperty.ResourceProviderNamespace,
-                DiagnosticProperty.ServiceBusServiceContext,
-                FullyQualifiedNamespace,
-                EntityPath);
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                 DiagnosticProperty.DiagnosticNamespace,
+                 DiagnosticProperty.ResourceProviderNamespace,
+                 DiagnosticProperty.ServiceBusServiceContext,
+                 FullyQualifiedNamespace,
+                 EntityPath);
         }
 
         /// <summary>

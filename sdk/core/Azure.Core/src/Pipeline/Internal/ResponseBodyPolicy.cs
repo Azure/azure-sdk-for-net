@@ -126,7 +126,8 @@ namespace Azure.Core.Pipeline
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                     int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-                    if (bytesRead == 0) break;
+                    if (bytesRead == 0)
+                        break;
                     await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
                 }
             }

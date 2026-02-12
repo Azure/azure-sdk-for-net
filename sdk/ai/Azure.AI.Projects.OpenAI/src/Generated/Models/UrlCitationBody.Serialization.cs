@@ -6,15 +6,33 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> URL citation. </summary>
-    internal partial class UrlCitationBody : Annotation, IJsonModel<UrlCitationBody>
+    internal partial class UrlCitationBody : InternalAnnotation, IJsonModel<UrlCitationBody>
     {
         /// <summary> Initializes a new instance of <see cref="UrlCitationBody"/> for deserialization. </summary>
         internal UrlCitationBody()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UrlCitationBody>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUrlCitationBody(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UrlCitationBody)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -52,7 +70,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Annotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UrlCitationBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -137,23 +155,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         UrlCitationBody IPersistableModel<UrlCitationBody>.Create(BinaryData data, ModelReaderWriterOptions options) => (UrlCitationBody)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Annotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UrlCitationBody>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUrlCitationBody(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UrlCitationBody)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UrlCitationBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

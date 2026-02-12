@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -42,7 +43,7 @@ namespace Azure.AI.Projects.OpenAI
         ///   (string, optional) and `file_id` (string, optional).
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
-        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, ImageGenToolInputImageMask inputImageMask, long? partialImages) : base(@type, additionalBinaryDataProperties)
+        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -96,7 +97,7 @@ namespace Azure.AI.Projects.OpenAI
         /// Optional mask for inpainting. Contains `image_url`
         ///   (string, optional) and `file_id` (string, optional).
         /// </summary>
-        public ImageGenToolInputImageMask InputImageMask { get; set; }
+        public InternalImageGenToolInputImageMask InputImageMask { get; set; }
 
         /// <summary> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </summary>
         public long? PartialImages { get; set; }

@@ -37,10 +37,10 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The action type. </summary>
-        internal string Type { get; } = "search";
+        public string Type { get; } = "search";
 
         /// <summary> [DEPRECATED] The search query. </summary>
-        public string Query { get; }
+        public string Query { get; set; }
 
         /// <summary> The search queries. </summary>
         public IList<string> Queries { get; }

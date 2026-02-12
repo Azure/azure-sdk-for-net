@@ -253,7 +253,8 @@ namespace Azure.Data.Tables
                         new TableConnectionString(
                             GetCredentials(settings),
                             tableStorageUri: createStorageUri(tableEndpoint, tableSecondaryEndpoint, sasToken ?? string.Empty, ConstructTableEndpoint)
-                        ) { EndpointSuffix = settingOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting), Settings = settings };
+                        )
+                        { EndpointSuffix = settingOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting), Settings = settings };
 
                     accountInformation._accountName = settingOrDefault(TableConstants.ConnectionStrings.AccountNameSetting);
 
@@ -412,7 +413,8 @@ namespace Azure.Data.Tables
                 TableConstants.ConnectionStrings.DevStoreAccountKey);
             var account = new TableConnectionString(
                 credentials,
-                tableStorageUri: (tableEndpoint, tableSecondaryEndpoint)) { Settings = ConnectionString.Empty() };
+                tableStorageUri: (tableEndpoint, tableSecondaryEndpoint))
+            { Settings = ConnectionString.Empty() };
             account.Settings.Add(TableConstants.ConnectionStrings.UseDevelopmentSetting, "true");
             if (proxyUri != null)
             {

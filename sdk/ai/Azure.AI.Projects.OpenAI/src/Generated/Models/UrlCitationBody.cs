@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> URL citation. </summary>
-    internal partial class UrlCitationBody : Annotation
+    internal partial class UrlCitationBody : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="UrlCitationBody"/>. </summary>
         /// <param name="url"> The URL of the web resource. </param>
@@ -43,15 +44,15 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The URL of the web resource. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
 
         /// <summary> The index of the first character of the URL citation in the message. </summary>
-        public long StartIndex { get; }
+        public long StartIndex { get; set; }
 
         /// <summary> The index of the last character of the URL citation in the message. </summary>
-        public long EndIndex { get; }
+        public long EndIndex { get; set; }
 
         /// <summary> The title of the web resource. </summary>
-        public string Title { get; }
+        public string Title { get; set; }
     }
 }

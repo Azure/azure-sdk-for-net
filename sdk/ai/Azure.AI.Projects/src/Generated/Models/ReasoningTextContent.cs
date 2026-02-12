@@ -8,12 +8,15 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> ReasoningTextContent. </summary>
-    internal partial class ReasoningTextContent : OutputContent
+    internal partial class ReasoningTextContent
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ReasoningTextContent"/>. </summary>
         /// <param name="text"> The reasoning text from the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ReasoningTextContent(string text) : base(OutputContentType.ReasoningText)
+        public ReasoningTextContent(string text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -21,13 +24,18 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="ReasoningTextContent"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The type of the reasoning text. Always `reasoning_text`. </param>
         /// <param name="text"> The reasoning text from the model. </param>
-        internal ReasoningTextContent(OutputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReasoningTextContent(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             Text = text;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The type of the reasoning text. Always `reasoning_text`. </summary>
+        internal string Type { get; } = "reasoning_text";
 
         /// <summary> The reasoning text from the model. </summary>
         public string Text { get; }

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Internal;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.OpenAI.Internal;
 
 #pragma warning disable AOAI001
 #pragma warning disable AZC0112

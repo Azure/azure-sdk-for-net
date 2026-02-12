@@ -3,13 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects.OpenAI;
-using OpenAI.Responses;
 using OpenAI;
-using System.Runtime.CompilerServices;
-using System.Collections.Generic;
-using System;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects;
 

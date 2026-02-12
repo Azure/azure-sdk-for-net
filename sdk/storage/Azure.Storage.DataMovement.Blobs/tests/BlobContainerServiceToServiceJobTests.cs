@@ -1,22 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
-using Azure.Core;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using BaseBlobs::Azure.Storage.Blobs;
-using Azure.Storage.DataMovement.Tests;
-using Moq;
-using System.Buffers;
-using Azure.Core.Pipeline;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Storage.DataMovement.Tests;
+using BaseBlobs::Azure.Storage.Blobs;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using Moq;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -25,7 +24,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     {
         private Mock<BlobStorageResourceContainer> GetMockBlobContainerResource()
         {
-            Mock <BlobStorageResourceContainer> mock = new Mock<BlobStorageResourceContainer>();
+            Mock<BlobStorageResourceContainer> mock = new Mock<BlobStorageResourceContainer>();
             mock.Setup(r => r.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
             mock.Setup(r => r.ProviderId).Returns("blob");
             mock.Setup(r => r.GetSourceCheckpointDetails())
@@ -33,7 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mock.Setup(r => r.GetDestinationCheckpointDetails())
                 .Returns(new MockResourceCheckpointDetails());
             mock.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns<string,string>((path,resourceId) =>
+                .Returns<string, string>((path, resourceId) =>
                 {
                     return GetMockBlockBlobResource(path).Object;
                 });

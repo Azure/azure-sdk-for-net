@@ -103,13 +103,13 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
-            agentName: "myAgent2",
+        AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "agentVersionWithMemory",
             options: new(agentDefinition));
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Async
-        responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
+        responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersionWithMemory.Name);
 
         response = await responseClient.CreateResponseAsync(
             "Please explain me the meaning of the joke from the previous conversation.");
@@ -119,7 +119,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #region Snippet:Sample_Cleanup_MemoryTool_Async
         await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
         #endregion
     }
 
@@ -213,7 +213,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
-            agentName: "myAgent2",
+            agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
 

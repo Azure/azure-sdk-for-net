@@ -18,8 +18,10 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchServicePublicNetworkAccess ToSearchServicePublicNetworkAccess(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "enabled")) return SearchServicePublicNetworkAccess.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled")) return SearchServicePublicNetworkAccess.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "enabled"))
+                return SearchServicePublicNetworkAccess.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled"))
+                return SearchServicePublicNetworkAccess.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServicePublicNetworkAccess value.");
         }
     }

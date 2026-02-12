@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.SqlVirtualMachine.Models;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SqlVirtualMachine.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 {
@@ -67,7 +67,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             ValidateSqlVirtualMachine(sqlVmFromGet.Data, sqlVm.Data);
             // Update
             string key = "test", value = "updateTag";
-            SqlVmResource sqlVmFromUpdate = (await sqlVm.UpdateAsync(WaitUntil.Completed, new SqlVmPatch(){
+            SqlVmResource sqlVmFromUpdate = (await sqlVm.UpdateAsync(WaitUntil.Completed, new SqlVmPatch()
+            {
                 Tags =
                 {
                     { key, value }

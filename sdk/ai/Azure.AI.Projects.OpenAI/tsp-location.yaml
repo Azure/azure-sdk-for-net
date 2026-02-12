@@ -1,5 +1,5 @@
 repo: Azure/azure-rest-api-specs
-commit: 90a45cb185ec4bbca5541986eb034db70a7ba089
+commit: 7299420c6d75812d5c82c11bf65523aeb160e64e
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-projects-openai
 entrypointFile: client.tsp
 additionalDirectories:
@@ -10,5 +10,14 @@ additionalDirectories:
   - specification/ai-foundry/data-plane/Foundry/src/openai-conversations
   - specification/ai-foundry/data-plane/Foundry/src/openai-evaluations
   - specification/ai-foundry/data-plane/Foundry/src/openai-responses
+  - specification/ai-foundry/data-plane/Foundry/src/connections
+  - specification/ai-foundry/data-plane/Foundry/src/datasets
+  - specification/ai-foundry/data-plane/Foundry/src/indexes
+  - specification/ai-foundry/data-plane/Foundry/src/deployments
+  - specification/ai-foundry/data-plane/Foundry/src/red-teams
+  - specification/ai-foundry/data-plane/Foundry/src/evaluation_taxonomies
+  - specification/ai-foundry/data-plane/Foundry/src/evaluators
+  - specification/ai-foundry/data-plane/Foundry/src/insights
+  - specification/ai-foundry/data-plane/Foundry/src/schedules
   - specification/ai-foundry/data-plane/Foundry/src/tools
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

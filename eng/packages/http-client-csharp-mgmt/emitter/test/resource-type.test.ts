@@ -3,7 +3,9 @@ import {
   calculateResourceTypeFromPath,
   ResourceScope
 } from "../src/resource-metadata.js";
-import { getOperationScopeFromPath } from "../src/resolve-arm-resources-converter.js";
+import {
+  getOperationScopeFromPath
+} from "../src/resolve-arm-resources-converter.js";
 import { strictEqual } from "assert";
 
 describe("Resource Type Calculation", () => {

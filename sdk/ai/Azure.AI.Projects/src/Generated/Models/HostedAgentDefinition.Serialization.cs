@@ -4,6 +4,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
@@ -14,6 +15,23 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/> for deserialization. </summary>
         internal HostedAgentDefinition()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHostedAgentDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -72,6 +90,11 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Image))
+            {
+                writer.WritePropertyName("image"u8);
+                writer.WriteStringValue(Image);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -99,7 +122,106 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            return UnknownHostedAgentDefinition.DeserializeUnknownHostedAgentDefinition(element, options);
+            AgentKind kind = default;
+            RaiConfig raiConfig = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<InternalTool> tools = default;
+            IList<ProtocolVersionRecord> containerProtocolVersions = default;
+            string cpu = default;
+            string memory = default;
+            IDictionary<string, string> environmentVariables = default;
+            string image = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new AgentKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("rai_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tools"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalTool> array = new List<InternalTool>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                    }
+                    tools = array;
+                    continue;
+                }
+                if (prop.NameEquals("container_protocol_versions"u8))
+                {
+                    List<ProtocolVersionRecord> array = new List<ProtocolVersionRecord>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
+                    }
+                    containerProtocolVersions = array;
+                    continue;
+                }
+                if (prop.NameEquals("cpu"u8))
+                {
+                    cpu = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("memory"u8))
+                {
+                    memory = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("environment_variables"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    environmentVariables = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("image"u8))
+                {
+                    image = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new HostedAgentDefinition(
+                kind,
+                raiConfig,
+                additionalBinaryDataProperties,
+                tools ?? new ChangeTrackingList<InternalTool>(),
+                containerProtocolVersions,
+                cpu,
+                memory,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                image);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -121,23 +243,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HostedAgentDefinition IPersistableModel<HostedAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostedAgentDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HostedAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHostedAgentDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HostedAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

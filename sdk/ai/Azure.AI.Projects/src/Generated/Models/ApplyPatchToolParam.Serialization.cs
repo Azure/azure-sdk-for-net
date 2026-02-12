@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> Apply patch tool. </summary>
     internal partial class ApplyPatchToolParam : InternalTool, IJsonModel<ApplyPatchToolParam>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplyPatchToolParam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplyPatchToolParam(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplyPatchToolParam)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplyPatchToolParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,23 +111,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ApplyPatchToolParam IPersistableModel<ApplyPatchToolParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplyPatchToolParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplyPatchToolParam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeApplyPatchToolParam(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplyPatchToolParam)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApplyPatchToolParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

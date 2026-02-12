@@ -16,6 +16,30 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ReportAssetSummaryResult. </summary>
     public partial class ReportAssetSummaryResult : IJsonModel<ReportAssetSummaryResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReportAssetSummaryResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReportAssetSummaryResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReportAssetSummaryResult"/> from. </param>
+        public static explicit operator ReportAssetSummaryResult(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeReportAssetSummaryResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReportAssetSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,31 +156,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         ReportAssetSummaryResult IPersistableModel<ReportAssetSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReportAssetSummaryResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeReportAssetSummaryResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReportAssetSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReportAssetSummaryResult"/> from. </param>
-        public static explicit operator ReportAssetSummaryResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeReportAssetSummaryResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

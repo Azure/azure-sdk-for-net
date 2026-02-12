@@ -13,9 +13,9 @@ namespace Azure.AI.Projects
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier202;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = PipelineMessageClassifier.Create(stackalloc ushort[] { 202 });
+        private static PipelineMessageClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 202 });
 
         internal PipelineMessage CreateCreateMemoryStoreRequest(BinaryContent content, RequestOptions options)
         {
@@ -67,7 +67,6 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/memory_stores", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -84,6 +83,7 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("before", before, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");

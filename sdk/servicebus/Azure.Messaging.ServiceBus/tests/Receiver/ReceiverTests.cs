@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
                     (_, _, _, count, _, _, _, _, _) =>
                     {
-                        prefetchCount = (int) count;
+                        prefetchCount = (int)count;
                     })
                 .Returns(mockTransportReceiver.Object);
             IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = new[]
@@ -603,7 +603,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task PurgeMessagesForDateEvaluatesReturnedCount()
         {
-            var expectedDeleteCount = (ServiceBusReceiver.MaxDeleteMessageCount * 4) -1;
+            var expectedDeleteCount = (ServiceBusReceiver.MaxDeleteMessageCount * 4) - 1;
             var expectedDate = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             var mockReceiver = new Mock<ServiceBusReceiver>(

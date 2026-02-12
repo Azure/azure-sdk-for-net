@@ -15,6 +15,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> Question suggested by the Active Learning feature. </summary>
     public partial class SuggestedQuestion : IJsonModel<SuggestedQuestion>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SuggestedQuestion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SuggestedQuestion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSuggestedQuestion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SuggestedQuestion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SuggestedQuestion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -146,23 +163,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SuggestedQuestion IPersistableModel<SuggestedQuestion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SuggestedQuestion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SuggestedQuestion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSuggestedQuestion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SuggestedQuestion)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SuggestedQuestion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

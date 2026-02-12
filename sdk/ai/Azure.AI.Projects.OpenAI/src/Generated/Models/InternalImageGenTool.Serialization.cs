@@ -6,11 +6,29 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalImageGenTool : AgentTool, IJsonModel<InternalImageGenTool>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalImageGenTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalImageGenTool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalImageGenTool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalImageGenTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,17 +56,17 @@ namespace Azure.AI.Projects.OpenAI
             if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
-                writer.WriteStringValue(Quality.Value.ToSerialString());
+                writer.WriteStringValue(Quality.Value.ToString());
             }
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
-                writer.WriteStringValue(Size.Value.ToSerialString());
+                writer.WriteStringValue(Size.Value.ToString());
             }
             if (Optional.IsDefined(OutputFormat))
             {
                 writer.WritePropertyName("output_format"u8);
-                writer.WriteStringValue(OutputFormat.Value.ToSerialString());
+                writer.WriteStringValue(OutputFormat.Value.ToString());
             }
             if (Optional.IsDefined(OutputCompression))
             {
@@ -58,12 +76,12 @@ namespace Azure.AI.Projects.OpenAI
             if (Optional.IsDefined(Moderation))
             {
                 writer.WritePropertyName("moderation"u8);
-                writer.WriteStringValue(Moderation.Value.ToSerialString());
+                writer.WriteStringValue(Moderation.Value.ToString());
             }
             if (Optional.IsDefined(Background))
             {
                 writer.WritePropertyName("background"u8);
-                writer.WriteStringValue(Background.Value.ToSerialString());
+                writer.WriteStringValue(Background.Value.ToString());
             }
             if (Optional.IsDefined(InputFidelity))
             {
@@ -117,7 +135,7 @@ namespace Azure.AI.Projects.OpenAI
             ImageGenToolModeration? moderation = default;
             ImageGenToolBackground? background = default;
             InputFidelity? inputFidelity = default;
-            ImageGenToolInputImageMask inputImageMask = default;
+            InternalImageGenToolInputImageMask inputImageMask = default;
             long? partialImages = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +159,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    quality = prop.Value.GetString().ToImageGenToolQuality();
+                    quality = new ImageGenToolQuality(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -150,7 +168,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    size = prop.Value.GetString().ToImageGenToolSize();
+                    size = new ImageGenToolSize(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("output_format"u8))
@@ -159,7 +177,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    outputFormat = prop.Value.GetString().ToImageGenToolOutputFormat();
+                    outputFormat = new ImageGenToolOutputFormat(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("output_compression"u8))
@@ -177,7 +195,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    moderation = prop.Value.GetString().ToImageGenToolModeration();
+                    moderation = new ImageGenToolModeration(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("background"u8))
@@ -186,7 +204,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    background = prop.Value.GetString().ToImageGenToolBackground();
+                    background = new ImageGenToolBackground(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("input_fidelity"u8))
@@ -205,7 +223,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    inputImageMask = ImageGenToolInputImageMask.DeserializeImageGenToolInputImageMask(prop.Value, options);
+                    inputImageMask = InternalImageGenToolInputImageMask.DeserializeInternalImageGenToolInputImageMask(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("partial_images"u8))
@@ -256,23 +274,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalImageGenTool IPersistableModel<InternalImageGenTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalImageGenTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalImageGenTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalImageGenTool(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalImageGenTool)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalImageGenTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

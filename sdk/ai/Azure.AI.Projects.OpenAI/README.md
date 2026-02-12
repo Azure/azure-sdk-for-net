@@ -20,7 +20,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
-- [Examples]
+- [Examples](#examples)
   - [Prompt Agents](#prompt-agents)
     - [Agents](#agents)
     - [Responses](#responses)
@@ -29,6 +29,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Published Agents](#published-agents)
   - [Container App](#container-app)
   - [Hosted Agents](#hosted-agents)
+  - [Structured Output](#structured-output)
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)
   - [Computer use](#computer-use)
@@ -44,18 +45,19 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
     - [Configure Microsoft Foundry](#configure-microsoft-foundry)
     - [Using Browser automation tool](#using-browser-automation-tool)
-  - [SharePoint tool](#sharepoint-tool)
-  - [Fabric Data Agent tool](#fabric-data-agent-tool)
+  - [SharePoint tool](#sharepoint)
+  - [Fabric Data Agent tool](#fabric)
     - [Create a Fabric Capacity](#create-a-fabric-capacity)
     - [Create a Lakehouse data repository](#create-a-lakehouse-data-repository)
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
-  - [A2ATool](#a2atool)
+  - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
       - [New Microsoft Foundry](#new-microsoft-foundry)
     - [Using A2A Tool](#using-a2a-tool)
+  - [Memory search tool](#memory-search-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -475,13 +477,12 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -490,7 +491,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -510,6 +512,61 @@ Agent deletion should be done through Azure CLI.
 ```bash
 az cognitiveservices agent delete-deployment --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
 az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+```
+
+### Structured Output
+
+The Agent can be instructed to give the response in JSON format, compliant with the provided scheme.
+
+For example, if we have the scheme as the one below:
+
+```C# Snippet:Sample_Schema_StructuredOutput
+private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
+    new {
+        additionalProperties = false,
+        properties = new {
+            name = new {
+                title = "Name",
+                type = "string"
+            },
+            date = new {
+                description = "Date in YYYY-MM-DD format",
+                title = "Date",
+                type = "string"
+            },
+            participants = new {
+                items = new { type = "string" },
+                title = "Participants",
+                type = "array"
+            }
+        },
+        required = new List<string> { "name", "date", "participants" },
+        title ="CalendarEvent",
+        type = "object",
+    }
+);
+```
+
+We can provide it to the Agent through `TextOptions` property of `PromptAgentDefinition` to get the Agent output in JSON format.
+
+```C# Snippet:Sample_CreateAgent_StructuredOutput_Async
+var textOptions = new ResponseTextOptions()
+{
+    TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
+        jsonSchemaFormatName: "Calendar",
+        jsonSchema: s_calendatSchema
+    )
+};
+PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+{
+    Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
+                   "and returns it in the desired structured output format.",
+    TextOptions = textOptions
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition)
+);
 ```
 
 ### File search
@@ -1035,7 +1092,7 @@ Console.WriteLine($"{text}{annotation}");
 ### Bing Grounding
 
 To support the response returned by the Agent, Bing grounding can be used. To implement it,
-create the `BingGroundingAgentTool` and use it in `PromptAgentDefinition` object.
+create the `BingGroundingTool` and use it in `PromptAgentDefinition` object.
 
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
@@ -1098,10 +1155,10 @@ await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateRe
 Console.WriteLine($"{text}{annotation}");
 ```
 
-### Bing Custom Search
+### Bing Custom Search (preview)<a id="bing-custom-search"></a>
 
 Along with bing grounding, Agents can use the custom search. To implement it,
-create the `BingCustomSearchAgentTool` and use it in `PromptAgentDefinition` object. The
+create the `BingCustomSearchPreviewTool` and use it in `PromptAgentDefinition` object. The
 use of this tool is like Bing Grounding, however it requires ID of Grounding with Bing
 Custom Search and the name of a search configuration. In this scenario, we use Bing to search
 en.wikipedia.org. This configuration is called "wikipedia" its search URL is configured through Azure.
@@ -1163,7 +1220,7 @@ while (nextResponseOptions is not null)
         {
             nextResponseOptions = new CreateResponseOptions()
             {
-                PreviousResponseId = latestResponse.PreviousResponseId,
+                PreviousResponseId = latestResponse.Id,
             };
             if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
             {
@@ -1211,14 +1268,14 @@ handled the same way as described in the MCP tool section.
 
 ### OpenAPI tool
 OpenAPI tool allows Agent to get information from Web services using [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification).
-To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` object and provide the specification file to its constructor. `OpenAPIAgentTool` contains a `Description` property, serving as a hint when this tool should be used.
+To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` object and provide the specification file to its constructor. `OpenAPITool` contains a `Description` property, serving as a hint when this tool should be used.
 
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Async
 string filePath = GetFile();
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIAnonymousAuthenticationDetails()
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
@@ -1255,8 +1312,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -1291,7 +1348,7 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-### Browser automation
+### Browser automation (preview)<a id="browser-automation"></a>
 
 Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
 
@@ -1369,8 +1426,8 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
-### SharePoint tool
-`SharepointAgentTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointAgentTool`.
+### SharePoint tool (preview)<a id="sharepoint"></a>
+`SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.
 
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Async
 AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
@@ -1432,7 +1489,7 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 ```
 
-### Fabric Data Agent tool
+### Fabric Data Agent tool (preview) <a id="fabric"></a>
 
 As a prerequisite to this example, we will need to create Microsoft Fabric with Lakehouse data repository. Please see the end-to end tutorials on using Microsoft Fabric [here](https://learn.microsoft.com/fabric/fundamentals/end-to-end-tutorials) for more information.
 
@@ -1473,7 +1530,7 @@ After we have created the Fabric data Agent, we can connect fabric to our Micros
 
 #### Using Microsoft Fabric tool
 
-To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricAgentTool` into `PromptAgentDefinition`.
+To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricPreviewTool` into `PromptAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_Fabric_Async
 AIProjectConnection fabricConnection = await projectClient.Connections.GetConnectionAsync(fabricConnectionName);
@@ -1491,7 +1548,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-### A2ATool
+### A2APreviewTool (preview)<a id="a2atool"></a>
 
 The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed to enable seamless communication between agents. In the scenario below we assume that we have the application endpoint, which complies  with A2A; the authentication is happening through header `x-api-key` value.
 
@@ -1523,7 +1580,7 @@ If we are using the Agent2agent connection, we do not need to provide the endpoi
 
 #### Using A2A Tool
 
-To use the Agent with A2A tool, we need to include `A2ATool` into `PromptAgentDefinition`.
+To use the Agent with A2A tool, we need to include `A2APreviewTool` into `PromptAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
@@ -1546,6 +1603,22 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Memory search tool (preview)<a id="memory-search-tool"></a>
+
+Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
+Agents can use Memory Stores by defining `MemorySearchPreviewTool` in `PromptAgentDefinition`.
+
+```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
+agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent capable to access memorized conversation.",
+};
+agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
+AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "agentVersionWithMemory",
     options: new(agentDefinition));
 ```
 

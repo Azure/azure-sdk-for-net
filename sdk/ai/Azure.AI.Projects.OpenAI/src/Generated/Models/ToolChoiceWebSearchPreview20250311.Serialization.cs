@@ -13,8 +13,25 @@ namespace Azure.AI.Projects.OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    public partial class ToolChoiceWebSearchPreview20250311 : ToolChoiceParam, IJsonModel<ToolChoiceWebSearchPreview20250311>
+    internal partial class ToolChoiceWebSearchPreview20250311 : InternalToolChoiceParam, IJsonModel<ToolChoiceWebSearchPreview20250311>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceWebSearchPreview20250311>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeToolChoiceWebSearchPreview20250311(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ToolChoiceWebSearchPreview20250311)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ToolChoiceWebSearchPreview20250311>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -42,7 +59,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceWebSearchPreview20250311>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -97,23 +114,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ToolChoiceWebSearchPreview20250311 IPersistableModel<ToolChoiceWebSearchPreview20250311>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceWebSearchPreview20250311)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceWebSearchPreview20250311>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeToolChoiceWebSearchPreview20250311(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ToolChoiceWebSearchPreview20250311)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ToolChoiceWebSearchPreview20250311>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

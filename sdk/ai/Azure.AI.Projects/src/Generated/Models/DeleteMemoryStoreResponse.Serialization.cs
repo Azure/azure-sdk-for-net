@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -16,6 +17,31 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="DeleteMemoryStoreResponse"/> for deserialization. </summary>
         internal DeleteMemoryStoreResponse()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeleteMemoryStoreResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeleteMemoryStoreResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeleteMemoryStoreResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeleteMemoryStoreResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DeleteMemoryStoreResponse"/> from. </param>
+        public static explicit operator DeleteMemoryStoreResponse(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeleteMemoryStoreResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -37,7 +63,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(DeleteMemoryStoreResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("deleted"u8);
@@ -84,7 +110,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @object = default;
+            MemoryStoreObjectType @object = default;
             string name = default;
             bool deleted = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -92,7 +118,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new MemoryStoreObjectType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -133,32 +159,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         DeleteMemoryStoreResponse IPersistableModel<DeleteMemoryStoreResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteMemoryStoreResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteMemoryStoreResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeleteMemoryStoreResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeleteMemoryStoreResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeleteMemoryStoreResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DeleteMemoryStoreResponse"/> from. </param>
-        public static explicit operator DeleteMemoryStoreResponse(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeleteMemoryStoreResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

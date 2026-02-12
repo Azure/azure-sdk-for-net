@@ -10,11 +10,28 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Item reference. </summary>
-    internal partial class ItemReferenceParam : Item, IJsonModel<ItemReferenceParam>
+    internal partial class ItemReferenceParam : InputItem, IJsonModel<ItemReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/> for deserialization. </summary>
         internal ItemReferenceParam()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeItemReferenceParam(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ItemReferenceParam)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -46,7 +63,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -65,14 +82,14 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            ItemType @type = default;
+            InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ItemType(prop.Value.GetString());
+                    @type = new InputItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -107,23 +124,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ItemReferenceParam IPersistableModel<ItemReferenceParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ItemReferenceParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ItemReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeItemReferenceParam(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ItemReferenceParam)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ItemReferenceParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

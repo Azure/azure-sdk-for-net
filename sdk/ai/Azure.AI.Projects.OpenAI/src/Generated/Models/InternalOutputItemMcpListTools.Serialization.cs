@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
@@ -14,6 +15,23 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemMcpListTools"/> for deserialization. </summary>
         internal InternalOutputItemMcpListTools()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemMcpListTools>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalOutputItemMcpListTools(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalOutputItemMcpListTools)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -39,7 +57,7 @@ namespace Azure.AI.Projects.OpenAI
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (MCPListToolsTool item in Tools)
+            foreach (InternalMCPListToolsTool item in Tools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -82,7 +100,7 @@ namespace Azure.AI.Projects.OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
-            IList<MCPListToolsTool> tools = default;
+            IList<InternalMCPListToolsTool> tools = default;
             string error = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -117,10 +135,10 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<MCPListToolsTool> array = new List<MCPListToolsTool>();
+                    List<InternalMCPListToolsTool> array = new List<InternalMCPListToolsTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MCPListToolsTool.DeserializeMCPListToolsTool(item, options));
+                        array.Add(InternalMCPListToolsTool.DeserializeInternalMCPListToolsTool(item, options));
                     }
                     tools = array;
                     continue;
@@ -170,23 +188,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalOutputItemMcpListTools IPersistableModel<InternalOutputItemMcpListTools>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalOutputItemMcpListTools)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalOutputItemMcpListTools>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalOutputItemMcpListTools(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalOutputItemMcpListTools)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalOutputItemMcpListTools>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
