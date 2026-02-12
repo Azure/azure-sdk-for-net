@@ -20,8 +20,6 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 
         protected virtual Animal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         public static explicit operator Animal(Response response) => throw null;
 
         void IJsonModel<Animal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -33,6 +31,8 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
         protected virtual Animal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Animal>.Write(ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Animal IPersistableModel<Animal>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

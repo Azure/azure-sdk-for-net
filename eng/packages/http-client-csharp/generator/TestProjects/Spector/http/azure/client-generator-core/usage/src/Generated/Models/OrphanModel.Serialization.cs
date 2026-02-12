@@ -17,8 +17,6 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
 
         protected virtual OrphanModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         void IJsonModel<OrphanModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,6 +26,8 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
         protected virtual OrphanModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<OrphanModel>.Write(ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         OrphanModel IPersistableModel<OrphanModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

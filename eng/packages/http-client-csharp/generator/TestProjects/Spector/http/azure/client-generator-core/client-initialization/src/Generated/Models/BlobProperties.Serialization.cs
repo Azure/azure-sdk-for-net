@@ -18,8 +18,6 @@ namespace Service
 
         protected virtual BlobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         public static explicit operator BlobProperties(Response response) => throw null;
 
         void IJsonModel<BlobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,6 +29,8 @@ namespace Service
         protected virtual BlobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<BlobProperties>.Write(ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BlobProperties IPersistableModel<BlobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
