@@ -603,26 +603,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ConfigurationCanSetMaxApplicationIdLength()
-        {
-            var configData = new Dictionary<string, string>
-            {
-                { "TestClient:Diagnostics:MaxApplicationIdLength", "50" },
-                { "TestClient:Diagnostics:ApplicationId", new string('a', 50) }
-            };
-
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(configData)
-                .Build();
-
-            var options = new TestClientOptions(configuration.GetSection("TestClient"), null);
-
-            Assert.AreEqual(50, options.Diagnostics.MaxApplicationIdLength);
-            Assert.AreEqual(new string('a', 50), options.Diagnostics.ApplicationId);
-        }
-
-        [Test]
-        public void ConfigurationWithLongApplicationIdButNoMaxLengthIsAccepted()
+        public void ConfigurationWithLongApplicationIdIsAccepted()
         {
             var configData = new Dictionary<string, string>
             {
@@ -638,37 +619,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(new string('a', 25), options.Diagnostics.ApplicationId);
         }
 
-        [Test]
-        public void ConfigurationWithInvalidMaxApplicationIdLengthThrows()
-        {
-            var configData = new Dictionary<string, string>
-            {
-                { "TestClient:Diagnostics:MaxApplicationIdLength", "10" }
-            };
 
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(configData)
-                .Build();
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => new TestClientOptions(configuration.GetSection("TestClient"), null));
-        }
-
-        [Test]
-        public void ConfigurationWithoutMaxApplicationIdLengthDefaultsTo24()
-        {
-            var configData = new Dictionary<string, string>
-            {
-                { "TestClient:Diagnostics:ApplicationId", "MyApp" }
-            };
-
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(configData)
-                .Build();
-
-            var options = new TestClientOptions(configuration.GetSection("TestClient"), null);
-
-            Assert.AreEqual(24, options.Diagnostics.MaxApplicationIdLength);
-            Assert.AreEqual("MyApp", options.Diagnostics.ApplicationId);
-        }
     }
 }
