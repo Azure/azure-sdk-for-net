@@ -13,28 +13,12 @@ namespace Azure.AI.Projects;
 internal class EventContent
 {
     public string type { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string content { get; set; }
     public EventContent(string content)
     {
         this.type = "text";
         this.content = content;
-    }
-}
-
-internal class EventRole
-{
-    public string role { get; set; }
-    public EventRole(string role) { this.role = role; }
-}
-
-internal class EventContentRole
-{
-    public string content { get; set; }
-    public string role { get; set; }
-    public EventContentRole(string content, string role)
-    {
-        this.content = content;
-        this.role = role;
     }
 }
 
@@ -61,8 +45,6 @@ internal class WorkflowEventContent
 }
 
 [JsonSerializable(typeof(EventContentId))]
-[JsonSerializable(typeof(EventContentRole))]
-[JsonSerializable(typeof(EventRole))]
 [JsonSerializable(typeof(EventContent))]
 [JsonSerializable(typeof(EventContent[]))]
 [JsonSerializable(typeof(WorkflowEventContent))]

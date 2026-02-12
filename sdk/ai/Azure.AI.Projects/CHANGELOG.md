@@ -6,6 +6,10 @@
 
 - Updated for full `net10` framework compatibility, including removal of `<EnablePreviewFeatures>` flagging.
 
+### Breaking Changes
+
+- Tracing: gen_ai.system.instructions event changed to gen_ai.system_instructions attribute.
+
 ### Sample Updates
 - Added Evaluation sample.
 
