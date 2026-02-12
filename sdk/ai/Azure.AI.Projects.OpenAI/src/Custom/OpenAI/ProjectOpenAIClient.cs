@@ -137,7 +137,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
-
         return ClientPipeline.Create(options: options, perCallPolicies: [], perTryPolicies: [authenticationPolicy], beforeTransportPolicies: []);
     }
 
@@ -161,7 +160,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
                 $"Cannot supply both a constructor '{nameof(projectEndpoint)}' and {nameof(options)}.{nameof(options.Endpoint)}.");
         }
         options ??= new();
-        options?.Endpoint ??= new Uri(rawTargetOpenAIEndpoint);
+        options?.Endpoint ??= new Uri($"{rawTargetOpenAIEndpoint}");
         return options;
     }
 }

@@ -179,7 +179,9 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
         string AGENT_NAME = TestEnvironment.AGENT_NAME;
 #endif
-        AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+        AIProjectClientOptions options = new();
+        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
 
         //
