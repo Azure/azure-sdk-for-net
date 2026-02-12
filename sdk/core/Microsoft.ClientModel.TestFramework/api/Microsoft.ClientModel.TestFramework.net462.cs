@@ -384,7 +384,9 @@ namespace Microsoft.ClientModel.TestFramework
         public Microsoft.ClientModel.TestFramework.RecordedTestMode? Mode { get { throw null; } set { } }
         public string? PathToTestResourceBootstrappingScript { get { throw null; } set { } }
         public static string? RepositoryRoot { get { throw null; } protected set { } }
-        public void BootStrapTestResources() { }
+        public virtual void BootStrapTestResources() { }
+        protected static string FindDevelopmentCertificatePath(string repositoryRoot) { throw null; }
+        protected static string FindRepositoryRoot() { throw null; }
         protected string? GetOptionalVariable(string name) { throw null; }
         protected string? GetRecordedOptionalVariable(string name) { throw null; }
         protected string? GetRecordedOptionalVariable(string name, System.Action<Microsoft.ClientModel.TestFramework.RecordedVariableOptions>? options) { throw null; }

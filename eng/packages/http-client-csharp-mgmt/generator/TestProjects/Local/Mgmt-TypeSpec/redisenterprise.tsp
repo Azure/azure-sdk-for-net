@@ -22,8 +22,21 @@ namespace MgmtTypeSpec {
     listBySubscription is ArmListBySubscription<Cluster>;
   }
 
-  model Cluster is TrackedResource<ClusterProperties> {
+  model Cluster is TrackedResource<ClusterCreateProperties> {
     ...ResourceNameParameter<Cluster>;
+  }
+
+  /**
+   * Create properties model that extends ClusterProperties - reproduces issue #55437.
+   * When Cluster.properties is flattened, the inherited properties from ClusterProperties
+   * (like encryption with its single-property ClusterPropertiesEncryption)
+   * should be safe-flattened through the inheritance chain.
+   */
+  model ClusterCreateProperties extends ClusterProperties {
+    /**
+     * Whether or not public network traffic can access the Redis cluster.
+     */
+    publicNetworkAccess?: PublicNetworkAccess | null;
   }
 
   /**
@@ -244,4 +257,11 @@ namespace MgmtTypeSpec {
   // Apply property flattening to ClusterUpdate.properties - this triggers the bug
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(ClusterUpdate.properties);
+
+  // Apply property flattening to Cluster.properties to reproduce issue #55437
+  // Cluster uses ClusterCreateProperties (extends ClusterProperties) which has
+  // nested single-property models (ClusterPropertiesEncryption with only CustomerManagedKeyEncryption)
+  // that should be safe-flattened through the inheritance chain.
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Cluster.properties);
 }

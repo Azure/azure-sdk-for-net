@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _subscriptionGovernanceRulesExecuteStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _subscriptionGovernanceRulesExecuteStatusRestClient = new SubscriptionGovernanceRulesExecuteStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

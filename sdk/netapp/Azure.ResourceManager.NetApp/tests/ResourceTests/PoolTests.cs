@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolResource pool1 = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize);
 
             // validate
-            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync("poolName2");});
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync("poolName2"); });
             Assert.AreEqual(404, exception.Status);
         }
 

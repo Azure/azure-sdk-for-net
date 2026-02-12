@@ -177,7 +177,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
         + "the function, ALWAYS specify the output queue uri parameter as "
         + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
         + "\"Foo says\" and then the response from the tool.",
-    tools: [ azureFnTool ]
+    tools: [azureFnTool]
     );
 ```
 

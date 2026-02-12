@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using Azure.ResourceManager.ContainerInstance.Models;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ContainerInstance.Tests
 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                 cpu: 1.0))
                     )
                     {
-                	Ports =
+                    Ports =
                         {
                             new ContainerPort(80)
                         },
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                 SecureValue = "secretValue1"
                             }
                         },
-			            SecurityContext = new ContainerSecurityContextDefinition()
-			            {
-			                IsPrivileged = false
-			            }
+                        SecurityContext = new ContainerSecurityContextDefinition()
+                        {
+                            IsPrivileged = false
+                        }
                     }
                 };
 
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                                     SecureValue = "secretValue1"
                                 }
                             },
-			                SecurityContext = new ContainerSecurityContextDefinition()
-			                {
-			                    IsPrivileged = false
-			                }
+                            SecurityContext = new ContainerSecurityContextDefinition()
+                            {
+                                IsPrivileged = false
+                            }
                         }
                     },
                     Sku = ContainerGroupSku.Confidential
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             if (expected.Sku == ContainerGroupSku.Confidential)
             {
                 Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
-		Assert.AreEqual(expected.Containers[0].SecurityContext?.IsPrivileged, actual.Containers[0].SecurityContext?.IsPrivileged);
-		Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
+                Assert.AreEqual(expected.Containers[0].SecurityContext?.IsPrivileged, actual.Containers[0].SecurityContext?.IsPrivileged);
+                Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
             }
         }
 

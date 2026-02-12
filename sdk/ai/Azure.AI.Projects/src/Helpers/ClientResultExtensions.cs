@@ -7,6 +7,7 @@ using Azure.AI.Projects.OpenAI;
 using OpenAI;
 
 namespace Azure.AI.Projects;
+
 internal static partial class ClientResultExtensions
 {
     extension(ClientResult result)

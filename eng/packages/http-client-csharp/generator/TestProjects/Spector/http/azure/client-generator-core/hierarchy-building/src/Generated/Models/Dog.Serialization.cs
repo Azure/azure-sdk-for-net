@@ -19,6 +19,8 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 
         protected override Animal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Dog(Response response) => throw null;
 
         void IJsonModel<Dog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
         protected override Animal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Dog>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Dog IPersistableModel<Dog>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

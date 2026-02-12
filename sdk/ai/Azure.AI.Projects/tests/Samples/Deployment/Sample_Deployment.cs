@@ -4,13 +4,13 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using System.Diagnostics;
-using Azure.Identity;
 
 namespace Azure.AI.Projects.Tests.Samples;
 

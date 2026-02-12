@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken)
-    		=> await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get a list of bare metal machine key sets for the provided cluster.
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudBareMetalMachineKeySetResource> GetAllAsync(CancellationToken cancellationToken)
-			=> GetAllAsync(null, null, cancellationToken);
+            => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of bare metal machine key sets for the provided cluster.
@@ -124,6 +124,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudBareMetalMachineKeySetResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
+            => GetAll(null, null, cancellationToken);
     }
 }

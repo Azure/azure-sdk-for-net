@@ -4,13 +4,17 @@
 
 ### Features Added
 
-### Breaking Changes
-
 ### Bugs Fixed
 
+- Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
 - Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
 
 ### Other Changes
+
+### Breaking Changes
+
+- Added nullability annotations to implicit conversion operator parameters for `Response<T>`, `AzureLocation`, `ContentType`, `ResourceType`, `RequestContent`, and `DynamicData` to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/operator-overloads).
+- Updated `RequestContent` implicit conversion operators to return nullable `RequestContent?` to accurately reflect that null inputs produce null outputs.
 
 ## 1.51.1 (2026-02-04)
 

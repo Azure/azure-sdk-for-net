@@ -55,7 +55,8 @@ private EvaluatorVersion promptVersion = new(
             """
     ),
     evaluatorType: EvaluatorType.Custom
-) {
+)
+{
     DisplayName = "Custom prompt evaluator example",
     Description = "Custom evaluator for groundedness",
 };
@@ -102,7 +103,8 @@ object[] testingCriteria = [
 
 Data source configuration and `evaluationData` object:
 ```C# Snippet:Sample_CreateData_EvaluationsCatalogPromptBased
-object dataSourceConfig = new {
+object dataSourceConfig = new
+{
     type = "custom",
     item_schema = new
     {
@@ -233,8 +235,10 @@ BinaryData runData = BinaryData.FromObjectAsJson(
         eval_id = evaluationId,
         name = $"Eval Run for Sample Prompt Based Custom Evaluator",
         data_source = dataSource,
-        metadata = new {
-            team = "eval-exp", scenario = "inline-data-v1"
+        metadata = new
+        {
+            team = "eval-exp",
+            scenario = "inline-data-v1"
         }
     }
 );

@@ -5,8 +5,8 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Text.Json;
 using System.Linq;
+using System.Text.Json;
 using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.FineTuning;

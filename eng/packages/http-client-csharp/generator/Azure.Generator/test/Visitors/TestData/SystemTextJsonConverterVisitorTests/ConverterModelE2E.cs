@@ -35,6 +35,19 @@ namespace Samples.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual global::System.BinaryData PersistableModelWriteCore(global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
+        {
+            string format = (options.Format == "W") ? ((global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Samples.SamplesContext.Default);
+                default:
+                    throw new global::System.FormatException($"The model {nameof(global::Samples.Models.TestModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void global::System.ClientModel.Primitives.IJsonModel<global::Samples.Models.TestModel>.Write(global::System.Text.Json.Utf8JsonWriter writer, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
@@ -119,19 +132,6 @@ namespace Samples.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         global::System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.Write(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual global::System.BinaryData PersistableModelWriteCore(global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
-        {
-            string format = (options.Format == "W") ? ((global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Samples.SamplesContext.Default);
-                default:
-                    throw new global::System.FormatException($"The model {nameof(global::Samples.Models.TestModel)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

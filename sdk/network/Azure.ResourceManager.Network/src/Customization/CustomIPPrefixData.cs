@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                 var list = new ChangeTrackingList<CustomIPPrefixData>();
+                var list = new ChangeTrackingList<CustomIPPrefixData>();
                 if (ChildCustomIPPrefixList.Count > 0)
                 {
                     foreach (var item in ChildCustomIPPrefixList)

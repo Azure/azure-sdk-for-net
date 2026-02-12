@@ -1026,7 +1026,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 new MultiLanguageInput("1", text) { Language = "en" }
             }
-                };
+            };
 
             // Confidence score overrides:
             //   default = 0.3

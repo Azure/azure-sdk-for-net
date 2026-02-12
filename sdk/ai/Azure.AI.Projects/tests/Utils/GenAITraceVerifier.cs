@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Tests.Utils
             ValidateSpanEvents(spanEvents, expectedEvents);
         }
 
-        public static void ValidateSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents=false)
+        public static void ValidateSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents = false)
         {
             foreach (var expectedEvent in expectedEvents)
             {

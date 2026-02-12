@@ -9,7 +9,8 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FaceAttributeType : IEquatable<FaceAttributeType>
     {
         /// <summary> Available attributes for detection01 model. </summary>
-        public struct Detection01 {
+        public struct Detection01
+        {
             /// <summary> 3-D roll/yaw/pitch angles for face direction. </summary>
             public static FaceAttributeType HeadPose { get; } = FaceAttributeType.HeadPose;
             /// <summary> Glasses type. Values include 'NoGlasses', 'ReadingGlasses', 'Sunglasses', 'SwimmingGoggles'. </summary>
@@ -27,7 +28,8 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Available attributes for detection03 model. </summary>
-        public struct Detection03 {
+        public struct Detection03
+        {
             /// <summary> 3-D roll/yaw/pitch angles for face direction. </summary>
             public static FaceAttributeType HeadPose { get; } = FaceAttributeType.HeadPose;
             /// <summary> Whether each face is wearing a mask. Mask type returns 'noMask', 'faceMask', 'otherMaskOrOcclusion', or 'uncertain'. Value returns a boolean 'noseAndMouthCovered' indicating whether nose and mouth are covered. </summary>
@@ -37,13 +39,15 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Available attributes for recognition03 model. </summary>
-        public struct Recognition03 {
+        public struct Recognition03
+        {
             /// <summary> The overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. The value is an informal rating of low, medium, or high. Only 'high' quality images are recommended for person enrollment and quality at or above 'medium' is recommended for identification scenarios. The attribute is only available when using any combinations of detection models detection_01 or detection_03, and recognition models recognition_03 or recognition_04. </summary>
             public static FaceAttributeType QualityForRecognition { get; } = FaceAttributeType.QualityForRecognition;
         }
 
         /// <summary> Available attributes for recognition04 model. </summary>
-        public struct Recognition04 {
+        public struct Recognition04
+        {
             /// <summary> The overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. The value is an informal rating of low, medium, or high. Only 'high' quality images are recommended for person enrollment and quality at or above 'medium' is recommended for identification scenarios. The attribute is only available when using any combinations of detection models detection_01 or detection_03, and recognition models recognition_03 or recognition_04. </summary>
             public static FaceAttributeType QualityForRecognition { get; } = FaceAttributeType.QualityForRecognition;
         }

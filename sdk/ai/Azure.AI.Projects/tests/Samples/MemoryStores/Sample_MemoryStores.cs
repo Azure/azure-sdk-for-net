@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Microsoft.ClientModel.TestFramework;
-using OpenAI.Responses;
 using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable OPENAI001

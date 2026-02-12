@@ -19,6 +19,23 @@ namespace Azure.Identity.Tests
         {
         }
 
+        #region Virtual Factory Methods
+        protected virtual TokenCredential CreateBareCredential()
+            => new EnvironmentCredential();
+
+        protected virtual TokenCredential CreateBareCredentialWithOptions(EnvironmentCredentialOptions options)
+            => new EnvironmentCredential(options);
+
+        protected virtual TokenCredential CreateInstrumentedCredential()
+            => InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null)));
+
+        protected virtual TokenCredential CreateInstrumentedBareCredential()
+            => InstrumentClient(new EnvironmentCredential());
+
+        protected virtual EnvironmentCredential GetEnvironmentCredential(TokenCredential credential)
+            => (EnvironmentCredential)credential;
+        #endregion
+
         [NonParallelizable]
         [Test]
         public void CredentialConstructionClientSecret()
@@ -35,7 +52,7 @@ namespace Azure.Identity.Tests
 
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "mockclientsecret");
 
-                var provider = new EnvironmentCredential();
+                var provider = GetEnvironmentCredential(CreateBareCredential());
 
                 ClientSecretCredential cred = provider.Credential as ClientSecretCredential;
 
@@ -76,7 +93,7 @@ namespace Azure.Identity.Tests
                 { "IDENTITY_SERVER_THUMBPRINT", null }
             }))
             {
-                var provider = new EnvironmentCredential();
+                var provider = GetEnvironmentCredential(CreateBareCredential());
                 var cred = provider.Credential as ClientCertificateCredential;
                 Assert.NotNull(cred);
                 Assert.AreEqual("mockclientid", cred.ClientId);
@@ -112,9 +129,9 @@ namespace Azure.Identity.Tests
                 {"IDENTITY_SERVER_THUMBPRINT", null}
             }))
             {
-                var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null)));
+                var credential = CreateInstrumentedCredential();
                 Assert.ThrowsAsync<CredentialUnavailableException>(async () =>
-                    await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                    await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             }
         }
 
@@ -159,9 +176,9 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(environmentVars))
             {
-                var credential = InstrumentClient(new EnvironmentCredential());
+                var credential = CreateInstrumentedBareCredential();
 
-                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)), string.Join(", ", environmentVars.Keys));
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default), string.Join(", ", environmentVars.Keys));
             }
         }
 
@@ -187,8 +204,8 @@ namespace Azure.Identity.Tests
                     { "AZURE_CLIENT_CERTIFICATE_PATH", null } },
                 typeof(UsernamePasswordCredential)};
 
-                // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
-                yield return new object[] {
+            // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
+            yield return new object[] {
                 new Dictionary<string, string> {
                     { "AZURE_CLIENT_ID", "mockclientid" },
                     { "AZURE_CLIENT_SECRET", null },
@@ -206,7 +223,7 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(environmentVars))
             {
-                var cred = new EnvironmentCredential();
+                var cred = GetEnvironmentCredential(CreateBareCredential());
                 Assert.AreEqual(expectedCredentialType, cred.Credential.GetType());
             }
         }
@@ -218,7 +235,7 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(environmentVars))
             {
-                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = true });
+                var cred = GetEnvironmentCredential(CreateBareCredentialWithOptions(new EnvironmentCredentialOptions { DisableInstanceDiscovery = true }));
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
                 Assert.IsTrue(DisableInstanceDiscovery);
             }
@@ -231,7 +248,7 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(environmentVars))
             {
-                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = false });
+                var cred = GetEnvironmentCredential(CreateBareCredentialWithOptions(new EnvironmentCredentialOptions { DisableInstanceDiscovery = false }));
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
                 Assert.IsFalse(DisableInstanceDiscovery);
             }

@@ -6,8 +6,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent;
-using Microsoft.ClientModel.TestFramework;
 using Azure.AI.Projects.Tests.Utils;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;

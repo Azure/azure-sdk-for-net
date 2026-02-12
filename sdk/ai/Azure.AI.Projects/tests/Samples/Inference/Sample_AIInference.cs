@@ -205,7 +205,7 @@ public class Sample_AIInference : SamplesBase
             List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
             Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
         }
-#endregion
+        #endregion
 
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());

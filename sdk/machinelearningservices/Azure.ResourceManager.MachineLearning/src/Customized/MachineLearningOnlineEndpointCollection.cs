@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.ResourceManager.MachineLearning.Models;
 using System.Threading;
+using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {

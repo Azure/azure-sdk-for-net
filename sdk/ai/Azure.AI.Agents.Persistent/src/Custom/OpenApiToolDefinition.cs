@@ -7,7 +7,7 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class OpenApiToolDefinition
     {
-        public OpenApiToolDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails openApiAuthentication, IList<string> defaultParams = null) :this(
+        public OpenApiToolDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails openApiAuthentication, IList<string> defaultParams = null) : this(
                 new OpenApiFunctionDefinition(
                     name: name,
                     description: description,
@@ -17,6 +17,7 @@ namespace Azure.AI.Agents.Persistent
                     functions: new ChangeTrackingList<InternalFunctionDefinition>(),
                     serializedAdditionalRawData: null
                     )
-            ){}
+            )
+        { }
     }
 }

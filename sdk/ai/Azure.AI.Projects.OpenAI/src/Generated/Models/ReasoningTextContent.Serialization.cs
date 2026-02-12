@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> ReasoningTextContent. </summary>
-    internal partial class ReasoningTextContent : OutputContent, IJsonModel<ReasoningTextContent>
+    internal partial class ReasoningTextContent : IJsonModel<ReasoningTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="ReasoningTextContent"/> for deserialization. </summary>
         internal ReasoningTextContent()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ReasoningTextContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,6 +34,19 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReasoningTextContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReasoningTextContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -45,25 +58,41 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReasoningTextContent)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReasoningTextContent IJsonModel<ReasoningTextContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ReasoningTextContent)JsonModelCreateCore(ref reader, options);
+        ReasoningTextContent IJsonModel<ReasoningTextContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ReasoningTextContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -82,14 +111,14 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            OutputContentType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             string text = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OutputContentType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("text"u8))
@@ -102,28 +131,15 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReasoningTextContent(@type, additionalBinaryDataProperties, text);
+            return new ReasoningTextContent(@type, text, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ReasoningTextContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReasoningTextContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReasoningTextContent IPersistableModel<ReasoningTextContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ReasoningTextContent)PersistableModelCreateCore(data, options);
+        ReasoningTextContent IPersistableModel<ReasoningTextContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReasoningTextContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

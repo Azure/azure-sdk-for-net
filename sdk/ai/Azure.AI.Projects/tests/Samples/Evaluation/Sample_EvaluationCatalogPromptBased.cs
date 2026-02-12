@@ -222,7 +222,8 @@ public class Sample_EvaluationsCatalogPromptBased : SamplesBase
                 """
         ),
         evaluatorType: EvaluatorType.Custom
-    ) {
+    )
+    {
         DisplayName = "Custom prompt evaluator example",
         Description = "Custom evaluator for groundedness",
     };
@@ -266,7 +267,8 @@ public class Sample_EvaluationsCatalogPromptBased : SamplesBase
         ];
         #endregion
         #region Snippet:Sample_CreateData_EvaluationsCatalogPromptBased
-        object dataSourceConfig = new {
+        object dataSourceConfig = new
+        {
             type = "custom",
             item_schema = new
             {
@@ -343,8 +345,10 @@ public class Sample_EvaluationsCatalogPromptBased : SamplesBase
                 eval_id = evaluationId,
                 name = $"Eval Run for Sample Prompt Based Custom Evaluator",
                 data_source = dataSource,
-                metadata = new {
-                    team = "eval-exp", scenario = "inline-data-v1"
+                metadata = new
+                {
+                    team = "eval-exp",
+                    scenario = "inline-data-v1"
                 }
             }
         );

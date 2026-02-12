@@ -150,7 +150,8 @@ namespace Azure.Communication.CallAutomation
                     {
                         request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer_2025_06_30.Serialize(c));
                     }
-                };
+                }
+                ;
 
                 if (options.ChannelAffinity != null && options.ChannelAffinity.Any())
                 {

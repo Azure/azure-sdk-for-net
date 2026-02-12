@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ContainerRegistry.Models;
+using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.ContainerRegistry;
+using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             ContainerAppJobData data = new ContainerAppJobData(AzureLocation.WestUS)
             {
                 EnvironmentId = envResource.Id,
-                Configuration = new Models.ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual,1800)
+                Configuration = new Models.ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 1800)
                 {
                     Registries =
                     {

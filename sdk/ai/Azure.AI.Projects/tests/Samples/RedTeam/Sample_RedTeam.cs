@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.ClientModel.Primitives;
+using System.Threading.Tasks;
+using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.Identity;
 
 namespace Azure.AI.Projects.Tests.Samples;
 

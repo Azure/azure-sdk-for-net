@@ -350,7 +350,7 @@ namespace Azure.AI.Projects.Telemetry
             return AgentTypeUnknown;
         }
 
-        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName=null)
+        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null)
         {
             _scopeType = activityName switch
             {

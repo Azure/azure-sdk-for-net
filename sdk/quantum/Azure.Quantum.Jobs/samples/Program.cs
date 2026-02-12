@@ -166,7 +166,7 @@ namespace Azure.Quantum.Jobs.Samples
             #region Snippet:Azure_Quantum_Jobs_GetJobs
             foreach (JobDetails job in quantumJobClient.GetJobs())
             {
-               Console.WriteLine($"{job.Name}");
+                Console.WriteLine($"{job.Name}");
             }
             #endregion
 
