@@ -141,7 +141,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
-        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2026_01_12) { }
+        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2026_03_12) { }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -151,7 +151,7 @@ namespace Azure.Communication.CallAutomation
             V2024_09_15 = 4,
             V2025_05_15 = 5,
             V2025_06_15 = 6,
-            V2026_01_12 = 7,
+            V2026_03_12 = 7,
         }
     }
     public abstract partial class CallAutomationEventBase
