@@ -375,10 +375,10 @@
 # ServiceLabel: %KeyVault
 # ServiceOwners:                                                   @Azure/azure-sdk-write-keyvault
 
-# PRLabel: %Load Test Service
+# PRLabel: %Azure Load Testing
 /sdk/loadtestservice/                                              @azure/testing-services
 
-# ServiceLabel: %Load Test Service
+# ServiceLabel: %Azure Load Testing
 # ServiceOwners:                                                   @azure/testing-services
 
 # PRLabel: %Maps
