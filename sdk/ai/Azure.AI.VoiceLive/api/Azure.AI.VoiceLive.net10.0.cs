@@ -1,5 +1,15 @@
 namespace Azure.AI.VoiceLive
 {
+    public partial class AgentSessionConfig
+    {
+        public AgentSessionConfig(string agentName, string projectName) { }
+        public string AgentName { get { throw null; } set { } }
+        public string? AgentVersion { get { throw null; } set { } }
+        public string? AuthenticationIdentityClientId { get { throw null; } set { } }
+        public string? ConversationId { get { throw null; } set { } }
+        public string? FoundryResourceOverride { get { throw null; } set { } }
+        public string ProjectName { get { throw null; } set { } }
+    }
     public partial class AnimationOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AnimationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AnimationOptions>
     {
         public AnimationOptions() { }
@@ -400,6 +410,20 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureVoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureVoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class BasicFillerResponseConfig : Azure.AI.VoiceLive.FillerResponseConfigBase, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>
+    {
+        public BasicFillerResponseConfig() { }
+        public System.Collections.Generic.IList<string> Texts { get { throw null; } }
+        protected override Azure.AI.VoiceLive.FillerResponseConfigBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.FillerResponseConfigBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.BasicFillerResponseConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.BasicFillerResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.BasicFillerResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CachedTokenDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.CachedTokenDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.CachedTokenDetails>
     {
         internal CachedTokenDetails() { }
@@ -460,6 +484,55 @@ namespace Azure.AI.VoiceLive
         public static implicit operator Azure.AI.VoiceLive.EouThresholdLevel (string value) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.EouThresholdLevel? (string value) { throw null; }
         public static bool operator !=(Azure.AI.VoiceLive.EouThresholdLevel left, Azure.AI.VoiceLive.EouThresholdLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class FillerResponseConfigBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.FillerResponseConfigBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.FillerResponseConfigBase>
+    {
+        internal FillerResponseConfigBase() { }
+        public int? LatencyThresholdMs { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.VoiceLive.FillerTrigger> Triggers { get { throw null; } }
+        protected virtual Azure.AI.VoiceLive.FillerResponseConfigBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.VoiceLive.FillerResponseConfigBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.FillerResponseConfigBase System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.FillerResponseConfigBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.FillerResponseConfigBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.FillerResponseConfigBase System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.FillerResponseConfigBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.FillerResponseConfigBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.FillerResponseConfigBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FillerTrigger : System.IEquatable<Azure.AI.VoiceLive.FillerTrigger>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FillerTrigger(string value) { throw null; }
+        public static Azure.AI.VoiceLive.FillerTrigger Latency { get { throw null; } }
+        public static Azure.AI.VoiceLive.FillerTrigger Tool { get { throw null; } }
+        public bool Equals(Azure.AI.VoiceLive.FillerTrigger other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.VoiceLive.FillerTrigger left, Azure.AI.VoiceLive.FillerTrigger right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.FillerTrigger (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.FillerTrigger? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.VoiceLive.FillerTrigger left, Azure.AI.VoiceLive.FillerTrigger right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FoundryAgentContextType : System.IEquatable<Azure.AI.VoiceLive.FoundryAgentContextType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FoundryAgentContextType(string value) { throw null; }
+        public static Azure.AI.VoiceLive.FoundryAgentContextType AgentContext { get { throw null; } }
+        public static Azure.AI.VoiceLive.FoundryAgentContextType NoContext { get { throw null; } }
+        public bool Equals(Azure.AI.VoiceLive.FoundryAgentContextType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.VoiceLive.FoundryAgentContextType left, Azure.AI.VoiceLive.FoundryAgentContextType right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.FoundryAgentContextType (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.FoundryAgentContextType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.VoiceLive.FoundryAgentContextType left, Azure.AI.VoiceLive.FoundryAgentContextType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class FunctionCallItem : Azure.AI.VoiceLive.ConversationRequestItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.FunctionCallItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.FunctionCallItem>
@@ -611,6 +684,22 @@ namespace Azure.AI.VoiceLive
         public static implicit operator Azure.AI.VoiceLive.ItemParamStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.VoiceLive.ItemParamStatus left, Azure.AI.VoiceLive.ItemParamStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LlmFillerResponseConfig : Azure.AI.VoiceLive.FillerResponseConfigBase, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>
+    {
+        public LlmFillerResponseConfig() { }
+        public string Instructions { get { throw null; } set { } }
+        public int? MaxCompletionTokens { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        protected override Azure.AI.VoiceLive.FillerResponseConfigBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.FillerResponseConfigBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.LlmFillerResponseConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.LlmFillerResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.LlmFillerResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LogProbProperties : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.LogProbProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.LogProbProperties>
     {
@@ -823,6 +912,27 @@ namespace Azure.AI.VoiceLive
         public static implicit operator Azure.AI.VoiceLive.PhotoAvatarBaseModes (string value) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.PhotoAvatarBaseModes? (string value) { throw null; }
         public static bool operator !=(Azure.AI.VoiceLive.PhotoAvatarBaseModes left, Azure.AI.VoiceLive.PhotoAvatarBaseModes right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ReasoningEffort : System.IEquatable<Azure.AI.VoiceLive.ReasoningEffort>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ReasoningEffort(string value) { throw null; }
+        public static Azure.AI.VoiceLive.ReasoningEffort High { get { throw null; } }
+        public static Azure.AI.VoiceLive.ReasoningEffort Low { get { throw null; } }
+        public static Azure.AI.VoiceLive.ReasoningEffort Medium { get { throw null; } }
+        public static Azure.AI.VoiceLive.ReasoningEffort Minimal { get { throw null; } }
+        public static Azure.AI.VoiceLive.ReasoningEffort None { get { throw null; } }
+        public static Azure.AI.VoiceLive.ReasoningEffort Xhigh { get { throw null; } }
+        public bool Equals(Azure.AI.VoiceLive.ReasoningEffort other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.VoiceLive.ReasoningEffort left, Azure.AI.VoiceLive.ReasoningEffort right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.ReasoningEffort (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.ReasoningEffort? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.VoiceLive.ReasoningEffort left, Azure.AI.VoiceLive.ReasoningEffort right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RequestAudioContentPart : Azure.AI.VoiceLive.VoiceLiveContentPart, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.RequestAudioContentPart>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequestAudioContentPart>
@@ -1097,6 +1207,7 @@ namespace Azure.AI.VoiceLive
         public string ConversationId { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.VoiceLive.MaxResponseOutputTokensOption MaxOutputTokens { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.InteractionModality> Modalities { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.SessionResponseItem> Output { get { throw null; } }
         public Azure.AI.VoiceLive.OutputAudioFormat? OutputAudioFormat { get { throw null; } }
@@ -1114,6 +1225,25 @@ namespace Azure.AI.VoiceLive
         Azure.AI.VoiceLive.SessionResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SessionResponseFoundryAgentCallItem : Azure.AI.VoiceLive.SessionResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>
+    {
+        internal SessionResponseFoundryAgentCallItem() { }
+        public string AgentResponseId { get { throw null; } }
+        public string Arguments { get { throw null; } }
+        public string CallId { get { throw null; } }
+        public System.BinaryData Error { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Output { get { throw null; } }
+        protected override Azure.AI.VoiceLive.SessionResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.SessionResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class SessionResponseItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponseItem>
     {
@@ -1768,6 +1898,86 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseDone>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseDone>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SessionUpdateResponseFoundryAgentCallArgumentsDelta : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>
+    {
+        internal SessionUpdateResponseFoundryAgentCallArgumentsDelta() { }
+        public string Delta { get { throw null; } }
+        public string ItemId { get { throw null; } }
+        public int OutputIndex { get { throw null; } }
+        public string ResponseId { get { throw null; } }
+        protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.SessionUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SessionUpdateResponseFoundryAgentCallArgumentsDone : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>
+    {
+        internal SessionUpdateResponseFoundryAgentCallArgumentsDone() { }
+        public string Arguments { get { throw null; } }
+        public string ItemId { get { throw null; } }
+        public int OutputIndex { get { throw null; } }
+        public string ResponseId { get { throw null; } }
+        protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.SessionUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SessionUpdateResponseFoundryAgentCallCompleted : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>
+    {
+        internal SessionUpdateResponseFoundryAgentCallCompleted() { }
+        public string ItemId { get { throw null; } }
+        public int OutputIndex { get { throw null; } }
+        protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.SessionUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SessionUpdateResponseFoundryAgentCallFailed : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>
+    {
+        internal SessionUpdateResponseFoundryAgentCallFailed() { }
+        public string ItemId { get { throw null; } }
+        public int OutputIndex { get { throw null; } }
+        protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.SessionUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SessionUpdateResponseFoundryAgentCallInProgress : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>
+    {
+        internal SessionUpdateResponseFoundryAgentCallInProgress() { }
+        public string AgentResponseId { get { throw null; } }
+        public string ItemId { get { throw null; } }
+        public int OutputIndex { get { throw null; } }
+        protected override Azure.AI.VoiceLive.SessionUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.SessionUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SessionUpdateResponseFunctionCallArgumentsDelta : Azure.AI.VoiceLive.SessionUpdate, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta>
     {
         internal SessionUpdateResponseFunctionCallArgumentsDelta() { }
@@ -2128,6 +2338,8 @@ namespace Azure.AI.VoiceLive
         public VoiceLiveClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.VoiceLive.VoiceLiveClientOptions options) { }
         public VoiceLiveClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public VoiceLiveClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.VoiceLive.VoiceLiveClientOptions options) { }
+        public virtual System.Threading.Tasks.Task<Azure.AI.VoiceLive.VoiceLiveSession> StartSessionAsync(Azure.AI.VoiceLive.AgentSessionConfig agentConfig, Azure.AI.VoiceLive.VoiceLiveSessionOptions sessionConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.VoiceLive.VoiceLiveSession> StartSessionAsync(Azure.AI.VoiceLive.AgentSessionConfig agentConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.VoiceLive.VoiceLiveSession> StartSessionAsync(Azure.AI.VoiceLive.VoiceLiveSessionOptions sessionConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.VoiceLive.VoiceLiveSession> StartSessionAsync(string model, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -2139,6 +2351,7 @@ namespace Azure.AI.VoiceLive
         public enum ServiceVersion
         {
             V2025_10_01 = 1,
+            V2026_01_01_PREVIEW = 2,
         }
     }
     public abstract partial class VoiceLiveContentPart : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveContentPart>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveContentPart>
@@ -2171,6 +2384,27 @@ namespace Azure.AI.VoiceLive
         Azure.AI.VoiceLive.VoiceLiveErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceLiveFoundryAgentDefinition : Azure.AI.VoiceLive.VoiceLiveToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>
+    {
+        public VoiceLiveFoundryAgentDefinition(string agentName, string projectName) { }
+        public Azure.AI.VoiceLive.FoundryAgentContextType? AgentContextType { get { throw null; } set { } }
+        public string AgentName { get { throw null; } set { } }
+        public string AgentVersion { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string FoundryResourceOverride { get { throw null; } set { } }
+        public string ProjectName { get { throw null; } set { } }
+        public bool? ReturnAgentResponseDirectly { get { throw null; } set { } }
+        protected override Azure.AI.VoiceLive.VoiceLiveToolDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.VoiceLive.VoiceLiveToolDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VoiceLiveFunctionDefinition : Azure.AI.VoiceLive.VoiceLiveToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveFunctionDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveFunctionDefinition>
     {
@@ -2245,10 +2479,12 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AzureSemanticVadTurnDetectionMultilingual AzureSemanticVadTurnDetectionMultilingual(float? threshold = default(float?), int? prefixPaddingMs = default(int?), int? silenceDurationMs = default(int?), Azure.AI.VoiceLive.EouDetection endOfUtteranceDetection = null, int? speechDurationMs = default(int?), bool? removeFillerWords = default(bool?), System.Collections.Generic.IEnumerable<string> languages = null, bool? autoTruncate = default(bool?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?)) { throw null; }
         public static Azure.AI.VoiceLive.AzureStandardVoice AzureStandardVoice(string name = null, float? temperature = default(float?), string customLexiconUrl = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
         public static Azure.AI.VoiceLive.AzureVoice AzureVoice(string type = null) { throw null; }
+        public static Azure.AI.VoiceLive.BasicFillerResponseConfig BasicFillerResponseConfig(System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.FillerTrigger> triggers = null, int? latencyThresholdMs = default(int?), System.Collections.Generic.IEnumerable<string> texts = null) { throw null; }
         public static Azure.AI.VoiceLive.CachedTokenDetails CachedTokenDetails(int textTokens, int audioTokens) { throw null; }
         public static Azure.AI.VoiceLive.CachedTokenDetails CachedTokenDetails(int textTokens = 0, int audioTokens = 0, int imageTokens = 0) { throw null; }
         public static Azure.AI.VoiceLive.ConversationRequestItem ConversationRequestItem(string type = null, string id = null) { throw null; }
         public static Azure.AI.VoiceLive.EouDetection EouDetection(string model = null) { throw null; }
+        public static Azure.AI.VoiceLive.FillerResponseConfigBase FillerResponseConfigBase(string type = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.FillerTrigger> triggers = null, int? latencyThresholdMs = default(int?)) { throw null; }
         public static Azure.AI.VoiceLive.FunctionCallItem FunctionCallItem(string id = null, string name = null, string callId = null, string arguments = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
         public static Azure.AI.VoiceLive.FunctionCallOutputItem FunctionCallOutputItem(string id = null, string callId = null, string output = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
         public static Azure.AI.VoiceLive.IceServer IceServer(System.Collections.Generic.IEnumerable<System.Uri> uris = null, string username = null, string credential = null) { throw null; }
@@ -2256,6 +2492,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.InputTextContentPart InputTextContentPart(string text = null) { throw null; }
         public static Azure.AI.VoiceLive.InputTokenDetails InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, Azure.AI.VoiceLive.CachedTokenDetails cachedTokensDetails) { throw null; }
         public static Azure.AI.VoiceLive.InputTokenDetails InputTokenDetails(int cachedTokens = 0, int textTokens = 0, int audioTokens = 0, int imageTokens = 0, Azure.AI.VoiceLive.CachedTokenDetails cachedTokensDetails = null) { throw null; }
+        public static Azure.AI.VoiceLive.LlmFillerResponseConfig LlmFillerResponseConfig(System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.FillerTrigger> triggers = null, int? latencyThresholdMs = default(int?), string model = null, string instructions = null, int? maxCompletionTokens = default(int?)) { throw null; }
         public static Azure.AI.VoiceLive.LogProbProperties LogProbProperties(string token = null, float logprob = 0f, System.BinaryData bytes = null) { throw null; }
         public static Azure.AI.VoiceLive.MessageContentPart MessageContentPart(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.MessageItem MessageItem(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.MessageContentPart> content = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
@@ -2276,7 +2513,9 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ResponseTextContentPart ResponseTextContentPart(string text = null) { throw null; }
         public static Azure.AI.VoiceLive.ResponseTokenStatistics ResponseTokenStatistics(int totalTokens = 0, int inputTokens = 0, int outputTokens = 0, Azure.AI.VoiceLive.InputTokenDetails inputTokenDetails = null, Azure.AI.VoiceLive.OutputTokenDetails outputTokenDetails = null) { throw null; }
         public static Azure.AI.VoiceLive.ServerVadTurnDetection ServerVadTurnDetection(float? threshold = default(float?), int? prefixPaddingMs = default(int?), int? silenceDurationMs = default(int?), Azure.AI.VoiceLive.EouDetection endOfUtteranceDetection = null, bool? autoTruncate = default(bool?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?)) { throw null; }
-        public static Azure.AI.VoiceLive.SessionResponse SessionResponse(string id = null, string @object = null, Azure.AI.VoiceLive.SessionResponseStatus? status = default(Azure.AI.VoiceLive.SessionResponseStatus?), Azure.AI.VoiceLive.ResponseStatusDetails statusDetails = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.SessionResponseItem> output = null, Azure.AI.VoiceLive.ResponseTokenStatistics usage = null, string conversationId = null, Azure.AI.VoiceLive.VoiceProvider voice = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities = null, Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat = default(Azure.AI.VoiceLive.OutputAudioFormat?), float? temperature = default(float?), Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxOutputTokens = null) { throw null; }
+        public static Azure.AI.VoiceLive.SessionResponse SessionResponse(string id, string @object, Azure.AI.VoiceLive.SessionResponseStatus? status, Azure.AI.VoiceLive.ResponseStatusDetails statusDetails, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.SessionResponseItem> output, Azure.AI.VoiceLive.ResponseTokenStatistics usage, string conversationId, Azure.AI.VoiceLive.VoiceProvider voice, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities, Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat, float? temperature, Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxOutputTokens) { throw null; }
+        public static Azure.AI.VoiceLive.SessionResponse SessionResponse(string id = null, string @object = null, Azure.AI.VoiceLive.SessionResponseStatus? status = default(Azure.AI.VoiceLive.SessionResponseStatus?), Azure.AI.VoiceLive.ResponseStatusDetails statusDetails = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.SessionResponseItem> output = null, Azure.AI.VoiceLive.ResponseTokenStatistics usage = null, string conversationId = null, Azure.AI.VoiceLive.VoiceProvider voice = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities = null, Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat = default(Azure.AI.VoiceLive.OutputAudioFormat?), float? temperature = default(float?), Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxOutputTokens = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.AI.VoiceLive.SessionResponseFoundryAgentCallItem SessionResponseFoundryAgentCallItem(string id = null, string @object = null, string name = null, string callId = null, string arguments = null, string agentResponseId = null, string output = null, System.BinaryData error = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionResponseItem SessionResponseItem(string type = null, string id = null, string @object = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionResponseMcpApprovalRequestItem SessionResponseMcpApprovalRequestItem(string id = null, string @object = null, string arguments = null, string name = null, string serverLabel = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionResponseMcpApprovalResponseItem SessionResponseMcpApprovalResponseItem(string id = null, string @object = null, string approvalRequestId = null, bool approve = false, string reason = null) { throw null; }
@@ -2316,6 +2555,11 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.SessionUpdateResponseContentPartDone SessionUpdateResponseContentPartDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0, Azure.AI.VoiceLive.VoiceLiveContentPart part = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseCreated SessionUpdateResponseCreated(string eventId = null, Azure.AI.VoiceLive.SessionResponse response = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseDone SessionUpdateResponseDone(string eventId = null, Azure.AI.VoiceLive.SessionResponse response = null) { throw null; }
+        public static Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDelta SessionUpdateResponseFoundryAgentCallArgumentsDelta(string eventId = null, string delta = null, string itemId = null, string responseId = null, int outputIndex = 0) { throw null; }
+        public static Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallArgumentsDone SessionUpdateResponseFoundryAgentCallArgumentsDone(string eventId = null, string itemId = null, string responseId = null, int outputIndex = 0, string arguments = null) { throw null; }
+        public static Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallCompleted SessionUpdateResponseFoundryAgentCallCompleted(string eventId = null, string itemId = null, int outputIndex = 0) { throw null; }
+        public static Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallFailed SessionUpdateResponseFoundryAgentCallFailed(string eventId = null, string itemId = null, int outputIndex = 0) { throw null; }
+        public static Azure.AI.VoiceLive.SessionUpdateResponseFoundryAgentCallInProgress SessionUpdateResponseFoundryAgentCallInProgress(string eventId = null, string itemId = null, int outputIndex = 0, string agentResponseId = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta SessionUpdateResponseFunctionCallArgumentsDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, string callId = null, string delta = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone SessionUpdateResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, string callId = null, string arguments = null, string name = null) { throw null; }
         public static Azure.AI.VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta SessionUpdateResponseMcpCallArgumentsDelta(string eventId = null, string delta = null, string itemId = null, string responseId = null, int outputIndex = 0, string obfuscation = null) { throw null; }
@@ -2338,10 +2582,12 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.VideoResolution VideoResolution(int width = 0, int height = 0) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveContentPart VoiceLiveContentPart(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveErrorDetails VoiceLiveErrorDetails(string code = null, string message = null, string param = null, string type = null, string eventId = null) { throw null; }
+        public static Azure.AI.VoiceLive.VoiceLiveFoundryAgentDefinition VoiceLiveFoundryAgentDefinition(string agentName = null, string agentVersion = null, string projectName = null, string clientId = null, string description = null, string foundryResourceOverride = null, Azure.AI.VoiceLive.FoundryAgentContextType? agentContextType = default(Azure.AI.VoiceLive.FoundryAgentContextType?), bool? returnAgentResponseDirectly = default(bool?)) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveFunctionDefinition VoiceLiveFunctionDefinition(string name = null, string description = null, System.BinaryData parameters = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition VoiceLiveMcpServerDefinition(string serverLabel = null, string serverUrl = null, string authorization = null, System.Collections.Generic.IDictionary<string, string> headers = null, System.Collections.Generic.IEnumerable<string> allowedTools = null, System.BinaryData requireApproval = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveMcpTool VoiceLiveMcpTool(string name = null, string description = null, System.BinaryData inputSchema = null, System.BinaryData annotations = null) { throw null; }
-        public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities = null, Azure.AI.VoiceLive.AnimationOptions animation = null, Azure.AI.VoiceLive.VoiceProvider voice = null, string instructions = null, int? inputAudioSamplingRate = default(int?), Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat = default(Azure.AI.VoiceLive.InputAudioFormat?), Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat = default(Azure.AI.VoiceLive.OutputAudioFormat?), Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction = null, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation = null, Azure.AI.VoiceLive.AvatarConfiguration avatar = null, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools = null, Azure.AI.VoiceLive.ToolChoiceOption toolChoice = null, float? temperature = default(float?), Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens = null, System.BinaryData turnDetection = null) { throw null; }
+        public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities, Azure.AI.VoiceLive.AnimationOptions animation, Azure.AI.VoiceLive.VoiceProvider voice, string instructions, int? inputAudioSamplingRate, Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat, Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat, Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation, Azure.AI.VoiceLive.AvatarConfiguration avatar, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools, Azure.AI.VoiceLive.ToolChoiceOption toolChoice, float? temperature, Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens, System.BinaryData turnDetection) { throw null; }
+        public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities = null, Azure.AI.VoiceLive.AnimationOptions animation = null, Azure.AI.VoiceLive.VoiceProvider voice = null, string instructions = null, int? inputAudioSamplingRate = default(int?), Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat = default(Azure.AI.VoiceLive.InputAudioFormat?), Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat = default(Azure.AI.VoiceLive.OutputAudioFormat?), Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction = null, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation = null, Azure.AI.VoiceLive.AvatarConfiguration avatar = null, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools = null, Azure.AI.VoiceLive.ToolChoiceOption toolChoice = null, float? temperature = default(float?), Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens = null, Azure.AI.VoiceLive.ReasoningEffort? reasoningEffort = default(Azure.AI.VoiceLive.ReasoningEffort?), System.BinaryData fillerResponse = null, System.BinaryData turnDetection = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveToolDefinition VoiceLiveToolDefinition(string type = null) { throw null; }
     }
     public partial class VoiceLiveResponse
@@ -2396,6 +2642,7 @@ namespace Azure.AI.VoiceLive
         public VoiceLiveSessionOptions() { }
         public Azure.AI.VoiceLive.AnimationOptions Animation { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AvatarConfiguration Avatar { get { throw null; } set { } }
+        public System.BinaryData FillerResponse { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AudioEchoCancellation InputAudioEchoCancellation { get { throw null; } set { } }
         public Azure.AI.VoiceLive.InputAudioFormat? InputAudioFormat { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AudioNoiseReduction InputAudioNoiseReduction { get { throw null; } set { } }
@@ -2407,6 +2654,7 @@ namespace Azure.AI.VoiceLive
         public string Model { get { throw null; } set { } }
         public Azure.AI.VoiceLive.OutputAudioFormat? OutputAudioFormat { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.AudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
+        public Azure.AI.VoiceLive.ReasoningEffort? ReasoningEffort { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
         public Azure.AI.VoiceLive.ToolChoiceOption ToolChoice { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.VoiceLiveToolDefinition> Tools { get { throw null; } }
@@ -2427,6 +2675,7 @@ namespace Azure.AI.VoiceLive
         public VoiceLiveSessionResponse() { }
         public Azure.AI.VoiceLive.AnimationOptions Animation { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AvatarConfiguration Avatar { get { throw null; } set { } }
+        public System.BinaryData FillerResponse { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AudioEchoCancellation InputAudioEchoCancellation { get { throw null; } set { } }
         public Azure.AI.VoiceLive.InputAudioFormat? InputAudioFormat { get { throw null; } set { } }
@@ -2439,6 +2688,7 @@ namespace Azure.AI.VoiceLive
         public string Model { get { throw null; } set { } }
         public Azure.AI.VoiceLive.OutputAudioFormat? OutputAudioFormat { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.AudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
+        public Azure.AI.VoiceLive.ReasoningEffort? ReasoningEffort { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
         public Azure.AI.VoiceLive.ToolChoiceOption ToolChoice { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.VoiceLiveToolDefinition> Tools { get { throw null; } }
