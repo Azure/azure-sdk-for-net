@@ -618,7 +618,5 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(new string('a', 25), options.Diagnostics.ApplicationId);
         }
-
-
     }
 }
