@@ -28,6 +28,30 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IssueTestResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIssueTestResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IssueTestResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IssueTestResourceData"/> from. </param>
+        internal static IssueTestResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIssueTestResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IssueTestResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -192,23 +216,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         IssueTestResourceData IPersistableModel<IssueTestResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IssueTestResourceData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IssueTestResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIssueTestResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IssueTestResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IssueTestResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -222,13 +229,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(issueTestResourceData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IssueTestResourceData"/> from. </param>
-        internal static IssueTestResourceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIssueTestResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

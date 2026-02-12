@@ -18,6 +18,8 @@ namespace Specs.Azure.Versioning.PreviewVersion
 
         protected virtual Widget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Widget(Response response) => throw null;
 
         void IJsonModel<Widget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace Specs.Azure.Versioning.PreviewVersion
         protected virtual Widget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Widget>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Widget IPersistableModel<Widget>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

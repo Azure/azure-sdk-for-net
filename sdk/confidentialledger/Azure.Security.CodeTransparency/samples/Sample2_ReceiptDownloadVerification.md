@@ -111,13 +111,13 @@ var transparentStatement = File.ReadAllBytes(filePath);
 var keys = File.ReadAllBytes(keysFilePath);
 try
 {
-    var verificationOptions = new CodeTransparencyVerificationOptions
-    {
-        UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
-        OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
-        OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
-    };
-    CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+var verificationOptions = new CodeTransparencyVerificationOptions
+{
+    UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
+    OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
+    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+};
+CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
 
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }

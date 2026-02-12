@@ -19,6 +19,8 @@ namespace _Type.Model.Inheritance.Recursive
 
         protected override Element PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Extension(Response response) => throw null;
 
         void IJsonModel<Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,8 +32,6 @@ namespace _Type.Model.Inheritance.Recursive
         protected override Element JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Extension>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Extension IPersistableModel<Extension>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

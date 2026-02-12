@@ -37,6 +37,19 @@ namespace Azure.Monitor.Query.Logs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchQueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryLogsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchQueryRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchQueryRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -195,19 +208,6 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BatchQueryRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchQueryRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryLogsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchQueryRequest)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

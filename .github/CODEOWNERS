@@ -98,10 +98,10 @@
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms
+/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms
+# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms @linglingye001
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @Azure/azure-sdk-write-attestation @gkostal
@@ -375,10 +375,10 @@
 # ServiceLabel: %KeyVault
 # ServiceOwners:                                                   @Azure/azure-sdk-write-keyvault
 
-# PRLabel: %Load Test Service
+# PRLabel: %Azure Load Testing
 /sdk/loadtestservice/                                              @azure/testing-services
 
-# ServiceLabel: %Load Test Service
+# ServiceLabel: %Azure Load Testing
 # ServiceOwners:                                                   @azure/testing-services
 
 # PRLabel: %Maps

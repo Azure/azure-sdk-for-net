@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.4.1 (2026-02-12)
 
 ### Other Changes
+
+- Removed `show-serialized-names` debug configuration to clean up unnecessary serialized name annotations from XML docs.
 
 ## 1.4.0 (2026-01-30)
 
