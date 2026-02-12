@@ -104,7 +104,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
-            agentName: "agentVersionWithMemory",
+            agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
 
@@ -212,13 +212,13 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+        AgentVersion agentVersionWithMemory = projectClient.Agents.CreateAgentVersion(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Sync
-        responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
+        responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersionWithMemory.Name);
 
         response = responseClient.CreateResponse(
             [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
@@ -228,7 +228,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #region Snippet:Sample_Cleanup_MemoryTool_Sync
         projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
         projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+        projectClient.Agents.DeleteAgentVersion(agentName: agentVersionWithMemory.Name, agentVersion: agentVersionWithMemory.Version);
         #endregion
     }
 

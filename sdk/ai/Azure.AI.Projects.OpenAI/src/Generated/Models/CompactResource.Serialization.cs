@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> The compacted response object. </summary>
-    public partial class CompactResource : IJsonModel<CompactResource>
+    internal partial class CompactResource : IJsonModel<CompactResource>
     {
         /// <summary> Initializes a new instance of <see cref="CompactResource"/> for deserialization. </summary>
         internal CompactResource()

@@ -1619,7 +1619,7 @@ agentDefinition = new(model: modelDeploymentName)
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
-    agentName: "agentVersionWithMemory",
+    agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
 

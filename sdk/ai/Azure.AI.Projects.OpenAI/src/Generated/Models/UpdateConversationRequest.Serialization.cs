@@ -10,42 +10,47 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The ProjectConversationUpdateOptions. </summary>
-    public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
+    /// <summary> The UpdateConversationRequest. </summary>
+    internal partial class UpdateConversationRequest : IJsonModel<UpdateConversationRequest>
     {
+        /// <summary> Initializes a new instance of <see cref="UpdateConversationRequest"/> for deserialization. </summary>
+        internal UpdateConversationRequest()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectConversationUpdateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual UpdateConversationRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectConversationUpdateOptions(document.RootElement, options);
+                        return DeserializeUpdateConversationRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateConversationRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateConversationRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectConversationUpdateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UpdateConversationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -56,15 +61,15 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateConversationRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(InternalMetadata))
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(InternalMetadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             else
             {
@@ -89,30 +94,30 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectConversationUpdateOptions IJsonModel<ProjectConversationUpdateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UpdateConversationRequest IJsonModel<UpdateConversationRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectConversationUpdateOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual UpdateConversationRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateConversationRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateConversationRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectConversationUpdateOptions(document.RootElement, options);
+            return DeserializeUpdateConversationRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProjectConversationUpdateOptions DeserializeProjectConversationUpdateOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static UpdateConversationRequest DeserializeUpdateConversationRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InternalMetadataContainer internalMetadata = default;
+            InternalMetadataContainer metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,10 +125,10 @@ namespace Azure.AI.Projects.OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        internalMetadata = null;
+                        metadata = null;
                         continue;
                     }
-                    internalMetadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
+                    metadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,27 +136,27 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectConversationUpdateOptions(internalMetadata, additionalBinaryDataProperties);
+            return new UpdateConversationRequest(metadata, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectConversationUpdateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UpdateConversationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectConversationUpdateOptions IPersistableModel<ProjectConversationUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UpdateConversationRequest IPersistableModel<UpdateConversationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectConversationUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UpdateConversationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectConversationUpdateOptions"> The <see cref="ProjectConversationUpdateOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ProjectConversationUpdateOptions projectConversationUpdateOptions)
+        /// <param name="updateConversationRequest"> The <see cref="UpdateConversationRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(UpdateConversationRequest updateConversationRequest)
         {
-            if (projectConversationUpdateOptions == null)
+            if (updateConversationRequest == null)
             {
                 return null;
             }
-            return BinaryContent.Create(projectConversationUpdateOptions, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(updateConversationRequest, ModelSerializationExtensions.WireOptions);
         }
     }
 }

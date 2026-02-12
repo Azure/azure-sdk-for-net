@@ -13,8 +13,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Microsoft.ClientModel.TestFramework;
 using Azure.AI.Projects.Tests.Utils;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -41,7 +41,8 @@ public class AgentsTests : AgentsTestBase
         {
             await projectClient.Agents.DeleteAgentAsync(emptyPromptAgentName);
         }
-        catch (ClientResultException){
+        catch (ClientResultException)
+        {
             // We do not have the agent to begin with.
         }
         AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -1047,7 +1048,7 @@ public class AgentsTests : AgentsTestBase
         ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         bool functionCalled = false;
         bool functionWasCalled = false;
-        bool isStarted = false, isFinished=false, isStatusGood=false;
+        bool isStarted = false, isFinished = false, isStatusGood = false;
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
 
         CreateResponseOptions nextResponseOptions = new()

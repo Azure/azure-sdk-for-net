@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OpenAI;
 
-[CodeGenType("UpdateConversationRequest")]
+[CodeGenType("UpdateConversationBody")]
+[CodeGenSuppress(nameof(ProjectConversationUpdateOptions), typeof(global::Azure.AI.Projects.OpenAI.InternalMetadataContainer))]
 public partial class ProjectConversationUpdateOptions
 {
     [CodeGenMember("Metadata")]

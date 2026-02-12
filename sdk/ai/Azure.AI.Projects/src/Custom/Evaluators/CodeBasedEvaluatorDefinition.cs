@@ -13,7 +13,7 @@ public partial class CodeBasedEvaluatorDefinition
     /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
     /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
     /// <param name="codeText"> Inline code text for the evaluator. </param>
-    public CodeBasedEvaluatorDefinition(IDictionary<string, BinaryData> initParameters, IDictionary<string, BinaryData> dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText) : base(EvaluatorDefinitionType.Code, initParameters, dataSchema, metrics, null)
+    public CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText) : base(EvaluatorDefinitionType.Code, initParameters, dataSchema, metrics, null)
     {
         CodeText = codeText;
     }

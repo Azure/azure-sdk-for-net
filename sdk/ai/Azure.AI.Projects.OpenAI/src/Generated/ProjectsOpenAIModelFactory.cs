@@ -27,25 +27,6 @@ namespace Azure.AI.Projects.OpenAI
             return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The compacted response object. </summary>
-        /// <param name="id"> The unique identifier for the compacted response. </param>
-        /// <param name="output"> The compacted list of output items. This is a list of all user messages, followed by a single compaction item. </param>
-        /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
-        /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
-        /// <returns> A new <see cref="OpenAI.CompactResource"/> instance for mocking. </returns>
-        public static CompactResource CompactResource(string id = default, IEnumerable<AgentResponseItem> output = default, DateTimeOffset createdAt = default, ResponseUsage usage = default)
-        {
-            output ??= new ChangeTrackingList<AgentResponseItem>();
-
-            return new CompactResource(
-                id,
-                "response.compaction",
-                output.ToList(),
-                createdAt,
-                usage,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// The AgentResponseItem.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
@@ -198,43 +179,6 @@ namespace Azure.AI.Projects.OpenAI
                 content,
                 MemoryItemKind.ChatSummary,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Represents token usage details including input tokens, output tokens,
-        /// a breakdown of output tokens, and the total tokens used.
-        /// </summary>
-        /// <param name="inputTokens"> The number of input tokens. </param>
-        /// <param name="inputTokensDetails"> A detailed breakdown of the input tokens. </param>
-        /// <param name="outputTokens"> The number of output tokens. </param>
-        /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
-        /// <param name="totalTokens"> The total number of tokens used. </param>
-        /// <returns> A new <see cref="OpenAI.ResponseUsage"/> instance for mocking. </returns>
-        public static ResponseUsage ResponseUsage(long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
-        {
-            return new ResponseUsage(
-                inputTokens,
-                inputTokensDetails,
-                outputTokens,
-                outputTokensDetails,
-                totalTokens,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ResponseUsageInputTokensDetails. </summary>
-        /// <param name="cachedTokens"></param>
-        /// <returns> A new <see cref="OpenAI.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default)
-        {
-            return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ResponseUsageOutputTokensDetails. </summary>
-        /// <param name="reasoningTokens"></param>
-        /// <returns> A new <see cref="OpenAI.ResponseUsageOutputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = default)
-        {
-            return new ResponseUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -580,10 +524,8 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <returns> A new <see cref="OpenAI.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
         {
-            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-
             return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
         }
 

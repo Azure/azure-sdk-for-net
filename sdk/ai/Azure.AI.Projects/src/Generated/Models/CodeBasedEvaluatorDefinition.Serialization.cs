@@ -96,8 +96,8 @@ namespace Azure.AI.Projects
                 return null;
             }
             EvaluatorDefinitionType @type = default;
-            IDictionary<string, BinaryData> initParameters = default;
-            IDictionary<string, BinaryData> dataSchema = default;
+            BinaryData initParameters = default;
+            BinaryData dataSchema = default;
             IDictionary<string, EvaluatorMetric> metrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string codeText = default;
@@ -114,19 +114,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    initParameters = dictionary;
+                    initParameters = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("data_schema"u8))
@@ -135,19 +123,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    dataSchema = dictionary;
+                    dataSchema = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
@@ -176,8 +152,8 @@ namespace Azure.AI.Projects
             }
             return new CodeBasedEvaluatorDefinition(
                 @type,
-                initParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                dataSchema ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                initParameters,
+                dataSchema,
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
                 codeText);

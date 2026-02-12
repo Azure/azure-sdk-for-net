@@ -728,10 +728,8 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <returns> A new <see cref="Projects.EvaluatorDefinition"/> instance for mocking. </returns>
-        public static EvaluatorDefinition EvaluatorDefinition(string @type = default, IDictionary<string, BinaryData> initParameters = default, IDictionary<string, BinaryData> dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default)
+        public static EvaluatorDefinition EvaluatorDefinition(string @type = default, BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default)
         {
-            initParameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-            dataSchema ??= new ChangeTrackingDictionary<string, BinaryData>();
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
             return new UnknownEvaluatorDefinition(new EvaluatorDefinitionType(@type), initParameters, dataSchema, metrics, additionalBinaryDataProperties: null);
@@ -761,10 +759,8 @@ namespace Azure.AI.Projects
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
         /// <returns> A new <see cref="Projects.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(IDictionary<string, BinaryData> initParameters = default, IDictionary<string, BinaryData> dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
         {
-            initParameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-            dataSchema ??= new ChangeTrackingDictionary<string, BinaryData>();
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
             return new CodeBasedEvaluatorDefinition(
@@ -782,10 +778,8 @@ namespace Azure.AI.Projects
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="promptText"> The prompt text used for evaluation. </param>
         /// <returns> A new <see cref="Projects.PromptBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static PromptBasedEvaluatorDefinition PromptBasedEvaluatorDefinition(IDictionary<string, BinaryData> initParameters = default, IDictionary<string, BinaryData> dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string promptText = default)
+        public static PromptBasedEvaluatorDefinition PromptBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string promptText = default)
         {
-            initParameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-            dataSchema ??= new ChangeTrackingDictionary<string, BinaryData>();
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
             return new PromptBasedEvaluatorDefinition(

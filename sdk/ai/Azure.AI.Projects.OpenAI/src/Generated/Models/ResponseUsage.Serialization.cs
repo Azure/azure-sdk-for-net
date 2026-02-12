@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.OpenAI
     /// Represents token usage details including input tokens, output tokens,
     /// a breakdown of output tokens, and the total tokens used.
     /// </summary>
-    public partial class ResponseUsage : IJsonModel<ResponseUsage>
+    internal partial class ResponseUsage : IJsonModel<ResponseUsage>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseUsage"/> for deserialization. </summary>
         internal ResponseUsage()

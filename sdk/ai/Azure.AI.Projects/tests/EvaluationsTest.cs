@@ -211,7 +211,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(found, Is.False);
     }
 
-    private async Task ValidateLatestList(AIProjectClient projectClient, string id, bool mustPresent, string errorText, ListVersionsRequestType? type=null)
+    private async Task ValidateLatestList(AIProjectClient projectClient, string id, bool mustPresent, string errorText, ListVersionsRequestType? type = null)
     {
         bool found = false;
         await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetLatestVersionsAsync(type: type))
@@ -679,22 +679,24 @@ public class EvaluationsTest : ProjectsClientTestBase
                 categories: [EvaluatorCategory.Quality],
                 definition: new CodeBasedEvaluatorDefinition(
                     codeText: "def grade(sample, item) -> float:\n    \"\"\"\n    Evaluate response quality based on multiple criteria.\n    Note: All data is in the \\'item\\' parameter, \\'sample\\' is empty.\n    \"\"\"\n    # Extract data from item (not sample!)\n    response = item.get(\"response\", \"\").lower() if isinstance(item, dict) else \"\"\n    ground_truth = item.get(\"ground_truth\", \"\").lower() if isinstance(item, dict) else \"\"\n    query = item.get(\"query\", \"\").lower() if isinstance(item, dict) else \"\"\n    \n    # Check if response is empty\n    if not response:\n        return 0.0\n    \n    # Check for harmful content\n    harmful_keywords = [\"harmful\", \"dangerous\", \"unsafe\", \"illegal\", \"unethical\"]\n    if any(keyword in response for keyword in harmful_keywords):\n        return 0.0\n    \n    # Length check\n    if len(response) < 10:\n        return 0.1\n    elif len(response) < 50:\n        return 0.2\n    \n    # Technical content check\n    technical_keywords = [\"api\", \"experiment\", \"run\", \"azure\", \"machine learning\", \"gradient\", \"neural\", \"algorithm\"]\n    technical_score = sum(1 for k in technical_keywords if k in response) / len(technical_keywords)\n    \n    # Query relevance\n    query_words = query.split()[:3] if query else []\n    relevance_score = 0.7 if any(word in response for word in query_words) else 0.3\n    \n    # Ground truth similarity\n    if ground_truth:\n        truth_words = set(ground_truth.split())\n        response_words = set(response.split())\n        overlap = len(truth_words & response_words) / len(truth_words) if truth_words else 0\n        similarity_score = min(1.0, overlap)\n    else:\n        similarity_score = 0.5\n    \n    return min(1.0, (technical_score * 0.3) + (relevance_score * 0.3) + (similarity_score * 0.4))",
-                    initParameters: new Dictionary<string, BinaryData>
-                    {
-                        { "required", BinaryData.FromObjectAsJson(new[] { "deployment_name", "pass_threshold" }) },
-                        { "type", BinaryData.FromString("\"object\"") },
-                        { "properties", BinaryData.FromObjectAsJson(new
+                    initParameters: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            required = new[] { "deployment_name", "pass_threshold" },
+                            type = "object",
+                            properties = new
                             {
                                 deployment_name = new { type = "string" },
                                 pass_threshold = new { type = "string" }
-                            })
+                            }
                         }
-                    },
-                    dataSchema: new Dictionary<string, BinaryData>
-                    {
-                        { "required", BinaryData.FromObjectAsJson(new[] { "item" }) },
-                        { "type", BinaryData.FromString("\"object\"") },
-                        { "properties", BinaryData.FromObjectAsJson(new
+                    ),
+                    dataSchema: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            required = new[] { "item" },
+                            type = "object",
+                            properties = new
                             {
                                 item = new
                                 {
@@ -706,9 +708,9 @@ public class EvaluationsTest : ProjectsClientTestBase
                                         ground_truth = new { type = "string" },
                                     }
                                 }
-                            })
+                            }
                         }
-                    },
+                    ),
                     metrics: new Dictionary<string, EvaluatorMetric> {
                         { "result", resultMetric }
                     }

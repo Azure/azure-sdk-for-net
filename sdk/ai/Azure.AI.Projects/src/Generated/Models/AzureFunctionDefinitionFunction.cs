@@ -8,7 +8,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The AzureFunctionDefinitionFunction. </summary>
     internal partial class AzureFunctionDefinitionFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,12 +16,8 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinitionFunction"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
         public AzureFunctionDefinitionFunction(string name, IDictionary<string, BinaryData> parameters)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Name = name;
             Parameters = parameters;
         }

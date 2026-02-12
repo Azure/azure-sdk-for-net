@@ -19,15 +19,21 @@ public class Sample_AzureFunction : ProjectsOpenAITestBase
     {
         AzureFunctionDefinitionFunction functionDefinition = new(
             name: "foo",
-            parameters: new Dictionary<string, BinaryData> {
-                { "query", BinaryData.FromObjectAsJson(
-                        new {
+            parameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        query = new
+                        {
                             Type = "string",
                             Description = "The question to ask.",
                         }
-                    )
-                }
-            }
+                    }
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+            )
         )
         {
             Description = "Get answers from the foo bot.",

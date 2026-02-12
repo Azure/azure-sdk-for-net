@@ -115,7 +115,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = UpdateConversation(conversationId, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
@@ -130,7 +130,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
-            ProjectConversationUpdateOptions spreadModel = new ProjectConversationUpdateOptions(default, default);
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }

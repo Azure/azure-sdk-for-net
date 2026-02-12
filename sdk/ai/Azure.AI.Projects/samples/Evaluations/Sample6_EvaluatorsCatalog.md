@@ -8,7 +8,8 @@ Return prompt-based evaluator:
 ```C# Snippet:Sampple_PromptEvaluator_EvaluatorsCatalog
 private static EvaluatorVersion GetPromptEvaluatorVersion()
 {
-    EvaluatorMetric metric = new() {
+    EvaluatorMetric metric = new()
+    {
         Type = EvaluatorMetricType.Ordinal,
         DesirableDirection = EvaluatorMetricDirection.Increase,
         MinValue = 1,
@@ -36,27 +37,29 @@ private static EvaluatorVersion GetPromptEvaluatorVersion()
                 Response:
                 {response}
                 """,
-            initParameters: new Dictionary<string, BinaryData>
-            {
-                { "type", BinaryData.FromString("\"object\"") },
-                { "properties", BinaryData.FromObjectAsJson(new {
+            initParameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    type = "object",
+                    properties = new
+                    {
                         deployment_name = new { type = "string" },
                         threshold = new { rtpe = "number" },
-                    })
-                },
-                { "required", BinaryData.FromObjectAsJson(new[] { "deployment_name", "threshold" }) }
-            },
-            dataSchema: new Dictionary<string, BinaryData>{
-                { "type", BinaryData.FromString("\"object\"") },
+                    },
+                    required = new[] { "deployment_name", "threshold" }
+                }
+            ),
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
                 {
-                    "properties",
-                    BinaryData.FromObjectAsJson(new
+                    type = "object",
+                    properties = new
                     {
                         query = new { type = "string" },
                         response = new { type = "string" }
-                    })
+                    }
                 }
-            },
+            ),
             metrics: new Dictionary<string, EvaluatorMetric> { { "score", metric } }
         ),
         evaluatorType: EvaluatorType.Custom
@@ -83,27 +86,29 @@ private static EvaluatorVersion GetCodeEvaluatorVersion()
         categories: [EvaluatorCategory.Quality],
         definition: new CodeBasedEvaluatorDefinition(
             codeText: "def grade(sample, item):\n    return 1.0",
-            initParameters: new Dictionary<string, BinaryData>
-            {
-                { "type", BinaryData.FromString("\"object\"") },
-                { "properties", BinaryData.FromObjectAsJson(new
+            initParameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    type = "object",
+                    properties = new
                     {
                         deployment_name = new { type = "string" },
-                    })
-                },
-                { "required", BinaryData.FromObjectAsJson(new[] { "deployment_name"}) },
-            },
-            dataSchema: new Dictionary<string, BinaryData>
-            {
-                { "type", BinaryData.FromString("\"object\"") },
-                { "properties", BinaryData.FromObjectAsJson(new
+                    },
+                    required = new[] { "deployment_name" },
+                }
+            ),
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
+                {
+                    type = "object",
+                    properties = new
                     {
                         item = new { type = "string" },
                         response = new { type = "string" }
-                    })
-                },
-                { "required", BinaryData.FromObjectAsJson(new[] { "query", "response" }) },
-            },
+                    },
+                    required = new[] { "query", "response" },
+                }
+            ),
             metrics: new Dictionary<string, EvaluatorMetric> {
                 { "result", resultMetric }
             }

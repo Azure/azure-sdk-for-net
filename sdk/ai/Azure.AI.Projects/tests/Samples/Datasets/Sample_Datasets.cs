@@ -374,6 +374,6 @@ public class Sample_Datasets : SamplesBase
         projectClient.Datasets.Delete(datasetName, datasetVersion);
     }
 
-    public Sample_Datasets(bool isAsync): base(isAsync)
+    public Sample_Datasets(bool isAsync) : base(isAsync)
     { }
 }

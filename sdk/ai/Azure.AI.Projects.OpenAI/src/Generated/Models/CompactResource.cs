@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> The compacted response object. </summary>
-    public partial class CompactResource
+    internal partial class CompactResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

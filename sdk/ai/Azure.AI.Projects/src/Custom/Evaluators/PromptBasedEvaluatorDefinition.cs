@@ -13,7 +13,7 @@ public partial class PromptBasedEvaluatorDefinition
     /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
     /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
     /// <param name="promptText"> Inline prompt text for the evaluator. </param>
-    public PromptBasedEvaluatorDefinition(IDictionary<string, BinaryData> initParameters, IDictionary<string, BinaryData> dataSchema, IDictionary<string, EvaluatorMetric> metrics, string promptText) : base(EvaluatorDefinitionType.Prompt, initParameters, dataSchema, metrics, null)
+    public PromptBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string promptText) : base(EvaluatorDefinitionType.Prompt, initParameters, dataSchema, metrics, null)
     {
         PromptText = promptText;
     }

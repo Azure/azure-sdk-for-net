@@ -51,7 +51,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 3. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators. In this example we will use only built-in "violence" evaluator. We will configure the data source to get data from the Agent responses.
 
 ```C# Snippet:Sample_CreateData_EvaluationRules
-private BinaryData evaluationConfig =  BinaryData.FromObjectAsJson(
+private BinaryData evaluationConfig = BinaryData.FromObjectAsJson(
     new
     {
         name = "Continuous Evaluation",
@@ -248,7 +248,7 @@ private static Dictionary<string, (string RunUri, string RunStatus)> GetRunIDs(E
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetRunIDs_EvaluationRules_Async
-private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus=default)
+private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus = default)
 {
     Dictionary<string, (string, string)> runIDs = [];
     bool hasMore = false;

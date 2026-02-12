@@ -132,7 +132,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
         }
-        PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);

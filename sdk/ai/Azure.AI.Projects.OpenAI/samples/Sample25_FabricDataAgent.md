@@ -3,10 +3,15 @@
 As a prerequisite to this example, we will need to create Microsoft Fabric with Lakehouse data repository. Please see the end-to end tutorials on using Microsoft Fabric [here](https://learn.microsoft.com/fabric/fundamentals/end-to-end-tutorials) for more information.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 **Note:** This feature is in the preview.
 
 >>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
+=======
+**Note:** This feature is in the preview.
+
+>>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 ## Create a Fabric Capacity
 
 1. Create a **Fabric Capacity** resource in the Azure Portal **(attention, the rate is being applied!)**.

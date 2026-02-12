@@ -91,7 +91,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     protected ProjectOpenAIClient GetTestProjectOpenAIClient(bool endpointInConstructor = true, bool endpointInOptions = false)
     {
         ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
-            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai/v1") : null);
 
         return CreateProxyFromClient(endpointInConstructor
             ? new ProjectOpenAIClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), clientOptions)
@@ -101,7 +101,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
         ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
-            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai/v1") : null);
 
         AgentReference defaultAgent = null;
         if (defaultAgentName is not null)

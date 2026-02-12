@@ -9,7 +9,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The AzureFunctionDefinitionFunction. </summary>
     internal partial class AzureFunctionDefinitionFunction : IJsonModel<AzureFunctionDefinitionFunction>
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinitionFunction"/> for deserialization. </summary>

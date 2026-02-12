@@ -113,6 +113,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         bool isDefaultModel = defaults?.Any(defaultItem => defaultItem == ResponsesClientDefault.DefaultModel) == true;
         bool isDefaultConversation = defaults?.Any(defaultItem => defaultItem == ResponsesClientDefault.DefaultConversation) == true;
 
+        ProjectConversation existingConversation = null;
+        if (isDefaultConversation)
+        {
+            ProjectOpenAIClient openAIClientForConversations = GetTestProjectOpenAIClient();
+            ProjectConversationsClient conversationsClient = openAIClientForConversations.GetProjectConversationsClient();
+            existingConversation = await conversationsClient.CreateProjectConversationAsync();
+        }
+
         ProjectResponsesClient responsesClient = null;
         if (creationMethod == ResponsesClientCreationMethod.UseFactory)
         {
@@ -121,13 +129,13 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             {
                 responsesClient = openAIClient.GetProjectResponsesClientForModel(
                     TestEnvironment.MODELDEPLOYMENTNAME,
-                    isDefaultConversation ? TestEnvironment.KNOWN_CONVERSATION_ID : null);
+                    isDefaultConversation ? existingConversation.Id : null);
             }
             else if (isDefaultAgent && !isDefaultModel)
             {
                 responsesClient = openAIClient.GetProjectResponsesClientForAgent(
                     TestEnvironment.AGENT_NAME,
-                    isDefaultConversation ? TestEnvironment.KNOWN_CONVERSATION_ID : null);
+                    isDefaultConversation ? existingConversation.Id : null);
             }
             else if (!isDefaultAgent && !isDefaultModel)
             {
@@ -144,7 +152,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             responsesClient = GetTestProjectResponsesClient(
                 defaultAgentName: isDefaultAgent ? TestEnvironment.AGENT_NAME : null,
                 defaultModelName: isDefaultModel ? TestEnvironment.MODELDEPLOYMENTNAME : null,
-                defaultConversationId: isDefaultConversation ? TestEnvironment.KNOWN_CONVERSATION_ID : null);
+                defaultConversationId: isDefaultConversation ? existingConversation.Id : null);
         }
 
         ResponseResult response = await responsesClient.CreateResponseAsync("Hello, agent or model!");
@@ -154,7 +162,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             isDefaultAgent ? Is.EqualTo(TestEnvironment.AGENT_NAME) : Is.Null);
         Assert.That(
             response?.AgentConversationId,
-            isDefaultConversation ? Is.EqualTo(TestEnvironment.KNOWN_CONVERSATION_ID) : Is.Null);
+            isDefaultConversation ? Is.EqualTo(existingConversation.Id) : Is.Null);
         if (isDefaultModel)
         {
             Assert.That(response?.Model, Does.StartWith(TestEnvironment.MODELDEPLOYMENTNAME));
