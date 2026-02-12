@@ -106,7 +106,7 @@ public class WorkflowAgentInvocation(
 
     private async Task<AgentThread?> GetThread(AgentRunContext context, AIAgent workflowAgent)
     {
-        if (threadRepository != null)
+        if (threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
             return await threadRepository.Get(context.ConversationId, workflowAgent).ConfigureAwait(false);
         }
@@ -115,7 +115,7 @@ public class WorkflowAgentInvocation(
 
     private async Task SaveThread(AgentRunContext context, AgentThread? agentThread)
     {
-        if (agentThread != null && threadRepository != null)
+        if (agentThread != null && threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
             await threadRepository.Set(context.ConversationId, agentThread).ConfigureAwait(false);
         }

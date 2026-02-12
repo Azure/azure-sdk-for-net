@@ -23,15 +23,15 @@ namespace Azure.AI.AgentServer.AgentFramework.Persistence
         }
 
         /// <inheritdoc/>
-        public Task<AgentThread> Get(string conversationId, AIAgent? agent = null)
+        public Task<AgentThread> Get(string? conversationId, AIAgent? agent = null)
         {
-            if (!_threads.ContainsKey(conversationId))
+            if (string.IsNullOrEmpty(conversationId) || !_threads.ContainsKey(conversationId))
             {
                 agent ??= _agent;
 
                 if (agent == null)
                 {
-                    throw new InvalidOperationException("Agent instance must be provided either in the instructor or in the method call.");
+                    throw new InvalidOperationException("Agent instance must be provided either in the constructor or in the method call.");
                 }
                 return Task.FromResult(agent.GetNewThread());
             }
@@ -39,8 +39,13 @@ namespace Azure.AI.AgentServer.AgentFramework.Persistence
         }
 
         /// <inheritdoc/>
-        public Task Set(string conversationId, AgentThread agentThread)
+        public Task Set(string? conversationId, AgentThread agentThread)
         {
+            if (string.IsNullOrEmpty(conversationId))
+            {
+                return Task.CompletedTask;
+            }
+
             _threads[conversationId] = agentThread;
             return Task.CompletedTask;
         }

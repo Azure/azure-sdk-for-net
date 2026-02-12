@@ -84,9 +84,9 @@ public class AgentRunContext
     public string ResponseId { get; }
 
     /// <summary>
-    /// Gets the conversation ID for this agent run.
+    /// Gets the conversation ID for this agent run, or null if no conversation context was provided.
     /// </summary>
-    public string ConversationId { get; }
+    public string? ConversationId { get; }
 
     /// <summary>
     /// Gets whether this is a streaming request.
@@ -120,6 +120,11 @@ public class AgentRunContext
     /// <returns>The conversation object, or null if not present in the request.</returns>
     public ResponseConversation1? GetConversationObject()
     {
+        if (ConversationId == null)
+        {
+            return null;
+        }
+
         if (Request.Conversation == null)
         {
             return null;

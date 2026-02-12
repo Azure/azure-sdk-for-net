@@ -102,7 +102,7 @@ public class AIAgentInvocation(
 
     private async Task<AgentThread?> GetThread(AgentRunContext context)
     {
-        if (threadRepository != null)
+        if (threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
             return await threadRepository.Get(context.ConversationId, agent).ConfigureAwait(false);
         }
@@ -111,7 +111,7 @@ public class AIAgentInvocation(
 
     private async Task SaveThread(AgentRunContext context, AgentThread? agentThread)
     {
-        if (agentThread != null && threadRepository != null)
+        if (agentThread != null && threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
             await threadRepository.Set(context.ConversationId, agentThread).ConfigureAwait(false);
         }

@@ -66,7 +66,7 @@ public static class ResponsesExtensions
             outputText: null,
             usage: usage,
             parallelToolCalls: request.ParallelToolCalls ?? false,
-            conversation: context == null ? null : new ResponseConversation1(context.ConversationId),
+            conversation: context?.ConversationId != null ? new ResponseConversation1(context.ConversationId) : null,
             agent: request.Agent.ToAgentId(),
             structuredInputs: request.StructuredInputs,
             serializedAdditionalRawData: null

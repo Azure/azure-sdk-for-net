@@ -13,23 +13,24 @@ namespace Azure.AI.AgentServer.AgentFramework.Persistence
         /// <summary>
         /// Gets an AgentThread instance based on the provided conversation ID.
         /// </summary>
-        /// <param name="conversationId">Conversation ID for the thread.</param>
+        /// <param name="conversationId">Conversation ID for the thread. When null, a new stateless thread is created.</param>
         /// <param name="agent">
         /// Optional. Agent instance to associate with the thread.
         /// If provided, this agent will be used for the thread.
         /// </param>
         /// <returns>
         /// An AgentThread instance associated with the given conversation ID.
-        /// It the convertsation ID does not exist, a new AgentThread is created and returned.
+        /// If the conversation ID does not exist, a new AgentThread is created and returned.
+        /// If the conversation ID is null, a new stateless thread is returned.
         /// </returns>
-        public Task<AgentThread> Get(string conversationId, AIAgent? agent = null);
+        public Task<AgentThread> Get(string? conversationId, AIAgent? agent = null);
 
         /// <summary>
         /// Sets the AgentThread instance for the given conversation ID.
         /// </summary>
-        /// <param name="conversationId">The conversation Id related to the AgentThread.</param>
+        /// <param name="conversationId">The conversation Id related to the AgentThread. When null, the operation is a no-op.</param>
         /// <param name="thread">AgentThread instance.</param>
         /// <returns></returns>
-        public Task Set(string conversationId, AgentThread thread);
+        public Task Set(string? conversationId, AgentThread thread);
     }
 }

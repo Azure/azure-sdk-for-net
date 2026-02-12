@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Invocation;
 [Obsolete("AgentInvocationContext is deprecated. Use AgentRunContext from Azure.AI.AgentServer.Responses.Invocation namespace instead. See MIGRATION_GUIDE.md for details.", false)]
 public class AgentInvocationContext(IIdGenerator idGenerator,
     string responseId,
-    string conversationId)
+    string? conversationId)
 {
     private static readonly AsyncLocal<AgentInvocationContext?> _current = new();
 
@@ -46,9 +46,9 @@ public class AgentInvocationContext(IIdGenerator idGenerator,
     public string ResponseId { get; } = responseId;
 
     /// <summary>
-    /// Gets the conversation ID for this invocation.
+    /// Gets the conversation ID for this invocation, or null if no conversation context was provided.
     /// </summary>
-    public string ConversationId { get; } = conversationId;
+    public string? ConversationId { get; } = conversationId;
 
     private sealed class ScopedContext(AgentInvocationContext? previous) : IAsyncDisposable
     {

@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Reflection;
+using System.Text.Json;
 using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
+using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
@@ -13,6 +15,9 @@ namespace Azure.AI.AgentServer.AgentFramework.Unit.Tests.Invocation;
 
 public class AIAgentInvocationTests
 {
+    // Valid ID format: prefix_<18 char partition key><32 char entropy>
+    private const string ValidConversationId = "conv_abc123def456ghi7jkl012mno345pqr678stu901vwx234abcdef";
+
     [Test]
     public async Task GetThread_PassesCurrentAgentToThreadRepository()
     {
@@ -24,7 +29,7 @@ public class AIAgentInvocationTests
             .ReturnsAsync(expectedThread);
 
         var invocation = new AIAgentInvocation(agent.Object, repository.Object);
-        var context = CreateContext();
+        var context = CreateContextWithConversation();
 
         var getThreadMethod = typeof(AIAgentInvocation)
             .GetMethod("GetThread", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -37,7 +42,34 @@ public class AIAgentInvocationTests
         repository.Verify(mock => mock.Get(It.IsAny<string>(), agent.Object), Times.Once);
     }
 
-    private static AgentRunContext CreateContext()
+    [Test]
+    public async Task GetThread_WithNullConversationId_ReturnsNullWithoutCallingRepository()
+    {
+        var agent = new Mock<AIAgent>(MockBehavior.Strict);
+        var repository = new Mock<IAgentThreadRepository>(MockBehavior.Strict);
+
+        var invocation = new AIAgentInvocation(agent.Object, repository.Object);
+        var context = CreateContextWithoutConversation();
+
+        var getThreadMethod = typeof(AIAgentInvocation)
+            .GetMethod("GetThread", BindingFlags.Instance | BindingFlags.NonPublic);
+        Assert.That(getThreadMethod, Is.Not.Null);
+
+        var task = (Task<AgentThread?>)getThreadMethod!.Invoke(invocation, [context])!;
+        var actualThread = await task.ConfigureAwait(false);
+
+        Assert.That(actualThread, Is.Null);
+        repository.Verify(mock => mock.Get(It.IsAny<string?>(), It.IsAny<AIAgent>()), Times.Never);
+    }
+
+    private static AgentRunContext CreateContextWithConversation()
+    {
+        var json = "{\"input\": \"Hello\", \"conversation\": {\"id\": \"" + ValidConversationId + "\"}}";
+        var request = JsonSerializer.Deserialize<CreateResponseRequest>(json, JsonExtensions.DefaultJsonSerializerOptions)!;
+        return new AgentRunContext(request);
+    }
+
+    private static AgentRunContext CreateContextWithoutConversation()
     {
         return new AgentRunContext(
             new CreateResponseRequest

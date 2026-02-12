@@ -13,12 +13,12 @@ public class FoundryIdGeneratorTests
     private const string ValidResponseId = "resp_xyz789abc123def4ghi789jkl012mno345pqr678stu901vwx234";
 
     [Test]
-    public void Constructor_WithNullIds_GeneratesNewIds()
+    public void Constructor_WithNullIds_GeneratesResponseIdAndKeepsConversationIdNull()
     {
         var generator = new FoundryIdGenerator(null, null);
 
         Assert.That(generator.ResponseId, Does.StartWith("resp_"));
-        Assert.That(generator.ConversationId, Does.StartWith("conv_"));
+        Assert.That(generator.ConversationId, Is.Null);
     }
 
     [Test]
@@ -98,9 +98,29 @@ public class FoundryIdGeneratorTests
     }
 
     [Test]
-    public void Constructor_WithEmptyConversationId_ThrowsArgumentException()
+    public void Constructor_WithEmptyConversationId_SetsConversationIdToNull()
     {
-        Assert.Throws<ArgumentException>(() => new FoundryIdGenerator(null, ""));
+        var generator = new FoundryIdGenerator(null, "");
+
+        Assert.That(generator.ConversationId, Is.Null);
+        Assert.That(generator.ResponseId, Does.StartWith("resp_"));
+        // Should still generate valid IDs using ResponseId for partition
+        Assert.That(generator.Generate("test"), Does.StartWith("test_"));
+    }
+
+    [Test]
+    public void Constructor_WithNullConversationId_UsesResponseIdForPartition()
+    {
+        var generator = new FoundryIdGenerator(ValidResponseId, null);
+
+        Assert.That(generator.ConversationId, Is.Null);
+        Assert.That(generator.ResponseId, Is.EqualTo(ValidResponseId));
+
+        // Generated IDs should share partition key derived from ResponseId
+        var id = generator.Generate("test");
+        var responsePartition = ValidResponseId.Split('_')[1].Substring(0, 18);
+        var generatedPartition = id.Split('_')[1].Substring(0, 18);
+        Assert.That(generatedPartition, Is.EqualTo(responsePartition));
     }
 
     [Test]

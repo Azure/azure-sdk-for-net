@@ -27,8 +27,8 @@ public partial class FoundryIdGenerator : IIdGenerator
     public FoundryIdGenerator(string? responseId, string? conversationId)
     {
         ResponseId = responseId ?? NewId("resp");
-        ConversationId = conversationId ?? NewId("conv");
-        _partitionId = ExtractPartitionId(ConversationId);
+        ConversationId = string.IsNullOrEmpty(conversationId) ? null : conversationId;
+        _partitionId = ExtractPartitionId(ConversationId ?? ResponseId);
     }
 
     /// <summary>
@@ -48,9 +48,9 @@ public partial class FoundryIdGenerator : IIdGenerator
     public string ResponseId { get; }
 
     /// <summary>
-    /// Gets the conversation ID.
+    /// Gets the conversation ID, or null if no conversation context was provided.
     /// </summary>
-    public string ConversationId { get; }
+    public string? ConversationId { get; }
 
     /// <summary>
     /// Generates a new ID with an optional category prefix.

@@ -32,9 +32,17 @@ public class FoundryConversationThreadRepository : IAgentThreadRepository
     }
 
     /// <inheritdoc />
-    public async Task<AgentThread> Get(string conversationId, AIAgent? agent = null)
+    public async Task<AgentThread> Get(string? conversationId, AIAgent? agent = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(conversationId);
+        if (string.IsNullOrWhiteSpace(conversationId))
+        {
+            if (agent != null)
+            {
+                return agent.GetNewThread();
+            }
+
+            throw new InvalidOperationException("Agent instance must be provided when conversation ID is null.");
+        }
 
         if (_threads.TryGetValue(conversationId, out var existingThread))
         {
@@ -51,9 +59,13 @@ public class FoundryConversationThreadRepository : IAgentThreadRepository
     }
 
     /// <inheritdoc />
-    public Task Set(string conversationId, AgentThread thread)
+    public Task Set(string? conversationId, AgentThread thread)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(conversationId);
+        if (string.IsNullOrWhiteSpace(conversationId))
+        {
+            return Task.CompletedTask;
+        }
+
         ArgumentNullException.ThrowIfNull(thread);
 
         _threads[conversationId] = thread;

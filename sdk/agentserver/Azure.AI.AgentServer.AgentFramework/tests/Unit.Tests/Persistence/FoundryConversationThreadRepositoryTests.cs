@@ -63,6 +63,38 @@ public class FoundryConversationThreadRepositoryTests
         agent.Verify(mock => mock.GetNewThread(), Times.Once);
     }
 
+    [Test]
+    public async Task Get_WithNullConversationId_ReturnsNewThreadFromAgent()
+    {
+        var repository = CreateRepository();
+        var expectedThread = new TestAgentThread();
+        var agent = new Mock<AIAgent>();
+        agent.Setup(mock => mock.GetNewThread()).Returns(expectedThread);
+
+        var thread = await repository.Get(null, agent.Object).ConfigureAwait(false);
+
+        Assert.That(thread, Is.SameAs(expectedThread));
+        agent.Verify(mock => mock.GetNewThread(), Times.Once);
+    }
+
+    [Test]
+    public void Get_WithNullConversationIdAndNoAgent_ThrowsInvalidOperationException()
+    {
+        var repository = CreateRepository();
+
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await repository.Get(null).ConfigureAwait(false));
+    }
+
+    [Test]
+    public void Set_WithNullConversationId_DoesNotThrow()
+    {
+        var repository = CreateRepository();
+
+        Assert.DoesNotThrowAsync(async () =>
+            await repository.Set(null, new TestAgentThread()).ConfigureAwait(false));
+    }
+
     private static FoundryConversationThreadRepository CreateRepository()
     {
         return new FoundryConversationThreadRepository(ProjectEndpoint, new TestTokenCredential());
