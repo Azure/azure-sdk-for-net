@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Validation message object.
-    /// Serialized Name: ValidationMessage
-    /// </summary>
+    /// <summary> Validation message object. </summary>
     public partial class PostgreSqlFlexibleServersValidationMessage
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationMessage"/>. </summary>
-        /// <param name="state">
-        /// Severity of validation message.
-        /// Serialized Name: ValidationMessage.state
-        /// </param>
-        /// <param name="message">
-        /// Validation message string.
-        /// Serialized Name: ValidationMessage.message
-        /// </param>
+        /// <param name="state"> Severity of validation message. </param>
+        /// <param name="message"> Validation message string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServersValidationMessage(PostgreSqlFlexibleServersValidationState? state, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Severity of validation message.
-        /// Serialized Name: ValidationMessage.state
-        /// </summary>
+        /// <summary> Severity of validation message. </summary>
         [WirePath("state")]
         public PostgreSqlFlexibleServersValidationState? State { get; }
-        /// <summary>
-        /// Validation message string.
-        /// Serialized Name: ValidationMessage.message
-        /// </summary>
+        /// <summary> Validation message string. </summary>
         [WirePath("message")]
         public string Message { get; }
     }

@@ -21,9 +21,6 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-mgmt-debug:
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
