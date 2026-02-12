@@ -41,7 +41,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ClientPipeline pipeline = ProjectOpenAIClient.CreatePipeline(new BearerTokenPolicy(TestEnvironment.Credential, "https://ai.azure.com/.default"), options);
         ClientUriBuilder uri = new();
         uri.Reset(new System.Uri(TestEnvironment.PROJECT_ENDPOINT));
-        uri.AppendPath("/openai/responses", false);
+        uri.AppendPath("/openai/v1/responses", false);
         PipelineMessage msg = pipeline.CreateMessage(uri.ToUri(), "POST", pipelineMessageClassifier200);
         PipelineRequest request = msg.Request;
         request.Headers.Set("Accept", "application/json, text/event-stream");
@@ -64,7 +64,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
                     }
                 }
             },
-            agent = new
+            agent_reference = new
             {
                 type = "agent_reference",
                 name = agentVersion.Name,
