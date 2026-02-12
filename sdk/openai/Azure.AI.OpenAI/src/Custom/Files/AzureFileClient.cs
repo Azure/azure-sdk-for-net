@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.Files;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using OpenAI.Files;
 
 namespace Azure.AI.OpenAI.Files;
 

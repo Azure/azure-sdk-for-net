@@ -13,6 +13,10 @@ namespace Specs.Azure.Core.Page
 {
     public partial class FirstItem : IJsonModel<FirstItem>
     {
+        protected virtual FirstItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<FirstItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,11 +27,7 @@ namespace Specs.Azure.Core.Page
 
         BinaryData IPersistableModel<FirstItem>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         FirstItem IPersistableModel<FirstItem>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual FirstItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<FirstItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Collections.Generic;
 using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples

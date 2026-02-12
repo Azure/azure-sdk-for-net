@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzurePowerShellCredentialsTests : CredentialTestBase<AzurePowerShellCredentialOptions>
+    internal class AzurePowerShellCredentialsTests : CredentialTestBase<AzurePowerShellCredentialOptions>
     {
         private string tokenXML =
             @"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">Kg==</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">1692035272</Property></Object>";
@@ -50,6 +50,48 @@ namespace Azure.Identity.Tests
                 new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
         }
 
+        #region Virtual Factory Methods
+        protected virtual TokenCredential CreateCredential(IProcessService processService, string tenantId = null, bool addTenantIdHint = false)
+        {
+            var options = new AzurePowerShellCredentialOptions { TenantId = tenantId };
+            if (addTenantIdHint)
+            {
+                options.AdditionallyAllowedTenants.Add(TenantIdHint);
+            }
+            return InstrumentClient(new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), processService));
+        }
+
+        protected virtual TokenCredential CreateCredentialWithTimeout(IProcessService processService, TimeSpan timeout, bool isChained = false)
+        {
+            var options = new AzurePowerShellCredentialOptions { ProcessTimeout = timeout, IsChainedCredential = isChained };
+            return InstrumentClient(new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), processService));
+        }
+
+        protected virtual TokenCredential CreateCredentialWithChainedOption(IProcessService processService, bool isChained)
+        {
+            var options = new AzurePowerShellCredentialOptions { IsChainedCredential = isChained };
+            return InstrumentClient(new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), processService));
+        }
+
+        protected virtual TokenCredential CreateBareCredential()
+        {
+            return InstrumentClient(new AzurePowerShellCredential());
+        }
+
+        protected virtual void CreateCredentialForTenantValidation(string tenantId)
+        {
+            new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { TenantId = tenantId });
+        }
+
+        /// <summary>
+        /// Returns the expected exception type for error scenarios.
+        /// Base: AuthenticationFailedException when not chained, CredentialUnavailableException when chained.
+        /// ConfigurableCredential always wraps in DefaultAzureCredential (chained), so always CredentialUnavailableException.
+        /// </summary>
+        protected virtual Type GetExpectedExceptionType(bool isChained)
+            => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
+        #endregion
+
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential(
             [Values(null, TenantIdHint)] string tenantId,
@@ -57,14 +99,12 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
             string expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
             var testProcess = new TestProcess { Output = processOutput };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
-            AccessToken actualToken = await credential.GetTokenAsync(context);
+            var credential = CreateCredential(new TestProcessService(testProcess, true), tenantId: explicitTenantId, addTenantIdHint: true);
+            AccessToken actualToken = await credential.GetTokenAsync(context, default);
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
@@ -89,57 +129,55 @@ namespace Azure.Identity.Tests
 
         private static IEnumerable<object[]> ErrorScenarios()
         {
-            yield return new object[] { null, "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "Some random exception", AzurePowerShellCredential.AzurePowerShellFailedError + " Some random exception", typeof(AuthenticationFailedException) };
-            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", typeof(AuthenticationFailedException) };
-            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure PowerShell authentication timed out.", typeof(AuthenticationFailedException) };
+            yield return new object[] { null, "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError, true };
+            yield return new object[] { null, "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "Some random exception", AzurePowerShellCredential.AzurePowerShellFailedError + " Some random exception", false };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", false };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure PowerShell authentication timed out.", false };
             yield return new object[] {
                 null,
                 "AADSTS500011: The resource principal named <RESOURCE> was not found in the tenant named",
                 AzurePowerShellCredential.AzurePowerShellFailedError +  " AADSTS500011: The resource principal named <RESOURCE> was not found in the tenant named",
-                typeof(AuthenticationFailedException) };
+                false };
         }
 
         private static IEnumerable<object[]> ErrorScenarios_IsChained()
         {
-            yield return new object[] { null, "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { null, "Some random exception", AzurePowerShellCredential.AzurePowerShellFailedError + " Some random exception", typeof(CredentialUnavailableException) };
-            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", typeof(CredentialUnavailableException) };
-            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure PowerShell authentication timed out.", typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError, true };
+            yield return new object[] { null, "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError, true };
+            yield return new object[] { null, "Some random exception", AzurePowerShellCredential.AzurePowerShellFailedError + " Some random exception", true };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", true };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure PowerShell authentication timed out.", true };
             yield return new object[] {
                 null,
                 "AADSTS500011: The resource principal named <RESOURCE> was not found in the tenant named",
                 AzurePowerShellCredential.AzurePowerShellFailedError +  " AADSTS500011: The resource principal named <RESOURCE> was not found in the tenant named",
-                typeof(CredentialUnavailableException) };
+                true };
         }
 
         [Test]
         [TestCaseSource(nameof(ErrorScenarios))]
-        public void AuthenticateWithAzurePowerShellCredential_ErrorScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedError, Type expectedException)
+        public void AuthenticateWithAzurePowerShellCredential_ErrorScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedError, bool isChained)
         {
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync(expectedException, async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), false);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(expectedError));
         }
 
         [Test]
         [TestCaseSource(nameof(ErrorScenarios_IsChained))]
-        public void AuthenticateWithAzurePowerShellCredential_ErrorScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedError, Type expectedException)
+        public void AuthenticateWithAzurePowerShellCredential_ErrorScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedError, bool isChained)
         {
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { IsChainedCredential = true }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync(expectedException, async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), true);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(expectedError));
         }
 
@@ -166,10 +204,9 @@ namespace Azure.Identity.Tests
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 testProcesses = new TestProcess[] { testProcesses[0] };
 
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcesses)));
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(expectedError, ex.Message);
+            var credential = CreateCredential(new TestProcessService(testProcesses));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain(expectedError));
         }
 
         [Test]
@@ -182,12 +219,8 @@ namespace Azure.Identity.Tests
                 var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
                 TestContext.WriteLine(processOutput);
                 var testProcess = new TestProcess { Output = processOutput, };
-                AzurePowerShellCredential credential = InstrumentClient(
-                    new AzurePowerShellCredential(
-                        new AzurePowerShellCredentialOptions(),
-                        CredentialPipeline.GetInstance(null),
-                        new TestProcessService(testProcess, true)));
-                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+                var credential = CreateCredential(new TestProcessService(testProcess, true));
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             }
             finally
             {
@@ -212,12 +245,8 @@ namespace Azure.Identity.Tests
                     }
                 }
             };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(
-                    new AzurePowerShellCredentialOptions(),
-                    CredentialPipeline.GetInstance(null),
-                    new TestProcessService(testProcess, true)));
-            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.IsTrue(fellBackToPowerShell);
         }
 
@@ -225,13 +254,9 @@ namespace Azure.Identity.Tests
         public void ConfigurePowershellProcessTimeout_ProcessTimeout()
         {
             var testProcess = new TestProcess { Timeout = 10000 };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(
-                    new AzurePowerShellCredentialOptions() { ProcessTimeout = TimeSpan.Zero },
-                    CredentialPipeline.GetInstance(null),
-                    new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellTimeoutError, ex.Message);
+            var credential = CreateCredentialWithTimeout(new TestProcessService(testProcess), TimeSpan.Zero);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain(AzurePowerShellCredential.AzurePowerShellTimeoutError));
         }
 
         [Test]
@@ -255,17 +280,9 @@ namespace Azure.Identity.Tests
         {
             string mockResult = "mock-result";
             var testProcess = new TestProcess { Error = mockResult };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { IsChainedCredential = isChainedCredential }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChainedCredential);
 
-            if (isChainedCredential)
-            {
-                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            }
-            else
-            {
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            }
+            Assert.ThrowsAsync(GetExpectedExceptionType(isChainedCredential), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
         }
 
         [Test]
@@ -274,10 +291,10 @@ namespace Azure.Identity.Tests
             var claims = "test-claims-challenge";
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
-                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false), async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims), default));
 
             Assert.That(ex.Message, Does.Contain("Azure PowerShell authentication requires multi-factor authentication or additional claims."));
             Assert.That(ex.Message, Does.Contain($"Connect-AzAccount -ClaimsChallenge '{claims}'"));
@@ -291,10 +308,10 @@ namespace Azure.Identity.Tests
             var tenant = TenantId;
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { TenantId = tenant }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            var credential = CreateCredential(new TestProcessService(testProcess, true), tenantId: tenant);
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
-                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false), async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims), default));
 
             Assert.That(ex.Message, Does.Contain($"Connect-AzAccount -Tenant {tenant} -ClaimsChallenge '{claims}'"));
         }
@@ -307,9 +324,9 @@ namespace Azure.Identity.Tests
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
 
-            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims), default);
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
         }
@@ -320,9 +337,9 @@ namespace Azure.Identity.Tests
             var cts = new CancellationTokenSource();
             var testProcess = new TestProcess { Timeout = 10000 };
             testProcess.Started += (o, e) => cts.Cancel();
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            var ex = Assert.CatchAsync<Exception>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
+            Assert.That(ex.Message, Does.Contain("canceled").IgnoreCase);
         }
 
         [TestCaseSource(nameof(NegativeTestCharacters))]
@@ -336,14 +353,14 @@ namespace Azure.Identity.Tests
 
                 tenantIdBuilder.Insert(i, testChar);
 
-                Assert.Throws<ArgumentException>(() => new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { TenantId = tenantIdBuilder.ToString() }), Validations.InvalidTenantIdErrorMessage);
+                Assert.Throws<ArgumentException>(() => CreateCredentialForTenantValidation(tenantIdBuilder.ToString()), Validations.InvalidTenantIdErrorMessage);
             }
         }
 
         [TestCaseSource(nameof(NegativeTestCharacters))]
         public void VerifyGetTokenTenantIdValidation(char testChar)
         {
-            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential());
+            var credential = CreateBareCredential();
 
             string tenantId = Guid.NewGuid().ToString();
 
@@ -355,14 +372,15 @@ namespace Azure.Identity.Tests
 
                 var tokenRequestContext = new TokenRequestContext(MockScopes.Default, tenantId: tenantIdBuilder.ToString());
 
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), Validations.InvalidTenantIdErrorMessage);
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), Validations.InvalidTenantIdErrorMessage);
             }
         }
 
         [TestCaseSource(nameof(NegativeTestCharacters))]
         public void VerifyGetTokenScopeValidation(char testChar)
         {
-            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential());
+            var credential = CreateBareCredential();
 
             string scope = MockScopes.Default.ToString();
 
@@ -374,7 +392,8 @@ namespace Azure.Identity.Tests
 
                 var tokenRequestContext = new TokenRequestContext(new string[] { scopeBuilder.ToString() });
 
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), ScopeUtilities.InvalidScopeMessage);
             }
         }
 
@@ -383,13 +402,9 @@ namespace Azure.Identity.Tests
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShellSecureString(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(
-                    new AzurePowerShellCredentialOptions(),
-                    CredentialPipeline.GetInstance(null),
-                    new TestProcessService(testProcess, true)));
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
 
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);

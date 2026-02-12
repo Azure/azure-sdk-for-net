@@ -17,6 +17,12 @@ namespace _Type.Property.ValueTypes
     {
         internal DictionaryStringProperty() => throw null;
 
+        protected virtual DictionaryStringProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator DictionaryStringProperty(Response response) => throw null;
+
         void IJsonModel<DictionaryStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace _Type.Property.ValueTypes
 
         BinaryData IPersistableModel<DictionaryStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         DictionaryStringProperty IPersistableModel<DictionaryStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual DictionaryStringProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<DictionaryStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="dictionaryStringProperty"> The <see cref="DictionaryStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DictionaryStringProperty dictionaryStringProperty) => throw null;
-
-        public static explicit operator DictionaryStringProperty(Response response) => throw null;
     }
 }

@@ -17,6 +17,12 @@ namespace Encode.Bytes
     {
         internal DefaultBytesProperty() => throw null;
 
+        protected virtual DefaultBytesProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator DefaultBytesProperty(Response response) => throw null;
+
         void IJsonModel<DefaultBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace Encode.Bytes
 
         BinaryData IPersistableModel<DefaultBytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         DefaultBytesProperty IPersistableModel<DefaultBytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual DefaultBytesProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<DefaultBytesProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="defaultBytesProperty"> The <see cref="DefaultBytesProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DefaultBytesProperty defaultBytesProperty) => throw null;
-
-        public static explicit operator DefaultBytesProperty(Response response) => throw null;
     }
 }

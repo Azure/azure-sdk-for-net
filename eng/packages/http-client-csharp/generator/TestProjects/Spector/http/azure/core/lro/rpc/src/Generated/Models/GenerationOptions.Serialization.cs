@@ -16,6 +16,10 @@ namespace Specs.Azure.Core.Lro.Rpc
     {
         internal GenerationOptions() => throw null;
 
+        protected virtual GenerationOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<GenerationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,11 +30,7 @@ namespace Specs.Azure.Core.Lro.Rpc
 
         BinaryData IPersistableModel<GenerationOptions>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         GenerationOptions IPersistableModel<GenerationOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual GenerationOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<GenerationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 

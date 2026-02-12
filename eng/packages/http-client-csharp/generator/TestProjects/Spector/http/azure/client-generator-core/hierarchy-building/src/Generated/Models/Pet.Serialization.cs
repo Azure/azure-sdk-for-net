@@ -17,6 +17,12 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     {
         internal Pet() => throw null;
 
+        protected override Animal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Pet(Response response) => throw null;
+
         void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 
         BinaryData IPersistableModel<Pet>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         Pet IPersistableModel<Pet>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override Animal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="pet"> The <see cref="Pet"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Pet pet) => throw null;
-
-        public static explicit operator Pet(Response response) => throw null;
     }
 }

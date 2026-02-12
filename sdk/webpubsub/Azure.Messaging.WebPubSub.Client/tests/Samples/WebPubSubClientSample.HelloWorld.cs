@@ -15,23 +15,23 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
     {
         public void ConstructWebPubSubClient()
         {
-#region Snippet:WebPubSubClient_Construct
+            #region Snippet:WebPubSubClient_Construct
             var client = new WebPubSubClient(new Uri("<client-access-uri>"));
-#endregion
+            #endregion
         }
 
         public void ConstructWebPubSubClient2()
         {
-#region Snippet:WebPubSubClient_Construct2
+            #region Snippet:WebPubSubClient_Construct2
             var client = new WebPubSubClient(new WebPubSubClientCredential(token =>
             {
                 // In common practice, you will have a negotiation server for generating token. Client should fetch token from it.
                 return FetchClientAccessTokenFromServerAsync(token);
             }));
-#endregion
+            #endregion
         }
 
-#region Snippet:WebPubSubClient_GenerateClientAccessUri
+        #region Snippet:WebPubSubClient_GenerateClientAccessUri
         public async ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationToken token)
         {
             var serviceClient = new WebPubSubServiceClient("<< Connection String >>", "hub");
@@ -41,93 +41,93 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 
         public void ConstructWebPubSubClientWithJsonProtocol()
         {
-#region Snippet:WebPubSubClient_JsonProtocol
+            #region Snippet:WebPubSubClient_JsonProtocol
             var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
             {
                 Protocol = new WebPubSubJsonProtocol()
             });
-#endregion
+            #endregion
         }
 
         public void ConstructWebPubSubClientWithJsonReliableProtocol()
         {
-#region Snippet:WebPubSubClient_JsonReliableProtocol
+            #region Snippet:WebPubSubClient_JsonReliableProtocol
             var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
             {
                 Protocol = new WebPubSubJsonReliableProtocol()
             });
-#endregion
+            #endregion
         }
 
         public void WebPubSubClientSubscribeConnected(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_Subscribe_Connected
+            #region Snippet:WebPubSubClient_Subscribe_Connected
             client.Connected += eventArgs =>
             {
                 Console.WriteLine($"Connection {eventArgs.ConnectionId} is connected");
                 return Task.CompletedTask;
             };
-#endregion
+            #endregion
         }
 
         public void WebPubSubClientSubscribeDisconnected(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_Subscribe_Disconnected
+            #region Snippet:WebPubSubClient_Subscribe_Disconnected
             client.Disconnected += eventArgs =>
             {
                 Console.WriteLine($"Connection is disconnected");
                 return Task.CompletedTask;
             };
-#endregion
+            #endregion
         }
 
         public void WebPubSubClientSubscribeStopped(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_Subscribe_Stopped
+            #region Snippet:WebPubSubClient_Subscribe_Stopped
             client.Stopped += eventArgs =>
             {
                 Console.WriteLine($"Client is stopped");
                 return Task.CompletedTask;
             };
-#endregion
+            #endregion
         }
 
         public void WebPubSubClientSubscribeServerMessage(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_Subscribe_ServerMessage
+            #region Snippet:WebPubSubClient_Subscribe_ServerMessage
             client.ServerMessageReceived += eventArgs =>
             {
                 Console.WriteLine($"Receive message: {eventArgs.Message.Data}");
                 return Task.CompletedTask;
             };
-#endregion
+            #endregion
         }
 
         public void WebPubSubClientSubscribeGroupMessage(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_Subscribe_GroupMessage
+            #region Snippet:WebPubSubClient_Subscribe_GroupMessage
             client.GroupMessageReceived += eventArgs =>
             {
                 Console.WriteLine($"Receive group message from {eventArgs.Message.Group}: {eventArgs.Message.Data}");
                 return Task.CompletedTask;
             };
-#endregion
+            #endregion
         }
 
         public void WebPubSubClientSubscribeRestoreFailed(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_Subscribe_RestoreFailed
+            #region Snippet:WebPubSubClient_Subscribe_RestoreFailed
             client.RejoinGroupFailed += eventArgs =>
             {
                 Console.WriteLine($"Restore group failed");
                 return Task.CompletedTask;
             };
-#endregion
+            #endregion
         }
 
         public async Task WebPubSubClientJoinGroupAndRetry(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_JoinGroupAndRetry
+            #region Snippet:WebPubSubClient_JoinGroupAndRetry
             // Send message to group "testGroup"
             try
             {
@@ -140,23 +140,23 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
                     await client.JoinGroupAsync("testGroup", ackId: ex.AckId);
                 }
             }
-#endregion
+            #endregion
         }
 
         public async Task WebPubSubClientSendToGroup(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_SendToGroup
+            #region Snippet:WebPubSubClient_SendToGroup
             // Send message to group "testGroup"
             await client.SendToGroupAsync("testGroup", BinaryData.FromString("hello world"), WebPubSubDataType.Text);
-#endregion
+            #endregion
         }
 
         public async Task WebPubSubClientSendEvent(WebPubSubClient client)
         {
-#region Snippet:WebPubSubClient_SendEvent
+            #region Snippet:WebPubSubClient_SendEvent
             // Send custom event to server
             await client.SendEventAsync("testEvent", BinaryData.FromString("hello world"), WebPubSubDataType.Text);
-#endregion
+            #endregion
         }
     }
 }

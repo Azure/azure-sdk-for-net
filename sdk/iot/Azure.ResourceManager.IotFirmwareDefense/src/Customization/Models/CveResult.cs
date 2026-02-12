@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         //public string CveId { get; set; }
         /// <summary> The SBOM component for the CVE. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CveComponent Component {
+        public CveComponent Component
+        {
             get
             {
                 var r = new CveComponent();

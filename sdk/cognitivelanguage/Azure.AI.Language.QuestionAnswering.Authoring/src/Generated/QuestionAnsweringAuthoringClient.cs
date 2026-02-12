@@ -706,15 +706,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="body"> Project assets the needs to be imported. </param>
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), contentType?.ToString(), cancellationToken.ToRequestContext());
+            return Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Import project assets. </summary>
@@ -723,15 +722,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="body"> Project assets the needs to be imported. </param>
         /// <param name="format"> Knowledge base Import or Export format. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
-        /// <param name="contentType"> Body parameter's content type. Known values are application/json. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, ImportContentType? contentType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = default, KnowledgeBaseFormat? format = default, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), contentType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Import project assets from file. </summary>

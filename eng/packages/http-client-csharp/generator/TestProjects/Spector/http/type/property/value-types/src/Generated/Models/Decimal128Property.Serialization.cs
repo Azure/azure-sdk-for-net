@@ -17,6 +17,12 @@ namespace _Type.Property.ValueTypes
     {
         internal Decimal128Property() => throw null;
 
+        protected virtual Decimal128Property PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Decimal128Property(Response response) => throw null;
+
         void IJsonModel<Decimal128Property>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace _Type.Property.ValueTypes
 
         BinaryData IPersistableModel<Decimal128Property>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         Decimal128Property IPersistableModel<Decimal128Property>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Decimal128Property PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Decimal128Property>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="decimal128Property"> The <see cref="Decimal128Property"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Decimal128Property decimal128Property) => throw null;
-
-        public static explicit operator Decimal128Property(Response response) => throw null;
     }
 }

@@ -15,6 +15,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal ModelForRecord() => throw null;
 
+        protected virtual ModelForRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<ModelForRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -25,11 +29,7 @@ namespace _Type.Property.AdditionalProperties
 
         BinaryData IPersistableModel<ModelForRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         ModelForRecord IPersistableModel<ModelForRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ModelForRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ModelForRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

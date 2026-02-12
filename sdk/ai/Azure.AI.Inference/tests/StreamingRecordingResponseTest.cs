@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using Azure.AI.Inference.Telemetry;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Azure.AI.Inference.Telemetry;
+using NUnit.Framework;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -63,7 +63,7 @@ namespace Azure.AI.Inference.Tests
 
             CollectionAssert.AreEqual(new[] { "stop" }, response.FinishReasons);
             Assert.AreEqual(response.Model, "gpt-100o");
-            Assert.AreEqual(response.Id, withUsage?"4":"3");
+            Assert.AreEqual(response.Id, withUsage ? "4" : "3");
 
             Assert.AreEqual(response.CompletionTokens, withUsage ? 7 : null);
             Assert.AreEqual(response.PromptTokens, withUsage ? 3 : null);
@@ -151,8 +151,10 @@ namespace Azure.AI.Inference.Tests
         #region Helpers
         private static StreamingChatCompletionsUpdate GetToolUpdate(string content, string functionName, string argsUpdate, string toolCallId, int index, bool isLast)
         {
-            var toolUpdate = new {
-                function = new {
+            var toolUpdate = new
+            {
+                function = new
+                {
                     name = functionName,
                     arguments = argsUpdate
                 },
@@ -167,7 +169,7 @@ namespace Azure.AI.Inference.Tests
                 created: DateTimeOffset.Now,
                 role: ChatRole.Assistant,
                 contentUpdate: content,
-                finishReason: isLast ? CompletionsFinishReason.ToolCalls : (CompletionsFinishReason?) null,
+                finishReason: isLast ? CompletionsFinishReason.ToolCalls : (CompletionsFinishReason?)null,
                 toolCallUpdate: StreamingChatResponseToolCallUpdate.DeserializeStreamingChatResponseToolCallUpdate(JsonSerializer.SerializeToElement(toolUpdate))
             );
         }

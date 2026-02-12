@@ -16,6 +16,10 @@ namespace Specs.Azure.Encode.Duration
     {
         internal DurationModel() => throw null;
 
+        protected virtual DurationModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<DurationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,11 +30,7 @@ namespace Specs.Azure.Encode.Duration
 
         BinaryData IPersistableModel<DurationModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         DurationModel IPersistableModel<DurationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual DurationModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<DurationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 

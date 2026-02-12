@@ -16,6 +16,12 @@ namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
     {
         internal PublicDecoratorModelInInternal() => throw null;
 
+        protected virtual PublicDecoratorModelInInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator PublicDecoratorModelInInternal(Response response) => throw null;
+
         void IJsonModel<PublicDecoratorModelInInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,14 +32,8 @@ namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
 
         BinaryData IPersistableModel<PublicDecoratorModelInInternal>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         PublicDecoratorModelInInternal IPersistableModel<PublicDecoratorModelInInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual PublicDecoratorModelInInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<PublicDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator PublicDecoratorModelInInternal(Response response) => throw null;
     }
 }

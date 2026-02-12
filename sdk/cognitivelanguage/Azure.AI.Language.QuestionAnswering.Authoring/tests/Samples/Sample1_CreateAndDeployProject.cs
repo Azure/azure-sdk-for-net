@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Authoring;
-using Azure.Core;
-using System.Linq;
-using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
@@ -26,14 +26,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             newProjectName = CreateTestProjectName();
 #endif
             RequestContent creationRequestContent = RequestContent.Create(
-                new {
+                new
+                {
                     description = "This is the description for a test project",
                     language = "en",
                     multilingualResource = false,
-                    settings = new {
+                    settings = new
+                    {
                         defaultAnswer = "No answer found for your question."
-                        }
                     }
+                }
                 );
 
             Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
@@ -84,12 +86,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
             Console.WriteLine($"Sources: {sources}");
-#endregion
+            #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.ToString().Contains(sourceUri));
 
-#region Snippet:QuestionAnsweringAuthoringClient_DeployProject_Authoring
+            #region Snippet:QuestionAnsweringAuthoringClient_DeployProject_Authoring
             // Set deployment name and start operation
             string newDeploymentName = "{DeploymentName}";
 #if !SNIPPET
@@ -105,7 +107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-#endregion
+            #endregion
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployments.Any(deployment => deployment.DeploymentName.ToString().Contains(newDeploymentName)));
@@ -117,7 +119,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         {
             QuestionAnsweringAuthoringClient client = Client;
 
-#region Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync_Authoring
+            #region Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync_Authoring
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
@@ -149,12 +151,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             {
                 Console.WriteLine(project);
             }
-#endregion
+            #endregion
 
             Assert.AreEqual(201, creationResponse.Status);
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ProjectName.ToString().Contains(newProjectName)));
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_Authoring
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_Authoring
 
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
@@ -183,12 +185,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
             Console.WriteLine($"Sources: {sources}");
-#endregion
+            #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.ToString().Contains(sourceUri));
 
-#region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync_Authoring
+            #region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync_Authoring
             // Set deployment name and start operation
             string newDeploymentName = "{DeploymentName}";
 #if !SNIPPET
@@ -204,7 +206,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-#endregion
+            #endregion
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.DeploymentName.ToString().Contains(newDeploymentName)));

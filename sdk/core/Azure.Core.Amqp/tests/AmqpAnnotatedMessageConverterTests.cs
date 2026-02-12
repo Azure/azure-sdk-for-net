@@ -186,11 +186,11 @@ namespace Azure.Core.Amqp.Tests
         [Test]
         public void ToAmqpMessagePopulatesSimpleApplicationProperties()
         {
-            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 } }));
 
             foreach (var value in s_simpleApplicationPropertyValues)
             {
-                annotatedMessage.ApplicationProperties.Add($"{value.GetType().Name }Property", value);
+                annotatedMessage.ApplicationProperties.Add($"{value.GetType().Name}Property", value);
             }
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
@@ -206,8 +206,8 @@ namespace Azure.Core.Amqp.Tests
             {
                 var containsValue = message.ApplicationProperties.Map.TryGetValue(property, out object value);
 
-                Assert.IsTrue(containsValue, $"The message properties did not contain: [{ property }]");
-                Assert.That(value, Is.EqualTo(annotatedMessage.ApplicationProperties[property]), $"The property value did not match for: [{ property }]");
+                Assert.IsTrue(containsValue, $"The message properties did not contain: [{property}]");
+                Assert.That(value, Is.EqualTo(annotatedMessage.ApplicationProperties[property]), $"The property value did not match for: [{property}]");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Core.Amqp.Tests
             var key = "UriProperty";
             var expectedUri = new Uri(uriValue, UriKind.RelativeOrAbsolute);
 
-            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 } }));
             annotatedMessage.ApplicationProperties.Add(key, expectedUri);
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
@@ -238,7 +238,7 @@ namespace Azure.Core.Amqp.Tests
         [Test]
         public void FromAmqpMessagePopulatesSimpleApplicationProperties()
         {
-            var applicationProperties = s_simpleApplicationPropertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value);
+            var applicationProperties = s_simpleApplicationPropertyValues.ToDictionary(value => $"{value.GetType().Name}Property", value => value);
             var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
 
             using var message = AmqpMessage.Create(dataBody);
@@ -261,8 +261,8 @@ namespace Azure.Core.Amqp.Tests
             {
                 var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(property, out object value);
 
-                Assert.IsTrue(containsValue, $"The message properties did not contain: [{ property }]");
-                Assert.AreEqual(value, applicationProperties[property], $"The property value did not match for: [{ property }]");
+                Assert.IsTrue(containsValue, $"The message properties did not contain: [{property}]");
+                Assert.AreEqual(value, applicationProperties[property], $"The property value did not match for: [{property}]");
             }
         }
 
@@ -295,10 +295,10 @@ namespace Azure.Core.Amqp.Tests
         [TestCaseSource(nameof(DescribedTypePropertyTestCases))]
         public void ToAmqpMessageTranslatesDescribedApplicationProperties(object typeDescriptor, object propertyValueRaw, Func<object, object> propertyValueAccessor)
         {
-            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 } }));
             annotatedMessage.ApplicationProperties.Add("TestProp", propertyValueRaw);
 
-             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
+            using AmqpMessage message = ToAmqpMessage(annotatedMessage);
 
             Assert.IsNotNull(message, "The AMQP message should have been created.");
             Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
@@ -335,7 +335,7 @@ namespace Azure.Core.Amqp.Tests
         [TestCaseSource(nameof(StreamPropertyTestCases))]
         public void ToAmqpMessageTranslatesStreamApplicationProperties(object propertyStream, byte[] contents)
         {
-            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 } }));
             annotatedMessage.ApplicationProperties.Add("TestProp", propertyStream);
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
@@ -355,7 +355,7 @@ namespace Azure.Core.Amqp.Tests
         [TestCaseSource(nameof(BinaryPropertyTestCases))]
         public void ToAmqpMessageTranslatesBinaryApplicationProperties(object property, object contents)
         {
-            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 } }));
             annotatedMessage.ApplicationProperties.Add("TestProp", property);
 
             using AmqpMessage message = ToAmqpMessage(annotatedMessage);
@@ -438,7 +438,7 @@ namespace Azure.Core.Amqp.Tests
 
             amqpMessage.Properties.CreationTime = DateTime.UtcNow;
             amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
-            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).TotalMilliseconds;
+            amqpMessage.Header.Ttl = (uint)TimeSpan.FromDays(49).TotalMilliseconds;
 
             var annotatedMessage = FromAmqpMessage(amqpMessage);
 
@@ -454,7 +454,7 @@ namespace Azure.Core.Amqp.Tests
                 ToAmqpMessage(new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5)));
 
             amqpMessage.Properties.CreationTime = DateTime.UtcNow;
-            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).TotalMilliseconds;
+            amqpMessage.Header.Ttl = (uint)TimeSpan.FromDays(49).TotalMilliseconds;
 
             var annotatedMessage = FromAmqpMessage(amqpMessage);
 
@@ -465,12 +465,12 @@ namespace Azure.Core.Amqp.Tests
         public void TimeToLiveRoundTripsCorrectlyWithGreaterThanMaxInt()
         {
             var input = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5))
-                {
-                    Header =
+            {
+                Header =
                     {
                         TimeToLive = TimeSpan.FromDays(100)
                     }
-                };
+            };
             var amqpMessage = ToAmqpMessage(input);
 
             Assert.AreEqual(uint.MaxValue, amqpMessage.Header.Ttl);

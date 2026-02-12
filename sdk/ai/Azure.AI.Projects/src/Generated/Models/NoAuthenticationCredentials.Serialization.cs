@@ -12,6 +12,36 @@ namespace Azure.AI.Projects
     /// <summary> Credentials that do not require authentication. </summary>
     public partial class NoAuthenticationCredentials : AIProjectConnectionBaseCredential, IJsonModel<NoAuthenticationCredentials>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AIProjectConnectionBaseCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NoAuthenticationCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNoAuthenticationCredentials(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NoAuthenticationCredentials)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NoAuthenticationCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NoAuthenticationCredentials)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NoAuthenticationCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -78,39 +108,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NoAuthenticationCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NoAuthenticationCredentials>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NoAuthenticationCredentials)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NoAuthenticationCredentials IPersistableModel<NoAuthenticationCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => (NoAuthenticationCredentials)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AIProjectConnectionBaseCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NoAuthenticationCredentials>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNoAuthenticationCredentials(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NoAuthenticationCredentials)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NoAuthenticationCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

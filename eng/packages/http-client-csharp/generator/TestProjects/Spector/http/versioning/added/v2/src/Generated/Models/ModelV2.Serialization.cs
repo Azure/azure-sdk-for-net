@@ -17,6 +17,12 @@ namespace Versioning.Added
     {
         internal ModelV2() => throw null;
 
+        protected virtual ModelV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator ModelV2(Response response) => throw null;
+
         void IJsonModel<ModelV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace Versioning.Added
 
         BinaryData IPersistableModel<ModelV2>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         ModelV2 IPersistableModel<ModelV2>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ModelV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ModelV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="modelV2"> The <see cref="ModelV2"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelV2 modelV2) => throw null;
-
-        public static explicit operator ModelV2(Response response) => throw null;
     }
 }

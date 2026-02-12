@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Autorest.CSharp.Core;
-using System.Threading;
 using System;
+using System.Threading;
+using Autorest.CSharp.Core;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent

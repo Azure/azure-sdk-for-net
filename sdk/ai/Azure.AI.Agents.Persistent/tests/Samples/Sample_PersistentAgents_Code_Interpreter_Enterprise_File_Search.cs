@@ -32,7 +32,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateAgent
-        List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+        List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
         // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
@@ -60,7 +60,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What does the attachment say?",
-            attachments: [ attachment ]
+            attachments: [attachment]
         );
 
         ThreadRun run = await client.Runs.CreateRunAsync(

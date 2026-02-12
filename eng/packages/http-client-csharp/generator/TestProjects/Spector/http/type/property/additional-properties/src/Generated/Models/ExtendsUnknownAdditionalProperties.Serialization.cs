@@ -17,6 +17,12 @@ namespace _Type.Property.AdditionalProperties
     {
         internal ExtendsUnknownAdditionalProperties() => throw null;
 
+        protected virtual ExtendsUnknownAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator ExtendsUnknownAdditionalProperties(Response response) => throw null;
+
         void IJsonModel<ExtendsUnknownAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace _Type.Property.AdditionalProperties
 
         BinaryData IPersistableModel<ExtendsUnknownAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         ExtendsUnknownAdditionalProperties IPersistableModel<ExtendsUnknownAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ExtendsUnknownAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ExtendsUnknownAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="extendsUnknownAdditionalProperties"> The <see cref="ExtendsUnknownAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ExtendsUnknownAdditionalProperties extendsUnknownAdditionalProperties) => throw null;
-
-        public static explicit operator ExtendsUnknownAdditionalProperties(Response response) => throw null;
     }
 }

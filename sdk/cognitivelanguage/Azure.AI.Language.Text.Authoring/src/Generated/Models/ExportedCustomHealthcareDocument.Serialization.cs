@@ -15,6 +15,23 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents an exported document for a CustomHealthcare project. </summary>
     public partial class ExportedCustomHealthcareDocument : IJsonModel<ExportedCustomHealthcareDocument>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExportedCustomHealthcareDocument PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomHealthcareDocument>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExportedCustomHealthcareDocument(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportedCustomHealthcareDocument)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportedCustomHealthcareDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -163,23 +180,6 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExportedCustomHealthcareDocument IPersistableModel<ExportedCustomHealthcareDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExportedCustomHealthcareDocument PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomHealthcareDocument>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExportedCustomHealthcareDocument(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportedCustomHealthcareDocument)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportedCustomHealthcareDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

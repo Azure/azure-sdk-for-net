@@ -15,6 +15,10 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     {
         internal SeaGull() => throw null;
 
+        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<SeaGull>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -25,11 +29,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         BinaryData IPersistableModel<SeaGull>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         SeaGull IPersistableModel<SeaGull>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<SeaGull>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

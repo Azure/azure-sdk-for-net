@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.Avs
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                stateName.ToString(),
-                status.ToString(),
+                stateName?.ToString(),
+                status?.ToString(),
                 @from,
                 to,
                 context), data => new AvsMaintenanceResource(Client, data));
@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.Avs
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                stateName.ToString(),
-                status.ToString(),
+                stateName?.ToString(),
+                status?.ToString(),
                 @from,
                 to,
                 context), data => new AvsMaintenanceResource(Client, data));

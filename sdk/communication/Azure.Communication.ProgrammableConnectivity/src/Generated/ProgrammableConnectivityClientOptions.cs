@@ -10,21 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
-    /// <summary> Client options for ProgrammableConnectivityClient. </summary>
+    /// <summary> Client options for <see cref="ProgrammableConnectivityClient"/>. </summary>
     public partial class ProgrammableConnectivityClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_09_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2024-02-09-preview". </summary>
-            V2024_02_09_Preview = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of ProgrammableConnectivityClientOptions. </summary>
+        /// <summary> Initializes a new instance of ProgrammableConnectivityClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public ProgrammableConnectivityClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +24,16 @@ namespace Azure.Communication.ProgrammableConnectivity
                 ServiceVersion.V2024_02_09_Preview => "2024-02-09-preview",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Version 2024-02-09-preview. </summary>
+            V2024_02_09_Preview = 1
         }
     }
 }

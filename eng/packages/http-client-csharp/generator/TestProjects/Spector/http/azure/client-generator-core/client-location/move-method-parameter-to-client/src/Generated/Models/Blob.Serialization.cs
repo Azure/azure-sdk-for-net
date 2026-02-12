@@ -16,6 +16,12 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
     {
         internal Blob() => throw null;
 
+        protected virtual Blob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Blob(Response response) => throw null;
+
         void IJsonModel<Blob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,14 +32,8 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
 
         BinaryData IPersistableModel<Blob>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         Blob IPersistableModel<Blob>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Blob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<Blob>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator Blob(Response response) => throw null;
     }
 }

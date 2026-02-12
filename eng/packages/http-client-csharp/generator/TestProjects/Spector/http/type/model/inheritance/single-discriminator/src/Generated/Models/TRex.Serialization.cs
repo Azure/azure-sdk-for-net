@@ -15,6 +15,10 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     {
         internal TRex() => throw null;
 
+        protected override Dinosaur PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<TRex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -25,11 +29,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         BinaryData IPersistableModel<TRex>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         TRex IPersistableModel<TRex>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override Dinosaur PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<TRex>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

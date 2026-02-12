@@ -417,7 +417,7 @@ namespace Azure.Core.Pipeline
 
             // While HeaderStringValueToStringVsEnumerator performance test shows that `HeaderStringValues.ToString` is faster than DefaultInterpolatedStringHandler,
             // we can't use it here because it uses ", " as default separator and doesn't allow customization.
-            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count-1, count);
+            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count - 1, count);
             var isFirst = true;
             foreach (var str in values)
             {

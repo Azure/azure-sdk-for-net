@@ -17,6 +17,12 @@ namespace _Type.Property.AdditionalProperties
     {
         internal SpreadStringRecord() => throw null;
 
+        protected virtual SpreadStringRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator SpreadStringRecord(Response response) => throw null;
+
         void IJsonModel<SpreadStringRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace _Type.Property.AdditionalProperties
 
         BinaryData IPersistableModel<SpreadStringRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         SpreadStringRecord IPersistableModel<SpreadStringRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual SpreadStringRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<SpreadStringRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="spreadStringRecord"> The <see cref="SpreadStringRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SpreadStringRecord spreadStringRecord) => throw null;
-
-        public static explicit operator SpreadStringRecord(Response response) => throw null;
     }
 }

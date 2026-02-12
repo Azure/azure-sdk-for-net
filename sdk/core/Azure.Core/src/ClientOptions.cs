@@ -33,7 +33,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions(): this(Default, null)
+        protected ClientOptions() : this(Default, null)
         {
         }
 
@@ -74,18 +74,19 @@ namespace Azure.Core
         /// Creates a new instance of <see cref="ClientOptions"/> with the specified <see cref="IConfigurationSection"/>.
         /// </summary>
         /// <param name="section">The <see cref="IConfigurationSection"/> to read from.</param>
+        /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
         [Experimental("SCME0002")]
-        protected ClientOptions(IConfigurationSection section)
+        protected ClientOptions(IConfigurationSection section, DiagnosticsOptions? diagnostics)
         {
             _transport = HttpPipelineTransport.Create();
             if (section is null || !section.Exists())
             {
-                Diagnostics = new DiagnosticsOptions((DiagnosticsOptions?)null);
+                Diagnostics = diagnostics ?? new DiagnosticsOptions((DiagnosticsOptions?)null);
                 Retry = new RetryOptions((RetryOptions?)null);
             }
             else
             {
-                Diagnostics = new DiagnosticsOptions(section.GetSection("Diagnostics"));
+                Diagnostics = diagnostics ?? new DiagnosticsOptions(section.GetSection("Diagnostics"));
                 Retry = new RetryOptions(section.GetSection("Retry"));
             }
         }

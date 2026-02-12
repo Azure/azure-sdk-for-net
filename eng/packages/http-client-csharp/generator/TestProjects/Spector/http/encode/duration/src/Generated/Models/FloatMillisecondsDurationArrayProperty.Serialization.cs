@@ -17,6 +17,12 @@ namespace Encode.Duration._Property
     {
         internal FloatMillisecondsDurationArrayProperty() => throw null;
 
+        protected virtual FloatMillisecondsDurationArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator FloatMillisecondsDurationArrayProperty(Response response) => throw null;
+
         void IJsonModel<FloatMillisecondsDurationArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace Encode.Duration._Property
 
         BinaryData IPersistableModel<FloatMillisecondsDurationArrayProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         FloatMillisecondsDurationArrayProperty IPersistableModel<FloatMillisecondsDurationArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual FloatMillisecondsDurationArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<FloatMillisecondsDurationArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="floatMillisecondsDurationArrayProperty"> The <see cref="FloatMillisecondsDurationArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatMillisecondsDurationArrayProperty floatMillisecondsDurationArrayProperty) => throw null;
-
-        public static explicit operator FloatMillisecondsDurationArrayProperty(Response response) => throw null;
     }
 }

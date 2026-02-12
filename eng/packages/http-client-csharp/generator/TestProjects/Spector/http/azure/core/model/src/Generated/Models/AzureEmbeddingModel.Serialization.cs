@@ -17,6 +17,12 @@ namespace Specs.Azure.Core.Model
     {
         internal AzureEmbeddingModel() => throw null;
 
+        protected virtual AzureEmbeddingModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator AzureEmbeddingModel(Response response) => throw null;
+
         void IJsonModel<AzureEmbeddingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace Specs.Azure.Core.Model
 
         BinaryData IPersistableModel<AzureEmbeddingModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         AzureEmbeddingModel IPersistableModel<AzureEmbeddingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual AzureEmbeddingModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<AzureEmbeddingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="azureEmbeddingModel"> The <see cref="AzureEmbeddingModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(AzureEmbeddingModel azureEmbeddingModel) => throw null;
-
-        public static explicit operator AzureEmbeddingModel(Response response) => throw null;
     }
 }

@@ -17,6 +17,12 @@ namespace _Type.Property.Optional
     {
         internal RequiredAndOptionalProperty() => throw null;
 
+        protected virtual RequiredAndOptionalProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator RequiredAndOptionalProperty(Response response) => throw null;
+
         void IJsonModel<RequiredAndOptionalProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,17 +33,11 @@ namespace _Type.Property.Optional
 
         BinaryData IPersistableModel<RequiredAndOptionalProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         RequiredAndOptionalProperty IPersistableModel<RequiredAndOptionalProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual RequiredAndOptionalProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<RequiredAndOptionalProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="requiredAndOptionalProperty"> The <see cref="RequiredAndOptionalProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(RequiredAndOptionalProperty requiredAndOptionalProperty) => throw null;
-
-        public static explicit operator RequiredAndOptionalProperty(Response response) => throw null;
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.SdkAnalyzers
         public static DiagnosticDescriptor AZC0012 = new(
             nameof(AZC0012),
             "Avoid single word type names",
-            "Type name '{0}' is too generic and has high chance of collision with BCL types or types from other libraries",
+            "Type name '{0}' is too generic and has high chance of collision with BCL types or types from other libraries. Consider renaming to: {1}",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,

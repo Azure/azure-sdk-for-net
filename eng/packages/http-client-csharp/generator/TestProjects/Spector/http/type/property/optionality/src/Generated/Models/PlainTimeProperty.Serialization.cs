@@ -15,6 +15,12 @@ namespace _Type.Property.Optional
 {
     public partial class PlainTimeProperty : IJsonModel<PlainTimeProperty>
     {
+        protected virtual PlainTimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator PlainTimeProperty(Response response) => throw null;
+
         void IJsonModel<PlainTimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -25,17 +31,11 @@ namespace _Type.Property.Optional
 
         BinaryData IPersistableModel<PlainTimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         PlainTimeProperty IPersistableModel<PlainTimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual PlainTimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<PlainTimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="plainTimeProperty"> The <see cref="PlainTimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(PlainTimeProperty plainTimeProperty) => throw null;
-
-        public static explicit operator PlainTimeProperty(Response response) => throw null;
     }
 }

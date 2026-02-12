@@ -15,6 +15,12 @@ namespace _Type.Model.Visibility
 {
     public partial class ReadOnlyModel : IJsonModel<ReadOnlyModel>
     {
+        protected virtual ReadOnlyModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator ReadOnlyModel(Response response) => throw null;
+
         void IJsonModel<ReadOnlyModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -25,17 +31,11 @@ namespace _Type.Model.Visibility
 
         BinaryData IPersistableModel<ReadOnlyModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
         ReadOnlyModel IPersistableModel<ReadOnlyModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ReadOnlyModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ReadOnlyModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="readOnlyModel"> The <see cref="ReadOnlyModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ReadOnlyModel readOnlyModel) => throw null;
-
-        public static explicit operator ReadOnlyModel(Response response) => throw null;
     }
 }
