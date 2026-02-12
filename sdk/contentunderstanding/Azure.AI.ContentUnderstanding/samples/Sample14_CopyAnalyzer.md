@@ -35,7 +35,38 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Copy an analyzer
 
-Create a source analyzer and copy it to a target. First, create the source analyzer (see [Sample 04][sample04] for details on creating analyzers), then copy it:
+Create a source analyzer and copy it to a target. First, create the source analyzer (see [Sample 04][sample04] for details on creating analyzers):
+
+```C# Snippet:ContentUnderstandingCopyAnalyzerSetup
+string sourceAnalyzerId = $"copy_source_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+string targetAnalyzerId = $"copy_target_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+
+// Create a field schema for the source analyzer
+var fields = new Dictionary<string, ContentFieldDefinition>
+{
+    ["title"] = new ContentFieldDefinition
+    {
+        Type = ContentFieldType.String,
+        Description = "Document title"
+    }
+};
+var fieldSchema = new ContentFieldSchema(fields);
+
+// Create the source analyzer
+var sourceAnalyzer = new ContentAnalyzer
+{
+    Description = "Source analyzer to copy",
+    BaseAnalyzerId = "prebuilt-document",
+    FieldSchema = fieldSchema
+};
+sourceAnalyzer.Models["completion"] = _gpt41Deployment;
+sourceAnalyzer.Models["embedding"] = _embeddingDeployment;
+
+var createResponse = await client.CreateAnalyzerAsync(WaitUntil.Completed, sourceAnalyzerId, sourceAnalyzer);
+Console.WriteLine($"Source analyzer '{sourceAnalyzerId}' created.");
+```
+
+Then copy it:
 
 ```C# Snippet:ContentUnderstandingCopyAnalyzer
 await client.CopyAnalyzerAsync(

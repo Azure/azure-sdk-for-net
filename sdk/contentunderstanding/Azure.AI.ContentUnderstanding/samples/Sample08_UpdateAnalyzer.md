@@ -32,7 +32,31 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Update an analyzer
 
-Update an analyzer's description and tags:
+First, create an analyzer to update. Then update its description and tags:
+
+```C# Snippet:ContentUnderstandingUpdateAnalyzerSetup
+// Create an analyzer to update
+string analyzerId = $"my_update_test_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+
+var initialAnalyzer = new ContentAnalyzer
+{
+    BaseAnalyzerId = "prebuilt-document",
+    Description = "Initial description",
+    Config = new ContentAnalyzerConfig
+    {
+        ReturnDetails = true
+    }
+};
+initialAnalyzer.Models["completion"] = "gpt-4.1";
+initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
+
+await client.CreateAnalyzerAsync(
+    WaitUntil.Completed,
+    analyzerId,
+    initialAnalyzer);
+```
+
+Now update the analyzer's description and tags:
 
 ```C# Snippet:ContentUnderstandingUpdateAnalyzer
 // First, get the current analyzer to preserve base analyzer ID
@@ -61,6 +85,10 @@ await client.UpdateAnalyzerAsync(analyzerId, updatedAnalyzer);
 var updated = await client.GetAnalyzerAsync(analyzerId);
 Console.WriteLine($"Description: {updated.Value.Description}");
 Console.WriteLine($"Tags: {string.Join(", ", updated.Value.Tags.Select(kvp => $"{kvp.Key}={kvp.Value}"))}");
+
+// Clean up: delete the analyzer
+await client.DeleteAnalyzerAsync(analyzerId);
+Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 ```
 
 ## Next steps

@@ -142,6 +142,20 @@ try
         string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
         Console.WriteLine(formattedJson);
     }
+}
+finally
+{
+    // Clean up: delete the custom analyzer
+    try
+    {
+        await client.DeleteAnalyzerAsync(analyzerId);
+        Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
+    }
+    catch
+    {
+        // Ignore cleanup errors
+    }
+}
 ```
 
 ## Next steps
