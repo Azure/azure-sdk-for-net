@@ -221,17 +221,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> List of guest configuration assignment reports. </summary>
-        /// <param name="value"> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </param>
-        /// <param name="nextLink"></param>
-        /// <returns> A new <see cref="Models.GuestConfigurationAssignmentReportList"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentReportList GuestConfigurationAssignmentReportList(IEnumerable<GuestConfigurationAssignmentReport> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<GuestConfigurationAssignmentReport>();
-
-            return new GuestConfigurationAssignmentReportList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>

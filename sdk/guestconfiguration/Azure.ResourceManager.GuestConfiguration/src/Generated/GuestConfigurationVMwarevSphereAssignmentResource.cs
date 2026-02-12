@@ -423,30 +423,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GuestConfigurationAssignmentReportList>> GetReportsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.GetReports");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GuestConfigurationAssignmentReportList> response = Response.FromValue(GuestConfigurationAssignmentReportList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsAsyncCollectionResultOfT(
+                _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
         }
 
         /// <summary>
@@ -471,30 +461,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GuestConfigurationAssignmentReportList> GetReports(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.GetReports");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<GuestConfigurationAssignmentReportList> response = Response.FromValue(GuestConfigurationAssignmentReportList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsCollectionResultOfT(
+                _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
         }
 
         /// <summary>

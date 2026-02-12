@@ -4,12 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
@@ -39,11 +37,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportsAsync(CancellationToken cancellationToken = default)
         {
-            return new SinglePageAsyncPageable<GuestConfigurationAssignmentReport>(async () =>
-            {
-                var response = await GetReportsAsync(cancellationToken).ConfigureAwait(false);
-                return (response.Value.Value, response.GetRawResponse());
-            });
+            return GetReportsAsync(cancellationToken);
         }
 
         /// <summary> List all reports for the guest configuration assignment, latest report first. </summary>
@@ -51,11 +45,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<GuestConfigurationAssignmentReport> GetGuestConfigurationConnectedVMwarevSphereAssignmentsReports(CancellationToken cancellationToken = default)
         {
-            return new SinglePagePageable<GuestConfigurationAssignmentReport>(() =>
-            {
-                var response = GetReports(cancellationToken);
-                return (response.Value.Value, response.GetRawResponse());
-            });
+            return GetReports(cancellationToken);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.GuestConfiguration;
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> List of guest configuration assignment reports. </summary>
-    public partial class GuestConfigurationAssignmentReportList
+    internal partial class GuestConfigurationAssignmentReportList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

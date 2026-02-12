@@ -15,7 +15,7 @@ using Azure.ResourceManager.GuestConfiguration;
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> List of guest configuration assignment reports. </summary>
-    public partial class GuestConfigurationAssignmentReportList : IJsonModel<GuestConfigurationAssignmentReportList>
+    internal partial class GuestConfigurationAssignmentReportList : IJsonModel<GuestConfigurationAssignmentReportList>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
