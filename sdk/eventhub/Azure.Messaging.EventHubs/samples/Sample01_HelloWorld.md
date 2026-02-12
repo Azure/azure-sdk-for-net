@@ -42,7 +42,7 @@ try
 
     for (var counter = 0; counter < int.MaxValue; ++counter)
     {
-        var eventBody = new BinaryData($"Event Number: { counter }");
+        var eventBody = new BinaryData($"Event Number: {counter}");
         var eventData = new EventData(eventBody);
 
         if (!eventBatch.TryAdd(eventData))
@@ -74,7 +74,7 @@ catch
 }
 finally
 {
-   await producer.CloseAsync();
+    await producer.CloseAsync();
 }
 ```
 
@@ -123,7 +123,7 @@ catch
 }
 finally
 {
-   await consumer.CloseAsync();
+    await consumer.CloseAsync();
 }
 ```
 

@@ -195,8 +195,13 @@ namespace BasicTypeSpec
         /// <param name="anotherModel"></param>
         /// <param name="modelsWithNamespaces"></param>
         /// <param name="unwrappedModelsWithNamespaces"></param>
+        /// <param name="listOfListFoo"></param>
+        /// <param name="dictionaryFoo"></param>
+        /// <param name="dictionaryOfDictionaryFoo"></param>
+        /// <param name="dictionaryListFoo"></param>
+        /// <param name="listOfDictionaryFoo"></param>
         /// <returns> A new <see cref="BasicTypeSpec.XmlAdvancedModel"/> instance for mocking. </returns>
-        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default)
+        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default, IEnumerable<IList<XmlItem>> listOfListFoo = default, IDictionary<string, XmlItem> dictionaryFoo = default, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default, IDictionary<string, IList<XmlItem>> dictionaryListFoo = default, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo = default)
         {
             unwrappedStrings ??= new ChangeTrackingList<string>();
             unwrappedCounts ??= new ChangeTrackingList<int>();
@@ -208,6 +213,11 @@ namespace BasicTypeSpec
             fooItems ??= new ChangeTrackingList<string>();
             modelsWithNamespaces ??= new ChangeTrackingList<XmlModelWithNamespace>();
             unwrappedModelsWithNamespaces ??= new ChangeTrackingList<XmlModelWithNamespace>();
+            listOfListFoo ??= new ChangeTrackingList<IList<XmlItem>>();
+            dictionaryFoo ??= new ChangeTrackingDictionary<string, XmlItem>();
+            dictionaryOfDictionaryFoo ??= new ChangeTrackingDictionary<string, IDictionary<string, XmlItem>>();
+            dictionaryListFoo ??= new ChangeTrackingDictionary<string, IList<XmlItem>>();
+            listOfDictionaryFoo ??= new ChangeTrackingList<IDictionary<string, XmlItem>>();
 
             return new XmlAdvancedModel(
                 name,
@@ -245,6 +255,11 @@ namespace BasicTypeSpec
                 anotherModel,
                 modelsWithNamespaces.ToList(),
                 unwrappedModelsWithNamespaces.ToList(),
+                listOfListFoo.ToList(),
+                dictionaryFoo,
+                dictionaryOfDictionaryFoo,
+                dictionaryListFoo,
+                listOfDictionaryFoo.ToList(),
                 additionalBinaryDataProperties: null);
         }
 

@@ -18,6 +18,8 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
 
         protected virtual Blob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator Blob(Response response) => throw null;
 
         void IJsonModel<Blob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
         protected virtual Blob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Blob>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Blob IPersistableModel<Blob>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 

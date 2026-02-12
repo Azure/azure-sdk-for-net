@@ -82,7 +82,7 @@ public abstract class TestEnvironment
     /// <summary>
     /// Determines if there is a current global test mode.
     /// </summary>
-    internal static RecordedTestMode GlobalTestMode
+    public static RecordedTestMode GlobalTestMode
     {
         get
         {
@@ -113,7 +113,7 @@ public abstract class TestEnvironment
     /// <summary>
     /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
     /// </summary>
-    internal static bool GlobalDisableAutoRecording
+    public static bool GlobalDisableAutoRecording
     {
         get
         {
@@ -139,7 +139,7 @@ public abstract class TestEnvironment
     /// <summary>
     /// Determines whether to enable the test framework to proxy traffic through fiddler.
     /// </summary>
-    internal static bool EnableFiddler
+    public static bool EnableFiddler
     {
         get
         {
@@ -164,7 +164,7 @@ public abstract class TestEnvironment
     /// <summary>
     /// Determines if the bootstrapping prompt and automatic resource group expiration extension should be disabled.
     /// </summary>
-    internal static bool DisableBootstrapping
+    public static bool DisableBootstrapping
     {
         get
         {
@@ -188,7 +188,7 @@ public abstract class TestEnvironment
     /// <summary>
     /// Determines whether to enable debug level proxy logging. Errors are logged by default.
     /// </summary>
-    internal static bool EnableTestProxyDebugLogs
+    public static bool EnableTestProxyDebugLogs
     {
         get
         {

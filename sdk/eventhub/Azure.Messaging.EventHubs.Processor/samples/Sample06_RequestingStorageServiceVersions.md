@@ -125,12 +125,12 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.  This
-   // is especially important when using lambda expressions or handlers
-   // in any form that may contain closure scopes or hold other references.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.  This
+    // is especially important when using lambda expressions or handlers
+    // in any form that may contain closure scopes or hold other references.
 
-   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```
