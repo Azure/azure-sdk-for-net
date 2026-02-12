@@ -8,17 +8,23 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
     public partial class MockableGuestConfigurationArmClient
     {
+        private static ResourceIdentifier GetResourceGroupId(ResourceIdentifier scope)
+        {
+            return ResourceGroupResource.CreateResourceIdentifier(scope.SubscriptionId, scope.ResourceGroupName);
+        }
+
         /// <summary> Gets a collection of GuestConfigurationVmAssignmentResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(ResourceIdentifier scope)
         {
-            return new GuestConfigurationVmAssignmentCollection(Client, scope, scope.Name);
+            return new GuestConfigurationVmAssignmentCollection(Client, GetResourceGroupId(scope), scope.Name);
         }
 
         /// <summary> Gets a specific GuestConfigurationVmAssignmentResource. </summary>
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(ResourceIdentifier scope)
         {
-            return new GuestConfigurationHcrpAssignmentCollection(Client, scope, scope.Name);
+            return new GuestConfigurationHcrpAssignmentCollection(Client, GetResourceGroupId(scope), scope.Name);
         }
 
         /// <summary> Gets a specific GuestConfigurationHcrpAssignmentResource. </summary>
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(ResourceIdentifier scope)
         {
-            return new GuestConfigurationVmssAssignmentCollection(Client, scope, scope.Name);
+            return new GuestConfigurationVmssAssignmentCollection(Client, GetResourceGroupId(scope), scope.Name);
         }
 
         /// <summary> Gets a specific GuestConfigurationVmssAssignmentResource. </summary>
@@ -108,7 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(ResourceIdentifier scope)
         {
-            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, scope, scope.Name);
+            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, GetResourceGroupId(scope), scope.Name);
         }
 
         /// <summary> Gets a specific GuestConfigurationVMwarevSphereAssignmentResource. </summary>
