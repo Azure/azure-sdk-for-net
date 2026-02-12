@@ -21,6 +21,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// <summary> Represents a Administrator. </summary>
     public partial class MySqlFlexibleServerAadAdministratorData : ResourceData, IJsonModel<MySqlFlexibleServerAadAdministratorData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerAadAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerAadAdministratorData"/> from. </param>
+        internal static MySqlFlexibleServerAadAdministratorData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerAadAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -155,23 +179,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServerAadAdministratorData IPersistableModel<MySqlFlexibleServerAadAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerAadAdministratorData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerAadAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerAadAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -185,13 +192,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(mySqlFlexibleServerAadAdministratorData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerAadAdministratorData"/> from. </param>
-        internal static MySqlFlexibleServerAadAdministratorData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

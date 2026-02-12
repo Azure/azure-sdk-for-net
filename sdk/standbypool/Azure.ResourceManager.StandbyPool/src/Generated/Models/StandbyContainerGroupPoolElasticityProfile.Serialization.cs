@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StandbyContainerGroupPoolElasticityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolElasticityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStandbyContainerGroupPoolElasticityProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyContainerGroupPoolElasticityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,23 +166,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StandbyContainerGroupPoolElasticityProfile IPersistableModel<StandbyContainerGroupPoolElasticityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StandbyContainerGroupPoolElasticityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolElasticityProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStandbyContainerGroupPoolElasticityProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolElasticityProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StandbyContainerGroupPoolElasticityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

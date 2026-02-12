@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary> DnsPrivateView resource definition. </summary>
     public partial class OracleDnsPrivateViewData : ResourceData, IJsonModel<OracleDnsPrivateViewData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDnsPrivateViewData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOracleDnsPrivateViewData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleDnsPrivateViewData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleDnsPrivateViewData"/> from. </param>
+        internal static OracleDnsPrivateViewData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOracleDnsPrivateViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleDnsPrivateViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> The client options for reading and writing models. </param>
         OracleDnsPrivateViewData IPersistableModel<OracleDnsPrivateViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleDnsPrivateViewData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OracleDnsPrivateViewData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOracleDnsPrivateViewData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OracleDnsPrivateViewData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleDnsPrivateViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleDnsPrivateViewData"/> from. </param>
-        internal static OracleDnsPrivateViewData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOracleDnsPrivateViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

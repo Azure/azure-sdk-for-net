@@ -18,6 +18,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The response of get private dns zone suffix. </summary>
     public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse : IJsonModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerPrivateDnsZoneSuffixResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerPrivateDnsZoneSuffixResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> from. </param>
+        internal static MySqlFlexibleServerPrivateDnsZoneSuffixResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,31 +144,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServerPrivateDnsZoneSuffixResponse IPersistableModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerPrivateDnsZoneSuffixResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerPrivateDnsZoneSuffixResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> from. </param>
-        internal static MySqlFlexibleServerPrivateDnsZoneSuffixResponse FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> The ArcAgentryConfigurations. </summary>
     public partial class ArcAgentryConfigurations : IJsonModel<ArcAgentryConfigurations>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArcAgentryConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArcAgentryConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArcAgentryConfigurations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArcAgentryConfigurations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArcAgentryConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -193,23 +210,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ArcAgentryConfigurations IPersistableModel<ArcAgentryConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArcAgentryConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcAgentryConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeArcAgentryConfigurations(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArcAgentryConfigurations)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ArcAgentryConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DependencyMap.Models
     /// <summary> UTC DateTime filter for dependency map visualization apis. </summary>
     public partial class DependencyMapDateTimeFilter : IJsonModel<DependencyMapDateTimeFilter>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependencyMapDateTimeFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyMapDateTimeFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDependencyMapDateTimeFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DependencyMapDateTimeFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependencyMapDateTimeFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DependencyMapDateTimeFilter IPersistableModel<DependencyMapDateTimeFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DependencyMapDateTimeFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DependencyMapDateTimeFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDependencyMapDateTimeFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DependencyMapDateTimeFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DependencyMapDateTimeFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

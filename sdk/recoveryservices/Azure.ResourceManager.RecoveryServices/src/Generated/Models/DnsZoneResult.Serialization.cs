@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> DNSZone information for Microsoft.RecoveryServices. </summary>
     public partial class DnsZoneResult : DnsZone, IJsonModel<DnsZoneResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DnsZone PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDnsZoneResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsZoneResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,23 +156,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DnsZoneResult IPersistableModel<DnsZoneResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (DnsZoneResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DnsZone PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDnsZoneResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DnsZoneResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

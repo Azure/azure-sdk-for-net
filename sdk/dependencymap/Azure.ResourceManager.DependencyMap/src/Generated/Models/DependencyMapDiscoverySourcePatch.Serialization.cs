@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DependencyMap.Models
     /// <summary> The type used for updating tags in DiscoverySourceResource resources. </summary>
     public partial class DependencyMapDiscoverySourcePatch : IJsonModel<DependencyMapDiscoverySourcePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependencyMapDiscoverySourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyMapDiscoverySourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDependencyMapDiscoverySourcePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DependencyMapDiscoverySourcePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependencyMapDiscoverySourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,23 +162,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DependencyMapDiscoverySourcePatch IPersistableModel<DependencyMapDiscoverySourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DependencyMapDiscoverySourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DependencyMapDiscoverySourcePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDependencyMapDiscoverySourcePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DependencyMapDiscoverySourcePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DependencyMapDiscoverySourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

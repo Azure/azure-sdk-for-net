@@ -182,3 +182,5 @@ tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp
+Configuration.json
+tspCodeModel.json

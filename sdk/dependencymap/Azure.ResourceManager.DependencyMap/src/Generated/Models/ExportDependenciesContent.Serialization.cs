@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DependencyMap.Models
     /// <summary> ExportDependencies request model. </summary>
     public partial class ExportDependenciesContent : IJsonModel<ExportDependenciesContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExportDependenciesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExportDependenciesContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportDependenciesContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportDependenciesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -174,23 +191,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExportDependenciesContent IPersistableModel<ExportDependenciesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExportDependenciesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExportDependenciesContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportDependenciesContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportDependenciesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
