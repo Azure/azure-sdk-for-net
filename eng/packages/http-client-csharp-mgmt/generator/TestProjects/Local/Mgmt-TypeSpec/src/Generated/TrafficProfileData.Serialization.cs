@@ -12,12 +12,11 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The TrafficProfileData. </summary>
-    public partial class TrafficProfileData : TrackedResourceData, IJsonModel<TrafficProfileData>
+    public partial class TrafficProfileData : TrafficTrackedResource, IJsonModel<TrafficProfileData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -51,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TrafficResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -152,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         BinaryData IPersistableModel<TrafficProfileData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -170,7 +169,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TrafficResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

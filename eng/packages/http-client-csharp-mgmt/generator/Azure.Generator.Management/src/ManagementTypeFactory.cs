@@ -89,20 +89,10 @@ namespace Azure.Generator.Management
                 return null;
             }
 
-            var library = ManagementClientGenerator.Instance.InputLibrary;
-
-            // Check for custom Azure resource intermediate models that should be replaced
-            // by ResourceData/TrackedResourceData (e.g., TrafficProxyResource, TrafficTrackedResource)
-            // These become InheritableSystemObjectModelProvider so child models inherit correctly
-            if (library.TryGetCustomResourceReplacementType(model, out var replacementType))
-            {
-                return new InheritableSystemObjectModelProvider(replacementType, model);
-            }
-
-            // For all other models (including resource data models like TrafficEndpoint),
-            // let the base implementation create a regular ModelProvider.
-            // The InheritableSystemObjectModelVisitor will then update them to inherit
-            // from ResourceData/TrackedResourceData if their base is an InheritableSystemObjectModelProvider.
+            // For custom Azure resource models (root, intermediate, and resource data models),
+            // let the base implementation create regular ModelProviders.
+            // This preserves the full custom resource hierarchy without replacing intermediate
+            // models with system types (e.g., TrafficResource → TrafficProxyResource → TrafficEndpointData).
             return base.CreateModelCore(model);
         }
 

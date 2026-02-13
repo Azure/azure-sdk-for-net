@@ -9,16 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The TrafficEndpointData. </summary>
-    public partial class TrafficEndpointData : ResourceData
+    public partial class TrafficEndpointData : TrafficProxyResource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="TrafficEndpointData"/>. </summary>
         public TrafficEndpointData()
         {
@@ -30,9 +26,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
-        internal TrafficEndpointData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, TrafficEndpointProperties properties) : base(id, name, @type, null)
+        internal TrafficEndpointData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, TrafficEndpointProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
