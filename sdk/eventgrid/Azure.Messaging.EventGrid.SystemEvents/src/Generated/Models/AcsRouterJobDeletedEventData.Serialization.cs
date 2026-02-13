@@ -47,6 +47,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsRouterJobDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsRouterJobDeletedEventData IPersistableModel<AcsRouterJobDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobDeletedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsRouterJobDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterJobDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,16 +180,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 labels,
                 tags);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsRouterJobDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterJobDeletedEventData IPersistableModel<AcsRouterJobDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobDeletedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsRouterJobDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsRouterJobDeletedEventDataConverter : JsonConverter<AcsRouterJobDeletedEventData>
         {

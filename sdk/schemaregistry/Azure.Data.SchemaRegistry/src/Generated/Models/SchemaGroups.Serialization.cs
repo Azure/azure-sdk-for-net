@@ -52,6 +52,16 @@ namespace Azure.Data.SchemaRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SchemaGroups>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SchemaGroups IPersistableModel<SchemaGroups>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SchemaGroups>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SchemaGroups"/> from. </param>
         public static explicit operator SchemaGroups(Response response)
         {
@@ -174,15 +184,5 @@ namespace Azure.Data.SchemaRegistry.Models
             }
             return new SchemaGroups(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SchemaGroups>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SchemaGroups IPersistableModel<SchemaGroups>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SchemaGroups>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

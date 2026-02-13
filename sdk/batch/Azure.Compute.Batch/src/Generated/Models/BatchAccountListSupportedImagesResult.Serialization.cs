@@ -46,6 +46,16 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchAccountListSupportedImagesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchAccountListSupportedImagesResult IPersistableModel<BatchAccountListSupportedImagesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchAccountListSupportedImagesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchAccountListSupportedImagesResult"/> from. </param>
         public static explicit operator BatchAccountListSupportedImagesResult(Response response)
         {
@@ -163,15 +173,5 @@ namespace Azure.Compute.Batch
             }
             return new BatchAccountListSupportedImagesResult(value ?? new ChangeTrackingList<BatchSupportedImage>(), odataNextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchAccountListSupportedImagesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchAccountListSupportedImagesResult IPersistableModel<BatchAccountListSupportedImagesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchAccountListSupportedImagesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

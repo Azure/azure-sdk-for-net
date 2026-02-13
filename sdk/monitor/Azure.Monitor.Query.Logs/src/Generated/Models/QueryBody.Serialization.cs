@@ -51,6 +51,28 @@ namespace Azure.Monitor.Query.Logs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QueryBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QueryBody IPersistableModel<QueryBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QueryBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="queryBody"> The <see cref="QueryBody"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(QueryBody queryBody)
+        {
+            if (queryBody == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(queryBody, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueryBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -176,28 +198,6 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
             }
             return new QueryBody(query, timespan, workspaces ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QueryBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QueryBody IPersistableModel<QueryBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QueryBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="queryBody"> The <see cref="QueryBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(QueryBody queryBody)
-        {
-            if (queryBody == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryBody, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

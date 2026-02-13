@@ -45,6 +45,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ObservedIntegers>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ObservedIntegers IPersistableModel<ObservedIntegers>.Create(BinaryData data, ModelReaderWriterOptions options) => (ObservedIntegers)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ObservedIntegers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ObservedIntegers>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -198,15 +208,5 @@ namespace Azure.Analytics.Defender.Easm
                 values ?? new ChangeTrackingList<int>(),
                 sources ?? new ChangeTrackingList<SourceDetails>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ObservedIntegers>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ObservedIntegers IPersistableModel<ObservedIntegers>.Create(BinaryData data, ModelReaderWriterOptions options) => (ObservedIntegers)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ObservedIntegers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

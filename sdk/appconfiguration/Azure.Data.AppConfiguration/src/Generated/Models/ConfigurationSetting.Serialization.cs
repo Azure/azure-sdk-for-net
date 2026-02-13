@@ -47,6 +47,28 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConfigurationSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfigurationSetting IPersistableModel<ConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="configurationSetting"> The <see cref="ConfigurationSetting"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ConfigurationSetting configurationSetting)
+        {
+            if (configurationSetting == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(configurationSetting, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSetting"/> from. </param>
         public static explicit operator ConfigurationSetting(Response response)
         {
@@ -252,28 +274,6 @@ namespace Azure.Data.AppConfiguration
                 isReadOnly,
                 eTag,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSetting IPersistableModel<ConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="configurationSetting"> The <see cref="ConfigurationSetting"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ConfigurationSetting configurationSetting)
-        {
-            if (configurationSetting == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationSetting, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

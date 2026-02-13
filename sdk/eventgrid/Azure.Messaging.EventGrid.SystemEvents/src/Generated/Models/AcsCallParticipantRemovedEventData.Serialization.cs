@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsCallParticipantRemovedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsCallParticipantRemovedEventData IPersistableModel<AcsCallParticipantRemovedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsCallParticipantRemovedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsCallParticipantRemovedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsCallParticipantRemovedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -206,16 +216,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 participantId,
                 userAgent);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsCallParticipantRemovedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsCallParticipantRemovedEventData IPersistableModel<AcsCallParticipantRemovedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsCallParticipantRemovedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsCallParticipantRemovedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsCallParticipantRemovedEventDataConverter : JsonConverter<AcsCallParticipantRemovedEventData>
         {

@@ -51,6 +51,16 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NumberVerificationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NumberVerificationResult IPersistableModel<NumberVerificationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NumberVerificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NumberVerificationResult"/> from. </param>
         public static explicit operator NumberVerificationResult(Response response)
         {
@@ -136,15 +146,5 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
             return new NumberVerificationResult(verificationResult, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NumberVerificationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NumberVerificationResult IPersistableModel<NumberVerificationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NumberVerificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -52,6 +52,16 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchNodeRemoteLoginSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchNodeRemoteLoginSettings IPersistableModel<BatchNodeRemoteLoginSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchNodeRemoteLoginSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchNodeRemoteLoginSettings"/> from. </param>
         public static explicit operator BatchNodeRemoteLoginSettings(Response response)
         {
@@ -175,15 +185,5 @@ namespace Azure.Compute.Batch
             }
             return new BatchNodeRemoteLoginSettings(ipv6RemoteLoginIpAddress, ipv6RemoteLoginPort, remoteLoginIpAddress, remoteLoginPort, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchNodeRemoteLoginSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchNodeRemoteLoginSettings IPersistableModel<BatchNodeRemoteLoginSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchNodeRemoteLoginSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

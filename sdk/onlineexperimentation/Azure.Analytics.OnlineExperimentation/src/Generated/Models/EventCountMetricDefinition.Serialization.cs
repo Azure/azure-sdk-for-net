@@ -50,6 +50,16 @@ namespace Azure.Analytics.OnlineExperimentation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventCountMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventCountMetricDefinition IPersistableModel<EventCountMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventCountMetricDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventCountMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventCountMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,15 +130,5 @@ namespace Azure.Analytics.OnlineExperimentation
             }
             return new EventCountMetricDefinition(@type, additionalBinaryDataProperties, @event);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventCountMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EventCountMetricDefinition IPersistableModel<EventCountMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventCountMetricDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventCountMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

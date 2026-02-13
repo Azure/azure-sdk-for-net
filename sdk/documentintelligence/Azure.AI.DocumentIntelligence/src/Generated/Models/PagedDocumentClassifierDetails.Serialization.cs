@@ -51,6 +51,16 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedDocumentClassifierDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedDocumentClassifierDetails IPersistableModel<PagedDocumentClassifierDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedDocumentClassifierDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedDocumentClassifierDetails"/> from. </param>
         public static explicit operator PagedDocumentClassifierDetails(Response response)
         {
@@ -162,15 +172,5 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new PagedDocumentClassifierDetails(value, nextLink, clientRequestId, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedDocumentClassifierDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedDocumentClassifierDetails IPersistableModel<PagedDocumentClassifierDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedDocumentClassifierDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

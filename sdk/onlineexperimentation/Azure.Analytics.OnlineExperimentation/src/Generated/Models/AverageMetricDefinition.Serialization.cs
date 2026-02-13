@@ -50,6 +50,16 @@ namespace Azure.Analytics.OnlineExperimentation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AverageMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AverageMetricDefinition IPersistableModel<AverageMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (AverageMetricDefinition)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AverageMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AverageMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,15 +130,5 @@ namespace Azure.Analytics.OnlineExperimentation
             }
             return new AverageMetricDefinition(@type, additionalBinaryDataProperties, value);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AverageMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AverageMetricDefinition IPersistableModel<AverageMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (AverageMetricDefinition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AverageMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

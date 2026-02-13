@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateMcpListToolsCompleted>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateMcpListToolsCompleted IPersistableModel<SessionUpdateMcpListToolsCompleted>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateMcpListToolsCompleted)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateMcpListToolsCompleted>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateMcpListToolsCompleted>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,15 +136,5 @@ namespace Azure.AI.VoiceLive
             }
             return new SessionUpdateMcpListToolsCompleted(@type, eventId, additionalBinaryDataProperties, itemId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateMcpListToolsCompleted>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateMcpListToolsCompleted IPersistableModel<SessionUpdateMcpListToolsCompleted>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateMcpListToolsCompleted)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateMcpListToolsCompleted>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

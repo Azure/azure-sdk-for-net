@@ -57,6 +57,28 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchTask IPersistableModel<BatchTask>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchTask"> The <see cref="BatchTask"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchTask batchTask)
+        {
+            if (batchTask == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchTask, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchTask"/> from. </param>
         public static explicit operator BatchTask(Response response)
         {
@@ -570,28 +592,6 @@ namespace Azure.Compute.Batch
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 authenticationTokenSettings,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchTask IPersistableModel<BatchTask>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchTask"> The <see cref="BatchTask"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchTask batchTask)
-        {
-            if (batchTask == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchTask, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

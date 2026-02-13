@@ -45,6 +45,16 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobPreparationAndReleaseTaskStatus IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobPreparationAndReleaseTaskStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -188,15 +198,5 @@ namespace Azure.Compute.Batch
                 jobReleaseTaskExecutionInfo,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJobPreparationAndReleaseTaskStatus IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

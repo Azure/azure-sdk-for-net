@@ -50,6 +50,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeBaseAnswerContext>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseAnswerContext IPersistableModel<KnowledgeBaseAnswerContext>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeBaseAnswerContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseAnswerContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,15 +149,5 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
             return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseAnswerContext>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseAnswerContext IPersistableModel<KnowledgeBaseAnswerContext>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseAnswerContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

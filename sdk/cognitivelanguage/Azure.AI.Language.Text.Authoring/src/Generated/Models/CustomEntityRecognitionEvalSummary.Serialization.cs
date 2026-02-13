@@ -50,6 +50,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomEntityRecognitionEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomEntityRecognitionEvalSummary IPersistableModel<CustomEntityRecognitionEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomEntityRecognitionEvalSummary)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomEntityRecognitionEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomEntityRecognitionEvalSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,15 +136,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new CustomEntityRecognitionEvalSummary(projectKind, evaluationOptions, additionalBinaryDataProperties, customEntityRecognitionEvaluation);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomEntityRecognitionEvalSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomEntityRecognitionEvalSummary IPersistableModel<CustomEntityRecognitionEvalSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomEntityRecognitionEvalSummary)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomEntityRecognitionEvalSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResponseFunctionCallItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResponseFunctionCallItem IPersistableModel<ResponseFunctionCallItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseFunctionCallItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResponseFunctionCallItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseFunctionCallItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -164,15 +174,5 @@ namespace Azure.AI.VoiceLive
                 arguments,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponseFunctionCallItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseFunctionCallItem IPersistableModel<ResponseFunctionCallItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseFunctionCallItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponseFunctionCallItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -49,6 +49,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventConversationItemDelete>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemDelete IPersistableModel<ClientEventConversationItemDelete>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemDelete)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClientEventConversationItemDelete>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventConversationItemDelete>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,15 +135,5 @@ namespace Azure.AI.VoiceLive
             }
             return new ClientEventConversationItemDelete(@type, eventId, additionalBinaryDataProperties, itemId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventConversationItemDelete>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventConversationItemDelete IPersistableModel<ClientEventConversationItemDelete>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemDelete)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventConversationItemDelete>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

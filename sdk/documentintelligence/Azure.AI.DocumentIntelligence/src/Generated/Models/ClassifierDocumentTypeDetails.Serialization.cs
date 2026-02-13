@@ -45,6 +45,16 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClassifierDocumentTypeDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClassifierDocumentTypeDetails IPersistableModel<ClassifierDocumentTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClassifierDocumentTypeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClassifierDocumentTypeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,15 +170,5 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new ClassifierDocumentTypeDetails(sourceKind, blobSource, blobFileListSource, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClassifierDocumentTypeDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClassifierDocumentTypeDetails IPersistableModel<ClassifierDocumentTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClassifierDocumentTypeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

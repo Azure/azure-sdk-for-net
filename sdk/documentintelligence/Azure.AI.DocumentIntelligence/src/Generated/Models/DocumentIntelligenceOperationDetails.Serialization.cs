@@ -54,6 +54,16 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentIntelligenceOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentIntelligenceOperationDetails IPersistableModel<DocumentIntelligenceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentIntelligenceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DocumentIntelligenceOperationDetails"/> from. </param>
         public static explicit operator DocumentIntelligenceOperationDetails(Response response)
         {
@@ -182,15 +192,5 @@ namespace Azure.AI.DocumentIntelligence
             }
             return UnknownDocumentIntelligenceOperationDetails.DeserializeUnknownDocumentIntelligenceOperationDetails(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentIntelligenceOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentIntelligenceOperationDetails IPersistableModel<DocumentIntelligenceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentIntelligenceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

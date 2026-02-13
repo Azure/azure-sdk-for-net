@@ -47,6 +47,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsRouterJobCancelledEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsRouterJobCancelledEventData IPersistableModel<AcsRouterJobCancelledEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobCancelledEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsRouterJobCancelledEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterJobCancelledEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -194,16 +204,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 note,
                 dispositionCode);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsRouterJobCancelledEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterJobCancelledEventData IPersistableModel<AcsRouterJobCancelledEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobCancelledEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsRouterJobCancelledEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsRouterJobCancelledEventDataConverter : JsonConverter<AcsRouterJobCancelledEventData>
         {

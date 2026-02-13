@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedTextAnalysisAuthoringTrainingJobState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedTextAnalysisAuthoringTrainingJobState IPersistableModel<PagedTextAnalysisAuthoringTrainingJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedTextAnalysisAuthoringTrainingJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringTrainingJobState"/> from. </param>
         public static explicit operator PagedTextAnalysisAuthoringTrainingJobState(Response response)
         {
@@ -161,15 +171,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new PagedTextAnalysisAuthoringTrainingJobState(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedTextAnalysisAuthoringTrainingJobState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedTextAnalysisAuthoringTrainingJobState IPersistableModel<PagedTextAnalysisAuthoringTrainingJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedTextAnalysisAuthoringTrainingJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

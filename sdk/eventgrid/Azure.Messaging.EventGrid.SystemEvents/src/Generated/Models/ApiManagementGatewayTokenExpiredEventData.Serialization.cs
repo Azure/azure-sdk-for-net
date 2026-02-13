@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementGatewayTokenExpiredEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementGatewayTokenExpiredEventData IPersistableModel<ApiManagementGatewayTokenExpiredEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementGatewayTokenExpiredEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementGatewayTokenExpiredEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,16 +148,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ApiManagementGatewayTokenExpiredEventData(gateway, token, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementGatewayTokenExpiredEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayTokenExpiredEventData IPersistableModel<ApiManagementGatewayTokenExpiredEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementGatewayTokenExpiredEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ApiManagementGatewayTokenExpiredEventDataConverter : JsonConverter<ApiManagementGatewayTokenExpiredEventData>
         {

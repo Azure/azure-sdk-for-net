@@ -49,7 +49,7 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedEnvironmentDefinition result = (PagedEnvironmentDefinition)response;
-                yield return Page<EnvironmentDefinition>.FromValues((IReadOnlyList<EnvironmentDefinition>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EnvironmentDefinition>.FromValues((IReadOnlyList<EnvironmentDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

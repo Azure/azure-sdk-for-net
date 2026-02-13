@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceClusterSupportEndingEventData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceClusterSupportEndingEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServiceClusterSupportEndingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServiceClusterSupportEndingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,16 +124,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerServiceClusterSupportEndingEventData IPersistableModel<ContainerServiceClusterSupportEndingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceClusterSupportEndingEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerServiceClusterSupportEndingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ContainerServiceClusterSupportEndingEventDataConverter : JsonConverter<ContainerServiceClusterSupportEndingEventData>
         {

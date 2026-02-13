@@ -51,6 +51,28 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeBatchDocumentsOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeBatchDocumentsOptions IPersistableModel<AnalyzeBatchDocumentsOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalyzeBatchDocumentsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="analyzeBatchDocumentsOptions"> The <see cref="AnalyzeBatchDocumentsOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnalyzeBatchDocumentsOptions analyzeBatchDocumentsOptions)
+        {
+            if (analyzeBatchDocumentsOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeBatchDocumentsOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeBatchDocumentsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -190,28 +212,6 @@ namespace Azure.AI.DocumentIntelligence
                 resultPrefix,
                 overwriteExisting,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeBatchDocumentsOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeBatchDocumentsOptions IPersistableModel<AnalyzeBatchDocumentsOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeBatchDocumentsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="analyzeBatchDocumentsOptions"> The <see cref="AnalyzeBatchDocumentsOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AnalyzeBatchDocumentsOptions analyzeBatchDocumentsOptions)
-        {
-            if (analyzeBatchDocumentsOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(analyzeBatchDocumentsOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }
