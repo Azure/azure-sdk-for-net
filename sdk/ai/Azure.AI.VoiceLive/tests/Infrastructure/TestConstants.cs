@@ -92,12 +92,10 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public const string MicrosoftLearnMcpServerUrl = "https://learn.microsoft.com/api/mcp";
         public const string MicrosoftLearnMcpServerLabel = "microsoft-learn";
 
-        // ===== Foundry Agent Configuration =====
-        // Note: These are example values. In actual tests, use real deployed agent names from your environment
-        public const string TestFoundryAgentName = "test-agent";
-        public const string TestFoundryAgentVersion = "1.0.0";
-        public const string TestFoundryProjectName = "test-project";
-        public const string TestFoundryClientId = "test-client-id";
-        public const string TestFoundryAgentDescription = "A test Foundry agent for integration testing";
+        // ===== Agent Session Configuration =====
+        public const string TestAgentName = "VoiceLiveIntegrationTestAgentV2";
+        public const string TestAgentVersion = "1";
+        public const string TestAgentProjectName = "test-project";
+        public const string TestAgentDescription = "You are a helpful math assistant. When asked a math question, solve it step by step and provide the answer.";
     }
 }
