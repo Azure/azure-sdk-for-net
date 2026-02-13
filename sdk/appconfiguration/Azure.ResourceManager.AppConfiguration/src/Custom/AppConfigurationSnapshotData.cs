@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> The snapshot resource. </summary>
+    // add back a removed property due to generator update
     public partial class AppConfigurationSnapshotData
     {
         /// <summary> The type of the resource. </summary>

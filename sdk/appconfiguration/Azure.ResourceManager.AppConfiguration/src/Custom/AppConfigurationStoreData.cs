@@ -9,7 +9,7 @@ using Azure.ResourceManager.AppConfiguration.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it. </summary>
+    // add back a ctor back for backward compatibility
     public partial class AppConfigurationStoreData
     {
         /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/>. </summary>

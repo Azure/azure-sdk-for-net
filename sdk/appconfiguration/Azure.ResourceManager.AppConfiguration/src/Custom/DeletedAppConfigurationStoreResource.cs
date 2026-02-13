@@ -12,12 +12,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary>
-    /// A Class representing a DeletedAppConfigurationStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedAppConfigurationStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedAppConfigurationStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedAppConfigurationStore method.
-    /// </summary>
     public partial class DeletedAppConfigurationStoreResource : ArmResource
     {
         /// <summary>

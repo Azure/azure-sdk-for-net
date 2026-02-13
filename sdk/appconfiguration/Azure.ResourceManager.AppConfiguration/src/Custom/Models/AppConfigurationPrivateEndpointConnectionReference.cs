@@ -7,7 +7,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> A reference to a related private endpoint connection. </summary>
+    // add this customization to bring back its base type
     public partial class AppConfigurationPrivateEndpointConnectionReference : ResourceData
     { }
 }
