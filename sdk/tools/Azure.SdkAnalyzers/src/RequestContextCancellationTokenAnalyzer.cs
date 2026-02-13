@@ -174,24 +174,14 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
-            // Check for extension method calls like cancellationToken.ToRequestContext() or ToRequestOptions()
+            // Check for any operation that uses the CancellationToken parameter
+            // This covers extension methods, helper methods, and other ways to create RequestContext
             if (requestContextOperation is IInvocationOperation invocationOp)
             {
-                // Check if it's an extension method on CancellationToken
-                if (invocationOp.TargetMethod.IsExtensionMethod &&
-                    invocationOp.Arguments.Length > 0 &&
-                    IsCancellationToken(invocationOp.Arguments[0].Value.Type))
+                // Check if any part of the invocation references the cancellation token parameter
+                if (ContainsCancellationTokenReference(invocationOp, cancellationTokenParam))
                 {
-                    // Check if the first argument (the 'this' parameter) is the cancellation token parameter
-                    if (IsCancellationTokenParameterReference(invocationOp.Arguments[0].Value, cancellationTokenParam))
-                    {
-                        // Common extension method names that create RequestContext with CancellationToken
-                        var methodName = invocationOp.TargetMethod.Name;
-                        if (methodName == "ToRequestContext" || methodName == "ToRequestOptions")
-                        {
-                            return true;
-                        }
-                    }
+                    return true;
                 }
             }
 
@@ -232,6 +222,34 @@ namespace Azure.SdkAnalyzers
                 if (IsCancellationToken(defaultOp.Type))
                 {
                     return false; // default(CancellationToken) is not the parameter
+                }
+            }
+
+            return false;
+        }
+
+        private bool ContainsCancellationTokenReference(IOperation operation, IParameterSymbol cancellationTokenParam)
+        {
+            if (operation == null)
+            {
+                return false;
+            }
+
+            // Check if this operation directly references the cancellation token parameter
+            if (operation is IParameterReferenceOperation paramRef)
+            {
+                if (SymbolEqualityComparer.Default.Equals(paramRef.Parameter, cancellationTokenParam))
+                {
+                    return true;
+                }
+            }
+
+            // Recursively check all child operations
+            foreach (var child in operation.ChildOperations)
+            {
+                if (ContainsCancellationTokenReference(child, cancellationTokenParam))
+                {
+                    return true;
                 }
             }
 

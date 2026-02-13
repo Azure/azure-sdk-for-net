@@ -629,5 +629,60 @@ namespace Azure
 
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0020NotProducedWhenUsingCustomHelperMethod()
+        {
+            const string code = @"
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+
+namespace Azure.Sample
+{
+    public class SampleClient
+    {
+        public async Task<Response> UpdateAsync(BinaryData content, RequestContext context = null)
+        {
+            return null;
+        }
+    }
+
+    public class MyService
+    {
+        private SampleClient _client = new SampleClient();
+
+        public async Task UpdateAsync(CancellationToken cancellationToken)
+        {
+            await _client.UpdateAsync(
+                BinaryData.FromString(""test""),
+                CreateContext(cancellationToken));
+        }
+
+        private RequestContext CreateContext(CancellationToken token)
+        {
+            return new RequestContext { CancellationToken = token };
+        }
+    }
+}
+
+namespace Azure
+{
+    public class RequestContext
+    {
+        public CancellationToken CancellationToken { get; set; }
+    }
+
+    public class Response { }
+
+    public class BinaryData
+    {
+        public static BinaryData FromString(string s) => new BinaryData();
+    }
+}
+";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }
