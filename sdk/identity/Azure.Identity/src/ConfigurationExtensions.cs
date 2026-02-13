@@ -5,8 +5,10 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Azure.Identity
@@ -17,6 +19,8 @@ namespace Azure.Identity
     [Experimental("SCME0002")]
     public static class ConfigurationExtensions
     {
+        private static readonly ConditionalWeakTable<IServiceCollection, ConfigurableCredentialCache> s_credentialCaches = new();
+
         /// <summary>
         /// Creates an instance of <typeparamref name="T"/> and sets its properties from the specified <see cref="IConfiguration"/>.
         /// </summary>
@@ -137,17 +141,27 @@ namespace Azure.Identity
 
         /// <summary>
         /// Registers a credential factory to return a <see cref="TokenCredential"/> to use for the current <see cref="IClientBuilder"/>.
+        /// If the same credential configuration has already been registered, the existing credential instance is reused.
         /// </summary>
         /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
         public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
-            => clientBuilder.PostConfigure(settings =>
+        {
+            var cache = s_credentialCaches.GetValue(clientBuilder.Services, _ => new ConfigurableCredentialCache());
+
+            return clientBuilder.PostConfigure(settings =>
             {
                 AddDefaultScope(settings);
                 settings.PostConfigure(config =>
                 {
-                    DefaultAzureCredentialOptions options = new(settings.Credential, config.GetSection("Credential"));
-                    settings.CredentialProvider = new ConfigurableCredential(options);
+                    IConfigurationSection credentialSection = config.GetSection("Credential");
+                    string cacheKey = ConfigurableCredentialCache.CreateKey(credentialSection);
+                    settings.CredentialProvider = cache.GetOrAdd(cacheKey, () =>
+                    {
+                        DefaultAzureCredentialOptions options = new(settings.Credential, credentialSection);
+                        return new ConfigurableCredential(options);
+                    });
                 });
             });
+        }
     }
 }
