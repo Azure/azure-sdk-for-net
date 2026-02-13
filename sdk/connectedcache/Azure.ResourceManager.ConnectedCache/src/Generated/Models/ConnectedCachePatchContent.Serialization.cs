@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Mcc PATCH operation properties. </summary>
     public partial class ConnectedCachePatchContent : IJsonModel<ConnectedCachePatchContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectedCachePatchContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedCachePatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectedCachePatchContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedCachePatchContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectedCachePatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,23 +162,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ConnectedCachePatchContent IPersistableModel<ConnectedCachePatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectedCachePatchContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedCachePatchContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConnectedCachePatchContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectedCachePatchContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectedCachePatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -20,6 +20,36 @@ namespace Azure.AI.VoiceLive
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResponseStatusDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseFailedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResponseFailedDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResponseFailedDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseFailedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResponseFailedDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseFailedDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -101,39 +131,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResponseFailedDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseFailedDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResponseFailedDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResponseFailedDetails IPersistableModel<ResponseFailedDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseFailedDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStatusDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseFailedDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResponseFailedDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResponseFailedDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseFailedDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Vault properties. </summary>
     public partial class DataReplicationVaultProperties : IJsonModel<DataReplicationVaultProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataReplicationVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataReplicationVaultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationVaultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,23 +169,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationVaultProperties IPersistableModel<DataReplicationVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataReplicationVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataReplicationVaultProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationVaultProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

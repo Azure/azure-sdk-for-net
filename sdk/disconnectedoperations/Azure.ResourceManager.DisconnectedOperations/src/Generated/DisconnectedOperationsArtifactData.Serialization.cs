@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.DisconnectedOperations
     /// <summary> Disconnected operations artifact resource. </summary>
     public partial class DisconnectedOperationsArtifactData : ResourceData, IJsonModel<DisconnectedOperationsArtifactData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsArtifactData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDisconnectedOperationsArtifactData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DisconnectedOperationsArtifactData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DisconnectedOperationsArtifactData"/> from. </param>
+        internal static DisconnectedOperationsArtifactData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDisconnectedOperationsArtifactData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisconnectedOperationsArtifactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="options"> The client options for reading and writing models. </param>
         DisconnectedOperationsArtifactData IPersistableModel<DisconnectedOperationsArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DisconnectedOperationsArtifactData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsArtifactData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDisconnectedOperationsArtifactData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DisconnectedOperationsArtifactData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DisconnectedOperationsArtifactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DisconnectedOperationsArtifactData"/> from. </param>
-        internal static DisconnectedOperationsArtifactData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDisconnectedOperationsArtifactData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -19,6 +19,36 @@ namespace Azure.AI.VoiceLive
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemRetrieve>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClientEventConversationItemRetrieve(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClientEventConversationItemRetrieve)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemRetrieve>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClientEventConversationItemRetrieve)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventConversationItemRetrieve>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -99,39 +129,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ClientEventConversationItemRetrieve>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemRetrieve>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClientEventConversationItemRetrieve)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ClientEventConversationItemRetrieve IPersistableModel<ClientEventConversationItemRetrieve>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemRetrieve)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemRetrieve>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClientEventConversationItemRetrieve(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClientEventConversationItemRetrieve)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClientEventConversationItemRetrieve>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

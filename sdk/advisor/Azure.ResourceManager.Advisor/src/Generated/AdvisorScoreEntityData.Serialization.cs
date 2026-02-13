@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Advisor
     /// <summary> The details of Advisor score for a single category. </summary>
     public partial class AdvisorScoreEntityData : ResourceData, IJsonModel<AdvisorScoreEntityData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvisorScoreEntityData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdvisorScoreEntityData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdvisorScoreEntityData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorScoreEntityData"/> from. </param>
+        internal static AdvisorScoreEntityData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAdvisorScoreEntityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdvisorScoreEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="options"> The client options for reading and writing models. </param>
         AdvisorScoreEntityData IPersistableModel<AdvisorScoreEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdvisorScoreEntityData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvisorScoreEntityData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAdvisorScoreEntityData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AdvisorScoreEntityData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AdvisorScoreEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorScoreEntityData"/> from. </param>
-        internal static AdvisorScoreEntityData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAdvisorScoreEntityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

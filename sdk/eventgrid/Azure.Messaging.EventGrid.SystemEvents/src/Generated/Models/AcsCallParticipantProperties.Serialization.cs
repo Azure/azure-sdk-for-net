@@ -15,6 +15,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all participant event user. </summary>
     public partial class AcsCallParticipantProperties : IJsonModel<AcsCallParticipantProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsCallParticipantProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAcsCallParticipantProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsCallParticipantProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AcsCallParticipantProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsCallParticipantProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,39 +149,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AcsCallParticipantProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AcsCallParticipantProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AcsCallParticipantProperties IPersistableModel<AcsCallParticipantProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcsCallParticipantProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAcsCallParticipantProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AcsCallParticipantProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsCallParticipantProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The properties of the response we got from elastic while creating external user. </summary>
     public partial class ElasticExternalUserCreationResult : IJsonModel<ElasticExternalUserCreationResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticExternalUserCreationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticExternalUserCreationResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticExternalUserCreationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticExternalUserCreationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticExternalUserCreationResult"/> from. </param>
+        internal static ElasticExternalUserCreationResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeElasticExternalUserCreationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticExternalUserCreationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,31 +147,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticExternalUserCreationResult IPersistableModel<ElasticExternalUserCreationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticExternalUserCreationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticExternalUserCreationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticExternalUserCreationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticExternalUserCreationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticExternalUserCreationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticExternalUserCreationResult"/> from. </param>
-        internal static ElasticExternalUserCreationResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeElasticExternalUserCreationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

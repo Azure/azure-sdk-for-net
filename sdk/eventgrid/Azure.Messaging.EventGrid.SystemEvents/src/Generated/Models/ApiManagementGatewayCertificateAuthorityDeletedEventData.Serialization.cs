@@ -17,6 +17,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(ApiManagementGatewayCertificateAuthorityDeletedEventDataConverter))]
     public partial class ApiManagementGatewayCertificateAuthorityDeletedEventData : IJsonModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementGatewayCertificateAuthorityDeletedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiManagementGatewayCertificateAuthorityDeletedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementGatewayCertificateAuthorityDeletedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementGatewayCertificateAuthorityDeletedEventData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -102,39 +132,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayCertificateAuthorityDeletedEventData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ApiManagementGatewayCertificateAuthorityDeletedEventData IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiManagementGatewayCertificateAuthorityDeletedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeApiManagementGatewayCertificateAuthorityDeletedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayCertificateAuthorityDeletedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApiManagementGatewayCertificateAuthorityDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

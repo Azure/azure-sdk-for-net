@@ -53,7 +53,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual Response<RecordingStateResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
@@ -77,7 +78,8 @@ namespace Azure.Communication.CallingServer
                             Participant = CommunicationIdentifierSerializer.Serialize(c.Participant)
                         });
                     }
-                };
+                }
+                ;
 
                 return contentRestClient.Recording(request, cancellationToken: cancellationToken);
             }
@@ -95,7 +97,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response<RecordingStateResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
@@ -119,7 +122,8 @@ namespace Azure.Communication.CallingServer
                             Participant = CommunicationIdentifierSerializer.Serialize(c.Participant)
                         });
                     }
-                };
+                }
+                ;
 
                 return await contentRestClient.RecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }

@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> Nginx Configuration Response. </summary>
     public partial class NginxConfigurationData : ResourceData, IJsonModel<NginxConfigurationData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNginxConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NginxConfigurationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxConfigurationData"/> from. </param>
+        internal static NginxConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNginxConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="options"> The client options for reading and writing models. </param>
         NginxConfigurationData IPersistableModel<NginxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NginxConfigurationData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNginxConfigurationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NginxConfigurationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NginxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxConfigurationData"/> from. </param>
-        internal static NginxConfigurationData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNginxConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

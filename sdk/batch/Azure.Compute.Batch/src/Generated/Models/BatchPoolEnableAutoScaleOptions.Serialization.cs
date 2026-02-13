@@ -16,6 +16,36 @@ namespace Azure.Compute.Batch
     /// <summary> Parameters for enabling automatic scaling on an Azure Batch Pool. </summary>
     public partial class BatchPoolEnableAutoScaleOptions : IJsonModel<BatchPoolEnableAutoScaleOptions>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchPoolEnableAutoScaleOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolEnableAutoScaleOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchPoolEnableAutoScaleOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchPoolEnableAutoScaleOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolEnableAutoScaleOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchPoolEnableAutoScaleOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchPoolEnableAutoScaleOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,39 +146,9 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BatchPoolEnableAutoScaleOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolEnableAutoScaleOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchPoolEnableAutoScaleOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BatchPoolEnableAutoScaleOptions IPersistableModel<BatchPoolEnableAutoScaleOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchPoolEnableAutoScaleOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolEnableAutoScaleOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchPoolEnableAutoScaleOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchPoolEnableAutoScaleOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchPoolEnableAutoScaleOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

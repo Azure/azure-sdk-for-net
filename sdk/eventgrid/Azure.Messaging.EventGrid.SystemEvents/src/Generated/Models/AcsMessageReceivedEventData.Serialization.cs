@@ -22,6 +22,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsMessageEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAcsMessageReceivedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsMessageReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -248,39 +278,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AcsMessageReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AcsMessageReceivedEventData IPersistableModel<AcsMessageReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageReceivedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AcsMessageEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAcsMessageReceivedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsMessageReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

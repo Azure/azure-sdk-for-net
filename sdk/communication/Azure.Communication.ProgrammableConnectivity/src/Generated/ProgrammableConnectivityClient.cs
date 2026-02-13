@@ -6,25 +6,24 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
-    // Data plane generated client.
     /// <summary> Azure Programmable Connectivity (APC) provides a unified interface to the Network APIs of multiple Telecom Operators. Note that Operators may deprecate a Network API with less advance notice than the Azure standard, in which case APC will also deprecate that Network API. </summary>
     public partial class ProgrammableConnectivityClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com//.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com//.default" };
+        private readonly string _apiVersion;
+        private DeviceLocation _cachedDeviceLocation;
+        private DeviceNetwork _cachedDeviceNetwork;
+        private NumberVerification _cachedNumberVerification;
+        private SimSwap _cachedSimSwap;
 
         /// <summary> Initializes a new instance of ProgrammableConnectivityClient for mocking. </summary>
         protected ProgrammableConnectivityClient()
@@ -32,68 +31,60 @@ namespace Azure.Communication.ProgrammableConnectivity
         }
 
         /// <summary> Initializes a new instance of ProgrammableConnectivityClient. </summary>
-        /// <param name="endpoint"> An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ProgrammableConnectivityClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ProgrammableConnectivityClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ProgrammableConnectivityClient. </summary>
-        /// <param name="endpoint"> An Azure Programmable Connectivity Endpoint providing access to Network APIs, for example https://{region}.apcgatewayapi.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ProgrammableConnectivityClient(Uri endpoint, TokenCredential credential, ProgrammableConnectivityClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new ProgrammableConnectivityClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of DeviceLocation. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual DeviceLocation GetDeviceLocationClient(string apiVersion = "2024-02-09-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            return new DeviceLocation(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of DeviceLocation. </summary>
+        public virtual DeviceLocation GetDeviceLocationClient()
+        {
+            return Volatile.Read(ref _cachedDeviceLocation) ?? Interlocked.CompareExchange(ref _cachedDeviceLocation, new DeviceLocation(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeviceLocation;
         }
 
         /// <summary> Initializes a new instance of DeviceNetwork. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual DeviceNetwork GetDeviceNetworkClient(string apiVersion = "2024-02-09-preview")
+        public virtual DeviceNetwork GetDeviceNetworkClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new DeviceNetwork(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedDeviceNetwork) ?? Interlocked.CompareExchange(ref _cachedDeviceNetwork, new DeviceNetwork(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeviceNetwork;
         }
 
         /// <summary> Initializes a new instance of NumberVerification. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual NumberVerification GetNumberVerificationClient(string apiVersion = "2024-02-09-preview")
+        public virtual NumberVerification GetNumberVerificationClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new NumberVerification(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedNumberVerification) ?? Interlocked.CompareExchange(ref _cachedNumberVerification, new NumberVerification(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedNumberVerification;
         }
 
         /// <summary> Initializes a new instance of SimSwap. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SimSwap GetSimSwapClient(string apiVersion = "2024-02-09-preview")
+        public virtual SimSwap GetSimSwapClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SimSwap(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSimSwap) ?? Interlocked.CompareExchange(ref _cachedSimSwap, new SimSwap(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSimSwap;
         }
     }
 }

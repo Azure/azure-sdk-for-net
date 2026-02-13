@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RulestackSecurityServiceTypeList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RulestackSecurityServiceTypeList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRulestackSecurityServiceTypeList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RulestackSecurityServiceTypeList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RulestackSecurityServiceTypeList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -140,23 +157,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RulestackSecurityServiceTypeList IPersistableModel<RulestackSecurityServiceTypeList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RulestackSecurityServiceTypeList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RulestackSecurityServiceTypeList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRulestackSecurityServiceTypeList(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RulestackSecurityServiceTypeList)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RulestackSecurityServiceTypeList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

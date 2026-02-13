@@ -34,15 +34,16 @@ namespace Azure.Analytics.Synapse.Tests
             return all;
         }
 
-        public static async Task WaitAndAssertSuccessfulCompletion (this Operation operation)
+        public static async Task WaitAndAssertSuccessfulCompletion(this Operation operation)
         {
             Response response = await operation.WaitForCompletionResponseAsync();
             response.AssertSuccess();
         }
 
-        public static void AssertSuccess (this Response response)
+        public static void AssertSuccess(this Response response)
         {
-            switch (response.Status) {
+            switch (response.Status)
+            {
                 case 200:
                 case 204:
                     break;

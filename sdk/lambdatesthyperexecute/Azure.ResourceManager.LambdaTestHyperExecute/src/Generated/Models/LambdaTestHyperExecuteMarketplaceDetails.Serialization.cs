@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LambdaTestHyperExecuteMarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLambdaTestHyperExecuteMarketplaceDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteMarketplaceDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LambdaTestHyperExecuteMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,23 +162,6 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LambdaTestHyperExecuteMarketplaceDetails IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LambdaTestHyperExecuteMarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLambdaTestHyperExecuteMarketplaceDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteMarketplaceDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

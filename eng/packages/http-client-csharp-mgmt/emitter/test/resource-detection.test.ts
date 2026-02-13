@@ -1427,6 +1427,166 @@ interface BestPracticeVersions {
     );
   });
 
+  it("3-level nested legacy resources use longest prefix match for parent detection", async () => {
+    // This test validates that when 3+ levels of nesting exist using LegacyOperations,
+    // the parent detection correctly uses the longest matching prefix (most specific parent).
+    // Without the fix, BestPracticeVersionDetail could be assigned to BestPractice (grandparent)
+    // instead of BestPracticeVersion (correct parent) if the map iteration order placed
+    // BestPractice before BestPracticeVersion.
+    const program = await typeSpecCompile(
+      `
+/** A best practice resource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
+@tenantResource
+model BestPractice is ProxyResource<BestPracticeProperties> {
+  ...ResourceNameParameter<
+    Resource = BestPractice,
+    KeyName = "bestPracticeName",
+    SegmentName = "bestPractices",
+    NamePattern = ""
+  >;
+  ...Azure.ResourceManager.Legacy.ExtendedLocationOptionalProperty;
+}
+/** Best practice properties */
+model BestPracticeProperties {
+  ...DefaultProvisioningStateProperty;
+  description?: string;
+}
+alias BestPracticeOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+  }
+>;
+alias BestPracticesVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+  },
+  {
+    @segment("versions")
+    @key
+    @TypeSpec.Http.path
+    versionName: string;
+  }
+>;
+alias BestPracticeVersionDetailOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+    @segment("versions")
+    @key
+    @TypeSpec.Http.path
+    versionName: string;
+  },
+  {
+    @segment("details")
+    @key
+    @TypeSpec.Http.path
+    detailName: string;
+  }
+>;
+/** Best practice operations */
+@armResourceOperations
+interface BestPractices {
+  get is BestPracticeOps.Read<BestPractice>;
+  createOrUpdate is BestPracticeOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticeOps.DeleteSync<BestPractice>;
+}
+/** Best practice version operations */
+@armResourceOperations
+interface BestPracticeVersions {
+  get is BestPracticesVersionOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
+}
+/** Best practice version detail operations - 3rd level nesting */
+@armResourceOperations
+interface BestPracticeVersionDetails {
+  get is BestPracticeVersionDetailOps.Read<BestPractice>;
+  createOrUpdate is BestPracticeVersionDetailOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticeVersionDetailOps.DeleteSync<BestPractice>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(
+      armProviderSchema.resources.length,
+      3,
+      "Should have 3 resource entries (BestPractice, BestPracticeVersion, BestPracticeVersionDetail)"
+    );
+
+    // Find each resource by its path pattern
+    const bestPractice = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
+    );
+    ok(bestPractice, "Should have BestPractice resource");
+
+    const bestPracticeVersion = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
+    );
+    ok(bestPracticeVersion, "Should have BestPracticeVersion resource");
+
+    const bestPracticeVersionDetail = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
+    );
+    ok(bestPracticeVersionDetail, "Should have BestPracticeVersionDetail resource");
+
+    // Critical assertion: BestPracticeVersion's parent should be BestPractice
+    strictEqual(
+      bestPracticeVersion.metadata.parentResourceId,
+      bestPractice.metadata.resourceIdPattern,
+      "BestPracticeVersion's parent should be BestPractice"
+    );
+
+    // Critical assertion: BestPracticeVersionDetail's parent should be BestPracticeVersion (NOT BestPractice)
+    // This is the exact scenario the longest-prefix-match fix addresses
+    strictEqual(
+      bestPracticeVersionDetail.metadata.parentResourceId,
+      bestPracticeVersion.metadata.resourceIdPattern,
+      "BestPracticeVersionDetail's parent should be BestPracticeVersion, not BestPractice"
+    );
+
+    // Validate resource names
+    strictEqual(bestPractice.metadata.resourceName, "BestPractice");
+    strictEqual(bestPracticeVersion.metadata.resourceName, "BestPracticeVersion");
+    strictEqual(bestPracticeVersionDetail.metadata.resourceName, "BestPracticeVersionDetail");
+
+    // Validate using resolveArmResources API and compare
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
   it("resource without get operation should be filtered", async () => {
     const program = await typeSpecCompile(
       `

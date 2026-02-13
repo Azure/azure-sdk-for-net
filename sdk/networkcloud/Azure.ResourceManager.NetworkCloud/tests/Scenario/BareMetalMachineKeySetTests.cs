@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class BareMetalMachineKeySetTests : NetworkCloudManagementTestBase
     {
-        public BareMetalMachineKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public BareMetalMachineKeySetTests(bool isAsync) : base(isAsync) {}
+        public BareMetalMachineKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public BareMetalMachineKeySetTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]

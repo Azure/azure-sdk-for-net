@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Details of an AzureKB search result. </summary>
     public partial class KBSearchResult : IJsonModel<KBSearchResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KBSearchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKBSearchResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KBSearchResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KBSearchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -215,23 +232,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KBSearchResult IPersistableModel<KBSearchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KBSearchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKBSearchResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KBSearchResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KBSearchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -300,6 +300,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-payload-xml": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/xml -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-resiliency-srv-driven-v1": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/resiliency/srv-driven/v1 -g AzureStubGenerator",
       "commandName": "Executable",

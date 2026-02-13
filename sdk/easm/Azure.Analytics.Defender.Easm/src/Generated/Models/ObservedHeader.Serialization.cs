@@ -15,6 +15,36 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ObservedHeader. </summary>
     public partial class ObservedHeader : ObservedValue, IJsonModel<ObservedHeader>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ObservedValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ObservedHeader>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeObservedHeader(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ObservedHeader)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ObservedHeader>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ObservedHeader)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ObservedHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,39 +174,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ObservedHeader>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ObservedHeader>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ObservedHeader)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ObservedHeader IPersistableModel<ObservedHeader>.Create(BinaryData data, ModelReaderWriterOptions options) => (ObservedHeader)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ObservedValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ObservedHeader>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeObservedHeader(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ObservedHeader)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ObservedHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

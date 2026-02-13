@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Job Delay Notification details. </summary>
     public partial class JobDelayDetails : IJsonModel<JobDelayDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobDelayDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobDelayDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJobDelayDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobDelayDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobDelayDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -183,23 +200,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         JobDelayDetails IPersistableModel<JobDelayDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobDelayDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobDelayDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJobDelayDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JobDelayDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobDelayDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

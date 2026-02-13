@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// <summary> Solution Configuration. </summary>
     public partial class PublicCloudConnectorSolutionConfigurationData : ResourceData, IJsonModel<PublicCloudConnectorSolutionConfigurationData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePublicCloudConnectorSolutionConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PublicCloudConnectorSolutionConfigurationData"/> from. </param>
+        internal static PublicCloudConnectorSolutionConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePublicCloudConnectorSolutionConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublicCloudConnectorSolutionConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="options"> The client options for reading and writing models. </param>
         PublicCloudConnectorSolutionConfigurationData IPersistableModel<PublicCloudConnectorSolutionConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PublicCloudConnectorSolutionConfigurationData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePublicCloudConnectorSolutionConfigurationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PublicCloudConnectorSolutionConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.HybridConnectivity
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(publicCloudConnectorSolutionConfigurationData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PublicCloudConnectorSolutionConfigurationData"/> from. </param>
-        internal static PublicCloudConnectorSolutionConfigurationData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePublicCloudConnectorSolutionConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

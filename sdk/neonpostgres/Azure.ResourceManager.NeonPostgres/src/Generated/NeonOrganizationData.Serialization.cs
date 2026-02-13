@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.NeonPostgres
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNeonOrganizationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NeonOrganizationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeonOrganizationData"/> from. </param>
+        internal static NeonOrganizationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNeonOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NeonOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,23 +213,6 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="options"> The client options for reading and writing models. </param>
         NeonOrganizationData IPersistableModel<NeonOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeonOrganizationData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNeonOrganizationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NeonOrganizationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NeonOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -219,13 +226,6 @@ namespace Azure.ResourceManager.NeonPostgres
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(neonOrganizationData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeonOrganizationData"/> from. </param>
-        internal static NeonOrganizationData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNeonOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

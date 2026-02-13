@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
     /// <summary> Properties which are common across all kinds of entities. </summary>
     public partial class HealthModelEntityProperties : IJsonModel<HealthModelEntityProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthModelEntityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthModelEntityProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelEntityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -326,23 +343,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HealthModelEntityProperties IPersistableModel<HealthModelEntityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthModelEntityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHealthModelEntityProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HealthModelEntityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

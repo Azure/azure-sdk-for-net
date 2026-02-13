@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Map of data location to service location. </summary>
     public partial class DataLocationToServiceLocationMap : IJsonModel<DataLocationToServiceLocationMap>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataLocationToServiceLocationMap PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataLocationToServiceLocationMap>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataLocationToServiceLocationMap(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataLocationToServiceLocationMap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,23 +154,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataLocationToServiceLocationMap IPersistableModel<DataLocationToServiceLocationMap>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataLocationToServiceLocationMap PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataLocationToServiceLocationMap>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataLocationToServiceLocationMap(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataLocationToServiceLocationMap>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

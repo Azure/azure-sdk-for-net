@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Models
         /// <returns>The next page of SearchResults.</returns>
         internal abstract Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken);
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize the SearchResults.
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.Search.Documents.Models
             ObjectSerializer serializer,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             // Parse the JSON
             using JsonDocument doc = async ?

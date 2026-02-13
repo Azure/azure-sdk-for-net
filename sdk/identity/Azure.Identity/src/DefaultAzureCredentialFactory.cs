@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -42,7 +42,7 @@ namespace Azure.Identity
         public TokenCredential[] CreateCredentialChain()
         {
             TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
+            string credentialSelection = Options.CredentialSource ?? EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
 
             if (_customEnvironmentVariableName != null)
             {
@@ -271,6 +271,7 @@ namespace Azure.Identity
             options.ClientId = Options.WorkloadIdentityClientId;
             options.TenantId = Options.TenantId;
             options.Pipeline = Pipeline;
+            options.IsAzureProxyEnabled = Options.IsAzureProxyEnabled;
 
             return new WorkloadIdentityCredential(options);
         }
@@ -364,6 +365,10 @@ namespace Azure.Identity
             var options = Options.Clone<AzureCliCredentialOptions>();
             options.TenantId = Options.TenantId;
             options.ProcessTimeout = Options.CredentialProcessTimeout;
+            if (!string.IsNullOrEmpty(Options.Subscription))
+            {
+                options.Subscription = Options.Subscription;
+            }
             options.IsChainedCredential = true;
 
             return new AzureCliCredential(Pipeline, default, options);

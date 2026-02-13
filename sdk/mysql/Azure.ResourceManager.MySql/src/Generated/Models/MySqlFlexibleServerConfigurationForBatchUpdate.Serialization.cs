@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a Configuration. </summary>
     public partial class MySqlFlexibleServerConfigurationForBatchUpdate : IJsonModel<MySqlFlexibleServerConfigurationForBatchUpdate>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerConfigurationForBatchUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationForBatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationForBatchUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerConfigurationForBatchUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,23 +150,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServerConfigurationForBatchUpdate IPersistableModel<MySqlFlexibleServerConfigurationForBatchUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerConfigurationForBatchUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationForBatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationForBatchUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerConfigurationForBatchUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

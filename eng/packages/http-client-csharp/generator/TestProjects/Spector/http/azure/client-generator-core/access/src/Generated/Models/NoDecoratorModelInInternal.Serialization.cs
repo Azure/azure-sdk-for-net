@@ -16,6 +16,18 @@ namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
     {
         internal NoDecoratorModelInInternal() => throw null;
 
+        protected virtual NoDecoratorModelInInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<NoDecoratorModelInInternal>.Write(ModelReaderWriterOptions options) => throw null;
+
+        NoDecoratorModelInInternal IPersistableModel<NoDecoratorModelInInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<NoDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator NoDecoratorModelInInternal(Response response) => throw null;
+
         void IJsonModel<NoDecoratorModelInInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,17 +35,5 @@ namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
         NoDecoratorModelInInternal IJsonModel<NoDecoratorModelInInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual NoDecoratorModelInInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<NoDecoratorModelInInternal>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        NoDecoratorModelInInternal IPersistableModel<NoDecoratorModelInInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual NoDecoratorModelInInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<NoDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator NoDecoratorModelInInternal(Response response) => throw null;
     }
 }

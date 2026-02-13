@@ -24,6 +24,23 @@ namespace Azure.ResourceManager.Avs.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScriptExecutionParameterDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScriptExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ScriptExecutionParameterDetails IPersistableModel<ScriptExecutionParameterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScriptExecutionParameterDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScriptExecutionParameterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

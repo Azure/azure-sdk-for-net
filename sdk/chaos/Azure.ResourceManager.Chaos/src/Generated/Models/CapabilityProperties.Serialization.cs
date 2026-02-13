@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the Capability properties model. </summary>
     internal partial class CapabilityProperties : IJsonModel<CapabilityProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CapabilityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCapabilityProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CapabilityProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CapabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -167,23 +184,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CapabilityProperties IPersistableModel<CapabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CapabilityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCapabilityProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CapabilityProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CapabilityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

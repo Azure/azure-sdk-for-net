@@ -17,6 +17,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> The JobResourcePatch. </summary>
     public partial class JobResourcePatch : IJsonModel<JobResourcePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJobResourcePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobResourcePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         JobResourcePatch IPersistableModel<JobResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJobResourcePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JobResourcePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

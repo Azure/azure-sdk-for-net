@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Enclave Endpoint Patch Resource. </summary>
     public partial class VirtualEnclaveEndpointPatch : IJsonModel<VirtualEnclaveEndpointPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualEnclaveEndpointPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualEnclaveEndpointPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveEndpointPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveEndpointPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VirtualEnclaveEndpointPatch IPersistableModel<VirtualEnclaveEndpointPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveEndpointPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualEnclaveEndpointPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveEndpointPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualEnclaveEndpointPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

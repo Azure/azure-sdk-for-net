@@ -16,6 +16,36 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents the options used running the evaluation. </summary>
     public partial class TextAuthoringEvaluationDetails : IJsonModel<TextAuthoringEvaluationDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TextAuthoringEvaluationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTextAuthoringEvaluationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringEvaluationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringEvaluationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextAuthoringEvaluationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -135,39 +165,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TextAuthoringEvaluationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringEvaluationDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TextAuthoringEvaluationDetails IPersistableModel<TextAuthoringEvaluationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TextAuthoringEvaluationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTextAuthoringEvaluationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringEvaluationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TextAuthoringEvaluationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

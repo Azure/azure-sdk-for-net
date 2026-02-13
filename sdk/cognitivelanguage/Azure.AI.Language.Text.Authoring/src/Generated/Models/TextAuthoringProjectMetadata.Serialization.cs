@@ -21,6 +21,43 @@ namespace Azure.AI.Language.Text.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TextAuthoringProjectMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTextAuthoringProjectMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringProjectMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TextAuthoringProjectMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextAuthoringProjectMetadata"/> from. </param>
+        public static explicit operator TextAuthoringProjectMetadata(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTextAuthoringProjectMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextAuthoringProjectMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -229,48 +266,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TextAuthoringProjectMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringProjectMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TextAuthoringProjectMetadata IPersistableModel<TextAuthoringProjectMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TextAuthoringProjectMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringProjectMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTextAuthoringProjectMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TextAuthoringProjectMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TextAuthoringProjectMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TextAuthoringProjectMetadata"/> from. </param>
-        public static explicit operator TextAuthoringProjectMetadata(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTextAuthoringProjectMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

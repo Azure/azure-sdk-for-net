@@ -24,14 +24,14 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+#pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         BatchClient batchClient = azureClient.GetBatchClient();
-        #pragma warning restore OPENAI001
-        
-        #pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+#pragma warning restore OPENAI001
+
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         OpenAIFileClient fileClient = azureClient.GetOpenAIFileClient();
-        #pragma warning restore AOAI001
+#pragma warning restore AOAI001
 
         // Step 1: Create batch request file in JSONL format
         var batchRequests = new StringBuilder();
@@ -42,8 +42,8 @@ public partial class AzureOpenAISamples
         // Step 2: Upload the batch file
         BinaryData batchFileData = BinaryData.FromString(batchRequests.ToString());
         OpenAIFile inputFile = await fileClient.UploadFileAsync(
-            batchFileData, 
-            "batch_requests.jsonl", 
+            batchFileData,
+            "batch_requests.jsonl",
             FileUploadPurpose.Batch);
 
         Console.WriteLine($"Uploaded batch file: {inputFile.Id}");
@@ -56,7 +56,7 @@ public partial class AzureOpenAISamples
         }}"));
 
         CreateBatchOperation batch = await batchClient.CreateBatchAsync(createBatchRequestContent, waitUntilCompleted: false);
-        
+
         Console.WriteLine($"Created batch job: {batch.BatchId}");
         Console.WriteLine("Batch processing initiated. Use the batch ID to monitor progress.");
         #endregion
@@ -68,26 +68,26 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        
-        #pragma warning disable OPENAI001
+
+#pragma warning disable OPENAI001
         BatchClient batchClient = azureClient.GetBatchClient();
-        #pragma warning restore OPENAI001
+#pragma warning restore OPENAI001
 
         // Assume we have a batch ID from a previous operation
         string batchId = "batch_abc123"; // Replace with actual batch ID
-        
+
         try
         {
             // Get batch information using the low-level API
             var getBatchResponse = await batchClient.GetBatchAsync(batchId, options: null);
             var batchContent = getBatchResponse.GetRawResponse().Content.ToString();
-            
+
             Console.WriteLine("Batch Status Information:");
             Console.WriteLine(batchContent);
-            
+
             // The response contains JSON with status, progress, and file IDs
             // Parse this to extract specific information as needed
-            
+
             Console.WriteLine("\nBatch monitoring workflow:");
             Console.WriteLine("1. Check batch status periodically");
             Console.WriteLine("2. Download results when completed");

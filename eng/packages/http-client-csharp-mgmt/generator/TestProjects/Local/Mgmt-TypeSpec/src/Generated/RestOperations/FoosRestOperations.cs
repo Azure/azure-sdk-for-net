@@ -200,5 +200,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateGetProvisioningStateRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
+            uri.AppendPath(fooName, true);
+            uri.AppendPath("/getProvisioningState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "text/plain");
+            return message;
+        }
     }
 }

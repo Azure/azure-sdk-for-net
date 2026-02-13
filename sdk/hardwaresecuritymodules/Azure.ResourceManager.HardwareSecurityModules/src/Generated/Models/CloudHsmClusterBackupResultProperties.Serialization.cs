@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterBackupResultProperties : BackupRestoreBaseResultProperties, IJsonModel<CloudHsmClusterBackupResultProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRestoreBaseResultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCloudHsmClusterBackupResultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterBackupResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -182,23 +199,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CloudHsmClusterBackupResultProperties IPersistableModel<CloudHsmClusterBackupResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudHsmClusterBackupResultProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupRestoreBaseResultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudHsmClusterBackupResultProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudHsmClusterBackupResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

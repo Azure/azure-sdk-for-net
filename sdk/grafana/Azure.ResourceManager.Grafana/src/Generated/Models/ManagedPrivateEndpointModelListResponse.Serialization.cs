@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.Grafana.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedPrivateEndpointModelListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelListResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedPrivateEndpointModelListResponse"/> from. </param>
+        internal static ManagedPrivateEndpointModelListResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedPrivateEndpointModelListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -146,31 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ManagedPrivateEndpointModelListResponse IPersistableModel<ManagedPrivateEndpointModelListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedPrivateEndpointModelListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelListResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedPrivateEndpointModelListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedPrivateEndpointModelListResponse"/> from. </param>
-        internal static ManagedPrivateEndpointModelListResponse FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

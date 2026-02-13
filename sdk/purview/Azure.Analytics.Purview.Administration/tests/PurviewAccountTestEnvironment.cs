@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Analytics.Purview.Administration.Tests
 {
-    public class PurviewAccountTestEnvironment: TestEnvironment
+    public class PurviewAccountTestEnvironment : TestEnvironment
     {
         public PurviewAccountTestEnvironment()
         {

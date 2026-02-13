@@ -16,6 +16,36 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The payload of autocomplete request. </summary>
     public partial class AutoCompleteConfig : IJsonModel<AutoCompleteConfig>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoCompleteConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoCompleteConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoCompleteConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,39 +168,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutoCompleteConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AutoCompleteConfig IPersistableModel<AutoCompleteConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutoCompleteConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutoCompleteConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutoCompleteConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

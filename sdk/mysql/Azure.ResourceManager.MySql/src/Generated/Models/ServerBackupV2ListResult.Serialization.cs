@@ -18,6 +18,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The response of a ServerBackupV2 list operation. </summary>
     internal partial class ServerBackupV2ListResult : IJsonModel<ServerBackupV2ListResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerBackupV2ListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerBackupV2ListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServerBackupV2ListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerBackupV2ListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServerBackupV2ListResult"/> from. </param>
+        internal static ServerBackupV2ListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeServerBackupV2ListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerBackupV2ListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,31 +173,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ServerBackupV2ListResult IPersistableModel<ServerBackupV2ListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServerBackupV2ListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerBackupV2ListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServerBackupV2ListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServerBackupV2ListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerBackupV2ListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServerBackupV2ListResult"/> from. </param>
-        internal static ServerBackupV2ListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeServerBackupV2ListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

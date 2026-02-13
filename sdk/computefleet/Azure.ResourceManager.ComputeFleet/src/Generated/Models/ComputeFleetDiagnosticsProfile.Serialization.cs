@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </summary>
     internal partial class ComputeFleetDiagnosticsProfile : IJsonModel<ComputeFleetDiagnosticsProfile>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetDiagnosticsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetDiagnosticsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeComputeFleetDiagnosticsProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetDiagnosticsProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetDiagnosticsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ComputeFleetDiagnosticsProfile IPersistableModel<ComputeFleetDiagnosticsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetDiagnosticsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetDiagnosticsProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetDiagnosticsProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetDiagnosticsProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetDiagnosticsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

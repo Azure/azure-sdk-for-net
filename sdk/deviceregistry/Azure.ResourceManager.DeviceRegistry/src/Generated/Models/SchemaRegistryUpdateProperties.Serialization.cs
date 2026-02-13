@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> The updatable properties of the SchemaRegistry. </summary>
     public partial class SchemaRegistryUpdateProperties : IJsonModel<SchemaRegistryUpdateProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SchemaRegistryUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SchemaRegistryUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSchemaRegistryUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SchemaRegistryUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SchemaRegistryUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SchemaRegistryUpdateProperties IPersistableModel<SchemaRegistryUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SchemaRegistryUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SchemaRegistryUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSchemaRegistryUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SchemaRegistryUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SchemaRegistryUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

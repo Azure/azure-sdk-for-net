@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryTemplatesGetTest()
         {
-            var response =  await client.GetDiscoveryTemplateAsync(TemplateId);
+            var response = await client.GetDiscoveryTemplateAsync(TemplateId);
             DiscoveryTemplate discoTemplate = response.Value;
             Assert.IsNotNull(discoTemplate.Name);
             Assert.IsNotNull(discoTemplate.Id);

@@ -15,6 +15,36 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> class that captures details of an enum-element. </summary>
     public partial class AtlasEnumElementDef : IJsonModel<AtlasEnumElementDef>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasEnumElementDef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasEnumElementDef>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAtlasEnumElementDef(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtlasEnumElementDef)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasEnumElementDef>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AtlasEnumElementDef)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasEnumElementDef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,39 +156,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AtlasEnumElementDef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEnumElementDef>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AtlasEnumElementDef)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AtlasEnumElementDef IPersistableModel<AtlasEnumElementDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AtlasEnumElementDef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEnumElementDef>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAtlasEnumElementDef(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AtlasEnumElementDef)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasEnumElementDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
         {
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource = await CreateAzureTrafficCollector(accountName);
-            var exist  = await _collection.ExistsAsync(azureTrafficCollectorResource.Data.Name);
+            var exist = await _collection.ExistsAsync(azureTrafficCollectorResource.Data.Name);
             Assert.IsNotNull(exist);
             Assert.IsTrue(exist.Value);
         }
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
         {
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource = await CreateAzureTrafficCollector(accountName);
-            var resourceId = AzureTrafficCollectorResource.CreateResourceIdentifier(_subscription.Id.SubscriptionId,_resourceGroup.Data.Name,accountName);
+            var resourceId = AzureTrafficCollectorResource.CreateResourceIdentifier(_subscription.Id.SubscriptionId, _resourceGroup.Data.Name, accountName);
             var azureTrafficCollectorAccount = Client.GetAzureTrafficCollectorResource(resourceId);
-            AzureTrafficCollectorResource result =await azureTrafficCollectorAccount.GetAsync();
+            AzureTrafficCollectorResource result = await azureTrafficCollectorAccount.GetAsync();
             Assert.IsNotEmpty(result.Data.Id);
             Assert.AreEqual(result.Data.Id, azureTrafficCollectorResource.Data.Id);
             Assert.AreEqual(result.Data.Name, azureTrafficCollectorResource.Data.Name);
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var expressRouteName = Recording.GenerateAssetName("expressRouteCircuit");
             string ingestionResourceId = $"/subscriptions/{_subscription.Data.SubscriptionId}/resourceGroups/{_resourceGroup.Data.Name}/providers/Microsoft.NetworkFunction/expressRouteCircuits/{expressRouteName}";
             var collectorPolicyName = Recording.GenerateAssetName("collectorPolicy");
-            var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollectorResource,collectorPolicyName, ingestionResourceId);
+            var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollectorResource, collectorPolicyName, ingestionResourceId);
             CollectorPolicyResource getPolicy = await azureTrafficCollectorResource.GetCollectorPolicyAsync(collectorPolicy.Data.Name);
             Assert.IsNotEmpty(getPolicy.Data.Id);
-            Assert.AreEqual(collectorPolicy.Data.Id,getPolicy.Data.Id);
+            Assert.AreEqual(collectorPolicy.Data.Id, getPolicy.Data.Id);
             Assert.AreEqual(collectorPolicyName, collectorPolicy.Data.Name);
             Assert.AreEqual(collectorPolicy.Data.Name, getPolicy.Data.Name);
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
         {
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
             var azureTrafficCollectorResource = await CreateAzureTrafficCollector(accountName);
-            AzureTrafficCollectorResource addTags = await azureTrafficCollectorResource.AddTagAsync("key2","AddTags");
+            AzureTrafficCollectorResource addTags = await azureTrafficCollectorResource.AddTagAsync("key2", "AddTags");
             Assert.IsTrue(addTags.Data.Tags.ContainsKey("key2"));
             var SetDic = new Dictionary<string, string>()
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             return (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, accountname, data)).Value;
         }
 
-        public async Task<CollectorPolicyResource> CreateCollectorPolicy(AzureTrafficCollectorResource resource,string collectorPolicyName,string resourceId)
+        public async Task<CollectorPolicyResource> CreateCollectorPolicy(AzureTrafficCollectorResource resource, string collectorPolicyName, string resourceId)
         {
             var collection = resource.GetCollectorPolicies();
             var data = new CollectorPolicyData(_location)

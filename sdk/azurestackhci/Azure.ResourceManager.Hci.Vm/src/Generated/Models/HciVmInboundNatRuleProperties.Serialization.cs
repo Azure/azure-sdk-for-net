@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmInboundNatRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInboundNatRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmInboundNatRuleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmInboundNatRuleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmInboundNatRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,23 +174,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmInboundNatRuleProperties IPersistableModel<HciVmInboundNatRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmInboundNatRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInboundNatRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmInboundNatRuleProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmInboundNatRuleProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmInboundNatRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

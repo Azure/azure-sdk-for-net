@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// <summary> Represents private link resource. </summary>
     public partial class DataReplicationPrivateLinkResourceData : ResourceData, IJsonModel<DataReplicationPrivateLinkResourceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataReplicationPrivateLinkResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataReplicationPrivateLinkResourceData"/> from. </param>
+        internal static DataReplicationPrivateLinkResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataReplicationPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationPrivateLinkResourceData IPersistableModel<DataReplicationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataReplicationPrivateLinkResourceData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataReplicationPrivateLinkResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataReplicationPrivateLinkResourceData"/> from. </param>
-        internal static DataReplicationPrivateLinkResourceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataReplicationPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

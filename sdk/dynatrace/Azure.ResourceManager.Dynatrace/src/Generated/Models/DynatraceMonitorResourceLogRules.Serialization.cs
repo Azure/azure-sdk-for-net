@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
     public partial class DynatraceMonitorResourceLogRules : IJsonModel<DynatraceMonitorResourceLogRules>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DynatraceMonitorResourceLogRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorResourceLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDynatraceMonitorResourceLogRules(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynatraceMonitorResourceLogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -176,23 +193,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DynatraceMonitorResourceLogRules IPersistableModel<DynatraceMonitorResourceLogRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DynatraceMonitorResourceLogRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorResourceLogRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDynatraceMonitorResourceLogRules(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DynatraceMonitorResourceLogRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

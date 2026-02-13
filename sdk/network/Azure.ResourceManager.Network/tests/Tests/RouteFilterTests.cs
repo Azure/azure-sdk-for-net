@@ -7,10 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Tests
             return await filterOperation.WaitForCompletionAsync();
         }
 
-        private async Task<RouteFilterRuleResource> CreateDefaultRouteFilterRule(RouteFilterResource filter,  string ruleName)
+        private async Task<RouteFilterRuleResource> CreateDefaultRouteFilterRule(RouteFilterResource filter, string ruleName)
         {
             var rule = new RouteFilterRuleData()
             {

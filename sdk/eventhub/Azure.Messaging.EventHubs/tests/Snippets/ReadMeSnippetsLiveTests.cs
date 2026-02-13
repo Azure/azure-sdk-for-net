@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 if ((!eventBatch.TryAdd(new EventData("First"))) ||
                     (!eventBatch.TryAdd(new EventData("Second"))))
                 {
-                   throw new ApplicationException("Not all events could be added to the batch!");
+                    throw new ApplicationException("Not all events could be added to the batch!");
                 }
 
                 await producer.SendAsync(eventBatch);
@@ -252,7 +252,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 if ((!eventBatch.TryAdd(new EventData("First"))) ||
                     (!eventBatch.TryAdd(new EventData("Second"))))
                 {
-                   throw new ApplicationException("Not all events could be added to the batch!");
+                    throw new ApplicationException("Not all events could be added to the batch!");
                 }
 
                 await producer.SendAsync(eventBatch);

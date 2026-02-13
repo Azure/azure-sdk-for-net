@@ -17,21 +17,13 @@ namespace _Type.Property.ValueTypes
     {
         internal DurationProperty() => throw null;
 
-        void IJsonModel<DurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        DurationProperty IJsonModel<DurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual DurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<DurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual DurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        DurationProperty IPersistableModel<DurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<DurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual DurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DurationProperty IPersistableModel<DurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace _Type.Property.ValueTypes
         public static implicit operator RequestContent(DurationProperty durationProperty) => throw null;
 
         public static explicit operator DurationProperty(Response response) => throw null;
+
+        void IJsonModel<DurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        DurationProperty IJsonModel<DurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual DurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

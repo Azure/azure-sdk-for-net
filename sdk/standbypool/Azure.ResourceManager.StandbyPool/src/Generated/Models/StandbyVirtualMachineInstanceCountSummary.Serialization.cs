@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StandbyVirtualMachineInstanceCountSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStandbyVirtualMachineInstanceCountSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyVirtualMachineInstanceCountSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,23 +156,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StandbyVirtualMachineInstanceCountSummary IPersistableModel<StandbyVirtualMachineInstanceCountSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StandbyVirtualMachineInstanceCountSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachineInstanceCountSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStandbyVirtualMachineInstanceCountSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StandbyVirtualMachineInstanceCountSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

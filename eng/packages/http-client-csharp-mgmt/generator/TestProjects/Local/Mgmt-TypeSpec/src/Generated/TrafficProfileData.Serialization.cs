@@ -18,6 +18,30 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary> The TrafficProfileData. </summary>
     public partial class TrafficProfileData : TrafficTrackedResource, IJsonModel<TrafficProfileData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrafficResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficProfileData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficProfileData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficProfileData"/> from. </param>
+        internal static TrafficProfileData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTrafficProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -167,23 +191,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         TrafficProfileData IPersistableModel<TrafficProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficProfileData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrafficResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficProfileData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficProfileData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrafficProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -197,13 +204,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trafficProfileData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficProfileData"/> from. </param>
-        internal static TrafficProfileData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTrafficProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

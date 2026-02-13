@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary> Solution Template Version Resource. Contains configurations that use expressions which can be resolved hierarchically along with edge specifications. </summary>
     public partial class EdgeSolutionTemplateVersionData : ResourceData, IJsonModel<EdgeSolutionTemplateVersionData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeSolutionTemplateVersionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeSolutionTemplateVersionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeSolutionTemplateVersionData"/> from. </param>
+        internal static EdgeSolutionTemplateVersionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeSolutionTemplateVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSolutionTemplateVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,31 +194,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeSolutionTemplateVersionData IPersistableModel<EdgeSolutionTemplateVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeSolutionTemplateVersionData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionTemplateVersionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeSolutionTemplateVersionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeSolutionTemplateVersionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSolutionTemplateVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeSolutionTemplateVersionData"/> from. </param>
-        internal static EdgeSolutionTemplateVersionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEdgeSolutionTemplateVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

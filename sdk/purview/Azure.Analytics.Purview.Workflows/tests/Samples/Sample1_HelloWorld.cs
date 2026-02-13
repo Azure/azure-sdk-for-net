@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
-    public class WorkflowsSamples: SamplesBase<WorkflowsClientTestEnvironment>
+    public class WorkflowsSamples : SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
         public async Task CreateWorkflowClient()
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 #endif
 
             var client = new WorkflowsClient(endpoint, credential);
-#endregion
+            #endregion
 
             //Perform an operation
             AsyncPageable<BinaryData> workflowList = client.GetWorkflowsAsync(new RequestContext());

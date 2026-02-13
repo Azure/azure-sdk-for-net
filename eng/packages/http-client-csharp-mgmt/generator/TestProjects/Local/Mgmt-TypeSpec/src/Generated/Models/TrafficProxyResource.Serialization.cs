@@ -17,6 +17,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> The TrafficProxyResource. </summary>
     public partial class TrafficProxyResource : TrafficResource, IJsonModel<TrafficProxyResource>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrafficResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficProxyResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficProxyResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficProxyResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficProxyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,23 +132,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TrafficProxyResource IPersistableModel<TrafficProxyResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficProxyResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrafficResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficProxyResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficProxyResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficProxyResource)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrafficProxyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

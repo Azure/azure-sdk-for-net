@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.StorageSync
     /// <summary> Server Endpoint object. </summary>
     public partial class StorageSyncServerEndpointData : ResourceData, IJsonModel<StorageSyncServerEndpointData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageSyncServerEndpointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageSyncServerEndpointData"/> from. </param>
+        internal static StorageSyncServerEndpointData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStorageSyncServerEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageSyncServerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="options"> The client options for reading and writing models. </param>
         StorageSyncServerEndpointData IPersistableModel<StorageSyncServerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageSyncServerEndpointData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageSyncServerEndpointData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageSyncServerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageSyncServerEndpointData"/> from. </param>
-        internal static StorageSyncServerEndpointData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStorageSyncServerEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

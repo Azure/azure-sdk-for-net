@@ -23,6 +23,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PlannedFailover PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlannedFailover>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePlannedFailover(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlannedFailover)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlannedFailover"/> from. </param>
+        internal static PlannedFailover FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlannedFailover>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +146,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         PlannedFailover IPersistableModel<PlannedFailover>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlannedFailover PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlannedFailover>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlannedFailover(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlannedFailover)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlannedFailover>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -152,13 +159,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(plannedFailover, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlannedFailover"/> from. </param>
-        internal static PlannedFailover FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

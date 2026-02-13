@@ -19,6 +19,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class PrivateLink : ResourceData, IJsonModel<PrivateLink>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePrivateLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -168,23 +185,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PrivateLink IPersistableModel<PrivateLink>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLink)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLink>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePrivateLink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PrivateLink)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

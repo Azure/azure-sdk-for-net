@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if public network access is enabled or not.
-    /// Serialized Name: ServerPublicNetworkAccessState
-    /// </summary>
+    /// <summary> Indicates if public network access is enabled or not. </summary>
     public readonly partial struct PostgreSqlFlexibleServerPublicNetworkAccessState : IEquatable<PostgreSqlFlexibleServerPublicNetworkAccessState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ServerPublicNetworkAccessState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Enabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ServerPublicNetworkAccessState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Disabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => left.Equals(right);

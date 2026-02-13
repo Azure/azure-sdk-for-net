@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The AgentUpdateProperties. </summary>
     internal partial class AgentUpdateProperties : IJsonModel<AgentUpdateProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgentUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAgentUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,23 +149,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AgentUpdateProperties IPersistableModel<AgentUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAgentUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AgentUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgentUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

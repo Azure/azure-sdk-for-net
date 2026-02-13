@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter step input response validation properties. </summary>
     public partial class ResponseValidationProperties : IJsonModel<ResponseValidationProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResponseValidationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResponseValidationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResponseValidationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseValidationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,23 +196,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResponseValidationProperties IPersistableModel<ResponseValidationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseValidationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResponseValidationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResponseValidationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseValidationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

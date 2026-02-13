@@ -42,12 +42,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public FilePosixProperties PosixProperties { get; internal set; }
 
-//        /// <summary>
-//        /// Content Hash of the file.  This value will only be populated if the file was created with data.
-//        /// </summary>
-//#pragma warning disable CA1819 // Properties should not return arrays
-//        public byte[] ContentHash { get; internal set; }
-//#pragma warning restore CA1819 // Properties should not return arrays
+        //        /// <summary>
+        //        /// Content Hash of the file.  This value will only be populated if the file was created with data.
+        //        /// </summary>
+        //#pragma warning disable CA1819 // Properties should not return arrays
+        //        public byte[] ContentHash { get; internal set; }
+        //#pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Constructor.
@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.Shares.Models
                 PosixProperties = new FilePosixProperties
                 {
                     FileMode = nfsFileMode,
-                    Owner =  owner,
+                    Owner = owner,
                     Group = group,
                     FileType = nfsFileType,
                 }

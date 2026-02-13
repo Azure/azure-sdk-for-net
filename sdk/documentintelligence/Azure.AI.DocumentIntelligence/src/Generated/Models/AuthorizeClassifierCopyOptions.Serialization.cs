@@ -21,6 +21,36 @@ namespace Azure.AI.DocumentIntelligence
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AuthorizeClassifierCopyOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeClassifierCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAuthorizeClassifierCopyOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizeClassifierCopyOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeClassifierCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizeClassifierCopyOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AuthorizeClassifierCopyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,39 +182,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AuthorizeClassifierCopyOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeClassifierCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AuthorizeClassifierCopyOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AuthorizeClassifierCopyOptions IPersistableModel<AuthorizeClassifierCopyOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AuthorizeClassifierCopyOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthorizeClassifierCopyOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAuthorizeClassifierCopyOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AuthorizeClassifierCopyOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AuthorizeClassifierCopyOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

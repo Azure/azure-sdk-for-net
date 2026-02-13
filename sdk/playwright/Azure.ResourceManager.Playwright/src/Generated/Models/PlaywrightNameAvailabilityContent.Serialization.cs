@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Playwright.Models
     /// <summary> The check availability request body. </summary>
     public partial class PlaywrightNameAvailabilityContent : IJsonModel<PlaywrightNameAvailabilityContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PlaywrightNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePlaywrightNameAvailabilityContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlaywrightNameAvailabilityContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlaywrightNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,23 +146,6 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PlaywrightNameAvailabilityContent IPersistableModel<PlaywrightNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlaywrightNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlaywrightNameAvailabilityContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlaywrightNameAvailabilityContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlaywrightNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
