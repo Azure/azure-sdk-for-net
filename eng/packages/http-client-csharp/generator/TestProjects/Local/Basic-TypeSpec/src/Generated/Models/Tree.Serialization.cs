@@ -96,6 +96,14 @@ namespace BasicTypeSpec
             return RequestContent.Create(tree, ModelSerializationExtensions.WireOptions);
         }
 
+        /// <summary> Converts the model to RequestContent using the specified format. </summary>
+        /// <param name="format"> The format to use for serialization. </param>
+        internal RequestContent ToRequestContent(string format)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            return RequestContent.Create(this, options);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Tree"/> from. </param>
         public static explicit operator Tree(Response response)
         {

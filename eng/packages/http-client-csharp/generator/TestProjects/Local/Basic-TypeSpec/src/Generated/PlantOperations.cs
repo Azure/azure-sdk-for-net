@@ -184,7 +184,8 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(tree, nameof(tree));
 
-            Response result = UpdateTree(tree, cancellationToken.ToRequestContext());
+            using RequestContent content = tree.ToRequestContent("X");
+            Response result = UpdateTree(content, cancellationToken.ToRequestContext());
             return Response.FromValue((Tree)result, result);
         }
 
@@ -197,7 +198,8 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(tree, nameof(tree));
 
-            Response result = await UpdateTreeAsync(tree, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = tree.ToRequestContent("X");
+            Response result = await UpdateTreeAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((Tree)result, result);
         }
     }
