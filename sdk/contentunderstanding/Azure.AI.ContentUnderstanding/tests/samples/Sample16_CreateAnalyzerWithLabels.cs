@@ -18,23 +18,32 @@ using NUnit.Framework;
 namespace Azure.AI.ContentUnderstanding.Samples
 {
     /// <summary>
-    /// Demonstrates creating a custom analyzer with labeled training data from Azure Blob Storage.
+    /// Demonstrates the API pattern for creating an analyzer with labeled training data.
     ///
     /// For an easier labeling workflow, use Azure AI Content Understanding Studio at
     /// https://contentunderstanding.ai.azure.com/
     ///
-    /// Labeled receipt data is available at <c>tests/samples/sample_files/receipt_labels</c>.
-    /// To run in LIVE mode, set environment variables for Option A or Option B:
-    ///   Option A – CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL (pre-generated SAS URL pointing to
-    ///              a container where labeled data has already been uploaded)
-    ///   Option B – CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT + _CONTAINER (the test will
-    ///              automatically upload local label files and generate a SAS URL)
-    ///   Common  – CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX (e.g. "receipt_labels/")
+    /// <para><b>Manual instructions to upload labels into Azure Blob Storage:</b></para>
+    /// <list type="number">
+    ///   <item>Create an Azure Blob Storage container (or use an existing one).</item>
+    ///   <item>Upload the contents of <c>tests/samples/sample_files/receipt_labels</c> into the
+    ///         container. You may upload into the root or a subfolder (e.g., "receipt_labels/").</item>
+    ///   <item>Generate a SAS URL for the container with at least <b>List</b> and <b>Read</b>
+    ///         permissions.</item>
+    ///   <item>Set <c>CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL</c> to that SAS URL.</item>
+    ///   <item>If you uploaded into a subfolder, also set
+    ///         <c>CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX</c> (e.g., "receipt_labels/").</item>
+    /// </list>
+    ///
+    /// Alternatively, set <c>CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT</c> and
+    /// <c>CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER</c> to let the sample auto-upload local
+    /// label files and generate a SAS URL via <c>DefaultAzureCredential</c>.
+    ///
+    /// See Sample16_CreateAnalyzerWithLabels.md for full documentation.
     /// </summary>
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
-        [Ignore("This test requires recorded session files. Run in Live mode to record.")]
         public async Task CreateAnalyzerWithLabelsAsync()
         {
             // ── Test infrastructure ──────────────────────────────────────────
@@ -53,14 +62,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ? Recording.GetVariable("trainingDataPrefix", null)
                 : TestEnvironment.TrainingDataPrefix;
 
-            // Option B: auto-upload local label files, then generate SAS URL
+            // Option B fallback: upload local label files → generate SAS URL
             if (string.IsNullOrEmpty(trainingDataSasUrl) && Mode != RecordedTestMode.Playback)
             {
                 string? acct = TestEnvironment.TrainingDataStorageAccountName;
                 string? ctr = TestEnvironment.TrainingDataContainerName;
                 if (!string.IsNullOrEmpty(acct) && !string.IsNullOrEmpty(ctr))
                 {
-                    // Upload local receipt_labels/ to the container
                     string localDir = ContentUnderstandingClientTestEnvironment.CreatePath("receipt_labels");
                     await UploadTrainingDataAsync(
                         acct!, ctr!, TestEnvironment.Credential, localDir, trainingDataPrefix);
@@ -70,6 +78,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
             }
 
+            // Save variable values for playback mode
             if (Mode == RecordedTestMode.Record)
             {
                 Recording.SetVariable("trainingDataPrefix", trainingDataPrefix ?? string.Empty);
@@ -83,31 +92,28 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #endif
 
-                // Step 1: Build the receipt field schema (see helper method below)
+                // Step 1: Build the receipt field schema
                 ContentFieldSchema fieldSchema = BuildReceiptFieldSchema();
 
-                // Step 2: Resolve training data SAS URL (optional)
-                //   Option A – use a pre-generated SAS URL that points to already-uploaded data.
-                //   Option B – upload local label files, then auto-generate a SAS URL.
+                // Step 2: Resolve training data SAS URL
+                // You can either provide a pre-generated SAS URL (Option A) or let the sample
+                // upload local label files and generate one automatically (Option B).
+                // See Sample16_CreateAnalyzerWithLabels.md for manual upload instructions.
 #if SNIPPET
-                // Option A: pre-generated SAS URL
+                // Option A: use a pre-generated SAS URL with Read + List permissions
                 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
 
-                // Option B: upload local files and auto-generate SAS
+                // Option B: upload local label files and auto-generate a SAS URL
                 if (string.IsNullOrEmpty(trainingDataSasUrl))
                 {
                     string? storageAccount = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
                     string? container = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
                     if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(container))
                     {
-                        // Upload local training data to blob container (if needed)
+                        var credential = new Azure.Identity.DefaultAzureCredential();
                         string localLabelDir = "<path_to_local_receipt_labels_folder>";
-                        await UploadTrainingDataAsync(storageAccount, container,
-                            new Azure.Identity.DefaultAzureCredential(), localLabelDir);
-
-                        // Generate a read-only SAS URL for the service
-                        trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(
-                            storageAccount, container, new Azure.Identity.DefaultAzureCredential());
+                        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir);
+                        trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(storageAccount, container, credential);
                     }
                 }
 
@@ -158,10 +164,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 Assert.IsNotNull(result.FieldSchema);
                 Assert.AreEqual("receipt_schema", result.FieldSchema!.Name);
-                Assert.AreEqual(3, result.FieldSchema!.Fields.Count, "Expected MerchantName, Items, Total");
+                Assert.AreEqual(3, result.FieldSchema!.Fields.Count, "Expected MerchantName, Items, TotalPrice");
                 Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("MerchantName"));
                 Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Items"));
-                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Total"));
+                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("TotalPrice"));
 
                 var itemsField = result.FieldSchema!.Fields["Items"];
                 Assert.AreEqual(ContentFieldType.Array, itemsField.Type);
@@ -194,7 +200,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         #region Snippet:ContentUnderstandingBuildReceiptFieldSchema
         /// <summary>
         /// Builds a <see cref="ContentFieldSchema"/> for receipt extraction
-        /// with MerchantName, Items (array of Quantity / Name / Price), and Total.
+        /// with MerchantName, Items (array of Quantity / Name / Price), and TotalPrice.
         /// </summary>
         private static ContentFieldSchema BuildReceiptFieldSchema()
         {
@@ -239,7 +245,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Description = "List of items purchased",
                         ItemDefinition = itemDefinition,
                     },
-                    ["Total"] = new ContentFieldDefinition
+                    ["TotalPrice"] = new ContentFieldDefinition
                     {
                         Type = ContentFieldType.String,
                         Method = GenerationMethod.Extract,
