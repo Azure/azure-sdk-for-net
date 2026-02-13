@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.GuestConfiguration
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GuestConfigurationAssignmentProperties properties = default;
+            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -120,6 +126,11 @@ namespace Azure.ResourceManager.GuestConfiguration
                     properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -131,7 +142,8 @@ namespace Azure.ResourceManager.GuestConfiguration
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                location);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

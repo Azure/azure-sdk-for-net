@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
+        /// <param name="location"> Region where the VM is located. </param>
         /// <returns> A new <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GuestConfigurationAssignmentProperties properties = default)
+        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GuestConfigurationAssignmentProperties properties = default, string location = default)
         {
             return new GuestConfigurationAssignmentData(
                 id,
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                location);
         }
 
         /// <summary> Guest configuration assignment properties. </summary>

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetReportRequest(string subscriptionId, string resourceGroupName, string vmssName, string id, string name, RequestContext context)
+        internal HttpMessage CreateGetReportRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -86,11 +86,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/reports/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/guestConfigurationAssignments/", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(name, true);
-            uri.AppendPath("/guestConfigurationAssignmentReportsVMSSGet", false);
+            uri.AppendPath("/reports/", false);
+            uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

@@ -31,14 +31,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
-        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="location"> Region where the VM is located. </param>
+        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties, string location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Location = location;
         }
 
         /// <summary> Properties of the Guest configuration assignment. </summary>
         [WirePath("properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
+
+        /// <summary> Region where the VM is located. </summary>
+        [WirePath("location")]
+        public string Location { get; set; }
     }
 }

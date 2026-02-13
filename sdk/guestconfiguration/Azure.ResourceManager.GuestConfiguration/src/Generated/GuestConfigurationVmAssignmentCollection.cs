@@ -30,8 +30,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly GuestConfigurationAssignments _guestConfigurationAssignmentsRestClient;
         private readonly ClientDiagnostics _guestConfigurationAssignmentReportsClientDiagnostics;
         private readonly GuestConfigurationAssignmentReports _guestConfigurationAssignmentReportsRestClient;
-        private readonly ClientDiagnostics _guestConfigurationAssignmentReportsVMSSClientDiagnostics;
-        private readonly GuestConfigurationAssignmentReportsVMSS _guestConfigurationAssignmentReportsVMSSRestClient;
         /// <summary> The vmName. </summary>
         private readonly string _vmName;
 
@@ -52,8 +50,6 @@ namespace Azure.ResourceManager.GuestConfiguration
             _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
-            _guestConfigurationAssignmentReportsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentReportsVMSSRestClient = new GuestConfigurationAssignmentReportsVMSS(_guestConfigurationAssignmentReportsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 
