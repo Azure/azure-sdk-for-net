@@ -1,3 +1,0 @@
-# GuestConfigurationAssignmentData inherits from ResourceData in new generated code, not GuestConfigurationResourceData.
-# This cannot be changed via custom code as partial classes cannot override the base class declaration.
-CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData' does not inherit from base type 'Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData' in the implementation but it does in the contract.

@@ -87,6 +87,7 @@ namespace Azure.Generator.Management.Primitives
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
             [typeof(ExtendedLocationType)] = DeserializeNewInstanceStringLikeType,
             [typeof(ManagedServiceIdentityType)] = DeserializeNewInstanceStringLikeType,
+            [typeof(AzureLocation)] = DeserializeNewInstanceStringLikeType,
         };
 
         private static readonly HashSet<CSharpType> _knownTypes = _idToInheritableSystemTypeMap.Values.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());

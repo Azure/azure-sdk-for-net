@@ -4,16 +4,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Guest configuration is an Azure resource putting guest configuration assignments on the machine. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [CodeGenSerialization(nameof(SystemData), DeserializationValueHook = nameof(DeserializeSystemDataValue))]
+    [CodeGenSerialization(nameof(Location), DeserializationValueHook = nameof(DeserializeLocationValue))]
     public partial class GuestConfigurationResourceData : IJsonModel<GuestConfigurationResourceData>, IPersistableModel<GuestConfigurationResourceData>
     {
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
@@ -180,6 +184,26 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             return new GuestConfigurationResourceData(id, name, location, resourceType, systemData);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeSystemDataValue(JsonProperty property, ref SystemData systemData)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeLocationValue(JsonProperty property, ref AzureLocation? location)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            location = new AzureLocation(property.Value.GetString());
         }
     }
 }

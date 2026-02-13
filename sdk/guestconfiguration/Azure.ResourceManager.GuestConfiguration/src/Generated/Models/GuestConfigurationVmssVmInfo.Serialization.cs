@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Information about VMSS VM. </summary>
     public partial class GuestConfigurationVmssVmInfo : IJsonModel<GuestConfigurationVmssVmInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GuestConfigurationVmssVmInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationVmssVmInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,23 +206,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GuestConfigurationVmssVmInfo IPersistableModel<GuestConfigurationVmssVmInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationVmssVmInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GuestConfigurationVmssVmInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

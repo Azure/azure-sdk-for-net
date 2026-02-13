@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
     public partial class GuestConfigurationNavigation : IJsonModel<GuestConfigurationNavigation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GuestConfigurationNavigation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGuestConfigurationNavigation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationNavigation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -305,23 +322,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GuestConfigurationNavigation IPersistableModel<GuestConfigurationNavigation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationNavigation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGuestConfigurationNavigation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GuestConfigurationNavigation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
     public partial class GuestConfigurationAssignmentReportProperties : IJsonModel<GuestConfigurationAssignmentReportProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GuestConfigurationAssignmentReportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGuestConfigurationAssignmentReportProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationAssignmentReportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -232,23 +249,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GuestConfigurationAssignmentReportProperties IPersistableModel<GuestConfigurationAssignmentReportProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationAssignmentReportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGuestConfigurationAssignmentReportProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GuestConfigurationAssignmentReportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

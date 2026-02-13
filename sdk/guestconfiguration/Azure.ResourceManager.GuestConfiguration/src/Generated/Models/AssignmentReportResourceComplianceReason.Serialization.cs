@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Reason and code for the compliance of the guest configuration assignment resource. </summary>
     public partial class AssignmentReportResourceComplianceReason : IJsonModel<AssignmentReportResourceComplianceReason>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssignmentReportResourceComplianceReason PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAssignmentReportResourceComplianceReason(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssignmentReportResourceComplianceReason>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AssignmentReportResourceComplianceReason IPersistableModel<AssignmentReportResourceComplianceReason>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssignmentReportResourceComplianceReason PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAssignmentReportResourceComplianceReason(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AssignmentReportResourceComplianceReason>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

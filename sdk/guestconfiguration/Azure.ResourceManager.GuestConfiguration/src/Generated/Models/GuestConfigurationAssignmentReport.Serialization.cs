@@ -18,6 +18,30 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
     public partial class GuestConfigurationAssignmentReport : IJsonModel<GuestConfigurationAssignmentReport>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GuestConfigurationAssignmentReport PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReport>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGuestConfigurationAssignmentReport(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReport)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GuestConfigurationAssignmentReport"/> from. </param>
+        internal static GuestConfigurationAssignmentReport FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGuestConfigurationAssignmentReport(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationAssignmentReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,31 +174,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         GuestConfigurationAssignmentReport IPersistableModel<GuestConfigurationAssignmentReport>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationAssignmentReport PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReport>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGuestConfigurationAssignmentReport(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReport)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GuestConfigurationAssignmentReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GuestConfigurationAssignmentReport"/> from. </param>
-        internal static GuestConfigurationAssignmentReport FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGuestConfigurationAssignmentReport(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

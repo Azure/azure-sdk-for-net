@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -18,8 +17,32 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
-    public partial class GuestConfigurationAssignmentData : ResourceData, IJsonModel<GuestConfigurationAssignmentData>
+    public partial class GuestConfigurationAssignmentData : GuestConfigurationResourceData, IJsonModel<GuestConfigurationAssignmentData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GuestConfigurationResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGuestConfigurationAssignmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GuestConfigurationAssignmentData"/> from. </param>
+        internal static GuestConfigurationAssignmentData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGuestConfigurationAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -44,11 +67,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -57,7 +75,7 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override GuestConfigurationResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -78,11 +96,11 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
+            string @type = default;
             SystemData systemData = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GuestConfigurationAssignmentProperties properties = default;
-            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -101,20 +119,17 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
+                    DeserializeSystemDataValue(prop, ref systemData);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    DeserializeLocationValue(prop, ref location);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -126,11 +141,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                     properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -139,18 +149,18 @@ namespace Azure.ResourceManager.GuestConfiguration
             return new GuestConfigurationAssignmentData(
                 id,
                 name,
-                resourceType,
+                @type,
                 systemData,
+                location,
                 additionalBinaryDataProperties,
-                properties,
-                location);
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GuestConfigurationAssignmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -166,23 +176,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         GuestConfigurationAssignmentData IPersistableModel<GuestConfigurationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GuestConfigurationAssignmentData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGuestConfigurationAssignmentData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GuestConfigurationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -196,13 +189,6 @@ namespace Azure.ResourceManager.GuestConfiguration
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(guestConfigurationAssignmentData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GuestConfigurationAssignmentData"/> from. </param>
-        internal static GuestConfigurationAssignmentData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGuestConfigurationAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

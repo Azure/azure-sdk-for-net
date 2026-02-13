@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return GuestConfigurationAssignmentData(
                 id,
                 name,
-                resourceType ?? default,
+                resourceType?.ToString(),
                 systemData,
+                location,
                 properties);
         }
 
