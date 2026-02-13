@@ -151,9 +151,10 @@ var operation = await client.CreateAnalyzerAsync(
     WaitUntil.Completed, analyzerId, customAnalyzer, allowReplace: true);
 
 ContentAnalyzer result = operation.Value;
-Console.WriteLine($"Analyzer '{analyzerId}' created.");
-Console.WriteLine($"  Base analyzer : {result.BaseAnalyzerId}");
-Console.WriteLine($"  Field count   : {result.FieldSchema?.Fields?.Count ?? 0}");
+Console.WriteLine($"Analyzer created: {analyzerId}");
+Console.WriteLine($"  Description: {result.Description}");
+Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
+Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count ?? 0}");
 Console.WriteLine($"  Knowledge srcs: {result.KnowledgeSources?.Count ?? 0}");
 ```
 

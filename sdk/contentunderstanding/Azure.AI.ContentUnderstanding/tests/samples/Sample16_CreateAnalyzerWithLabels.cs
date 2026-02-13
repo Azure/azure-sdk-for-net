@@ -151,13 +151,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     WaitUntil.Completed, analyzerId, customAnalyzer, allowReplace: true);
 
                 ContentAnalyzer result = operation.Value;
-                Console.WriteLine($"Analyzer '{analyzerId}' created.");
-                Console.WriteLine($"  Base analyzer : {result.BaseAnalyzerId}");
-                Console.WriteLine($"  Field count   : {result.FieldSchema?.Fields?.Count ?? 0}");
+                Console.WriteLine($"Analyzer created: {analyzerId}");
+                Console.WriteLine($"  Description: {result.Description}");
+                Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
+                Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count ?? 0}");
                 Console.WriteLine($"  Knowledge srcs: {result.KnowledgeSources?.Count ?? 0}");
                 #endregion
 
                 #region Assertion:ContentUnderstandingCreateAnalyzerWithLabels
+                // Verify analyzer creation
+                Console.WriteLine();
+                Console.WriteLine("Analyzer Creation Verification:");
                 Assert.IsNotNull(result);
                 Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId);
                 Assert.AreEqual("Receipt analyzer with labeled training data", result.Description);
@@ -165,6 +169,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(result.FieldSchema);
                 Assert.AreEqual("receipt_schema", result.FieldSchema!.Name);
                 Assert.AreEqual(3, result.FieldSchema!.Fields.Count, "Expected MerchantName, Items, TotalPrice");
+                Console.WriteLine("Analyzer created successfully");
+
+                // Verify field schema
                 Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("MerchantName"));
                 Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Items"));
                 Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("TotalPrice"));
@@ -174,7 +181,66 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(itemsField.ItemDefinition);
                 Assert.AreEqual(ContentFieldType.Object, itemsField.ItemDefinition!.Type);
                 Assert.AreEqual(3, itemsField.ItemDefinition!.Properties.Count, "Expected Quantity, Name, Price");
+
+                Console.WriteLine("Field schema verified:");
+                Console.WriteLine("  MerchantName: String (Extract)");
+                Console.WriteLine("  Items: Array of Objects (Generate)");
+                Console.WriteLine("    - Quantity, Name, Price");
+                Console.WriteLine("  TotalPrice: String (Extract)");
                 #endregion
+
+                // If training data was provided, test the analyzer with a sample document
+                if (!string.IsNullOrEmpty(trainingDataSasUrl)
+                    && trainingDataSasUrl != "https://placeholder.blob.core.windows.net/container?sv=placeholder")
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Testing analyzer with sample document...");
+                    string testDocUrl =
+                        "https://github.com/Azure-Samples/cognitive-services-REST-api-samples/raw/master/curl/form-recognizer/sample-invoice.pdf";
+
+                    var analyzeResult = (await client.AnalyzeAsync(
+                        WaitUntil.Completed, analyzerId, new[] { new AnalyzeInput { Url = new Uri(testDocUrl) } })).Value;
+
+                    Console.WriteLine("Analysis completed!");
+                    Assert.IsNotNull(analyzeResult);
+                    Assert.IsNotNull(analyzeResult.Contents);
+                    Assert.IsTrue(analyzeResult.Contents.Count > 0);
+
+                    if (analyzeResult.Contents[0] is DocumentContent docContent)
+                    {
+                        Console.WriteLine($"Extracted fields: {docContent.Fields.Count}");
+
+                        if (docContent.Fields.TryGetValue("MerchantName", out var merchantField) && merchantField is StringField merchantStringField)
+                        {
+                            Console.WriteLine($"  MerchantName: {merchantStringField.ValueString}");
+                        }
+                        if (docContent.Fields.TryGetValue("TotalPrice", out var totalPriceField) && totalPriceField is StringField totalPriceStringField)
+                        {
+                            Console.WriteLine($"  TotalPrice: {totalPriceStringField.ValueString}");
+                        }
+                    }
+                }
+
+                // Display API pattern information
+                Console.WriteLine();
+                Console.WriteLine("CreateAnalyzerWithLabels API Pattern:");
+                Console.WriteLine("   1. Define field schema with nested structures (arrays, objects)");
+                Console.WriteLine("   2. Upload training data to Azure Blob Storage:");
+                Console.WriteLine("      - Documents: receipt1.jpg, receipt2.jpg, ...");
+                Console.WriteLine("      - Labels: receipt1.jpg.labels.json, receipt2.jpg.labels.json, ...");
+                Console.WriteLine("      - OCR: receipt1.jpg.result.json, receipt2.jpg.result.json, ...");
+                Console.WriteLine("   3. Create LabeledDataKnowledgeSource with storage SAS URL");
+                Console.WriteLine("   4. Create analyzer with field schema and knowledge sources");
+                Console.WriteLine("   5. Use analyzer for document analysis");
+
+                Console.WriteLine();
+                Console.WriteLine("CreateAnalyzerWithLabels pattern demonstration completed");
+                if (string.IsNullOrEmpty(trainingDataSasUrl)
+                    || trainingDataSasUrl == "https://placeholder.blob.core.windows.net/container?sv=placeholder")
+                {
+                    Console.WriteLine("   Note: This sample demonstrates the API pattern.");
+                    Console.WriteLine("   For actual training, provide CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL with labeled data.");
+                }
             }
             finally
             {
