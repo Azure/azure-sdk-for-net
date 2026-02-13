@@ -549,10 +549,11 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
+    [Ignore("Temporarily disabled pending published agent v1 route migration")]
     public async Task TestPublishedAgent()
     {
         ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
-           endpoint: new Uri($"{TestEnvironment.PUBLISHED_ENDPOINT}/openai"));
+           endpoint: new Uri($"{TestEnvironment.PUBLISHED_ENDPOINT}/openai/v1"));
         ProjectOpenAIClient client = CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
         ResponseResult response = await client.Responses.CreateResponseAsync("What is the size of France in square miles?");
         Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
