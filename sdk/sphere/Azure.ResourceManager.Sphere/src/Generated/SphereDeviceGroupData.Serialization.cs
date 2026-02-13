@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Sphere
     /// <summary> An device group resource belonging to a product resource. </summary>
     public partial class SphereDeviceGroupData : ResourceData, IJsonModel<SphereDeviceGroupData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSphereDeviceGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SphereDeviceGroupData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SphereDeviceGroupData"/> from. </param>
+        internal static SphereDeviceGroupData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSphereDeviceGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SphereDeviceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="options"> The client options for reading and writing models. </param>
         SphereDeviceGroupData IPersistableModel<SphereDeviceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SphereDeviceGroupData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSphereDeviceGroupData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SphereDeviceGroupData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SphereDeviceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.Sphere
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sphereDeviceGroupData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SphereDeviceGroupData"/> from. </param>
-        internal static SphereDeviceGroupData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSphereDeviceGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

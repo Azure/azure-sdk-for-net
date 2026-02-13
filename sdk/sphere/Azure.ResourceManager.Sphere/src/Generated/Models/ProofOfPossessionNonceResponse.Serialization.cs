@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Sphere.Models
     /// <summary> Result of the action to generate a proof of possession nonce. </summary>
     public partial class ProofOfPossessionNonceResponse : SphereCertificateProperties, IJsonModel<ProofOfPossessionNonceResponse>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SphereCertificateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeProofOfPossessionNonceResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProofOfPossessionNonceResponse"/> from. </param>
+        internal static ProofOfPossessionNonceResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProofOfPossessionNonceResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProofOfPossessionNonceResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,31 +184,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ProofOfPossessionNonceResponse IPersistableModel<ProofOfPossessionNonceResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProofOfPossessionNonceResponse)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SphereCertificateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProofOfPossessionNonceResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProofOfPossessionNonceResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProofOfPossessionNonceResponse"/> from. </param>
-        internal static ProofOfPossessionNonceResponse FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProofOfPossessionNonceResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

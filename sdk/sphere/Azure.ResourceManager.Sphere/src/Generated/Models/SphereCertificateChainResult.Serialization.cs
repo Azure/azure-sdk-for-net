@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Sphere.Models
     /// <summary> The certificate chain response. </summary>
     public partial class SphereCertificateChainResult : IJsonModel<SphereCertificateChainResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SphereCertificateChainResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SphereCertificateChainResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSphereCertificateChainResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SphereCertificateChainResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SphereCertificateChainResult"/> from. </param>
+        internal static SphereCertificateChainResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSphereCertificateChainResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SphereCertificateChainResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,31 +143,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SphereCertificateChainResult IPersistableModel<SphereCertificateChainResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SphereCertificateChainResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SphereCertificateChainResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSphereCertificateChainResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SphereCertificateChainResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SphereCertificateChainResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SphereCertificateChainResult"/> from. </param>
-        internal static SphereCertificateChainResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSphereCertificateChainResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

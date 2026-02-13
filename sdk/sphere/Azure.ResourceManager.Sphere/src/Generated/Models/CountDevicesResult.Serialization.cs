@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.Sphere.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CountElementsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CountDevicesResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCountDevicesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CountDevicesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CountDevicesResult"/> from. </param>
+        internal static CountDevicesResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCountDevicesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CountDevicesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -105,31 +129,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         CountDevicesResult IPersistableModel<CountDevicesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CountDevicesResult)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CountElementsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CountDevicesResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCountDevicesResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CountDevicesResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CountDevicesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CountDevicesResult"/> from. </param>
-        internal static CountDevicesResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCountDevicesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

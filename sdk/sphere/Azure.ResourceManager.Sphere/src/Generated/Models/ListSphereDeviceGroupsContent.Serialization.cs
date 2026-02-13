@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Sphere.Models
     /// <summary> Request of the action to list device groups for a catalog. </summary>
     public partial class ListSphereDeviceGroupsContent : IJsonModel<ListSphereDeviceGroupsContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ListSphereDeviceGroupsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListSphereDeviceGroupsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeListSphereDeviceGroupsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListSphereDeviceGroupsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ListSphereDeviceGroupsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,23 +135,6 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ListSphereDeviceGroupsContent IPersistableModel<ListSphereDeviceGroupsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListSphereDeviceGroupsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ListSphereDeviceGroupsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeListSphereDeviceGroupsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ListSphereDeviceGroupsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListSphereDeviceGroupsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
