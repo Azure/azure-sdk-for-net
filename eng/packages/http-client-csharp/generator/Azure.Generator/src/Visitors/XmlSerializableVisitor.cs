@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Providers;
 using Azure.Generator.Snippets;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
@@ -47,8 +50,10 @@ namespace Azure.Generator.Visitors
     {
         private const string WriteMethodName = "Write";
         private const string WriteObjectValueMethodName = "WriteObjectValue";
+        private const string ToRequestContentMethodName = "ToRequestContent";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
         private static readonly CSharpType RequestContentType = typeof(RequestContent);
+        private static readonly CSharpType ModelReaderWriterOptionsType = typeof(ModelReaderWriterOptions);
         private readonly Dictionary<TypeProvider, InputModelType> _xmlSerializationProviders = [];
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -76,6 +81,10 @@ namespace Azure.Generator.Visitors
                     if (inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
                     {
                         UpdateImplicitRequestContentOperatorForJsonAndXml(serializationProvider);
+                        if (xmlElementName is not null)
+                        {
+                            UpdateToRequestContentMethod(serializationProvider, xmlElementName);
+                        }
                     }
                     else if (xmlElementName is not null)
                     {
@@ -216,11 +225,7 @@ namespace Azure.Generator.Visitors
                 {
                     Return(Null)
                 },
-                Declare("content", typeof(XmlWriterContent), New.Instance(typeof(XmlWriterContent)), out var contentVar),
-                contentVar.As<XmlWriterContent>().XmlWriter().Invoke(
-                    WriteObjectValueMethodName,
-                    [modelParameter, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), Literal(xmlElementName)]).Terminate(),
-                Return(contentVar)
+                .. RequestContentProvider.CreateXml(modelParameter, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), xmlElementName)
             ]);
 
             implicitOperator.Update(bodyStatements: newBody);
@@ -252,6 +257,42 @@ namespace Azure.Generator.Visitors
             ]);
 
             implicitOperator.Update(bodyStatements: newBody);
+        }
+
+        private static void UpdateToRequestContentMethod(TypeProvider serializationProvider, string xmlElementName)
+        {
+            // Find the ToRequestContent(string format) method
+            var toRequestContentMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == ToRequestContentMethodName &&
+                                    m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                                    m.Signature.ReturnType?.Equals(RequestContentType) == true &&
+                                    m.Signature.Parameters.Count == 1 &&
+                                    m.Signature.Parameters[0].Type.Equals(typeof(string)));
+
+            if (toRequestContentMethod is null)
+            {
+                return;
+            }
+
+            var formatParameter = toRequestContentMethod.Signature.Parameters[0];
+            var newBody = new MethodBodyStatements(
+            [
+                Declare("options", ModelReaderWriterOptionsType, New.Instance(ModelReaderWriterOptionsType, formatParameter), out var optionsVar),
+                new SwitchStatement(formatParameter,
+                [
+                    // case "X":
+                    new SwitchCaseStatement(Literal("X"), new MethodBodyStatements(RequestContentProvider.CreateXml(This, optionsVar, xmlElementName))),
+                    // case "J":
+                    new SwitchCaseStatement(Literal("J"), new MethodBodyStatements(RequestContentProvider.Create(This, optionsVar))),
+                    // default:
+                    SwitchCaseStatement.Default(new MethodBodyStatements(
+                    [
+                        Return(Static(RequestContentType).Invoke(nameof(RequestContent.Create), [This, optionsVar]))
+                    ]))
+                ])
+            ]);
+
+            toRequestContentMethod.Update(bodyStatements: newBody);
         }
     }
 }

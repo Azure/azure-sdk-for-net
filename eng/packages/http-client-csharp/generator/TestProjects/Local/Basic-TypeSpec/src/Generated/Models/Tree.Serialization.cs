@@ -101,7 +101,19 @@ namespace BasicTypeSpec
         internal RequestContent ToRequestContent(string format)
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
-            return RequestContent.Create(this, options);
+            switch (format)
+            {
+                case "X":
+                    XmlWriterContent content = new XmlWriterContent();
+                    content.XmlWriter.WriteObjectValue(this, options, "Tree");
+                    return content;
+                case "J":
+                    Utf8JsonRequestContent jsonContent = new Utf8JsonRequestContent();
+                    jsonContent.JsonWriter.WriteObjectValue(this, options);
+                    return jsonContent;
+                default:
+                    return RequestContent.Create(this, options);
+            }
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Tree"/> from. </param>

@@ -433,7 +433,6 @@ model Plant {
 }
 
 @doc("Tree is a specific type of plant")
-@usage(Usage.xml | Usage.output | Usage.json)
 model Tree extends Plant {
   species: "tree";
 
@@ -726,11 +725,27 @@ interface PlantOperations {
     @body body: Tree;
   };
 
+  @doc("Get a tree as a plant")
+  @get
+  @route("/tree/as-plant/json")
+  getTreeAsJson(): {
+    @header contentType: "application/json";
+    @body body: Tree;
+  };
+
   @doc("Update a tree as a plant")
   @put
   @route("/tree/as-plant")
   updateTree(@body tree: Tree, @header contentType: "application/xml"): {
     @header contentType: "application/xml";
+    @body body: Tree;
+  };
+
+  @doc("Update a tree as a plant")
+  @put
+  @route("/tree/as-plant/json")
+  updateTreeAsJson(@body tree: Tree, @header contentType: "application/json"): {
+    @header contentType: "application/json";
     @body body: Tree;
   };
 }
