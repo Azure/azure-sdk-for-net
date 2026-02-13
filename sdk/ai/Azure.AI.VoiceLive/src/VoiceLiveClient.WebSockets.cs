@@ -15,6 +15,72 @@ namespace Azure.AI.VoiceLive
     {
 #pragma warning disable AZC0004 // Websocket is an async only class
         /// <summary>
+        /// Creates a new <see cref="VoiceLiveSession"/> for real-time voice communication.
+        /// The session is not automatically connected - call ConnectAsync() to connect.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
+        /// simultaneously sending and receiving WebSocket messages.
+        /// </remarks>
+        /// <param name="model">The model to use for the session.</param>
+        /// <returns>A new, unconnected instance of <see cref="VoiceLiveSession"/>.</returns>
+        public virtual VoiceLiveSession CreateSession(string model)
+        {
+            Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint, model);
+            return CreateSessionInstance(webSocketEndpoint);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="VoiceLiveSession"/> using a session target (model or agent).
+        /// The session is not automatically connected - call ConnectAsync() to connect.
+        /// </summary>
+        /// <param name="target">The session target specifying either a model or agent.</param>
+        /// <returns>A new, unconnected instance of <see cref="VoiceLiveSession"/>.</returns>
+        /// <example>
+        /// Model-centric session:
+        /// <code>
+        /// var session = client.CreateSession(SessionTarget.FromModel("gpt-4o-realtime-preview"));
+        /// await session.ConnectAsync();
+        /// </code>
+        /// Agent-centric session:
+        /// <code>
+        /// var agentConfig = new AgentSessionConfig("my-agent", "my-project");
+        /// var session = client.CreateSession(SessionTarget.FromAgent(agentConfig));
+        /// await session.ConnectAsync();
+        /// </code>
+        /// </example>
+        public virtual VoiceLiveSession CreateSession(SessionTarget target)
+        {
+            Argument.AssertNotNull(target, nameof(target));
+
+            if (target.IsModelSession)
+            {
+                return CreateSession(target.Model!);
+            }
+            else if (target.IsAgentSession)
+            {
+                Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint, target.Agent!);
+                return CreateSessionInstance(webSocketEndpoint);
+            }
+
+            throw new ArgumentException("SessionTarget must specify either a model or an agent.", nameof(target));
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="VoiceLiveSession"/> with session configuration.
+        /// The session is not automatically connected - call ConnectAsync() to connect.
+        /// </summary>
+        /// <param name="sessionConfig">Session configuration including model and other settings.</param>
+        /// <returns>A new, unconnected instance of <see cref="VoiceLiveSession"/>.</returns>
+        public virtual VoiceLiveSession CreateSession(VoiceLiveSessionOptions sessionConfig)
+        {
+            Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
+            Argument.AssertNotNullOrEmpty(sessionConfig.Model, nameof(sessionConfig.Model));
+            
+            return CreateSession(sessionConfig.Model);
+        }
+
+        /// <summary>
         /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication.
         /// </summary>
         /// <remarks>
@@ -68,26 +134,91 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication with an agent and specified session configuration.
+        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication using a session target.
         /// </summary>
         /// <remarks>
         /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
         /// simultaneously sending and receiving WebSocket messages.
         /// </remarks>
-        /// <param name="agentConfig">The agent configuration for the session.</param>
-        /// <param name="sessionConfig">The configuration for the session.</param>
+        /// <param name="target">The session target specifying either a model or agent.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
+        /// <example>
+        /// Model-centric session:
+        /// <code>
+        /// var session = await client.StartSessionAsync(SessionTarget.FromModel("gpt-4o-realtime-preview"));
+        /// </code>
+        /// Agent-centric session:
+        /// <code>
+        /// var agentConfig = new AgentSessionConfig("my-agent", "my-project");
+        /// var session = await client.StartSessionAsync(SessionTarget.FromAgent(agentConfig));
+        /// </code>
+        /// </example>
+        public virtual async Task<VoiceLiveSession> StartSessionAsync(SessionTarget target, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(target, nameof(target));
+
+            if (target.IsModelSession)
+            {
+                return await StartSessionAsync(target.Model!, cancellationToken).ConfigureAwait(false);
+            }
+            else if (target.IsAgentSession)
+            {
+                return await StartSessionAsync(target.Agent!, cancellationToken).ConfigureAwait(false);
+            }
+
+            throw new ArgumentException("SessionTarget must specify either a model or an agent.", nameof(target));
+        }
+
+        /// <summary>
+        /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication using a session target with additional options.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="VoiceLiveSession"/> abstracts bidirectional communication between the caller and service,
+        /// simultaneously sending and receiving WebSocket messages.
+        /// </remarks>
+        /// <param name="target">The session target specifying either a model or agent.</param>
+        /// <param name="sessionConfig">Optional session configuration to apply after connection.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
+        /// <example>
+        /// Model-centric session with options:
+        /// <code>
+        /// var sessionOptions = new VoiceLiveSessionOptions { /* configure options */ };
+        /// var session = await client.StartSessionAsync(SessionTarget.FromModel("gpt-4o-realtime-preview"), sessionOptions);
+        /// </code>
+        /// Agent-centric session with options:
+        /// <code>
+        /// var agentConfig = new AgentSessionConfig("my-agent", "my-project");
+        /// var sessionOptions = new VoiceLiveSessionOptions { /* configure options */ };
+        /// var session = await client.StartSessionAsync(SessionTarget.FromAgent(agentConfig), sessionOptions);
+        /// </code>
+        /// </example>
         public virtual async Task<VoiceLiveSession> StartSessionAsync(
-            AgentSessionConfig agentConfig,
-            VoiceLiveSessionOptions sessionConfig,
+            SessionTarget target, 
+            VoiceLiveSessionOptions sessionConfig, 
             CancellationToken cancellationToken = default)
         {
-            return await StartSessionWithConfigurationAsync(
-                model: null,
-                agentConfig,
-                sessionConfig,
-                cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(target, nameof(target));
+
+            if (target.IsModelSession)
+            {
+                return await StartSessionWithConfigurationAsync(
+                    target.Model,
+                    agentConfig: null,
+                    sessionConfig,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            else if (target.IsAgentSession)
+            {
+                return await StartSessionWithConfigurationAsync(
+                    model: null,
+                    target.Agent,
+                    sessionConfig,
+                    cancellationToken).ConfigureAwait(false);
+            }
+
+            throw new ArgumentException("SessionTarget must specify either a model or an agent.", nameof(target));
         }
 #pragma warning restore AZC0004 // Websocket is an async only class
 
@@ -139,12 +270,21 @@ namespace Azure.AI.VoiceLive
         /// <returns>A connected VoiceLiveSession.</returns>
         private async Task<VoiceLiveSession> CreateAndConnectSessionAsync(Uri webSocketEndpoint, CancellationToken cancellationToken)
         {
-            VoiceLiveSession session = _keyCredential != null ?
-                new(this, webSocketEndpoint, _keyCredential) :
-                new(this, webSocketEndpoint, _tokenCredential);
-
+            VoiceLiveSession session = CreateSessionInstance(webSocketEndpoint);
             await session.ConnectAsync(Options.Headers, cancellationToken).ConfigureAwait(false);
             return session;
+        }
+
+        /// <summary>
+        /// Creates a VoiceLiveSession instance with the specified endpoint (without connecting).
+        /// </summary>
+        /// <param name="webSocketEndpoint">The WebSocket endpoint to use.</param>
+        /// <returns>A VoiceLiveSession instance ready to connect.</returns>
+        private VoiceLiveSession CreateSessionInstance(Uri webSocketEndpoint)
+        {
+            return _keyCredential != null ?
+                new(this, webSocketEndpoint, _keyCredential) :
+                new(this, webSocketEndpoint, _tokenCredential);
         }
 
         /// <summary>

@@ -9,9 +9,14 @@ using Azure.Core;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>
-    /// Configuration for agent-centric voice live sessions.
-    /// Use this to connect to a specific Foundry agent instead of specifying a model directly.
+    /// Configuration for creating a session with an agent as the main AI actor.
+    /// When using an agent session, the agent's configuration (tools, instructions,
+    /// temperature, etc.) is managed in the Foundry portal, not in session code.
     /// </summary>
+    /// <remarks>
+    /// This is distinct from <see cref="VoiceLiveFoundryAgentDefinition"/> which represents agent tools
+    /// that can be added to model-centric sessions.
+    /// </remarks>
     public class AgentSessionConfig
     {
         /// <summary>

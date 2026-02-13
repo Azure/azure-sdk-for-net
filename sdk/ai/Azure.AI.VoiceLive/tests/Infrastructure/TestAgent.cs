@@ -7,7 +7,6 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
 {
     /// <summary>
     /// Helper class for creating and managing Foundry agents in tests.
-    /// Matches the JavaScript testAgent infrastructure patterns.
     /// </summary>
     public static class TestAgent
     {
@@ -54,7 +53,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
 
         /// <summary>
         /// Creates an AgentSessionConfig for agent-centric sessions.
-        /// This is the primary way to create agent-based sessions.
+        /// This is the primary way to create agent-based sessions where the agent is the main AI actor.
         /// </summary>
         /// <param name="testEnvironment">The test environment containing configuration.</param>
         /// <param name="agentName">Optional override for agent name.</param>
@@ -91,6 +90,37 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         }
 
         /// <summary>
+        /// Creates a SessionTarget for agent-centric sessions using test environment configuration.
+        /// This uses the SessionTarget pattern to specify an agent session.
+        /// </summary>
+        /// <param name="testEnvironment">The test environment containing configuration.</param>
+        /// <param name="agentName">Optional override for agent name.</param>
+        /// <param name="projectName">Optional override for project name.</param>
+        /// <param name="agentVersion">Optional override for agent version.</param>
+        /// <param name="conversationId">Optional conversation ID for continuation.</param>
+        /// <returns>A configured SessionTarget for an agent session.</returns>
+        public static SessionTarget CreateAgentSessionTarget(
+            VoiceLiveTestEnvironment testEnvironment,
+            string? agentName = null,
+            string? projectName = null,
+            string? agentVersion = null,
+            string? conversationId = null)
+        {
+            var agentConfig = CreateAgentSessionConfig(testEnvironment, agentName, projectName, agentVersion, conversationId);
+            return SessionTarget.FromAgent(agentConfig);
+        }
+
+        /// <summary>
+        /// Creates a SessionTarget for model-centric sessions.
+        /// </summary>
+        /// <param name="model">The model name to use (e.g., "gpt-4o-realtime-preview").</param>
+        /// <returns>A configured SessionTarget for a model session.</returns>
+        public static SessionTarget CreateModelSessionTarget(string model)
+        {
+            return SessionTarget.FromModel(model);
+        }
+
+        /// <summary>
         /// Gets a cached Foundry agent definition, creating it if necessary.
         /// Reuses the same agent across all tests.
         /// </summary>
@@ -104,7 +134,6 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
 
         /// <summary>
         /// Creates a VoiceLiveFoundryAgentDefinition tool for use in VoiceLive sessions.
-        /// Equivalent to JS createFoundryAgentTool function.
         /// </summary>
         /// <param name="testEnvironment">The test environment containing configuration.</param>
         /// <param name="agentName">Optional override for agent name.</param>

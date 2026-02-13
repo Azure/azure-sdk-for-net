@@ -204,8 +204,6 @@ namespace Azure.AI.VoiceLive.Tests
 
             TestContext.WriteLine("✓ Agent configured with AgentContext mode");
         }
-    }
-}
 
         [LiveOnly]
         [TestCase]
@@ -213,7 +211,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             // This test verifies that AgentSessionConfig is properly configured for agent-centric sessions
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
-            
+
             var agentConfig = TestAgent.CreateAgentSessionConfig(TestEnvironment);
 
             // Verify the agent configuration is properly set up
@@ -230,7 +228,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             // This test verifies that AgentSessionConfig properties are set correctly
             var agentConfig = TestAgent.CreateAgentSessionConfig(
-                TestEnvironment, 
+                TestEnvironment,
                 agentVersion: "custom-version",
                 conversationId: "test-conversation-123");
 
@@ -242,6 +240,7 @@ namespace Azure.AI.VoiceLive.Tests
             TestContext.WriteLine("✓ AgentSessionConfig properties verified");
         }
 
+        [LiveOnly]
         [TestCase]
         public void ShouldVerifyFoundryAgentToolAllProperties()
         {
@@ -280,8 +279,11 @@ namespace Azure.AI.VoiceLive.Tests
                 FoundryResourceOverride = "override-resource"
             };
 
+            // Test required properties
             Assert.AreEqual("test-agent", agentConfig.AgentName);
             Assert.AreEqual("test-project", agentConfig.ProjectName);
+
+            // Test optional properties
             Assert.AreEqual("3.0", agentConfig.AgentVersion);
             Assert.AreEqual("conv-123", agentConfig.ConversationId);
             Assert.AreEqual("auth-client-id", agentConfig.AuthenticationIdentityClientId);
@@ -289,13 +291,184 @@ namespace Azure.AI.VoiceLive.Tests
 
             TestContext.WriteLine("✓ All AgentSessionConfig properties configured correctly");
         }
+
+        [TestCase]
+        public void ShouldVerifyAgentSessionConfigOptionalPropertiesAreNullByDefault()
+        {
+            // This test verifies that optional properties are null by default
+            var agentConfig = new AgentSessionConfig("test-agent", "test-project");
+
+            // Required properties should be set
+            Assert.AreEqual("test-agent", agentConfig.AgentName);
+            Assert.AreEqual("test-project", agentConfig.ProjectName);
+
+            // Optional properties should be null by default
+            Assert.IsNull(agentConfig.AgentVersion);
+            Assert.IsNull(agentConfig.ConversationId);
+            Assert.IsNull(agentConfig.AuthenticationIdentityClientId);
+            Assert.IsNull(agentConfig.FoundryResourceOverride);
+
+            TestContext.WriteLine("✓ Optional AgentSessionConfig properties default to null as expected");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public void ShouldCreateSessionTargetFromModel()
+        {
+            // This test verifies that SessionTarget can be created for model sessions
+            var target = SessionTarget.FromModel("gpt-4o-realtime-preview");
+
+            Assert.IsTrue(target.IsModelSession);
+            Assert.IsFalse(target.IsAgentSession);
+            Assert.AreEqual("gpt-4o-realtime-preview", target.Model);
+            Assert.IsNull(target.Agent);
+
+            // Test type guards
+            Assert.IsTrue(target.IsModelSessionTarget());
+            Assert.IsFalse(target.IsAgentSessionTarget());
+
+            TestContext.WriteLine("✓ SessionTarget created from model");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public void ShouldCreateSessionTargetFromAgent()
+        {
+            // This test verifies that SessionTarget can be created for agent sessions
+            var agentConfig = new AgentSessionConfig("test-agent", "test-project");
+            var target = SessionTarget.FromAgent(agentConfig);
+
+            Assert.IsFalse(target.IsModelSession);
+            Assert.IsTrue(target.IsAgentSession);
+            Assert.IsNull(target.Model);
+            Assert.AreEqual(agentConfig, target.Agent);
+
+            // Test type guards
+            Assert.IsFalse(target.IsModelSessionTarget());
+            Assert.IsTrue(target.IsAgentSessionTarget());
+
+            TestContext.WriteLine("✓ SessionTarget created from agent");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public void ShouldSupportImplicitConversionsToSessionTarget()
+        {
+            // This test verifies that implicit conversions work for SessionTarget
+            SessionTarget modelTarget = "gpt-4o-realtime-preview";
+            Assert.IsTrue(modelTarget.IsModelSession);
+            Assert.AreEqual("gpt-4o-realtime-preview", modelTarget.Model);
+
+            var agentConfig = new AgentSessionConfig("test-agent", "test-project");
+            SessionTarget agentTarget = SessionTarget.FromAgent(agentConfig); // Using explicit conversion temporarily
+            Assert.IsTrue(agentTarget.IsAgentSession);
+            Assert.AreEqual(agentConfig, agentTarget.Agent);
+
+            // Test that implicit conversion also works
+            SessionTarget implicitAgentTarget = agentConfig;
+            Assert.IsTrue(implicitAgentTarget.IsAgentSession);
+            Assert.AreEqual(agentConfig, implicitAgentTarget.Agent);
+
+            TestContext.WriteLine("✓ Implicit conversions to SessionTarget work correctly");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task ShouldCreateSessionWithSessionTargetFromModel()
+        {
+            // This test verifies that sessions can be created using SessionTarget with model
+            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
+
+            var target = SessionTarget.FromModel("gpt-4o");
+
+            await using var session = await client.StartSessionAsync(target, TimeoutToken).ConfigureAwait(false);
+
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+
+            Assert.IsTrue(session.IsConnected);
+            TestContext.WriteLine("✓ Session created using SessionTarget with model");
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task ShouldCreateSessionWithSessionTargetFromAgent()
+        {
+            // This test verifies that sessions can be created using SessionTarget with agent
+            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
+
+            var target = TestAgent.CreateAgentSessionTarget(TestEnvironment);
+
+            await using var session = await client.StartSessionAsync(target, TimeoutToken).ConfigureAwait(false);
+
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+
+            Assert.IsTrue(session.IsConnected);
+            TestContext.WriteLine($"✓ Session created using SessionTarget with agent: {target.Agent?.AgentName}");
+        }
+
+        [TestCase]
+        public void ShouldCreateSessionWithoutConnecting()
+        {
+            // This test verifies that CreateSession methods return unconnected sessions
+            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
+
+            // Test model-based session creation
+            var modelSession = client.CreateSession("gpt-4o");
+            Assert.IsNotNull(modelSession);
+            Assert.IsFalse(modelSession.IsConnected); // Should not be connected yet
+
+            // Test SessionTarget-based session creation
+            var target = SessionTarget.FromModel("gpt-4o-realtime-preview");
+            var targetSession = client.CreateSession(target);
+            Assert.IsNotNull(targetSession);
+            Assert.IsFalse(targetSession.IsConnected); // Should not be connected yet
+
+            // Test agent-based session creation
+            var agentConfig = new AgentSessionConfig("test-agent", "test-project");
+            var agentTarget = SessionTarget.FromAgent(agentConfig);
+            var agentSession = client.CreateSession(agentTarget);
+            Assert.IsNotNull(agentSession);
+            Assert.IsFalse(agentSession.IsConnected); // Should not be connected yet
+
+            TestContext.WriteLine("✓ CreateSession methods work without auto-connecting");
+        }
+
+        [TestCase]
+        public void ShouldVerifySessionTargetTypeSystem()
+        {
+            // This test verifies that SessionTarget type checking works correctly
+            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
+
+            // Test model session target
+            var modelTarget = SessionTarget.FromModel("gpt-4o");
+            var modelSession = client.CreateSession(modelTarget);
+            Assert.IsTrue(modelTarget.IsModelSession);
+            Assert.IsTrue(modelTarget.IsModelSessionTarget());
+
+            // Test agent session target
+            var agentConfig = new AgentSessionConfig("my-agent", "my-project");
+            var agentTarget = SessionTarget.FromAgent(agentConfig);
+            var agentSession = client.CreateSession(agentTarget);
+            Assert.IsTrue(agentTarget.IsAgentSession);
+            Assert.IsTrue(agentTarget.IsAgentSessionTarget());
+            // Test type guard methods work correctly
+            Assert.IsTrue(modelTarget.IsModelSessionTarget());
+            Assert.IsFalse(modelTarget.IsAgentSessionTarget());
+            Assert.IsFalse(agentTarget.IsModelSessionTarget());
+            Assert.IsTrue(agentTarget.IsAgentSessionTarget());
+
+            TestContext.WriteLine("✓ SessionTarget type system and type guards work correctly");
+        }
+
         [LiveOnly]
         [TestCase]
         public async Task ShouldVerifyAgentSessionConfigWithClientId()
         {
             // This test verifies that AgentSessionConfig with AuthenticationIdentityClientId is properly configured
             var agentConfig = TestAgent.CreateAgentSessionConfig(TestEnvironment);
-            
+
             // Verify the client ID is set if available in test environment
             if (!string.IsNullOrEmpty(TestEnvironment.AgentClientId))
             {
@@ -308,3 +481,5 @@ namespace Azure.AI.VoiceLive.Tests
                 TestContext.WriteLine("✓ AgentSessionConfig configured without client ID (not set in environment)");
             }
         }
+    }
+}
