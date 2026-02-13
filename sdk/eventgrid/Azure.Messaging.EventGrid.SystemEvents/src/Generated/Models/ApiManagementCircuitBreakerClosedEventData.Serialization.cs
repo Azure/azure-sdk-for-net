@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementCircuitBreakerClosedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementCircuitBreakerClosedEventData IPersistableModel<ApiManagementCircuitBreakerClosedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementCircuitBreakerClosedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementCircuitBreakerClosedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,16 +148,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ApiManagementCircuitBreakerClosedEventData(backendName, circuitBreaker, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementCircuitBreakerClosedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementCircuitBreakerClosedEventData IPersistableModel<ApiManagementCircuitBreakerClosedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementCircuitBreakerClosedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ApiManagementCircuitBreakerClosedEventDataConverter : JsonConverter<ApiManagementCircuitBreakerClosedEventData>
         {

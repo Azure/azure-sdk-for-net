@@ -55,6 +55,28 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IngestionSource IPersistableModel<IngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="ingestionSource"> The <see cref="IngestionSource"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(IngestionSource ingestionSource)
+        {
+            if (ingestionSource == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(ingestionSource, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionSource"/> from. </param>
         public static explicit operator IngestionSource(Response response)
         {
@@ -142,28 +164,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return UnknownIngestionSource.DeserializeUnknownIngestionSource(element, options);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionSource IPersistableModel<IngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="ingestionSource"> The <see cref="IngestionSource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(IngestionSource ingestionSource)
-        {
-            if (ingestionSource == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ingestionSource, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

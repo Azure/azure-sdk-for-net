@@ -46,6 +46,16 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PiiOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PiiOperationAction IPersistableModel<PiiOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (PiiOperationAction)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PiiOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PiiOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,15 +139,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new PiiOperationAction(name, kind, additionalBinaryDataProperties, actionContent);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PiiOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PiiOperationAction IPersistableModel<PiiOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (PiiOperationAction)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PiiOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

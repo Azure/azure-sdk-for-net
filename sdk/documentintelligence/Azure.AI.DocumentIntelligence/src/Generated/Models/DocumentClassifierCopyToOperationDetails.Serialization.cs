@@ -50,6 +50,16 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentClassifierCopyToOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentClassifierCopyToOperationDetails IPersistableModel<DocumentClassifierCopyToOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentClassifierCopyToOperationDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentClassifierCopyToOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentClassifierCopyToOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -217,15 +227,5 @@ namespace Azure.AI.DocumentIntelligence
                 additionalBinaryDataProperties,
                 result);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentClassifierCopyToOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentClassifierCopyToOperationDetails IPersistableModel<DocumentClassifierCopyToOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentClassifierCopyToOperationDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentClassifierCopyToOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

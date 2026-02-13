@@ -52,6 +52,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QuestionAnsweringAuthoringUpdateSourcesJobState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuestionAnsweringAuthoringUpdateSourcesJobState IPersistableModel<QuestionAnsweringAuthoringUpdateSourcesJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QuestionAnsweringAuthoringUpdateSourcesJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuestionAnsweringAuthoringUpdateSourcesJobState"/> from. </param>
         public static explicit operator QuestionAnsweringAuthoringUpdateSourcesJobState(Response response)
         {
@@ -223,15 +233,5 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuestionAnsweringAuthoringUpdateSourcesJobState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringAuthoringUpdateSourcesJobState IPersistableModel<QuestionAnsweringAuthoringUpdateSourcesJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuestionAnsweringAuthoringUpdateSourcesJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

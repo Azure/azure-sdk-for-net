@@ -47,6 +47,28 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasTypesDef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasTypesDef IPersistableModel<AtlasTypesDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasTypesDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="atlasTypesDef"> The <see cref="AtlasTypesDef"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AtlasTypesDef atlasTypesDef)
+        {
+            if (atlasTypesDef == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(atlasTypesDef, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasTypesDef"/> from. </param>
         public static explicit operator AtlasTypesDef(Response response)
         {
@@ -306,28 +328,6 @@ namespace Azure.Analytics.Purview.DataMap
                 structDefs ?? new ChangeTrackingList<AtlasStructDef>(),
                 termTemplateDefs ?? new ChangeTrackingList<TermTemplateDef>(),
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasTypesDef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasTypesDef IPersistableModel<AtlasTypesDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasTypesDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="atlasTypesDef"> The <see cref="AtlasTypesDef"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AtlasTypesDef atlasTypesDef)
-        {
-            if (atlasTypesDef == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(atlasTypesDef, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

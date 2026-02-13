@@ -50,6 +50,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SharedAccessSignatureTokenIngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SharedAccessSignatureTokenIngestionSource IPersistableModel<SharedAccessSignatureTokenIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharedAccessSignatureTokenIngestionSource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SharedAccessSignatureTokenIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SharedAccessSignatureTokenIngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,15 +146,5 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new SharedAccessSignatureTokenIngestionSource(id, created, kind, additionalBinaryDataProperties, connectionInfo);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SharedAccessSignatureTokenIngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SharedAccessSignatureTokenIngestionSource IPersistableModel<SharedAccessSignatureTokenIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharedAccessSignatureTokenIngestionSource)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SharedAccessSignatureTokenIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

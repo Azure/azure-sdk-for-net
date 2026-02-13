@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsScriptExecutionFinishedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsScriptExecutionFinishedEventData IPersistableModel<AvsScriptExecutionFinishedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsScriptExecutionFinishedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsScriptExecutionFinishedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsScriptExecutionFinishedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -176,16 +186,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties, namedOutputs);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsScriptExecutionFinishedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvsScriptExecutionFinishedEventData IPersistableModel<AvsScriptExecutionFinishedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsScriptExecutionFinishedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsScriptExecutionFinishedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AvsScriptExecutionFinishedEventDataConverter : JsonConverter<AvsScriptExecutionFinishedEventData>
         {

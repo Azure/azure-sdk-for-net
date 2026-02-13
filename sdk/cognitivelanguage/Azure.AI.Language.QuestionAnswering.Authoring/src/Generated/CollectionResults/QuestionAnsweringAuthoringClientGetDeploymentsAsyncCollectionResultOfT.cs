@@ -55,7 +55,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedProjectDeployment result = (PagedProjectDeployment)response;
-                yield return Page<ProjectDeployment>.FromValues((IReadOnlyList<ProjectDeployment>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ProjectDeployment>.FromValues((IReadOnlyList<ProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

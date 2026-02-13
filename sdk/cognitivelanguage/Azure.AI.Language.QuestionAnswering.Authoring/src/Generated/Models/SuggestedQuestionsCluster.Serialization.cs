@@ -45,6 +45,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SuggestedQuestionsCluster>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SuggestedQuestionsCluster IPersistableModel<SuggestedQuestionsCluster>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SuggestedQuestionsCluster>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SuggestedQuestionsCluster>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -151,15 +161,5 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             return new SuggestedQuestionsCluster(clusterHead, suggestedQuestions ?? new ChangeTrackingList<SuggestedQuestion>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SuggestedQuestionsCluster>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SuggestedQuestionsCluster IPersistableModel<SuggestedQuestionsCluster>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SuggestedQuestionsCluster>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

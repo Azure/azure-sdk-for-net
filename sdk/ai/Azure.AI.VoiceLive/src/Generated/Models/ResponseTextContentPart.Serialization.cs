@@ -45,6 +45,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResponseTextContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResponseTextContentPart IPersistableModel<ResponseTextContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseTextContentPart)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResponseTextContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseTextContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,15 +128,5 @@ namespace Azure.AI.VoiceLive
             }
             return new ResponseTextContentPart(@type, additionalBinaryDataProperties, text);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponseTextContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseTextContentPart IPersistableModel<ResponseTextContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseTextContentPart)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponseTextContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

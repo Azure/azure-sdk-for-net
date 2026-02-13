@@ -51,6 +51,28 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImageParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageParameters IPersistableModel<ImageParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImageParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="imageParameters"> The <see cref="ImageParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ImageParameters imageParameters)
+        {
+            if (imageParameters == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(imageParameters, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -247,28 +269,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 showBranding,
                 imageSize,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ImageParameters IPersistableModel<ImageParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="imageParameters"> The <see cref="ImageParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ImageParameters imageParameters)
-        {
-            if (imageParameters == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(imageParameters, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

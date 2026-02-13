@@ -52,6 +52,28 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJob IPersistableModel<BatchJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchJob"> The <see cref="BatchJob"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchJob batchJob)
+        {
+            if (batchJob == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchJob, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchJob"/> from. </param>
         public static explicit operator BatchJob(Response response)
         {
@@ -526,28 +548,6 @@ namespace Azure.Compute.Batch
                 executionInfo,
                 jobStatistics,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchJob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJob IPersistableModel<BatchJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchJob"> The <see cref="BatchJob"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchJob batchJob)
-        {
-            if (batchJob == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchJob, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

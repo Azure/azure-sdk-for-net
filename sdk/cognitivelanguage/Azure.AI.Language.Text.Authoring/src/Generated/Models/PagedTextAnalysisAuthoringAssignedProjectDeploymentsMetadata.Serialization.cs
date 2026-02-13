@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata IPersistableModel<PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata"/> from. </param>
         public static explicit operator PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata(Response response)
         {
@@ -161,15 +171,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata(value, nextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata IPersistableModel<PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -52,6 +52,16 @@ namespace Azure.Monitor.Query.Logs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LogsQueryResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogsQueryResult IPersistableModel<LogsQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LogsQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LogsQueryResult"/> from. </param>
         public static explicit operator LogsQueryResult(Response response)
         {
@@ -180,15 +190,5 @@ namespace Azure.Monitor.Query.Logs.Models
             }
             return new LogsQueryResult(allTables, error, statistics, visualization, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogsQueryResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LogsQueryResult IPersistableModel<LogsQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogsQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

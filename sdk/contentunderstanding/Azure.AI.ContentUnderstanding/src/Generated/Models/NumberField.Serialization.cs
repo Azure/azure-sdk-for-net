@@ -45,6 +45,16 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NumberField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NumberField IPersistableModel<NumberField>.Create(BinaryData data, ModelReaderWriterOptions options) => (NumberField)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NumberField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NumberField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -159,15 +169,5 @@ namespace Azure.AI.ContentUnderstanding
                 additionalBinaryDataProperties,
                 valueNumber);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NumberField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NumberField IPersistableModel<NumberField>.Create(BinaryData data, ModelReaderWriterOptions options) => (NumberField)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NumberField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

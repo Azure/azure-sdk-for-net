@@ -46,6 +46,16 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchPoolListUsageMetricsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchPoolListUsageMetricsResult IPersistableModel<BatchPoolListUsageMetricsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchPoolListUsageMetricsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchPoolListUsageMetricsResult"/> from. </param>
         public static explicit operator BatchPoolListUsageMetricsResult(Response response)
         {
@@ -163,15 +173,5 @@ namespace Azure.Compute.Batch
             }
             return new BatchPoolListUsageMetricsResult(value ?? new ChangeTrackingList<BatchPoolUsageMetrics>(), odataNextLink, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchPoolListUsageMetricsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolListUsageMetricsResult IPersistableModel<BatchPoolListUsageMetricsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchPoolListUsageMetricsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
