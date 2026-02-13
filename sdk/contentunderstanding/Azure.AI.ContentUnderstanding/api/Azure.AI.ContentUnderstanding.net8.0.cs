@@ -1005,6 +1005,7 @@ namespace Azure.AI.ContentUnderstanding
     }
     public partial class LabeledDataKnowledgeSource : Azure.AI.ContentUnderstanding.KnowledgeSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource>
     {
+        public LabeledDataKnowledgeSource(System.Uri containerUrl) { }
         public LabeledDataKnowledgeSource(System.Uri containerUrl, string fileListPath) { }
         public System.Uri ContainerUrl { get { throw null; } set { } }
         public string FileListPath { get { throw null; } set { } }

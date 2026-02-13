@@ -15,7 +15,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 {
     public class ContentUnderstandingClientTestEnvironment : TestEnvironment
     {
-        private const string AssetsFolderName = "samples/SampleFiles";
+        private const string AssetsFolderName = "samples/sample_files";
 
         // We are using assets from the Azure-Samples repository.
         // Files are located at: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/tree/main/ContentUnderstanding.Common/data
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <remarks>
         /// The API key is sanitized in recordings to prevent exposing secrets.
         /// </remarks>
-        public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
+        public string ApiKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the gpt-4.1 deployment name (optional).
@@ -59,12 +59,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the source resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? SourceResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
+        public string? SourceResourceId => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the source region for cross-resource copying (optional).
         /// </summary>
-        public string? SourceRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
+        public string? SourceRegion => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target endpoint for cross-resource copying (optional).
@@ -74,17 +74,27 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the target resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? TargetResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
+        public string? TargetResourceId => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target region for cross-resource copying (optional).
         /// </summary>
-        public string? TargetRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION", options => options.IsSecret());
+        public string? TargetRegion => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target API key for cross-resource copying (optional).
         /// </summary>
-        public string? TargetKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_KEY", options => options.IsSecret());
+        public string? TargetKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_KEY", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the SAS URL for the Azure Blob container with labeled training data (optional).
+        /// </summary>
+        public string? TrainingDataSasUrl => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the path prefix within the training data container (optional).
+        /// </summary>
+        public string? TrainingDataPrefix => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 
         /// <summary>
         /// Creates a file path for a test asset file.

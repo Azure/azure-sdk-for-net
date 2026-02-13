@@ -193,6 +193,7 @@ The samples demonstrate:
 * **Document Classification** - Create and use classifiers to categorize documents
 * **Analyzer Management** - Get, list, update, copy, and delete analyzers
 * **Result Management** - Retrieve result files from video analysis and delete analysis results
+* **Labeled Training Data** - Create custom analyzers with labeled training data from Azure Blob Storage
 
 See the [samples directory][samples_directory] for complete examples.
 
@@ -232,6 +233,7 @@ For more information, see [Diagnostics samples][diagnostics].
 
 * [Sample 00: Configure model deployment defaults][sample00] - Required one-time setup to configure model deployments for prebuilt and custom analyzers
 * [Sample 01: Analyze a document from binary data][sample01] - Analyze PDF files from disk using `prebuilt-documentSearch`
+* [Sample 16: Create analyzer with labeled training data][sample16] - Build custom analyzers using labeled data from Azure Blob Storage
 * Explore the [samples directory][samples_directory] for complete code examples
 * Read the [Azure AI Content Understanding documentation][product_docs] for detailed service information
 
@@ -266,6 +268,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample16]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample16_CreateAnalyzerWithLabels.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
