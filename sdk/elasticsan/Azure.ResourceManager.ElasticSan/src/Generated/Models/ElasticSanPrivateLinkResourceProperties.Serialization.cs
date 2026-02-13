@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Properties of a private link resource. </summary>
     internal partial class ElasticSanPrivateLinkResourceProperties : IJsonModel<ElasticSanPrivateLinkResourceProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticSanPrivateLinkResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticSanPrivateLinkResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -191,23 +208,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticSanPrivateLinkResourceProperties IPersistableModel<ElasticSanPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticSanPrivateLinkResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticSanPrivateLinkResourceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticSanPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

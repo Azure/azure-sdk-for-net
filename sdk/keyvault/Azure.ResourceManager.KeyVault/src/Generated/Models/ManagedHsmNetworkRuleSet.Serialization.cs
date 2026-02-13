@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A set of rules governing the network accessibility of a managed hsm pool. </summary>
     public partial class ManagedHsmNetworkRuleSet : IJsonModel<ManagedHsmNetworkRuleSet>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedHsmNetworkRuleSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedHsmNetworkRuleSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedHsmNetworkRuleSet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedHsmNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -217,23 +234,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ManagedHsmNetworkRuleSet IPersistableModel<ManagedHsmNetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedHsmNetworkRuleSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedHsmNetworkRuleSet(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedHsmNetworkRuleSet)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedHsmNetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

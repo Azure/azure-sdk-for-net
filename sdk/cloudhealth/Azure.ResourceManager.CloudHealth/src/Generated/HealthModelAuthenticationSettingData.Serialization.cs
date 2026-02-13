@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.CloudHealth
     /// <summary> An authentication setting in a health model. </summary>
     public partial class HealthModelAuthenticationSettingData : ResourceData, IJsonModel<HealthModelAuthenticationSettingData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelAuthenticationSettingData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthModelAuthenticationSettingData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelAuthenticationSettingData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthModelAuthenticationSettingData"/> from. </param>
+        internal static HealthModelAuthenticationSettingData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHealthModelAuthenticationSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelAuthenticationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="options"> The client options for reading and writing models. </param>
         HealthModelAuthenticationSettingData IPersistableModel<HealthModelAuthenticationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthModelAuthenticationSettingData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelAuthenticationSettingData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHealthModelAuthenticationSettingData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelAuthenticationSettingData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HealthModelAuthenticationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.CloudHealth
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(healthModelAuthenticationSettingData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthModelAuthenticationSettingData"/> from. </param>
-        internal static HealthModelAuthenticationSettingData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHealthModelAuthenticationSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

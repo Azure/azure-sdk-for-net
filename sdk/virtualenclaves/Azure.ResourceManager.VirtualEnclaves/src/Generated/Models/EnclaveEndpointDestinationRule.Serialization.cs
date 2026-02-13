@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Enclave Endpoint Rule Properties. </summary>
     public partial class EnclaveEndpointDestinationRule : IJsonModel<EnclaveEndpointDestinationRule>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnclaveEndpointDestinationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnclaveEndpointDestinationRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnclaveEndpointDestinationRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnclaveEndpointDestinationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -164,23 +181,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EnclaveEndpointDestinationRule IPersistableModel<EnclaveEndpointDestinationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EnclaveEndpointDestinationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnclaveEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEnclaveEndpointDestinationRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnclaveEndpointDestinationRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EnclaveEndpointDestinationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

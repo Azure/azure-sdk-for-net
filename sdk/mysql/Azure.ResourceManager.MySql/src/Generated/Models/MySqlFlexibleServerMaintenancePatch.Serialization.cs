@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a maintenance update parameter. </summary>
     public partial class MySqlFlexibleServerMaintenancePatch : IJsonModel<MySqlFlexibleServerMaintenancePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerMaintenancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServerMaintenancePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenancePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerMaintenancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,23 +140,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServerMaintenancePatch IPersistableModel<MySqlFlexibleServerMaintenancePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerMaintenancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenancePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServerMaintenancePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenancePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerMaintenancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

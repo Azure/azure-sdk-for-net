@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceNetworkingIPAccessRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceNetworkingIPAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceNetworkingIPAccessRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceNetworkingIPAccessRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceNetworkingIPAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -165,23 +182,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServiceNetworkingIPAccessRule IPersistableModel<ServiceNetworkingIPAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceNetworkingIPAccessRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceNetworkingIPAccessRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServiceNetworkingIPAccessRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceNetworkingIPAccessRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceNetworkingIPAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

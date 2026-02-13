@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
     public partial class SingletonPartitionScheme : ManagedServicePartitionScheme, IJsonModel<SingletonPartitionScheme>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServicePartitionScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SingletonPartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSingletonPartitionScheme(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SingletonPartitionScheme)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SingletonPartitionScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -98,23 +115,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SingletonPartitionScheme IPersistableModel<SingletonPartitionScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (SingletonPartitionScheme)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedServicePartitionScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SingletonPartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSingletonPartitionScheme(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SingletonPartitionScheme)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SingletonPartitionScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

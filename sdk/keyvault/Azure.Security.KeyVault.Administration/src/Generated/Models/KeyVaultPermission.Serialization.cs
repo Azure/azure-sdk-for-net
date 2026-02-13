@@ -32,6 +32,19 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultPermission>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultPermission)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -229,19 +242,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KeyVaultPermission>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultPermission>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultPermission)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

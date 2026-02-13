@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> A collection of related endpoints from the same service for which the Batch service requires outbound access. </summary>
     public partial class LoadTestingOutboundEnvironmentEndpoint : IJsonModel<LoadTestingOutboundEnvironmentEndpoint>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestingOutboundEnvironmentEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLoadTestingOutboundEnvironmentEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingOutboundEnvironmentEndpoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestingOutboundEnvironmentEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,23 +159,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LoadTestingOutboundEnvironmentEndpoint IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoadTestingOutboundEnvironmentEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLoadTestingOutboundEnvironmentEndpoint(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LoadTestingOutboundEnvironmentEndpoint)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

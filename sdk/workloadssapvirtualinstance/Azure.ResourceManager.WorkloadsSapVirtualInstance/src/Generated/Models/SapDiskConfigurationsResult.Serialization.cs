@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> The list of disk configuration for vmSku which are part of SAP deployment. </summary>
     public partial class SapDiskConfigurationsResult : IJsonModel<SapDiskConfigurationsResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapDiskConfigurationsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapDiskConfigurationsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapDiskConfigurationsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapDiskConfigurationsResult"/> from. </param>
+        internal static SapDiskConfigurationsResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSapDiskConfigurationsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapDiskConfigurationsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -134,31 +158,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SapDiskConfigurationsResult IPersistableModel<SapDiskConfigurationsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SapDiskConfigurationsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapDiskConfigurationsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapDiskConfigurationsResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapDiskConfigurationsResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapDiskConfigurationsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapDiskConfigurationsResult"/> from. </param>
-        internal static SapDiskConfigurationsResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSapDiskConfigurationsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

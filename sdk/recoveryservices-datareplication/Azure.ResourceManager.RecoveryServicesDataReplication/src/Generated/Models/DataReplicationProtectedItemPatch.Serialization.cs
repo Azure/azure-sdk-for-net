@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Protected item model update. </summary>
     public partial class DataReplicationProtectedItemPatch : ResourceData, IJsonModel<DataReplicationProtectedItemPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataReplicationProtectedItemPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationProtectedItemPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,23 +179,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationProtectedItemPatch IPersistableModel<DataReplicationProtectedItemPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataReplicationProtectedItemPatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataReplicationProtectedItemPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationProtectedItemPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

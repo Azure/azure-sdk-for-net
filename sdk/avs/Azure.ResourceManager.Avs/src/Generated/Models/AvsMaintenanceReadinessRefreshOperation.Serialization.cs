@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Refresh MaintenanceReadiness status. </summary>
     public partial class AvsMaintenanceReadinessRefreshOperation : AvsMaintenanceManagementOperation, IJsonModel<AvsMaintenanceReadinessRefreshOperation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsMaintenanceManagementOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsMaintenanceReadinessRefreshOperation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsMaintenanceReadinessRefreshOperation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsMaintenanceReadinessRefreshOperation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsMaintenanceReadinessRefreshOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -172,23 +189,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsMaintenanceReadinessRefreshOperation IPersistableModel<AvsMaintenanceReadinessRefreshOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsMaintenanceReadinessRefreshOperation)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AvsMaintenanceManagementOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsMaintenanceReadinessRefreshOperation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsMaintenanceReadinessRefreshOperation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsMaintenanceReadinessRefreshOperation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsMaintenanceReadinessRefreshOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

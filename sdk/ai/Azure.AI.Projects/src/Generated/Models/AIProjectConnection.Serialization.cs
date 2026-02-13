@@ -43,6 +43,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AIProjectConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AIProjectConnection IPersistableModel<AIProjectConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AIProjectConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AIProjectConnection"/> from. </param>
         public static explicit operator AIProjectConnection(ClientResult result)
         {
@@ -229,15 +239,5 @@ namespace Azure.AI.Projects
                 metadata,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AIProjectConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AIProjectConnection IPersistableModel<AIProjectConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AIProjectConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

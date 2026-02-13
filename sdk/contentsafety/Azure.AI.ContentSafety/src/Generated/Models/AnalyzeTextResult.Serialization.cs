@@ -38,6 +38,19 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnalyzeTextResult"/> from. </param>
         public static explicit operator AnalyzeTextResult(Response response)
         {
@@ -161,19 +174,6 @@ namespace Azure.AI.ContentSafety
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AnalyzeTextResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     /// <summary> The definition of a file along with its contents. </summary>
     public partial class DecompiledFileDefinition : IJsonModel<DecompiledFileDefinition>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DecompiledFileDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DecompiledFileDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDecompiledFileDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DecompiledFileDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DecompiledFileDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DecompiledFileDefinition IPersistableModel<DecompiledFileDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DecompiledFileDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DecompiledFileDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDecompiledFileDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DecompiledFileDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DecompiledFileDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

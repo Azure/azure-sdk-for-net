@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Response for whether the requested resource name is available or not. </summary>
     public partial class SelfHelpNameAvailabilityResult : IJsonModel<SelfHelpNameAvailabilityResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SelfHelpNameAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSelfHelpNameAvailabilityResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SelfHelpNameAvailabilityResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHelpNameAvailabilityResult"/> from. </param>
+        internal static SelfHelpNameAvailabilityResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSelfHelpNameAvailabilityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SelfHelpNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,31 +169,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SelfHelpNameAvailabilityResult IPersistableModel<SelfHelpNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SelfHelpNameAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSelfHelpNameAvailabilityResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SelfHelpNameAvailabilityResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SelfHelpNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHelpNameAvailabilityResult"/> from. </param>
-        internal static SelfHelpNameAvailabilityResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSelfHelpNameAvailabilityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

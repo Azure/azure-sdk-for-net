@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Basic information for any product system. </summary>
     internal partial class BasicInformation : IJsonModel<BasicInformation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BasicInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BasicInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBasicInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BasicInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BasicInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -225,23 +242,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BasicInformation IPersistableModel<BasicInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BasicInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BasicInformation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBasicInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BasicInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BasicInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

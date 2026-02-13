@@ -70,7 +70,15 @@ namespace Azure.AI.Projects
         internal PipelineMessage CreateNextGetConnectionsRequest(Uri nextPage, string connectionType, bool? defaultConnection, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(_endpoint);
+                uri.AppendPath(nextPage.OriginalString, false);
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;

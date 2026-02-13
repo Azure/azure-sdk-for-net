@@ -38,6 +38,19 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedDocumentModelDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PagedDocumentModelDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedDocumentModelDetails"/> from. </param>
         public static explicit operator PagedDocumentModelDetails(Response response)
         {
@@ -152,19 +165,6 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PagedDocumentModelDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedDocumentModelDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PagedDocumentModelDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

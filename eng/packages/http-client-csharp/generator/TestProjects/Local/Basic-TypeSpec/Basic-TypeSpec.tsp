@@ -708,12 +708,28 @@ op GetXmlAdvancedModel(): {
   @body body: XmlAdvancedModel;
 };
 
+@route("xmlAdvanced")
+@doc("Update an advanced XML model with various property types")
+@put
+op UpdateXmlAdvancedModel(@body body: XmlAdvancedModel, @header contentType: "application/xml"): {
+  @header contentType: "application/xml";
+  @body body: XmlAdvancedModel;
+};
+
 @route("/plants")
 interface PlantOperations {
   @doc("Get a tree as a plant")
   @get
   @route("/tree/as-plant")
   getTree(): {
+    @header contentType: "application/xml";
+    @body body: Tree;
+  };
+
+  @doc("Update a tree as a plant")
+  @put
+  @route("/tree/as-plant")
+  updateTree(@body tree: Tree, @header contentType: "application/xml"): {
     @header contentType: "application/xml";
     @body body: Tree;
   };

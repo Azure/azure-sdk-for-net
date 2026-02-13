@@ -37,6 +37,19 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VoiceLiveFunctionDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VoiceLiveFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,19 +156,6 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VoiceLiveFunctionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceLiveFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VoiceLiveFunctionDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

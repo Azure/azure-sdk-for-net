@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary> DbServer resource model. </summary>
     public partial class OracleDBServerData : ResourceData, IJsonModel<OracleDBServerData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDBServerData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOracleDBServerData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleDBServerData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleDBServerData"/> from. </param>
+        internal static OracleDBServerData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOracleDBServerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleDBServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> The client options for reading and writing models. </param>
         OracleDBServerData IPersistableModel<OracleDBServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleDBServerData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OracleDBServerData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOracleDBServerData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OracleDBServerData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleDBServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleDBServerData"/> from. </param>
-        internal static OracleDBServerData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOracleDBServerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

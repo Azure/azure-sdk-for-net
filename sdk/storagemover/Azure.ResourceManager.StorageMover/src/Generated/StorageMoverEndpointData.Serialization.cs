@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.StorageMover
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageMoverEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageMoverEndpointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageMoverEndpointData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageMoverEndpointData"/> from. </param>
+        internal static StorageMoverEndpointData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStorageMoverEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageMoverEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -168,23 +192,6 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="options"> The client options for reading and writing models. </param>
         StorageMoverEndpointData IPersistableModel<StorageMoverEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageMoverEndpointData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageMoverEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageMoverEndpointData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageMoverEndpointData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageMoverEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -198,13 +205,6 @@ namespace Azure.ResourceManager.StorageMover
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(storageMoverEndpointData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageMoverEndpointData"/> from. </param>
-        internal static StorageMoverEndpointData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStorageMoverEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The billing plan properties for the upgrade plan call. </summary>
     public partial class DynatraceUpgradePlanContent : IJsonModel<DynatraceUpgradePlanContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DynatraceUpgradePlanContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceUpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDynatraceUpgradePlanContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceUpgradePlanContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynatraceUpgradePlanContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DynatraceUpgradePlanContent IPersistableModel<DynatraceUpgradePlanContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DynatraceUpgradePlanContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DynatraceUpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDynatraceUpgradePlanContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DynatraceUpgradePlanContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DynatraceUpgradePlanContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

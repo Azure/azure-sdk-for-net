@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkAnchorDnsForwardingRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkAnchorDnsForwardingRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkAnchorDnsForwardingRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAnchorDnsForwardingRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkAnchorDnsForwardingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -127,23 +144,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NetworkAnchorDnsForwardingRule IPersistableModel<NetworkAnchorDnsForwardingRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkAnchorDnsForwardingRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkAnchorDnsForwardingRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetworkAnchorDnsForwardingRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkAnchorDnsForwardingRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkAnchorDnsForwardingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -46,6 +46,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalItemResourceLocalShellToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalItemResourceLocalShellToolCall IPersistableModel<InternalItemResourceLocalShellToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalItemResourceLocalShellToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalItemResourceLocalShellToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalItemResourceLocalShellToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -173,15 +183,5 @@ namespace Azure.AI.Projects.OpenAI
                 action,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalItemResourceLocalShellToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalItemResourceLocalShellToolCall IPersistableModel<InternalItemResourceLocalShellToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalItemResourceLocalShellToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalItemResourceLocalShellToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

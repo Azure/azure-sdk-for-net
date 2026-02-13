@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.Hci.Vm
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmNatGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmNatGatewayData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmNatGatewayData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmNatGatewayData"/> from. </param>
+        internal static HciVmNatGatewayData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHciVmNatGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmNatGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -205,23 +229,6 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmNatGatewayData IPersistableModel<HciVmNatGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciVmNatGatewayData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmNatGatewayData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmNatGatewayData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmNatGatewayData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmNatGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -235,13 +242,6 @@ namespace Azure.ResourceManager.Hci.Vm
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(hciVmNatGatewayData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmNatGatewayData"/> from. </param>
-        internal static HciVmNatGatewayData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHciVmNatGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

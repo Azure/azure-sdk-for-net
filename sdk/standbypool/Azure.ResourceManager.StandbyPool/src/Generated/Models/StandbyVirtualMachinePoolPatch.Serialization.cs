@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.StandbyPool.Models
     /// <summary> The type used for update operations of the StandbyVirtualMachinePoolResource. </summary>
     public partial class StandbyVirtualMachinePoolPatch : IJsonModel<StandbyVirtualMachinePoolPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StandbyVirtualMachinePoolPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStandbyVirtualMachinePoolPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyVirtualMachinePoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StandbyVirtualMachinePoolPatch IPersistableModel<StandbyVirtualMachinePoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StandbyVirtualMachinePoolPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStandbyVirtualMachinePoolPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StandbyVirtualMachinePoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

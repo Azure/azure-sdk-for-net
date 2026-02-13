@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterIPTag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedClusterIPTag(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -127,23 +144,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ManagedClusterIPTag IPersistableModel<ManagedClusterIPTag>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterIPTag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedClusterIPTag(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedClusterIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

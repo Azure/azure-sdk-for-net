@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExecuteDeleteContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteDeleteContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExecuteDeleteContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteDeleteContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExecuteDeleteContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +171,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExecuteDeleteContent IPersistableModel<ExecuteDeleteContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteDeleteContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteDeleteContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExecuteDeleteContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExecuteDeleteContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExecuteDeleteContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

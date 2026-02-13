@@ -12,10 +12,11 @@ using System.IO;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    internal partial class UnknownPlant : Plant, IJsonModel<Plant>
+    internal partial class UnknownPlant : Plant, IJsonModel<Plant>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPlant"/> for deserialization. </summary>
         internal UnknownPlant()
@@ -72,6 +73,16 @@ namespace BasicTypeSpec
                     throw new FormatException($"The model {nameof(Plant)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Plant>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Plant IPersistableModel<Plant>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Plant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -148,16 +159,6 @@ namespace BasicTypeSpec
             return new UnknownPlant(species, id, height, additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Plant>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Plant IPersistableModel<Plant>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Plant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         /// <param name="nameHint"> An optional name hint. </param>
@@ -224,5 +225,9 @@ namespace BasicTypeSpec
             }
             return new UnknownPlant(species, id, height, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

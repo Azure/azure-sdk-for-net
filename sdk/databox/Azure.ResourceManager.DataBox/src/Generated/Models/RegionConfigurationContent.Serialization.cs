@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the configuration for the region. </summary>
     public partial class RegionConfigurationContent : IJsonModel<RegionConfigurationContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RegionConfigurationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegionConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRegionConfigurationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegionConfigurationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -167,23 +184,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RegionConfigurationContent IPersistableModel<RegionConfigurationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionConfigurationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRegionConfigurationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RegionConfigurationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureFunctionDefinitionFunction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureFunctionDefinitionFunction IPersistableModel<AzureFunctionDefinitionFunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureFunctionDefinitionFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureFunctionDefinitionFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -151,15 +161,5 @@ namespace Azure.AI.Projects.OpenAI
             }
             return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureFunctionDefinitionFunction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureFunctionDefinitionFunction IPersistableModel<AzureFunctionDefinitionFunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureFunctionDefinitionFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

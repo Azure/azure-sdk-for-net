@@ -47,6 +47,16 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemMcpApprovalRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemMcpApprovalRequest IPersistableModel<InputItemMcpApprovalRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemMcpApprovalRequest)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemMcpApprovalRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemMcpApprovalRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,15 +157,5 @@ namespace Azure.AI.Projects.OpenAI
                 name,
                 arguments);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemMcpApprovalRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemMcpApprovalRequest IPersistableModel<InputItemMcpApprovalRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemMcpApprovalRequest)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemMcpApprovalRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

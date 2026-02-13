@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> The type used for update operations of the SchemaRegistry. </summary>
     public partial class DeviceRegistrySchemaRegistryPatch : IJsonModel<DeviceRegistrySchemaRegistryPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceRegistrySchemaRegistryPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistrySchemaRegistryPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeviceRegistrySchemaRegistryPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceRegistrySchemaRegistryPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistrySchemaRegistryPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,23 +192,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DeviceRegistrySchemaRegistryPatch IPersistableModel<DeviceRegistrySchemaRegistryPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceRegistrySchemaRegistryPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistrySchemaRegistryPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeviceRegistrySchemaRegistryPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeviceRegistrySchemaRegistryPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceRegistrySchemaRegistryPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

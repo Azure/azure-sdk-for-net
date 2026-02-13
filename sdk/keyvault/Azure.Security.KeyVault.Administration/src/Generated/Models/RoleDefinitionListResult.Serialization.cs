@@ -33,6 +33,19 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RoleDefinitionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoleDefinitionListResult"/> from. </param>
         public static explicit operator RoleDefinitionListResult(Response response)
         {
@@ -149,19 +162,6 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RoleDefinitionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RoleDefinitionListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

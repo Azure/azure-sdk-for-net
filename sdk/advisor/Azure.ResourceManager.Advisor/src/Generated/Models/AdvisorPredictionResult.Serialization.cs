@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Response used by predictions. </summary>
     public partial class AdvisorPredictionResult : IJsonModel<AdvisorPredictionResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AdvisorPredictionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvisorPredictionResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdvisorPredictionResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdvisorPredictionResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorPredictionResult"/> from. </param>
+        internal static AdvisorPredictionResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAdvisorPredictionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdvisorPredictionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,31 +147,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         AdvisorPredictionResult IPersistableModel<AdvisorPredictionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AdvisorPredictionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvisorPredictionResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAdvisorPredictionResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AdvisorPredictionResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AdvisorPredictionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorPredictionResult"/> from. </param>
-        internal static AdvisorPredictionResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAdvisorPredictionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

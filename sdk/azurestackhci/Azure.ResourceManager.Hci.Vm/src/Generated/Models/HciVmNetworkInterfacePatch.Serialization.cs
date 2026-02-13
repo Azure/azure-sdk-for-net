@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The network interface resource patch definition. </summary>
     public partial class HciVmNetworkInterfacePatch : IJsonModel<HciVmNetworkInterfacePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmNetworkInterfacePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkInterfacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmNetworkInterfacePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmNetworkInterfacePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmNetworkInterfacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmNetworkInterfacePatch IPersistableModel<HciVmNetworkInterfacePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmNetworkInterfacePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkInterfacePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmNetworkInterfacePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmNetworkInterfacePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmNetworkInterfacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

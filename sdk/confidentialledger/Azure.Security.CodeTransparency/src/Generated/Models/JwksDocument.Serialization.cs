@@ -38,6 +38,19 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityCodeTransparencyContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="JwksDocument"/> from. </param>
         public static explicit operator JwksDocument(Response response)
         {
@@ -137,19 +150,6 @@ namespace Azure.Security.CodeTransparency
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<JwksDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityCodeTransparencyContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Astro.Models
     /// <summary> Properties specific to Single Sign On Resource. </summary>
     public partial class AstroSingleSignOnProperties : IJsonModel<AstroSingleSignOnProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AstroSingleSignOnProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AstroSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAstroSingleSignOnProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AstroSingleSignOnProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AstroSingleSignOnProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -205,23 +222,6 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AstroSingleSignOnProperties IPersistableModel<AstroSingleSignOnProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AstroSingleSignOnProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AstroSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAstroSingleSignOnProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AstroSingleSignOnProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AstroSingleSignOnProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

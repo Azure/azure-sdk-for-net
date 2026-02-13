@@ -52,7 +52,7 @@ namespace Samples
                 {
                     items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextCat;
                 if ((nextPage == null))
                 {

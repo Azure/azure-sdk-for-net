@@ -1,0 +1,1 @@
+this.Write(writer, global::Samples.ModelSerializationExtensions.WireOptions, nameHint)

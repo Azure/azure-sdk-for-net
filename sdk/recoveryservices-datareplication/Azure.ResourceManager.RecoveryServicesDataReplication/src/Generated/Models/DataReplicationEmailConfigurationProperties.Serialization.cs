@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataReplicationEmailConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationEmailConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataReplicationEmailConfigurationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationEmailConfigurationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationEmailConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -182,23 +199,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationEmailConfigurationProperties IPersistableModel<DataReplicationEmailConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataReplicationEmailConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationEmailConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataReplicationEmailConfigurationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationEmailConfigurationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationEmailConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

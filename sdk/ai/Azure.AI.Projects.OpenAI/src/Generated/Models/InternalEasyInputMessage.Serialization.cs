@@ -47,6 +47,16 @@ namespace OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalEasyInputMessage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalEasyInputMessage IPersistableModel<InternalEasyInputMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalEasyInputMessage)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalEasyInputMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalEasyInputMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,15 +157,5 @@ namespace OpenAI
             }
             return new InternalEasyInputMessage(@type, additionalBinaryDataProperties, role, content, status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalEasyInputMessage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalEasyInputMessage IPersistableModel<InternalEasyInputMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalEasyInputMessage)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalEasyInputMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

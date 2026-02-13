@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solutions metrics based chart. </summary>
     public partial class MetricsBasedChart : IJsonModel<MetricsBasedChart>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricsBasedChart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricsBasedChart(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricsBasedChart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -191,23 +208,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MetricsBasedChart IPersistableModel<MetricsBasedChart>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MetricsBasedChart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMetricsBasedChart(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MetricsBasedChart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

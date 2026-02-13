@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StorageClassTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSmbStorageClassTypeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SmbStorageClassTypeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SmbStorageClassTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,23 +179,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SmbStorageClassTypeProperties IPersistableModel<SmbStorageClassTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SmbStorageClassTypeProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageClassTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSmbStorageClassTypeProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SmbStorageClassTypeProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SmbStorageClassTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

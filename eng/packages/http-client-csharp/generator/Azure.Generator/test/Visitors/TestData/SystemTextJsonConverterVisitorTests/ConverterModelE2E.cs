@@ -48,6 +48,16 @@ namespace Samples.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        global::System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.Write(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        global::Samples.Models.TestModel global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.Create(global::System.BinaryData data, global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.GetFormatFromOptions(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void global::System.ClientModel.Primitives.IJsonModel<global::Samples.Models.TestModel>.Write(global::System.Text.Json.Utf8JsonWriter writer, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
@@ -129,16 +139,6 @@ namespace Samples.Models
             }
             return new global::Samples.Models.TestModel(stringProperty, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        global::System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.Write(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        global::Samples.Models.TestModel global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.Create(global::System.BinaryData data, global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.TestModel>.GetFormatFromOptions(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => "J";
 
         internal partial class TestModelConverter : global::System.Text.Json.Serialization.JsonConverter<global::Samples.Models.TestModel>
         {

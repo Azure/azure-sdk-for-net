@@ -19,8 +19,11 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/>. </summary>
         /// <param name="value"> The value of the nested model. </param>
         /// <param name="nestedId"> An attribute on the nested model. </param>
-        internal XmlNestedModel(string value, int nestedId)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public XmlNestedModel(string value, int nestedId)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             Value = value;
             NestedId = nestedId;
         }
@@ -37,9 +40,9 @@ namespace BasicTypeSpec
         }
 
         /// <summary> The value of the nested model. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
 
         /// <summary> An attribute on the nested model. </summary>
-        public int NestedId { get; }
+        public int NestedId { get; set; }
     }
 }

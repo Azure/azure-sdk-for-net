@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> Private endpoint connection resource. </summary>
     public partial class KeyVaultPrivateEndpointConnectionData : ResourceData, IJsonModel<KeyVaultPrivateEndpointConnectionData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultPrivateEndpointConnectionData"/> from. </param>
+        internal static KeyVaultPrivateEndpointConnectionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -225,23 +249,6 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="options"> The client options for reading and writing models. </param>
         KeyVaultPrivateEndpointConnectionData IPersistableModel<KeyVaultPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyVaultPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -255,13 +262,6 @@ namespace Azure.ResourceManager.KeyVault
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(keyVaultPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultPrivateEndpointConnectionData"/> from. </param>
-        internal static KeyVaultPrivateEndpointConnectionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

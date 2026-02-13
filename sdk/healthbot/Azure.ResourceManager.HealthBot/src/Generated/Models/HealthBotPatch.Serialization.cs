@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.HealthBot.Models
     /// <summary> Parameters for updating a Azure Health Bot. </summary>
     public partial class HealthBotPatch : IJsonModel<HealthBotPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthBotPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthBotPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthBotPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthBotPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthBotPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -213,23 +230,6 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HealthBotPatch IPersistableModel<HealthBotPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthBotPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthBotPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHealthBotPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthBotPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HealthBotPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Avs
     /// <summary> An instance describing a Pure Storage Policy Based Management policy. </summary>
     public partial class AvsPureStoragePolicyData : ResourceData, IJsonModel<AvsPureStoragePolicyData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsPureStoragePolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsPureStoragePolicyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsPureStoragePolicyData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsPureStoragePolicyData"/> from. </param>
+        internal static AvsPureStoragePolicyData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAvsPureStoragePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsPureStoragePolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsPureStoragePolicyData IPersistableModel<AvsPureStoragePolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsPureStoragePolicyData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsPureStoragePolicyData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsPureStoragePolicyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsPureStoragePolicyData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsPureStoragePolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.Avs
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(avsPureStoragePolicyData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsPureStoragePolicyData"/> from. </param>
-        internal static AvsPureStoragePolicyData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAvsPureStoragePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

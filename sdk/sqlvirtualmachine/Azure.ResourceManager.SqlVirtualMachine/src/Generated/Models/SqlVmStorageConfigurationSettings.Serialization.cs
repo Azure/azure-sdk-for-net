@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Storage Configurations for SQL Data, Log and TempDb. </summary>
     public partial class SqlVmStorageConfigurationSettings : IJsonModel<SqlVmStorageConfigurationSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlVmStorageConfigurationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmStorageConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlVmStorageConfigurationSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmStorageConfigurationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -219,23 +236,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SqlVmStorageConfigurationSettings IPersistableModel<SqlVmStorageConfigurationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlVmStorageConfigurationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlVmStorageConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlVmStorageConfigurationSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlVmStorageConfigurationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -38,6 +38,19 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkRetrievalResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkRetrievalResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkRetrievalResult"/> from. </param>
         public static explicit operator NetworkRetrievalResult(Response response)
         {
@@ -126,19 +139,6 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkRetrievalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkRetrievalResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkRetrievalResult)} does not support writing '{options.Format}' format.");
-            }
-        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

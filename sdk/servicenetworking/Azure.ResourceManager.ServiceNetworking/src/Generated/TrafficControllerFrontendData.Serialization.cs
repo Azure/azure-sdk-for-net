@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerFrontendData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficControllerFrontendData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficControllerFrontendData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficControllerFrontendData"/> from. </param>
+        internal static TrafficControllerFrontendData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTrafficControllerFrontendData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficControllerFrontendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -189,23 +213,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="options"> The client options for reading and writing models. </param>
         TrafficControllerFrontendData IPersistableModel<TrafficControllerFrontendData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficControllerFrontendData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficControllerFrontendData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficControllerFrontendData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficControllerFrontendData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrafficControllerFrontendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -219,13 +226,6 @@ namespace Azure.ResourceManager.ServiceNetworking
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trafficControllerFrontendData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficControllerFrontendData"/> from. </param>
-        internal static TrafficControllerFrontendData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTrafficControllerFrontendData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

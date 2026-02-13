@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Fabric.Models
     /// <summary> The check availability result. </summary>
     public partial class FabricNameAvailabilityResult : IJsonModel<FabricNameAvailabilityResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FabricNameAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FabricNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFabricNameAvailabilityResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FabricNameAvailabilityResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FabricNameAvailabilityResult"/> from. </param>
+        internal static FabricNameAvailabilityResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFabricNameAvailabilityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FabricNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,31 +173,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         FabricNameAvailabilityResult IPersistableModel<FabricNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricNameAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFabricNameAvailabilityResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FabricNameAvailabilityResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FabricNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FabricNameAvailabilityResult"/> from. </param>
-        internal static FabricNameAvailabilityResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFabricNameAvailabilityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

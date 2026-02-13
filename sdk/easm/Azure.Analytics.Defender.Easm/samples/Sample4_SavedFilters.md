@@ -8,7 +8,7 @@ In this example, we'll go over how a saved filter could be used to synchronize t
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample4_SavedFilters_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
+string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
@@ -39,8 +39,8 @@ The saved filter can now be used in scripts to monitor the assets. First, retrie
 ```C# Snippet:Sample4_SavedFilters_Monitor_Assets
 var savedFilterResponse = client.GetSavedFilter(savedFilterName);
 string monitorFilter = savedFilterResponse.Value.Filter;
-            var savedFilterPageResponse = client.GetSavedFilters(monitorFilter);
-                        foreach (SavedFilter savedFilter in savedFilterPageResponse)
+var savedFilterPageResponse = client.GetSavedFilters(monitorFilter);
+foreach (SavedFilter savedFilter in savedFilterPageResponse)
 {
     monitor(savedFilter);
 }

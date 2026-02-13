@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The result of the Service Fabric runtime versions. </summary>
     public partial class ServiceFabricManagedClusterVersion : ResourceData, IJsonModel<ServiceFabricManagedClusterVersion>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterVersion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceFabricManagedClusterVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedClusterVersion"/> from. </param>
+        internal static ServiceFabricManagedClusterVersion FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeServiceFabricManagedClusterVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricManagedClusterVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -159,31 +183,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ServiceFabricManagedClusterVersion IPersistableModel<ServiceFabricManagedClusterVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedClusterVersion)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServiceFabricManagedClusterVersion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceFabricManagedClusterVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedClusterVersion"/> from. </param>
-        internal static ServiceFabricManagedClusterVersion FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeServiceFabricManagedClusterVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

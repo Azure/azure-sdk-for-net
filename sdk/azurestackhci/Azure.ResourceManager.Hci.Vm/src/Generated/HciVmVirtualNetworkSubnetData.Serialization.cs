@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Hci.Vm
     /// <summary> The virtual network resource definition. </summary>
     public partial class HciVmVirtualNetworkSubnetData : ResourceData, IJsonModel<HciVmVirtualNetworkSubnetData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualNetworkSubnetData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmVirtualNetworkSubnetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmVirtualNetworkSubnetData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmVirtualNetworkSubnetData"/> from. </param>
+        internal static HciVmVirtualNetworkSubnetData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHciVmVirtualNetworkSubnetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmVirtualNetworkSubnetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +194,6 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmVirtualNetworkSubnetData IPersistableModel<HciVmVirtualNetworkSubnetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciVmVirtualNetworkSubnetData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualNetworkSubnetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmVirtualNetworkSubnetData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmVirtualNetworkSubnetData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmVirtualNetworkSubnetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -200,13 +207,6 @@ namespace Azure.ResourceManager.Hci.Vm
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(hciVmVirtualNetworkSubnetData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmVirtualNetworkSubnetData"/> from. </param>
-        internal static HciVmVirtualNetworkSubnetData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHciVmVirtualNetworkSubnetData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Elastic
     /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
     public partial class ElasticTagRuleData : ResourceData, IJsonModel<ElasticTagRuleData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticTagRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticTagRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticTagRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticTagRuleData"/> from. </param>
+        internal static ElasticTagRuleData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeElasticTagRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticTagRuleData IPersistableModel<ElasticTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ElasticTagRuleData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticTagRuleData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticTagRuleData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticTagRuleData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.Elastic
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(elasticTagRuleData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticTagRuleData"/> from. </param>
-        internal static ElasticTagRuleData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeElasticTagRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
