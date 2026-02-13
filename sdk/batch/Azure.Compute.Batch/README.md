@@ -18,7 +18,7 @@ Use the client library for to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Compute.Batch --prerelease
+dotnet add package Azure.Compute.Batch
 ```
 
 ### Prerequisites
