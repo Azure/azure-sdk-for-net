@@ -38,6 +38,7 @@ import {
   armResourceReadName,
   armResourceUpdateName,
   armResourceWithParameter,
+  customAzureResource,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
@@ -99,7 +100,8 @@ export function buildArmProviderSchema(
   const models = new Map<string, SdkModelType>(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
-  const resourceModels = getAllResourceModels(codeModel);
+  const { models: resourceModels, customResourceIds } =
+    getAllResourceModels(codeModel);
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
@@ -261,6 +263,7 @@ export function buildArmProviderSchema(
           resourcePathToClientName.set(metadataKey, client.name);
         }
 
+        const isCustom = customResourceIds.has(modelId);
         entry = {
           resourceIdPattern: "", // this will be populated later
           resourceType: "", // this will be populated later
@@ -274,6 +277,10 @@ export function buildArmProviderSchema(
           // Use model name as default; will be updated later if multiple paths exist
           resourceName: model?.name ?? "Unknown"
         } as ResourceMetadata;
+        // Only set isCustomResource when true to keep output clean for standard resources
+        if (isCustom) {
+          entry.isCustomResource = true;
+        }
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
 
@@ -869,8 +876,59 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   return clients;
 }
 
-function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
+/**
+ * Checks if a model or any of its base models has the @customAzureResource decorator.
+ *
+ * The @customAzureResource decorator (Azure.ResourceManager.Legacy.@customAzureResource) is used
+ * for ARM resources that don't follow standard ARM resource templates. This is commonly used for:
+ * - Legacy services that were converted from Swagger to TypeSpec (e.g., TrafficManager)
+ * - Services with custom resource hierarchies that don't fit standard ARM patterns
+ *
+ * Unlike standard ARM resources that use TrackedResource<T> or ProxyResource<T> templates
+ * (which automatically get @armResourceInternal decorator), custom resources define their own
+ * base Resource model with this decorator.
+ *
+ * @see https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
+ *
+ * @param model - The model to check for @customAzureResource decorator
+ * @returns true if the model or any ancestor has @customAzureResource decorator
+ */
+function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
+  let current: InputModelType | undefined = model;
+  while (current) {
+    if (
+      current.decorators?.some((d) => d.name === customAzureResource)
+    ) {
+      return true;
+    }
+    current = current.baseModel;
+  }
+  return false;
+}
+
+/**
+ * Collects all models that represent ARM resources from the code model.
+ *
+ * ARM resources are detected in two ways:
+ *
+ * 1. **Standard ARM resources**: Models that use standard ARM templates like TrackedResource<T>
+ *    or ProxyResource<T>. These models have @armResourceInternal or @armResourceWithParameter
+ *    decorators applied automatically by the typespec-azure-resource-manager library.
+ *
+ * 2. **Custom Azure resources**: Models that inherit from a custom base Resource model decorated
+ *    with @customAzureResource. This pattern is used by legacy services (e.g., TrafficManager)
+ *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
+ *
+ * @param codeModel - The code model containing all models
+ * @returns Object containing array of resource models and set of custom resource model IDs
+ */
+function getAllResourceModels(codeModel: CodeModel): {
+  models: InputModelType[];
+  customResourceIds: Set<string>;
+} {
   const resourceModels: InputModelType[] = [];
+  const customResourceIds = new Set<string>();
+
   for (const model of codeModel.models) {
     // Check for armResource decorators
     if (
@@ -881,8 +939,20 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
     ) {
       resourceModels.push(model);
     }
+    // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
+    //    Used by legacy services like TrafficManager that don't use standard ARM templates
+    else if (hasCustomAzureResourceInHierarchy(model)) {
+      // Only include models that have properties defined.
+      // This filters out completely empty models. Note that the base CustomResource model
+      // also has properties (id, name, type), but it won't become a resource in the final schema
+      // because only models with defined operations become actual resources.
+      if (model.properties && model.properties.length > 0) {
+        resourceModels.push(model);
+        customResourceIds.add(model.crossLanguageDefinitionId);
+      }
+    }
   }
-  return resourceModels;
+  return { models: resourceModels, customResourceIds };
 }
 
 function getSingletonResource(

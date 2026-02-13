@@ -24,6 +24,7 @@ import "./chaos.tsp";
 import "./redisenterprise.tsp";
 import "./propertyoverride.tsp";
 import "./sitemanager.tsp";
+import "./trafficmanager.tsp";
 import "./extensionresources.tsp";
 import "./flatten-with-customized-property.tsp";
 import "./extensionresourcename.tsp";

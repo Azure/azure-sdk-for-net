@@ -1843,4 +1843,178 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       normalizeSchemaForComparison(armProviderSchema, normalizeServiceGroupScopes)
     );
   });
+
+  it("custom Azure resource with @customAzureResource decorator (TrafficManager pattern)", async () => {
+    const program = await typeSpecCompile(
+      `
+using Azure.ResourceManager.Legacy;
+
+// Custom base Resource model with @customAzureResource decorator
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+@Azure.ResourceManager.Legacy.customAzureResource
+model CustomResource {
+  id?: string;
+  name?: string;
+  type?: string;
+}
+
+// Custom ProxyResource extending CustomResource
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/no-empty-model" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+model CustomProxyResource extends CustomResource {}
+
+// Custom TrackedResource extending CustomResource
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+model CustomTrackedResource extends CustomResource {
+  @visibility(Lifecycle.Create, Lifecycle.Read, Lifecycle.Update)
+  tags?: Record<string>;
+  @visibility(Lifecycle.Create, Lifecycle.Read)
+  location?: string;
+}
+
+// Traffic Profile (parent resource) extending custom tracked resource
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+model TrafficProfile extends CustomTrackedResource {
+  properties?: TrafficProfileProperties;
+}
+
+model TrafficProfileProperties {
+  profileStatus?: string;
+}
+
+// Traffic Endpoint (child resource) extending custom proxy resource
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+@parentResource(TrafficProfile)
+model TrafficEndpoint extends CustomProxyResource {
+  properties?: TrafficEndpointProperties;
+}
+
+model TrafficEndpointProperties {
+  target?: string;
+}
+
+// Define legacy operations for TrafficProfile
+alias TrafficProfileOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider<TrafficProfile>;
+  },
+  {
+    @path
+    @segment("trafficProfiles")
+    profileName: string;
+  },
+  ErrorResponse,
+  "TrafficProfile"
+>;
+
+@armResourceOperations
+interface TrafficProfiles {
+  get is TrafficProfileOps.Read<TrafficProfile>;
+  createOrUpdate is TrafficProfileOps.CreateOrUpdateSync<TrafficProfile>;
+  delete is TrafficProfileOps.DeleteSync<TrafficProfile>;
+  list is TrafficProfileOps.List<TrafficProfile>;
+}
+
+// Define legacy operations for TrafficEndpoint
+alias TrafficEndpointOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider<TrafficEndpoint>;
+    @path
+    @segment("trafficProfiles")
+    profileName: string;
+  },
+  {
+    @path
+    @segment("endpoints")
+    endpointName: string;
+  },
+  ErrorResponse,
+  "TrafficEndpoint"
+>;
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Testing LegacyOperations pattern"
+interface TrafficEndpoints {
+  get is TrafficEndpointOps.Read<TrafficEndpoint>;
+  createOrUpdate is TrafficEndpointOps.CreateOrUpdateSync<TrafficEndpoint>;
+  delete is TrafficEndpointOps.DeleteSync<TrafficEndpoint>;
+}
+`,
+      runner
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have TrafficProfile and TrafficEndpoint as resources
+    strictEqual(
+      armProviderSchema.resources.length,
+      2,
+      "Should have 2 resources: TrafficProfile and TrafficEndpoint"
+    );
+
+    // Find the TrafficProfile resource
+    const trafficProfileResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/trafficProfiles"
+    );
+    ok(trafficProfileResource, "TrafficProfile resource should be detected");
+    strictEqual(
+      trafficProfileResource.metadata.resourceName,
+      "TrafficProfile",
+      "Resource name should be TrafficProfile"
+    );
+    strictEqual(
+      trafficProfileResource.metadata.methods.length,
+      4,
+      "TrafficProfile should have 4 methods (get, createOrUpdate, delete, list)"
+    );
+
+    // Find the TrafficEndpoint resource
+    const trafficEndpointResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/trafficProfiles/endpoints"
+    );
+    ok(trafficEndpointResource, "TrafficEndpoint resource should be detected");
+    strictEqual(
+      trafficEndpointResource.metadata.resourceName,
+      "TrafficEndpoint",
+      "Resource name should be TrafficEndpoint"
+    );
+    strictEqual(
+      trafficEndpointResource.metadata.methods.length,
+      3,
+      "TrafficEndpoint should have 3 methods (get, createOrUpdate, delete)"
+    );
+
+    // Verify the parent-child relationship
+    strictEqual(
+      trafficEndpointResource.metadata.parentResourceId,
+      trafficProfileResource.metadata.resourceIdPattern,
+      "TrafficEndpoint should have TrafficProfile as parent"
+    );
+  });
 });
