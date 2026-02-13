@@ -6,7 +6,7 @@ This sample demonstrates how to create custom analyzers using labeled training d
 
 Labeled training data allows you to train custom analyzers on annotated sample documents. This is useful when you need domain-specific field extraction beyond what prebuilt analyzers provide.
 
-This sample mainly demonstrates the API pattern for creating an analyzer with labeled training data. For an easier labeling workflow, use **Azure AI Content Understanding Studio** at https://contentunderstanding.ai.azure.com/.
+For an easier labeling workflow, use **Azure AI Content Understanding Studio** at https://contentunderstanding.ai.azure.com/.
 
 ## Prerequisites
 
@@ -33,8 +33,8 @@ Labeled receipt data is available in this repo at `tests/samples/sample_files/re
 | `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX` | No | Path prefix within the container (e.g., `"receipt_labels/"`). Omit if files are at the container root |
 
 > **Tip:** If `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` is not set but both `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT`
-> and `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER` are provided, the sample will automatically generate a User Delegation SAS URL
-> using `DefaultAzureCredential`. This avoids the need to manually create SAS tokens.
+> and `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER` are provided, the sample auto-generates a User Delegation SAS URL
+> via `DefaultAzureCredential`. This avoids the need to manually create SAS tokens.
 
 ### Training data file structure
 
@@ -45,147 +45,22 @@ Each training document requires three files:
 
 ## Example
 
+### Create the analyzer
+
 ```C# Snippet:ContentUnderstandingCreateAnalyzerWithLabels
-// Generate a unique analyzer ID
-string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+```
 
-// Step 1: Define field schema for receipt extraction
-var itemDefinition = new ContentFieldDefinition
-{
-    Type = ContentFieldType.Object,
-    Method = GenerationMethod.Extract,
-    Description = "Individual item details",
-};
-itemDefinition.Properties.Add("Quantity", new ContentFieldDefinition
-{
-    Type = ContentFieldType.String,
-    Method = GenerationMethod.Extract,
-    Description = "Quantity of the item",
-});
-itemDefinition.Properties.Add("Name", new ContentFieldDefinition
-{
-    Type = ContentFieldType.String,
-    Method = GenerationMethod.Extract,
-    Description = "Name of the item",
-});
-itemDefinition.Properties.Add("Price", new ContentFieldDefinition
-{
-    Type = ContentFieldType.String,
-    Method = GenerationMethod.Extract,
-    Description = "Price of the item",
-});
+### Helper: Build receipt field schema
 
-var fieldSchema = new ContentFieldSchema(
-    new Dictionary<string, ContentFieldDefinition>
-    {
-        ["MerchantName"] = new ContentFieldDefinition
-        {
-            Type = ContentFieldType.String,
-            Method = GenerationMethod.Extract,
-            Description = "Name of the merchant",
-        },
-        ["Items"] = new ContentFieldDefinition
-        {
-            Type = ContentFieldType.Array,
-            Method = GenerationMethod.Generate,
-            Description = "List of items purchased",
-            ItemDefinition = itemDefinition,
-        },
-        ["Total"] = new ContentFieldDefinition
-        {
-            Type = ContentFieldType.String,
-            Method = GenerationMethod.Extract,
-            Description = "Total amount",
-        },
-    }
-)
-{
-    Name = "receipt_schema",
-    Description = "Schema for receipt extraction with items",
-};
+```C# Snippet:ContentUnderstandingBuildReceiptFieldSchema
+```
 
-// Step 2: Create labeled data knowledge source (optional, based on environment variable)
-// Option A: Use a pre-generated SAS URL directly.
-// Option B: Provide storage account + container name to auto-generate a User Delegation SAS.
-// Option A: Pre-generated SAS URL
-string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
+### Helper: Generate User Delegation SAS URL
 
-// Option B: Auto-generate SAS from storage account + container name
-if (string.IsNullOrEmpty(trainingDataSasUrl))
-{
-    string? storageAccountName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
-    string? containerName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
-    if (!string.IsNullOrEmpty(storageAccountName) && !string.IsNullOrEmpty(containerName))
-    {
-        var blobServiceClient = new BlobServiceClient(
-            new Uri($"https://{storageAccountName}.blob.core.windows.net"),
-            new Azure.Identity.DefaultAzureCredential());
-        var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
-            DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1))).Value;
-        var sasBuilder = new BlobSasBuilder
-        {
-            BlobContainerName = containerName,
-            Resource = "c",
-            ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
-        };
-        sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List);
-        var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
-        trainingDataSasUrl = $"https://{storageAccountName}.blob.core.windows.net/{containerName}?{sasToken}";
-        Console.WriteLine($"Auto-generated User Delegation SAS URL from storage account '{storageAccountName}'");
-    }
-}
+```C# Snippet:ContentUnderstandingGenerateUserDelegationSas
+```
 
-string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
+### Clean up
 
-var knowledgeSources = new List<KnowledgeSource>();
-if (!string.IsNullOrEmpty(trainingDataSasUrl))
-{
-    var knowledgeSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl));
-    if (!string.IsNullOrEmpty(trainingDataPrefix))
-    {
-        knowledgeSource.Prefix = trainingDataPrefix;
-    }
-    knowledgeSources.Add(knowledgeSource);
-    Console.WriteLine($"Using labeled training data from: {trainingDataSasUrl[..Math.Min(50, trainingDataSasUrl.Length)]}...");
-}
-else
-{
-    Console.WriteLine("No CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL set, creating analyzer without labeled training data");
-}
-
-// Step 3: Create analyzer (with or without labeled data)
-var customAnalyzer = new ContentAnalyzer
-{
-    BaseAnalyzerId = "prebuilt-document",
-    Description = "Receipt analyzer with labeled training data",
-    Config = new ContentAnalyzerConfig
-    {
-        EnableLayout = true,
-        EnableOcr = true,
-    },
-    FieldSchema = fieldSchema,
-};
-customAnalyzer.Models.Add("completion", "gpt-4.1");
-customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
-
-if (knowledgeSources.Count > 0)
-{
-    foreach (var ks in knowledgeSources)
-    {
-        customAnalyzer.KnowledgeSources.Add(ks);
-    }
-}
-
-var operation = await client.CreateAnalyzerAsync(
-    WaitUntil.Completed,
-    analyzerId,
-    customAnalyzer,
-    allowReplace: true
-);
-
-ContentAnalyzer result = operation.Value;
-Console.WriteLine($"Analyzer created: {analyzerId}");
-Console.WriteLine($"  Description: {result.Description}");
-Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
-Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count}");
+```C# Snippet:ContentUnderstandingDeleteAnalyzerWithLabels
 ```

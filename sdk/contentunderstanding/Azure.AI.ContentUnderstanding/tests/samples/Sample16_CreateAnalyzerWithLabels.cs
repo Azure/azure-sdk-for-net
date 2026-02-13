@@ -17,33 +17,16 @@ using NUnit.Framework;
 namespace Azure.AI.ContentUnderstanding.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to build analyzers with training labels (labeled data from Azure Blob Storage).
+    /// Demonstrates creating a custom analyzer with labeled training data from Azure Blob Storage.
     ///
-    /// This sample is mainly to show the API pattern for creating an analyzer with labeled training data.
     /// For an easier labeling workflow, use Azure AI Content Understanding Studio at
     /// https://contentunderstanding.ai.azure.com/
     ///
-    /// Labeled receipt data is available in this repo at <c>tests/samples/sample_files/receipt_labels</c>.
-    /// For LIVE mode with real training data: upload that folder to Azure Blob Storage, generate a
-    /// container SAS URL with List/Read permissions, then set the environment variables below. Use
-    /// <c>CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX</c> if you uploaded into a subfolder
-    /// (e.g., "receipt_labels/"); omit or leave unset if files are at the container root.
-    ///
-    /// Required environment variables:
-    ///   CONTENTUNDERSTANDING_ENDPOINT – Azure Content Understanding endpoint URL
-    ///
-    /// Optional environment variables (for labeled training data; used in LIVE mode):
-    ///
-    /// Option A – Provide a pre-generated SAS URL:
-    ///   CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL – SAS URL for the Azure Blob container with labeled training data.
-    ///
-    /// Option B – Provide storage account + container name (auto-generates a User Delegation SAS via DefaultAzureCredential):
-    ///   CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT – Storage account name (e.g., "mystorageaccount").
-    ///   CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER – Container name (e.g., "training-data").
-    ///
-    /// Common (works with both options):
-    ///   CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX – Path prefix within the container (e.g., "receipt_labels/").
-    ///     Omit or leave unset if files are at the container root.
+    /// Labeled receipt data is available at <c>tests/samples/sample_files/receipt_labels</c>.
+    /// To run in LIVE mode: upload that folder to Azure Blob Storage, then set one of:
+    ///   Option A – CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL (pre-generated SAS URL)
+    ///   Option B – CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT + _CONTAINER (auto-generates SAS)
+    ///   Common  – CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX (e.g. "receipt_labels/")
     /// </summary>
     public partial class ContentUnderstandingSamples
     {
@@ -51,17 +34,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
         [Ignore("This test requires recorded session files. Run in Live mode to record.")]
         public async Task CreateAnalyzerWithLabelsAsync()
         {
+            // ── Test infrastructure ──────────────────────────────────────────
             string endpoint = TestEnvironment.Endpoint;
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(
-                new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options)
-            );
+                new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
-            // Generate a unique analyzer ID (deterministic for playback)
             string defaultId = $"test_receipt_analyzer_{Recording.Random.NewGuid().ToString("N")}";
             string analyzerId = Recording.GetVariable("analyzerWithLabelsId", defaultId) ?? defaultId;
 
-            // Get training data configuration
             string? trainingDataSasUrl = Mode == RecordedTestMode.Playback
                 ? "https://placeholder.blob.core.windows.net/container?sv=placeholder"
                 : TestEnvironment.TrainingDataSasUrl;
@@ -69,215 +50,197 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ? Recording.GetVariable("trainingDataPrefix", null)
                 : TestEnvironment.TrainingDataPrefix;
 
-            // Fallback: auto-generate SAS URL from storage account + container name
             if (string.IsNullOrEmpty(trainingDataSasUrl) && Mode != RecordedTestMode.Playback)
             {
-                string? storageAccountName = TestEnvironment.TrainingDataStorageAccountName;
-                string? containerName = TestEnvironment.TrainingDataContainerName;
-                if (!string.IsNullOrEmpty(storageAccountName) && !string.IsNullOrEmpty(containerName))
+                string? acct = TestEnvironment.TrainingDataStorageAccountName;
+                string? ctr = TestEnvironment.TrainingDataContainerName;
+                if (!string.IsNullOrEmpty(acct) && !string.IsNullOrEmpty(ctr))
                 {
                     trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(
-                        storageAccountName!, containerName!, TestEnvironment.Credential);
-                    Console.WriteLine($"Auto-generated User Delegation SAS URL from storage account '{storageAccountName}', container '{containerName}'");
+                        acct!, ctr!, TestEnvironment.Credential);
                 }
             }
 
-            // Record prefix for playback so request bodies match
             if (Mode == RecordedTestMode.Record)
             {
                 Recording.SetVariable("trainingDataPrefix", trainingDataPrefix ?? string.Empty);
             }
+            // ─────────────────────────────────────────────────────────────────
 
             try
             {
                 #region Snippet:ContentUnderstandingCreateAnalyzerWithLabels
 #if SNIPPET
-                // Generate a unique analyzer ID
                 string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #endif
 
-                // Step 1: Define field schema for receipt extraction
-                var itemDefinition = new ContentFieldDefinition
-                {
-                    Type = ContentFieldType.Object,
-                    Method = GenerationMethod.Extract,
-                    Description = "Individual item details",
-                };
-                itemDefinition.Properties.Add("Quantity", new ContentFieldDefinition
-                {
-                    Type = ContentFieldType.String,
-                    Method = GenerationMethod.Extract,
-                    Description = "Quantity of the item",
-                });
-                itemDefinition.Properties.Add("Name", new ContentFieldDefinition
-                {
-                    Type = ContentFieldType.String,
-                    Method = GenerationMethod.Extract,
-                    Description = "Name of the item",
-                });
-                itemDefinition.Properties.Add("Price", new ContentFieldDefinition
-                {
-                    Type = ContentFieldType.String,
-                    Method = GenerationMethod.Extract,
-                    Description = "Price of the item",
-                });
+                // Step 1: Build the receipt field schema (see helper method below)
+                ContentFieldSchema fieldSchema = BuildReceiptFieldSchema();
 
-                var fieldSchema = new ContentFieldSchema(
-                    new Dictionary<string, ContentFieldDefinition>
-                    {
-                        ["MerchantName"] = new ContentFieldDefinition
-                        {
-                            Type = ContentFieldType.String,
-                            Method = GenerationMethod.Extract,
-                            Description = "Name of the merchant",
-                        },
-                        ["Items"] = new ContentFieldDefinition
-                        {
-                            Type = ContentFieldType.Array,
-                            Method = GenerationMethod.Generate,
-                            Description = "List of items purchased",
-                            ItemDefinition = itemDefinition,
-                        },
-                        ["Total"] = new ContentFieldDefinition
-                        {
-                            Type = ContentFieldType.String,
-                            Method = GenerationMethod.Extract,
-                            Description = "Total amount",
-                        },
-                    }
-                )
-                {
-                    Name = "receipt_schema",
-                    Description = "Schema for receipt extraction with items",
-                };
-
-                // Step 2: Create labeled data knowledge source (optional, based on environment variable)
-                // Option A: Use a pre-generated SAS URL directly.
-                // Option B: Provide storage account + container name to auto-generate a User Delegation SAS.
+                // Step 2: Resolve training data SAS URL (optional)
 #if SNIPPET
-                // Option A: Pre-generated SAS URL
+                // Option A: pre-generated SAS URL
                 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
 
-                // Option B: Auto-generate SAS from storage account + container name
+                // Option B: auto-generate from storage account + container name
                 if (string.IsNullOrEmpty(trainingDataSasUrl))
                 {
-                    string? storageAccountName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
-                    string? containerName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
-                    if (!string.IsNullOrEmpty(storageAccountName) && !string.IsNullOrEmpty(containerName))
+                    string? storageAccount = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+                    string? container = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
+                    if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(container))
                     {
-                        var blobServiceClient = new BlobServiceClient(
-                            new Uri($"https://{storageAccountName}.blob.core.windows.net"),
-                            new Azure.Identity.DefaultAzureCredential());
-                        var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
-                            DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1))).Value;
-                        var sasBuilder = new BlobSasBuilder
-                        {
-                            BlobContainerName = containerName,
-                            Resource = "c",
-                            ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
-                        };
-                        sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List);
-                        var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
-                        trainingDataSasUrl = $"https://{storageAccountName}.blob.core.windows.net/{containerName}?{sasToken}";
-                        Console.WriteLine($"Auto-generated User Delegation SAS URL from storage account '{storageAccountName}'");
+                        trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(
+                            storageAccount, container, new Azure.Identity.DefaultAzureCredential());
                     }
                 }
 
                 string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 #endif
 
+                // Step 3: Create knowledge source from labeled data (if available)
                 var knowledgeSources = new List<KnowledgeSource>();
                 if (!string.IsNullOrEmpty(trainingDataSasUrl))
                 {
-                    var knowledgeSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl));
+                    var labeledSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl));
                     if (!string.IsNullOrEmpty(trainingDataPrefix))
                     {
-                        knowledgeSource.Prefix = trainingDataPrefix;
+                        labeledSource.Prefix = trainingDataPrefix;
                     }
-                    knowledgeSources.Add(knowledgeSource);
-                    Console.WriteLine($"Using labeled training data from: {trainingDataSasUrl!.Substring(0, Math.Min(50, trainingDataSasUrl.Length))}...");
-                }
-                else
-                {
-                    Console.WriteLine("No CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL set, creating analyzer without labeled training data");
+                    knowledgeSources.Add(labeledSource);
                 }
 
-                // Step 3: Create analyzer (with or without labeled data)
+                // Step 4: Create the analyzer
                 var customAnalyzer = new ContentAnalyzer
                 {
                     BaseAnalyzerId = "prebuilt-document",
                     Description = "Receipt analyzer with labeled training data",
-                    Config = new ContentAnalyzerConfig
-                    {
-                        EnableLayout = true,
-                        EnableOcr = true,
-                    },
+                    Config = new ContentAnalyzerConfig { EnableLayout = true, EnableOcr = true },
                     FieldSchema = fieldSchema,
                 };
                 customAnalyzer.Models.Add("completion", "gpt-4.1");
                 customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
-
-                if (knowledgeSources.Count > 0)
+                foreach (var source in knowledgeSources)
                 {
-                    foreach (var ks in knowledgeSources)
-                    {
-                        customAnalyzer.KnowledgeSources.Add(ks);
-                    }
+                    customAnalyzer.KnowledgeSources.Add(source);
                 }
 
                 var operation = await client.CreateAnalyzerAsync(
-                    WaitUntil.Completed,
-                    analyzerId,
-                    customAnalyzer,
-                    allowReplace: true
-                );
+                    WaitUntil.Completed, analyzerId, customAnalyzer, allowReplace: true);
 
                 ContentAnalyzer result = operation.Value;
-                Console.WriteLine($"Analyzer created: {analyzerId}");
-                Console.WriteLine($"  Description: {result.Description}");
-                Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
-                Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count ?? 0}");
+                Console.WriteLine($"Analyzer '{analyzerId}' created.");
+                Console.WriteLine($"  Base analyzer : {result.BaseAnalyzerId}");
+                Console.WriteLine($"  Field count   : {result.FieldSchema?.Fields?.Count ?? 0}");
+                Console.WriteLine($"  Knowledge srcs: {result.KnowledgeSources?.Count ?? 0}");
                 #endregion
 
-                // Verify analyzer creation
-                Assert.IsNotNull(result, "Analyzer should not be null");
+                #region Assertion:ContentUnderstandingCreateAnalyzerWithLabels
+                Assert.IsNotNull(result);
                 Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId);
                 Assert.AreEqual("Receipt analyzer with labeled training data", result.Description);
+
                 Assert.IsNotNull(result.FieldSchema);
                 Assert.AreEqual("receipt_schema", result.FieldSchema!.Name);
-                Assert.AreEqual(3, result.FieldSchema!.Fields.Count, "Should have 3 custom fields");
+                Assert.AreEqual(3, result.FieldSchema!.Fields.Count, "Expected MerchantName, Items, Total");
+                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("MerchantName"));
+                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Items"));
+                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Total"));
 
-                // Verify field schema
-                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("MerchantName"), "Should have MerchantName field");
-                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Items"), "Should have Items field");
-                Assert.IsTrue(result.FieldSchema!.Fields.ContainsKey("Total"), "Should have Total field");
-
-                var itemsFieldResult = result.FieldSchema!.Fields["Items"];
-                Assert.AreEqual(ContentFieldType.Array, itemsFieldResult.Type);
-                Assert.IsNotNull(itemsFieldResult.ItemDefinition);
-                Assert.AreEqual(ContentFieldType.Object, itemsFieldResult.ItemDefinition!.Type);
-                Assert.AreEqual(3, itemsFieldResult.ItemDefinition!.Properties.Count);
-
-                Console.WriteLine("Analyzer creation with labeled data verified successfully");
+                var itemsField = result.FieldSchema!.Fields["Items"];
+                Assert.AreEqual(ContentFieldType.Array, itemsField.Type);
+                Assert.IsNotNull(itemsField.ItemDefinition);
+                Assert.AreEqual(ContentFieldType.Object, itemsField.ItemDefinition!.Type);
+                Assert.AreEqual(3, itemsField.ItemDefinition!.Properties.Count, "Expected Quantity, Name, Price");
+                #endregion
             }
             finally
             {
-                // Clean up: delete the analyzer
+                #region Snippet:ContentUnderstandingDeleteAnalyzerWithLabels
+#if SNIPPET
+                await client.DeleteAnalyzerAsync(analyzerId);
+                Console.WriteLine($"Analyzer '{analyzerId}' deleted.");
+#else
                 try
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
-                    Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
+                    Console.WriteLine($"Analyzer '{analyzerId}' deleted.");
                 }
                 catch
                 {
                     // Ignore cleanup errors in tests
                 }
+#endif
+                #endregion
             }
         }
 
+        #region Snippet:ContentUnderstandingBuildReceiptFieldSchema
         /// <summary>
-        /// Generates a User Delegation SAS URL for a blob container using DefaultAzureCredential.
-        /// This avoids the need to manually create SAS tokens or store account keys.
+        /// Builds a <see cref="ContentFieldSchema"/> for receipt extraction
+        /// with MerchantName, Items (array of Quantity / Name / Price), and Total.
+        /// </summary>
+        private static ContentFieldSchema BuildReceiptFieldSchema()
+        {
+            var itemDefinition = new ContentFieldDefinition
+            {
+                Type = ContentFieldType.Object,
+                Method = GenerationMethod.Extract,
+                Description = "Individual item details",
+            };
+            itemDefinition.Properties.Add("Quantity", new ContentFieldDefinition
+            {
+                Type = ContentFieldType.String,
+                Method = GenerationMethod.Extract,
+                Description = "Quantity of the item",
+            });
+            itemDefinition.Properties.Add("Name", new ContentFieldDefinition
+            {
+                Type = ContentFieldType.String,
+                Method = GenerationMethod.Extract,
+                Description = "Name of the item",
+            });
+            itemDefinition.Properties.Add("Price", new ContentFieldDefinition
+            {
+                Type = ContentFieldType.String,
+                Method = GenerationMethod.Extract,
+                Description = "Price of the item",
+            });
+
+            return new ContentFieldSchema(
+                new Dictionary<string, ContentFieldDefinition>
+                {
+                    ["MerchantName"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.String,
+                        Method = GenerationMethod.Extract,
+                        Description = "Name of the merchant",
+                    },
+                    ["Items"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.Array,
+                        Method = GenerationMethod.Generate,
+                        Description = "List of items purchased",
+                        ItemDefinition = itemDefinition,
+                    },
+                    ["Total"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.String,
+                        Method = GenerationMethod.Extract,
+                        Description = "Total amount",
+                    },
+                }
+            )
+            {
+                Name = "receipt_schema",
+                Description = "Schema for receipt extraction with items",
+            };
+        }
+        #endregion
+
+        #region Snippet:ContentUnderstandingGenerateUserDelegationSas
+        /// <summary>
+        /// Generates a User Delegation SAS URL (Read + List) for an Azure Blob container.
+        /// Uses <see cref="TokenCredential"/> so no storage account key is needed.
         /// </summary>
         private static async Task<string> GenerateUserDelegationSasUrlAsync(
             string storageAccountName,
@@ -288,21 +251,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 new Uri($"https://{storageAccountName}.blob.core.windows.net"),
                 credential);
 
-            // Get a user delegation key valid for 1 hour
             var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
                 DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1))).Value;
 
-            // Build container-level SAS with Read + List permissions
             var sasBuilder = new BlobSasBuilder
             {
                 BlobContainerName = containerName,
-                Resource = "c", // container-level SAS
+                Resource = "c",
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
             };
             sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List);
 
-            var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
+            string sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
             return $"https://{storageAccountName}.blob.core.windows.net/{containerName}?{sasToken}";
         }
+        #endregion
     }
 }
