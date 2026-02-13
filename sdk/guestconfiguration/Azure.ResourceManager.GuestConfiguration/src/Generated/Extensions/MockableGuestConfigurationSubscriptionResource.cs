@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

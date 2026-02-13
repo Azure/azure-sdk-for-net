@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

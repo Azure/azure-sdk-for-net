@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/reports", false);
             uri.AppendQuery("api-version", _apiVersion, true);

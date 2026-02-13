@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             GuestConfigurationVmssAssignmentResource guestConfigurationVmssAssignment = client.GetGuestConfigurationVmssAssignmentResource(guestConfigurationVmssAssignmentResourceId);
 
             // invoke the operation
-            GuestConfigurationVmssAssignmentResource result = await guestConfigurationVmssAssignment.GetAsync();
+            GuestConfigurationVmssAssignmentResource result = await guestConfigurationVmssAssignment.GetAsync(resourceGroupName, vmssName, name, subscriptionId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             GuestConfigurationVmssAssignmentResource guestConfigurationVmssAssignment = client.GetGuestConfigurationVmssAssignmentResource(guestConfigurationVmssAssignmentResourceId);
 
             // invoke the operation
-            ArmOperation<GuestConfigurationVmssAssignmentResource> lro = await guestConfigurationVmssAssignment.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<GuestConfigurationVmssAssignmentResource> lro = await guestConfigurationVmssAssignment.DeleteAsync(WaitUntil.Completed, resourceGroupName, vmssName, name, subscriptionId);
             GuestConfigurationVmssAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -122,7 +122,7 @@ Value = "NotePad,sql",
                     Context = "Azure policy",
                 },
             };
-            ArmOperation<GuestConfigurationVmssAssignmentResource> lro = await guestConfigurationVmssAssignment.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<GuestConfigurationVmssAssignmentResource> lro = await guestConfigurationVmssAssignment.UpdateAsync(WaitUntil.Completed, resourceGroupName, vmssName, name, subscriptionId, data);
             GuestConfigurationVmssAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -154,7 +154,7 @@ Value = "NotePad,sql",
             GuestConfigurationVmssAssignmentResource guestConfigurationVmssAssignment = client.GetGuestConfigurationVmssAssignmentResource(guestConfigurationVmssAssignmentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationVmssAssignment.GetReportsAsync())
+            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationVmssAssignment.GetReportsAsync(resourceGroupName, vmssName, name, subscriptionId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -185,7 +185,7 @@ Value = "NotePad,sql",
 
             // invoke the operation
             string id = "7367cbb8-ae99-47d0-a33b-a283564d2cb1";
-            GuestConfigurationAssignmentReport result = await guestConfigurationVmssAssignment.GetReportAsync(id);
+            GuestConfigurationAssignmentReport result = await guestConfigurationVmssAssignment.GetReportAsync(resourceGroupName, vmssName, name, id, subscriptionId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

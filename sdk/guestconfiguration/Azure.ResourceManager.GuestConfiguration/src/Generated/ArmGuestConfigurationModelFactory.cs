@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
 
         /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
-        /// <param name="id"> Fully qualified resource Id. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Region where the VM is located. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
         /// <returns> A new <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, AzureLocation? location = default, GuestConfigurationAssignmentProperties properties = default)
+        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, GuestConfigurationAssignmentProperties properties = default)
         {
             return new GuestConfigurationAssignmentData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
-                location,
                 additionalBinaryDataProperties: null,
+                location,
                 properties);
         }
 
@@ -223,22 +223,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The core properties of GuestConfiguration ARM resources. </summary>
-        /// <param name="id"> Fully qualified resource Id. </param>
+        /// <summary> ARM proxy resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Region where the VM is located. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationResourceData"/> instance for mocking. </returns>
-        public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, AzureLocation? location = default)
+        public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default)
         {
             return new GuestConfigurationResourceData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
-                location,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                location);
         }
 
         /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>

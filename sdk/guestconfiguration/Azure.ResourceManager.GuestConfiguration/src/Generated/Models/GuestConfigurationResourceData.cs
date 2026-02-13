@@ -13,32 +13,32 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> The core properties of GuestConfiguration ARM resources. </summary>
-    public partial class GuestConfigurationResourceData
+    /// <summary> ARM proxy resource. </summary>
+    public partial class GuestConfigurationResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private protected string _name;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
-        /// <param name="id"> Fully qualified resource Id. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> Region where the VM is located. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationResourceData(ResourceIdentifier id, string name, string @type, SystemData systemData, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public GuestConfigurationResourceData()
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            SystemData = systemData;
-            Location = location;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of the resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        internal GuestConfigurationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location) : base(id, name, resourceType, systemData)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Location = location;
+        }
+
+        /// <summary> Region where the VM is located. </summary>
+        [WirePath("location")]
+        public string Location { get; set; }
     }
 }

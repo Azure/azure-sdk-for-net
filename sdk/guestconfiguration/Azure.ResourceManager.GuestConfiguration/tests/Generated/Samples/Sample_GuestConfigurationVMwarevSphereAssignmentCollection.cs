@@ -57,7 +57,7 @@ Value = "NotePad,sql",
                     Context = "Azure policy",
                 },
             };
-            ArmOperation<GuestConfigurationVMwarevSphereAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestConfigurationAssignmentName, data);
+            ArmOperation<GuestConfigurationVMwarevSphereAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, guestConfigurationAssignmentName, data);
             GuestConfigurationVMwarevSphereAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -88,7 +88,7 @@ Value = "NotePad,sql",
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
-            GuestConfigurationVMwarevSphereAssignmentResource result = await collection.GetAsync(guestConfigurationAssignmentName);
+            GuestConfigurationVMwarevSphereAssignmentResource result = await collection.GetAsync(vmName, guestConfigurationAssignmentName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -116,16 +116,9 @@ Value = "NotePad,sql",
             string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}";
             GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(new ResourceIdentifier(scope));
 
-            // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationVMwarevSphereAssignmentResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GuestConfigurationAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
+            // invoke the operation
+            // Note: GetAllAsync is no longer available on this collection after migration.
+            // Use GetAsync with vmName and assignmentName to get individual assignments.
             Console.WriteLine("Succeeded");
         }
 
@@ -150,7 +143,7 @@ Value = "NotePad,sql",
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
-            bool result = await collection.ExistsAsync(guestConfigurationAssignmentName);
+            bool result = await collection.ExistsAsync(vmName, guestConfigurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -176,7 +169,7 @@ Value = "NotePad,sql",
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
-            NullableResponse<GuestConfigurationVMwarevSphereAssignmentResource> response = await collection.GetIfExistsAsync(guestConfigurationAssignmentName);
+            NullableResponse<GuestConfigurationVMwarevSphereAssignmentResource> response = await collection.GetIfExistsAsync(vmName, guestConfigurationAssignmentName);
             GuestConfigurationVMwarevSphereAssignmentResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

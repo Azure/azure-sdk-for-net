@@ -15,12 +15,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> The core properties of GuestConfiguration ARM resources. </summary>
-    public partial class GuestConfigurationResourceData : IJsonModel<GuestConfigurationResourceData>
+    /// <summary> ARM proxy resource. </summary>
+    public partial class GuestConfigurationResourceData : ResourceData, IJsonModel<GuestConfigurationResourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,9 +35,39 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<GuestConfigurationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+        }
+
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GuestConfigurationResourceData IJsonModel<GuestConfigurationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GuestConfigurationResourceData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -58,10 +88,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -80,7 +110,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -101,11 +135,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationResourceData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
-                location,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                location);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GuestConfigurationResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
@@ -119,5 +156,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GuestConfigurationResourceData IPersistableModel<GuestConfigurationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GuestConfigurationResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GuestConfigurationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

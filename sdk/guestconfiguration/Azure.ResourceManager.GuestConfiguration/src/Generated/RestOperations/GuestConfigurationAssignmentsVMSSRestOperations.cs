@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
-            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments", false);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

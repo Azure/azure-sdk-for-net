@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(ResourceIdentifier scope)
         {
-            return new GuestConfigurationHcrpAssignmentCollection(Client, GetResourceGroupId(scope), scope.Name);
+            return new GuestConfigurationHcrpAssignmentCollection(Client, GetResourceGroupId(scope));
         }
 
         /// <summary> Gets a specific GuestConfigurationHcrpAssignmentResource. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetGuestConfigurationHcrpAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationHcrpAssignments(scope).GetAsync(scope.Name, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a specific GuestConfigurationHcrpAssignmentResource. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual Response<GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetGuestConfigurationHcrpAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationHcrpAssignments(scope).Get(scope.Name, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GuestConfigurationVmssAssignmentResources in the ArmClient. </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(ResourceIdentifier scope)
         {
-            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, GetResourceGroupId(scope), scope.Name);
+            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, GetResourceGroupId(scope));
         }
 
         /// <summary> Gets a specific GuestConfigurationVMwarevSphereAssignmentResource. </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetGuestConfigurationVMwarevSphereAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetGuestConfigurationVMwarevSphereAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationVMwarevSphereAssignments(scope).GetAsync(scope.Name, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a specific GuestConfigurationVMwarevSphereAssignmentResource. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual Response<GuestConfigurationVMwarevSphereAssignmentResource> GetGuestConfigurationVMwarevSphereAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetGuestConfigurationVMwarevSphereAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationVMwarevSphereAssignments(scope).Get(scope.Name, guestConfigurationAssignmentName, cancellationToken);
         }
     }
 }

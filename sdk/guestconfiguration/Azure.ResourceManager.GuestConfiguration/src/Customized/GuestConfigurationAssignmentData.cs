@@ -28,13 +28,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeLocationValue(JsonProperty property, ref AzureLocation? location)
+        private static void DeserializeLocationValue(JsonProperty property, ref string location)
         {
-            if (property.Value.ValueKind == JsonValueKind.Null)
-            {
-                return;
-            }
-            location = new AzureLocation(property.Value.GetString());
+            location = property.Value.GetString();
         }
     }
 }
