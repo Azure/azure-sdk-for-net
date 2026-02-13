@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.GeneratorAgent.Commands;
-using Azure.GeneratorAgent.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,10 +22,20 @@ public static class ServiceConfiguration
     {
         services.AddSingleton(configuration);
 
+        services.AddHttpClient<GitService>(client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(30);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Azure-GeneratorAgent/1.0");
+            client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+            client.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+            client.MaxResponseContentBufferSize = 10 * 1024 * 1024;
+        });
+
         services.AddTransient<RootCommandFactory>();
 
-        services.AddSingleton<SdkValidator>();
+        services.AddSingleton<ValidationService>();
         services.AddSingleton<GitService>();
+        services.AddSingleton<FileService>();
 
         return services;
     }

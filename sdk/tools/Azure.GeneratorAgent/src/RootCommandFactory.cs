@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.CommandLine;
-using Azure.GeneratorAgent.Services;
+using Azure.GeneratorAgent;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent.Commands;
@@ -12,20 +12,30 @@ namespace Azure.GeneratorAgent.Commands;
 /// </summary>
 public class RootCommandFactory
 {
-    private readonly SdkValidator _validator;
+    private const string DefaultOwner = "Azure";
+    private const string DefaultSpecsRepository = "azure-rest-api-specs";
+    private const string TspLocationFileName = "tsp-location.yaml";
+    private const string CommitField = "commit";
+    private const string EmitterPackageJsonPathField = "emitterPackageJsonPath";
+    private const string DefaultEmitterPackageJsonPath = "\"eng/azure-typespec-http-client-csharp-emitter-package.json\"";
+
+    private readonly ValidationService _validator;
     private readonly GitService _gitService;
+    private readonly FileService _fileService;
     private readonly ILogger<RootCommandFactory> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RootCommandFactory"/> class.
     /// </summary>
-    /// <param name="validator">SDK validator service.</param>
+    /// <param name="validator">Validation service.</param>
     /// <param name="gitService">Git service.</param>
+    /// <param name="fileService">File service.</param>
     /// <param name="logger">Logger instance.</param>
-    public RootCommandFactory(SdkValidator validator, GitService gitService, ILogger<RootCommandFactory> logger)
+    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, ILogger<RootCommandFactory> logger)
     {
         _validator = validator;
         _gitService = gitService;
+        _fileService = fileService;
         _logger = logger;
     }
 
@@ -56,10 +66,8 @@ public class RootCommandFactory
 
             try
             {
-                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath!, CancellationToken.None).ConfigureAwait(false);
-
-                _logger.LogInformation("Generate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
-                // TODO: Continue with remaining workflow steps (Build → Parse → Fix)
+                // TODO: Implement generate workflow
+                _logger.LogInformation("Generate workflow - TODO");
             }
             catch (Exception ex)
             {
@@ -84,11 +92,32 @@ public class RootCommandFactory
 
             try
             {
-                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath!, CancellationToken.None).ConfigureAwait(false);
+                // Step 1: Validate SDK path
+                var validatedPath = await _validator.ValidateAsync(sdkPath!, CancellationToken.None).ConfigureAwait(false);
+                _logger.LogInformation("Step 1: SDK path validated: {Path}", validatedPath);
 
-                _logger.LogInformation("Migrate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
-                // TODO: Step 4 (Migration specific): Update tsp-location.yaml & .csproj
-                // TODO: Continue with remaining workflow steps (Build → Parse → Fix)
+                // Step 2: Validate tsp-location.yaml
+                var tspLocationPath = Path.Combine(validatedPath, TspLocationFileName);
+                _validator.ValidateTspLocationFile(tspLocationPath);
+
+                // Step 3: Get directory from tsp-location.yaml an validate it
+                var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, CancellationToken.None).ConfigureAwait(false);
+                _validator.ValidateRepositoryPath(relativeDirectory);
+
+                // Step 4: Get latest commit id
+                var commitSha = await _gitService.GetLatestCommitAsync(DefaultOwner, DefaultSpecsRepository, relativeDirectory, CancellationToken.None).ConfigureAwait(false);
+                _logger.LogInformation("Latest commit ID: {CommitSha}", commitSha);
+
+                // Step 5: Update the commit ID in tsp-location.yaml
+                if (!string.IsNullOrEmpty(commitSha))
+                {
+                    await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, CancellationToken.None).ConfigureAwait(false);
+                    _logger.LogInformation("Updated commit ID in tsp-location.yaml");
+                }
+
+                // Step 6: Update emitterPackageJsonPath in tsp-location.yaml
+                await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, CancellationToken.None).ConfigureAwait(false);
+                _logger.LogInformation("Updated emitterPackageJsonPath in tsp-location.yaml");
             }
             catch (Exception ex)
             {
@@ -98,21 +127,5 @@ public class RootCommandFactory
         });
 
         return migrateCommand;
-    }
-
-    private async Task<(string ValidatedPath, string CommitSha)> ValidateAndPrepareAsync(
-        string sdkPath,
-        CancellationToken cancellationToken)
-    {
-        if (string.IsNullOrEmpty(sdkPath))
-        {
-            throw new ArgumentException("SDK path is required but was not provided", nameof(sdkPath));
-        }
-
-        var validatedPath = await _validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
-
-        var commitSha = await _gitService.GetLatestCommitAsync(validatedPath, cancellationToken).ConfigureAwait(false);
-
-        return (validatedPath, commitSha);
     }
 }

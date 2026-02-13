@@ -2,132 +2,89 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+using System.Text.Json;
 
-namespace Azure.GeneratorAgent.Services;
+namespace Azure.GeneratorAgent;
 
 /// <summary>
 /// Executes Git commands to retrieve repository information.
 /// </summary>
 public sealed class GitService
 {
+    private const string DefaultUserAgent = "AzureGeneratorAgent";
+
     private readonly ILogger<GitService> _logger;
+    private readonly HttpClient _httpClient;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GitService"/> class.
     /// </summary>
     /// <param name="logger">Logger instance.</param>
-    public GitService(ILogger<GitService> logger)
+    /// <param name="httpClient">HTTP client for making requests to GitHub API.</param>
+    public GitService(ILogger<GitService> logger, HttpClient httpClient)
     {
         _logger = logger;
+        _httpClient = httpClient;
     }
 
     /// <summary>
-    /// Gets the latest commit SHA from the repository.
+    /// Gets the latest commit SHA from a remote GitHub repository, optionally for a specific path.
     /// </summary>
-    /// <param name="path">Path to any directory within a git repository.</param>
+    /// <param name="owner">Repository owner</param>
+    /// <param name="repoName">Repository name</param>
+    /// <param name="path">Optional path within the repository. If null, gets latest commit from main branch.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The commit SHA.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when not a git repository or git command fails.</exception>
-    public async Task<string> GetLatestCommitAsync(string path, CancellationToken cancellationToken = default)
+    /// <returns>The latest commit SHA, or null if path-specific request fails.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the GitHub API call fails for repository-wide requests.</exception>
+    public async Task<string?> GetLatestCommitAsync(string owner, string repoName, string? path = null, CancellationToken cancellationToken = default)
     {
-        _logger.LogDebug("Getting latest commit from: {Path}", path);
+        _logger.LogDebug("Getting latest commit from remote: {Owner}/{Repo}{Path}", owner, repoName, path != null ? $":{path}" : "");
 
-        var repositoryPath = FindRepositoryRoot(path);
-        if (repositoryPath == null)
+        var apiUrl = path != null
+            ? $"https://api.github.com/repos/{owner}/{repoName}/commits?sha=main&path={Uri.EscapeDataString(path)}&per_page=1"
+            : $"https://api.github.com/repos/{owner}/{repoName}/commits?sha=main&per_page=1";
+
+        if (!_httpClient.DefaultRequestHeaders.UserAgent.Any())
         {
-            throw new InvalidOperationException($"Not within a git repository: {path}");
+            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"{DefaultUserAgent}/1.0");
         }
 
-        await EnsureGitAvailableAsync(cancellationToken).ConfigureAwait(false);
-
-        using var process = new Process
+        if (!_httpClient.DefaultRequestHeaders.Contains("Accept"))
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = "rev-parse HEAD",
-                WorkingDirectory = repositoryPath,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            }
-        };
-
-        process.Start();
-        var output = await process.StandardOutput.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
-        var error = await process.StandardError.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
-        await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
-
-        if (process.ExitCode != 0)
-        {
-            _logger.LogError("Git command failed: {Error}", error);
-            throw new InvalidOperationException($"Git command failed: {error}");
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
         }
 
-        var commitSha = output.Trim();
-        _logger.LogInformation("Latest commit SHA: {CommitSha}", commitSha);
+        var response = await _httpClient.GetAsync(apiUrl, cancellationToken).ConfigureAwait(false);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Failed to fetch commits from GitHub API: {StatusCode} {ReasonPhrase}", response.StatusCode, response.ReasonPhrase);
+            throw new InvalidOperationException($"Failed to fetch commits from GitHub API: {response.StatusCode} {response.ReasonPhrase}");
+        }
+
+        var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+
+        if (json.Length > 1_000_000)
+        {
+            throw new InvalidOperationException("API response exceeded maximum allowed size");
+        }
+
+        using var doc = JsonDocument.Parse(json);
+        var root = doc.RootElement;
+
+        if (root.GetArrayLength() == 0)
+        {
+            throw new InvalidOperationException($"No commits found for repository {owner}/{repoName}");
+        }
+
+        var commitSha = root[0].GetProperty("sha").GetString();
+        if (string.IsNullOrEmpty(commitSha))
+        {
+            throw new InvalidOperationException("Invalid commit SHA received from GitHub API");
+        }
+
+        _logger.LogInformation("Latest commit SHA for {Owner}/{Repo}{Path}: {CommitSha}", owner, repoName, path != null ? $":{path}" : "", commitSha);
 
         return commitSha;
-    }
-
-    /// <summary>
-    /// Ensures Git is available on the system PATH.
-    /// </summary>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <exception cref="InvalidOperationException">Thrown when Git is not available.</exception>
-    private static async Task EnsureGitAvailableAsync(CancellationToken cancellationToken)
-    {
-        using var process = new Process
-        {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = "--version",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            }
-        };
-
-        try
-        {
-            process.Start();
-            await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
-            if (process.ExitCode != 0)
-            {
-                throw new InvalidOperationException("Git is not available or not properly installed. Please ensure Git is installed and available on the system PATH.");
-            }
-        }
-        catch (Exception ex) when (ex is not InvalidOperationException)
-        {
-            throw new InvalidOperationException("Git is not available or not properly installed. Please ensure Git is installed and available on the system PATH.", ex);
-        }
-    }
-
-    /// <summary>
-    /// Finds the git repository root by walking up the directory tree.
-    /// </summary>
-    /// <param name="startPath">Starting path to search from.</param>
-    /// <returns>The repository root path, or null if not found.</returns>
-    private static string? FindRepositoryRoot(string startPath)
-    {
-        var currentPath = Path.GetFullPath(startPath);
-
-        while (currentPath != null)
-        {
-            var gitDir = Path.Combine(currentPath, ".git");
-            if (Directory.Exists(gitDir))
-            {
-                return currentPath;
-            }
-
-            var parent = Directory.GetParent(currentPath);
-            currentPath = parent?.FullName;
-        }
-
-        return null;
     }
 }
