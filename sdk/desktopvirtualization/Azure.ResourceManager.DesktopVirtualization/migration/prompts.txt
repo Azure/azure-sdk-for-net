@@ -1,1 +1,3 @@
 Use migration/handle_renamemapping.md to handle rename mapping.
+Use migration/handle_rp_prefix.md to handle prepend-rp-prefix.
+Use migration/handle_format_by_name_rules.md to handle format-by-name-rules.
