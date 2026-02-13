@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Azure.AI.Projects.OpenAI.Tests.Utils;
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -60,6 +61,8 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
             _ => throw new NotImplementedException()
         };
         options.Endpoint = endpoint;
+        options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
+        options.NetworkTimeout = TimeSpan.FromMinutes(2);
         return GetConfiguredOptions(options, instrument);
     }
 
@@ -77,6 +80,9 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                 }
             }),
             PipelinePosition.PerCall);
+
+        options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
+        options.NetworkTimeout = TimeSpan.FromMinutes(2);
 
         return instrument ? InstrumentClientOptions(options) : options;
     }

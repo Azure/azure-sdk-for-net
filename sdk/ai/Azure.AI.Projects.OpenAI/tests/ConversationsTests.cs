@@ -78,7 +78,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
         Assert.That(items.Last().AsResponseResultItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
 
         items.Clear();
-        await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(conversation.Id, itemKind: AgentResponseItemKind.OutputMessage))
+        await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(conversation.Id, itemKind: AgentResponseItemKind.Message))
         {
             items.Add(item);
         }
