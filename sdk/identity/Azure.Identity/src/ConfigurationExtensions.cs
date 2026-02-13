@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +18,6 @@ namespace Azure.Identity
     [Experimental("SCME0002")]
     public static class ConfigurationExtensions
     {
-        private static readonly ConditionalWeakTable<IServiceCollection, ConfigurableCredentialCache> s_credentialCaches = new();
-
         /// <summary>
         /// Creates an instance of <typeparamref name="T"/> and sets its properties from the specified <see cref="IConfiguration"/>.
         /// </summary>
@@ -112,8 +109,12 @@ namespace Azure.Identity
 
             settings.PostConfigure(config =>
             {
-                DefaultAzureCredentialOptions options = new(settings.Credential, config.GetSection("Credential"));
-                settings.CredentialProvider = new ConfigurableCredential(options);
+                IConfigurationSection credentialSection = config.GetSection("Credential");
+                settings.CredentialProvider = ConfigurableCredentialCache.GetOrAdd(credentialSection, () =>
+                {
+                    DefaultAzureCredentialOptions options = new(settings.Credential, credentialSection);
+                    return new ConfigurableCredential(options);
+                });
             });
             return settings;
         }
@@ -146,15 +147,13 @@ namespace Azure.Identity
         /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
         public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
         {
-            var cache = s_credentialCaches.GetValue(clientBuilder.Services, _ => new ConfigurableCredentialCache());
-
             return clientBuilder.PostConfigure(settings =>
             {
                 AddDefaultScope(settings);
                 settings.PostConfigure(config =>
                 {
                     IConfigurationSection credentialSection = config.GetSection("Credential");
-                    settings.CredentialProvider = cache.GetOrAdd(credentialSection, () =>
+                    settings.CredentialProvider = ConfigurableCredentialCache.GetOrAdd(credentialSection, () =>
                     {
                         DefaultAzureCredentialOptions options = new(settings.Credential, credentialSection);
                         return new ConfigurableCredential(options);

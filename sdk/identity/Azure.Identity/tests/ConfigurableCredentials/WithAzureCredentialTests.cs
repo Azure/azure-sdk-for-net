@@ -230,7 +230,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void SeparateHosts_SameCredentialConfig_DoNotShareCredentialInstances()
+        public void SeparateHosts_SameCredentialConfig_SharesCredentialInstance()
         {
             var sharedConfig = new Dictionary<string, string>
             {
@@ -254,11 +254,11 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
             Assert.That(client1.Settings.CredentialProvider, Is.Not.Null);
             Assert.That(client2.Settings.CredentialProvider, Is.Not.Null);
-            Assert.That(client1.Settings.CredentialProvider, Is.Not.SameAs(client2.Settings.CredentialProvider));
+            Assert.That(client1.Settings.CredentialProvider, Is.SameAs(client2.Settings.CredentialProvider));
         }
 
         [Test]
-        public void SeparateHosts_KeyedClients_DoNotShareCredentialInstances()
+        public void SeparateHosts_KeyedClients_SameConfig_SharesCredentialInstance()
         {
             var sharedConfig = new Dictionary<string, string>
             {
@@ -280,7 +280,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             var client1 = host1.Services.GetRequiredKeyedService<SimpleTestClient>("k1");
             var client2 = host2.Services.GetRequiredKeyedService<SimpleTestClient>("k1");
 
-            Assert.That(client1.Settings.CredentialProvider, Is.Not.SameAs(client2.Settings.CredentialProvider));
+            Assert.That(client1.Settings.CredentialProvider, Is.SameAs(client2.Settings.CredentialProvider));
         }
 
         [Test]
@@ -447,6 +447,110 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             var client2 = host.Services.GetRequiredService<SimpleTestClient2>();
 
             Assert.That(client1.Settings.CredentialProvider, Is.Not.SameAs(client2.Settings.CredentialProvider));
+        }
+
+        [Test]
+        public void DirectAndDI_SameCredentialConfig_SharesCredentialInstance()
+        {
+            // Create a credential via the direct ClientSettings path
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["DirectClient:Endpoint"] = "https://direct.example.com",
+                    ["DirectClient:Credential:CredentialSource"] = "AzureCli",
+                    ["DirectClient:Credential:TenantId"] = "cross-path-tenant",
+                })
+                .Build();
+            var directSettings = config.GetAzureClientSettings<SimpleTestSettings>("DirectClient");
+
+            // Create a credential via the DI path with the same credential values
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["DIClient:Endpoint"] = "https://di.example.com",
+                ["DIClient:Credential:CredentialSource"] = "AzureCli",
+                ["DIClient:Credential:TenantId"] = "cross-path-tenant",
+            });
+            builder.AddClient<SimpleTestClient, SimpleTestSettings>("DIClient").WithAzureCredential();
+
+            IHost host = builder.Build();
+            var diClient = host.Services.GetRequiredService<SimpleTestClient>();
+
+            Assert.That(directSettings.CredentialProvider, Is.Not.Null);
+            Assert.That(diClient.Settings.CredentialProvider, Is.Not.Null);
+            Assert.That(directSettings.CredentialProvider, Is.SameAs(diClient.Settings.CredentialProvider));
+        }
+
+        [Test]
+        public void DirectAndDI_DifferentCredentialConfig_ReturnsDifferentInstances()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["DirectClient:Endpoint"] = "https://direct.example.com",
+                    ["DirectClient:Credential:CredentialSource"] = "AzureCli",
+                    ["DirectClient:Credential:TenantId"] = "direct-tenant",
+                })
+                .Build();
+            var directSettings = config.GetAzureClientSettings<SimpleTestSettings>("DirectClient");
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["DIClient:Endpoint"] = "https://di.example.com",
+                ["DIClient:Credential:CredentialSource"] = "AzureCli",
+                ["DIClient:Credential:TenantId"] = "di-tenant",
+            });
+            builder.AddClient<SimpleTestClient, SimpleTestSettings>("DIClient").WithAzureCredential();
+
+            IHost host = builder.Build();
+            var diClient = host.Services.GetRequiredService<SimpleTestClient>();
+
+            Assert.That(directSettings.CredentialProvider, Is.Not.SameAs(diClient.Settings.CredentialProvider));
+        }
+
+        [Test]
+        public void DirectPath_SameCredentialConfig_SharesCredentialInstance()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Client1:Endpoint"] = "https://one.example.com",
+                    ["Client1:Credential:CredentialSource"] = "AzureCli",
+                    ["Client1:Credential:TenantId"] = "direct-shared-tenant",
+                    ["Client2:Endpoint"] = "https://two.example.com",
+                    ["Client2:Credential:CredentialSource"] = "AzureCli",
+                    ["Client2:Credential:TenantId"] = "direct-shared-tenant",
+                })
+                .Build();
+
+            var settings1 = config.GetAzureClientSettings<SimpleTestSettings>("Client1");
+            var settings2 = config.GetAzureClientSettings<SimpleTestSettings>("Client2");
+
+            Assert.That(settings1.CredentialProvider, Is.Not.Null);
+            Assert.That(settings2.CredentialProvider, Is.Not.Null);
+            Assert.That(settings1.CredentialProvider, Is.SameAs(settings2.CredentialProvider));
+        }
+
+        [Test]
+        public void DirectPath_DifferentCredentialConfig_ReturnsDifferentInstances()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Client1:Endpoint"] = "https://one.example.com",
+                    ["Client1:Credential:CredentialSource"] = "AzureCli",
+                    ["Client1:Credential:TenantId"] = "direct-tenant-a",
+                    ["Client2:Endpoint"] = "https://two.example.com",
+                    ["Client2:Credential:CredentialSource"] = "AzureCli",
+                    ["Client2:Credential:TenantId"] = "direct-tenant-b",
+                })
+                .Build();
+
+            var settings1 = config.GetAzureClientSettings<SimpleTestSettings>("Client1");
+            var settings2 = config.GetAzureClientSettings<SimpleTestSettings>("Client2");
+
+            Assert.That(settings1.CredentialProvider, Is.Not.SameAs(settings2.CredentialProvider));
         }
     }
 }
