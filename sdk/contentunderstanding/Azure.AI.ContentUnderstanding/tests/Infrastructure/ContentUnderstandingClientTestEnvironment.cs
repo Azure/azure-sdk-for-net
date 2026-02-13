@@ -97,6 +97,20 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? TrainingDataPrefix => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 
         /// <summary>
+        /// Gets the storage account name for labeled training data (optional).
+        /// Used with <see cref="TrainingDataContainerName"/> to auto-generate a SAS URL
+        /// when <see cref="TrainingDataSasUrl"/> is not set.
+        /// </summary>
+        public string? TrainingDataStorageAccountName => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+
+        /// <summary>
+        /// Gets the container name for labeled training data (optional).
+        /// Used with <see cref="TrainingDataStorageAccountName"/> to auto-generate a SAS URL
+        /// when <see cref="TrainingDataSasUrl"/> is not set.
+        /// </summary>
+        public string? TrainingDataContainerName => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
+
+        /// <summary>
         /// Creates a file path for a test asset file.
         /// </summary>
         /// <param name="filename">The name of the test asset file.</param>

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
@@ -30,7 +33,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
     ///   CONTENTUNDERSTANDING_ENDPOINT – Azure Content Understanding endpoint URL
     ///
     /// Optional environment variables (for labeled training data; used in LIVE mode):
+    ///
+    /// Option A – Provide a pre-generated SAS URL:
     ///   CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL – SAS URL for the Azure Blob container with labeled training data.
+    ///
+    /// Option B – Provide storage account + container name (auto-generates a User Delegation SAS via DefaultAzureCredential):
+    ///   CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT – Storage account name (e.g., "mystorageaccount").
+    ///   CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER – Container name (e.g., "training-data").
+    ///
+    /// Common (works with both options):
     ///   CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX – Path prefix within the container (e.g., "receipt_labels/").
     ///     Omit or leave unset if files are at the container root.
     /// </summary>
@@ -57,6 +68,19 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string? trainingDataPrefix = Mode == RecordedTestMode.Playback
                 ? Recording.GetVariable("trainingDataPrefix", null)
                 : TestEnvironment.TrainingDataPrefix;
+
+            // Fallback: auto-generate SAS URL from storage account + container name
+            if (string.IsNullOrEmpty(trainingDataSasUrl) && Mode != RecordedTestMode.Playback)
+            {
+                string? storageAccountName = TestEnvironment.TrainingDataStorageAccountName;
+                string? containerName = TestEnvironment.TrainingDataContainerName;
+                if (!string.IsNullOrEmpty(storageAccountName) && !string.IsNullOrEmpty(containerName))
+                {
+                    trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(
+                        storageAccountName!, containerName!, TestEnvironment.Credential);
+                    Console.WriteLine($"Auto-generated User Delegation SAS URL from storage account '{storageAccountName}', container '{containerName}'");
+                }
+            }
 
             // Record prefix for playback so request bodies match
             if (Mode == RecordedTestMode.Record)
@@ -128,8 +152,37 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 };
 
                 // Step 2: Create labeled data knowledge source (optional, based on environment variable)
+                // Option A: Use a pre-generated SAS URL directly.
+                // Option B: Provide storage account + container name to auto-generate a User Delegation SAS.
 #if SNIPPET
+                // Option A: Pre-generated SAS URL
                 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
+
+                // Option B: Auto-generate SAS from storage account + container name
+                if (string.IsNullOrEmpty(trainingDataSasUrl))
+                {
+                    string? storageAccountName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+                    string? containerName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
+                    if (!string.IsNullOrEmpty(storageAccountName) && !string.IsNullOrEmpty(containerName))
+                    {
+                        var blobServiceClient = new BlobServiceClient(
+                            new Uri($"https://{storageAccountName}.blob.core.windows.net"),
+                            new Azure.Identity.DefaultAzureCredential());
+                        var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
+                            DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1))).Value;
+                        var sasBuilder = new BlobSasBuilder
+                        {
+                            BlobContainerName = containerName,
+                            Resource = "c",
+                            ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+                        };
+                        sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List);
+                        var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
+                        trainingDataSasUrl = $"https://{storageAccountName}.blob.core.windows.net/{containerName}?{sasToken}";
+                        Console.WriteLine($"Auto-generated User Delegation SAS URL from storage account '{storageAccountName}'");
+                    }
+                }
+
                 string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 #endif
 
@@ -220,6 +273,36 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Ignore cleanup errors in tests
                 }
             }
+        }
+
+        /// <summary>
+        /// Generates a User Delegation SAS URL for a blob container using DefaultAzureCredential.
+        /// This avoids the need to manually create SAS tokens or store account keys.
+        /// </summary>
+        private static async Task<string> GenerateUserDelegationSasUrlAsync(
+            string storageAccountName,
+            string containerName,
+            TokenCredential credential)
+        {
+            var blobServiceClient = new BlobServiceClient(
+                new Uri($"https://{storageAccountName}.blob.core.windows.net"),
+                credential);
+
+            // Get a user delegation key valid for 1 hour
+            var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
+                DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1))).Value;
+
+            // Build container-level SAS with Read + List permissions
+            var sasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = containerName,
+                Resource = "c", // container-level SAS
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+            };
+            sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List);
+
+            var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
+            return $"https://{storageAccountName}.blob.core.windows.net/{containerName}?{sasToken}";
         }
     }
 }

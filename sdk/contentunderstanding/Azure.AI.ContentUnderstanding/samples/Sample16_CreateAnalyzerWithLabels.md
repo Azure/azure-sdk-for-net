@@ -27,8 +27,14 @@ Labeled receipt data is available in this repo at `tests/samples/sample_files/re
 | Variable | Required | Description |
 |---|---|---|
 | `CONTENTUNDERSTANDING_ENDPOINT` | Yes | Azure Content Understanding endpoint URL |
-| `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` | No | SAS URL for the Azure Blob container with labeled training data |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` | No | SAS URL for the Azure Blob container with labeled training data (Option A) |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT` | No | Storage account name for auto-generating a SAS URL via User Delegation Key (Option B) |
+| `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER` | No | Container name, used together with storage account name (Option B) |
 | `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX` | No | Path prefix within the container (e.g., `"receipt_labels/"`). Omit if files are at the container root |
+
+> **Tip:** If `CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL` is not set but both `CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT`
+> and `CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER` are provided, the sample will automatically generate a User Delegation SAS URL
+> using `DefaultAzureCredential`. This avoids the need to manually create SAS tokens.
 
 ### Training data file structure
 
@@ -99,7 +105,36 @@ var fieldSchema = new ContentFieldSchema(
 };
 
 // Step 2: Create labeled data knowledge source (optional, based on environment variable)
+// Option A: Use a pre-generated SAS URL directly.
+// Option B: Provide storage account + container name to auto-generate a User Delegation SAS.
+// Option A: Pre-generated SAS URL
 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
+
+// Option B: Auto-generate SAS from storage account + container name
+if (string.IsNullOrEmpty(trainingDataSasUrl))
+{
+    string? storageAccountName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+    string? containerName = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
+    if (!string.IsNullOrEmpty(storageAccountName) && !string.IsNullOrEmpty(containerName))
+    {
+        var blobServiceClient = new BlobServiceClient(
+            new Uri($"https://{storageAccountName}.blob.core.windows.net"),
+            new Azure.Identity.DefaultAzureCredential());
+        var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
+            DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1))).Value;
+        var sasBuilder = new BlobSasBuilder
+        {
+            BlobContainerName = containerName,
+            Resource = "c",
+            ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+        };
+        sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List);
+        var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccountName).ToString();
+        trainingDataSasUrl = $"https://{storageAccountName}.blob.core.windows.net/{containerName}?{sasToken}";
+        Console.WriteLine($"Auto-generated User Delegation SAS URL from storage account '{storageAccountName}'");
+    }
+}
+
 string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 
 var knowledgeSources = new List<KnowledgeSource>();
