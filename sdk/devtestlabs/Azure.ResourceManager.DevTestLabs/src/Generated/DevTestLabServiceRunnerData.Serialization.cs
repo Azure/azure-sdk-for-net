@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.DevTestLabs
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabServiceRunnerData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevTestLabServiceRunnerData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabServiceRunnerData"/> from. </param>
+        internal static DevTestLabServiceRunnerData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDevTestLabServiceRunnerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabServiceRunnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -205,23 +229,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="options"> The client options for reading and writing models. </param>
         DevTestLabServiceRunnerData IPersistableModel<DevTestLabServiceRunnerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevTestLabServiceRunnerData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabServiceRunnerData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevTestLabServiceRunnerData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevTestLabServiceRunnerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -235,13 +242,6 @@ namespace Azure.ResourceManager.DevTestLabs
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(devTestLabServiceRunnerData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabServiceRunnerData"/> from. </param>
-        internal static DevTestLabServiceRunnerData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDevTestLabServiceRunnerData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

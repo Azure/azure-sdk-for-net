@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A schedule. </summary>
     public partial class DevTestLabSchedulePatch : DevTestLabResourcePatch, IJsonModel<DevTestLabSchedulePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DevTestLabResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevTestLabSchedulePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabSchedulePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,23 +132,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DevTestLabSchedulePatch IPersistableModel<DevTestLabSchedulePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevTestLabSchedulePatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DevTestLabResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevTestLabSchedulePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabSchedulePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevTestLabSchedulePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

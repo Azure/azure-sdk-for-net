@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A Disk. </summary>
     public partial class DevTestLabDiskPatch : DevTestLabResourcePatch, IJsonModel<DevTestLabDiskPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DevTestLabResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevTestLabDiskPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabDiskPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabDiskPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -115,23 +132,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DevTestLabDiskPatch IPersistableModel<DevTestLabDiskPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevTestLabDiskPatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DevTestLabResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevTestLabDiskPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabDiskPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevTestLabDiskPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

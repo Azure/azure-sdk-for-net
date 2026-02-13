@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> An event to be notified for. </summary>
     public partial class DevTestLabNotificationChannelEvent : IJsonModel<DevTestLabNotificationChannelEvent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevTestLabNotificationChannelEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelEvent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevTestLabNotificationChannelEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabNotificationChannelEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DevTestLabNotificationChannelEvent IPersistableModel<DevTestLabNotificationChannelEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevTestLabNotificationChannelEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelEvent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevTestLabNotificationChannelEvent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevTestLabNotificationChannelEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

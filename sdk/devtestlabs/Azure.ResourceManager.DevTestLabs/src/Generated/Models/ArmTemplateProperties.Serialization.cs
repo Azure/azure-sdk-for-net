@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an Azure Resource Manager template. </summary>
     internal partial class ArmTemplateProperties : IJsonModel<ArmTemplateProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmTemplateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmTemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArmTemplateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmTemplateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArmTemplateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -236,23 +253,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ArmTemplateProperties IPersistableModel<ArmTemplateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmTemplateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmTemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeArmTemplateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmTemplateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ArmTemplateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

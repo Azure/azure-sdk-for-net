@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabGalleryImage(AzureLocation location) : base(location)
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The geo-location where the resource lives. </param>
         public DevTestLabUserData(AzureLocation location) : base(location)
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabUserData"/>. </summary>

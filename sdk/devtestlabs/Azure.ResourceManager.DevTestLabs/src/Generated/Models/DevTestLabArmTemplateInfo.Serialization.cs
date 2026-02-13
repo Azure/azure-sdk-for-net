@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Information about a generated ARM template. </summary>
     public partial class DevTestLabArmTemplateInfo : IJsonModel<DevTestLabArmTemplateInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevTestLabArmTemplateInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabArmTemplateInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevTestLabArmTemplateInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabArmTemplateInfo"/> from. </param>
+        internal static DevTestLabArmTemplateInfo FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDevTestLabArmTemplateInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabArmTemplateInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,31 +176,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         DevTestLabArmTemplateInfo IPersistableModel<DevTestLabArmTemplateInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevTestLabArmTemplateInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabArmTemplateInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevTestLabArmTemplateInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevTestLabArmTemplateInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevTestLabArmTemplateInfo"/> from. </param>
-        internal static DevTestLabArmTemplateInfo FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDevTestLabArmTemplateInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
