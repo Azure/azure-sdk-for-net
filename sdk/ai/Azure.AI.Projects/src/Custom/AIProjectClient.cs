@@ -56,7 +56,11 @@ namespace Azure.AI.Projects
             _tokenProvider = tokenProvider;
             _telemetryDetails = new(typeof(AIProjectAgentsOperations).Assembly, options?.UserAgentApplicationId);
 
-            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", _apiVersion);
+            PipelinePolicyHelpers.AddQueryParameterPolicyIf(
+                options,
+                "api-version",
+                _apiVersion,
+                conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
