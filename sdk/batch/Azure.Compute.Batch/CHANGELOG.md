@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-GA release
+GA release, see migration guide if migrating from Microsoft.Azure.Batch
 
 ## 1.0.0-beta.5 (2026-02-01)
 
