@@ -573,5 +573,61 @@ namespace Azure
 
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0020NotProducedWhenUsingToRequestContextExtension()
+        {
+            const string code = @"
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+
+namespace Azure.Sample
+{
+    public class SampleClient
+    {
+        public async Task<Response> UpdateAsync(BinaryData content, RequestContext context = null)
+        {
+            return null;
+        }
+    }
+
+    public class MyService
+    {
+        private SampleClient _client = new SampleClient();
+
+        public async Task UpdateAsync(CancellationToken cancellationToken)
+        {
+            await _client.UpdateAsync(
+                BinaryData.FromString(""test""),
+                cancellationToken.ToRequestContext());
+        }
+    }
+}
+
+namespace Azure
+{
+    public class RequestContext
+    {
+        public CancellationToken CancellationToken { get; set; }
+    }
+
+    public class Response { }
+
+    public class BinaryData
+    {
+        public static BinaryData FromString(string s) => new BinaryData();
+    }
+
+    public static class CancellationTokenExtensions
+    {
+        public static RequestContext ToRequestContext(this CancellationToken cancellationToken) 
+            => cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+    }
+}
+";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

@@ -174,6 +174,27 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
+            // Check for extension method calls like cancellationToken.ToRequestContext() or ToRequestOptions()
+            if (requestContextOperation is IInvocationOperation invocationOp)
+            {
+                // Check if it's an extension method on CancellationToken
+                if (invocationOp.TargetMethod.IsExtensionMethod &&
+                    invocationOp.Arguments.Length > 0 &&
+                    IsCancellationToken(invocationOp.Arguments[0].Value.Type))
+                {
+                    // Check if the first argument (the 'this' parameter) is the cancellation token parameter
+                    if (IsCancellationTokenParameterReference(invocationOp.Arguments[0].Value, cancellationTokenParam))
+                    {
+                        // Common extension method names that create RequestContext with CancellationToken
+                        var methodName = invocationOp.TargetMethod.Name;
+                        if (methodName == "ToRequestContext" || methodName == "ToRequestOptions")
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
             // Check for parameter reference (passed from another scope)
             // In this case, we can't easily determine if it has the token set, so we assume it's okay
             if (requestContextOperation is IParameterReferenceOperation ||
