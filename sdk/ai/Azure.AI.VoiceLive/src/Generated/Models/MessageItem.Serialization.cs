@@ -49,6 +49,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MessageItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MessageItem IPersistableModel<MessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MessageItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MessageItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,15 +133,5 @@ namespace Azure.AI.VoiceLive
             }
             return UnknownMessageItem.DeserializeUnknownMessageItem(element, options);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MessageItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MessageItem IPersistableModel<MessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MessageItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

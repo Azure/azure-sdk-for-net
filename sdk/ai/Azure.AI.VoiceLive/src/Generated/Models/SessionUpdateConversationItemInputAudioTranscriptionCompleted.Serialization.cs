@@ -60,6 +60,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateConversationItemInputAudioTranscriptionCompleted IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemInputAudioTranscriptionCompleted)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -158,15 +168,5 @@ namespace Azure.AI.VoiceLive
                 contentIndex,
                 transcript);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemInputAudioTranscriptionCompleted IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemInputAudioTranscriptionCompleted)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

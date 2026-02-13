@@ -53,6 +53,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateResponseCreated>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateResponseCreated IPersistableModel<SessionUpdateResponseCreated>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseCreated)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateResponseCreated>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateResponseCreated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,15 +139,5 @@ namespace Azure.AI.VoiceLive
             }
             return new SessionUpdateResponseCreated(@type, eventId, additionalBinaryDataProperties, response);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateResponseCreated>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseCreated IPersistableModel<SessionUpdateResponseCreated>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseCreated)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateResponseCreated>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

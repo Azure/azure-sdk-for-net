@@ -49,6 +49,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventInputAudioTurnAppend>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventInputAudioTurnAppend IPersistableModel<ClientEventInputAudioTurnAppend>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventInputAudioTurnAppend)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClientEventInputAudioTurnAppend>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventInputAudioTurnAppend>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,15 +143,5 @@ namespace Azure.AI.VoiceLive
             }
             return new ClientEventInputAudioTurnAppend(@type, eventId, additionalBinaryDataProperties, turnId, audio);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventInputAudioTurnAppend>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventInputAudioTurnAppend IPersistableModel<ClientEventInputAudioTurnAppend>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventInputAudioTurnAppend)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventInputAudioTurnAppend>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

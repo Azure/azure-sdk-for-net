@@ -45,6 +45,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureSemanticEouDetectionEn>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureSemanticEouDetectionEn IPersistableModel<AzureSemanticEouDetectionEn>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticEouDetectionEn)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureSemanticEouDetectionEn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureSemanticEouDetectionEn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -137,15 +147,5 @@ namespace Azure.AI.VoiceLive
             }
             return new AzureSemanticEouDetectionEn(model, additionalBinaryDataProperties, thresholdLevel, timeoutMs);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureSemanticEouDetectionEn>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureSemanticEouDetectionEn IPersistableModel<AzureSemanticEouDetectionEn>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSemanticEouDetectionEn)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureSemanticEouDetectionEn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
