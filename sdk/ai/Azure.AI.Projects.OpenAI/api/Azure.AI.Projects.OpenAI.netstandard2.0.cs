@@ -158,6 +158,7 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind McpCall { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind McpListTools { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind MemorySearchCall { get { throw null; } }
+        public static Azure.AI.Projects.OpenAI.AgentResponseItemKind Message { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind OauthConsentRequest { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind OutputMessage { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind Reasoning { get { throw null; } }

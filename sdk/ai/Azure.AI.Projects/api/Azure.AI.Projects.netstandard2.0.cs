@@ -720,7 +720,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.FileDataset FileDataset(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.FolderDataset FolderDataset(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.HourlyRecurrenceSchedule HourlyRecurrenceSchedule() { throw null; }
-        public static Azure.AI.Projects.HumanEvaluationRuleAction HumanEvaluationRuleAction(string templateId = null) { throw null; }
+        public static Azure.AI.Projects.HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = null) { throw null; }
         public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId = null, string filename = null, string fileData = null, System.Uri fileUrl = null) { throw null; }
         public static Azure.AI.Projects.InputImageContentParamAutoParam InputImageContentParamAutoParam(System.Uri imageUrl = null, string fileId = null, Azure.AI.Projects.DetailEnum? detail = default(Azure.AI.Projects.DetailEnum?)) { throw null; }
         public static Azure.AI.Projects.InputTextContentParam InputTextContentParam(string text = null) { throw null; }
@@ -1255,6 +1255,7 @@ namespace Azure.AI.Projects
         public EvaluationRuleActionType(string value) { throw null; }
         public static Azure.AI.Projects.EvaluationRuleActionType ContinuousEvaluation { get { throw null; } }
         public static Azure.AI.Projects.EvaluationRuleActionType HumanEvaluation { get { throw null; } }
+        public static Azure.AI.Projects.EvaluationRuleActionType HumanEvaluationPreview { get { throw null; } }
         public bool Equals(Azure.AI.Projects.EvaluationRuleActionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1299,22 +1300,22 @@ namespace Azure.AI.Projects
     {
         protected EvaluationRules() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule> CreateOrUpdate(string id, Azure.AI.Projects.EvaluationRule evaluationRule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult CreateOrUpdate(string id, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule>> CreateOrUpdateAsync(string id, Azure.AI.Projects.EvaluationRule evaluationRule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateOrUpdateAsync(string id, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult Delete(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult Delete(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult Get(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule> Get(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.EvaluationRule> GetAll(Azure.AI.Projects.EvaluationRuleActionType? actionType = default(Azure.AI.Projects.EvaluationRuleActionType?), string agentName = null, bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string actionType, string agentName, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.EvaluationRule> GetAllAsync(Azure.AI.Projects.EvaluationRuleActionType? actionType = default(Azure.AI.Projects.EvaluationRuleActionType?), string agentName = null, bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string actionType, string agentName, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule>> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule> CreateOrUpdate(string id, Azure.AI.Projects.EvaluationRule evaluationRule, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult CreateOrUpdate(string id, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule>> CreateOrUpdateAsync(string id, Azure.AI.Projects.EvaluationRule evaluationRule, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateOrUpdateAsync(string id, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult Delete(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Delete(string id, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule> Get(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Get(string id, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.EvaluationRule> GetAll(Azure.AI.Projects.EvaluationRuleActionType? actionType = default(Azure.AI.Projects.EvaluationRuleActionType?), string agentName = null, bool? enabled = default(bool?), Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string actionType, string agentName, bool? enabled, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.EvaluationRule> GetAllAsync(Azure.AI.Projects.EvaluationRuleActionType? actionType = default(Azure.AI.Projects.EvaluationRuleActionType?), string agentName = null, bool? enabled = default(bool?), Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string actionType, string agentName, bool? enabled, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationRule>> GetAsync(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
     public partial class EvaluationRunClusterInsightRequest : Azure.AI.Projects.InsightRequest, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationRunClusterInsightRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationRunClusterInsightRequest>
     {
@@ -1378,10 +1379,10 @@ namespace Azure.AI.Projects
     {
         protected EvaluationTaxonomies() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationTaxonomy> Create(string name, Azure.AI.Projects.EvaluationTaxonomy body, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult Create(string name, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationTaxonomy>> CreateAsync(string name, Azure.AI.Projects.EvaluationTaxonomy body, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(string name, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationTaxonomy> Create(string name, Azure.AI.Projects.EvaluationTaxonomy body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Create(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationTaxonomy>> CreateAsync(string name, Azure.AI.Projects.EvaluationTaxonomy body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -1394,8 +1395,8 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.EvaluationTaxonomy> GetAllAsync(string inputName = null, string inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.EvaluationTaxonomy>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult Update(string name, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAsync(string name, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult Update(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
     }
     public partial class EvaluationTaxonomy : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationTaxonomy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationTaxonomy>
     {
@@ -1645,9 +1646,10 @@ namespace Azure.AI.Projects
         HostedAgentsV1Preview = 1,
         WorkflowAgentsV1Preview = 2,
         EvaluationsV1Preview = 3,
-        RedTeamsV1Preview = 4,
-        InsightsV1Preview = 5,
-        MemoryStoresV1Preview = 6,
+        SchedulesV1Preview = 4,
+        RedTeamsV1Preview = 5,
+        InsightsV1Preview = 6,
+        MemoryStoresV1Preview = 7,
     }
     public partial class HourlyRecurrenceSchedule : Azure.AI.Projects.RecurrenceSchedule, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HourlyRecurrenceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HourlyRecurrenceSchedule>
     {
@@ -1662,19 +1664,19 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HourlyRecurrenceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HourlyRecurrenceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HumanEvaluationRuleAction : Azure.AI.Projects.EvaluationRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HumanEvaluationRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationRuleAction>
+    public partial class HumanEvaluationPreviewRuleAction : Azure.AI.Projects.EvaluationRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>
     {
-        public HumanEvaluationRuleAction(string templateId) { }
+        public HumanEvaluationPreviewRuleAction(string templateId) { }
         public string TemplateId { get { throw null; } set { } }
         protected override Azure.AI.Projects.EvaluationRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.EvaluationRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.HumanEvaluationRuleAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HumanEvaluationRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HumanEvaluationRuleAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.HumanEvaluationRuleAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationRuleAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.HumanEvaluationPreviewRuleAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.HumanEvaluationPreviewRuleAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.HumanEvaluationPreviewRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class InputFileContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputFileContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>
     {
@@ -2464,12 +2466,12 @@ namespace Azure.AI.Projects
     {
         protected RedTeams() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam> Create(Azure.AI.Projects.RedTeam redTeam, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam> Create(Azure.AI.Projects.RedTeam redTeam, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult Create(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam>> CreateAsync(Azure.AI.Projects.RedTeam redTeam, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam>> CreateAsync(Azure.AI.Projects.RedTeam redTeam, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam> Create(Azure.AI.Projects.RedTeam redTeam, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam> Create(Azure.AI.Projects.RedTeam redTeam, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Create(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam>> CreateAsync(Azure.AI.Projects.RedTeam redTeam, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam>> CreateAsync(Azure.AI.Projects.RedTeam redTeam, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetAll(System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -2601,9 +2603,9 @@ namespace Azure.AI.Projects
     {
         protected Schedules() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Schedule> CreateOrUpdate(string id, Azure.AI.Projects.Schedule schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Schedule> CreateOrUpdate(string id, Azure.AI.Projects.Schedule resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateOrUpdate(string id, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Schedule>> CreateOrUpdateAsync(string id, Azure.AI.Projects.Schedule schedule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Schedule>> CreateOrUpdateAsync(string id, Azure.AI.Projects.Schedule resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateOrUpdateAsync(string id, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2611,20 +2613,20 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Schedule> Get(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.CollectionResult GetAll(System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Schedule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Schedule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Schedule> GetAll(Azure.AI.Projects.ScheduleTaskType? type = default(Azure.AI.Projects.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Schedule> GetAllAsync(Azure.AI.Projects.ScheduleTaskType? type = default(Azure.AI.Projects.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Schedule>> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetRun(string scheduleId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ScheduleRun> GetRun(string scheduleId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetRunAsync(string scheduleId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ScheduleRun>> GetRunAsync(string scheduleId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.CollectionResult GetRuns(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.ScheduleRun> GetRuns(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetRunsAsync(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.ScheduleRun> GetRunsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.ScheduleRun> GetRuns(string id, Azure.AI.Projects.ScheduleTaskType? type = default(Azure.AI.Projects.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetRuns(string id, string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.ScheduleRun> GetRunsAsync(string id, Azure.AI.Projects.ScheduleTaskType? type = default(Azure.AI.Projects.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetRunsAsync(string id, string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
     public abstract partial class ScheduleTask : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ScheduleTask>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ScheduleTask>
     {
@@ -2639,6 +2641,23 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.ScheduleTask System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ScheduleTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ScheduleTask>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ScheduleTask>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduleTaskType : System.IEquatable<Azure.AI.Projects.ScheduleTaskType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduleTaskType(string value) { throw null; }
+        public static Azure.AI.Projects.ScheduleTaskType Evaluation { get { throw null; } }
+        public static Azure.AI.Projects.ScheduleTaskType Insight { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.ScheduleTaskType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.ScheduleTaskType left, Azure.AI.Projects.ScheduleTaskType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.ScheduleTaskType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.ScheduleTaskType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.ScheduleTaskType left, Azure.AI.Projects.ScheduleTaskType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SpecificApplyPatchParam : Azure.AI.Projects.ToolChoiceParam, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SpecificApplyPatchParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SpecificApplyPatchParam>
     {
