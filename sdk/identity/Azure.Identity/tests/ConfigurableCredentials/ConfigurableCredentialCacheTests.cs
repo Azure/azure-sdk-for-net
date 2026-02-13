@@ -25,8 +25,9 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void CreateKey_SameValuesDifferentPaths_ProducesSameKey()
+        public void GetOrAdd_SameValuesDifferentPaths_ReturnsSameInstance()
         {
+            var cache = new ConfigurableCredentialCache();
             var values = new Dictionary<string, string>
             {
                 ["TenantId"] = "abc-123",
@@ -36,15 +37,17 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             var section1 = BuildCredentialSection("Client1:Credential", values);
             var section2 = BuildCredentialSection("Client2:Credential", values);
 
-            string key1 = ConfigurableCredentialCache.CreateKey(section1);
-            string key2 = ConfigurableCredentialCache.CreateKey(section2);
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
 
-            Assert.AreEqual(key1, key2);
+            Assert.AreSame(cred1, cred2);
         }
 
         [Test]
-        public void CreateKey_DifferentValues_ProducesDifferentKeys()
+        public void GetOrAdd_DifferentValues_ReturnsDifferentInstances()
         {
+            var cache = new ConfigurableCredentialCache();
+
             var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
             {
                 ["TenantId"] = "tenant-a"
@@ -54,30 +57,31 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 ["TenantId"] = "tenant-b"
             });
 
-            string key1 = ConfigurableCredentialCache.CreateKey(section1);
-            string key2 = ConfigurableCredentialCache.CreateKey(section2);
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
 
-            Assert.AreNotEqual(key1, key2);
+            Assert.AreNotSame(cred1, cred2);
         }
 
         [Test]
-        public void CreateKey_EmptySection_ProducesConsistentKey()
+        public void GetOrAdd_EmptySections_ReturnsSameInstance()
         {
-            var section = BuildCredentialSection("Client:Credential", new Dictionary<string, string>());
+            var cache = new ConfigurableCredentialCache();
 
-            string key = ConfigurableCredentialCache.CreateKey(section);
-
-            Assert.IsNotNull(key);
-            Assert.IsNotEmpty(key);
-            // Same empty section should produce the same hash
+            var section1 = BuildCredentialSection("Client:Credential", new Dictionary<string, string>());
             var section2 = BuildCredentialSection("Other:Credential", new Dictionary<string, string>());
-            Assert.AreEqual(key, ConfigurableCredentialCache.CreateKey(section2));
+
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
+
+            Assert.AreSame(cred1, cred2);
         }
 
         [Test]
-        public void CreateKey_OrderIndependent_ProducesSameKey()
+        public void GetOrAdd_OrderIndependent_ReturnsSameInstance()
         {
-            // Build two sections with the same values but inserted in different order
+            var cache = new ConfigurableCredentialCache();
+
             var section1 = BuildCredentialSection("A:Credential", new Dictionary<string, string>
             {
                 ["Zebra"] = "z",
@@ -89,25 +93,34 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 ["Zebra"] = "z"
             });
 
-            string key1 = ConfigurableCredentialCache.CreateKey(section1);
-            string key2 = ConfigurableCredentialCache.CreateKey(section2);
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
 
-            Assert.AreEqual(key1, key2);
+            Assert.AreSame(cred1, cred2);
         }
 
         [Test]
-        public void GetOrAdd_SameKey_ReturnsSameInstance()
+        public void GetOrAdd_SameSection_FactoryCalledOnce()
         {
             var cache = new ConfigurableCredentialCache();
             int factoryCallCount = 0;
 
-            var cred1 = cache.GetOrAdd("key1", () =>
+            var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
+            {
+                ["TenantId"] = "abc"
+            });
+            var section2 = BuildCredentialSection("Client2:Credential", new Dictionary<string, string>
+            {
+                ["TenantId"] = "abc"
+            });
+
+            var cred1 = cache.GetOrAdd(section1, () =>
             {
                 factoryCallCount++;
                 return new ConfigurableCredential();
             });
 
-            var cred2 = cache.GetOrAdd("key1", () =>
+            var cred2 = cache.GetOrAdd(section2, () =>
             {
                 factoryCallCount++;
                 return new ConfigurableCredential();
@@ -118,19 +131,10 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void GetOrAdd_DifferentKeys_ReturnsDifferentInstances()
+        public void GetOrAdd_NestedValues_SameContentReturnsSameInstance()
         {
             var cache = new ConfigurableCredentialCache();
 
-            var cred1 = cache.GetOrAdd("key1", () => new ConfigurableCredential());
-            var cred2 = cache.GetOrAdd("key2", () => new ConfigurableCredential());
-
-            Assert.AreNotSame(cred1, cred2);
-        }
-
-        [Test]
-        public void CreateKey_NestedValues_ProducesSameKeyRegardlessOfPath()
-        {
             var configData1 = new Dictionary<string, string>
             {
                 ["Client1:Credential:TenantId"] = "abc",
@@ -145,15 +149,17 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             var config1 = new ConfigurationBuilder().AddInMemoryCollection(configData1).Build();
             var config2 = new ConfigurationBuilder().AddInMemoryCollection(configData2).Build();
 
-            string key1 = ConfigurableCredentialCache.CreateKey(config1.GetSection("Client1:Credential"));
-            string key2 = ConfigurableCredentialCache.CreateKey(config2.GetSection("Client2:Credential"));
+            var cred1 = cache.GetOrAdd(config1.GetSection("Client1:Credential"), () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(config2.GetSection("Client2:Credential"), () => new ConfigurableCredential());
 
-            Assert.AreEqual(key1, key2);
+            Assert.AreSame(cred1, cred2);
         }
 
         [Test]
-        public void CreateKey_SameArrayValues_ProducesSameKey()
+        public void GetOrAdd_SameArrayValues_ReturnsSameInstance()
         {
+            var cache = new ConfigurableCredentialCache();
+
             var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
             {
                 ["CredentialSource"] = "AzureCli",
@@ -167,15 +173,17 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 ["AdditionallyAllowedTenants:1"] = "tenant-b",
             });
 
-            string key1 = ConfigurableCredentialCache.CreateKey(section1);
-            string key2 = ConfigurableCredentialCache.CreateKey(section2);
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
 
-            Assert.AreEqual(key1, key2);
+            Assert.AreSame(cred1, cred2);
         }
 
         [Test]
-        public void CreateKey_DifferentArrayValues_ProducesDifferentKeys()
+        public void GetOrAdd_DifferentArrayValues_ReturnsDifferentInstances()
         {
+            var cache = new ConfigurableCredentialCache();
+
             var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
             {
                 ["CredentialSource"] = "AzureCli",
@@ -189,15 +197,17 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 ["AdditionallyAllowedTenants:1"] = "tenant-c",
             });
 
-            string key1 = ConfigurableCredentialCache.CreateKey(section1);
-            string key2 = ConfigurableCredentialCache.CreateKey(section2);
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
 
-            Assert.AreNotEqual(key1, key2);
+            Assert.AreNotSame(cred1, cred2);
         }
 
         [Test]
-        public void CreateKey_DifferentArrayLength_ProducesDifferentKeys()
+        public void GetOrAdd_DifferentArrayLength_ReturnsDifferentInstances()
         {
+            var cache = new ConfigurableCredentialCache();
+
             var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
             {
                 ["CredentialSource"] = "AzureCli",
@@ -210,10 +220,10 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 ["AdditionallyAllowedTenants:1"] = "tenant-b",
             });
 
-            string key1 = ConfigurableCredentialCache.CreateKey(section1);
-            string key2 = ConfigurableCredentialCache.CreateKey(section2);
+            var cred1 = cache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = cache.GetOrAdd(section2, () => new ConfigurableCredential());
 
-            Assert.AreNotEqual(key1, key2);
+            Assert.AreNotSame(cred1, cred2);
         }
     }
 }

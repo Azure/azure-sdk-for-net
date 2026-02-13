@@ -154,8 +154,7 @@ namespace Azure.Identity
                 settings.PostConfigure(config =>
                 {
                     IConfigurationSection credentialSection = config.GetSection("Credential");
-                    string cacheKey = ConfigurableCredentialCache.CreateKey(credentialSection);
-                    settings.CredentialProvider = cache.GetOrAdd(cacheKey, () =>
+                    settings.CredentialProvider = cache.GetOrAdd(credentialSection, () =>
                     {
                         DefaultAzureCredentialOptions options = new(settings.Credential, credentialSection);
                         return new ConfigurableCredential(options);

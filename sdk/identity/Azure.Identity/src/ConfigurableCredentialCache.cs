@@ -17,8 +17,9 @@ namespace Azure.Identity
     {
         private readonly ConcurrentDictionary<string, ConfigurableCredential> _cache = new();
 
-        public ConfigurableCredential GetOrAdd(string key, Func<ConfigurableCredential> factory)
+        public ConfigurableCredential GetOrAdd(IConfigurationSection credentialSection, Func<ConfigurableCredential> factory)
         {
+            string key = CreateKey(credentialSection);
             return _cache.GetOrAdd(key, _ => factory());
         }
 
@@ -27,21 +28,20 @@ namespace Azure.Identity
         /// Two sections at different paths but with identical values will produce the same key.
         /// The key is a SHA256 hash to avoid leaking secrets that may be present in configuration values.
         /// </summary>
-        internal static string CreateKey(IConfigurationSection section)
+        private static string CreateKey(IConfigurationSection section)
         {
             string basePath = section.Path;
             int prefixLength = basePath.Length > 0 ? basePath.Length + 1 : 0; // +1 for the ':' separator
 
-            StringBuilder sb = new();
-            foreach (KeyValuePair<string, string> kvp in section.AsEnumerable()
+            IEnumerable<KeyValuePair<string, string>> entries = section.AsEnumerable()
                 .Where(kvp => kvp.Value is not null)
-                .OrderBy(kvp => kvp.Key, StringComparer.Ordinal))
-            {
-                string relativeKey = kvp.Key.Length > prefixLength
-                    ? kvp.Key.Substring(prefixLength)
-                    : string.Empty;
+                .OrderBy(kvp => kvp.Key, StringComparer.Ordinal);
 
-                sb.Append(relativeKey).Append('=').Append(kvp.Value).Append(';');
+            StringBuilder sb = new();
+            foreach (KeyValuePair<string, string> kvp in entries)
+            {
+                sb.Append(kvp.Key, prefixLength, kvp.Key.Length - prefixLength);
+                sb.Append('=').Append(kvp.Value).Append(';');
             }
 
             byte[] inputBytes = Encoding.UTF8.GetBytes(sb.ToString());
