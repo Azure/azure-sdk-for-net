@@ -502,7 +502,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Evaluation action model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ContinuousEvaluationRuleAction"/> and <see cref="Projects.HumanEvaluationRuleAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ContinuousEvaluationRuleAction"/> and <see cref="Projects.HumanEvaluationPreviewRuleAction"/>.
         /// </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <returns> A new <see cref="Projects.EvaluationRuleAction"/> instance for mocking. </returns>
@@ -522,10 +522,10 @@ namespace Azure.AI.Projects
 
         /// <summary> Evaluation rule action for human evaluation. </summary>
         /// <param name="templateId"> Human evaluation template Id. </param>
-        /// <returns> A new <see cref="Projects.HumanEvaluationRuleAction"/> instance for mocking. </returns>
-        public static HumanEvaluationRuleAction HumanEvaluationRuleAction(string templateId = default)
+        /// <returns> A new <see cref="Projects.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
+        public static HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = default)
         {
-            return new HumanEvaluationRuleAction(EvaluationRuleActionType.HumanEvaluation, additionalBinaryDataProperties: null, templateId);
+            return new HumanEvaluationPreviewRuleAction(EvaluationRuleActionType.HumanEvaluationPreview, additionalBinaryDataProperties: null, templateId);
         }
 
         /// <summary> Evaluation filter model. </summary>

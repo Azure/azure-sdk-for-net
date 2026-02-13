@@ -10,10 +10,10 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Evaluation rule action for human evaluation. </summary>
-    public partial class HumanEvaluationRuleAction : EvaluationRuleAction, IJsonModel<HumanEvaluationRuleAction>
+    public partial class HumanEvaluationPreviewRuleAction : EvaluationRuleAction, IJsonModel<HumanEvaluationPreviewRuleAction>
     {
-        /// <summary> Initializes a new instance of <see cref="HumanEvaluationRuleAction"/> for deserialization. </summary>
-        internal HumanEvaluationRuleAction()
+        /// <summary> Initializes a new instance of <see cref="HumanEvaluationPreviewRuleAction"/> for deserialization. </summary>
+        internal HumanEvaluationPreviewRuleAction()
         {
         }
 
@@ -21,35 +21,35 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationRuleAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationPreviewRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHumanEvaluationRuleAction(document.RootElement, options);
+                        return DeserializeHumanEvaluationPreviewRuleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HumanEvaluationRuleAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HumanEvaluationPreviewRuleAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationPreviewRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HumanEvaluationRuleAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HumanEvaluationPreviewRuleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HumanEvaluationRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HumanEvaluationPreviewRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -60,10 +60,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationPreviewRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HumanEvaluationRuleAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HumanEvaluationPreviewRuleAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("templateId"u8);
@@ -72,24 +72,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HumanEvaluationRuleAction IJsonModel<HumanEvaluationRuleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HumanEvaluationRuleAction)JsonModelCreateCore(ref reader, options);
+        HumanEvaluationPreviewRuleAction IJsonModel<HumanEvaluationPreviewRuleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HumanEvaluationPreviewRuleAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationRuleAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HumanEvaluationPreviewRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HumanEvaluationRuleAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HumanEvaluationPreviewRuleAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHumanEvaluationRuleAction(document.RootElement, options);
+            return DeserializeHumanEvaluationPreviewRuleAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HumanEvaluationRuleAction DeserializeHumanEvaluationRuleAction(JsonElement element, ModelReaderWriterOptions options)
+        internal static HumanEvaluationPreviewRuleAction DeserializeHumanEvaluationPreviewRuleAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,17 +115,17 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HumanEvaluationRuleAction(@type, additionalBinaryDataProperties, templateId);
+            return new HumanEvaluationPreviewRuleAction(@type, additionalBinaryDataProperties, templateId);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HumanEvaluationRuleAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HumanEvaluationPreviewRuleAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HumanEvaluationRuleAction IPersistableModel<HumanEvaluationRuleAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (HumanEvaluationRuleAction)PersistableModelCreateCore(data, options);
+        HumanEvaluationPreviewRuleAction IPersistableModel<HumanEvaluationPreviewRuleAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (HumanEvaluationPreviewRuleAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HumanEvaluationRuleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HumanEvaluationPreviewRuleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

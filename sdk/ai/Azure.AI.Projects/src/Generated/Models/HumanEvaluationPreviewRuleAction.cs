@@ -8,23 +8,23 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Evaluation rule action for human evaluation. </summary>
-    public partial class HumanEvaluationRuleAction : EvaluationRuleAction
+    public partial class HumanEvaluationPreviewRuleAction : EvaluationRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="HumanEvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HumanEvaluationPreviewRuleAction"/>. </summary>
         /// <param name="templateId"> Human evaluation template Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
-        public HumanEvaluationRuleAction(string templateId) : base(EvaluationRuleActionType.HumanEvaluation)
+        public HumanEvaluationPreviewRuleAction(string templateId) : base(EvaluationRuleActionType.HumanEvaluationPreview)
         {
             Argument.AssertNotNull(templateId, nameof(templateId));
 
             TemplateId = templateId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HumanEvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HumanEvaluationPreviewRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateId"> Human evaluation template Id. </param>
-        internal HumanEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string templateId) : base(@type, additionalBinaryDataProperties)
+        internal HumanEvaluationPreviewRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string templateId) : base(@type, additionalBinaryDataProperties)
         {
             TemplateId = templateId;
         }
