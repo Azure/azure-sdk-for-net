@@ -127,7 +127,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParam))]
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
-    [ModelReaderWriterBuildable(typeof(HumanEvaluationRuleAction))]
+    [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(InputContent))]
