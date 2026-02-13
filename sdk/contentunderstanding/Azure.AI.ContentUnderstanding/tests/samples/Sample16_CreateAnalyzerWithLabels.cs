@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
@@ -23,9 +24,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
     /// https://contentunderstanding.ai.azure.com/
     ///
     /// Labeled receipt data is available at <c>tests/samples/sample_files/receipt_labels</c>.
-    /// To run in LIVE mode: upload that folder to Azure Blob Storage, then set one of:
-    ///   Option A – CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL (pre-generated SAS URL)
-    ///   Option B – CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT + _CONTAINER (auto-generates SAS)
+    /// To run in LIVE mode, set environment variables for Option A or Option B:
+    ///   Option A – CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL (pre-generated SAS URL pointing to
+    ///              a container where labeled data has already been uploaded)
+    ///   Option B – CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT + _CONTAINER (the test will
+    ///              automatically upload local label files and generate a SAS URL)
     ///   Common  – CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX (e.g. "receipt_labels/")
     /// </summary>
     public partial class ContentUnderstandingSamples
@@ -50,12 +53,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ? Recording.GetVariable("trainingDataPrefix", null)
                 : TestEnvironment.TrainingDataPrefix;
 
+            // Option B: auto-upload local label files, then generate SAS URL
             if (string.IsNullOrEmpty(trainingDataSasUrl) && Mode != RecordedTestMode.Playback)
             {
                 string? acct = TestEnvironment.TrainingDataStorageAccountName;
                 string? ctr = TestEnvironment.TrainingDataContainerName;
                 if (!string.IsNullOrEmpty(acct) && !string.IsNullOrEmpty(ctr))
                 {
+                    // Upload local receipt_labels/ to the container
+                    string localDir = ContentUnderstandingClientTestEnvironment.CreatePath("receipt_labels");
+                    await UploadTrainingDataAsync(
+                        acct!, ctr!, TestEnvironment.Credential, localDir, trainingDataPrefix);
+
                     trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(
                         acct!, ctr!, TestEnvironment.Credential);
                 }
@@ -78,17 +87,25 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ContentFieldSchema fieldSchema = BuildReceiptFieldSchema();
 
                 // Step 2: Resolve training data SAS URL (optional)
+                //   Option A – use a pre-generated SAS URL that points to already-uploaded data.
+                //   Option B – upload local label files, then auto-generate a SAS URL.
 #if SNIPPET
                 // Option A: pre-generated SAS URL
                 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
 
-                // Option B: auto-generate from storage account + container name
+                // Option B: upload local files and auto-generate SAS
                 if (string.IsNullOrEmpty(trainingDataSasUrl))
                 {
                     string? storageAccount = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
                     string? container = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
                     if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(container))
                     {
+                        // Upload local training data to blob container (if needed)
+                        string localLabelDir = "<path_to_local_receipt_labels_folder>";
+                        await UploadTrainingDataAsync(storageAccount, container,
+                            new Azure.Identity.DefaultAzureCredential(), localLabelDir);
+
+                        // Generate a read-only SAS URL for the service
                         trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(
                             storageAccount, container, new Azure.Identity.DefaultAzureCredential());
                     }
@@ -234,6 +251,44 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Name = "receipt_schema",
                 Description = "Schema for receipt extraction with items",
             };
+        }
+        #endregion
+
+        #region Snippet:ContentUnderstandingUploadTrainingData
+        /// <summary>
+        /// Uploads local training data files (images, .labels.json, .result.json) to an
+        /// Azure Blob container. Existing blobs with the same name are overwritten.
+        /// </summary>
+        /// <param name="storageAccountName">Storage account name.</param>
+        /// <param name="containerName">Container name (created if it does not exist).</param>
+        /// <param name="credential">Credential with write access to the container.</param>
+        /// <param name="localDirectory">Local folder containing the label files.</param>
+        /// <param name="prefix">
+        /// Optional blob prefix (virtual folder) to prepend, e.g. "receipt_labels/".
+        /// </param>
+        private static async Task UploadTrainingDataAsync(
+            string storageAccountName,
+            string containerName,
+            TokenCredential credential,
+            string localDirectory,
+            string? prefix = null)
+        {
+            var containerClient = new BlobContainerClient(
+                new Uri($"https://{storageAccountName}.blob.core.windows.net/{containerName}"),
+                credential);
+
+            await containerClient.CreateIfNotExistsAsync();
+
+            foreach (string filePath in Directory.GetFiles(localDirectory))
+            {
+                string blobName = string.IsNullOrEmpty(prefix)
+                    ? Path.GetFileName(filePath)
+                    : prefix!.TrimEnd('/') + "/" + Path.GetFileName(filePath);
+
+                Console.WriteLine($"Uploading {Path.GetFileName(filePath)} -> {blobName}");
+                await containerClient.GetBlobClient(blobName)
+                    .UploadAsync(filePath, overwrite: true);
+            }
         }
         #endregion
 

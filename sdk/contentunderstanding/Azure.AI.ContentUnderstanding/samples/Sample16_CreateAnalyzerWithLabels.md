@@ -55,6 +55,11 @@ Each training document requires three files:
 ```C# Snippet:ContentUnderstandingBuildReceiptFieldSchema
 ```
 
+### Helper: Upload local training data to Blob Storage
+
+```C# Snippet:ContentUnderstandingUploadTrainingData
+```
+
 ### Helper: Generate User Delegation SAS URL
 
 ```C# Snippet:ContentUnderstandingGenerateUserDelegationSas
