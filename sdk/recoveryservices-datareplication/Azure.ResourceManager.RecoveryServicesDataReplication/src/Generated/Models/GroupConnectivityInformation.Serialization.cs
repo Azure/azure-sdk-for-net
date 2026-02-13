@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Represents of a connection's group information. </summary>
     public partial class GroupConnectivityInformation : IJsonModel<GroupConnectivityInformation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GroupConnectivityInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGroupConnectivityInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GroupConnectivityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -205,23 +222,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GroupConnectivityInformation IPersistableModel<GroupConnectivityInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GroupConnectivityInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGroupConnectivityInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GroupConnectivityInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

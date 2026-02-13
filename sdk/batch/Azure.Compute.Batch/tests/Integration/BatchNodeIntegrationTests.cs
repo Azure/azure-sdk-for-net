@@ -231,8 +231,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                     TypeHandlerVersion = "2.16",
                     AutoUpgradeMinorVersion = true,
                     EnableAutomaticUpgrade = true,
-                    ProtectedSettings = {},
-                    Settings = {},
+                    ProtectedSettings = { },
+                    Settings = { },
                 };
                 batchPoolCreateOptions.VirtualMachineConfiguration.Extensions.Add(vMExtension);
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
@@ -281,7 +281,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 batchPoolCreateOptions.NetworkConfiguration = new NetworkConfiguration()
                 {
-                    EndpointConfiguration  = batchPoolEndpointConfiguration,
+                    EndpointConfiguration = batchPoolEndpointConfiguration,
                     PublicIpAddressConfiguration = new BatchPublicIpAddressConfiguration
                     {
                         IpFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
@@ -341,7 +341,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 UploadBatchServiceLogsOptions uploadBatchServiceLogsContent = new UploadBatchServiceLogsOptions(new Uri("http://contoso.com"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
-                UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
+                UploadBatchServiceLogsResult uploadBatchServiceLogsResult = await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
                 Assert.NotNull(uploadBatchServiceLogsResult);
                 Assert.IsNotEmpty(uploadBatchServiceLogsResult.VirtualDirectoryName);
             }

@@ -10,7 +10,7 @@ namespace Azure.Identity.Tests
     public class X509Certificate2FromFileProviderTests
     {
         [Test]
-        public async Task ValidatePemCertificateLoad([Values]bool async)
+        public async Task ValidatePemCertificateLoad([Values] bool async)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
 
@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidatePemCertificateLoadFailsWithPassword([Values]bool async)
+        public void ValidatePemCertificateLoadFailsWithPassword([Values] bool async)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
 
@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task ValidatePfxCertificateLoad([Values] bool async, [Values(null, "password")]string password)
+        public async Task ValidatePfxCertificateLoad([Values] bool async, [Values(null, "password")] string password)
         {
             var certificatePath = password == null ? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx") : Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx");
 

@@ -35,6 +35,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedTeam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RedTeam)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedTeam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedTeam IPersistableModel<RedTeam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedTeam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="redTeam"> The <see cref="RedTeam"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(RedTeam redTeam)
+        {
+            if (redTeam == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(redTeam, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RedTeam"/> from. </param>
         public static explicit operator RedTeam(ClientResult result)
         {
@@ -332,39 +365,6 @@ namespace Azure.AI.Projects
                 status,
                 target,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedTeam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedTeam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RedTeam)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedTeam IPersistableModel<RedTeam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedTeam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="redTeam"> The <see cref="RedTeam"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(RedTeam redTeam)
-        {
-            if (redTeam == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(redTeam, ModelSerializationExtensions.WireOptions);
         }
     }
 }

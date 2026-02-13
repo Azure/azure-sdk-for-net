@@ -19,6 +19,17 @@ namespace Encode.Duration._Property
 
         protected virtual FloatMillisecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<FloatMillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        FloatMillisecondsDurationProperty IPersistableModel<FloatMillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<FloatMillisecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="floatMillisecondsDurationProperty"> The <see cref="FloatMillisecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FloatMillisecondsDurationProperty floatMillisecondsDurationProperty) => throw null;
+
         public static explicit operator FloatMillisecondsDurationProperty(Response response) => throw null;
 
         void IJsonModel<FloatMillisecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace Encode.Duration._Property
         FloatMillisecondsDurationProperty IJsonModel<FloatMillisecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual FloatMillisecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<FloatMillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        FloatMillisecondsDurationProperty IPersistableModel<FloatMillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<FloatMillisecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="floatMillisecondsDurationProperty"> The <see cref="FloatMillisecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FloatMillisecondsDurationProperty floatMillisecondsDurationProperty) => throw null;
     }
 }

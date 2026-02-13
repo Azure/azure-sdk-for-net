@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Base type for destination rules. </summary>
     public partial class CommunityEndpointDestinationRule : IJsonModel<CommunityEndpointDestinationRule>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CommunityEndpointDestinationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCommunityEndpointDestinationRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommunityEndpointDestinationRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CommunityEndpointDestinationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -202,23 +219,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CommunityEndpointDestinationRule IPersistableModel<CommunityEndpointDestinationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommunityEndpointDestinationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCommunityEndpointDestinationRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CommunityEndpointDestinationRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CommunityEndpointDestinationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation.
-    /// Serialized Name: OverwriteDatabasesOnTargetServer
-    /// </summary>
+    /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
     public readonly partial struct PostgreSqlMigrationOverwriteDbsInTarget : IEquatable<PostgreSqlMigrationOverwriteDbsInTarget>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary>
-        /// True
-        /// Serialized Name: OverwriteDatabasesOnTargetServer.True
-        /// </summary>
+        /// <summary> True. </summary>
         public static PostgreSqlMigrationOverwriteDbsInTarget True { get; } = new PostgreSqlMigrationOverwriteDbsInTarget(TrueValue);
-        /// <summary>
-        /// False
-        /// Serialized Name: OverwriteDatabasesOnTargetServer.False
-        /// </summary>
+        /// <summary> False. </summary>
         public static PostgreSqlMigrationOverwriteDbsInTarget False { get; } = new PostgreSqlMigrationOverwriteDbsInTarget(FalseValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationOverwriteDbsInTarget"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationOverwriteDbsInTarget left, PostgreSqlMigrationOverwriteDbsInTarget right) => left.Equals(right);

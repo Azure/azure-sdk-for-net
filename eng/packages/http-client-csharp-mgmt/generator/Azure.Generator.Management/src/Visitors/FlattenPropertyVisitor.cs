@@ -290,7 +290,7 @@ namespace Azure.Generator.Management.Visitors
                         // This is a nested flattened property case - the constructor parameter is a complex type
                         // We need to find the correct internal property by matching the constructor parameter name,
                         // then recursively collect all nested flattened properties for that specific internal property
-                        if (_flattenedModelTypes.TryGetValue(propertyType, out var propertyNameMap))
+                        if (TryGetFlattenedModelType(propertyType, out var propertyNameMap))
                         {
                             // Try to match the constructor parameter name with an internal property name
                             if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list) && list.Count > 0)
@@ -373,6 +373,14 @@ namespace Azure.Generator.Management.Visitors
                 return;
             }
             _visitedModelTypes.Add(model.Type);
+
+            // Ensure base model types are flattened first so that inherited properties
+            // are in their final state (e.g., safe-flattened single-property models become internal)
+            // before this model processes them via GetAllProperties.
+            if (model.BaseModelProvider is ModelProvider baseModel && !_flattenedModelTypes.ContainsKey(baseModel.Type))
+            {
+                FlattenModel(baseModel);
+            }
 
             var isFlattenProperty = false;
             var isSafeFlatten = false;
@@ -743,6 +751,33 @@ namespace Azure.Generator.Management.Visitors
 
         private bool IsOverriddenValueType(PropertyProvider flattenedProperty)
             => flattenedProperty.Type.IsValueType && !flattenedProperty.Type.IsNullable;
+
+        /// <summary>
+        /// Looks up the flattened model type map for the given type, also checking base types
+        /// when the type itself has no entry (handles inherited flattened properties).
+        /// </summary>
+        private bool TryGetFlattenedModelType(CSharpType type, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
+        {
+            if (_flattenedModelTypes.TryGetValue(type, out propertyNameMap))
+            {
+                return true;
+            }
+            // Check base types for inherited flattened properties
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(type, out var typeProvider)
+                && typeProvider is ModelProvider model)
+            {
+                var baseModel = model.BaseModelProvider;
+                while (baseModel is not null)
+                {
+                    if (_flattenedModelTypes.TryGetValue(baseModel.Type, out propertyNameMap))
+                    {
+                        return true;
+                    }
+                    baseModel = baseModel.BaseModelProvider;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Recursively collects all nested flattened properties for a given internal property.

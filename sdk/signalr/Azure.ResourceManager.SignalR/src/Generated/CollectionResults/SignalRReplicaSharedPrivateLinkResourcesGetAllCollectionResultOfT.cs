@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _replicaName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _replicaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSignalRResourceGroupResource.GetSignalRReplicaSharedPrivateLinkResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SignalRReplicaSharedPrivateLinkResourceCollection.GetAll");
             scope.Start();
             try
             {

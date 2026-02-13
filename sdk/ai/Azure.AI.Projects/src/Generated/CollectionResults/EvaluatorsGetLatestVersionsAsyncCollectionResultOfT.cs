@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
             Uri nextPage = ((PagedEvaluatorVersion)page).NextLink;
             if (nextPage != null)
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
+                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {

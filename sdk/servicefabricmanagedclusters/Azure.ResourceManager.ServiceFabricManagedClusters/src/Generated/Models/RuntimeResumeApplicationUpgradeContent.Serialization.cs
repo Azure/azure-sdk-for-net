@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Parameters for Resume Upgrade action. The upgrade domain name must be specified. </summary>
     public partial class RuntimeResumeApplicationUpgradeContent : IJsonModel<RuntimeResumeApplicationUpgradeContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RuntimeResumeApplicationUpgradeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeResumeApplicationUpgradeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRuntimeResumeApplicationUpgradeContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeResumeApplicationUpgradeContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeResumeApplicationUpgradeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,23 +135,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RuntimeResumeApplicationUpgradeContent IPersistableModel<RuntimeResumeApplicationUpgradeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuntimeResumeApplicationUpgradeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeResumeApplicationUpgradeContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRuntimeResumeApplicationUpgradeContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeResumeApplicationUpgradeContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RuntimeResumeApplicationUpgradeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The PostgreSqlFlexibleServerRecommendationFilterType.
-    /// Serialized Name: RecommendationTypeParameterEnum
-    /// </summary>
+    /// <summary> The PostgreSqlFlexibleServerRecommendationFilterType. </summary>
     public readonly partial struct PostgreSqlFlexibleServerRecommendationFilterType : IEquatable<PostgreSqlFlexibleServerRecommendationFilterType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReIndexValue = "ReIndex";
         private const string AnalyzeTableValue = "AnalyzeTable";
 
-        /// <summary>
-        /// CreateIndex
-        /// Serialized Name: RecommendationTypeParameterEnum.CreateIndex
-        /// </summary>
+        /// <summary> CreateIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationFilterType CreateIndex { get; } = new PostgreSqlFlexibleServerRecommendationFilterType(CreateIndexValue);
-        /// <summary>
-        /// DropIndex
-        /// Serialized Name: RecommendationTypeParameterEnum.DropIndex
-        /// </summary>
+        /// <summary> DropIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationFilterType DropIndex { get; } = new PostgreSqlFlexibleServerRecommendationFilterType(DropIndexValue);
-        /// <summary>
-        /// ReIndex
-        /// Serialized Name: RecommendationTypeParameterEnum.ReIndex
-        /// </summary>
+        /// <summary> ReIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationFilterType ReIndex { get; } = new PostgreSqlFlexibleServerRecommendationFilterType(ReIndexValue);
-        /// <summary>
-        /// AnalyzeTable
-        /// Serialized Name: RecommendationTypeParameterEnum.AnalyzeTable
-        /// </summary>
+        /// <summary> AnalyzeTable. </summary>
         public static PostgreSqlFlexibleServerRecommendationFilterType AnalyzeTable { get; } = new PostgreSqlFlexibleServerRecommendationFilterType(AnalyzeTableValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationFilterType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerRecommendationFilterType left, PostgreSqlFlexibleServerRecommendationFilterType right) => left.Equals(right);

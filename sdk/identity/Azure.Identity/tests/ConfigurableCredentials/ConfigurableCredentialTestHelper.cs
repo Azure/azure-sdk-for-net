@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
@@ -98,6 +99,10 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
         public TCred GetUnderlyingCredential(ConfigurableCredential credential)
         {
+            // When called on a Castle proxy, get the real target to access original field values
+            if (credential is Castle.DynamicProxy.IProxyTargetAccessor proxy)
+                credential = (ConfigurableCredential)proxy.DynProxyGetTarget();
+
             TokenCredential tokenCredential = credential
                 .GetType()
                 .GetField("_tokenCredential", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -113,10 +118,15 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             return underlyingCredential;
         }
 
-        public ConfigurableCredential GetCredentialFromConfig(IConfiguration config)
+        public ConfigurableCredential GetCredentialFromConfig(IConfiguration config, HttpPipelineTransport transport = null)
         {
             IConfigurationSection credentialSection = config.GetSection("MyClient:Credential");
-            return new ConfigurableCredential(new DefaultAzureCredentialOptions(new CredentialSettings(credentialSection), credentialSection));
+            var dacOptions = new DefaultAzureCredentialOptions(new CredentialSettings(credentialSection), credentialSection);
+            if (transport != null)
+            {
+                dacOptions.Transport = transport;
+            }
+            return new ConfigurableCredential(dacOptions);
         }
 
         public void CreateCredentialForTenantValidation(string tenantId)
@@ -126,7 +136,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             GetCredentialFromConfig(config);
         }
 
-        private IConfiguration GetConfigurationFromCommonCredentialTestConfig<TCredOptions>(
+        public IConfiguration GetConfigurationFromCommonCredentialTestConfig<TCredOptions>(
             CredentialTestBase<TCredOptions>.CommonCredentialTestConfig config)
             where TCredOptions : TokenCredentialOptions
         {

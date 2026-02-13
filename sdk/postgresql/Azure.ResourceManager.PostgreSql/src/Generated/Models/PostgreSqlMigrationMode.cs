@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Mode used to perform the migration: Online or Offline.
-    /// Serialized Name: MigrationMode
-    /// </summary>
+    /// <summary> Mode used to perform the migration: Online or Offline. </summary>
     public readonly partial struct PostgreSqlMigrationMode : IEquatable<PostgreSqlMigrationMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string OfflineValue = "Offline";
         private const string OnlineValue = "Online";
 
-        /// <summary>
-        /// Offline
-        /// Serialized Name: MigrationMode.Offline
-        /// </summary>
+        /// <summary> Offline. </summary>
         public static PostgreSqlMigrationMode Offline { get; } = new PostgreSqlMigrationMode(OfflineValue);
-        /// <summary>
-        /// Online
-        /// Serialized Name: MigrationMode.Online
-        /// </summary>
+        /// <summary> Online. </summary>
         public static PostgreSqlMigrationMode Online { get; } = new PostgreSqlMigrationMode(OnlineValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationMode left, PostgreSqlMigrationMode right) => left.Equals(right);

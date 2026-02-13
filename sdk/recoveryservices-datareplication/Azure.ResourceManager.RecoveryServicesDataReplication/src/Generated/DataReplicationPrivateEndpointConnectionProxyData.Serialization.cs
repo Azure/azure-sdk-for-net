@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// <summary> Represents private endpoint connection proxy request. </summary>
     public partial class DataReplicationPrivateEndpointConnectionProxyData : ResourceData, IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataReplicationPrivateEndpointConnectionProxyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationPrivateEndpointConnectionProxyData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataReplicationPrivateEndpointConnectionProxyData"/> from. </param>
+        internal static DataReplicationPrivateEndpointConnectionProxyData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataReplicationPrivateEndpointConnectionProxyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +194,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationPrivateEndpointConnectionProxyData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataReplicationPrivateEndpointConnectionProxyData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataReplicationPrivateEndpointConnectionProxyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationPrivateEndpointConnectionProxyData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -200,13 +207,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataReplicationPrivateEndpointConnectionProxyData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataReplicationPrivateEndpointConnectionProxyData"/> from. </param>
-        internal static DataReplicationPrivateEndpointConnectionProxyData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataReplicationPrivateEndpointConnectionProxyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

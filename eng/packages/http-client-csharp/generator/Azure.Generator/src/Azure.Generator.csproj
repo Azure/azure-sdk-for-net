@@ -9,27 +9,27 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Expressions.DataFactory" />
-	  <PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
-	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
-		<!-- Check if the folder does not exist -->
-		<Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` from repo root folder, and followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
-	</Target>
+  <Target Name="CheckEmitterBuild" BeforeTargets="Build">
+    <!-- Check if the folder does not exist -->
+    <Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` from repo root folder, and followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
+  </Target>
 
-	<!-- Copy output to package dist path for local execution -->
-	<Target Name="CopyForNpmPackage" AfterTargets="Build">
-		<Message Text="Copying output to dist path" Importance="high" />
-		<ItemGroup>
-			<SourceDir Include="$(OutputPath)**\*.*" />
-		</ItemGroup>
-		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
+  <!-- Copy output to package dist path for local execution -->
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
+    <Message Text="Copying output to dist path" Importance="high" />
+    <ItemGroup>
+      <SourceDir Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
     <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
-	</Target>
+  </Target>
 
-	<!-- Include shared code from Azure.Core. CopyToOutputDirectory is required to make roslyn reduce work -->
-	<ItemGroup>
+  <!-- Include shared code from Azure.Core. CopyToOutputDirectory is required to make roslyn reduce work -->
+  <ItemGroup>
     <Compile Include="
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs;
@@ -53,7 +53,9 @@
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\IOperationSource.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TaskExtensions.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationPoller.cs;
-      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\FixedDelayWithNoJitterStrategy.cs;">
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\FixedDelayWithNoJitterStrategy.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\IXmlSerializable.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\XmlWriterContent.cs;">
       <LinkBase>Shared/Core</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

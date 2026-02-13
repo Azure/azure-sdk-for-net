@@ -34,6 +34,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InternalMemoryUpdateOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalMemoryUpdateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalMemoryUpdateOptions IPersistableModel<InternalMemoryUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalMemoryUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="internalMemoryUpdateOptions"> The <see cref="InternalMemoryUpdateOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(InternalMemoryUpdateOptions internalMemoryUpdateOptions)
+        {
+            if (internalMemoryUpdateOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(internalMemoryUpdateOptions, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalMemoryUpdateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,39 +195,6 @@ namespace Azure.AI.Projects
                 }
             }
             return new InternalMemoryUpdateOptions(scope, items ?? new ChangeTrackingList<InputItem>(), previousUpdateId, updateDelay, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMemoryUpdateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemoryUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InternalMemoryUpdateOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMemoryUpdateOptions IPersistableModel<InternalMemoryUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMemoryUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="internalMemoryUpdateOptions"> The <see cref="InternalMemoryUpdateOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(InternalMemoryUpdateOptions internalMemoryUpdateOptions)
-        {
-            if (internalMemoryUpdateOptions == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(internalMemoryUpdateOptions, ModelSerializationExtensions.WireOptions);
         }
     }
 }

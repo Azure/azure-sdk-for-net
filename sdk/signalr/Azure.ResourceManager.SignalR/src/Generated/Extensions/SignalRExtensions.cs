@@ -220,46 +220,6 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary>
-        /// List shared private link resources
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRResourceGroupResource.GetSignalRReplicaSharedPrivateLinkResourcesAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the SignalRResource. </param>
-        /// <param name="replicaName"> The name of the Replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SignalRReplicaSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SignalRReplicaSharedPrivateLinkResource> GetSignalRReplicaSharedPrivateLinkResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalRReplicaSharedPrivateLinkResourcesAsync(resourceName, replicaName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List shared private link resources
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRResourceGroupResource.GetSignalRReplicaSharedPrivateLinkResources(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the SignalRResource. </param>
-        /// <param name="replicaName"> The name of the Replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SignalRReplicaSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SignalRReplicaSharedPrivateLinkResource> GetSignalRReplicaSharedPrivateLinkResources(this ResourceGroupResource resourceGroupResource, string resourceName, string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalRReplicaSharedPrivateLinkResources(resourceName, replicaName, cancellationToken);
-        }
-
-        /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>

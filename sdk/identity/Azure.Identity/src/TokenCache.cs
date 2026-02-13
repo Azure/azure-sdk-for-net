@@ -39,7 +39,7 @@ namespace Azure.Identity
         /// Determines whether the token cache will be associated with CAE enabled requests.
         /// </summary>
         /// <value>If true, this cache services only CAE enabled requests.Otherwise, this cache services non-CAE enabled requests.</value>
-        internal bool IsCaeEnabled { get;}
+        internal bool IsCaeEnabled { get; }
 
         private class CacheTimestamp
         {
