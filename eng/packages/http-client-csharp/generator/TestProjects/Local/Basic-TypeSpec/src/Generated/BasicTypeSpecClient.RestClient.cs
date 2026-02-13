@@ -306,7 +306,8 @@ namespace BasicTypeSpec
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(_endpoint);
+                uri.AppendPath(nextPage.OriginalString, false);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -338,7 +339,8 @@ namespace BasicTypeSpec
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(_endpoint);
+                uri.AppendPath(nextPage.OriginalString, false);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -370,7 +372,8 @@ namespace BasicTypeSpec
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(_endpoint);
+                uri.AppendPath(nextPage.OriginalString, false);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -403,7 +406,8 @@ namespace BasicTypeSpec
             }
             else
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                uri.Reset(_endpoint);
+                uri.AppendPath(nextPage.OriginalString, false);
             }
             uri.UpdateQuery("numElements", TypeFormatters.ConvertToString(numElements));
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
