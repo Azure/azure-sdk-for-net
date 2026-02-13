@@ -1,0 +1,1 @@
+spec path: /home/codespace/code/spec/specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/DesktopVirtualization

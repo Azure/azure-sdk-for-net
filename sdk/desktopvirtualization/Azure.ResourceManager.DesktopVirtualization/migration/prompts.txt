@@ -1,0 +1,1 @@
+Use migration/handle_renamemapping.md to handle rename mapping.
