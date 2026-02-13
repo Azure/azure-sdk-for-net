@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
         /// <param name="azureFrontDoor"> Property specifying the configuration of Azure Front Door for this configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationStoreProperties(AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, long? defaultKeyValueRevisionRetentionPeriodInSeconds, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, TelemetryProperties telemetry, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, AzureFrontDoorProperties azureFrontDoor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationStoreProperties(AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, long? defaultKeyValueRevisionRetentionPeriodInSeconds, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, TelemetryProperties telemetry, AppConfigurationManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, AzureFrontDoorProperties azureFrontDoor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Managed On Behalf Of Configuration. </summary>
         [WirePath("managedOnBehalfOfConfiguration")]
-        internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
+        internal AppConfigurationManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
 
         /// <summary> Property specifying the configuration of Azure Front Door for this configuration store. </summary>
         [WirePath("azureFrontDoor")]
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
         [WirePath("managedOnBehalfOfConfiguration.moboBrokerResources")]
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

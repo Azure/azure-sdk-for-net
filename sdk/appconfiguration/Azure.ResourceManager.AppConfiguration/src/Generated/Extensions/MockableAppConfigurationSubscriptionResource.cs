@@ -172,62 +172,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets information about the deleted configuration stores in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStoresOperationGroup_ListDeleted. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetDeletedAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAppConfigurationStoreResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets information about the deleted configuration stores in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStoresOperationGroup_ListDeleted. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedAppConfigurationStoreResource> GetDeleted(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAppConfigurationStoreResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks whether the configuration store name is available for use.
         /// <list type="bullet">
         /// <item>
@@ -345,12 +289,12 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AppConfigurationNameAvailabilityResult>> RegionalCheckNameAvailabilityAsync(string location, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationRegionalNameAvailabilityAsync(string location, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.RegionalCheckNameAvailability");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationRegionalNameAvailability");
             scope.Start();
             try
             {
@@ -358,7 +302,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateRegionalCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -396,12 +340,12 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AppConfigurationNameAvailabilityResult> RegionalCheckNameAvailability(string location, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationRegionalNameAvailability(string location, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.RegionalCheckNameAvailability");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableAppConfigurationSubscriptionResource.CheckAppConfigurationRegionalNameAvailability");
             scope.Start();
             try
             {
@@ -409,7 +353,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateRegionalCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

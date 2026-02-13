@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default;
             AppConfigurationCreateMode? createMode = default;
             TelemetryProperties telemetry = default;
-            ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
+            AppConfigurationManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             AzureFrontDoorProperties azureFrontDoor = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    managedOnBehalfOfConfiguration = ManagedOnBehalfOfConfiguration.DeserializeManagedOnBehalfOfConfiguration(prop.Value, options);
+                    managedOnBehalfOfConfiguration = AppConfigurationManagedOnBehalfOfConfiguration.DeserializeAppConfigurationManagedOnBehalfOfConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureFrontDoor"u8))

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration
     /// Each <see cref="DeletedAppConfigurationStoreResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="DeletedAppConfigurationStoreCollection"/> instance call the GetDeletedAppConfigurationStores method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class DeletedAppConfigurationStoreCollection : ArmCollection
+    public partial class DeletedAppConfigurationStoreCollection : ArmCollection, IEnumerable<DeletedAppConfigurationStoreResource>, IAsyncEnumerable<DeletedAppConfigurationStoreResource>
     {
         private readonly ClientDiagnostics _configurationStoresClientDiagnostics;
         private readonly ConfigurationStores _configurationStoresRestClient;
@@ -151,6 +153,62 @@ namespace Azure.ResourceManager.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets information about the deleted configuration stores in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStoresOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAsyncCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAppConfigurationStoreResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets information about the deleted configuration stores in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStoresOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedAppConfigurationStoreResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -391,6 +449,22 @@ namespace Azure.ResourceManager.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DeletedAppConfigurationStoreResource> IEnumerable<DeletedAppConfigurationStoreResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DeletedAppConfigurationStoreResource> IAsyncEnumerable<DeletedAppConfigurationStoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

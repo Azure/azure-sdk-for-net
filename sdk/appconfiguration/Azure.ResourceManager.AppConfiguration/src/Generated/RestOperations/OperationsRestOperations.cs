@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateRegionalCheckNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
