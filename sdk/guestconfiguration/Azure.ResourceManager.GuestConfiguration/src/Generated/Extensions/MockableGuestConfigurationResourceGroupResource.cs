@@ -108,10 +108,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         }
 
         /// <summary> Gets a collection of GuestConfigurationHcrpAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="machineName"> The machineName for the resource. </param>
         /// <returns> An object representing collection of GuestConfigurationHcrpAssignments and their operations over a GuestConfigurationHcrpAssignmentResource. </returns>
-        public virtual GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments()
+        public virtual GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(string machineName)
         {
-            return GetCachedClient(client => new GuestConfigurationHcrpAssignmentCollection(client, Id));
+            return GetCachedClient(client => new GuestConfigurationHcrpAssignmentCollection(client, Id, machineName));
         }
 
         /// <summary>
@@ -131,18 +132,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="machineName"> The machineName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            return await GetGuestConfigurationHcrpAssignments().GetAsync(machineName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationHcrpAssignments(machineName).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,18 +162,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="machineName"> The machineName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            return GetGuestConfigurationHcrpAssignments().Get(machineName, guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationHcrpAssignments(machineName).Get(guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GuestConfigurationVmssAssignments in the <see cref="ResourceGroupResource"/>. </summary>
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -245,10 +244,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         }
 
         /// <summary> Gets a collection of GuestConfigurationVMwarevSphereAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="vmName"> The vmName for the resource. </param>
         /// <returns> An object representing collection of GuestConfigurationVMwarevSphereAssignments and their operations over a GuestConfigurationVMwarevSphereAssignmentResource. </returns>
-        public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments()
+        public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(string vmName)
         {
-            return GetCachedClient(client => new GuestConfigurationVMwarevSphereAssignmentCollection(client, Id));
+            return GetCachedClient(client => new GuestConfigurationVMwarevSphereAssignmentCollection(client, Id, vmName));
         }
 
         /// <summary>
@@ -268,18 +268,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetGuestConfigurationVMwarevSphereAssignmentAsync(string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            return await GetGuestConfigurationVMwarevSphereAssignments().GetAsync(vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationVMwarevSphereAssignments(vmName).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,18 +298,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="vmName"> The vmName for the resource. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GuestConfigurationVMwarevSphereAssignmentResource> GetGuestConfigurationVMwarevSphereAssignment(string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            return GetGuestConfigurationVMwarevSphereAssignments().Get(vmName, guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationVMwarevSphereAssignments(vmName).Get(guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>

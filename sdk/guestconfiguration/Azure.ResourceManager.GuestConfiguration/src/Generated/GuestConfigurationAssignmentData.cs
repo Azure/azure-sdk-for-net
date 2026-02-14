@@ -17,25 +17,34 @@ namespace Azure.ResourceManager.GuestConfiguration
     public partial class GuestConfigurationAssignmentData : GuestConfigurationResourceData
     {
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentData"/>. </summary>
-        public GuestConfigurationAssignmentData()
+        /// <param name="name"> The guest configuration assignment name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public GuestConfigurationAssignmentData(string name) : base(name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="type"> The type of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
-        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, GuestConfigurationAssignmentProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location)
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, string location, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, GuestConfigurationAssignmentProperties properties, SystemData systemData) : base(id, name, location, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
+            SystemData = systemData;
         }
 
         /// <summary> Properties of the Guest configuration assignment. </summary>
         [WirePath("properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
+
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        [WirePath("systemData")]
+        public SystemData SystemData { get; }
     }
 }

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return GuestConfigurationAssignmentData(
                 id,
                 name,
-                resourceType ?? default,
-                systemData,
                 location?.Name,
-                properties);
+                resourceType ?? default,
+                properties,
+                systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationResourceData"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = default, string name = default, AzureLocation? location = default, ResourceType? resourceType = default, SystemData systemData = default)
         {
-            return GuestConfigurationResourceData(id, name, resourceType ?? default, systemData, location?.Name);
+            return GuestConfigurationResourceData(id, name, location?.Name, resourceType ?? default);
         }
     }
 }

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
         {
             GuestConfigurationAssignmentProperties properties = GetDefaultGuestConfigurationAssignmentProperties();
 
-            return new GuestConfigurationAssignmentData
+            return new GuestConfigurationAssignmentData(GuestConfigurationManagementUtilities.DefaultAssignmentName)
             {
                 Properties = properties
             };

@@ -15,30 +15,33 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    internal partial class GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignmentData>
+    internal partial class GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignmentData>
     {
-        private readonly GuestConfigurationAssignments _client;
-        private readonly string _resourceGroupName;
+        private readonly GuestConfigurationConnectedVMwarevSphereAssignments _client;
         private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
+        private readonly string _vmName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The GuestConfigurationAssignments client used to send requests. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <summary> Initializes a new instance of GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The GuestConfigurationConnectedVMwarevSphereAssignments client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT(GuestConfigurationAssignments client, string resourceGroupName, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT(GuestConfigurationConnectedVMwarevSphereAssignments client, string subscriptionId, string resourceGroupName, string vmName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _resourceGroupName = resourceGroupName;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
+            _vmName = vmName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<GuestConfigurationAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -65,8 +68,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextRGListRequest(nextLink, _resourceGroupName, _subscriptionId, _context) : _client.CreateRGListRequest(_resourceGroupName, _subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.RGList");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllForConnectedVMwarevSphereRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _context) : _client.CreateGetAllForConnectedVMwarevSphereRequest(_subscriptionId, _resourceGroupName, _vmName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentCollection.GetAll");
             scope.Start();
             try
             {
