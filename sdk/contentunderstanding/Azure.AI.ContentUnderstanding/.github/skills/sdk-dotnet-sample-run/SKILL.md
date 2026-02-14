@@ -7,6 +7,8 @@ description: Run a specific sample for the Azure AI Content Understanding .NET S
 
 Run a specific sample from the Azure AI Content Understanding .NET SDK.
 
+> **[COPILOT INTERACTION MODEL]:** This skill is designed to be interactive. At each step marked with **[ASK USER]**, pause execution and prompt the user for input or confirmation before proceeding. Do NOT silently skip these prompts. Use the `ask_questions` tool when available.
+
 ## What This Skill Does
 
 1. **Auto-detects and installs** the .NET SDK (10.0, matching the repo's `global.json`)
@@ -25,6 +27,12 @@ Run a specific sample from the Azure AI Content Understanding .NET SDK.
 
 > **Note:** The .NET SDK is **automatically installed** by the script if not already present. .NET 10.0 (matching the repo's `global.json`) is installed to `~/.dotnet/`.
 
+> **[ASK USER] Prerequisites check:**
+> Before proceeding, verify the user's environment:
+> 1. "Have you already run the **setup check** (`sdk-dotnet-setup-check` skill)?" — If no, recommend running it first to validate endpoint, auth, and model deployments.
+> 2. "Have you configured your `appsettings.json` with your endpoint and credentials?" — If no, guide them through the Credential Setup section below.
+> 3. "Have you run `Sample00_UpdateDefaults` to configure model defaults?" — If no and they want to use prebuilt analyzers, guide them to run it first.
+
 ## Package Directory
 
 ```
@@ -32,6 +40,22 @@ sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 ```
 
 ## Credential Setup
+
+> **[ASK USER] Existing configuration:**
+> Ask the user: "Do you already have an `appsettings.json` configured in the package directory?"
+> - If yes: "Would you like to keep your existing configuration, or start fresh?"
+> - If no: Proceed to collect endpoint and credentials below.
+
+> **[ASK USER] Provide endpoint:**
+> Ask the user: "Please provide your **Microsoft Foundry endpoint URL**."
+> - It should look like: `https://<your-resource-name>.services.ai.azure.com/`
+> - It should NOT include `api-version` or other query parameters.
+> - If the user does not know where to find it: direct them to Azure Portal → Their Foundry resource → Keys and Endpoint.
+
+> **[ASK USER] Authentication method:**
+> Ask the user: "How would you like to **authenticate** with Azure?"
+> - **Option A: DefaultAzureCredential (recommended)** — Uses `az login` or managed identity. No API key needed. Make sure you have run `az login`.
+> - **Option B: API Key** — Provide your `CONTENTUNDERSTANDING_API_KEY` from the Azure Portal → Keys and Endpoint → Key1 or Key2.
 
 Create an `appsettings.json` file in the package directory (`sdk/contentunderstanding/Azure.AI.ContentUnderstanding/`):
 
@@ -52,6 +76,9 @@ Create an `appsettings.json` file in the package directory (`sdk/contentundersta
   "CONTENTUNDERSTANDING_TARGET_REGION": ""
 }
 ```
+
+> **[ASK USER] Confirm appsettings.json:**
+> After writing the file, summarize the configuration values (masking any API key) and ask: "Does this configuration look correct?" Wait for confirmation before proceeding.
 
 ### Settings by sample
 
@@ -77,16 +104,34 @@ Samples **01, 05, 10, 11** require a local document file. The script auto-downlo
 .github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary --file /path/to/your/document.pdf
 ```
 
+> **[ASK USER] Local file (if applicable):**
+> If the user chose a sample that requires a local file (Sample01, Sample05, Sample10, Sample11), ask:
+> "This sample requires a local document file. Would you like to:"
+> - **Use the default test PDF** — The script will auto-download one for you.
+> - **Provide your own file** — Please provide the full path to your document (PDF, image, etc.).
+
 You can also set these as environment variables instead of using `appsettings.json`.
 
 ## Available Samples
 
+> **[ASK USER] Which sample?:**
+> Ask the user: "Which sample would you like to run?" with options:
+> - `Sample00_UpdateDefaults` — Configure model defaults (one-time setup, required first)
+> - `Sample01_AnalyzeBinary` — Analyze a local PDF/image file (recommended start)
+> - `Sample02_AnalyzeUrl` — Analyze content from URLs (documents, images, audio, video)
+> - `Sample03_AnalyzeInvoice` — Extract structured invoice fields
+> - `Sample04_CreateAnalyzer` — Create a custom analyzer
+> - Other — Let me see the full list
+>
+> If the user picks "Other", show the full Available Samples list below or run:
+> `.github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh --list`
+
 ### Getting Started (Run These First)
 
-#### `Sample00_UpdateDefaults` ⭐ Required First!
+#### `Sample00_UpdateDefaults` — Required First!
 **One-time setup** - Configures model deployment mappings (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) for your Microsoft Foundry resource. Must run before using prebuilt analyzers.
 
-#### `Sample01_AnalyzeBinary` ⭐ Start Here!
+#### `Sample01_AnalyzeBinary` — Start Here!
 Analyzes a local PDF/image file using `prebuilt-documentSearch`.
 - Key concepts: Binary input, local file reading, markdown extraction, page properties
 
@@ -141,7 +186,22 @@ Cross-resource copying between different Azure resources/regions.
 
 ### Setting up Sample15 cross-resource environment
 
-Sample15 requires **two separate Microsoft Foundry resources** (source and target). Add the following to your `appsettings.json`:
+Sample15 requires **two separate Microsoft Foundry resources** (source and target).
+
+> **[ASK USER] Cross-resource setup (Sample15 only):**
+> If the user chose Sample15, ask:
+> 1. "Do you have **two separate Microsoft Foundry resources** (source and target) set up?" — If no, guide them to create a second resource.
+> 2. "Please provide the following for your **source** resource:"
+>    - Source endpoint URL
+>    - Source ARM Resource ID (found in Azure Portal → Properties → Resource ID)
+>    - Source region (programmatic name, e.g., `eastus`)
+> 3. "Please provide the following for your **target** resource:"
+>    - Target endpoint URL
+>    - Target ARM Resource ID
+>    - Target region
+> 4. Confirm: "Cross-resource copy requires `DefaultAzureCredential` (API keys cannot be used) and both resources must have the **Cognitive Services User** role assigned. Is this configured?"
+
+Add the following to your `appsettings.json`:
 
 ```json
 {
@@ -187,6 +247,11 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 ### Step 2: Configure Credentials
 
+> **[ASK USER] Configuration check:**
+> Ask the user: "Do you already have `appsettings.json` configured with your endpoint and credentials?"
+> - If yes: Skip to Step 3.
+> - If no: Guide them through the Credential Setup section above, collecting endpoint, auth method, and model deployment names interactively.
+
 ```bash
 # Create appsettings.json (if not already done)
 cat > appsettings.json << 'EOF'
@@ -207,16 +272,31 @@ export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com
 # Optional: export CONTENTUNDERSTANDING_API_KEY="your-key"
 ```
 
-### Step 3: Run the Sample
+### Step 3: Determine Platform
 
-**Using the script (recommended):**
+> **[ASK USER] Platform:**
+> Ask the user: "Which **platform** are you on?" with options:
+> - Linux/macOS (use bash commands)
+> - Windows PowerShell
+>
+> Use their answer to show the correct script command below.
+
+### Step 4: Run the Sample
+
+> **[ASK USER] Ready to run:**
+> Ask the user: "Ready to run the sample? This will build the SDK from source and execute the sample against your live Azure services. (Yes / Not yet)"
+> If "Not yet", ask what they still need to configure and help them resolve it.
+
+**Bash (Linux/macOS):**
 
 ```bash
-# Linux/macOS
-.github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh Sample02_AnalyzeUrl
+.github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh <SampleName>
+```
 
-# Windows (PowerShell)
-.github\skills\sdk-dotnet-sample-run\scripts\run-sample.ps1 -SampleName Sample02_AnalyzeUrl
+**PowerShell (Windows):**
+
+```powershell
+.github\skills\sdk-dotnet-sample-run\scripts\run-sample.ps1 -SampleName <SampleName>
 ```
 
 **Examples:**
@@ -237,6 +317,16 @@ export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com
 # List available samples
 .github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh --list
 ```
+
+### Step 5: Review Results
+
+> **[ASK USER] Sample result:**
+> After running the sample, ask: "Did the sample run successfully?"
+> - If yes: "Would you like to run another sample, or are you all set?"
+> - If no: Help troubleshoot using the Troubleshooting section below. Common issues include missing `appsettings.json`, model defaults not configured, or authorization errors.
+
+> **[ASK USER] Run another?:**
+> If the user wants to run another sample, loop back to the "Which sample?" prompt in the Available Samples section above.
 
 ## Quick Reference
 
