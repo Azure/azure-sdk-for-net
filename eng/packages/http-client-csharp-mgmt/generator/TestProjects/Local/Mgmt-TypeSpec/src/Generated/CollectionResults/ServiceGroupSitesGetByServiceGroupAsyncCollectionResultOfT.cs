@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 ServiceGroupSiteListResult result = ServiceGroupSiteListResult.FromResponse(response);
-                yield return Page<ServiceGroupSiteData>.FromValues((IReadOnlyList<ServiceGroupSiteData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ServiceGroupSiteData>.FromValues((IReadOnlyList<ServiceGroupSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
