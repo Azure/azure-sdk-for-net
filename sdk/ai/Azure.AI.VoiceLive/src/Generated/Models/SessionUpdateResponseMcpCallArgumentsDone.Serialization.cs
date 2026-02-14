@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateResponseMcpCallArgumentsDone>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateResponseMcpCallArgumentsDone IPersistableModel<SessionUpdateResponseMcpCallArgumentsDone>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseMcpCallArgumentsDone)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateResponseMcpCallArgumentsDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateResponseMcpCallArgumentsDone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,15 +170,5 @@ namespace Azure.AI.VoiceLive
                 outputIndex,
                 arguments);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateResponseMcpCallArgumentsDone>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateResponseMcpCallArgumentsDone IPersistableModel<SessionUpdateResponseMcpCallArgumentsDone>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateResponseMcpCallArgumentsDone)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateResponseMcpCallArgumentsDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

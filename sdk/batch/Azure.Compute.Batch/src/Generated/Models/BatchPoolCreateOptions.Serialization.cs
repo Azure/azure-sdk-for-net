@@ -51,6 +51,28 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchPoolCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchPoolCreateOptions IPersistableModel<BatchPoolCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchPoolCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchPoolCreateOptions"> The <see cref="BatchPoolCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchPoolCreateOptions batchPoolCreateOptions)
+        {
+            if (batchPoolCreateOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchPoolCreateOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchPoolCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -459,28 +481,6 @@ namespace Azure.Compute.Batch
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 upgradePolicy,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchPoolCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolCreateOptions IPersistableModel<BatchPoolCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchPoolCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchPoolCreateOptions"> The <see cref="BatchPoolCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchPoolCreateOptions batchPoolCreateOptions)
-        {
-            if (batchPoolCreateOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchPoolCreateOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

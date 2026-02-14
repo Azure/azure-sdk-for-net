@@ -50,6 +50,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentEntityRegionEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentEntityRegionEvalResult IPersistableModel<DocumentEntityRegionEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentEntityRegionEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentEntityRegionEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -172,15 +182,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new DocumentEntityRegionEvalResult(expectedEntities, predictedEntities, regionOffset, regionLength, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentEntityRegionEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentEntityRegionEvalResult IPersistableModel<DocumentEntityRegionEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentEntityRegionEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

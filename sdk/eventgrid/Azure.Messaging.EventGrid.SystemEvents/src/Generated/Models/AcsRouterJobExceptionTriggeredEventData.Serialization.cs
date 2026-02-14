@@ -47,6 +47,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsRouterJobExceptionTriggeredEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsRouterJobExceptionTriggeredEventData IPersistableModel<AcsRouterJobExceptionTriggeredEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobExceptionTriggeredEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsRouterJobExceptionTriggeredEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterJobExceptionTriggeredEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -194,16 +204,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 ruleKey,
                 exceptionRuleId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsRouterJobExceptionTriggeredEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsRouterJobExceptionTriggeredEventData IPersistableModel<AcsRouterJobExceptionTriggeredEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsRouterJobExceptionTriggeredEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsRouterJobExceptionTriggeredEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsRouterJobExceptionTriggeredEventDataConverter : JsonConverter<AcsRouterJobExceptionTriggeredEventData>
         {

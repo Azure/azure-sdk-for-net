@@ -55,6 +55,28 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacCollectionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacCollectionResource IPersistableModel<StacCollectionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="stacCollectionResource"> The <see cref="StacCollectionResource"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StacCollectionResource stacCollectionResource)
+        {
+            if (stacCollectionResource == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stacCollectionResource, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacCollectionResource"/> from. </param>
         public static explicit operator StacCollectionResource(Response response)
         {
@@ -455,28 +477,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 providers ?? new ChangeTrackingList<StacProvider>(),
                 summaries ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacCollectionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacCollectionResource IPersistableModel<StacCollectionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="stacCollectionResource"> The <see cref="StacCollectionResource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StacCollectionResource stacCollectionResource)
-        {
-            if (stacCollectionResource == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacCollectionResource, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

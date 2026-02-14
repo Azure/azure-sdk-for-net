@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SpeedResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpeedResolution IPersistableModel<SpeedResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpeedResolution)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SpeedResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SpeedResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,15 +139,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new SpeedResolution(resolutionKind, additionalBinaryDataProperties, value, unit);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SpeedResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SpeedResolution IPersistableModel<SpeedResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpeedResolution)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SpeedResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

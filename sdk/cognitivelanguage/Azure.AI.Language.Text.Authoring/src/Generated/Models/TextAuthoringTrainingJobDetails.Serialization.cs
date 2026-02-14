@@ -51,6 +51,28 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextAuthoringTrainingJobDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextAuthoringTrainingJobDetails IPersistableModel<TextAuthoringTrainingJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextAuthoringTrainingJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="textAuthoringTrainingJobDetails"> The <see cref="TextAuthoringTrainingJobDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TextAuthoringTrainingJobDetails textAuthoringTrainingJobDetails)
+        {
+            if (textAuthoringTrainingJobDetails == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(textAuthoringTrainingJobDetails, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextAuthoringTrainingJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -166,28 +188,6 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new TextAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringTrainingJobDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringTrainingJobDetails IPersistableModel<TextAuthoringTrainingJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringTrainingJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="textAuthoringTrainingJobDetails"> The <see cref="TextAuthoringTrainingJobDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TextAuthoringTrainingJobDetails textAuthoringTrainingJobDetails)
-        {
-            if (textAuthoringTrainingJobDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(textAuthoringTrainingJobDetails, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -51,6 +51,28 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchPoolEvaluateAutoScaleOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchPoolEvaluateAutoScaleOptions IPersistableModel<BatchPoolEvaluateAutoScaleOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchPoolEvaluateAutoScaleOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchPoolEvaluateAutoScaleOptions"> The <see cref="BatchPoolEvaluateAutoScaleOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchPoolEvaluateAutoScaleOptions batchPoolEvaluateAutoScaleOptions)
+        {
+            if (batchPoolEvaluateAutoScaleOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchPoolEvaluateAutoScaleOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchPoolEvaluateAutoScaleOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,28 +150,6 @@ namespace Azure.Compute.Batch
                 }
             }
             return new BatchPoolEvaluateAutoScaleOptions(autoScaleFormula, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchPoolEvaluateAutoScaleOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchPoolEvaluateAutoScaleOptions IPersistableModel<BatchPoolEvaluateAutoScaleOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchPoolEvaluateAutoScaleOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchPoolEvaluateAutoScaleOptions"> The <see cref="BatchPoolEvaluateAutoScaleOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchPoolEvaluateAutoScaleOptions batchPoolEvaluateAutoScaleOptions)
-        {
-            if (batchPoolEvaluateAutoScaleOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchPoolEvaluateAutoScaleOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

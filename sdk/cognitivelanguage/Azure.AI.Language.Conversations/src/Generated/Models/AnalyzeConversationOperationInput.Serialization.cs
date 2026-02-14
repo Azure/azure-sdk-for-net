@@ -52,6 +52,28 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeConversationOperationInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeConversationOperationInput IPersistableModel<AnalyzeConversationOperationInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalyzeConversationOperationInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="analyzeConversationOperationInput"> The <see cref="AnalyzeConversationOperationInput"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnalyzeConversationOperationInput analyzeConversationOperationInput)
+        {
+            if (analyzeConversationOperationInput == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeConversationOperationInput, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeConversationOperationInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -173,28 +195,6 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             return new AnalyzeConversationOperationInput(displayName, conversationInput, actions, cancelAfter, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeConversationOperationInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeConversationOperationInput IPersistableModel<AnalyzeConversationOperationInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeConversationOperationInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="analyzeConversationOperationInput"> The <see cref="AnalyzeConversationOperationInput"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AnalyzeConversationOperationInput analyzeConversationOperationInput)
-        {
-            if (analyzeConversationOperationInput == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(analyzeConversationOperationInput, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

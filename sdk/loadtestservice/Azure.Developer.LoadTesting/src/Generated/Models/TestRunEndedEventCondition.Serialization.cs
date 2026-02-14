@@ -45,6 +45,16 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestRunEndedEventCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunEndedEventCondition IPersistableModel<TestRunEndedEventCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TestRunEndedEventCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestRunEndedEventCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -165,15 +175,5 @@ namespace Azure.Developer.LoadTesting
             }
             return new TestRunEndedEventCondition(testRunStatuses ?? new ChangeTrackingList<TestRunStatus>(), testRunResults ?? new ChangeTrackingList<PassFailTestResult>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestRunEndedEventCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunEndedEventCondition IPersistableModel<TestRunEndedEventCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestRunEndedEventCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

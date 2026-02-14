@@ -51,7 +51,7 @@ namespace Azure.Analytics.OnlineExperimentation
                     yield break;
                 }
                 PagedExperimentMetric result = (PagedExperimentMetric)response;
-                yield return Page<ExperimentMetric>.FromValues((IReadOnlyList<ExperimentMetric>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ExperimentMetric>.FromValues((IReadOnlyList<ExperimentMetric>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

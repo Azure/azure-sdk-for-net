@@ -49,7 +49,7 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedDevBox result = (PagedDevBox)response;
-                yield return Page<DevBox>.FromValues((IReadOnlyList<DevBox>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DevBox>.FromValues((IReadOnlyList<DevBox>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

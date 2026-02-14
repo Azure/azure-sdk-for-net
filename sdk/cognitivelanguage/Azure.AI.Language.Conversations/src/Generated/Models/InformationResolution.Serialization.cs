@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformationResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformationResolution IPersistableModel<InformationResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (InformationResolution)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformationResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformationResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,15 +139,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new InformationResolution(resolutionKind, additionalBinaryDataProperties, value, unit);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InformationResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InformationResolution IPersistableModel<InformationResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (InformationResolution)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InformationResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

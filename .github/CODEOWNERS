@@ -1206,6 +1206,9 @@
 
 # ######## Code Generation ########
 
+# PRLabel: %CodeGen
+/sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
+
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes
 

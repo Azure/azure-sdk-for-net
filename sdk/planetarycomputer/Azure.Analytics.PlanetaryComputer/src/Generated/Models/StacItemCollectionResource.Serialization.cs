@@ -54,6 +54,16 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacItemCollectionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacItemCollectionResource IPersistableModel<StacItemCollectionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (StacItemCollectionResource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacItemCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacItemCollectionResource"/> from. </param>
         public static explicit operator StacItemCollectionResource(Response response)
         {
@@ -253,15 +263,5 @@ namespace Azure.Analytics.PlanetaryComputer
                 boundingBox ?? new ChangeTrackingList<float>(),
                 context);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacItemCollectionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacItemCollectionResource IPersistableModel<StacItemCollectionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (StacItemCollectionResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacItemCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

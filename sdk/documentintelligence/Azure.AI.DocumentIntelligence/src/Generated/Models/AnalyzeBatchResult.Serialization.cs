@@ -51,6 +51,16 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeBatchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeBatchResult IPersistableModel<AnalyzeBatchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalyzeBatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeBatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,16 +180,6 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, details ?? new ChangeTrackingList<AnalyzeBatchResultDetails>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeBatchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeBatchResult IPersistableModel<AnalyzeBatchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeBatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Converts a response to a AnalyzeBatchResult using the LRO result path. </summary>
         /// <param name="response"> The response from the service. </param>

@@ -51,6 +51,16 @@ namespace Azure.Analytics.OnlineExperimentation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedExperimentMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedExperimentMetric IPersistableModel<PagedExperimentMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedExperimentMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedExperimentMetric"/> from. </param>
         public static explicit operator PagedExperimentMetric(Response response)
         {
@@ -162,15 +172,5 @@ namespace Azure.Analytics.OnlineExperimentation
             }
             return new PagedExperimentMetric(value, nextLink, clientRequestId, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedExperimentMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedExperimentMetric IPersistableModel<PagedExperimentMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedExperimentMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

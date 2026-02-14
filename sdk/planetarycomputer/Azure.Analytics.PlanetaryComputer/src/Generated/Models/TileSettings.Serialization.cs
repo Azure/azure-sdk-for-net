@@ -52,6 +52,28 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TileSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TileSettings IPersistableModel<TileSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TileSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="tileSettings"> The <see cref="TileSettings"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TileSettings tileSettings)
+        {
+            if (tileSettings == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(tileSettings, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TileSettings"/> from. </param>
         public static explicit operator TileSettings(Response response)
         {
@@ -159,28 +181,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new TileSettings(minZoom, maxItemsPerTile, defaultLocation, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TileSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TileSettings IPersistableModel<TileSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TileSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="tileSettings"> The <see cref="TileSettings"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TileSettings tileSettings)
-        {
-            if (tileSettings == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tileSettings, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

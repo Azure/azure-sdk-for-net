@@ -46,6 +46,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QuestionAnsweringProject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuestionAnsweringProject IPersistableModel<QuestionAnsweringProject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QuestionAnsweringProject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuestionAnsweringProject"/> from. </param>
         public static explicit operator QuestionAnsweringProject(Response response)
         {
@@ -256,15 +266,5 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 configureSemanticRanking,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuestionAnsweringProject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringProject IPersistableModel<QuestionAnsweringProject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuestionAnsweringProject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

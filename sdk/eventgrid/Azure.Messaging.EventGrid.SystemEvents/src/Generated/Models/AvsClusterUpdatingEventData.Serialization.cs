@@ -52,6 +52,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsClusterUpdatingEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsClusterUpdatingEventData IPersistableModel<AvsClusterUpdatingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsClusterUpdatingEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsClusterUpdatingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsClusterUpdatingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -180,16 +190,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AvsClusterUpdatingEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsClusterUpdatingEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvsClusterUpdatingEventData IPersistableModel<AvsClusterUpdatingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsClusterUpdatingEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsClusterUpdatingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AvsClusterUpdatingEventDataConverter : JsonConverter<AvsClusterUpdatingEventData>
         {
