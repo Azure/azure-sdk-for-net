@@ -24,7 +24,7 @@
  * allowing gradual migration to the standardized API.
  */
 
-import { Program, Operation, Model } from "@typespec/compiler";
+import { Program, Operation } from "@typespec/compiler";
 import {
   ResolvedResource,
   ResourceType,
@@ -266,7 +266,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              createOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -284,7 +287,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              updateOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -302,7 +308,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              deleteOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -351,9 +360,6 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
-  // Check if this is a custom resource (uses @customAzureResource decorator)
-  const isCustom = hasCustomAzureResourceInHierarchy(resolvedResource.type);
-
   // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
   // The spec should always define unique resource names for extension resources targeting
   // different parent types — the emitter should not auto-generate disambiguated names.
@@ -378,11 +384,6 @@ function convertResolvedResourceToMetadata(
     ),
     resourceName: resourceName
   };
-
-  // Only include isCustomResource when true to keep output clean
-  if (isCustom) {
-    metadata.isCustomResource = true;
-  }
 
   return metadata;
 }
@@ -513,28 +514,6 @@ function calculateResourceScope(
 }
 
 /**
- * Checks if a model or any of its base models has the @customAzureResource decorator.
- * This indicates a legacy/custom ARM resource that doesn't use standard ARM templates.
- */
-function hasCustomAzureResourceInHierarchy(model: Model): boolean {
-  let current: Model | undefined = model;
-  while (current) {
-    const decorators = current.decorators;
-    if (decorators) {
-      for (const dec of decorators) {
-        // Check for the @customAzureResource decorator by name
-        const fullName = dec.decorator?.name;
-        if (fullName === "$customAzureResource") {
-          return true;
-        }
-      }
-    }
-    current = current.baseModel;
-  }
-  return false;
-}
-
-/**
  * Extracts the explicit resource name from a resolved resource's operations.
  * Checks the CRUD operations' decorators for OverrideResourceName parameters
  * set via @extensionResourceOperation or @legacyExtensionResourceOperation.
@@ -568,8 +547,7 @@ function getExplicitResourceNameFromOperations(
       ) {
         // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
         // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
-        const argIndex =
-          name === extensionResourceOperationName ? 3 : 2;
+        const argIndex = name === extensionResourceOperationName ? 3 : 2;
         if (
           decorator.args.length > argIndex &&
           decorator.args[argIndex].jsValue &&

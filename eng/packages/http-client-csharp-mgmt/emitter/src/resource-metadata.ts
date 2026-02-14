@@ -49,8 +49,6 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
-  /** Indicates if this resource uses @customAzureResource decorator (legacy pattern) */
-  isCustomResource?: boolean;
 }
 
 export function convertResourceMetadataToArguments(
@@ -65,11 +63,6 @@ export function convertResourceMetadataToArguments(
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
-
-  // Only include isCustomResource when true to keep output clean for standard resources
-  if (metadata.isCustomResource) {
-    result.isCustomResource = true;
-  }
 
   return result;
 }
@@ -220,10 +213,6 @@ export function convertArmProviderSchemaToArguments(
         singletonResourceName: r.metadata.singletonResourceName,
         resourceName: r.metadata.resourceName
       };
-      // Only include isCustomResource when true to keep output clean
-      if (r.metadata.isCustomResource) {
-        resource.isCustomResource = true;
-      }
       return resource;
     }),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
@@ -281,8 +270,13 @@ export function postProcessArmResources(
   for (const resource of resources) {
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
-    if (parentResource && validResourceMap.has(parentResource.metadata.resourceIdPattern)) {
-      const parent = validResourceMap.get(parentResource.metadata.resourceIdPattern);
+    if (
+      parentResource &&
+      validResourceMap.has(parentResource.metadata.resourceIdPattern)
+    ) {
+      const parent = validResourceMap.get(
+        parentResource.metadata.resourceIdPattern
+      );
       if (parent) {
         resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
         resource.metadata.parentResourceModelId = parent.resourceModelId;
@@ -338,14 +332,19 @@ export function postProcessArmResources(
       for (const otherResource of validResources) {
         if (
           otherResource.metadata.resourceIdPattern &&
-          isPrefix(otherResource.metadata.resourceIdPattern, method.operationPath)
+          isPrefix(
+            otherResource.metadata.resourceIdPattern,
+            method.operationPath
+          )
         ) {
           candidates.push(otherResource.metadata.resourceIdPattern);
         }
       }
       // Use the longest resource path as the resourceScope
       if (candidates.length > 0) {
-        method.resourceScope = candidates.reduce((a, b) => (a.length > b.length ? a : b));
+        method.resourceScope = candidates.reduce((a, b) =>
+          a.length > b.length ? a : b
+        );
       }
     }
   }
@@ -407,7 +406,8 @@ export function postProcessArmResources(
       if (resource.metadata.parentResourceId) {
         // Find parent resource
         const parent = validResources.find(
-          (r) => r.metadata.resourceIdPattern === resource.metadata.parentResourceId
+          (r) =>
+            r.metadata.resourceIdPattern === resource.metadata.parentResourceId
         );
         if (parent) {
           // When moving operations to parent resource, convert them to Action kind

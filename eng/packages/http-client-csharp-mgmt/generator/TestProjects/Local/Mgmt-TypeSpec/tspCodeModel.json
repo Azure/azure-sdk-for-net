@@ -21917,8 +21917,7 @@
                   }
                 ],
                 "resourceScope": "ResourceGroup",
-                "resourceName": "TrafficProfile",
-                "isCustomResource": true
+                "resourceName": "TrafficProfile"
               },
               {
                 "resourceModelId": "MgmtTypeSpec.TrafficEndpoint",
@@ -21952,8 +21951,7 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
-                "resourceName": "TrafficEndpoint",
-                "isCustomResource": true
+                "resourceName": "TrafficEndpoint"
               },
               {
                 "resourceModelId": "MgmtTypeSpec.VmConfigurationAssignment",
