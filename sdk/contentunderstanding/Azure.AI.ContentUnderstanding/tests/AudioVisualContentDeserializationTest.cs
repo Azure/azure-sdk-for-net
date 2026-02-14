@@ -28,6 +28,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
         #region Null value handling
 
         [Test]
+        public void Deserialize_NullTopLevelElement_ReturnsNull()
+        {
+            // Cover AudioVisualContent.Customizations.cs lines 24-25:
+            // if (element.ValueKind == JsonValueKind.Null) { return null; }
+            // When the top-level JSON element is "null", DeserializeAudioVisualContent returns null.
+            var binaryData = BinaryData.FromString("null");
+            var result = ModelReaderWriter.Read<AudioVisualContent>(binaryData, JsonOptions);
+
+            Assert.IsNull(result, "Deserializing a null JSON element should return null");
+        }
+
+        [Test]
         public void Deserialize_NullJsonElement_ReturnsNull()
         {
             // Test the null path: if (element.ValueKind == JsonValueKind.Null) return null;

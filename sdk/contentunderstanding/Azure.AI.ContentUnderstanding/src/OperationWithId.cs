@@ -74,16 +74,12 @@ namespace Azure.AI.ContentUnderstanding
 
             // The "Operation-Location" header contains the URL with the operation ID as the last path segment.
             // Extract the operation ID by parsing the URI and getting the last segment.
-            if (response != null && response.Headers.TryGetValue("Operation-Location", out string? operationLocation))
+            if (response != null
+                && response.Headers.TryGetValue("Operation-Location", out string? operationLocation)
+                && Uri.TryCreate(operationLocation, UriKind.Absolute, out var uri)
+                && uri.Segments.Length > 0)
             {
-                if (Uri.TryCreate(operationLocation, UriKind.Absolute, out var uri))
-                {
-                    var segments = uri.Segments;
-                    if (segments.Length > 0)
-                    {
-                        return segments[segments.Length - 1].TrimEnd('/');
-                    }
-                }
+                return uri.Segments[uri.Segments.Length - 1].TrimEnd('/');
             }
 
             return null;

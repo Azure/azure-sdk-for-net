@@ -1929,6 +1929,208 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(operation.HasValue, "Completed operation should have a value");
         }
 
+        /// <summary>
+        /// Tests that the async Analyze protocol method polls to completion when WaitUntil.Completed is specified.
+        /// Covers ContentUnderstandingClient.Customizations.cs async WaitForCompletionAsync branch.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeAsync_Protocol_WaitUntilCompleted()
+        {
+            // Arrange
+            var mockTransport = CreateLroCompletionMockTransport("analyze-async-completed-op");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            var operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "test-analyzer",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("analyze-async-completed-op", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed for WaitUntil.Completed");
+            Assert.IsTrue(operation.HasValue, "Completed operation should have a value");
+        }
+
+        /// <summary>
+        /// Tests that the async AnalyzeBinary protocol method polls to completion when WaitUntil.Completed is specified.
+        /// Covers ContentUnderstandingClient.Customizations.cs async WaitForCompletionAsync branch.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeBinaryAsync_Protocol_WaitUntilCompleted()
+        {
+            // Arrange
+            var mockTransport = CreateLroCompletionMockTransport("binary-async-completed-op");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            var operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "test-analyzer",
+                "application/pdf",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("binary-async-completed-op", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed for WaitUntil.Completed");
+            Assert.IsTrue(operation.HasValue, "Completed operation should have a value");
+        }
+
+        /// <summary>
+        /// Tests that the sync Analyze protocol method catch block is exercised when the transport returns an error.
+        /// Covers scope.Failed(e) and throw in the sync Analyze catch block.
+        /// </summary>
+        [Test]
+        public void Analyze_Protocol_ThrowsOnTransportError()
+        {
+            // Arrange: 400 Bad Request triggers RequestFailedException in ProcessMessage
+            var mockTransport = new MockTransport(new MockResponse(400));
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act & Assert: Exception is caught by scope.Failed(e), then rethrown
+            Assert.Throws<RequestFailedException>(() =>
+                client.Analyze(WaitUntil.Started, "test-analyzer", requestContent));
+        }
+
+        /// <summary>
+        /// Tests that the sync AnalyzeBinary protocol method catch block is exercised when the transport returns an error.
+        /// Covers scope.Failed(e) and throw in the sync AnalyzeBinary catch block.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_Protocol_ThrowsOnTransportError()
+        {
+            // Arrange: 400 Bad Request triggers RequestFailedException in ProcessMessage
+            var mockTransport = new MockTransport(new MockResponse(400));
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act & Assert: Exception is caught by scope.Failed(e), then rethrown
+            Assert.Throws<RequestFailedException>(() =>
+                client.AnalyzeBinary(WaitUntil.Started, "test-analyzer", "application/pdf", requestContent));
+        }
+
+        /// <summary>
+        /// Tests that the async Analyze protocol method catch block is exercised when the transport returns an error.
+        /// Covers scope.Failed(e) and throw in the async Analyze catch block.
+        /// </summary>
+        [Test]
+        public void AnalyzeAsync_Protocol_ThrowsOnTransportError()
+        {
+            // Arrange: 400 Bad Request triggers RequestFailedException in ProcessMessageAsync
+            var mockTransport = new MockTransport(new MockResponse(400));
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act & Assert: Exception is caught by scope.Failed(e), then rethrown
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.AnalyzeAsync(WaitUntil.Started, "test-analyzer", requestContent));
+        }
+
+        /// <summary>
+        /// Tests that the async AnalyzeBinary protocol method catch block is exercised when the transport returns an error.
+        /// Covers scope.Failed(e) and throw in the async AnalyzeBinary catch block.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinaryAsync_Protocol_ThrowsOnTransportError()
+        {
+            // Arrange: 400 Bad Request triggers RequestFailedException in ProcessMessageAsync
+            var mockTransport = new MockTransport(new MockResponse(400));
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act & Assert: Exception is caught by scope.Failed(e), then rethrown
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.AnalyzeBinaryAsync(WaitUntil.Started, "test-analyzer", "application/pdf", requestContent));
+        }
+
+        /// <summary>
+        /// Tests that OperationWithId.Id throws InvalidOperationException when the Operation-Location header
+        /// contains a relative (non-absolute) URI that can't be parsed by Uri.TryCreate with UriKind.Absolute.
+        /// Covers the GetOperationId() fallback path → return null → Id property throws.
+        /// </summary>
+        [Test]
+        public void Analyze_Protocol_InvalidOperationLocation_ThrowsOnIdAccess()
+        {
+            // Arrange: Use a relative URI for Operation-Location so Uri.TryCreate(UriKind.Absolute) fails
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Operation-Location", "not-a-valid-absolute-uri");
+            initialResponse.AddHeader("Content-Type", "application/json");
+            var mockTransport = new MockTransport(initialResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            var operation = client.Analyze(WaitUntil.Started, "test-analyzer", requestContent);
+
+            // Assert: Accessing Id should throw because GetOperationId() returned null
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.Throws<InvalidOperationException>(() => { var _ = operation.Id; },
+                "Accessing Id when Operation-Location is not a valid absolute URI should throw InvalidOperationException");
+        }
+
+        /// <summary>
+        /// Tests that passing a non-null RequestContext to a protocol method exercises
+        /// RequestContextExtensions.Parse's non-null branch (line 23).
+        /// </summary>
+        [Test]
+        public void GetAnalyzer_Protocol_WithRequestContext_CoversRequestContextParse()
+        {
+            // Arrange: Return a valid analyzer JSON response
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader("Content-Type", "application/json");
+            mockResponse.SetContent("{\"analyzerId\":\"test-analyzer\",\"baseAnalyzerId\":\"prebuilt-document\"}");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            // Act: Pass a non-null RequestContext to cover RequestContextExtensions.Parse non-null branch
+            var context = new RequestContext();
+            var response = client.GetAnalyzer("test-analyzer", context);
+
+            // Assert
+            Assert.IsNotNull(response, "Response should not be null");
+            Assert.AreEqual(200, response.Status, "Response status should be 200");
+        }
+
         #endregion
     }
 }
