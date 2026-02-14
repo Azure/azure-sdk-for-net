@@ -59,7 +59,7 @@ npm run build:emitter
 
 If TypeScript compilation fails, examine the errors — they likely indicate breaking API changes in the base `@azure-typespec/http-client-csharp` package. Fix the emitter source code under `eng/packages/http-client-csharp-mgmt/emitter/` accordingly.
 
-### 5a. Lint and format the emitter
+### 6. Lint and format the emitter
 
 ```shell
 cd eng/packages/http-client-csharp-mgmt
@@ -76,7 +76,7 @@ npm run prettier:fix
 
 These checks are required to pass CI. Always run them after any emitter code changes.
 
-### 6. Build the generator
+### 7. Build the generator
 
 ```shell
 cd eng/packages/http-client-csharp-mgmt
@@ -87,7 +87,7 @@ This runs `dotnet build ./generator`. The `Azure.Generator.Management` project r
 
 If C# compilation fails, examine the errors — they likely indicate breaking API changes in the `Azure.Generator` package. Fix the generator source code under `eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/` accordingly.
 
-### 7. Regenerate test projects
+### 8. Regenerate test projects
 
 ```shell
 pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1
@@ -100,7 +100,7 @@ This script:
 
 If regeneration produces file changes, they must be included in the commit.
 
-### 8. Verify
+### 9. Verify
 
 - Run `git status` to see all modified files
 - Ensure `package.json`, `package-lock.json`, `Packages.Data.props`, and any regenerated test project files are included
