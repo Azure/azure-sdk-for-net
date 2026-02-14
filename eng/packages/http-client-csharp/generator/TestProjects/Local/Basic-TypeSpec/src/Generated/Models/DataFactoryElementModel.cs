@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
+using System.Text.Json;
 
 namespace BasicTypeSpec
 {
@@ -22,8 +22,14 @@ namespace BasicTypeSpec
         /// <param name="intProperty"> Int property with DFE pattern. </param>
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
-        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="stringProperty"/>, <paramref name="intProperty"/>, <paramref name="boolProperty"/> or <paramref name="stringArrayProperty"/> is null. </exception>
+        public DataFactoryElementModel(BinaryData stringProperty, BinaryData intProperty, BinaryData boolProperty, BinaryData stringArrayProperty)
         {
+            Argument.AssertNotNull(stringProperty, nameof(stringProperty));
+            Argument.AssertNotNull(intProperty, nameof(intProperty));
+            Argument.AssertNotNull(boolProperty, nameof(boolProperty));
+            Argument.AssertNotNull(stringArrayProperty, nameof(stringArrayProperty));
+
             StringProperty = stringProperty;
             IntProperty = intProperty;
             BoolProperty = boolProperty;
@@ -36,7 +42,7 @@ namespace BasicTypeSpec
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryElementModel(BinaryData stringProperty, BinaryData intProperty, BinaryData boolProperty, BinaryData stringArrayProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StringProperty = stringProperty;
             IntProperty = intProperty;
@@ -45,16 +51,168 @@ namespace BasicTypeSpec
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> String property with DFE pattern. </summary>
-        public DataFactoryElement<string> StringProperty { get; }
+        /// <summary>
+        /// String property with DFE pattern
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="string"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="DataFactoryElementModel"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData StringProperty { get; set; }
 
-        /// <summary> Int property with DFE pattern. </summary>
-        public DataFactoryElement<int> IntProperty { get; }
+        /// <summary>
+        /// Int property with DFE pattern
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="int"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="DataFactoryElementModel"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData IntProperty { get; set; }
 
-        /// <summary> Bool property with DFE pattern. </summary>
-        public DataFactoryElement<bool> BoolProperty { get; }
+        /// <summary>
+        /// Bool property with DFE pattern
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="bool"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="DataFactoryElementModel"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData BoolProperty { get; set; }
 
-        /// <summary> String array property with DFE pattern. </summary>
-        public DataFactoryElement<IList<string>> StringArrayProperty { get; }
+        /// <summary>
+        /// String array property with DFE pattern
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="DataFactoryElementModel"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData StringArrayProperty { get; set; }
     }
 }

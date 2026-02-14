@@ -3344,7 +3344,7 @@
       "name": "DataFactoryElementModel",
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.DataFactoryElementModel",
-      "usage": "Input,Output,Json,External",
+      "usage": "Input,Output,Json",
       "doc": "Model with DataFactoryElement properties",
       "decorators": [],
       "serializationOptions": {
@@ -3362,7 +3362,7 @@
           "type": {
             "$id": "297",
             "kind": "union",
-            "name": "Dfe",
+            "name": "DfeString",
             "variantTypes": [
               {
                 "$id": "298",
@@ -3376,10 +3376,7 @@
               }
             ],
             "namespace": "BasicTypeSpec",
-            "decorators": [],
-            "external": {
-              "identity": "Azure.Core.Expressions.DataFactoryElement"
-            }
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -3403,7 +3400,7 @@
           "type": {
             "$id": "300",
             "kind": "union",
-            "name": "Dfe",
+            "name": "DfeInt32",
             "variantTypes": [
               {
                 "$id": "301",
@@ -3417,10 +3414,7 @@
               }
             ],
             "namespace": "BasicTypeSpec",
-            "decorators": [],
-            "external": {
-              "identity": "Azure.Core.Expressions.DataFactoryElement"
-            }
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -3444,7 +3438,7 @@
           "type": {
             "$id": "303",
             "kind": "union",
-            "name": "Dfe",
+            "name": "DfeBoolean",
             "variantTypes": [
               {
                 "$id": "304",
@@ -3458,10 +3452,7 @@
               }
             ],
             "namespace": "BasicTypeSpec",
-            "decorators": [],
-            "external": {
-              "identity": "Azure.Core.Expressions.DataFactoryElement"
-            }
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -3485,7 +3476,7 @@
           "type": {
             "$id": "306",
             "kind": "union",
-            "name": "Dfe",
+            "name": "DfeStringArray",
             "variantTypes": [
               {
                 "$ref": "193"
@@ -3495,10 +3486,7 @@
               }
             ],
             "namespace": "BasicTypeSpec",
-            "decorators": [],
-            "external": {
-              "identity": "Azure.Core.Expressions.DataFactoryElement"
-            }
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -4656,7 +4644,8 @@
                         },
                         "valueType": {
                           "$ref": "376"
-                        }
+                        },
+                        "crossLanguageDefinitionId": "BasicTypeSpec.XmlNamespaces.ns1"
                       },
                       {
                         "$id": "378",
@@ -4669,7 +4658,8 @@
                         },
                         "valueType": {
                           "$ref": "376"
-                        }
+                        },
+                        "crossLanguageDefinitionId": "BasicTypeSpec.XmlNamespaces.ns2"
                       }
                     ],
                     "isFixed": true,
@@ -4686,7 +4676,8 @@
                   },
                   "valueType": {
                     "$ref": "376"
-                  }
+                  },
+                  "crossLanguageDefinitionId": "BasicTypeSpec.XmlNamespaces.ns1"
                 }
               }
             },
@@ -4740,7 +4731,8 @@
                   },
                   "valueType": {
                     "$ref": "376"
-                  }
+                  },
+                  "crossLanguageDefinitionId": "BasicTypeSpec.XmlNamespaces.ns2"
                 }
               }
             }
