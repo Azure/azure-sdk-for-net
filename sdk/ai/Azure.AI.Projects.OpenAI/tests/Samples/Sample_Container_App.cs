@@ -10,6 +10,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
+#pragma warning disable AAIP001
 public class Sample_Container_App : ProjectsOpenAITestBase
 {
     [Test]

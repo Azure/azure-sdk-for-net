@@ -20,6 +20,8 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <!-- Ignore ModelFactory error (applied to externally originating types) -->
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <!-- Ignore warnings about the experimental features -->
+    <NoWarn>$(NoWarn);AAIP001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

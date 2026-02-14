@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects;
 
+[Experimental("AAIP001")]
 public partial class RedTeams
 {
     /// <summary>
