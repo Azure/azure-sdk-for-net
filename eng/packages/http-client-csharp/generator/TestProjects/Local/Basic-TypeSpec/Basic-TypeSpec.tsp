@@ -673,19 +673,43 @@ union Dfe<T> {
     DataFactoryElementModel
 }
 
+@clientName("DfeString", "csharp")
+union DfeString {
+    string,
+    DataFactoryElementModel
+}
+
+@clientName("DfeInt32", "csharp")
+union DfeInt32 {
+    int32,
+    DataFactoryElementModel
+}
+
+@clientName("DfeBoolean", "csharp")
+union DfeBoolean {
+    boolean,
+    DataFactoryElementModel
+}
+
+@clientName("DfeStringArray", "csharp")
+union DfeStringArray {
+    string[],
+    DataFactoryElementModel
+}
+
 @doc("Model with DataFactoryElement properties")
 model DataFactoryElementModel {
   @doc("String property with DFE pattern")
-  stringProperty: Dfe<string>;
+  stringProperty: DfeString;
 
   @doc("Int property with DFE pattern")
-  intProperty: Dfe<int32>;
+  intProperty: DfeInt32;
 
   @doc("Bool property with DFE pattern")
-  boolProperty: Dfe<boolean>;
+  boolProperty: DfeBoolean;
 
   @doc("String array property with DFE pattern")
-  stringArrayProperty: Dfe<string[]>;
+  stringArrayProperty: DfeStringArray;
 }
 
 @route("datafactory")

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
 {
@@ -154,7 +153,7 @@ namespace BasicTypeSpec
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
         /// <returns> A new <see cref="BasicTypeSpec.DataFactoryElementModel"/> instance for mocking. </returns>
-        public static DataFactoryElementModel DataFactoryElementModel(DataFactoryElement<string> stringProperty = default, DataFactoryElement<int> intProperty = default, DataFactoryElement<bool> boolProperty = default, DataFactoryElement<IList<string>> stringArrayProperty = default)
+        public static DataFactoryElementModel DataFactoryElementModel(BinaryData stringProperty = default, BinaryData intProperty = default, BinaryData boolProperty = default, BinaryData stringArrayProperty = default)
         {
             return new DataFactoryElementModel(stringProperty, intProperty, boolProperty, stringArrayProperty, additionalBinaryDataProperties: null);
         }

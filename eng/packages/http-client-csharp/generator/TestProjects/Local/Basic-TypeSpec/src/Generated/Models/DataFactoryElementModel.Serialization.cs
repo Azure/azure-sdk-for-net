@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
 {
@@ -101,13 +100,41 @@ namespace BasicTypeSpec
                 throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("stringProperty"u8);
-            writer.WriteObjectValue(StringProperty, options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(StringProperty);
+#else
+            using (JsonDocument document = JsonDocument.Parse(StringProperty))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("intProperty"u8);
-            writer.WriteObjectValue(IntProperty, options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(IntProperty);
+#else
+            using (JsonDocument document = JsonDocument.Parse(IntProperty))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("boolProperty"u8);
-            writer.WriteObjectValue(BoolProperty, options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(BoolProperty);
+#else
+            using (JsonDocument document = JsonDocument.Parse(BoolProperty))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("stringArrayProperty"u8);
-            writer.WriteObjectValue(StringArrayProperty, options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(StringArrayProperty);
+#else
+            using (JsonDocument document = JsonDocument.Parse(StringArrayProperty))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -150,31 +177,31 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            DataFactoryElement<string> stringProperty = default;
-            DataFactoryElement<int> intProperty = default;
-            DataFactoryElement<bool> boolProperty = default;
-            DataFactoryElement<IList<string>> stringArrayProperty = default;
+            BinaryData stringProperty = default;
+            BinaryData intProperty = default;
+            BinaryData boolProperty = default;
+            BinaryData stringArrayProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("stringProperty"u8))
                 {
-                    stringProperty = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    stringProperty = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("intProperty"u8))
                 {
-                    intProperty = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    intProperty = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("boolProperty"u8))
                 {
-                    boolProperty = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    boolProperty = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("stringArrayProperty"u8))
                 {
-                    stringArrayProperty = ModelReaderWriter.Read<DataFactoryElement<IList<string>>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    stringArrayProperty = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
