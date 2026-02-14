@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppServiceDetectorResource>> GetAsync(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDetectorResource>> GetAsync(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _certificateOrdersDiagnosticsClientDiagnostics.CreateScope("AppServiceDetectorResource.Get");
             scope.Start();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, timeGrain, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppServiceDetectorResource> Get(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDetectorResource> Get(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _certificateOrdersDiagnosticsClientDiagnostics.CreateScope("AppServiceDetectorResource.Get");
             scope.Start();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, timeGrain, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)

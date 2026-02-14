@@ -951,6 +951,9 @@
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
+# PRLabel: %App Services %Mgmt
+/sdk/certificateregistration/Azure.ResourceManager.CertificateRegistration/     @antcp @AzureAppServiceCLI
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
@@ -1169,6 +1172,9 @@
 
 # ServiceLabel: %Virtual Enclaves %Mgmt
 # ServiceOwners:                                                   @jchavaherrera
+
+# PRLabel: %App Services %Mgmt
+/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
 
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978

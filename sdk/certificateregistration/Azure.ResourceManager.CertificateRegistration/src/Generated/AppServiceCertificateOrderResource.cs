@@ -1122,34 +1122,34 @@ namespace Azure.ResourceManager.CertificateRegistration
 
         /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppServiceDetectorResource>> GetAppServiceDetectorAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDetectorResource>> GetAppServiceDetectorAsync(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            return await GetAppServiceDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceDetectors().GetAsync(detectorName, startOn, endOn, timeGrain, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppServiceDetectorResource> GetAppServiceDetector(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDetectorResource> GetAppServiceDetector(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            return GetAppServiceDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
+            return GetAppServiceDetectors().Get(detectorName, startOn, endOn, timeGrain, cancellationToken);
         }
     }
 }

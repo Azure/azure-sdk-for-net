@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AppServiceDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startOn, endOn, timeGrain, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AppServiceDetectorResource> Get(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDetectorResource> Get(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startOn, endOn, timeGrain, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,13 +232,13 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startOn, endOn, timeGrain, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
@@ -292,13 +292,13 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startOn, endOn, timeGrain, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
@@ -352,13 +352,13 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AppServiceDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AppServiceDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startOn, endOn, timeGrain, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
@@ -416,13 +416,13 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="startOn"> The start time for detector response. </param>
+        /// <param name="endOn"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AppServiceDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AppServiceDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startOn, endOn, timeGrain, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
