@@ -369,7 +369,7 @@ function convertResolvedResourceToMetadata(
     resourceName = explicitName;
   }
 
-  const metadata: ResourceMetadata = {
+  return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
     resourceType,
@@ -384,8 +384,6 @@ function convertResolvedResourceToMetadata(
     ),
     resourceName: resourceName
   };
-
-  return metadata;
 }
 
 /**
