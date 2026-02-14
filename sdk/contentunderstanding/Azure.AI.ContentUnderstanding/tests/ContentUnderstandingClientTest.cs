@@ -1709,5 +1709,226 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(Guid.TryParse(headerValue, out _),
                 "Auto-generated x-ms-client-request-id should be a valid GUID");
         }
+
+        #region Protocol Method Tests - OperationWithId
+
+        /// <summary>
+        /// Creates a MockTransport with LRO-compatible responses for Analyze/AnalyzeBinary protocol methods.
+        /// The transport returns a 202 initial response with Operation-Location header, followed by a
+        /// 200 final response with succeeded status for polling.
+        /// </summary>
+        private static MockTransport CreateLroMockTransport(string operationId = "test-op-456")
+        {
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Operation-Location", $"https://example.com/contentunderstanding/operations/{operationId}");
+            initialResponse.AddHeader("Content-Type", "application/json");
+
+            var finalResponse = new MockResponse(200);
+            finalResponse.AddHeader("Content-Type", "application/json");
+            finalResponse.SetContent($"{{\"id\":\"{operationId}\",\"status\":\"Succeeded\",\"result\":{{}}}}");
+
+            // Provide initial + multiple final responses for potential polling.
+            return new MockTransport(initialResponse, finalResponse, finalResponse, finalResponse);
+        }
+
+        /// <summary>
+        /// Creates a MockTransport with LRO-compatible responses that complete during polling.
+        /// Returns a 202 initial response, then a "Running" poll, then a "Succeeded" poll with result.
+        /// Used for testing WaitUntil.Completed flow where the operation must poll to completion.
+        /// </summary>
+        private static MockTransport CreateLroCompletionMockTransport(string operationId = "test-completion-op")
+        {
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Operation-Location", $"https://example.com/contentunderstanding/operations/{operationId}");
+            initialResponse.AddHeader("Content-Type", "application/json");
+
+            var finalResponse = new MockResponse(200);
+            finalResponse.AddHeader("Content-Type", "application/json");
+            finalResponse.SetContent($"{{\"id\":\"{operationId}\",\"status\":\"Succeeded\",\"result\":{{\"contents\":[]}}}}");
+
+            // Provide initial response + enough Succeeded responses for the operation.WaitForCompletion polling.
+            return new MockTransport(initialResponse, finalResponse, finalResponse, finalResponse, finalResponse);
+        }
+
+        /// <summary>
+        /// Tests that the sync Analyze protocol method wraps the result in OperationWithId
+        /// and correctly extracts the operation ID from the Operation-Location header.
+        /// </summary>
+        [Test]
+        public void Analyze_Protocol_ReturnsOperationWithId()
+        {
+            // Arrange
+            var mockTransport = CreateLroMockTransport("my-analyze-op-id");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            var operation = client.Analyze(
+                WaitUntil.Started,
+                "test-analyzer",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("my-analyze-op-id", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsFalse(operation.HasCompleted, "Operation should not be completed for WaitUntil.Started");
+        }
+
+        /// <summary>
+        /// Tests that the async Analyze protocol method wraps the result in OperationWithId
+        /// and correctly extracts the operation ID from the Operation-Location header.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeAsync_Protocol_ReturnsOperationWithId()
+        {
+            // Arrange
+            var mockTransport = CreateLroMockTransport("my-analyze-async-op-id");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            var operation = await client.AnalyzeAsync(
+                WaitUntil.Started,
+                "test-analyzer",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("my-analyze-async-op-id", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsFalse(operation.HasCompleted, "Operation should not be completed for WaitUntil.Started");
+        }
+
+        /// <summary>
+        /// Tests that the sync AnalyzeBinary protocol method wraps the result in OperationWithId
+        /// and correctly extracts the operation ID from the Operation-Location header.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_Protocol_ReturnsOperationWithId()
+        {
+            // Arrange
+            var mockTransport = CreateLroMockTransport("my-binary-op-id");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            var operation = client.AnalyzeBinary(
+                WaitUntil.Started,
+                "test-analyzer",
+                "application/pdf",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("my-binary-op-id", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsFalse(operation.HasCompleted, "Operation should not be completed for WaitUntil.Started");
+        }
+
+        /// <summary>
+        /// Tests that the async AnalyzeBinary protocol method wraps the result in OperationWithId
+        /// and correctly extracts the operation ID from the Operation-Location header.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeBinaryAsync_Protocol_ReturnsOperationWithId()
+        {
+            // Arrange
+            var mockTransport = CreateLroMockTransport("my-binary-async-op-id");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            var operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Started,
+                "test-analyzer",
+                "application/pdf",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("my-binary-async-op-id", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsFalse(operation.HasCompleted, "Operation should not be completed for WaitUntil.Started");
+        }
+
+        /// <summary>
+        /// Tests that the sync Analyze protocol method polls to completion when WaitUntil.Completed is specified.
+        /// Verifies that the OperationWithId.WaitForCompletion code path is exercised.
+        /// </summary>
+        [Test]
+        public void Analyze_Protocol_WaitUntilCompleted()
+        {
+            // Arrange
+            var mockTransport = CreateLroCompletionMockTransport("analyze-completed-op");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            var operation = client.Analyze(
+                WaitUntil.Completed,
+                "test-analyzer",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("analyze-completed-op", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed for WaitUntil.Completed");
+            Assert.IsTrue(operation.HasValue, "Completed operation should have a value");
+        }
+
+        /// <summary>
+        /// Tests that the sync AnalyzeBinary protocol method polls to completion when WaitUntil.Completed is specified.
+        /// Verifies that the OperationWithId.WaitForCompletion code path is exercised.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_Protocol_WaitUntilCompleted()
+        {
+            // Arrange
+            var mockTransport = CreateLroCompletionMockTransport("binary-completed-op");
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            var operation = client.AnalyzeBinary(
+                WaitUntil.Completed,
+                "test-analyzer",
+                "application/pdf",
+                requestContent);
+
+            // Assert
+            Assert.IsNotNull(operation, "Operation should not be null");
+            Assert.AreEqual("binary-completed-op", operation.Id,
+                "Operation ID should be extracted from Operation-Location header");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed for WaitUntil.Completed");
+            Assert.IsTrue(operation.HasValue, "Completed operation should have a value");
+        }
+
+        #endregion
     }
 }
