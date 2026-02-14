@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -100,6 +100,11 @@ namespace Azure.Identity
                 ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
             }
 
+            if (section[nameof(ManagedIdentityObjectId)] is string managedIdentityObjectId)
+            {
+                ManagedIdentityObjectId = managedIdentityObjectId;
+            }
+
             if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
             {
                 CredentialProcessTimeout = credentialProcessTimeout;
@@ -118,6 +123,16 @@ namespace Azure.Identity
             if (bool.TryParse(section[nameof(WorkloadIdentityCredentialOptions.IsAzureProxyEnabled)], out bool isAzureProxyEnabled))
             {
                 IsAzureProxyEnabled = isAzureProxyEnabled;
+            }
+
+            if (bool.TryParse(section[nameof(IsProbeEnabled)], out bool isProbeEnabled))
+            {
+                IsProbeEnabled = isProbeEnabled;
+            }
+
+            if (bool.TryParse(section[nameof(UseManagedIdentityPipeline)], out bool useMiPipeline))
+            {
+                UseManagedIdentityPipeline = useMiPipeline;
             }
         }
 
@@ -332,6 +347,26 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
+        /// Specifies the object ID of a user-assigned managed identity. If this value is configured, then
+        /// <see cref="ManagedIdentityClientId"/> and <see cref="ManagedIdentityResourceId"/> should not be configured.
+        /// </summary>
+        internal string ManagedIdentityObjectId { get; set; }
+
+        /// <summary>
+        /// Specifies whether the IMDS probe request should be enabled when using a managed identity credential
+        /// via <see cref="ConfigurableCredential"/>. When <c>null</c> (default), the probe is disabled for
+        /// single-credential selection and enabled when MIC is part of the default credential chain.
+        /// </summary>
+        internal bool? IsProbeEnabled { get; set; }
+
+        /// <summary>
+        /// Specifies whether the managed identity pipeline (with IMDS-specific retry policy) should be used.
+        /// When <c>null</c> (default), the standard pipeline is used for single-credential selection
+        /// and the MI pipeline is used when MIC is part of the default credential chain.
+        /// </summary>
+        internal bool? UseManagedIdentityPipeline { get; set; }
+
+        /// <summary>
         /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure PowerShell.
         /// </summary>
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
@@ -444,6 +479,7 @@ namespace Azure.Identity
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
+                dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
@@ -466,6 +502,8 @@ namespace Azure.Identity
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
+                dacClone.IsProbeEnabled = IsProbeEnabled;
+                dacClone.UseManagedIdentityPipeline = UseManagedIdentityPipeline;
             }
 
             return clone;
