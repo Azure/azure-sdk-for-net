@@ -128,10 +128,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluation/result", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);

@@ -104,10 +104,6 @@ namespace Azure.Analytics.OnlineExperimentation
             uri.Reset(_endpoint);
             uri.AppendPath("/experiment-metrics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);

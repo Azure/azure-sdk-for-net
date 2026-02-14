@@ -119,10 +119,6 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath(name, true);
             uri.AppendPath("/blocklistItems", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);

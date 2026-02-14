@@ -25,10 +25,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-text/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -78,10 +74,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -131,10 +123,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/exported-models", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -184,10 +172,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -237,10 +221,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/resources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -290,10 +270,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/train/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -341,10 +317,6 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/analyze-text/projects/global/deployments/resources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
             if (skip != null)
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
@@ -395,10 +367,6 @@ namespace Azure.AI.Language.Text.Authoring
             if (projectKind != null)
             {
                 uri.AppendQuery("projectKind", projectKind, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
@@ -485,10 +453,6 @@ namespace Azure.AI.Language.Text.Authoring
             if (projectKind != null)
             {
                 uri.AppendQuery("projectKind", projectKind, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
