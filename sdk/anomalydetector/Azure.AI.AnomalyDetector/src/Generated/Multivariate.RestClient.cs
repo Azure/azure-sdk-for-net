@@ -60,7 +60,7 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
-        internal HttpMessage CreateGetMultivariateModelsRequest(int? skip, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetMultivariateModelsRequest(int? skip, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -71,9 +71,9 @@ namespace Azure.AI.AnomalyDetector
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -83,10 +83,17 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
-        internal HttpMessage CreateNextGetMultivariateModelsRequest(Uri nextPage, int? skip, int? maxCount, RequestContext context)
+        internal HttpMessage CreateNextGetMultivariateModelsRequest(Uri nextPage, int? skip, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

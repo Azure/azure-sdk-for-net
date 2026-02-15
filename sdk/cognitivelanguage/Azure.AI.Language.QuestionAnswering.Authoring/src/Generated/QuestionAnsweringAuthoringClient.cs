@@ -72,15 +72,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetProjects(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(this, maxCount, skip, maxpagesize, context);
+            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(this, top, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -91,37 +91,37 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(this, maxCount, skip, maxpagesize, context);
+            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(this, top, skip, maxpagesize, context);
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<QuestionAnsweringProject> GetProjects(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<QuestionAnsweringProject> GetProjects(int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(this, top, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(this, top, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1091,7 +1091,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1099,14 +1099,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 context);
@@ -1121,7 +1121,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1129,14 +1129,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 context);
@@ -1144,21 +1144,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ProjectDeployment> GetDeployments(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProjectDeployment> GetDeployments(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -1166,21 +1166,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProjectDeployment> GetDeploymentsAsync(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -1195,7 +1195,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1203,14 +1203,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 context);
@@ -1225,7 +1225,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1233,14 +1233,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsAsyncCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 context);
@@ -1248,21 +1248,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WordAlterations> GetSynonyms(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WordAlterations> GetSynonyms(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -1270,21 +1270,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WordAlterations> GetSynonymsAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WordAlterations> GetSynonymsAsync(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSynonymsAsyncCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -1397,7 +1397,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1405,14 +1405,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetSources(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 context);
@@ -1427,7 +1427,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1435,14 +1435,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesAsyncCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 context);
@@ -1450,21 +1450,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<QnaSourceRecord> GetSources(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<QnaSourceRecord> GetSources(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -1472,21 +1472,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<QnaSourceRecord> GetSourcesAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QnaSourceRecord> GetSourcesAsync(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetSourcesAsyncCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 cancellationToken.ToRequestContext());
@@ -1711,7 +1711,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
@@ -1720,14 +1720,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetQnas(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
+        public virtual Pageable<BinaryData> GetQnas(string projectName, int? top, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 source,
@@ -1743,7 +1743,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
@@ -1752,14 +1752,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, int? top, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasAsyncCollectionResult(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 source,
@@ -1768,7 +1768,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
@@ -1776,14 +1776,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<RetrieveQnaRecord> GetQnas(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RetrieveQnaRecord> GetQnas(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 source,
@@ -1792,7 +1792,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
@@ -1800,14 +1800,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<RetrieveQnaRecord> GetQnasAsync(string projectName, int? maxCount = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RetrieveQnaRecord> GetQnasAsync(string projectName, int? top = default, int? skip = default, int? maxpagesize = default, string source = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             return new QuestionAnsweringAuthoringClientGetQnasAsyncCollectionResultOfT(
                 this,
                 projectName,
-                maxCount,
+                top,
                 skip,
                 maxpagesize,
                 source,

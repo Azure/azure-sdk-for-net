@@ -69,15 +69,15 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsRequest(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
+        internal HttpMessage CreateGetOperationsRequest(int? top, int? skip, string collectionId, string status, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/operations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateNextGetOperationsRequest(Uri nextPage, int? maxCount, int? skip, string collectionId, string status, RequestContext context)
+        internal HttpMessage CreateNextGetOperationsRequest(Uri nextPage, int? top, int? skip, string collectionId, string status, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -156,7 +156,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetRunsRequest(string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateGetRunsRequest(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -166,9 +166,9 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
@@ -182,7 +182,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateNextGetRunsRequest(Uri nextPage, string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetRunsRequest(Uri nextPage, string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -254,7 +254,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string collectionId, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string collectionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -262,9 +262,9 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
@@ -278,7 +278,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string collectionId, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string collectionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -379,15 +379,15 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesRequest(int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateGetSourcesRequest(int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
@@ -401,7 +401,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateNextGetSourcesRequest(Uri nextPage, int? maxCount, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetSourcesRequest(Uri nextPage, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

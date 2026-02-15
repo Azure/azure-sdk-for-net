@@ -18,19 +18,19 @@ namespace Azure.AI.AnomalyDetector
     {
         private readonly Multivariate _client;
         private readonly int? _skip;
-        private readonly int? _maxCount;
+        private readonly int? _top;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of MultivariateGetMultivariateModelsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Multivariate client used to send requests. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="top"> The number of result items to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MultivariateGetMultivariateModelsCollectionResult(Multivariate client, int? skip, int? maxCount, RequestContext context) : base(context?.CancellationToken ?? default)
+        public MultivariateGetMultivariateModelsCollectionResult(Multivariate client, int? skip, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _skip = skip;
-            _maxCount = maxCount;
+            _top = top;
             _context = context;
         }
 
@@ -54,13 +54,13 @@ namespace Azure.AI.AnomalyDetector
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAIAnomalyDetectorContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMultivariateModelsRequest(nextLink, _skip, _maxCount, _context) : _client.CreateGetMultivariateModelsRequest(_skip, _maxCount, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetMultivariateModelsRequest(nextLink, _skip, _top, _context) : _client.CreateGetMultivariateModelsRequest(_skip, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Multivariate.GetMultivariateModels");
             scope.Start();
             try
