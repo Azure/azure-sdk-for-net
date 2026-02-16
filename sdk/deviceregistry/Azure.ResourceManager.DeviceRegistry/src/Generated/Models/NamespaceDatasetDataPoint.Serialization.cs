@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceDatasetDataPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDatasetDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNamespaceDatasetDataPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceDatasetDataPoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceDatasetDataPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,23 +166,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NamespaceDatasetDataPoint IPersistableModel<NamespaceDatasetDataPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NamespaceDatasetDataPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDatasetDataPoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNamespaceDatasetDataPoint(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceDatasetDataPoint)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NamespaceDatasetDataPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Community Resource Properties without default values. </summary>
     public partial class VirtualEnclaveCommunityPatchProperties : IJsonModel<VirtualEnclaveCommunityPatchProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualEnclaveCommunityPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualEnclaveCommunityPatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveCommunityPatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveCommunityPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -261,23 +278,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VirtualEnclaveCommunityPatchProperties IPersistableModel<VirtualEnclaveCommunityPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveCommunityPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualEnclaveCommunityPatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveCommunityPatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualEnclaveCommunityPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

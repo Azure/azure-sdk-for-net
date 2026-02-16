@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.FileShares.Models
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class FileSharePrivateLinkServiceConnectionState : IJsonModel<FileSharePrivateLinkServiceConnectionState>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FileSharePrivateLinkServiceConnectionState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFileSharePrivateLinkServiceConnectionState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileSharePrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileSharePrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,23 +160,6 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FileSharePrivateLinkServiceConnectionState IPersistableModel<FileSharePrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileSharePrivateLinkServiceConnectionState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFileSharePrivateLinkServiceConnectionState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FileSharePrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FileSharePrivateLinkServiceConnectionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

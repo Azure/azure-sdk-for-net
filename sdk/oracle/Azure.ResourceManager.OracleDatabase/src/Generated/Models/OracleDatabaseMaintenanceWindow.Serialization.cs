@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> MaintenanceWindow resource properties. </summary>
     public partial class OracleDatabaseMaintenanceWindow : IJsonModel<OracleDatabaseMaintenanceWindow>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OracleDatabaseMaintenanceWindow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleDatabaseMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOracleDatabaseMaintenanceWindow(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleDatabaseMaintenanceWindow)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleDatabaseMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -307,23 +324,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         OracleDatabaseMaintenanceWindow IPersistableModel<OracleDatabaseMaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OracleDatabaseMaintenanceWindow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OracleDatabaseMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOracleDatabaseMaintenanceWindow(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OracleDatabaseMaintenanceWindow)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleDatabaseMaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

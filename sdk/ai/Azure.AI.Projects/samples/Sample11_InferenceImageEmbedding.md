@@ -7,13 +7,13 @@ This sample demonstrates how to use the synchronous and asynchronous `GetImageEm
 - Install the Azure.AI.Projects package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
-  - `MODEL_DEPLOYMENT_NAME`: The name of the embeddings deployment to retrieve.
+  - `EMBEDDING_MODEL_DEPLOYMENT_NAME`: The name of the embeddings deployment to retrieve.
 
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_ImageEmbeddingSync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
@@ -45,7 +45,7 @@ foreach (EmbeddingItem item in response.Value.Data)
 
 ```C# Snippet:AI_Projects_ImageEmbeddingAsync
 var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();

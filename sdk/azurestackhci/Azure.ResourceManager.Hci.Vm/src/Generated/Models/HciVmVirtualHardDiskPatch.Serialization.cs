@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The virtual hard disk resource patch definition. </summary>
     public partial class HciVmVirtualHardDiskPatch : IJsonModel<HciVmVirtualHardDiskPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmVirtualHardDiskPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualHardDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmVirtualHardDiskPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmVirtualHardDiskPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmVirtualHardDiskPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmVirtualHardDiskPatch IPersistableModel<HciVmVirtualHardDiskPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmVirtualHardDiskPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualHardDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmVirtualHardDiskPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmVirtualHardDiskPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmVirtualHardDiskPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Appliance SSHKey definition. </summary>
     public partial class ApplianceSshKey : IJsonModel<ApplianceSshKey>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplianceSshKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplianceSshKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplianceSshKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -175,23 +192,6 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ApplianceSshKey IPersistableModel<ApplianceSshKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplianceSshKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeApplianceSshKey(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApplianceSshKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> Initialization handle used to configure the AVS SDDC to communicate with the storage pool. </summary>
     public partial class ServiceInitializationHandle : IJsonModel<ServiceInitializationHandle>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceInitializationHandle PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceInitializationHandle>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceInitializationHandle(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceInitializationHandle)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceInitializationHandle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,23 +150,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServiceInitializationHandle IPersistableModel<ServiceInitializationHandle>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceInitializationHandle PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceInitializationHandle>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServiceInitializationHandle(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceInitializationHandle)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceInitializationHandle>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

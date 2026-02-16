@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.OracleDatabase
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExadbVmClusterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExadbVmClusterData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExadbVmClusterData"/> from. </param>
+        internal static ExadbVmClusterData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExadbVmClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExadbVmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -227,23 +251,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> The client options for reading and writing models. </param>
         ExadbVmClusterData IPersistableModel<ExadbVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExadbVmClusterData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExadbVmClusterData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExadbVmClusterData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExadbVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -257,13 +264,6 @@ namespace Azure.ResourceManager.OracleDatabase
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(exadbVmClusterData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExadbVmClusterData"/> from. </param>
-        internal static ExadbVmClusterData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExadbVmClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

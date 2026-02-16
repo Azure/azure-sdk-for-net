@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DependencyMap.Models
     /// <summary> GetDependencyViewForAllMachines request model. </summary>
     public partial class GetDependencyViewForAllMachinesContent : IJsonModel<GetDependencyViewForAllMachinesContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetDependencyViewForAllMachinesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetDependencyViewForAllMachinesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGetDependencyViewForAllMachinesContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetDependencyViewForAllMachinesContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetDependencyViewForAllMachinesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GetDependencyViewForAllMachinesContent IPersistableModel<GetDependencyViewForAllMachinesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetDependencyViewForAllMachinesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GetDependencyViewForAllMachinesContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGetDependencyViewForAllMachinesContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GetDependencyViewForAllMachinesContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GetDependencyViewForAllMachinesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

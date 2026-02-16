@@ -73,7 +73,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="featureId">The identified of the feature flag.</param>
         /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this(featureId, isEnabled, label, default)
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : this(featureId, isEnabled, label, default)
         {
         }
 

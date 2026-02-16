@@ -97,7 +97,14 @@ namespace Azure.Security.KeyVault.Administration
         internal HttpMessage CreateNextGetRoleDefinitionsRequest(Uri nextPage, string scope, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -183,7 +190,14 @@ namespace Azure.Security.KeyVault.Administration
         internal HttpMessage CreateNextGetRoleAssignmentsRequest(Uri nextPage, string scope, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -25,6 +25,65 @@ namespace Azure.Analytics.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacCollectionResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacCollectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacCollectionResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacCollectionResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacCollectionResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StacCollectionResource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacCollectionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacCollectionResource IPersistableModel<StacCollectionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="stacCollectionResource"> The <see cref="StacCollectionResource"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StacCollectionResource stacCollectionResource)
+        {
+            if (stacCollectionResource == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stacCollectionResource, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacCollectionResource"/> from. </param>
+        public static explicit operator StacCollectionResource(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStacCollectionResource(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StacCollectionResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -418,65 +477,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 providers ?? new ChangeTrackingList<StacProvider>(),
                 summaries ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacCollectionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCollectionResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StacCollectionResource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacCollectionResource IPersistableModel<StacCollectionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacCollectionResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCollectionResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacCollectionResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacCollectionResource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="stacCollectionResource"> The <see cref="StacCollectionResource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StacCollectionResource stacCollectionResource)
-        {
-            if (stacCollectionResource == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacCollectionResource, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacCollectionResource"/> from. </param>
-        public static explicit operator StacCollectionResource(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStacCollectionResource(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

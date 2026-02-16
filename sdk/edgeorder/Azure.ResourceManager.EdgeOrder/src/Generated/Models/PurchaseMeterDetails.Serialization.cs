@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Billing type Purchase meter details. </summary>
     public partial class PurchaseMeterDetails : EdgeOrderProductMeterDetails, IJsonModel<PurchaseMeterDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EdgeOrderProductMeterDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PurchaseMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePurchaseMeterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurchaseMeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -158,23 +175,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PurchaseMeterDetails IPersistableModel<PurchaseMeterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (PurchaseMeterDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EdgeOrderProductMeterDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PurchaseMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePurchaseMeterDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PurchaseMeterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

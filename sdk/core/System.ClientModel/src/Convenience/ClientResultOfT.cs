@@ -36,15 +36,12 @@ public class ClientResult<T> : ClientResult
     /// Returns the value of this <see cref="ClientResult{T}"/> object.
     /// </summary>
     /// <param name="result">The <see cref="ClientResult{T}"/> instance.</param>
-    public static implicit operator T(ClientResult<T> result)
+    public static implicit operator T(ClientResult<T>? result)
     {
-        if (result == null)
+        if (result is null)
         {
-#pragma warning disable CA1065 // Don't throw from cast operators
-            throw new ArgumentNullException(nameof(result), $"The implicit cast from ClientResult<{typeof(T)}> to {typeof(T)} failed because the ClientResult<{typeof(T)}> was null.");
-#pragma warning restore CA1065
+            return default!;
         }
-
         return result.Value!;
     }
 }

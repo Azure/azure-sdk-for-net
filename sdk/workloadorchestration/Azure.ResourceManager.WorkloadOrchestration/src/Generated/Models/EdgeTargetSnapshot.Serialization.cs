@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     /// <summary> Target Snapshot. </summary>
     public partial class EdgeTargetSnapshot : IJsonModel<EdgeTargetSnapshot>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeTargetSnapshot PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeTargetSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeTargetSnapshot(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeTargetSnapshot)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeTargetSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -178,23 +195,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeTargetSnapshot IPersistableModel<EdgeTargetSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeTargetSnapshot PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeTargetSnapshot>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeTargetSnapshot(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeTargetSnapshot)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeTargetSnapshot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

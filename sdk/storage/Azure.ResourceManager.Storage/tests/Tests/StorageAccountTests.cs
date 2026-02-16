@@ -1568,7 +1568,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Filters.BlobTypes.Count, 2);
             Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Filters.BlobTypes.Count, 1);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
-            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCold.DaysAfterCreationGreaterThan ,100);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCold.DaysAfterCreationGreaterThan, 100);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCool.DaysAfterCreationGreaterThan, 500);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Snapshot.TierToCool.DaysAfterCreationGreaterThan, 100);
             Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Snapshot.TierToCold.DaysAfterCreationGreaterThan, 500);
@@ -2631,7 +2631,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             var updateParameters2 = new StorageAccountPatch
             {
-                Zones = {"1"}
+                Zones = { "1" }
             };
             account3 = (await account3.UpdateAsync(updateParameters2)).Value;
             Assert.AreEqual(account3.Data.Zones[0], "1");

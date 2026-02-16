@@ -4,10 +4,10 @@
 #nullable disable
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Azure.AI.VoiceLive
 {

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
@@ -22,8 +22,9 @@ namespace Azure.Core.Tests
         [TestCase]
         public void NullImplicitFromString()
         {
-            string from = null;
-            Assert.Throws<ArgumentNullException>(() => { ResourceType to = from; });
+            string from = null!;
+            ResourceType to = from;
+            Assert.AreEqual(default(ResourceType), to);
         }
 
         [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]

@@ -18,17 +18,9 @@ namespace SpecialWords._Models
 
         protected virtual Assert PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Assert>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        Assert IJsonModel<Assert>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Assert JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Assert>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Assert IPersistableModel<Assert>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
@@ -36,5 +28,13 @@ namespace SpecialWords._Models
 
         /// <param name="assert"> The <see cref="Assert"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Assert assert) => throw null;
+
+        void IJsonModel<Assert>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        Assert IJsonModel<Assert>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual Assert JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

@@ -16,6 +16,46 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
     public partial class QuestionAnsweringConfig : AnalysisConfig, IJsonModel<QuestionAnsweringConfig>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnalysisConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuestionAnsweringConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QuestionAnsweringConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuestionAnsweringConfig IPersistableModel<QuestionAnsweringConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (QuestionAnsweringConfig)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QuestionAnsweringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuestionAnsweringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -99,45 +139,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new QuestionAnsweringConfig(targetProjectKind, apiVersion, additionalBinaryDataProperties, callingOptions);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuestionAnsweringConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuestionAnsweringConfig IPersistableModel<QuestionAnsweringConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (QuestionAnsweringConfig)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalysisConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuestionAnsweringConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuestionAnsweringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

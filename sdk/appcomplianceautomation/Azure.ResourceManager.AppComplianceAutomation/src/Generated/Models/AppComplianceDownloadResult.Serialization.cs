@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes all the possible response for the download operation. </summary>
     public partial class AppComplianceDownloadResult : IJsonModel<AppComplianceDownloadResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceDownloadResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppComplianceDownloadResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppComplianceDownloadResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppComplianceDownloadResult"/> from. </param>
+        internal static AppComplianceDownloadResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAppComplianceDownloadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceDownloadResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -188,31 +212,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         AppComplianceDownloadResult IPersistableModel<AppComplianceDownloadResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppComplianceDownloadResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceDownloadResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppComplianceDownloadResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppComplianceDownloadResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppComplianceDownloadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppComplianceDownloadResult"/> from. </param>
-        internal static AppComplianceDownloadResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAppComplianceDownloadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

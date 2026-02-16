@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using System.Xml.Linq;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     sku: new StorageSku(StorageSkuName.StandardV2Lrs),
                     StorageKind.FileStorage,
                     AzureLocation.WestUS2)))
-                    //"eastus2euap")))
+                //"eastus2euap")))
                 .Value;
             _fileService = _storageAccount.GetFileService();
             _fileService = await _fileService.GetAsync();

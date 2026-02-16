@@ -318,7 +318,7 @@ namespace Azure.Storage.Files.DataLake
                     string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
                     options),
                 options,
-                storageSharedKeyCredential:null,
+                storageSharedKeyCredential: null,
                 sasCredential: null,
                 tokenCredential: credential)
         {

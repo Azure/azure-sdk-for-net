@@ -21,7 +21,7 @@ internal partial class UploadFileRequest : IUtf8JsonSerializable
     internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
     {
         MultipartFormDataRequestContent content = new();
-        ContentDispositionHeaderValue header = new("form-data") { Name = "file"};
+        ContentDispositionHeaderValue header = new("form-data") { Name = "file" };
         var _dataStream = new StreamContent(Data);
         if (System.Linq.Enumerable.Any(Filename, c => c > 127))
         {

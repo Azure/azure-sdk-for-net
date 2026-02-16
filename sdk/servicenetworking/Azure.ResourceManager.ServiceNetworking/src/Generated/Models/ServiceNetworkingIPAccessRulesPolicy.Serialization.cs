@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> Ip Access Policy. </summary>
     internal partial class ServiceNetworkingIPAccessRulesPolicy : IJsonModel<ServiceNetworkingIPAccessRulesPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceNetworkingIPAccessRulesPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceNetworkingIPAccessRulesPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceNetworkingIPAccessRulesPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceNetworkingIPAccessRulesPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,23 +148,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServiceNetworkingIPAccessRulesPolicy IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceNetworkingIPAccessRulesPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServiceNetworkingIPAccessRulesPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceNetworkingIPAccessRulesPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceNetworkingIPAccessRulesPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

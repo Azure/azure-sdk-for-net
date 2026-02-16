@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Authoring
                     yield break;
                 }
                 PagedTextAnalysisAuthoringPrebuiltEntity result = (PagedTextAnalysisAuthoringPrebuiltEntity)response;
-                yield return Page<TextAuthoringPrebuiltEntity>.FromValues((IReadOnlyList<TextAuthoringPrebuiltEntity>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<TextAuthoringPrebuiltEntity>.FromValues((IReadOnlyList<TextAuthoringPrebuiltEntity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

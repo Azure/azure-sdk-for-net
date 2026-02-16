@@ -7,9 +7,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using Azure.Data.Tables.Models;
-using System.Runtime.Serialization;
 
 namespace Azure.Data.Tables.Queryable
 {

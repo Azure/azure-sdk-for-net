@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Nginx Deployment Update Parameters. </summary>
     public partial class NginxDeploymentPatch : IJsonModel<NginxDeploymentPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NginxDeploymentPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNginxDeploymentPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxDeploymentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -213,23 +230,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NginxDeploymentPatch IPersistableModel<NginxDeploymentPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxDeploymentPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNginxDeploymentPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NginxDeploymentPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

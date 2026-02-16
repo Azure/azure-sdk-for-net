@@ -846,7 +846,7 @@ namespace Azure.Messaging.EventHubs
         internal async Task ValidateStoragePermissionsAsync(BlobContainerClient containerClient,
                                                             CancellationToken cancellationToken = default)
         {
-            var blobClient = containerClient.GetBlobClient($"EventProcessorPermissionCheck/{ Guid.NewGuid().ToString("N") }");
+            var blobClient = containerClient.GetBlobClient($"EventProcessorPermissionCheck/{Guid.NewGuid().ToString("N")}");
 
             // Write an blob with metadata, simulating the approach used for checkpoint and ownership
             // data creation.
@@ -854,7 +854,7 @@ namespace Azure.Messaging.EventHubs
             try
             {
                 using var blobContent = new MemoryStream(Array.Empty<byte>());
-                var blobMetadata = new Dictionary<string, string> {{ "name", blobClient.Name }};
+                var blobMetadata = new Dictionary<string, string> { { "name", blobClient.Name } };
 
                 await blobClient.UploadAsync(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -1207,7 +1207,7 @@ namespace Azure.Messaging.EventHubs
                 // This exception was either not related to processing events or was the result of sending an empty batch to be
                 // processed.  Since there would be no other caught exceptions, tread this like a single case.
 
-                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message,operation);
+                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, operation);
                 throw;
             }
             finally

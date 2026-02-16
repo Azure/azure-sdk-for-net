@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Parameters allowed to update advanced threat protection for a server. </summary>
     public partial class AdvancedThreatProtectionPatch : IJsonModel<AdvancedThreatProtectionPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AdvancedThreatProtectionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvancedThreatProtectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdvancedThreatProtectionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdvancedThreatProtectionPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdvancedThreatProtectionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,23 +140,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AdvancedThreatProtectionPatch IPersistableModel<AdvancedThreatProtectionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AdvancedThreatProtectionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvancedThreatProtectionPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAdvancedThreatProtectionPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AdvancedThreatProtectionPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AdvancedThreatProtectionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

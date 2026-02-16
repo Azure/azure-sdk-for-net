@@ -21,6 +21,7 @@
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 <!-- Remove before shipping GA -->
   <PropertyGroup>

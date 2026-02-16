@@ -2,7 +2,6 @@ $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
 $failingSpecs = @(
     Join-Path 'http' 'streaming' 'jsonl'
-    Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
 # Azure scenarios not yet buildable
     Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'

@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -33,9 +33,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -45,14 +45,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetProjectsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetProjectsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -62,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -79,9 +86,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -91,14 +98,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -108,7 +122,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetExportedModelsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetExportedModelsRequest(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,9 +139,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -137,14 +151,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetExportedModelsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetExportedModelsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -154,7 +175,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainedModelsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainedModelsRequest(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -171,9 +192,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -183,14 +204,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetTrainedModelsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTrainedModelsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -200,7 +228,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentResourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentResourcesRequest(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -217,9 +245,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -229,14 +257,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentResourcesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentResourcesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -246,7 +281,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingJobsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingJobsRequest(string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -263,9 +298,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -275,14 +310,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetTrainingJobsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTrainingJobsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -292,7 +334,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetAssignedResourceDeploymentsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetAssignedResourceDeploymentsRequest(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -307,9 +349,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -319,14 +361,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetAssignedResourceDeploymentsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetAssignedResourceDeploymentsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -336,7 +385,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedLanguagesRequest(string projectKind, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSupportedLanguagesRequest(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -355,9 +404,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -367,14 +416,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedLanguagesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetSupportedLanguagesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -402,7 +458,14 @@ namespace Azure.AI.Language.Text.Authoring
         internal HttpMessage CreateNextGetSupportedPrebuiltEntitiesRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -412,7 +475,7 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingConfigVersionsRequest(string projectKind, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingConfigVersionsRequest(string projectKind, int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -431,9 +494,9 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -443,14 +506,21 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateNextGetTrainingConfigVersionsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTrainingConfigVersionsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
-            if (maxpagesize != null)
+            if (nextPage.IsAbsoluteUri)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
+            {
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

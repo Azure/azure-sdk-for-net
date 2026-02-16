@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureDeviceRegistryNamespaceRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDeviceRegistryNamespaceRef>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureDeviceRegistryNamespaceRef(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDeviceRegistryNamespaceRef)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureDeviceRegistryNamespaceRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,23 +137,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AzureDeviceRegistryNamespaceRef IPersistableModel<AzureDeviceRegistryNamespaceRef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureDeviceRegistryNamespaceRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDeviceRegistryNamespaceRef>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureDeviceRegistryNamespaceRef(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureDeviceRegistryNamespaceRef)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureDeviceRegistryNamespaceRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

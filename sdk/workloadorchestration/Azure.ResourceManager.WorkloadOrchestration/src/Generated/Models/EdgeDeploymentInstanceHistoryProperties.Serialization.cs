@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     /// <summary> Instance History Properties. </summary>
     public partial class EdgeDeploymentInstanceHistoryProperties : IJsonModel<EdgeDeploymentInstanceHistoryProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeDeploymentInstanceHistoryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeDeploymentInstanceHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeDeploymentInstanceHistoryProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeDeploymentInstanceHistoryProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeDeploymentInstanceHistoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -207,23 +224,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeDeploymentInstanceHistoryProperties IPersistableModel<EdgeDeploymentInstanceHistoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeDeploymentInstanceHistoryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeDeploymentInstanceHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeDeploymentInstanceHistoryProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeDeploymentInstanceHistoryProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeDeploymentInstanceHistoryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

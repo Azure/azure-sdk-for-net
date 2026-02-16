@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.TestFramework.Models;
 using System.Linq;
-using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.AlertsManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
 {

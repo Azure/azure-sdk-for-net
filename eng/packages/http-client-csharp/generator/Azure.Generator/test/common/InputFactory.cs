@@ -391,6 +391,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="derivedModels"></param>
         /// <param name="decorators"></param>
         /// <param name="isDynamicModel"></param>
+        /// <param name="serializationOptions"></param>
         /// <returns></returns>
         public static InputModelType Model(
             string name,
@@ -405,7 +406,8 @@ namespace Azure.Generator.Tests.Common
             IDictionary<string, InputModelType>? discriminatedModels = null,
             IEnumerable<InputModelType>? derivedModels = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null,
-            bool isDynamicModel = false)
+            bool isDynamicModel = false,
+            InputSerializationOptions? serializationOptions = null)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             var model = new InputModelType(
@@ -425,7 +427,7 @@ namespace Azure.Generator.Tests.Common
                 discriminatedModels is null ? new Dictionary<string, InputModelType>() : discriminatedModels.AsReadOnly(),
                 additionalProperties,
                 modelAsStruct,
-                new(),
+                serializationOptions ?? new(),
                 isDynamicModel);
             if (decorators is not null)
             {

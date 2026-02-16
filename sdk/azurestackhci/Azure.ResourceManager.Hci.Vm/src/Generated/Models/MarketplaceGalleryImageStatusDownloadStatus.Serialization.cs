@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The download status of the gallery image. </summary>
     internal partial class MarketplaceGalleryImageStatusDownloadStatus : IJsonModel<MarketplaceGalleryImageStatusDownloadStatus>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceGalleryImageStatusDownloadStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatusDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMarketplaceGalleryImageStatusDownloadStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatusDownloadStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MarketplaceGalleryImageStatusDownloadStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +138,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MarketplaceGalleryImageStatusDownloadStatus IPersistableModel<MarketplaceGalleryImageStatusDownloadStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MarketplaceGalleryImageStatusDownloadStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatusDownloadStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMarketplaceGalleryImageStatusDownloadStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatusDownloadStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MarketplaceGalleryImageStatusDownloadStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

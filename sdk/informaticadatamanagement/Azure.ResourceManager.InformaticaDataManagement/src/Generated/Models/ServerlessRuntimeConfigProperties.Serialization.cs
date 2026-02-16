@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Serverless Runtime config properties. </summary>
     public partial class ServerlessRuntimeConfigProperties : IJsonModel<ServerlessRuntimeConfigProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerlessRuntimeConfigProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerlessRuntimeConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServerlessRuntimeConfigProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerlessRuntimeConfigProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerlessRuntimeConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,23 +173,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServerlessRuntimeConfigProperties IPersistableModel<ServerlessRuntimeConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServerlessRuntimeConfigProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerlessRuntimeConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServerlessRuntimeConfigProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServerlessRuntimeConfigProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerlessRuntimeConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

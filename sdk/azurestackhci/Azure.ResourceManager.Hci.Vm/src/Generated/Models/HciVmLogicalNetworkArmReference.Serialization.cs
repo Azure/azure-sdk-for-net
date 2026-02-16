@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> The Azure Resource ID for a Logical Network. </summary>
     public partial class HciVmLogicalNetworkArmReference : IJsonModel<HciVmLogicalNetworkArmReference>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmLogicalNetworkArmReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmLogicalNetworkArmReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmLogicalNetworkArmReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmLogicalNetworkArmReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmLogicalNetworkArmReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmLogicalNetworkArmReference IPersistableModel<HciVmLogicalNetworkArmReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmLogicalNetworkArmReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmLogicalNetworkArmReference>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmLogicalNetworkArmReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmLogicalNetworkArmReference)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmLogicalNetworkArmReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

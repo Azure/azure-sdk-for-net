@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudRackResource> GetAllAsync(CancellationToken cancellationToken)
-			=> GetAllAsync(null, null, cancellationToken);
+            => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of racks in the provided resource group.
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudRackResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
-	}
+            => GetAll(null, null, cancellationToken);
+    }
 }

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Backend address pool for the load balancer. </summary>
     public partial class HciVmBackendAddressPoolProperties : IJsonModel<HciVmBackendAddressPoolProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmBackendAddressPoolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmBackendAddressPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmBackendAddressPoolProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmBackendAddressPoolProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmBackendAddressPoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -161,23 +178,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmBackendAddressPoolProperties IPersistableModel<HciVmBackendAddressPoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmBackendAddressPoolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmBackendAddressPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmBackendAddressPoolProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmBackendAddressPoolProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmBackendAddressPoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> Connection strings to connect to an Oracle Autonomous Database. </summary>
     public partial class AutonomousDatabaseConnectionStrings : IJsonModel<AutonomousDatabaseConnectionStrings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutonomousDatabaseConnectionStrings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStrings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutonomousDatabaseConnectionStrings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseConnectionStrings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseConnectionStrings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -197,23 +214,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AutonomousDatabaseConnectionStrings IPersistableModel<AutonomousDatabaseConnectionStrings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutonomousDatabaseConnectionStrings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseConnectionStrings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutonomousDatabaseConnectionStrings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseConnectionStrings)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutonomousDatabaseConnectionStrings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

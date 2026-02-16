@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Nginx Deployment Api Key Response Properties. </summary>
     public partial class NginxDeploymentApiKeyProperties : IJsonModel<NginxDeploymentApiKeyProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NginxDeploymentApiKeyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNginxDeploymentApiKeyProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NginxDeploymentApiKeyProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxDeploymentApiKeyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,23 +149,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NginxDeploymentApiKeyProperties IPersistableModel<NginxDeploymentApiKeyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxDeploymentApiKeyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNginxDeploymentApiKeyProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentApiKeyProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NginxDeploymentApiKeyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

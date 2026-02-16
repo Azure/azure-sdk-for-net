@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AkriConnectorsRegistrySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorsRegistryEndpointRef>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAkriConnectorsRegistryEndpointRef(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AkriConnectorsRegistryEndpointRef)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AkriConnectorsRegistryEndpointRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -111,23 +128,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AkriConnectorsRegistryEndpointRef IPersistableModel<AkriConnectorsRegistryEndpointRef>.Create(BinaryData data, ModelReaderWriterOptions options) => (AkriConnectorsRegistryEndpointRef)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AkriConnectorsRegistrySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorsRegistryEndpointRef>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAkriConnectorsRegistryEndpointRef(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AkriConnectorsRegistryEndpointRef)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AkriConnectorsRegistryEndpointRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

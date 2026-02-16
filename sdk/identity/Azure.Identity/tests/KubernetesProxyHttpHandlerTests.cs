@@ -77,7 +77,8 @@ namespace Azure.Identity.Tests
 
             var mockTransport = CreateMockTransport(requestValidator: req => capturedRequest = req);
             config ??= CreateTestConfig(transport: mockTransport);
-            if (config.Transport == null) config.Transport = mockTransport;
+            if (config.Transport == null)
+                config.Transport = mockTransport;
 
             var httpClient = CreateTestHttpClient(config);
             var request = new HttpRequestMessage(method, targetUrl) { Content = content };
