@@ -585,6 +585,7 @@ namespace Azure.AI.VoiceLive.Tests
             Dictionary<string, StringBuilder> deltaBuilders = new Dictionary<string, StringBuilder>();
 
             Stack<HashSet<string>> incompleteOutputItems = new Stack<HashSet<string>>();
+            var i = 0;
 
             foreach (var item in responseItems)
             {
@@ -605,7 +606,7 @@ namespace Azure.AI.VoiceLive.Tests
 
                     case SessionUpdateResponseOutputItemAdded outputItem:
                         Assert.AreEqual(responseId, outputItem.ResponseId);
-                        Assert.AreEqual(0, outputItem.OutputIndex);
+                        Assert.AreEqual(i++, outputItem.OutputIndex);
                         Assert.IsNotNull(outputItem.Item);
 
                         responseItemId = outputItem.Item.Id;
