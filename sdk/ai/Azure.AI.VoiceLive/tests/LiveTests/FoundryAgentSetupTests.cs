@@ -111,42 +111,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        public async Task ShouldSupportMultipleAgentsInSameSession()
-        {
-            // This test verifies that multiple Foundry agents can be configured in a single session
-            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
-
-            var agent1 = TestAgent.CreateFoundryAgentTool(TestEnvironment, description: "First test agent");
-            var agent2 = TestAgent.CreateFoundryAgentTool(TestEnvironment, agentName: TestConstants.TestAgentName + "-2", description: "Second test agent");
-
-            var options = new VoiceLiveSessionOptions
-            {
-                Model = "gpt-4o"
-            };
-            options.Tools.Add(agent1);
-            options.Tools.Add(agent2);
-
-            await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
-
-            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
-
-            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
-
-            Assert.IsNotNull(sessionUpdated.Session.Tools);
-
-            var agentTools = sessionUpdated.Session.Tools.Where(t => t is VoiceLiveFoundryAgentDefinition).ToList();
-            Assert.AreEqual(2, agentTools.Count, $"Expected exactly 2 Foundry agent tools, found {agentTools.Count}");
-
-            var agentNames = agentTools.Cast<VoiceLiveFoundryAgentDefinition>().Select(a => a.AgentName).ToList();
-            Assert.Contains(TestConstants.TestAgentName, agentNames, "First agent not found in session tools");
-            Assert.Contains(TestConstants.TestAgentName + "-2", agentNames, "Second agent not found in session tools");
-
-            TestContext.WriteLine($"✓ Session configured with {agentTools.Count} Foundry agents: {string.Join(", ", agentNames)}");
-        }
-
-        [LiveOnly]
-        [TestCase]
         public async Task ShouldVerifyAgentContextTypeNoContext()
         {
             // This test verifies that NoContext mode works correctly

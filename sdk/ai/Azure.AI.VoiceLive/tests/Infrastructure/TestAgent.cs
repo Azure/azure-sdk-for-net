@@ -167,7 +167,9 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
                 agentName: finalAgentName,
                 projectName: finalProjectName)
             {
-                AgentVersion = TestConstants.TestAgentVersion,
+                AgentVersion = !string.IsNullOrEmpty(testEnvironment.AgentVersion)
+                                  ? testEnvironment.AgentVersion
+                                  : TestConstants.TestAgentVersion,
                 AgentContextType = FoundryAgentContextType.AgentContext,
                 ReturnAgentResponseDirectly = false
             };

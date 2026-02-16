@@ -122,6 +122,12 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public string AgentName => GetOptionalVariable("AGENT_NAME") ?? string.Empty;
 
         /// <summary>
+        /// Agent Version from Azure AI Foundry portal.
+        /// Falls back to TestConstants if not specified.
+        /// </summary>
+        public string AgentVersion => GetOptionalVariable("AGENT_VERSION") ?? TestConstants.TestAgentVersion;
+
+        /// <summary>
         /// Agent Client ID (Client ID) from Azure AI Foundry portal.
         /// This is the authentication identity client ID for Foundry agents.
         /// </summary>
