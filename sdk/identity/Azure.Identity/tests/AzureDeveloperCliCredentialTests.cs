@@ -246,7 +246,7 @@ namespace Azure.Identity.Tests
         public void AuthenticateWithDeveloperCliCredential_ExceptionScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
         {
             var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
-            var credential = CreateCredential(new TestProcessService(testProcess));
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChained);
             var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.That(ex.Message, Does.Contain(expectedMessage));
