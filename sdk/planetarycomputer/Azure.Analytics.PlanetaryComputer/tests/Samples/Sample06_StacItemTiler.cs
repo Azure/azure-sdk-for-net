@@ -285,13 +285,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get detailed statistics for each asset
-            Response<IReadOnlyDictionary<string, BinaryData>> response = await dataClient.GetAssetStatisticsAsync(
+            Response<AssetStatisticsResponse> response = await dataClient.GetAssetStatisticsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 assets: new[] { "image" }
             );
 
-            IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value;
+            IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value.AdditionalProperties;
             Console.WriteLine($"Statistics for {assetStatistics.Count} assets");
             #endregion
         }

@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class PageIngestionSourceSummary
+    internal partial class ManagedIdentityMetadataPagedResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PageIngestionSourceSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadataPagedResponse"/>. </summary>
         /// <param name="value"> The items on the page. </param>
-        internal PageIngestionSourceSummary(IEnumerable<IngestionSourceSummary> value)
+        internal ManagedIdentityMetadataPagedResponse(IEnumerable<ManagedIdentityMetadata> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PageIngestionSourceSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadataPagedResponse"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PageIngestionSourceSummary(IList<IngestionSourceSummary> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedIdentityMetadataPagedResponse(IList<ManagedIdentityMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> The items on the page. </summary>
-        public IList<IngestionSourceSummary> Value { get; }
+        public IList<ManagedIdentityMetadata> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
         public Uri NextLink { get; }
