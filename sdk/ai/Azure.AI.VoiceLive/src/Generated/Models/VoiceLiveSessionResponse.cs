@@ -51,12 +51,12 @@ namespace Azure.AI.VoiceLive
         /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
         /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
         /// </param>
-        /// <param name="fillerResponse"> Configuration for filler response generation during latency or tool calls. </param>
+        /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
         /// <param name="agent"> The agent configuration for the session, if applicable. </param>
         /// <param name="id"> The unique identifier for the session. </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData fillerResponse, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive
             Temperature = temperature;
             MaxResponseOutputTokens = maxResponseOutputTokens;
             ReasoningEffort = reasoningEffort;
-            FillerResponse = fillerResponse;
+            InterimResponse = interimResponse;
             Agent = agent;
             Id = id;
             _turnDetection = turnDetection;
@@ -136,7 +136,7 @@ namespace Azure.AI.VoiceLive
         public ReasoningEffort? ReasoningEffort { get; set; }
 
         /// <summary>
-        /// Configuration for filler response generation during latency or tool calls.
+        /// Configuration for interim response generation during latency or tool calls.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -144,10 +144,10 @@ namespace Azure.AI.VoiceLive
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="BasicFillerResponseConfig"/>. </description>
+        /// <description> <see cref="StaticInterimResponseConfig"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="LlmFillerResponseConfig"/>. </description>
+        /// <description> <see cref="LlmInterimResponseConfig"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -174,7 +174,7 @@ namespace Azure.AI.VoiceLive
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData FillerResponse { get; set; }
+        public BinaryData InterimResponse { get; set; }
 
         /// <summary> The unique identifier for the session. </summary>
         public string Id { get; set; }

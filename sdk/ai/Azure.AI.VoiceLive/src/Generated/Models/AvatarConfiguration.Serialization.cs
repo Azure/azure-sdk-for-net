@@ -112,10 +112,20 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("video"u8);
                 writer.WriteObjectValue(Video, options);
             }
+            if (Optional.IsDefined(Scene))
+            {
+                writer.WritePropertyName("scene"u8);
+                writer.WriteObjectValue(Scene, options);
+            }
             if (Optional.IsDefined(OutputProtocol))
             {
                 writer.WritePropertyName("output_protocol"u8);
                 writer.WriteStringValue(OutputProtocol.Value.ToString());
+            }
+            if (Optional.IsDefined(OutputAuditAudio))
+            {
+                writer.WritePropertyName("output_audit_audio"u8);
+                writer.WriteBooleanValue(OutputAuditAudio.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,7 +176,9 @@ namespace Azure.AI.VoiceLive
             PhotoAvatarBaseModes? model = default;
             bool customized = default;
             VideoParams video = default;
+            SceneParams scene = default;
             AvatarOutputProtocol? outputProtocol = default;
+            bool? outputAuditAudio = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -226,6 +238,15 @@ namespace Azure.AI.VoiceLive
                     video = VideoParams.DeserializeVideoParams(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("scene"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scene = SceneParams.DeserializeSceneParams(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("output_protocol"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -233,6 +254,15 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     outputProtocol = new AvatarOutputProtocol(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("output_audit_audio"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputAuditAudio = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -248,7 +278,9 @@ namespace Azure.AI.VoiceLive
                 model,
                 customized,
                 video,
+                scene,
                 outputProtocol,
+                outputAuditAudio,
                 additionalBinaryDataProperties);
         }
     }

@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, <see cref="SessionResponseMcpApprovalResponseItem"/>, and <see cref="SessionResponseFoundryAgentCallItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, and <see cref="SessionResponseMcpApprovalResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSessionResponseItem))]
     public abstract partial class SessionResponseItem : IJsonModel<SessionResponseItem>
@@ -153,8 +153,6 @@ namespace Azure.AI.VoiceLive
                         return SessionResponseMcpApprovalRequestItem.DeserializeSessionResponseMcpApprovalRequestItem(element, options);
                     case "mcp_approval_response":
                         return SessionResponseMcpApprovalResponseItem.DeserializeSessionResponseMcpApprovalResponseItem(element, options);
-                    case "foundry_agent_call":
-                        return SessionResponseFoundryAgentCallItem.DeserializeSessionResponseFoundryAgentCallItem(element, options);
                 }
             }
             return UnknownSessionResponseItem.DeserializeUnknownSessionResponseItem(element, options);

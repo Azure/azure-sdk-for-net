@@ -15,6 +15,7 @@ namespace Azure.AI.VoiceLive
     {
         private readonly string _value;
         private const string ErrorValue = "error";
+        private const string WarningValue = "warning";
         private const string SessionAvatarConnectingValue = "session.avatar.connecting";
         private const string SessionCreatedValue = "session.created";
         private const string SessionUpdatedValue = "session.updated";
@@ -54,16 +55,9 @@ namespace Azure.AI.VoiceLive
         private const string McpListToolsFailedValue = "mcp_list_tools.failed";
         private const string ResponseMcpCallArgumentsDeltaValue = "response.mcp_call_arguments.delta";
         private const string ResponseMcpCallArgumentsDoneValue = "response.mcp_call_arguments.done";
-        private const string McpApprovalRequestValue = "mcp_approval_request";
-        private const string McpApprovalResponseValue = "mcp_approval_response";
         private const string ResponseMcpCallInProgressValue = "response.mcp_call.in_progress";
         private const string ResponseMcpCallCompletedValue = "response.mcp_call.completed";
         private const string ResponseMcpCallFailedValue = "response.mcp_call.failed";
-        private const string ResponseFoundryAgentCallArgumentsDeltaValue = "response.foundry_agent_call_arguments.delta";
-        private const string ResponseFoundryAgentCallArgumentsDoneValue = "response.foundry_agent_call_arguments.done";
-        private const string ResponseFoundryAgentCallInProgressValue = "response.foundry_agent_call.in_progress";
-        private const string ResponseFoundryAgentCallCompletedValue = "response.foundry_agent_call.completed";
-        private const string ResponseFoundryAgentCallFailedValue = "response.foundry_agent_call.failed";
 
         /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -77,6 +71,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Error. </summary>
         public static ServerEventType Error { get; } = new ServerEventType(ErrorValue);
+
+        /// <summary> Gets the Warning. </summary>
+        public static ServerEventType Warning { get; } = new ServerEventType(WarningValue);
 
         /// <summary> Gets the SessionAvatarConnecting. </summary>
         public static ServerEventType SessionAvatarConnecting { get; } = new ServerEventType(SessionAvatarConnectingValue);
@@ -195,12 +192,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the ResponseMcpCallArgumentsDone. </summary>
         public static ServerEventType ResponseMcpCallArgumentsDone { get; } = new ServerEventType(ResponseMcpCallArgumentsDoneValue);
 
-        /// <summary> Gets the McpApprovalRequest. </summary>
-        public static ServerEventType McpApprovalRequest { get; } = new ServerEventType(McpApprovalRequestValue);
-
-        /// <summary> Gets the McpApprovalResponse. </summary>
-        public static ServerEventType McpApprovalResponse { get; } = new ServerEventType(McpApprovalResponseValue);
-
         /// <summary> Gets the ResponseMcpCallInProgress. </summary>
         public static ServerEventType ResponseMcpCallInProgress { get; } = new ServerEventType(ResponseMcpCallInProgressValue);
 
@@ -209,21 +200,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ResponseMcpCallFailed. </summary>
         public static ServerEventType ResponseMcpCallFailed { get; } = new ServerEventType(ResponseMcpCallFailedValue);
-
-        /// <summary> Gets the ResponseFoundryAgentCallArgumentsDelta. </summary>
-        public static ServerEventType ResponseFoundryAgentCallArgumentsDelta { get; } = new ServerEventType(ResponseFoundryAgentCallArgumentsDeltaValue);
-
-        /// <summary> Gets the ResponseFoundryAgentCallArgumentsDone. </summary>
-        public static ServerEventType ResponseFoundryAgentCallArgumentsDone { get; } = new ServerEventType(ResponseFoundryAgentCallArgumentsDoneValue);
-
-        /// <summary> Gets the ResponseFoundryAgentCallInProgress. </summary>
-        public static ServerEventType ResponseFoundryAgentCallInProgress { get; } = new ServerEventType(ResponseFoundryAgentCallInProgressValue);
-
-        /// <summary> Gets the ResponseFoundryAgentCallCompleted. </summary>
-        public static ServerEventType ResponseFoundryAgentCallCompleted { get; } = new ServerEventType(ResponseFoundryAgentCallCompletedValue);
-
-        /// <summary> Gets the ResponseFoundryAgentCallFailed. </summary>
-        public static ServerEventType ResponseFoundryAgentCallFailed { get; } = new ServerEventType(ResponseFoundryAgentCallFailedValue);
 
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

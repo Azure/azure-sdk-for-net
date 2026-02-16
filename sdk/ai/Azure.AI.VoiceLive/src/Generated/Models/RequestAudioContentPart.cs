@@ -10,24 +10,34 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> An audio content part for a request. </summary>
+    /// <summary> An audio content part for a request. This is supported only by realtime models (e.g., gpt-realtime). For text-based models, use `input_text` instead. </summary>
     public partial class RequestAudioContentPart : VoiceLiveContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/>. </summary>
-        public RequestAudioContentPart() : base(ContentPartType.InputAudio)
+        /// <param name="audio"> Base64-encoded audio bytes, these will be parsed as the format specified in the session input audio type configuration. This defaults to PCM 16-bit 24kHz mono if not specified. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
+        public RequestAudioContentPart(string audio) : base(ContentPartType.InputAudio)
         {
+            Argument.AssertNotNull(audio, nameof(audio));
+
+            Audio = audio;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="transcript"></param>
-        internal RequestAudioContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string transcript) : base(@type, additionalBinaryDataProperties)
+        /// <param name="audio"> Base64-encoded audio bytes, these will be parsed as the format specified in the session input audio type configuration. This defaults to PCM 16-bit 24kHz mono if not specified. </param>
+        /// <param name="transcript"> Optional transcript of the audio content. This is not sent to the model, but will be attached to the message item for reference. </param>
+        internal RequestAudioContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio, string transcript) : base(@type, additionalBinaryDataProperties)
         {
+            Audio = audio;
             Transcript = transcript;
         }
 
-        /// <summary> Gets or sets the Transcript. </summary>
+        /// <summary> Base64-encoded audio bytes, these will be parsed as the format specified in the session input audio type configuration. This defaults to PCM 16-bit 24kHz mono if not specified. </summary>
+        public string Audio { get; set; }
+
+        /// <summary> Optional transcript of the audio content. This is not sent to the model, but will be attached to the message item for reference. </summary>
         public string Transcript { get; set; }
     }
 }

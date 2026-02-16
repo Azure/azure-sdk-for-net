@@ -93,6 +93,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("custom_lexicon_url"u8);
                 writer.WriteStringValue(CustomLexiconUrl);
             }
+            if (Optional.IsDefined(CustomTextNormalizationUrl))
+            {
+                writer.WritePropertyName("custom_text_normalization_url"u8);
+                writer.WriteStringValue(CustomTextNormalizationUrl);
+            }
             if (Optional.IsCollectionDefined(PreferLocales))
             {
                 writer.WritePropertyName("prefer_locales"u8);
@@ -166,6 +171,7 @@ namespace Azure.AI.VoiceLive
             float? temperature = default;
             PersonalVoiceModels model = default;
             string customLexiconUrl = default;
+            string customTextNormalizationUrl = default;
             IList<string> preferLocales = default;
             string locale = default;
             string style = default;
@@ -201,6 +207,11 @@ namespace Azure.AI.VoiceLive
                 if (prop.NameEquals("custom_lexicon_url"u8))
                 {
                     customLexiconUrl = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("custom_text_normalization_url"u8))
+                {
+                    customTextNormalizationUrl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("prefer_locales"u8))
@@ -261,6 +272,7 @@ namespace Azure.AI.VoiceLive
                 temperature,
                 model,
                 customLexiconUrl,
+                customTextNormalizationUrl,
                 preferLocales ?? new ChangeTrackingList<string>(),
                 locale,
                 style,

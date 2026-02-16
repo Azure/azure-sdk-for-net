@@ -13,31 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>
-    /// Configuration for basic/static filler response generation.
+    /// Configuration for static interim response generation.
     /// Randomly selects from configured texts when any trigger condition is met.
     /// </summary>
-    public partial class BasicFillerResponseConfig : FillerResponseConfigBase, IJsonModel<BasicFillerResponseConfig>
+    public partial class StaticInterimResponseConfig : InterimResponseConfigBase, IJsonModel<StaticInterimResponseConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FillerResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InterimResponseConfigBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BasicFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBasicFillerResponseConfig(document.RootElement, options);
+                        return DeserializeStaticInterimResponseConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BasicFillerResponseConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticInterimResponseConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StaticInterimResponseConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StaticInterimResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticInterimResponseConfig IPersistableModel<StaticInterimResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (StaticInterimResponseConfig)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticInterimResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BasicFillerResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StaticInterimResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -48,10 +71,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BasicFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BasicFillerResponseConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticInterimResponseConfig)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Texts))
@@ -73,31 +96,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BasicFillerResponseConfig IJsonModel<BasicFillerResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BasicFillerResponseConfig)JsonModelCreateCore(ref reader, options);
+        StaticInterimResponseConfig IJsonModel<StaticInterimResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StaticInterimResponseConfig)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FillerResponseConfigBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InterimResponseConfigBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BasicFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BasicFillerResponseConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticInterimResponseConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBasicFillerResponseConfig(document.RootElement, options);
+            return DeserializeStaticInterimResponseConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BasicFillerResponseConfig DeserializeBasicFillerResponseConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static StaticInterimResponseConfig DeserializeStaticInterimResponseConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FillerResponseConfigType @type = default;
-            IList<FillerTrigger> triggers = default;
+            InterimResponseConfigType @type = default;
+            IList<InterimResponseTrigger> triggers = default;
             int? latencyThresholdMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> texts = default;
@@ -105,7 +128,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new FillerResponseConfigType(prop.Value.GetString());
+                    @type = new InterimResponseConfigType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("triggers"u8))
@@ -114,10 +137,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<FillerTrigger> array = new List<FillerTrigger>();
+                    List<InterimResponseTrigger> array = new List<InterimResponseTrigger>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new FillerTrigger(item.GetString()));
+                        array.Add(new InterimResponseTrigger(item.GetString()));
                     }
                     triggers = array;
                     continue;
@@ -157,30 +180,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BasicFillerResponseConfig(@type, triggers ?? new ChangeTrackingList<FillerTrigger>(), latencyThresholdMs, additionalBinaryDataProperties, texts ?? new ChangeTrackingList<string>());
+            return new StaticInterimResponseConfig(@type, triggers ?? new ChangeTrackingList<InterimResponseTrigger>(), latencyThresholdMs, additionalBinaryDataProperties, texts ?? new ChangeTrackingList<string>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BasicFillerResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BasicFillerResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BasicFillerResponseConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BasicFillerResponseConfig IPersistableModel<BasicFillerResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (BasicFillerResponseConfig)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BasicFillerResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

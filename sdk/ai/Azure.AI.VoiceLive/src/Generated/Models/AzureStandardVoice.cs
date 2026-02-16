@@ -30,17 +30,19 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
         /// <param name="customLexiconUrl"></param>
+        /// <param name="customTextNormalizationUrl"></param>
         /// <param name="preferLocales"></param>
         /// <param name="locale"></param>
         /// <param name="style"></param>
         /// <param name="pitch"></param>
         /// <param name="rate"></param>
         /// <param name="volume"></param>
-        internal AzureStandardVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzureStandardVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, string customTextNormalizationUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;
             CustomLexiconUrl = customLexiconUrl;
+            CustomTextNormalizationUrl = customTextNormalizationUrl;
             PreferLocales = preferLocales;
             Locale = locale;
             Style = style;
@@ -57,6 +59,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the CustomLexiconUrl. </summary>
         public string CustomLexiconUrl { get; set; }
+
+        /// <summary> Gets or sets the CustomTextNormalizationUrl. </summary>
+        public string CustomTextNormalizationUrl { get; set; }
 
         /// <summary> Gets the PreferLocales. </summary>
         public IList<string> PreferLocales { get; }
