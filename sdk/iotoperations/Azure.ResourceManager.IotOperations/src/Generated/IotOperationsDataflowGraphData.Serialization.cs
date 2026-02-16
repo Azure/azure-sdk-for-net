@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.IotOperations
     /// <summary> Instance dataflowEndpoint resource. </summary>
     public partial class IotOperationsDataflowGraphData : ResourceData, IJsonModel<IotOperationsDataflowGraphData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowGraphData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotOperationsDataflowGraphData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotOperationsDataflowGraphData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsDataflowGraphData"/> from. </param>
+        internal static IotOperationsDataflowGraphData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIotOperationsDataflowGraphData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsDataflowGraphData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +194,6 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="options"> The client options for reading and writing models. </param>
         IotOperationsDataflowGraphData IPersistableModel<IotOperationsDataflowGraphData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotOperationsDataflowGraphData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IotOperationsDataflowGraphData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIotOperationsDataflowGraphData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotOperationsDataflowGraphData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IotOperationsDataflowGraphData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -200,13 +207,6 @@ namespace Azure.ResourceManager.IotOperations
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(iotOperationsDataflowGraphData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsDataflowGraphData"/> from. </param>
-        internal static IotOperationsDataflowGraphData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIotOperationsDataflowGraphData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

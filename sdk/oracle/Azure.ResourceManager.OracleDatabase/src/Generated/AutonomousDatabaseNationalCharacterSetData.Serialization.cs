@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary> AutonomousDatabaseNationalCharacterSets resource definition. </summary>
     public partial class AutonomousDatabaseNationalCharacterSetData : ResourceData, IJsonModel<AutonomousDatabaseNationalCharacterSetData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseNationalCharacterSetData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutonomousDatabaseNationalCharacterSetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseNationalCharacterSetData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutonomousDatabaseNationalCharacterSetData"/> from. </param>
+        internal static AutonomousDatabaseNationalCharacterSetData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAutonomousDatabaseNationalCharacterSetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> The client options for reading and writing models. </param>
         AutonomousDatabaseNationalCharacterSetData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutonomousDatabaseNationalCharacterSetData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseNationalCharacterSetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutonomousDatabaseNationalCharacterSetData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseNationalCharacterSetData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutonomousDatabaseNationalCharacterSetData"/> from. </param>
-        internal static AutonomousDatabaseNationalCharacterSetData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAutonomousDatabaseNationalCharacterSetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

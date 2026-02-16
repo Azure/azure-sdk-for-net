@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> A nested model for XML testing. </summary>
-    public partial class XmlNestedModel
+    public partial class XmlNestedModel : IPersistableModel<XmlNestedModel>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/> for deserialization. </summary>
         internal XmlNestedModel()
@@ -65,6 +66,16 @@ namespace BasicTypeSpec
                     throw new FormatException($"The model {nameof(XmlNestedModel)} does not support writing '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<XmlNestedModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        XmlNestedModel IPersistableModel<XmlNestedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<XmlNestedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -136,5 +147,9 @@ namespace BasicTypeSpec
             }
             return new XmlNestedModel(value, nestedId, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Write(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

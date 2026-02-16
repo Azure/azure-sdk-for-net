@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> Warning type. </summary>
     public partial class JobRunWarning : IJsonModel<JobRunWarning>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobRunWarning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunWarning>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJobRunWarning(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobRunWarning)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobRunWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,23 +156,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         JobRunWarning IPersistableModel<JobRunWarning>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobRunWarning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobRunWarning>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJobRunWarning(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JobRunWarning)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobRunWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

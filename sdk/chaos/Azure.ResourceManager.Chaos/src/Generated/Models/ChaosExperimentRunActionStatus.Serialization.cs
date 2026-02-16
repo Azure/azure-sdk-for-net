@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the an action and its status. </summary>
     public partial class ChaosExperimentRunActionStatus : IJsonModel<ChaosExperimentRunActionStatus>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ChaosExperimentRunActionStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunActionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeChaosExperimentRunActionStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChaosExperimentRunActionStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChaosExperimentRunActionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -201,23 +218,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ChaosExperimentRunActionStatus IPersistableModel<ChaosExperimentRunActionStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChaosExperimentRunActionStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunActionStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeChaosExperimentRunActionStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentRunActionStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ChaosExperimentRunActionStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

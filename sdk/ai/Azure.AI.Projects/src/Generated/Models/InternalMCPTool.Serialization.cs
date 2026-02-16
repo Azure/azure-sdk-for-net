@@ -47,6 +47,16 @@ namespace OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalMCPTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalMCPTool IPersistableModel<InternalMCPTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalMCPTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalMCPTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalMCPTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -275,15 +285,5 @@ namespace OpenAI
                 requireApproval,
                 projectConnectionId);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMCPTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMCPTool IPersistableModel<InternalMCPTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalMCPTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMCPTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

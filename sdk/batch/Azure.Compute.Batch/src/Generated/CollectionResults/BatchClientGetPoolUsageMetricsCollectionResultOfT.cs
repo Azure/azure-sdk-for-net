@@ -78,7 +78,7 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchPoolListUsageMetricsResult result = (BatchPoolListUsageMetricsResult)response;
-                yield return Page<BatchPoolUsageMetrics>.FromValues((IReadOnlyList<BatchPoolUsageMetrics>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchPoolUsageMetrics>.FromValues((IReadOnlyList<BatchPoolUsageMetrics>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
                 if (nextPage == null)
                 {

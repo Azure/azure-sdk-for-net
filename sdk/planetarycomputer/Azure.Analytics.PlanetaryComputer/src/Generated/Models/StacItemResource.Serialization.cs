@@ -39,6 +39,41 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StacItemResource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacItemResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacItemResource IPersistableModel<StacItemResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (StacItemResource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacItemResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="stacItemResource"> The <see cref="StacItemResource"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StacItemResource stacItemResource)
+        {
+            if (stacItemResource == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stacItemResource, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StacItemResource"/> from. </param>
         public static explicit operator StacItemResource(Response response)
         {
@@ -278,41 +313,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 assets,
                 timestamp,
                 eTag);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacItemResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacItemResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StacItemResource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacItemResource IPersistableModel<StacItemResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (StacItemResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacItemResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="stacItemResource"> The <see cref="StacItemResource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StacItemResource stacItemResource)
-        {
-            if (stacItemResource == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacItemResource, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

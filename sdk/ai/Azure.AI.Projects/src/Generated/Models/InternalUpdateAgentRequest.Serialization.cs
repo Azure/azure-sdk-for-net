@@ -46,6 +46,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalUpdateAgentRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalUpdateAgentRequest IPersistableModel<InternalUpdateAgentRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalUpdateAgentRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalUpdateAgentRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -173,15 +183,5 @@ namespace Azure.AI.Projects
             }
             return new InternalUpdateAgentRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalUpdateAgentRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalUpdateAgentRequest IPersistableModel<InternalUpdateAgentRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalUpdateAgentRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

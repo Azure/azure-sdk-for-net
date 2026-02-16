@@ -19,6 +19,12 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
+        BinaryData IPersistableModel<SawShark>.Write(ModelReaderWriterOptions options) => throw null;
+
+        SawShark IPersistableModel<SawShark>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<SawShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<SawShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,11 +32,5 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
         SawShark IJsonModel<SawShark>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<SawShark>.Write(ModelReaderWriterOptions options) => throw null;
-
-        SawShark IPersistableModel<SawShark>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<SawShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

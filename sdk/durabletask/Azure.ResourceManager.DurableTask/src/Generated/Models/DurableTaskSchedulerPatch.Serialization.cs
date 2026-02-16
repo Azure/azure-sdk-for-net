@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.DurableTask.Models
     /// <summary> The update request model for the Scheduler resource. </summary>
     public partial class DurableTaskSchedulerPatch : IJsonModel<DurableTaskSchedulerPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DurableTaskSchedulerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDurableTaskSchedulerPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DurableTaskSchedulerPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DurableTaskSchedulerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DurableTaskSchedulerPatch IPersistableModel<DurableTaskSchedulerPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DurableTaskSchedulerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDurableTaskSchedulerPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DurableTaskSchedulerPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DurableTaskSchedulerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -47,6 +47,16 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureOpenAIModelConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureOpenAIModelConfiguration IPersistableModel<AzureOpenAIModelConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOpenAIModelConfiguration)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureOpenAIModelConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOpenAIModelConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,15 +127,5 @@ namespace Azure.AI.Projects
             }
             return new AzureOpenAIModelConfiguration(@type, additionalBinaryDataProperties, modelDeploymentName);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureOpenAIModelConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOpenAIModelConfiguration IPersistableModel<AzureOpenAIModelConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOpenAIModelConfiguration)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureOpenAIModelConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

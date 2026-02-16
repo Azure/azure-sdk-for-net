@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Properties of subscription permission to create job validation response. </summary>
     public partial class SubscriptionIsAllowedToCreateJobValidationResult : DataBoxValidationInputResult, IJsonModel<SubscriptionIsAllowedToCreateJobValidationResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataBoxValidationInputResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionIsAllowedToCreateJobValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSubscriptionIsAllowedToCreateJobValidationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionIsAllowedToCreateJobValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,23 +142,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SubscriptionIsAllowedToCreateJobValidationResult IPersistableModel<SubscriptionIsAllowedToCreateJobValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (SubscriptionIsAllowedToCreateJobValidationResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataBoxValidationInputResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionIsAllowedToCreateJobValidationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSubscriptionIsAllowedToCreateJobValidationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SubscriptionIsAllowedToCreateJobValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

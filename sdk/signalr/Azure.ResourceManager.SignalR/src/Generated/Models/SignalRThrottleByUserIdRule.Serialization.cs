@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Throttle the client connection by the user ID. </summary>
     public partial class SignalRThrottleByUserIdRule : SignalRClientConnectionCountRule, IJsonModel<SignalRThrottleByUserIdRule>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SignalRClientConnectionCountRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByUserIdRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSignalRThrottleByUserIdRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignalRThrottleByUserIdRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRThrottleByUserIdRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -113,23 +130,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SignalRThrottleByUserIdRule IPersistableModel<SignalRThrottleByUserIdRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRThrottleByUserIdRule)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRClientConnectionCountRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByUserIdRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSignalRThrottleByUserIdRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SignalRThrottleByUserIdRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SignalRThrottleByUserIdRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

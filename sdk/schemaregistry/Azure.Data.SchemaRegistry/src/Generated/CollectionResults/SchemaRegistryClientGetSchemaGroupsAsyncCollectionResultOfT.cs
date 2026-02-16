@@ -44,7 +44,7 @@ namespace Azure.Data.SchemaRegistry
                     yield break;
                 }
                 SchemaGroups result = (SchemaGroups)response;
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

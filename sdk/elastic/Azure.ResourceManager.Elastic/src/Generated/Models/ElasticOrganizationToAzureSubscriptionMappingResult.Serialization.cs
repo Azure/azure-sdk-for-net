@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The Azure Subscription ID to which the Organization of the logged in user belongs and gets billed into. </summary>
     public partial class ElasticOrganizationToAzureSubscriptionMappingResult : IJsonModel<ElasticOrganizationToAzureSubscriptionMappingResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticOrganizationToAzureSubscriptionMappingResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticOrganizationToAzureSubscriptionMappingResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticOrganizationToAzureSubscriptionMappingResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticOrganizationToAzureSubscriptionMappingResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticOrganizationToAzureSubscriptionMappingResult"/> from. </param>
+        internal static ElasticOrganizationToAzureSubscriptionMappingResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeElasticOrganizationToAzureSubscriptionMappingResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticOrganizationToAzureSubscriptionMappingResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,31 +147,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticOrganizationToAzureSubscriptionMappingResult IPersistableModel<ElasticOrganizationToAzureSubscriptionMappingResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticOrganizationToAzureSubscriptionMappingResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticOrganizationToAzureSubscriptionMappingResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticOrganizationToAzureSubscriptionMappingResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticOrganizationToAzureSubscriptionMappingResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticOrganizationToAzureSubscriptionMappingResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticOrganizationToAzureSubscriptionMappingResult"/> from. </param>
-        internal static ElasticOrganizationToAzureSubscriptionMappingResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeElasticOrganizationToAzureSubscriptionMappingResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

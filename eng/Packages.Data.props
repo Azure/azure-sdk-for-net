@@ -27,8 +27,8 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260210.1</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260131.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260213.8</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260213.2</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
     <MicrosoftRestClientRuntimeVersion>[2.3.24, 3.0.0)</MicrosoftRestClientRuntimeVersion>
@@ -123,6 +123,7 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'
       or '$(IsGeneratorLibrary)' == 'true'
+      or '$(IsToolProject)' == 'true'
       or '$(IsSamplesProject)' == 'true'
       or '$(IsTestProject)' == 'true'
       or '$(IsTestSupportProject)' == 'true'
@@ -393,7 +394,8 @@
       or '$(IsTestSupportProject)' == 'true'
       or '$(IsPerfProject)' == 'true'
       or '$(IsStressProject)' == 'true'
-      or '$(IsSamplesProject)' == 'true'">
+      or '$(IsSamplesProject)' == 'true'
+      or '$(IsToolProject)' == 'true'">
 
     <!-- General testing infrastructure  -->
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->

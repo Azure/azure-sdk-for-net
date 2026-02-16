@@ -47,6 +47,16 @@ namespace OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalFunctionTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalFunctionTool IPersistableModel<InternalFunctionTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalFunctionTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalFunctionTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalFunctionTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -209,15 +219,5 @@ namespace OpenAI
                 parameters,
                 strict);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalFunctionTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalFunctionTool IPersistableModel<InternalFunctionTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalFunctionTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalFunctionTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
