@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
             Argument.AssertNotNullOrEmpty(sessionConfig.Model, nameof(sessionConfig.Model));
-            
+
             return CreateSession(sessionConfig.Model);
         }
 
@@ -195,8 +195,8 @@ namespace Azure.AI.VoiceLive
         /// </code>
         /// </example>
         public virtual async Task<VoiceLiveSession> StartSessionAsync(
-            SessionTarget target, 
-            VoiceLiveSessionOptions sessionConfig, 
+            SessionTarget target,
+            VoiceLiveSessionOptions sessionConfig,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(target, nameof(target));
