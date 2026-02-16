@@ -92,12 +92,12 @@ namespace Azure.Analytics.PlanetaryComputer
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("msft:_created"u8);
-                writer.WriteStringValue(CreatedOn);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("msft:_updated"u8);
-                writer.WriteStringValue(UpdatedOn);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ShortDescription))
             {
@@ -199,8 +199,8 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            string createdOn = default;
-            string updatedOn = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             string shortDescription = default;
             IList<string> stacExtensions = default;
             string id = default;
@@ -215,12 +215,20 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("msft:_created"u8))
                 {
-                    createdOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("msft:_updated"u8))
                 {
-                    updatedOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("msft:short_description"u8))

@@ -80,7 +80,12 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
-            writer.WriteStringValue(Coordinates);
+            writer.WriteStartArray();
+            foreach (float item in Coordinates)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,7 +116,7 @@ namespace Azure.Analytics.PlanetaryComputer
             GeometryType @type = default;
             IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string coordinates = default;
+            IList<float> coordinates = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -135,7 +140,12 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("coordinates"u8))
                 {
-                    coordinates = prop.Value.GetString();
+                    List<float> array = new List<float>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    coordinates = array;
                     continue;
                 }
                 if (options.Format != "W")

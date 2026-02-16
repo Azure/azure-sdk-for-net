@@ -14,63 +14,63 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class PageIngestionRun : IJsonModel<PageIngestionRun>
+    internal partial class IngestionRunPagedResponse : IJsonModel<IngestionRunPagedResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="PageIngestionRun"/> for deserialization. </summary>
-        internal PageIngestionRun()
+        /// <summary> Initializes a new instance of <see cref="IngestionRunPagedResponse"/> for deserialization. </summary>
+        internal IngestionRunPagedResponse()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PageIngestionRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IngestionRunPagedResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePageIngestionRun(document.RootElement, options);
+                        return DeserializeIngestionRunPagedResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageIngestionRun)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionRunPagedResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PageIngestionRun)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionRunPagedResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PageIngestionRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IngestionRunPagedResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageIngestionRun IPersistableModel<PageIngestionRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IngestionRunPagedResponse IPersistableModel<IngestionRunPagedResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PageIngestionRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IngestionRunPagedResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PageIngestionRun"/> from. </param>
-        public static explicit operator PageIngestionRun(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionRunPagedResponse"/> from. </param>
+        public static explicit operator IngestionRunPagedResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePageIngestionRun(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIngestionRunPagedResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PageIngestionRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IngestionRunPagedResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageIngestionRun)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionRunPagedResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -117,24 +117,24 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageIngestionRun IJsonModel<PageIngestionRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IngestionRunPagedResponse IJsonModel<IngestionRunPagedResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PageIngestionRun JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IngestionRunPagedResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRunPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageIngestionRun)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionRunPagedResponse)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePageIngestionRun(document.RootElement, options);
+            return DeserializeIngestionRunPagedResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PageIngestionRun DeserializePageIngestionRun(JsonElement element, ModelReaderWriterOptions options)
+        internal static IngestionRunPagedResponse DeserializeIngestionRunPagedResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PageIngestionRun(value, nextLink, additionalBinaryDataProperties);
+            return new IngestionRunPagedResponse(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

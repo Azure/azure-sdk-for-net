@@ -14,63 +14,63 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class PageIngestionDefinition : IJsonModel<PageIngestionDefinition>
+    internal partial class ManagedIdentityMetadataPagedResponse : IJsonModel<ManagedIdentityMetadataPagedResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="PageIngestionDefinition"/> for deserialization. </summary>
-        internal PageIngestionDefinition()
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadataPagedResponse"/> for deserialization. </summary>
+        internal ManagedIdentityMetadataPagedResponse()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PageIngestionDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedIdentityMetadataPagedResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePageIngestionDefinition(document.RootElement, options);
+                        return DeserializeManagedIdentityMetadataPagedResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageIngestionDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PageIngestionDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PageIngestionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedIdentityMetadataPagedResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageIngestionDefinition IPersistableModel<PageIngestionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedIdentityMetadataPagedResponse IPersistableModel<ManagedIdentityMetadataPagedResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PageIngestionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedIdentityMetadataPagedResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PageIngestionDefinition"/> from. </param>
-        public static explicit operator PageIngestionDefinition(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedIdentityMetadataPagedResponse"/> from. </param>
+        public static explicit operator ManagedIdentityMetadataPagedResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePageIngestionDefinition(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeManagedIdentityMetadataPagedResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PageIngestionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedIdentityMetadataPagedResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,14 +81,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageIngestionDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IngestionInformation item in Value)
+            foreach (ManagedIdentityMetadata item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -117,40 +117,40 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageIngestionDefinition IJsonModel<PageIngestionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedIdentityMetadataPagedResponse IJsonModel<ManagedIdentityMetadataPagedResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PageIngestionDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedIdentityMetadataPagedResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageIngestionDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePageIngestionDefinition(document.RootElement, options);
+            return DeserializeManagedIdentityMetadataPagedResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PageIngestionDefinition DeserializePageIngestionDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedIdentityMetadataPagedResponse DeserializeManagedIdentityMetadataPagedResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IngestionInformation> value = default;
+            IList<ManagedIdentityMetadata> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IngestionInformation> array = new List<IngestionInformation>();
+                    List<ManagedIdentityMetadata> array = new List<ManagedIdentityMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IngestionInformation.DeserializeIngestionInformation(item, options));
+                        array.Add(ManagedIdentityMetadata.DeserializeManagedIdentityMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PageIngestionDefinition(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedIdentityMetadataPagedResponse(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }
