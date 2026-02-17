@@ -104,6 +104,14 @@ public class RootCommandFactory
         migrateCommand.SetAction(async (parseResult) =>
         {
             var sdkPath = parseResult.GetValue(sdkPathArgument);
+
+            if (string.IsNullOrEmpty(sdkPath))
+            {
+                _logger.LogError("SDK path argument is required but was not provided");
+                Environment.ExitCode = 1;
+                return;
+            }
+
             _logger.LogInformation("Starting migrate command for SDK path: {SdkPath}", sdkPath);
 
             // Create command-specific timeout linked to app cancellation
