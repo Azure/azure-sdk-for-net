@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     public partial class RequestAudioContentPart : VoiceLiveContentPart, IJsonModel<RequestAudioContentPart>
     {
         /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/> for deserialization. </summary>
-        internal RequestAudioContentPart()
+        public RequestAudioContentPart()
         {
         }
 
