@@ -1,6 +1,6 @@
 directory: specification/ai/data-plane/VoiceLive
-commit: 484d18d08d2c502833787df195b51b042e3a58e0
-repo: Azure/azure-rest-api-specs
+commit: 808abbc6a7ab04935b351b5c42a5d39cfb1bef4f
+repo: rhurey/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai/data-plane/VoiceLive
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
