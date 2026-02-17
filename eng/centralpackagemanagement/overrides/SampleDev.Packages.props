@@ -1,8 +1,0 @@
-<Project>
-  <!--
-    Packages used by the WebPubSub for Socket.IO sample Azure Function.
-  -->
-  <ItemGroup>
-    <PackageVersion Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
-  </ItemGroup>
-</Project>
