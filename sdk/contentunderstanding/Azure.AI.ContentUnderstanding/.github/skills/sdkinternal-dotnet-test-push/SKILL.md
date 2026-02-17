@@ -1,4 +1,3 @@
-```skill
 ---
 name: sdkinternal-dotnet-test-push
 description: Push test session recordings to Azure SDK Assets repository, with optional record-and-push workflow. Push recordings only, or run a complete workflow that records tests against live services, pushes recordings, and verifies with playback. Combines push-recordings and record-push workflow into a single skill.
@@ -138,5 +137,4 @@ $version = Get-Content eng/common/testproxy/target_version.txt
 
 # Add to PATH (the binary is named Azure.Sdk.Tools.TestProxy)
 export PATH="/tmp/test-proxy:$PATH"
-```
 ```

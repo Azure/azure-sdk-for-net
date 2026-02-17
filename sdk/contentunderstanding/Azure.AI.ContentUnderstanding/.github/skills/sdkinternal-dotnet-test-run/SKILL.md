@@ -1,4 +1,3 @@
-```skill
 ---
 name: sdkinternal-dotnet-test-run
 description: Unified Azure SDK test runner. Run tests in different modes (Playback/Record/Live), run samples (single or all), and collect code coverage. Combines playback testing, record testing, live testing, sample execution, and coverage collection into a single skill.
@@ -153,4 +152,3 @@ If playback tests fail due to API changes, re-record with `--mode record`.
 | Java | `mvn test` | `-DAZURE_TEST_MODE` |
 | Python | `pytest` | `AZURE_TEST_MODE` |
 | JavaScript | `npm test` | `AZURE_TEST_MODE` |
-```

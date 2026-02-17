@@ -1,13 +1,16 @@
 # Run a specific .NET SDK sample for Azure AI Content Understanding
-# This script extracts code from sample markdown files, builds a console project, and runs it.
+# This script extracts code from sample markdown files and builds a standalone console project.
+# By default, it only builds the project. Use -Run to also execute it.
 #
 # Usage: .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl
+#        .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl -Run
 #        .\run-sample.ps1 -SampleName Sample01_AnalyzeBinary -FilePath C:\path\to\doc.pdf
 #        .\run-sample.ps1 -List
 
 param(
     [string]$SampleName = "",
     [switch]$List,
+    [switch]$Run,
     [string]$FilePath = "",
     [switch]$Help
 )
@@ -114,11 +117,13 @@ if ($Help) {
     Write-ColorOutput "Options:" "Yellow"
     Write-Host "  -SampleName <name>   Name of the sample (e.g., Sample02_AnalyzeUrl)"
     Write-Host "  -List                List available samples"
+    Write-Host "  -Run                 Run the sample after building (default: build only)"
     Write-Host "  -FilePath <path>     Local file path (for samples that need a file)"
     Write-Host "  -Help                Show this help"
     Write-Host ""
     Write-ColorOutput "Examples:" "Yellow"
     Write-Host "  .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl"
+    Write-Host "  .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl -Run"
     Write-Host "  .\run-sample.ps1 -SampleName Sample01_AnalyzeBinary -FilePath C:\docs\invoice.pdf"
     Write-Host "  .\run-sample.ps1 -List"
     exit 0
@@ -336,53 +341,91 @@ if (-not (Test-Path (Join-Path $runnerBase "Directory.Build.props"))) {
 '@
 }
 
-# Build local SDK from source
+# Resolve SDK reference: try NuGet first, fall back to local build
 $localSrcCsproj = Join-Path $localSrcDir "Azure.AI.ContentUnderstanding.csproj"
-if (Test-Path $localSrcCsproj) {
-    Write-ColorOutput "Building local SDK from: $localSrcDir" "Blue"
-    # Build from .sample_runner/ dir so dotnet uses our local global.json (permissive rollForward)
-    # but build the real csproj which has the repo's MSBuild infrastructure (shared sources etc.)
-    Push-Location $runnerBase
-    try {
-        $buildOutput = dotnet build $localSrcCsproj -c Release 2>&1
-        $sdkBuildExitCode = $LASTEXITCODE
-    } finally {
-        Pop-Location
+$useLocalSrc = $false
+$dllPath = ""
+
+Write-ColorOutput "Checking if Azure.AI.ContentUnderstanding NuGet package is available..." "Blue"
+$nugetAvailable = $false
+$nugetCheckDir = Join-Path ([IO.Path]::GetTempPath()) "nuget_check_$(Get-Random)"
+New-Item -ItemType Directory -Path $nugetCheckDir -Force | Out-Null
+
+$checkCsproj = @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.ContentUnderstanding" Version="1.0.0-*" />
+  </ItemGroup>
+</Project>
+'@
+Set-Content -Path (Join-Path $nugetCheckDir "check.csproj") -Value $checkCsproj
+# Copy isolation files so the check project uses nuget.org only
+$runnerGlobalJsonPath = Join-Path $runnerBase "global.json"
+if (Test-Path $runnerGlobalJsonPath) { Copy-Item $runnerGlobalJsonPath $nugetCheckDir }
+Set-Content -Path (Join-Path $nugetCheckDir "Directory.Build.props") -Value '<Project />'
+Set-Content -Path (Join-Path $nugetCheckDir "Directory.Build.targets") -Value '<Project />'
+Set-Content -Path (Join-Path $nugetCheckDir "Directory.Packages.props") -Value '<Project />'
+$runnerNugetConfig = Join-Path $runnerBase "NuGet.Config"
+if (Test-Path $runnerNugetConfig) { Copy-Item $runnerNugetConfig $nugetCheckDir }
+
+Push-Location $nugetCheckDir
+try {
+    $restoreOutput = dotnet restore check.csproj 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        $nugetAvailable = $true
+        Write-ColorOutput "NuGet package Azure.AI.ContentUnderstanding found. Using public NuGet." "Green"
     }
-    if ($sdkBuildExitCode -ne 0) {
-        Write-ColorOutput "Warning: Failed to build local SDK. Output:" "Yellow"
-        $buildOutput | ForEach-Object { Write-Host $_ }
-        Write-ColorOutput "Falling back to NuGet package reference." "Yellow"
-        $useLocalSrc = $false
-    } else {
-        Write-ColorOutput "Local SDK build succeeded." "Green"
-        $useLocalSrc = $true
-        # Find the built DLL - repo uses artifacts/ output directory
-        $repoRoot = Resolve-Path (Join-Path $packageRoot ".." ".." "..") | Select-Object -ExpandProperty Path
-        $artifactsDir = Join-Path $repoRoot "artifacts" "bin" "Azure.AI.ContentUnderstanding"
-        $builtDll = Get-ChildItem -Path $artifactsDir -Recurse -Filter "Azure.AI.ContentUnderstanding.dll" -ErrorAction SilentlyContinue |
-            Where-Object { $_.FullName -match 'Release[\\/]net10\.0' -and $_.FullName -notmatch 'ref[\\/]' } |
-            Sort-Object LastWriteTime -Descending |
-            Select-Object -First 1
-        # Fall back to searching src directory if artifacts not found
-        if (-not $builtDll) {
-            $builtDll = Get-ChildItem -Path $localSrcDir -Recurse -Filter "Azure.AI.ContentUnderstanding.dll" -ErrorAction SilentlyContinue |
-                Where-Object { $_.FullName -match 'bin[\\/]Release' -and $_.FullName -notmatch 'ref[\\/]' } |
+} finally {
+    Pop-Location
+}
+Remove-Item -Recurse -Force $nugetCheckDir -ErrorAction SilentlyContinue
+
+if (-not $nugetAvailable) {
+    Write-ColorOutput "NuGet package not available. Attempting local SDK build..." "Yellow"
+    if (Test-Path $localSrcCsproj) {
+        Write-ColorOutput "Building local SDK from: $localSrcDir" "Blue"
+        Push-Location $runnerBase
+        try {
+            $buildOutput = dotnet build $localSrcCsproj -c Release 2>&1
+            $sdkBuildExitCode = $LASTEXITCODE
+        } finally {
+            Pop-Location
+        }
+        if ($sdkBuildExitCode -ne 0) {
+            Write-ColorOutput "Error: Failed to build local SDK and NuGet package is not available." "Red"
+            $buildOutput | ForEach-Object { Write-Host $_ }
+            exit 1
+        } else {
+            Write-ColorOutput "Local SDK build succeeded." "Green"
+            $useLocalSrc = $true
+            # Find the built DLL - repo uses artifacts/ output directory
+            $repoRoot = Resolve-Path (Join-Path $packageRoot ".." ".." "..") | Select-Object -ExpandProperty Path
+            $artifactsDir = Join-Path $repoRoot "artifacts" "bin" "Azure.AI.ContentUnderstanding"
+            $builtDll = Get-ChildItem -Path $artifactsDir -Recurse -Filter "Azure.AI.ContentUnderstanding.dll" -ErrorAction SilentlyContinue |
+                Where-Object { $_.FullName -match 'Release[\\/]net10\.0' -and $_.FullName -notmatch 'ref[\\/]' } |
                 Sort-Object LastWriteTime -Descending |
                 Select-Object -First 1
+            if (-not $builtDll) {
+                $builtDll = Get-ChildItem -Path $localSrcDir -Recurse -Filter "Azure.AI.ContentUnderstanding.dll" -ErrorAction SilentlyContinue |
+                    Where-Object { $_.FullName -match 'bin[\\/]Release' -and $_.FullName -notmatch 'ref[\\/]' } |
+                    Sort-Object LastWriteTime -Descending |
+                    Select-Object -First 1
+            }
+            if (-not $builtDll) {
+                Write-ColorOutput "Error: Could not find built DLL and NuGet package is not available." "Red"
+                exit 1
+            } else {
+                $dllPath = $builtDll.FullName
+                Write-ColorOutput "Using local SDK DLL: $dllPath" "Green"
+            }
         }
-        if (-not $builtDll) {
-            Write-ColorOutput "Warning: Could not find built DLL. Falling back to NuGet." "Yellow"
-            $useLocalSrc = $false
-        } else {
-            $dllPath = $builtDll.FullName
-            Write-ColorOutput "Using local SDK DLL: $dllPath" "Green"
-        }
+    } else {
+        Write-ColorOutput "Error: NuGet package not available and local SDK source not found at: $localSrcCsproj" "Red"
+        exit 1
     }
-} else {
-    Write-ColorOutput "Local SDK source not found at: $localSrcCsproj" "Yellow"
-    Write-ColorOutput "Using NuGet package reference instead." "Yellow"
-    $useLocalSrc = $false
 }
 
 # Create .csproj
@@ -607,30 +650,65 @@ if (Test-Path $appsettingsPath) {
     Write-ColorOutput "Copied appsettings.json to sample project folder" "Blue"
 }
 
-# ─── Build and run ────────────────────────────────────────────────────────────
+# ─── Build the project ────────────────────────────────────────────────────────
 Write-Host ""
-Write-ColorOutput "=== Running: $SampleName ===" "Blue"
+Write-ColorOutput "=== Building: $SampleName ===" "Blue"
 Write-Host ""
 
 Push-Location $runnerDir
 try {
-    dotnet run --project (Join-Path $runnerDir "$SampleName.csproj")
-    $exitCode = $LASTEXITCODE
+    dotnet build (Join-Path $runnerDir "$SampleName.csproj")
+    $buildExitCode = $LASTEXITCODE
 } finally {
     Pop-Location
 }
 
-Write-Host ""
-if ($exitCode -eq 0) {
-    Write-ColorOutput "Sample completed: $SampleName" "Green"
-} else {
-    Write-ColorOutput "Sample failed with exit code: $exitCode" "Red"
+if ($buildExitCode -ne 0) {
+    Write-ColorOutput "Build failed with exit code: $buildExitCode" "Red"
     Write-Host ""
     Write-ColorOutput "Troubleshooting:" "Yellow"
-    Write-Host "  - Check that your endpoint and credentials are correct"
-    Write-Host "  - Ensure model deployments are configured (run Sample00_UpdateDefaults)"
-    Write-Host "  - Verify the Cognitive Services User role is assigned"
     Write-Host "  - Review the generated code: $(Join-Path $runnerDir 'Program.cs')"
+    Write-Host "  - Delete .sample_runner/ and re-run to regenerate"
+    exit $buildExitCode
 }
 
-exit $exitCode
+Write-ColorOutput "Build succeeded: $SampleName" "Green"
+
+# ─── Run (if -Run flag) or print instructions ───────────────────────────────
+if ($Run) {
+    Write-Host ""
+    Write-ColorOutput "=== Running: $SampleName ===" "Blue"
+    Write-Host ""
+
+    Push-Location $runnerDir
+    try {
+        dotnet run --project (Join-Path $runnerDir "$SampleName.csproj") --no-build
+        $exitCode = $LASTEXITCODE
+    } finally {
+        Pop-Location
+    }
+
+    Write-Host ""
+    if ($exitCode -eq 0) {
+        Write-ColorOutput "Sample completed: $SampleName" "Green"
+    } else {
+        Write-ColorOutput "Sample failed with exit code: $exitCode" "Red"
+        Write-Host ""
+        Write-ColorOutput "Troubleshooting:" "Yellow"
+        Write-Host "  - Check that your endpoint and credentials are correct"
+        Write-Host "  - Ensure model deployments are configured (run Sample00_UpdateDefaults)"
+        Write-Host "  - Verify the Cognitive Services User role is assigned"
+        Write-Host "  - Review the generated code: $(Join-Path $runnerDir 'Program.cs')"
+    }
+    exit $exitCode
+} else {
+    Write-Host ""
+    Write-ColorOutput "Sample project is ready! To run it:" "Green"
+    Write-Host ""
+    Write-ColorOutput "  cd $runnerDir" "Cyan"
+    Write-ColorOutput "  dotnet run --project $SampleName.csproj" "Cyan"
+    Write-Host ""
+    Write-ColorOutput "Project location: $runnerDir" "Blue"
+    Write-ColorOutput "Generated code:   $(Join-Path $runnerDir 'Program.cs')" "Blue"
+    exit 0
+}

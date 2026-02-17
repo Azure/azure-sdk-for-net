@@ -50,7 +50,7 @@ start_time=$(date +%s)
 
 for s in "${samples[@]}"; do
   sample_start=$(date +%s)
-  output=$(bash "$RUN_SAMPLE_SCRIPT" "${s}.md" 2>&1)
+  output=$(bash "$RUN_SAMPLE_SCRIPT" "${s}.md" --run 2>&1)
   rc=$?
   sample_end=$(date +%s)
   elapsed=$((sample_end - sample_start))

@@ -110,12 +110,17 @@ list_samples() {
 # ─── Parse arguments ──────────────────────────────────────────────────────────
 SAMPLE_NAME=""
 LOCAL_FILE=""
+RUN_AFTER_BUILD=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --list|-l)
             list_samples
             exit 0
+            ;;
+        --run|-r)
+            RUN_AFTER_BUILD=true
+            shift
             ;;
         --file|-f)
             LOCAL_FILE="$2"
@@ -126,11 +131,13 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "Options:"
             echo "  --list, -l          List available samples"
+            echo "  --run, -r           Run the sample after building (default: build only)"
             echo "  --file, -f <path>   Local file path (for samples that need a file)"
             echo "  --help, -h          Show this help"
             echo ""
             echo "Examples:"
             echo "  $0 Sample02_AnalyzeUrl"
+            echo "  $0 Sample02_AnalyzeUrl --run"
             echo "  $0 Sample01_AnalyzeBinary --file /path/to/doc.pdf"
             echo "  $0 --list"
             exit 0
@@ -365,40 +372,74 @@ if [ ! -f "$RUNNER_BASE/Directory.Build.props" ]; then
 NUGETCONFIG
 fi
 
-# ─── Build local SDK from source ─────────────────────────────────────────────
+# ─── Resolve SDK reference: try NuGet first, fall back to local build ─────────
 LOCAL_SRC_CSPROJ="$LOCAL_SRC_DIR/Azure.AI.ContentUnderstanding.csproj"
 USE_LOCAL_SRC=false
 DLL_PATH=""
 
-if [ -f "$LOCAL_SRC_CSPROJ" ]; then
-    print_info "Building local SDK from: $LOCAL_SRC_DIR"
-    # Build from .sample_runner/ CWD so dotnet uses our local global.json
-    pushd "$RUNNER_BASE" > /dev/null
-    if dotnet build "$LOCAL_SRC_CSPROJ" -c Release > /tmp/sdk_build_output.txt 2>&1; then
-        print_success "Local SDK build succeeded."
-        popd > /dev/null
-        # Find the built DLL in the repo artifacts directory
-        REPO_ROOT="$(cd "$PACKAGE_ROOT/../../.." && pwd)"
-        ARTIFACTS_DIR="$REPO_ROOT/artifacts/bin/Azure.AI.ContentUnderstanding"
-        DLL_PATH=$(find "$ARTIFACTS_DIR" -name "Azure.AI.ContentUnderstanding.dll" -path "*/Release/net10.0/*" ! -path "*/ref/*" 2>/dev/null | head -1)
-        # Fall back to src directory
-        if [ -z "$DLL_PATH" ]; then
-            DLL_PATH=$(find "$LOCAL_SRC_DIR" -name "Azure.AI.ContentUnderstanding.dll" -path "*/bin/Release/*" ! -path "*/ref/*" 2>/dev/null | head -1)
-        fi
-        if [ -n "$DLL_PATH" ]; then
-            USE_LOCAL_SRC=true
-            print_success "Using local SDK DLL: $DLL_PATH"
+# Try NuGet package first by doing a restore check
+print_info "Checking if Azure.AI.ContentUnderstanding NuGet package is available..."
+NUGET_AVAILABLE=false
+NUGET_CHECK_DIR=$(mktemp -d)
+cat > "$NUGET_CHECK_DIR/check.csproj" << 'CHECKCSPROJ'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.ContentUnderstanding" Version="1.0.0-*" />
+  </ItemGroup>
+</Project>
+CHECKCSPROJ
+# Copy isolation files so the check project uses nuget.org only
+cp "$RUNNER_BASE/global.json" "$NUGET_CHECK_DIR/" 2>/dev/null || true
+echo '<Project />' > "$NUGET_CHECK_DIR/Directory.Build.props"
+echo '<Project />' > "$NUGET_CHECK_DIR/Directory.Build.targets"
+echo '<Project />' > "$NUGET_CHECK_DIR/Directory.Packages.props"
+cp "$RUNNER_BASE/NuGet.Config" "$NUGET_CHECK_DIR/" 2>/dev/null || true
+
+pushd "$NUGET_CHECK_DIR" > /dev/null
+if dotnet restore check.csproj > /dev/null 2>&1; then
+    NUGET_AVAILABLE=true
+    print_success "NuGet package Azure.AI.ContentUnderstanding found. Using public NuGet."
+fi
+popd > /dev/null
+rm -rf "$NUGET_CHECK_DIR"
+
+if [ "$NUGET_AVAILABLE" = false ]; then
+    print_warning "NuGet package not available. Attempting local SDK build..."
+    if [ -f "$LOCAL_SRC_CSPROJ" ]; then
+        print_info "Building local SDK from: $LOCAL_SRC_DIR"
+        # Build from .sample_runner/ CWD so dotnet uses our local global.json
+        pushd "$RUNNER_BASE" > /dev/null
+        if dotnet build "$LOCAL_SRC_CSPROJ" -c Release > /tmp/sdk_build_output.txt 2>&1; then
+            print_success "Local SDK build succeeded."
+            popd > /dev/null
+            # Find the built DLL in the repo artifacts directory
+            REPO_ROOT="$(cd "$PACKAGE_ROOT/../../.." && pwd)"
+            ARTIFACTS_DIR="$REPO_ROOT/artifacts/bin/Azure.AI.ContentUnderstanding"
+            DLL_PATH=$(find "$ARTIFACTS_DIR" -name "Azure.AI.ContentUnderstanding.dll" -path "*/Release/net10.0/*" ! -path "*/ref/*" 2>/dev/null | head -1)
+            # Fall back to src directory
+            if [ -z "$DLL_PATH" ]; then
+                DLL_PATH=$(find "$LOCAL_SRC_DIR" -name "Azure.AI.ContentUnderstanding.dll" -path "*/bin/Release/*" ! -path "*/ref/*" 2>/dev/null | head -1)
+            fi
+            if [ -n "$DLL_PATH" ]; then
+                USE_LOCAL_SRC=true
+                print_success "Using local SDK DLL: $DLL_PATH"
+            else
+                print_error "Error: Could not find built DLL and NuGet package is not available."
+                exit 1
+            fi
         else
-            print_warning "Warning: Could not find built DLL. Falling back to NuGet."
+            popd > /dev/null
+            print_error "Error: Failed to build local SDK and NuGet package is not available."
+            tail -20 /tmp/sdk_build_output.txt
+            exit 1
         fi
     else
-        popd > /dev/null
-        print_warning "Warning: Failed to build local SDK. Falling back to NuGet."
-        tail -20 /tmp/sdk_build_output.txt
+        print_error "Error: NuGet package not available and local SDK source not found at: $LOCAL_SRC_CSPROJ"
+        exit 1
     fi
-else
-    print_warning "Local SDK source not found at: $LOCAL_SRC_CSPROJ"
-    print_warning "Using NuGet package reference instead."
 fi
 
 # ─── Create temporary project ────────────────────────────────────────────────
@@ -601,29 +642,61 @@ if [ -f "$APPSETTINGS" ]; then
     print_info "Copied appsettings.json to sample project folder"
 fi
 
-# ─── Build and run ────────────────────────────────────────────────────────────
+# ─── Build the project ────────────────────────────────────────────────────────
 echo ""
-print_info "=== Running: $SAMPLE_NAME ==="
+print_info "=== Building: $SAMPLE_NAME ==="
 echo ""
 
 cd "$RUNNER_DIR"
 
 set +e
-dotnet run --project "$RUNNER_DIR/${SAMPLE_NAME}.csproj"
-EXIT_CODE=$?
+dotnet build "$RUNNER_DIR/${SAMPLE_NAME}.csproj"
+BUILD_EXIT_CODE=$?
 set -e
 
-echo ""
-if [ $EXIT_CODE -eq 0 ]; then
-    print_success "✓ Sample completed: $SAMPLE_NAME"
-else
-    print_error "✗ Sample failed with exit code: $EXIT_CODE"
+if [ $BUILD_EXIT_CODE -ne 0 ]; then
+    print_error "✗ Build failed with exit code: $BUILD_EXIT_CODE"
     echo ""
     print_warning "Troubleshooting:"
-    print_warning "  - Check that your endpoint and credentials are correct"
-    print_warning "  - Ensure model deployments are configured (run Sample00_UpdateDefaults)"
-    print_warning "  - Verify the Cognitive Services User role is assigned"
     print_warning "  - Review the generated code: $RUNNER_DIR/Program.cs"
+    print_warning "  - Delete .sample_runner/ and re-run to regenerate"
+    exit $BUILD_EXIT_CODE
 fi
 
-exit $EXIT_CODE
+print_success "✓ Build succeeded: $SAMPLE_NAME"
+
+# ─── Run (if --run flag) or print instructions ───────────────────────────────
+if [ "$RUN_AFTER_BUILD" = true ]; then
+    echo ""
+    print_info "=== Running: $SAMPLE_NAME ==="
+    echo ""
+
+    set +e
+    dotnet run --project "$RUNNER_DIR/${SAMPLE_NAME}.csproj" --no-build
+    EXIT_CODE=$?
+    set -e
+
+    echo ""
+    if [ $EXIT_CODE -eq 0 ]; then
+        print_success "✓ Sample completed: $SAMPLE_NAME"
+    else
+        print_error "✗ Sample failed with exit code: $EXIT_CODE"
+        echo ""
+        print_warning "Troubleshooting:"
+        print_warning "  - Check that your endpoint and credentials are correct"
+        print_warning "  - Ensure model deployments are configured (run Sample00_UpdateDefaults)"
+        print_warning "  - Verify the Cognitive Services User role is assigned"
+        print_warning "  - Review the generated code: $RUNNER_DIR/Program.cs"
+    fi
+    exit $EXIT_CODE
+else
+    echo ""
+    print_success "Sample project is ready! To run it:"
+    echo ""
+    print_cyan "  cd $RUNNER_DIR"
+    print_cyan "  dotnet run --project ${SAMPLE_NAME}.csproj"
+    echo ""
+    print_info "Project location: $RUNNER_DIR"
+    print_info "Generated code:   $RUNNER_DIR/Program.cs"
+    exit 0
+fi
