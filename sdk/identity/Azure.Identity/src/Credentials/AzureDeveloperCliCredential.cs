@@ -267,53 +267,36 @@ namespace Azure.Identity
         private static string ProcessCliErrorForDisplay(string rawCliError)
         {
             // Strategy: Try to parse azd JSON format {"type":"...","data":{"message":"..."}}, extract message, fallback to raw
-            string displayText = rawCliError;
-
             // Guard: skip processing if null/empty or doesn't start with brace
             string trimmedError = rawCliError?.TrimStart();
             bool skipParsing = string.IsNullOrEmpty(trimmedError) || trimmedError[0] != '{';
             if (skipParsing)
-                return displayText;
+                return rawCliError;
 
-            JsonDocument jsonDoc = null;
             try
             {
-                jsonDoc = JsonDocument.Parse(rawCliError);
+                using JsonDocument jsonDoc = JsonDocument.Parse(rawCliError);
 
-                if (jsonDoc != null)
+                if (jsonDoc == null)
+                    return rawCliError;
+
+                JsonElement root = jsonDoc.RootElement;
+                if (root.TryGetProperty("data", out JsonElement dataObj) &&
+                    dataObj.TryGetProperty("message", out JsonElement msgObj))
                 {
-                    JsonElement root = jsonDoc.RootElement;
-                    JsonElement dataObj;
-                    bool foundData = root.TryGetProperty("data", out dataObj);
-
-                    if (foundData)
+                    string msgText = msgObj.GetString();
+                    if (!string.IsNullOrWhiteSpace(msgText))
                     {
-                        JsonElement msgObj;
-                        bool foundMsg = dataObj.TryGetProperty("message", out msgObj);
-
-                        if (foundMsg)
-                        {
-                            string msgText = msgObj.GetString();
-                            bool hasContent = !string.IsNullOrWhiteSpace(msgText);
-
-                            if (hasContent)
-                            {
-                                displayText = msgText.Trim();
-                            }
-                        }
+                        return msgText.Trim();
                     }
                 }
             }
-            catch
+            catch (JsonException)
             {
                 // Parsing failed, keep original output
             }
-            finally
-            {
-                jsonDoc?.Dispose();
-            }
 
-            return displayText;
+            return rawCliError;
         }
     }
 }

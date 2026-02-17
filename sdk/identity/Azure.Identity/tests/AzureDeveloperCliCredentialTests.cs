@@ -345,8 +345,7 @@ namespace Azure.Identity.Tests
             // Simulates azd returning JSON error with nested message
             string rawJsonError = "{\"type\":\"consoleMessage\",\"timestamp\":\"2024-01-01T00:00:00Z\",\"data\":{\"message\":\"\\nERROR: fetching token: interactive login needed\"}}";
             var testProcess = new TestProcess { Error = rawJsonError };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -361,8 +360,7 @@ namespace Azure.Identity.Tests
         {
             string jsonWithWhitespace = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"  \\n\\nERROR: token expired  \\n  \"}}";
             var testProcess = new TestProcess { Error = jsonWithWhitespace };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -377,8 +375,7 @@ namespace Azure.Identity.Tests
         {
             string malformedJson = "{invalid json here";
             var testProcess = new TestProcess { Error = malformedJson };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -392,8 +389,7 @@ namespace Azure.Identity.Tests
         {
             string jsonWithoutMessage = "{\"type\":\"consoleMessage\",\"data\":{}}";
             var testProcess = new TestProcess { Error = jsonWithoutMessage };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -406,8 +402,7 @@ namespace Azure.Identity.Tests
         {
             string jsonWithEmptyMessage = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"\"}}";
             var testProcess = new TestProcess { Error = jsonWithEmptyMessage };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -420,8 +415,7 @@ namespace Azure.Identity.Tests
         {
             string plainError = "ERROR: authentication required";
             var testProcess = new TestProcess { Error = plainError };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -435,8 +429,7 @@ namespace Azure.Identity.Tests
             // When azd returns a JSON error about login, use azd's message directly instead of substituting
             string jsonLoginError = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"ERROR: no auth configuration found. Please run `azd auth login` to setup account\"}}";
             var testProcess = new TestProcess { Error = jsonLoginError };
-            AzureDeveloperCliCredential credential = InstrumentClient(
-                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var credential = CreateCredential(new TestProcessService(testProcess));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
