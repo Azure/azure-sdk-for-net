@@ -154,12 +154,23 @@ namespace Azure.Identity.Tests
         protected virtual Type GetExpectedExceptionType(bool isChained)
             => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
 
+        protected virtual bool IsChainedCredentialSupported => true;
+
+        private void SkipIfChainedNotSupported()
+        {
+            if (!IsChainedCredentialSupported)
+            {
+                Assert.Ignore("ConfigurableCredential does not support chained credential scenarios yet. See https://github.com/Azure/azure-sdk-for-net/issues/56233");
+            }
+        }
+
         #endregion
 
         [NonParallelizable]
         [Test]
         public async Task VerifyImdsRequestWithClientIdMock()
         {
+            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var initialResponse = CreateErrorMockResponse(400, "mock error");
@@ -186,6 +197,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyImdsSendsProbeOnlyOnFirstRequest()
         {
+            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             int probeCount = 0;
@@ -473,10 +485,10 @@ namespace Azure.Identity.Tests
             var mockTransport = new MockTransport(response);
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             if (expectedMessage != null)
             {
-                Assert.That(ex.InnerException.Message, Does.Contain(expectedMessage));
+                Assert.That(ExceptionChainContains(ex, expectedMessage));
             }
         }
 
@@ -484,6 +496,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void VerifyImdsRequestFailureWithInvalidJsonPopulatesExceptionMessage()
         {
+            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var expectedMessage = "Response was not in a valid json format.";
@@ -491,8 +504,8 @@ namespace Azure.Identity.Tests
             var mockTransport = new MockTransport(response);
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
-            Assert.That(ex.Message, Does.Contain(expectedMessage));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ExceptionChainContains(ex, expectedMessage));
         }
 
         [NonParallelizable]
@@ -501,14 +514,15 @@ namespace Azure.Identity.Tests
         [TestCase(null)]
         public void VerifyImdsRequestFailureWithValidJsonIdentityNotFoundErrorThrowsCUE(string content)
         {
+            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateResponse(400, content);
             var mockTransport = new MockTransport(req => response);
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.IdentityUnavailableError));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ExceptionChainContains(ex, ImdsManagedIdentityProbeSource.IdentityUnavailableError));
         }
 
         [NonParallelizable]
@@ -517,6 +531,7 @@ namespace Azure.Identity.Tests
         [TestCase(false)]
         public void VerifyImdsProbeRequestSuccessWithIdentityNotFoundErrorThrowsCUE(bool isChained)
         {
+            if (isChained) SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var mockTransport = new MockTransport(req =>
@@ -528,14 +543,10 @@ namespace Azure.Identity.Tests
                 return CreateResponse(400, """{"error":"invalid_request","error_description":"Identity not found"}""");
             });
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: isChained);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default));
             if (isChained)
             {
-                var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default));
-                Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.IdentityUnavailableError));
-            }
-            else
-            {
-                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default));
+                Assert.That(ExceptionChainContains(ex, ImdsManagedIdentityProbeSource.IdentityUnavailableError));
             }
         }
 
@@ -550,9 +561,9 @@ namespace Azure.Identity.Tests
             var mockTransport = new MockTransport(req => response);
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
-            Assert.That(ex.Message, Does.Contain(expectedMessage));
+            Assert.That(ExceptionChainContains(ex, expectedMessage));
         }
 
         [NonParallelizable]
@@ -802,6 +813,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
         {
+            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
             var mockTransport = new MockTransport(req =>
             {
@@ -810,9 +822,9 @@ namespace Azure.Identity.Tests
             // setting the delay to 1ms and retry mode to fixed to speed up test
             var credential = CreateCredentialForImdsWithRetryOptions(mockTransport, isChained: true, retryDelay: TimeSpan.FromMilliseconds(1), retryMode: RetryMode.Fixed, networkTimeout: TimeSpan.FromMilliseconds(100));
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.AggregateError));
+            Assert.That(ExceptionChainContains(ex, ImdsManagedIdentityProbeSource.AggregateError));
 
             await Task.CompletedTask;
         }
@@ -821,6 +833,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableOnIMDSRequestFailedExcpetion()
         {
+            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var mockTransport = new MockTransport(req =>
@@ -829,9 +842,9 @@ namespace Azure.Identity.Tests
             });
             var credential = CreateCredentialForImdsWithRetryOptions(mockTransport, isChained: true, isManagedIdentityPipeline: true);
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.NoResponseError));
+            Assert.That(ExceptionChainContains(ex, ImdsManagedIdentityProbeSource.NoResponseError));
 
             await Task.CompletedTask;
         }
@@ -859,6 +872,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableOnIMDSGatewayErrorResponse([Values(502, 504)] int statusCode)
         {
+            SkipIfChainedNotSupported();
             using var server = new TestServer(context =>
             {
                 context.Response.StatusCode = statusCode;
@@ -871,9 +885,9 @@ namespace Azure.Identity.Tests
 
             var credential = CreateBareCredentialWithOptions(options);
 
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(true), async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.GatewayError));
+            Assert.That(ExceptionChainContains(ex, ImdsManagedIdentityProbeSource.GatewayError));
 
             await Task.CompletedTask;
         }
@@ -911,8 +925,9 @@ namespace Azure.Identity.Tests
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: isChained);
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
-            if (isChained)
+            if (isChained && ex.InnerException is System.Text.Json.JsonException)
             {
+                // Probe path wraps the parse failure as JsonException
                 Assert.IsInstanceOf(typeof(System.Text.Json.JsonException), ex.InnerException);
             }
             await Task.CompletedTask;

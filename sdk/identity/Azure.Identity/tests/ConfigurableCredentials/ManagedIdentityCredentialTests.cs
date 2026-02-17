@@ -31,8 +31,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             string resourceId = null,
             string objectId = null,
             bool isForceRefreshEnabled = true,
-            bool isChained = false,
-            bool? UseManagedIdentityPipeline = null,
             TimeSpan? maxRetryDelay = null,
             TimeSpan? retryDelay = null,
             RetryMode? retryMode = null,
@@ -50,12 +48,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             if (objectId != null)
             {
                 config["MyClient:Credential:ManagedIdentityObjectId"] = objectId;
-            }
-            // Enable IMDS probe when chained, matching the base test's MIC construction.
-            config["MyClient:Credential:IsProbeEnabled"] = isChained.ToString();
-            if (UseManagedIdentityPipeline.HasValue)
-            {
-                config["MyClient:Credential:UseManagedIdentityPipeline"] = UseManagedIdentityPipeline.Value.ToString();
             }
 
             // Temporarily clear AZURE_CLIENT_ID so it doesn't interfere with config-based creation.
@@ -91,7 +83,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             bool isForceRefreshEnabled = true,
             Uri authorityHost = null)
         {
-            var credential = CreateConfiguredCredential(transport, clientId: clientId, isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
+            var credential = CreateConfiguredCredential(transport, clientId: clientId, isForceRefreshEnabled: isForceRefreshEnabled);
             return InstrumentClient(credential);
         }
 
@@ -109,7 +101,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
         {
             var credential = CreateConfiguredCredential(
                 options?.Transport as HttpPipelineTransport,
-                isChained: options?.IsChainedCredential ?? false,
                 maxRetryDelay: options?.Retry.MaxDelay,
                 retryDelay: options?.Retry.Delay,
                 retryMode: options?.Retry.Mode,
@@ -133,7 +124,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             string clientId = null,
             bool isChained = false,
             bool isForceRefreshEnabled = true,
-            bool UseManagedIdentityPipeline = false,
+            bool isManagedIdentityPipeline = false,
             TimeSpan? maxRetryDelay = null,
             TimeSpan? retryDelay = null,
             RetryMode? retryMode = null,
@@ -143,8 +134,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
                 transport,
                 clientId: clientId,
                 isForceRefreshEnabled: isForceRefreshEnabled,
-                isChained: isChained,
-                UseManagedIdentityPipeline: UseManagedIdentityPipeline,
                 maxRetryDelay: maxRetryDelay,
                 retryDelay: retryDelay,
                 retryMode: retryMode,
@@ -173,12 +162,10 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             return InstrumentClient(credential);
         }
 
-        // With IsProbeEnabled smuggled through config, the MIC inside DAC behaves
-        // identically to the base test's MIC. Since DAC with a single CUE source
-        // re-throws the original CUE (CreateAggregateException returns it directly),
-        // exception types match the base class behavior.
         protected override Type GetExpectedExceptionType(bool isChained)
-            => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
+            => typeof(AuthenticationFailedException);
+
+        protected override bool IsChainedCredentialSupported => false;
 
         #endregion
     }

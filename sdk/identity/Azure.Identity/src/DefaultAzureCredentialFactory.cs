@@ -245,7 +245,7 @@ namespace Azure.Identity
                 Constants.AzureDeveloperCliCredential => [CreateAzureDeveloperCliCredential()],
                 Constants.EnvironmentCredential => [CreateEnvironmentCredential()],
                 Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
-                Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential(Options.IsProbeEnabled ?? false)],
+                Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential(false)],
                 Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
                 Constants.BrokerCredential => [CreateBrokerCredential()],
                 _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}.{_troubleshootingMessage}")
@@ -289,7 +289,7 @@ namespace Azure.Identity
 
             var miOptions = new ManagedIdentityClientOptions
             {
-                Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: options.UseManagedIdentityPipeline ?? true),
+                Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
                 Options = options,
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,

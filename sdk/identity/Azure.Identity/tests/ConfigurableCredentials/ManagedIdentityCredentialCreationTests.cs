@@ -140,50 +140,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
 
         [Test]
         [NonParallelizable]
-        public void IsProbeEnabled_ConfigSetsTrue()
-        {
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:IsProbeEnabled"] = "true";
-
-                var mi = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<ManagedIdentityClient>(mi, "Client");
-                Assert.IsTrue(ReadField<bool>(client, "_isChainedCredential"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void IsProbeEnabled_ConfigSetsFalse()
-        {
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:IsProbeEnabled"] = "false";
-
-                var mi = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<ManagedIdentityClient>(mi, "Client");
-                Assert.IsFalse(ReadField<bool>(client, "_isChainedCredential"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void IsProbeEnabled_DefaultsFalse()
-        {
-            using (new TestEnvVar(AllNulledEnvVars()))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-
-                var mi = GetUnderlying(CreateFromConfig(config));
-                var client = ReadProperty<ManagedIdentityClient>(mi, "Client");
-                Assert.IsFalse(ReadField<bool>(client, "_isChainedCredential"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
         public void IsUnsafeSupportLoggingEnabled_ConfigSetsTrue()
         {
             // When creating via ConfigurableCredential (DefaultAzureCredential path),

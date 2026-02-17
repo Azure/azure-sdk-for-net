@@ -124,16 +124,6 @@ namespace Azure.Identity
             {
                 IsAzureProxyEnabled = isAzureProxyEnabled;
             }
-
-            if (bool.TryParse(section[nameof(IsProbeEnabled)], out bool isProbeEnabled))
-            {
-                IsProbeEnabled = isProbeEnabled;
-            }
-
-            if (bool.TryParse(section[nameof(UseManagedIdentityPipeline)], out bool useMiPipeline))
-            {
-                UseManagedIdentityPipeline = useMiPipeline;
-            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -353,20 +343,6 @@ namespace Azure.Identity
         internal string ManagedIdentityObjectId { get; set; }
 
         /// <summary>
-        /// Specifies whether the IMDS probe request should be enabled when using a managed identity credential
-        /// via <see cref="ConfigurableCredential"/>. When <c>null</c> (default), the probe is disabled for
-        /// single-credential selection and enabled when MIC is part of the default credential chain.
-        /// </summary>
-        internal bool? IsProbeEnabled { get; set; }
-
-        /// <summary>
-        /// Specifies whether the managed identity pipeline (with IMDS-specific retry policy) should be used.
-        /// When <c>null</c> (default), the standard pipeline is used for single-credential selection
-        /// and the MI pipeline is used when MIC is part of the default credential chain.
-        /// </summary>
-        internal bool? UseManagedIdentityPipeline { get; set; }
-
-        /// <summary>
         /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure PowerShell.
         /// </summary>
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
@@ -502,8 +478,6 @@ namespace Azure.Identity
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
-                dacClone.IsProbeEnabled = IsProbeEnabled;
-                dacClone.UseManagedIdentityPipeline = UseManagedIdentityPipeline;
             }
 
             return clone;
