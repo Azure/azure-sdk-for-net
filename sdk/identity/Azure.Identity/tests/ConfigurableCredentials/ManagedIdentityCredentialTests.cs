@@ -39,15 +39,18 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             IConfiguration config = _helper.GetConfiguration();
             if (clientId != null)
             {
-                config["MyClient:Credential:ManagedIdentityClientId"] = clientId;
+                config["MyClient:Credential:ManagedIdentityIdType"] = "ClientId";
+                config["MyClient:Credential:ManagedIdentityId"] = clientId;
             }
             if (resourceId != null)
             {
-                config["MyClient:Credential:ManagedIdentityResourceId"] = resourceId;
+                config["MyClient:Credential:ManagedIdentityIdType"] = "ResourceId";
+                config["MyClient:Credential:ManagedIdentityId"] = resourceId;
             }
             if (objectId != null)
             {
-                config["MyClient:Credential:ManagedIdentityObjectId"] = objectId;
+                config["MyClient:Credential:ManagedIdentityIdType"] = "ObjectId";
+                config["MyClient:Credential:ManagedIdentityId"] = objectId;
             }
 
             // Temporarily clear AZURE_CLIENT_ID so it doesn't interfere with config-based creation.

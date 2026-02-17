@@ -296,7 +296,19 @@ namespace Azure.Identity
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
             };
 
-            if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
+            // ManagedIdentityIdType/ManagedIdentityId (new config properties) take priority
+            if (!string.IsNullOrEmpty(options.ManagedIdentityIdType))
+            {
+                miOptions.ManagedIdentityId = options.ManagedIdentityIdType switch
+                {
+                    "SystemAssigned" => ManagedIdentityId.SystemAssigned,
+                    "ClientId" => ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityId),
+                    "ResourceId" => ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(options.ManagedIdentityId)),
+                    "ObjectId" => ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityId),
+                    _ => throw new ArgumentException($"Invalid {nameof(options.ManagedIdentityIdType)} value: '{options.ManagedIdentityIdType}'. Valid values are 'SystemAssigned', 'ClientId', 'ResourceId', 'ObjectId'."),
+                };
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityClientId);
             }

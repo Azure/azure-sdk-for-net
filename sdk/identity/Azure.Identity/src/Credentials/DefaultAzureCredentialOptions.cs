@@ -105,6 +105,16 @@ namespace Azure.Identity
                 ManagedIdentityObjectId = managedIdentityObjectId;
             }
 
+            if (section[nameof(ManagedIdentityIdType)] is string managedIdentityIdType)
+            {
+                ManagedIdentityIdType = managedIdentityIdType;
+            }
+
+            if (section[nameof(ManagedIdentityId)] is string managedIdentityId)
+            {
+                ManagedIdentityId = managedIdentityId;
+            }
+
             if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
             {
                 CredentialProcessTimeout = credentialProcessTimeout;
@@ -343,6 +353,17 @@ namespace Azure.Identity
         internal string ManagedIdentityObjectId { get; set; }
 
         /// <summary>
+        /// Specifies the type of managed identity to use. Valid values are "SystemAssigned", "ClientId", "ResourceId", and "ObjectId".
+        /// When set to a user-assigned type, <see cref="ManagedIdentityId"/> must also be specified.
+        /// </summary>
+        internal string ManagedIdentityIdType { get; set; }
+
+        /// <summary>
+        /// Specifies the ID of the managed identity when <see cref="ManagedIdentityIdType"/> is set to "ClientId", "ResourceId", or "ObjectId".
+        /// </summary>
+        internal string ManagedIdentityId { get; set; }
+
+        /// <summary>
         /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure PowerShell.
         /// </summary>
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
@@ -456,6 +477,8 @@ namespace Azure.Identity
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
                 dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
+                dacClone.ManagedIdentityIdType = ManagedIdentityIdType;
+                dacClone.ManagedIdentityId = ManagedIdentityId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
