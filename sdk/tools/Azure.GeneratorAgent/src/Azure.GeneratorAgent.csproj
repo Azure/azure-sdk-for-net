@@ -11,9 +11,11 @@
     <PackAsTool>true</PackAsTool>
     <Version>1.0.0-beta.1</Version>
     <PackageDescription>Azure SDK Code Generation CLI tool for automated SDK workflows</PackageDescription>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GitHub.Copilot.SDK" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Http" />

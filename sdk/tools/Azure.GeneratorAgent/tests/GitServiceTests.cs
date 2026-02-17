@@ -1,22 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net;
+using System.Text;
 using Azure.GeneratorAgent;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using System.Net;
-using System.Text;
 
 namespace Azure.GeneratorAgent.Tests;
 
 public class GitServiceTests
 {
     [Test]
-    public async Task GetLatestCommitAsync_WithValidRepository_ReturnsCommitSha()
+    public async Task GetLatestCommitWithPathAsync_WithValidRepository_ReturnsCommitInfo()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
+        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object);
         var httpClientMock = CreateMockHttpClient("""
             [
                 {
@@ -28,17 +29,20 @@ public class GitServiceTests
             ]
             """);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock);
+        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object);
 
-        var commitSha = await gitService.GetLatestCommitAsync("owner", "repo");
+        var result = await gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "some/path");
 
-        Assert.That(commitSha, Is.EqualTo("abc123def456789012345678901234567890abcd"));
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Value.CommitSha, Is.EqualTo("abc123def456789012345678901234567890abcd"));
+        Assert.That(result.Value.ResolvedPath, Is.EqualTo("some/path"));
     }
 
     [Test]
-    public async Task GetLatestCommitAsync_WithPath_ReturnsCommitSha()
+    public async Task GetLatestCommitWithPathAsync_WithPath_ReturnsCommitInfo()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
+        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object);
         var httpClientMock = CreateMockHttpClient("""
             [
                 {
@@ -50,52 +54,60 @@ public class GitServiceTests
             ]
             """);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock);
+        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object);
 
-        var commitSha = await gitService.GetLatestCommitAsync("owner", "repo", "sdk/some-service");
+        var result = await gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "sdk/some-service");
 
-        Assert.That(commitSha, Is.EqualTo("def456abc789012345678901234567890abcdef1"));
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Value.CommitSha, Is.EqualTo("def456abc789012345678901234567890abcdef1"));
+        Assert.That(result.Value.ResolvedPath, Is.EqualTo("sdk/some-service"));
     }
 
     [Test]
-    public async Task GetLatestCommitAsync_WithFailedRequest_ThrowsInvalidOperationException()
+    public async Task GetLatestCommitWithPathAsync_WithFailedRequest_ThrowsInvalidOperationException()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
+        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object);
         var httpClientMock = CreateMockHttpClient("", HttpStatusCode.NotFound);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock);
+        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object);
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.GetLatestCommitAsync("owner", "repo"));
+            gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path"));
 
-        Assert.That(ex!.Message, Does.Contain("Failed to fetch commits from GitHub API"));
+        Assert.That(ex!.Message, Does.Contain("No commits found in repository"));
     }
 
     [Test]
-    public async Task GetLatestCommitAsync_WithEmptyResponse_ThrowsInvalidOperationException()
+    public async Task GetLatestCommitWithPathAsync_WithEmptyResponse_ThrowsInvalidOperationException()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
+        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object);
         var httpClientMock = CreateMockHttpClient("[]");
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock);
+        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object);
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.GetLatestCommitAsync("owner", "repo"));
+            gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "path"));
 
         Assert.That(ex!.Message, Does.Contain("No commits found"));
     }
 
     [Test]
-    public void GetLatestCommitAsync_WithOversizedResponse_ThrowsInvalidOperationException()
+    public void GetLatestCommitWithPathAsync_WithOversizedResponse_ThrowsInvalidOperationException()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
-        var largeResponse = new string('x', 1_000_001); // Exceeds 1MB limit
+        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object);
+
+        // Create a large valid JSON response that exceeds 1MB limit
+        var largeResponse = '[' + new string(' ', 1_000_000) + ']'; // Creates a 1,000,002 character response
+
         var httpClientMock = CreateMockHttpClient(largeResponse);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock);
+        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object);
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.GetLatestCommitAsync("owner", "repo"));
+            gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "some/path"));
 
         Assert.That(ex!.Message, Does.Contain("API response exceeded maximum allowed size"));
     }

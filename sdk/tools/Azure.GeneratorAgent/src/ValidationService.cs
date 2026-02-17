@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.Logging;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent;
 
@@ -13,13 +13,13 @@ public sealed class ValidationService
 {
     private readonly ILogger<ValidationService> _logger;
 
-    // Pre-compiled regex for path validation (performance optimization)
+    // Pre-compiled regex for path validation
     private static readonly Regex InvalidPathCharsRegex = new(
         @"[<>:""|?*]",
         RegexOptions.Compiled | RegexOptions.CultureInvariant,
         TimeSpan.FromMilliseconds(100));
 
-    // Common dangerous path patterns (faster than regex for simple checks)
+    // Common dangerous path patterns
     private static readonly string[] DangerousPathPatterns = { "..", "~" };
 
     /// <summary>
@@ -38,52 +38,84 @@ public sealed class ValidationService
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Absolute path to the validated SDK directory.</returns>
     /// <exception cref="ArgumentException">Thrown when validation fails.</exception>
+    /// <exception cref="DirectoryNotFoundException">Thrown when directory is not found.</exception>
+    /// <exception cref="FileNotFoundException">Thrown when required files are missing.</exception>
     public Task<string> ValidateAsync(string sdkPath, CancellationToken cancellationToken = default)
     {
-        _logger.LogDebug("Validating SDK path: {SdkPath}", sdkPath);
-
         if (string.IsNullOrWhiteSpace(sdkPath))
         {
-            throw new ArgumentException("SDK path cannot be empty", nameof(sdkPath));
+            var message = "SDK path cannot be empty";
+            _logger.LogError(message);
+            throw new ArgumentException(message, nameof(sdkPath));
         }
 
-        var absolutePath = Path.GetFullPath(sdkPath);
+        _logger.LogDebug("Validating SDK path: {SdkPath}", sdkPath);
 
-        if (!Directory.Exists(absolutePath))
+        try
         {
-            throw new DirectoryNotFoundException($"Directory not found: {absolutePath}");
-        }
+            var absolutePath = Path.GetFullPath(sdkPath);
+            _logger.LogDebug("Resolved absolute path: {AbsolutePath}", absolutePath);
 
-        var srcPath = Path.Combine(absolutePath, "src");
-        if (!Directory.Exists(srcPath))
+            if (!Directory.Exists(absolutePath))
+            {
+                var message = $"SDK directory not found: {absolutePath}";
+                _logger.LogError(message);
+                throw new DirectoryNotFoundException(message);
+            }
+
+            var srcPath = Path.Combine(absolutePath, "src");
+            if (!Directory.Exists(srcPath))
+            {
+                var message = $"Required 'src' directory not found in SDK path: {absolutePath}";
+                _logger.LogError(message);
+                throw new DirectoryNotFoundException(message);
+            }
+
+            var csprojFiles = Directory.GetFiles(srcPath, "*.csproj", SearchOption.TopDirectoryOnly);
+            if (csprojFiles.Length == 0)
+            {
+                var message = $"No .csproj files found in src directory: {srcPath}";
+                _logger.LogError(message);
+                throw new FileNotFoundException(message);
+            }
+
+            _logger.LogInformation("SDK path validation successful: {Path} (found {ProjectCount} .csproj files)",
+                absolutePath, csprojFiles.Length);
+            return Task.FromResult(absolutePath);
+        }
+        catch (Exception ex) when (ex is not ArgumentException and not DirectoryNotFoundException and not FileNotFoundException)
         {
-            throw new DirectoryNotFoundException($"Required 'src' directory missing: {absolutePath}");
+            var message = $"Unexpected error during SDK path validation: {ex.Message}";
+            _logger.LogError(ex, message);
+            throw new InvalidOperationException(message, ex);
         }
-
-        var csprojFiles = Directory.GetFiles(srcPath, "*.csproj", SearchOption.TopDirectoryOnly);
-        if (csprojFiles.Length == 0)
-        {
-            throw new FileNotFoundException($"No .csproj files found in: {srcPath}");
-        }
-
-        _logger.LogInformation("SDK path validated successfully: {Path}", absolutePath);
-        return Task.FromResult(absolutePath);
     }
 
     /// <summary>
     /// Validates that tsp-location.yaml exists in the SDK directory.
     /// </summary>
     /// <param name="tspLocationPath">Path to the tsp-location.yaml file.</param>
+    /// <exception cref="ArgumentException">Thrown when path is null or empty.</exception>
     /// <exception cref="FileNotFoundException">Thrown when tsp-location.yaml is not found.</exception>
     public void ValidateTspLocationFile(string tspLocationPath)
     {
-        if (!File.Exists(tspLocationPath))
+        if (string.IsNullOrEmpty(tspLocationPath))
         {
-            _logger.LogError("tsp-location.yaml not found at path: {FilePath}", tspLocationPath);
-            throw new FileNotFoundException($"tsp-location.yaml not found at path: {tspLocationPath}");
+            var message = "tsp-location.yaml path cannot be empty";
+            _logger.LogError(message);
+            throw new ArgumentException(message, nameof(tspLocationPath));
         }
 
-        _logger.LogDebug("tsp-location.yaml found at: {FilePath}", tspLocationPath);
+        _logger.LogDebug("Validating tsp-location.yaml file: {FilePath}", tspLocationPath);
+
+        if (!File.Exists(tspLocationPath))
+        {
+            var message = $"tsp-location.yaml not found at path: {tspLocationPath}";
+            _logger.LogError(message);
+            throw new FileNotFoundException(message);
+        }
+
+        _logger.LogDebug("tsp-location.yaml validation successful: {FilePath}", tspLocationPath);
     }
 
     /// <summary>
@@ -95,32 +127,52 @@ public sealed class ValidationService
     {
         if (string.IsNullOrEmpty(path))
         {
+            _logger.LogDebug("Repository path is null or empty - validation skipped");
             return;
         }
 
-        foreach (var dangerousPattern in DangerousPathPatterns)
+        _logger.LogDebug("Validating repository path: {Path}", path);
+
+        try
         {
-            if (path.Contains(dangerousPattern, StringComparison.Ordinal))
+            foreach (var dangerousPattern in DangerousPathPatterns)
             {
-                throw new ArgumentException($"Path traversal pattern '{dangerousPattern}' detected in repository path", nameof(path));
+                if (path.Contains(dangerousPattern, StringComparison.Ordinal))
+                {
+                    var message = $"Path traversal pattern '{dangerousPattern}' detected in repository path: {path}";
+                    _logger.LogError(message);
+                    throw new ArgumentException(message, nameof(path));
+                }
             }
-        }
 
-        if (Path.IsPathRooted(path))
+            if (Path.IsPathRooted(path))
+            {
+                var message = $"Absolute paths are not allowed for repository paths: {path}";
+                _logger.LogError(message);
+                throw new ArgumentException(message, nameof(path));
+            }
+
+            if (path.Length > 500)
+            {
+                var message = $"Repository path exceeds maximum length of 500 characters: {path.Length}";
+                _logger.LogError(message);
+                throw new ArgumentException(message, nameof(path));
+            }
+
+            if (InvalidPathCharsRegex.IsMatch(path))
+            {
+                var message = $"Repository path contains invalid characters: {path}";
+                _logger.LogError(message);
+                throw new ArgumentException(message, nameof(path));
+            }
+
+            _logger.LogDebug("Repository path validation successful: {Path}", path);
+        }
+        catch (RegexMatchTimeoutException ex)
         {
-            throw new ArgumentException("Absolute paths are not allowed", nameof(path));
+            var message = $"Timeout occurred while validating repository path: {path}";
+            _logger.LogError(ex, message);
+            throw new ArgumentException(message, nameof(path), ex);
         }
-
-        if (path.Length > 500)
-        {
-            throw new ArgumentException("Repository path exceeds maximum length", nameof(path));
-        }
-
-        if (InvalidPathCharsRegex.IsMatch(path))
-        {
-            throw new ArgumentException("Repository path contains invalid characters", nameof(path));
-        }
-
-        _logger.LogDebug("Repository path validated: {Path}", path);
     }
 }

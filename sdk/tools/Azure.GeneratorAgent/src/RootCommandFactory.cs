@@ -16,12 +16,14 @@ public class RootCommandFactory
     private const string DefaultSpecsRepository = "azure-rest-api-specs";
     private const string TspLocationFileName = "tsp-location.yaml";
     private const string CommitField = "commit";
+    private const string DirectoryField = "directory";
     private const string EmitterPackageJsonPathField = "emitterPackageJsonPath";
     private const string DefaultEmitterPackageJsonPath = "\"eng/azure-typespec-http-client-csharp-emitter-package.json\"";
 
     private readonly ValidationService _validator;
     private readonly GitService _gitService;
     private readonly FileService _fileService;
+    private readonly CopilotService _copilotService;
     private readonly ILogger<RootCommandFactory> _logger;
 
     /// <summary>
@@ -30,30 +32,33 @@ public class RootCommandFactory
     /// <param name="validator">Validation service.</param>
     /// <param name="gitService">Git service.</param>
     /// <param name="fileService">File service.</param>
+    /// <param name="copilotService">Copilot service.</param>
     /// <param name="logger">Logger instance.</param>
-    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, ILogger<RootCommandFactory> logger)
+    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, CopilotService copilotService, ILogger<RootCommandFactory> logger)
     {
         _validator = validator;
         _gitService = gitService;
         _fileService = fileService;
+        _copilotService = copilotService;
         _logger = logger;
     }
 
     /// <summary>
     /// Creates the root command with all subcommands.
     /// </summary>
+    /// <param name="cancellationToken">Application-wide cancellation token.</param>
     /// <returns>Configured root command.</returns>
-    public RootCommand CreateRootCommand()
+    public RootCommand CreateRootCommand(CancellationToken cancellationToken = default)
     {
         var rootCommand = new RootCommand("Azure SDK Code Generation CLI");
 
-        rootCommand.Add(CreateGenerateCommand());
-        rootCommand.Add(CreateMigrateCommand());
+        rootCommand.Add(CreateGenerateCommand(cancellationToken));
+        rootCommand.Add(CreateMigrateCommand(cancellationToken));
 
         return rootCommand;
     }
 
-    private Command CreateGenerateCommand()
+    private Command CreateGenerateCommand(CancellationToken appCancellationToken)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
         var generateCommand = new Command("generate", "Generate code for Azure SDK");
@@ -62,24 +67,35 @@ public class RootCommandFactory
         generateCommand.SetAction(async (parseResult) =>
         {
             var sdkPath = parseResult.GetValue(sdkPathArgument);
-            _logger.LogInformation("Generate command called with SDK path: {SdkPath}", sdkPath);
+            _logger.LogInformation("Starting generate command for SDK path: {SdkPath}", sdkPath);
 
             try
             {
                 // TODO: Implement generate workflow
-                _logger.LogInformation("Generate workflow - TODO");
+                _logger.LogInformation("Generate workflow - TODO: Implementation pending");
+                Environment.ExitCode = 0;
+            }
+            catch (OperationCanceledException) when (appCancellationToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Generate command was cancelled by user (Ctrl+C)");
+                Environment.ExitCode = 1;
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("Generate command was cancelled");
+                Environment.ExitCode = 1;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Generate command failed");
-                Environment.Exit(1);
+                _logger.LogError(ex, "Generate command failed for SDK path: {SdkPath}", sdkPath);
+                Environment.ExitCode = 1;
             }
         });
 
         return generateCommand;
     }
 
-    private Command CreateMigrateCommand()
+    private Command CreateMigrateCommand(CancellationToken appCancellationToken)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
         var migrateCommand = new Command("migrate", "Migrate existing code to new Azure SDK");
@@ -88,41 +104,90 @@ public class RootCommandFactory
         migrateCommand.SetAction(async (parseResult) =>
         {
             var sdkPath = parseResult.GetValue(sdkPathArgument);
-            _logger.LogInformation("Migrate command called with SDK path: {SdkPath}", sdkPath);
+            _logger.LogInformation("Starting migrate command for SDK path: {SdkPath}", sdkPath);
+
+            // Create command-specific timeout linked to app cancellation
+            using var commandCts = CancellationTokenSource.CreateLinkedTokenSource(appCancellationToken);
+            commandCts.CancelAfter(TimeSpan.FromMinutes(10));
+            var cancellationToken = commandCts.Token;
 
             try
             {
                 // Step 1: Validate SDK path
-                var validatedPath = await _validator.ValidateAsync(sdkPath!, CancellationToken.None).ConfigureAwait(false);
-                _logger.LogInformation("Step 1: SDK path validated: {Path}", validatedPath);
+                _logger.LogDebug("Step 1: Validating SDK path");
+                var validatedPath = await _validator.ValidateAsync(sdkPath!, cancellationToken).ConfigureAwait(false);
 
                 // Step 2: Validate tsp-location.yaml
+                _logger.LogDebug("Step 2: Validating tsp-location.yaml file");
                 var tspLocationPath = Path.Combine(validatedPath, TspLocationFileName);
                 _validator.ValidateTspLocationFile(tspLocationPath);
 
-                // Step 3: Get directory from tsp-location.yaml an validate it
-                var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, CancellationToken.None).ConfigureAwait(false);
+                // Step 3: Initialize Copilot
+                _logger.LogDebug("Step 3: Initializing Copilot service");
+                await _copilotService.InitializeCopilotAsync(validatedPath, cancellationToken).ConfigureAwait(false);
+
+                // Step 4: Get directory from tsp-location.yaml and validate it
+                _logger.LogDebug("Step 4: Reading and validating directory field");
+                var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
                 _validator.ValidateRepositoryPath(relativeDirectory);
 
-                // Step 4: Get latest commit id
-                var commitSha = await _gitService.GetLatestCommitAsync(DefaultOwner, DefaultSpecsRepository, relativeDirectory, CancellationToken.None).ConfigureAwait(false);
-                _logger.LogInformation("Latest commit ID: {CommitSha}", commitSha);
+                // Step 5: Get latest commit id and resolved path
+                _logger.LogDebug("Step 5: Getting latest commit information");
+                var commitResult = await _gitService.GetLatestCommitWithPathAsync(DefaultOwner, DefaultSpecsRepository, validatedPath, relativeDirectory, cancellationToken).ConfigureAwait(false);
 
-                // Step 5: Update the commit ID in tsp-location.yaml
-                if (!string.IsNullOrEmpty(commitSha))
+                if (!commitResult.HasValue)
                 {
-                    await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, CancellationToken.None).ConfigureAwait(false);
-                    _logger.LogInformation("Updated commit ID in tsp-location.yaml");
+                    _logger.LogError("Unable to retrieve commit information for repository path: {Path}", relativeDirectory);
+                    Environment.ExitCode = 1;
+                    return;
                 }
 
-                // Step 6: Update emitterPackageJsonPath in tsp-location.yaml
-                await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, CancellationToken.None).ConfigureAwait(false);
-                _logger.LogInformation("Updated emitterPackageJsonPath in tsp-location.yaml");
+                var (commitSha, resolvedPath) = commitResult.Value;
+                _logger.LogInformation("Retrieved latest commit: {CommitSha} for path: {ResolvedPath}", commitSha, resolvedPath);
+
+                // Step 6: Update the commit ID, directory, and emitterPackageJsonPath in tsp-location.yaml
+                _logger.LogDebug("Step 6: Updating tsp-location.yaml fields");
+                await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, cancellationToken).ConfigureAwait(false);
+                await _fileService.WriteFieldAsync(tspLocationPath, DirectoryField, resolvedPath, cancellationToken).ConfigureAwait(false);
+                await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
+
+                _logger.LogInformation("Successfully completed migration for SDK path: {SdkPath}", sdkPath);
+                Environment.ExitCode = 0;
+            }
+            catch (OperationCanceledException) when (appCancellationToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Migrate command was cancelled by user (Ctrl+C)");
+                Environment.ExitCode = 1;
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                _logger.LogWarning("Migrate command timed out after 10 minutes");
+                Environment.ExitCode = 1;
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError("Invalid argument provided to migrate command: {Message}", ex.Message);
+                Environment.ExitCode = 1;
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                _logger.LogError("Directory not found: {Message}", ex.Message);
+                Environment.ExitCode = 1;
+            }
+            catch (FileNotFoundException ex)
+            {
+                _logger.LogError("Required file not found: {Message}", ex.Message);
+                Environment.ExitCode = 1;
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError("Migration operation failed: {Message}", ex.Message);
+                Environment.ExitCode = 1;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Migrate command failed");
-                Environment.Exit(1);
+                _logger.LogError(ex, "Unexpected error during migration for SDK path: {SdkPath}", sdkPath);
+                Environment.ExitCode = 1;
             }
         });
 

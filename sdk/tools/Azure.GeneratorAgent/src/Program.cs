@@ -22,8 +22,16 @@ public static class GeneratorAgentProgram
     /// <returns>Exit code.</returns>
     public static async Task<int> Main(string[] args)
     {
+        ILogger? logger = null;
         try
         {
+            using var appCts = new CancellationTokenSource();
+            Console.CancelKeyPress += (_, e) =>
+            {
+                e.Cancel = true;
+                appCts.Cancel();
+            };
+
             var builder = Host.CreateApplicationBuilder(args);
 
             // Configure logging
@@ -35,19 +43,40 @@ public static class GeneratorAgentProgram
 
             using var host = builder.Build();
             var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
-            var logger = loggerFactory.CreateLogger(typeof(GeneratorAgentProgram).FullName!);
+            logger = loggerFactory.CreateLogger(typeof(GeneratorAgentProgram).FullName!);
 
             logger.LogInformation("Starting Azure SDK Code Generation CLI");
 
             var commandFactory = host.Services.GetRequiredService<RootCommandFactory>();
-            var rootCommand = commandFactory.CreateRootCommand();
+            var rootCommand = commandFactory.CreateRootCommand(appCts.Token);
 
             var parseResult = rootCommand.Parse(args);
-            return await parseResult.InvokeAsync().ConfigureAwait(false);
+            var exitCode = await parseResult.InvokeAsync().ConfigureAwait(false);
+
+            logger.LogInformation("Azure SDK Code Generation CLI completed with exit code: {ExitCode}", exitCode);
+            return exitCode;
+        }
+        catch (OperationCanceledException) when (args.Contains("--help") || args.Contains("-h"))
+        {
+            // Help was requested - this is normal, not an error
+            return 0;
+        }
+        catch (OperationCanceledException)
+        {
+            logger?.LogInformation("Application was cancelled by user (Ctrl+C)");
+            return 1;
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"Fatal error during startup: {ex.Message}");
+            if (logger != null)
+            {
+                logger.LogError(ex, "Fatal error during application startup");
+            }
+            else
+            {
+                // Fallback if logger isn't available yet
+                Console.Error.WriteLine($"Fatal error during startup: {ex.Message}");
+            }
             return 1;
         }
     }

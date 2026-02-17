@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent;
@@ -47,9 +48,11 @@ public sealed class FileService
 
             // Parse directory field directly using simple string search
             string? value = null;
-            foreach (var line in yamlContent.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries))
+            foreach (var rawLine in yamlContent.Split('\n'))
             {
+                var line = rawLine.TrimEnd('\r');
                 var trimmedLine = line.TrimStart();
+
                 if (trimmedLine.StartsWith(DirectoryFieldName, StringComparison.Ordinal))
                 {
                     var colonIndex = trimmedLine.IndexOf(':', StringComparison.Ordinal);
@@ -65,7 +68,7 @@ public sealed class FileService
             _logger.LogDebug("Successfully read directory field with value: {Value}", value);
             return value;
         }
-        catch (Exception ex) when (ex is not ArgumentException)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to read directory field from tsp-location.yaml at {FilePath}", tspLocationPath);
             throw new InvalidOperationException($"Failed to read tsp-location.yaml at {tspLocationPath}: {ex.Message}", ex);
@@ -111,7 +114,7 @@ public sealed class FileService
             _logger.LogInformation("Successfully updated field {Field} to {NewValue} in {FilePath}",
                 field, value, tspLocationPath);
         }
-        catch (Exception ex) when (ex is not ArgumentException)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to write field {Field} to tsp-location.yaml at {FilePath}", field, tspLocationPath);
             throw new InvalidOperationException($"Failed to write tsp-location.yaml at {tspLocationPath}: {ex.Message}", ex);
@@ -128,16 +131,21 @@ public sealed class FileService
     private static string UpdateYamlField(string yamlContent, string field, string newValue)
     {
         var replacement = $"{field}: {newValue}";
-        var lines = yamlContent.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+        var lines = yamlContent.Split('\n');
         var fieldPattern = $"{field}:";
         var fieldUpdated = false;
 
         for (int i = 0; i < lines.Length; i++)
         {
-            var trimmedLine = lines[i].TrimStart();
-            if (trimmedLine.StartsWith(fieldPattern, StringComparison.Ordinal))
+            var originalLine = lines[i].TrimEnd('\r');
+            var trimmedLine = originalLine.TrimStart();
+
+            if (!string.IsNullOrEmpty(trimmedLine) && trimmedLine.StartsWith(fieldPattern, StringComparison.Ordinal))
             {
-                lines[i] = replacement;
+                // Preserve original indentation
+                var indentLength = originalLine.Length - trimmedLine.Length;
+                var indent = indentLength > 0 ? originalLine.Substring(0, indentLength) : string.Empty;
+                lines[i] = indent + replacement;
                 fieldUpdated = true;
                 break;
             }
@@ -145,10 +153,11 @@ public sealed class FileService
 
         if (!fieldUpdated)
         {
-            return yamlContent.TrimEnd() + Environment.NewLine + replacement + Environment.NewLine;
+            return yamlContent.TrimEnd() + "\n" + replacement + "\n";
         }
 
-        return string.Join(Environment.NewLine, lines) + Environment.NewLine;
+        var lineEnding = yamlContent.Contains("\r\n") ? "\r\n" : "\n";
+        return string.Join(lineEnding, lines.Select(line => line.TrimEnd('\r'))) + lineEnding;
     }
 
     /// <summary>

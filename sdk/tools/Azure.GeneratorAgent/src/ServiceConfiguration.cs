@@ -4,6 +4,7 @@
 using Azure.GeneratorAgent.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent.Configuration;
 
@@ -20,9 +21,11 @@ public static class ServiceConfiguration
     /// <returns>Configured service collection.</returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Configuration
         services.AddSingleton(configuration);
 
-        services.AddHttpClient<GitService>(client =>
+        // HTTP Client with Azure SDK patterns
+        services.AddHttpClient<GitService>("GitService", (serviceProvider, client) =>
         {
             client.Timeout = TimeSpan.FromSeconds(30);
             client.DefaultRequestHeaders.UserAgent.ParseAdd("Azure-GeneratorAgent/1.0");
@@ -31,11 +34,12 @@ public static class ServiceConfiguration
             client.MaxResponseContentBufferSize = 10 * 1024 * 1024;
         });
 
-        services.AddTransient<RootCommandFactory>();
-
+        // Services - Azure SDK preferred lifetimes
         services.AddSingleton<ValidationService>();
-        services.AddSingleton<GitService>();
         services.AddSingleton<FileService>();
+        services.AddSingleton<CopilotService>(); // Thread-safe singleton - no mutable state
+        // GitService is registered by AddHttpClient<GitService> above
+        services.AddTransient<RootCommandFactory>(); // Factory pattern
 
         return services;
     }
