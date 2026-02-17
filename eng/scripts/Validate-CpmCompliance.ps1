@@ -17,7 +17,19 @@
       6. Override files with incorrect casing (must be *.Packages.props)
 
     Designed to run in CI alongside the MSBuild enforcement target in
-    Directory.Build.targets, providing defense-in-depth.
+    eng/Directory.Build.Common.targets, providing defense-in-depth.
+
+    When run without parameters, scans the entire repository. Use
+    -ServiceDirectory or -PackagePath to scope checks to a specific area.
+
+.PARAMETER ServiceDirectory
+    Scope checks to a specific service directory under sdk/ (e.g. 'core',
+    'storage'). Checks 1-5 scan only within sdk/<ServiceDirectory>.
+    Check 6 (override casing) always scans the central overrides directory.
+
+.PARAMETER PackagePath
+    Scope checks to a specific package path (e.g. 'sdk/core/Azure.Core').
+    Takes precedence over ServiceDirectory if both are provided.
 
 .PARAMETER RepoRoot
     Root of the azure-sdk-for-net repository. Defaults to two directories
@@ -25,11 +37,19 @@
 
 .EXAMPLE
     .\Validate-CpmCompliance.ps1
+    .\Validate-CpmCompliance.ps1 -ServiceDirectory "storage"
+    .\Validate-CpmCompliance.ps1 -PackagePath "sdk/core/Azure.Core"
     .\Validate-CpmCompliance.ps1 -RepoRoot "C:\repos\azure-sdk-for-net"
 #>
 
 [CmdletBinding()]
 param (
+    [Parameter(Position=0)]
+    [string] $ServiceDirectory,
+
+    [Parameter()]
+    [string] $PackagePath,
+
     [Parameter()]
     [string] $RepoRoot
 )
@@ -42,6 +62,30 @@ if (-not $RepoRoot) {
 }
 
 $RepoRoot = $RepoRoot.TrimEnd('\', '/')
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Determine scan path based on parameters
+# ─────────────────────────────────────────────────────────────────────────────
+if ($PackagePath) {
+    $ScanPath = Join-Path $RepoRoot $PackagePath
+    if (-not (Test-Path $ScanPath)) {
+        Write-Host -ForegroundColor Red "Package path not found: $ScanPath"
+        exit 1
+    }
+    Write-Host "Scoping CPM checks to package: $PackagePath"
+}
+elseif ($ServiceDirectory) {
+    $ScanPath = Join-Path $RepoRoot "sdk" $ServiceDirectory
+    if (-not (Test-Path $ScanPath)) {
+        Write-Host -ForegroundColor Red "Service directory not found: $ScanPath"
+        exit 1
+    }
+    Write-Host "Scoping CPM checks to service: $ServiceDirectory"
+}
+else {
+    $ScanPath = $RepoRoot
+    Write-Host "Running CPM checks across entire repository."
+}
 
 [string[]] $errors = @()
 
@@ -99,7 +143,7 @@ $ApprovedPackagesPropsLocations = @(
 # ─────────────────────────────────────────────────────────────────────────────
 LogInfo "Check 1: Scanning for ManagePackageVersionsCentrally='false' outside allowlist..."
 
-$cpmFalseFiles = Get-ChildItem -Path $RepoRoot -Recurse -Include '*.props', '*.targets', '*.csproj' |
+$cpmFalseFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
     Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
     Select-String -Pattern 'ManagePackageVersionsCentrally.*false' -SimpleMatch:$false |
     Select-Object -ExpandProperty Path -Unique
@@ -107,8 +151,8 @@ $cpmFalseFiles = Get-ChildItem -Path $RepoRoot -Recurse -Include '*.props', '*.t
 foreach ($file in $cpmFalseFiles) {
     $rel = Get-RelativePath $file
     if (-not (Test-IsAllowlisted $rel)) {
-        # Allow the central packages file itself and the root enforcement target
-        if ($rel -notlike 'eng/centralpackagemanagement/*' -and $rel -ne 'Directory.Build.targets') {
+        # Allow the central packages file itself and the enforcement target (contains condition strings)
+        if ($rel -notlike 'eng/centralpackagemanagement/*' -and $rel -ne 'eng/Directory.Build.Common.targets') {
             LogError "CPM-001: ManagePackageVersionsCentrally set to 'false' in non-allowlisted file: $rel"
         }
     }
@@ -119,15 +163,15 @@ foreach ($file in $cpmFalseFiles) {
 # ─────────────────────────────────────────────────────────────────────────────
 LogInfo "Check 2: Scanning for CentralPackageVersionOverrideEnabled='true'..."
 
-$overrideEnabledFiles = Get-ChildItem -Path $RepoRoot -Recurse -Include '*.props', '*.targets', '*.csproj' |
+$overrideEnabledFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
     Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
     Select-String -Pattern 'CentralPackageVersionOverrideEnabled.*true' -SimpleMatch:$false |
     Select-Object -ExpandProperty Path -Unique
 
 foreach ($file in $overrideEnabledFiles) {
     $rel = Get-RelativePath $file
-    # Allow the central config and the root enforcement target (contains condition strings)
-    if ($rel -notlike 'eng/centralpackagemanagement/*' -and $rel -ne 'Directory.Build.targets') {
+    # Allow the central config and the enforcement target (contains condition strings)
+    if ($rel -notlike 'eng/centralpackagemanagement/*' -and $rel -ne 'eng/Directory.Build.Common.targets') {
         LogError "CPM-002: CentralPackageVersionOverrideEnabled set to 'true' in: $rel"
     }
 }
@@ -137,7 +181,7 @@ foreach ($file in $overrideEnabledFiles) {
 # ─────────────────────────────────────────────────────────────────────────────
 LogInfo "Check 3: Scanning for VersionOverride attributes on PackageReference..."
 
-$versionOverrideFiles = Get-ChildItem -Path $RepoRoot -Recurse -Include '*.props', '*.targets', '*.csproj' |
+$versionOverrideFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
     Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
     Select-String -Pattern 'VersionOverride\s*=' -SimpleMatch:$false |
     Select-Object -ExpandProperty Path -Unique
@@ -154,7 +198,7 @@ foreach ($file in $versionOverrideFiles) {
 # ─────────────────────────────────────────────────────────────────────────────
 LogInfo "Check 4: Scanning for unapproved Directory.Packages.props files..."
 
-$allPackagesProps = Get-ChildItem -Path $RepoRoot -Recurse -Filter 'Directory.Packages.props' |
+$allPackagesProps = Get-ChildItem -Path $ScanPath -Recurse -Filter 'Directory.Packages.props' |
     Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' }
 
 foreach ($file in $allPackagesProps) {
@@ -171,7 +215,7 @@ foreach ($file in $allPackagesProps) {
 # ─────────────────────────────────────────────────────────────────────────────
 LogInfo "Check 5: Scanning for DirectoryPackagesPropsPath redirects..."
 
-$dppRedirects = Get-ChildItem -Path $RepoRoot -Recurse -Include '*.props', '*.targets', '*.csproj' |
+$dppRedirects = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
     Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
     Select-String -Pattern 'DirectoryPackagesPropsPath' -SimpleMatch |
     Select-Object -ExpandProperty Path -Unique
