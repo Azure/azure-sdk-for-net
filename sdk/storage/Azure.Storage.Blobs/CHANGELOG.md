@@ -41,7 +41,7 @@
 - Added support for conditional headers on BlobBaseClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
 
 ### Breaking Changes
-- All parameters for the BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync() overloads are now required, as these overloads are depricated.  We recommend switching to the new overloads taking optional GetBlobsOptions or GetBlobsByHierarchyOptions.
+- All parameters for the BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync() overloads are now required, as these overloads are being phased out and hidden from IntelliSense.  We recommend switching to the new overloads taking optional GetBlobsOptions or GetBlobsByHierarchyOptions.
 
 ## 12.26.0 (2025-10-13)
 
