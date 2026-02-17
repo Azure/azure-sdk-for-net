@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.1-beta.3 (Unreleased)
+## 1.4.1-beta.3 (2026-02-17)
 
 ### Features Added
 
