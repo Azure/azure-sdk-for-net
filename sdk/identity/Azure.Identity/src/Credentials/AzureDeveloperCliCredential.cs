@@ -276,11 +276,8 @@ namespace Azure.Identity
             try
             {
                 using JsonDocument jsonDoc = JsonDocument.Parse(rawCliError);
-
-                if (jsonDoc == null)
-                    return rawCliError;
-
                 JsonElement root = jsonDoc.RootElement;
+
                 if (root.TryGetProperty("data", out JsonElement dataObj) &&
                     dataObj.TryGetProperty("message", out JsonElement msgObj))
                 {
