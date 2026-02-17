@@ -445,4 +445,29 @@
       <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
   </Target>
+
+  <!--
+    Central Package Management Enforcement
+
+    These targets prevent projects from bypassing central package version
+    management by re-enabling VersionOverride or disabling CPM in their
+    local Directory.Build.props / .csproj files.
+
+    If you have a legitimate need to override a package version, add a scoped
+    entry to eng/centralpackagemanagement/Directory.Packages.props with
+    appropriate conditions. See eng/centralpackagemanagement/README.md.
+  -->
+  <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
+    <!-- Block re-enabling VersionOverride -->
+    <Error
+      Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'"
+      Text="AZSDK0001: Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+
+    <!-- Block disabling central package management entirely -->
+    <Error
+      Condition="'$(ManagePackageVersionsCentrally)' == 'false'"
+      Text="AZSDK0001: Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+  </Target>
 </Project>
