@@ -1,8 +1,3 @@
-#requires -version 5
-
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License.
-
 <#
 .SYNOPSIS
     Validates Central Package Management (CPM) compliance across the repository.
@@ -229,14 +224,9 @@ foreach ($file in $dppRedirects) {
 # ─────────────────────────────────────────────────────────────────────────────
 LogInfo "Check 6: Validating override file casing convention..."
 
-$overrideDir = Join-Path $RepoRoot "eng\centralpackagemanagement"
+$overrideDir = Join-Path $RepoRoot "eng\centralpackagemanagement\overrides"
 if (Test-Path $overrideDir) {
-    $overrideFiles = Get-ChildItem -Path $overrideDir -Filter '*.props' |
-        Where-Object { $_.Name -ne 'Directory.Packages.props' -and
-                       $_.Name -ne 'Directory.Legacy.Packages.props' -and
-                       $_.Name -ne 'Directory.Mgmt.Packages.props' -and
-                       $_.Name -ne 'Directory.Build.Packages.props' -and
-                       $_.Name -ne 'Directory.TypeSpec.Packages.props' }
+    $overrideFiles = Get-ChildItem -Path $overrideDir -Recurse -Filter '*.props'
 
     foreach ($file in $overrideFiles) {
         # Per-package override files must end with .Packages.props (exact casing)

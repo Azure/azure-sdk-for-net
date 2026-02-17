@@ -1,0 +1,8 @@
+<Project>
+  <!--
+    Packages used by the DigitalTwins client sample for CLI parsing.
+  -->
+  <ItemGroup>
+    <PackageVersion Include="CommandLineParser" Version="2.7.82" />
+  </ItemGroup>
+</Project>

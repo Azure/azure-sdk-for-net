@@ -1,6 +1,6 @@
 <Project>
   <!--
-    Legacy Track 1 storage packages used by the IoT Hub sample for
+    Legacy Track 1 storage common package used by the IoT Hub sample for
     integration scenarios (e.g. file upload to blob storage).
   -->
   <ItemGroup>
