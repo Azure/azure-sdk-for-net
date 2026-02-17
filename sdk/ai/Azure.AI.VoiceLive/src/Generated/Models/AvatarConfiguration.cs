@@ -37,11 +37,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"> Base model to use for the avatar. Required for photo avatar. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
         /// <param name="video"> Optional video configuration including resolution, bitrate, and codec. </param>
-        /// <param name="scene"> Configuration for the avatar's zoom level, position, rotation and movement amplitude in the video frame. </param>
         /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
-        /// <param name="outputAuditAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfiguration(AvatarConfigTypes? @type, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseModes? model, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? outputAuditAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvatarConfiguration(AvatarConfigTypes? @type, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseModes? model, bool customized, VideoParams video, AvatarOutputProtocol? outputProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             IceServers = iceServers;
@@ -50,9 +48,7 @@ namespace Azure.AI.VoiceLive
             Model = model;
             Customized = customized;
             Video = video;
-            Scene = scene;
             OutputProtocol = outputProtocol;
-            OutputAuditAudio = outputAuditAudio;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,13 +73,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Optional video configuration including resolution, bitrate, and codec. </summary>
         public VideoParams Video { get; set; }
 
-        /// <summary> Configuration for the avatar's zoom level, position, rotation and movement amplitude in the video frame. </summary>
-        public SceneParams Scene { get; set; }
-
         /// <summary> Output protocol for avatar streaming. Default is 'webrtc'. </summary>
         public AvatarOutputProtocol? OutputProtocol { get; set; }
-
-        /// <summary> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </summary>
-        public bool? OutputAuditAudio { get; set; }
     }
 }

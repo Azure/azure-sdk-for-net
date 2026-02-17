@@ -12,14 +12,9 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> An audio content part for a request. This is supported only by realtime models (e.g., gpt-realtime). For text-based models, use `input_text` instead. </summary>
+    /// <summary> An audio content part for a request. </summary>
     public partial class RequestAudioContentPart : VoiceLiveContentPart, IJsonModel<RequestAudioContentPart>
     {
-        /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/> for deserialization. </summary>
-        internal RequestAudioContentPart()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,8 +74,6 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(RequestAudioContentPart)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("audio"u8);
-            writer.WriteStringValue(Audio);
             if (Optional.IsDefined(Transcript))
             {
                 writer.WritePropertyName("transcript"u8);
@@ -115,18 +108,12 @@ namespace Azure.AI.VoiceLive
             }
             ContentPartType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string audio = default;
             string transcript = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ContentPartType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("audio"u8))
-                {
-                    audio = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("transcript"u8))
@@ -139,7 +126,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RequestAudioContentPart(@type, additionalBinaryDataProperties, audio, transcript);
+            return new RequestAudioContentPart(@type, additionalBinaryDataProperties, transcript);
         }
     }
 }

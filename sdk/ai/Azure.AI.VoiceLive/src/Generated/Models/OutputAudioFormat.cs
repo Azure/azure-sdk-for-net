@@ -17,9 +17,9 @@ namespace Azure.AI.VoiceLive
         /// <summary> 16-bit PCM audio format at default sampling rate (24kHz). </summary>
         private const string Pcm16Value = "pcm16";
         /// <summary> 16-bit PCM audio format at 8kHz sampling rate. </summary>
-        private const string Pcm168000hzValue = "pcm16_8000hz";
+        private const string Pcm168000hzValue = "pcm16-8000hz";
         /// <summary> 16-bit PCM audio format at 16kHz sampling rate. </summary>
-        private const string Pcm1616000hzValue = "pcm16_16000hz";
+        private const string Pcm1616000hzValue = "pcm16-16000hz";
         /// <summary> G.711 μ-law (mu-law) audio format at 8kHz sampling rate. </summary>
         private const string G711UlawValue = "g711_ulaw";
         /// <summary> G.711 A-law audio format at 8kHz sampling rate. </summary>

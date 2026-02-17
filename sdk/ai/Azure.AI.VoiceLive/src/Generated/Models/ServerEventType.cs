@@ -15,7 +15,6 @@ namespace Azure.AI.VoiceLive
     {
         private readonly string _value;
         private const string ErrorValue = "error";
-        private const string WarningValue = "warning";
         private const string SessionAvatarConnectingValue = "session.avatar.connecting";
         private const string SessionCreatedValue = "session.created";
         private const string SessionUpdatedValue = "session.updated";
@@ -55,6 +54,8 @@ namespace Azure.AI.VoiceLive
         private const string McpListToolsFailedValue = "mcp_list_tools.failed";
         private const string ResponseMcpCallArgumentsDeltaValue = "response.mcp_call_arguments.delta";
         private const string ResponseMcpCallArgumentsDoneValue = "response.mcp_call_arguments.done";
+        private const string McpApprovalRequestValue = "mcp_approval_request";
+        private const string McpApprovalResponseValue = "mcp_approval_response";
         private const string ResponseMcpCallInProgressValue = "response.mcp_call.in_progress";
         private const string ResponseMcpCallCompletedValue = "response.mcp_call.completed";
         private const string ResponseMcpCallFailedValue = "response.mcp_call.failed";
@@ -71,9 +72,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Error. </summary>
         public static ServerEventType Error { get; } = new ServerEventType(ErrorValue);
-
-        /// <summary> Gets the Warning. </summary>
-        public static ServerEventType Warning { get; } = new ServerEventType(WarningValue);
 
         /// <summary> Gets the SessionAvatarConnecting. </summary>
         public static ServerEventType SessionAvatarConnecting { get; } = new ServerEventType(SessionAvatarConnectingValue);
@@ -191,6 +189,12 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ResponseMcpCallArgumentsDone. </summary>
         public static ServerEventType ResponseMcpCallArgumentsDone { get; } = new ServerEventType(ResponseMcpCallArgumentsDoneValue);
+
+        /// <summary> Gets the McpApprovalRequest. </summary>
+        public static ServerEventType McpApprovalRequest { get; } = new ServerEventType(McpApprovalRequestValue);
+
+        /// <summary> Gets the McpApprovalResponse. </summary>
+        public static ServerEventType McpApprovalResponse { get; } = new ServerEventType(McpApprovalResponseValue);
 
         /// <summary> Gets the ResponseMcpCallInProgress. </summary>
         public static ServerEventType ResponseMcpCallInProgress { get; } = new ServerEventType(ResponseMcpCallInProgressValue);

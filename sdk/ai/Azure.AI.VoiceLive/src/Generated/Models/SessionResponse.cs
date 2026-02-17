@@ -21,7 +21,6 @@ namespace Azure.AI.VoiceLive
         {
             Output = new ChangeTrackingList<SessionResponseItem>();
             Modalities = new ChangeTrackingList<InteractionModality>();
-            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionResponse"/>. </summary>
@@ -60,13 +59,8 @@ namespace Azure.AI.VoiceLive
         /// Maximum number of output tokens for a single assistant response,
         /// inclusive of tool calls, that was used in this response.
         /// </param>
-        /// <param name="metadata">
-        /// Set of up to 16 key-value pairs that can be attached to an object.
-        /// This can be useful for storing additional information about the object in a structured format.
-        /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionResponse(string id, string @object, SessionResponseStatus? status, ResponseStatusDetails statusDetails, IList<SessionResponseItem> output, ResponseTokenStatistics usage, string conversationId, VoiceProvider voice, IList<InteractionModality> modalities, OutputAudioFormat? outputAudioFormat, float? temperature, MaxResponseOutputTokensOption maxOutputTokens, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionResponse(string id, string @object, SessionResponseStatus? status, ResponseStatusDetails statusDetails, IList<SessionResponseItem> output, ResponseTokenStatistics usage, string conversationId, VoiceProvider voice, IList<InteractionModality> modalities, OutputAudioFormat? outputAudioFormat, float? temperature, MaxResponseOutputTokensOption maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -80,7 +74,6 @@ namespace Azure.AI.VoiceLive
             OutputAudioFormat = outputAudioFormat;
             Temperature = temperature;
             MaxOutputTokens = maxOutputTokens;
-            Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -130,12 +123,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </summary>
         public float? Temperature { get; }
-
-        /// <summary>
-        /// Set of up to 16 key-value pairs that can be attached to an object.
-        /// This can be useful for storing additional information about the object in a structured format.
-        /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; }
     }
 }
