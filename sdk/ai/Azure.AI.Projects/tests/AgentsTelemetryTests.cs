@@ -20,6 +20,7 @@ using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
+#pragma warning disable AAIP001
 namespace Azure.AI.Projects.Tests;
 
 public partial class AgentsTelemetryTests : AgentsTestBase

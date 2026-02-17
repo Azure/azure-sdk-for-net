@@ -23,6 +23,7 @@ using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
+#pragma warning disable AAIP001
 
 public class AgentsTests : AgentsTestBase
 {
