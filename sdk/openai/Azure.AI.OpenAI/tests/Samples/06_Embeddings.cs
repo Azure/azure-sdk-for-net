@@ -274,4 +274,5 @@ public partial class AzureOpenAISamples
 
         return dotProduct / (magnitudeA * magnitudeB);
     }
+    #endregion
 }
