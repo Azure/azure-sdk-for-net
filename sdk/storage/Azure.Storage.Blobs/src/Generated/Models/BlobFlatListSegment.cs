@@ -8,31 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobFlatListSegment. </summary>
+    /// <summary> The blob flat list segment. </summary>
     internal partial class BlobFlatListSegment
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
-        /// <param name="blobItems"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
+        /// <param name="blobItems"> The blob items. </param>
         internal BlobFlatListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
-            Argument.AssertNotNull(blobItems, nameof(blobItems));
-
             BlobItems = blobItems.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
-        /// <param name="blobItems"></param>
-        internal BlobFlatListSegment(IReadOnlyList<BlobItemInternal> blobItems)
+        /// <param name="blobItems"> The blob items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobFlatListSegment(IList<BlobItemInternal> blobItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobItems = blobItems;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the blob items. </summary>
-        public IReadOnlyList<BlobItemInternal> BlobItems { get; }
+        /// <summary> The blob items. </summary>
+        public IList<BlobItemInternal> BlobItems { get; }
     }
 }

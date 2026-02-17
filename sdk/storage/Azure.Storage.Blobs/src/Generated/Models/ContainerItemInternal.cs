@@ -7,51 +7,55 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An Azure Storage container. </summary>
     internal partial class ContainerItemInternal
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="properties"> Properties of a container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        /// <param name="name"> The name of the container. </param>
+        /// <param name="properties"> The properties of the container. </param>
         internal ContainerItemInternal(string name, ContainerPropertiesInternal properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="deleted"></param>
-        /// <param name="version"></param>
-        /// <param name="properties"> Properties of a container. </param>
-        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="name"> The name of the container. </param>
+        /// <param name="deleted"> Whether the container is deleted. </param>
+        /// <param name="version"> The version of the container. </param>
+        /// <param name="properties"> The properties of the container. </param>
+        /// <param name="metadata"> The metadata of the container. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Deleted = deleted;
             Version = version;
             Properties = properties;
             Metadata = metadata;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The name of the container. </summary>
         public string Name { get; }
-        /// <summary> Gets the deleted. </summary>
+
+        /// <summary> Whether the container is deleted. </summary>
         public bool? Deleted { get; }
-        /// <summary> Gets the version. </summary>
+
+        /// <summary> The version of the container. </summary>
         public string Version { get; }
-        /// <summary> Properties of a container. </summary>
+
+        /// <summary> The properties of the container. </summary>
         public ContainerPropertiesInternal Properties { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+
+        /// <summary> The metadata of the container. </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }

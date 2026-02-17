@@ -11,19 +11,30 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class BlobImmutabilityPolicyModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlobImmutabilityPolicyMode value) => value switch
         {
-            BlobImmutabilityPolicyMode.Mutable => "Mutable",
-            BlobImmutabilityPolicyMode.Unlocked => "Unlocked",
-            BlobImmutabilityPolicyMode.Locked => "Locked",
+            BlobImmutabilityPolicyMode.Mutable => "mutable",
+            BlobImmutabilityPolicyMode.Locked => "locked",
+            BlobImmutabilityPolicyMode.Unlocked => "unlocked",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlobImmutabilityPolicyMode ToBlobImmutabilityPolicyMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Mutable")) return BlobImmutabilityPolicyMode.Mutable;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unlocked")) return BlobImmutabilityPolicyMode.Unlocked;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Locked")) return BlobImmutabilityPolicyMode.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mutable"))
+            {
+                return BlobImmutabilityPolicyMode.Mutable;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked"))
+            {
+                return BlobImmutabilityPolicyMode.Locked;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked"))
+            {
+                return BlobImmutabilityPolicyMode.Unlocked;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.");
         }
     }

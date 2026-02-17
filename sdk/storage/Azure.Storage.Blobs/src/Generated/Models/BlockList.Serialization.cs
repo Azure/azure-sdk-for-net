@@ -5,36 +5,181 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlockList
+    /// <summary> Contains the committed and uncommitted blocks in a block blob. </summary>
+    public partial class BlockList : IPersistableModel<BlockList>, IXmlSerializable
     {
-        internal static BlockList DeserializeBlockList(XElement element)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlockList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+            string format = options.Format == "W" ? ((IPersistableModel<BlockList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeBlockList(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlockList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlockList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "BlockList");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlockList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlockList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlockList IPersistableModel<BlockList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlockList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BlockList"/> from. </param>
+        public static explicit operator BlockList(Response response)
+        {
+            using Stream stream = response.ContentStream;
+            if (stream == null)
+            {
+                return default;
+            }
+
+            return DeserializeBlockList(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlockList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(BlockList)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(CommittedBlocks))
+            {
+                writer.WriteStartElement("CommittedBlocks");
+                foreach (BlobBlock item in CommittedBlocks)
+                {
+                    writer.WriteStartElement("Block");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(UncommittedBlocks))
+            {
+                writer.WriteStartElement("UncommittedBlocks");
+                foreach (BlobBlock item in UncommittedBlocks)
+                {
+                    writer.WriteStartElement("Block");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BlockList DeserializeBlockList(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             IEnumerable<BlobBlock> committedBlocks = default;
             IEnumerable<BlobBlock> uncommittedBlocks = default;
-            if (element.Element("CommittedBlocks") is XElement committedBlocksElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                var array = new List<BlobBlock>();
-                foreach (var e in committedBlocksElement.Elements("Block"))
+                string localName = child.Name.LocalName;
+                if (localName == "CommittedBlocks")
                 {
-                    array.Add(BlobBlock.DeserializeBlobBlock(e));
+                    List<BlobBlock> array = new List<BlobBlock>();
+                    foreach (var e in child.Elements("Block"))
+                    {
+                        array.Add(BlobBlock.DeserializeBlobBlock(e, options));
+                    }
+                    committedBlocks = array;
+                    continue;
                 }
-                committedBlocks = array;
-            }
-            if (element.Element("UncommittedBlocks") is XElement uncommittedBlocksElement)
-            {
-                var array = new List<BlobBlock>();
-                foreach (var e in uncommittedBlocksElement.Elements("Block"))
+                if (localName == "UncommittedBlocks")
                 {
-                    array.Add(BlobBlock.DeserializeBlobBlock(e));
+                    List<BlobBlock> array = new List<BlobBlock>();
+                    foreach (var e in child.Elements("Block"))
+                    {
+                        array.Add(BlobBlock.DeserializeBlobBlock(e, options));
+                    }
+                    uncommittedBlocks = array;
+                    continue;
                 }
-                uncommittedBlocks = array;
             }
-            return new BlockList(committedBlocks, uncommittedBlocks);
+            return new BlockList(committedBlocks ?? new ChangeTrackingList<BlobBlock>(), uncommittedBlocks ?? new ChangeTrackingList<BlobBlock>(), additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

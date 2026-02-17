@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -23,7 +25,26 @@ namespace Azure.Storage.Blobs
     /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
-    public class BlobClient : BlobBaseClient
+    // CUSTOM: Suppress unused methods, ctors, and fields.
+    [CodeGenSuppress("BlobClient", typeof(Uri), typeof(TokenCredential))]
+    [CodeGenSuppress("Pipeline", typeof(HttpPipeline))]
+    [CodeGenSuppress("_endpoint", typeof(Uri))]
+    [CodeGenSuppress("_version", typeof(string))]
+    [CodeGenSuppress("_tokenCredential", typeof(TokenCredential))]
+    [CodeGenSuppress("_cachedServiceRestClient", typeof(ServiceRestClient))]
+    [CodeGenSuppress("_cachedContainerRestClient", typeof(ContainerRestClient))]
+    [CodeGenSuppress("_cachedBlobRestClient", typeof(BlobRestClient))]
+    [CodeGenSuppress("_cachedAppendBlobRestClient", typeof(AppendBlobRestClient))]
+    [CodeGenSuppress("_cachedBlockBlobRestClient", typeof(BlockBlobRestClient))]
+    [CodeGenSuppress("_cachedPageBlobRestClient", typeof(PageBlobRestClient))]
+    [CodeGenSuppress("GetServiceRestClient")]
+    [CodeGenSuppress("GetContainerRestClient")]
+    [CodeGenSuppress("GetBlobRestClient")]
+    [CodeGenSuppress("GetAppendBlobRestClient")]
+    [CodeGenSuppress("GetBlockBlobRestClient")]
+    [CodeGenSuppress("GetPageBlobRestClient")]
+    [CodeGenSuppress("BlobClient", typeof(HttpPipelinePolicy), typeof(Uri), typeof(BlobClientOptions))]
+    public partial class BlobClient : BlobBaseClient
     {
         #region ctors
         /// <summary>
@@ -177,6 +198,13 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of BlobClient from a <see cref="BlobClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for BlobClient. </param>
+        [Experimental("SCME0002")]
+        public BlobClient(BlobClientSettings settings) : this(settings?.Url, settings?.Options)
         {
         }
 

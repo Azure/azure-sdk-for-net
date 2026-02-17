@@ -5,30 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The properties that enable an account to host a static website. </summary>
     public partial class BlobStaticWebsite
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobStaticWebsite"/>. </summary>
         /// <param name="enabled"> Indicates whether this account is hosting a static website. </param>
-        /// <param name="indexDocument"> The default name of the index page under each directory. </param>
-        /// <param name="errorDocument404Path"> The absolute path of the custom 404 page. </param>
+        /// <param name="indexDocument"> The index document. </param>
+        /// <param name="errorDocument404Path"> The error document. </param>
         /// <param name="defaultIndexDocumentPath"> Absolute path of the default index page. </param>
-        internal BlobStaticWebsite(bool enabled, string indexDocument, string errorDocument404Path, string defaultIndexDocumentPath)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobStaticWebsite(bool enabled, string indexDocument, string errorDocument404Path, string defaultIndexDocumentPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             IndexDocument = indexDocument;
             ErrorDocument404Path = errorDocument404Path;
             DefaultIndexDocumentPath = defaultIndexDocumentPath;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether this account is hosting a static website. </summary>
         public bool Enabled { get; set; }
-        /// <summary> The default name of the index page under each directory. </summary>
+
+        /// <summary> The index document. </summary>
         public string IndexDocument { get; set; }
-        /// <summary> The absolute path of the custom 404 page. </summary>
+
+        /// <summary> The error document. </summary>
         public string ErrorDocument404Path { get; set; }
+
         /// <summary> Absolute path of the default index page. </summary>
         public string DefaultIndexDocumentPath { get; set; }
     }

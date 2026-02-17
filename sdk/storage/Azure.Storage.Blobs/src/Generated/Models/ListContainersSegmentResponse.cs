@@ -8,34 +8,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of containers. </summary>
+    /// <summary> The list container segment response. </summary>
     internal partial class ListContainersSegmentResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="containerItems"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="containerItems"/> is null. </exception>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="containerItems"> The container segment. </param>
         internal ListContainersSegmentResponse(string serviceEndpoint, IEnumerable<ContainerItemInternal> containerItems)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(containerItems, nameof(containerItems));
-
             ServiceEndpoint = serviceEndpoint;
             ContainerItems = containerItems.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="prefix"></param>
-        /// <param name="marker"></param>
-        /// <param name="maxResults"></param>
-        /// <param name="containerItems"></param>
-        /// <param name="nextMarker"></param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ContainerItemInternal> containerItems, string nextMarker)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="prefix"> The prefix of the containers. </param>
+        /// <param name="marker"> The marker of the containers. </param>
+        /// <param name="maxResults"> The max results of the containers. </param>
+        /// <param name="containerItems"> The container segment. </param>
+        /// <param name="nextMarker"> The next marker of the containers. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ContainerItemInternal> containerItems, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -43,19 +42,25 @@ namespace Azure.Storage.Blobs.Models
             MaxResults = maxResults;
             ContainerItems = containerItems;
             NextMarker = nextMarker;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the prefix. </summary>
+
+        /// <summary> The prefix of the containers. </summary>
         public string Prefix { get; }
-        /// <summary> Gets the marker. </summary>
+
+        /// <summary> The marker of the containers. </summary>
         public string Marker { get; }
-        /// <summary> Gets the max results. </summary>
+
+        /// <summary> The max results of the containers. </summary>
         public int? MaxResults { get; }
-        /// <summary> Gets the container items. </summary>
-        public IReadOnlyList<ContainerItemInternal> ContainerItems { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The container segment. </summary>
+        public IList<ContainerItemInternal> ContainerItems { get; }
+
+        /// <summary> The next marker of the containers. </summary>
         public string NextMarker { get; }
     }
 }

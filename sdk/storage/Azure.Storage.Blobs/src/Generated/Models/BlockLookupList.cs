@@ -5,14 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlockLookupList. </summary>
     internal partial class BlockLookupList
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
         public BlockLookupList()
         {
@@ -22,14 +25,16 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
-        /// <param name="committed"></param>
-        /// <param name="uncommitted"></param>
-        /// <param name="latest"></param>
-        internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest)
+        /// <param name="committed"> The committed blocks. </param>
+        /// <param name="uncommitted"> The uncommitted blocks. </param>
+        /// <param name="latest"> The latest blocks. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Committed = committed;
             Uncommitted = uncommitted;
             Latest = latest;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

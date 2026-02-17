@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlockList. </summary>
+    /// <summary> Contains the committed and uncommitted blocks in a block blob. </summary>
     public partial class BlockList
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlockList"/>. </summary>
         internal BlockList()
         {
@@ -21,12 +25,14 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlockList"/>. </summary>
-        /// <param name="committedBlocks"></param>
-        /// <param name="uncommittedBlocks"></param>
-        internal BlockList(IEnumerable<BlobBlock> committedBlocks, IEnumerable<BlobBlock> uncommittedBlocks)
+        /// <param name="committedBlocks"> The list of committed blocks. </param>
+        /// <param name="uncommittedBlocks"> The list of uncommitted blocks. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlockList(IEnumerable<BlobBlock> committedBlocks, IEnumerable<BlobBlock> uncommittedBlocks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommittedBlocks = committedBlocks;
             UncommittedBlocks = uncommittedBlocks;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

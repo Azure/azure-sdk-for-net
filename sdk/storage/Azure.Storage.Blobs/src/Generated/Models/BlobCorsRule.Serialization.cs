@@ -5,17 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobCorsRule : IXmlSerializable
+    /// <summary> CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. </summary>
+    public partial class BlobCorsRule : IPersistableModel<BlobCorsRule>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobCorsRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartElement(nameHint ?? "CorsRule");
+            string format = options.Format == "W" ? ((IPersistableModel<BlobCorsRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeBlobCorsRule(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobCorsRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobCorsRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "CorsRule");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobCorsRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlobCorsRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobCorsRule IPersistableModel<BlobCorsRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobCorsRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobCorsRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(BlobCorsRule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartElement("AllowedOrigins");
             writer.WriteValue(AllowedOrigins);
             writer.WriteEndElement();
@@ -31,37 +116,64 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("MaxAgeInSeconds");
             writer.WriteValue(MaxAgeInSeconds);
             writer.WriteEndElement();
-            writer.WriteEndElement();
         }
 
-        internal static BlobCorsRule DeserializeBlobCorsRule(XElement element)
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BlobCorsRule DeserializeBlobCorsRule(XElement element, ModelReaderWriterOptions options)
         {
+            if (element == null)
+            {
+                return null;
+            }
+
             string allowedOrigins = default;
             string allowedMethods = default;
             string allowedHeaders = default;
             string exposedHeaders = default;
             int maxAgeInSeconds = default;
-            if (element.Element("AllowedOrigins") is XElement allowedOriginsElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                allowedOrigins = (string)allowedOriginsElement;
+                string localName = child.Name.LocalName;
+                if (localName == "AllowedOrigins")
+                {
+                    allowedOrigins = (string)child;
+                    continue;
+                }
+                if (localName == "AllowedMethods")
+                {
+                    allowedMethods = (string)child;
+                    continue;
+                }
+                if (localName == "AllowedHeaders")
+                {
+                    allowedHeaders = (string)child;
+                    continue;
+                }
+                if (localName == "ExposedHeaders")
+                {
+                    exposedHeaders = (string)child;
+                    continue;
+                }
+                if (localName == "MaxAgeInSeconds")
+                {
+                    maxAgeInSeconds = (int)child;
+                    continue;
+                }
             }
-            if (element.Element("AllowedMethods") is XElement allowedMethodsElement)
-            {
-                allowedMethods = (string)allowedMethodsElement;
-            }
-            if (element.Element("AllowedHeaders") is XElement allowedHeadersElement)
-            {
-                allowedHeaders = (string)allowedHeadersElement;
-            }
-            if (element.Element("ExposedHeaders") is XElement exposedHeadersElement)
-            {
-                exposedHeaders = (string)exposedHeadersElement;
-            }
-            if (element.Element("MaxAgeInSeconds") is XElement maxAgeInSecondsElement)
-            {
-                maxAgeInSeconds = (int)maxAgeInSecondsElement;
-            }
-            return new BlobCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new BlobCorsRule(
+                allowedOrigins,
+                allowedMethods,
+                allowedHeaders,
+                exposedHeaders,
+                maxAgeInSeconds,
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

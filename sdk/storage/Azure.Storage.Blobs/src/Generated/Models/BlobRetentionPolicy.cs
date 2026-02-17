@@ -5,25 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> the retention policy which determines how long the associated data should persist. </summary>
+    /// <summary> The retention policy. </summary>
     public partial class BlobRetentionPolicy
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobRetentionPolicy"/>. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
-        /// <param name="allowPermanentDelete"> Indicates whether permanent delete is allowed on this storage account. </param>
-        internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete)
+        /// <param name="enabled"> Whether to enable the retention policy. </param>
+        /// <param name="days"> The number of days to retain the logs. </param>
+        /// <param name="allowPermanentDelete"> Whether to allow permanent delete. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Days = days;
             AllowPermanentDelete = allowPermanentDelete;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates whether a retention policy is enabled for the storage service. </summary>
+        /// <summary> Whether to enable the retention policy. </summary>
         public bool Enabled { get; set; }
-        /// <summary> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </summary>
+
+        /// <summary> The number of days to retain the logs. </summary>
         public int? Days { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
+using static Azure.Storage.Blobs.BlobExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -467,7 +468,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri.AbsoluteUri,
+                endpoint: blobUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -1798,7 +1799,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
-            ResponseWithHeaders<Stream, BlobDownloadHeaders> response;
+            Response<Stream> response;
 
             conditions.ValidateConditionsNotPresent(
                 invalidConditions:
@@ -1825,43 +1826,43 @@ namespace Azure.Storage.Blobs.Specialized
             if (async)
             {
                 response = await BlobRestClient.DownloadAsync(
+                    snapshot: default,
+                    versionId: default,
+                    timeout: default,
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentMD5: rangeGetContentMD5,
-                    rangeGetContentCRC64: rangeGetContentCRC64,
+                    rangeGetContentMd5: rangeGetContentMD5,
+                    rangeGetContentCrc64: rangeGetContentCRC64,
                     structuredBodyType: structuredBodyType,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                    ifModifiedSince: conditions?.IfModifiedSince,
-                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                    ifMatch: conditions?.IfMatch?.ToString(),
-                    ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                     ifTags: conditions?.TagConditions,
+                    requestConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
             else
             {
                 response = BlobRestClient.Download(
+                    snapshot: default,
+                    versionId: default,
+                    timeout: default,
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentMD5: rangeGetContentMD5,
-                    rangeGetContentCRC64: rangeGetContentCRC64,
+                    rangeGetContentMd5: rangeGetContentMD5,
+                    rangeGetContentCrc64: rangeGetContentCRC64,
                     structuredBodyType: structuredBodyType,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                    ifModifiedSince: conditions?.IfModifiedSince,
-                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                    ifMatch: conditions?.IfMatch?.ToString(),
-                    ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                     ifTags: conditions?.TagConditions,
+                    requestConditions: conditions,
                     cancellationToken: cancellationToken);
             }
 
             // Watch out for exploding Responses
-            long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
+            long length = response.IsUnavailable() ? 0 : response.GetRawResponse().Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
             Response<BlobDownloadStreamingResult> result = Response.FromValue(
@@ -3907,11 +3908,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobStartCopyFromURLHeaders> response;
+                    Response response;
 
                     if (async)
                     {
-                        response = await BlobRestClient.StartCopyFromURLAsync(
+                        response = await BlobRestClient.StartCopyFromUrlAsync(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -3921,10 +3922,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfTags: sourceConditions?.TagConditions,
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
+                            requestConditions: destinationConditions,
                             leaseId: destinationConditions?.LeaseId,
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
@@ -3937,7 +3935,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.StartCopyFromURL(
+                        response = BlobRestClient.StartCopyFromUrl(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -3947,10 +3945,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfTags: sourceConditions?.TagConditions,
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
+                            requestConditions: destinationConditions,
                             leaseId: destinationConditions?.LeaseId,
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
@@ -3962,8 +3957,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToBlobCopyInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobCopyInfo(BlobCopyInfoHeaderType.StartCopyFromUrl),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -4125,11 +4120,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobAbortCopyFromURLHeaders> response;
+                    Response response;
 
                     if (async)
                     {
-                        response = await BlobRestClient.AbortCopyFromURLAsync(
+                        response = await BlobRestClient.AbortCopyFromUrlAsync(
                             copyId: copyId,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
@@ -4137,13 +4132,13 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.AbortCopyFromURL(
+                        response = BlobRestClient.AbortCopyFromUrl(
                             copyId: copyId,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -4395,11 +4390,11 @@ namespace Azure.Storage.Blobs.Specialized
 
                     scope.Start();
 
-                    ResponseWithHeaders<BlobCopyFromURLHeaders> response;
+                    Response response;
 
                     if (async)
                     {
-                        response = await BlobRestClient.CopyFromURLAsync(
+                        response = await BlobRestClient.CopyFromUrlAsync(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -4407,10 +4402,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
+                            requestConditions: destinationConditions,
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
@@ -4426,7 +4418,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.CopyFromURL(
+                        response = BlobRestClient.CopyFromUrl(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -4434,10 +4426,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
+                            requestConditions: destinationConditions,
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
@@ -4452,8 +4441,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToBlobCopyInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobCopyInfo(BlobCopyInfoHeaderType.CopyFromUrl),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -4793,17 +4782,14 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobDeleteHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await BlobRestClient.DeleteAsync(
                             leaseId: conditions?.LeaseId,
                             deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             accessTierIfModifiedSince: conditions?.AccessTierIfModifiedSince,
                             accessTierIfUnmodifiedSince: conditions?.AccessTierIfUnmodifiedSince,
@@ -4815,17 +4801,14 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.Delete(
                             leaseId: conditions?.LeaseId,
                             deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             accessTierIfModifiedSince: conditions?.AccessTierIfModifiedSince,
                             accessTierIfUnmodifiedSince: conditions?.AccessTierIfUnmodifiedSince,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -5062,7 +5045,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobUndeleteHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -5076,7 +5059,7 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -5235,6 +5218,9 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         rawResponse = await BlobRestClient.GetPropertiesAsync(
+                            snapshot: default,
+                            versionId: default,
+                            timeout: default,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -5247,6 +5233,9 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         rawResponse = BlobRestClient.GetProperties(
+                            snapshot: default,
+                            versionId: default,
+                            timeout: default,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -5256,12 +5245,9 @@ namespace Azure.Storage.Blobs.Specialized
                             context: context);
                     }
 
-                    ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
-                        new BlobGetPropertiesHeaders(rawResponse), rawResponse);
-
                     return Response.FromValue(
-                        response.ToBlobProperties(),
-                        response.GetRawResponse());
+                        rawResponse.ToBlobProperties(),
+                        rawResponse);
                 }
                 catch (Exception ex)
                 {
@@ -5419,21 +5405,20 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobSetHttpHeadersHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await BlobRestClient.SetHttpHeadersAsync(
                             blobCacheControl: httpHeaders?.CacheControl,
                             blobContentType: httpHeaders?.ContentType,
-                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobContentMd5: httpHeaders?.ContentHash != null
+                                ? BinaryData.FromBytes(httpHeaders.ContentHash)
+                                : null,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
                             cancellationToken: cancellationToken)
@@ -5444,22 +5429,21 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.SetHttpHeaders(
                             blobCacheControl: httpHeaders?.CacheControl,
                             blobContentType: httpHeaders?.ContentType,
-                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobContentMd5: httpHeaders?.ContentHash != null
+                                ? BinaryData.FromBytes(httpHeaders.ContentHash)
+                                : null,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlobInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobInfo(BlobInfoHeaderType.SetHttpHeaders),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -5615,7 +5599,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobSetMetadataHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -5626,10 +5610,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -5643,17 +5624,14 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlobInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobInfo(BlobInfoHeaderType.SetMetadata),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -5809,7 +5787,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobCreateSnapshotHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -5819,10 +5797,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
@@ -5836,10 +5811,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
@@ -5847,7 +5819,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return Response.FromValue(
                         response.ToBlobSnapshotInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -6049,7 +6021,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobSetTierHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -6071,7 +6043,7 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -6209,7 +6181,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> response;
+                    Response<BlobTags> response;
 
                     if (async)
                     {
@@ -6405,7 +6377,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobSetTagsHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -6433,7 +6405,7 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -6593,13 +6565,13 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await BlobRestClient.SetImmutabilityPolicyAsync(
                             timeout: null,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             immutabilityPolicyExpiry: immutabilityPolicy.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
                             cancellationToken: cancellationToken)
@@ -6609,7 +6581,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlobRestClient.SetImmutabilityPolicy(
                             timeout: null,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             immutabilityPolicyExpiry: immutabilityPolicy.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
                             cancellationToken: cancellationToken);
@@ -6617,7 +6589,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return Response.FromValue(
                         response.ToBlobImmutabilityPolicy(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -6725,7 +6697,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -6739,7 +6711,7 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -6865,7 +6837,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobSetLegalHoldHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -6885,7 +6857,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return Response.FromValue(
                         response.ToBlobLegalHoldInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -6996,7 +6968,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobGetAccountInfoHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -7011,8 +6983,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToAccountInfo(),
-                        response.GetRawResponse());
+                        response.ToAccountInfo(AccountInfoHeaderType.Blob),
+                        response);
                 }
                 catch (Exception ex)
                 {

@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Shared;
+using static Azure.Storage.Blobs.BlobExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -252,7 +253,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new PageBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri.AbsoluteUri,
+                endpoint: blobUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -1013,18 +1014,19 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageBlobCreateHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await PageBlobRestClient.CreateAsync(
-                            contentLength: 0,
-                            blobContentLength: size,
+                            size: size,
                             tier: premiumPageBlobAccessTier,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
-                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobContentMd5: httpHeaders?.ContentHash is { } contentHashAsync
+                                ? BinaryData.FromBytes(contentHashAsync)
+                                : null,
                             blobCacheControl: httpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
@@ -1033,10 +1035,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
@@ -1049,13 +1048,14 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.Create(
-                            contentLength: 0,
-                            blobContentLength: size,
+                            size: size,
                             tier: premiumPageBlobAccessTier,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
-                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobContentMd5: httpHeaders?.ContentHash is { } contentHashAsync
+                                ? BinaryData.FromBytes(contentHashAsync)
+                                : null,
                             blobCacheControl: httpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
@@ -1064,10 +1064,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
@@ -1078,8 +1075,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContentInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobContentInfo(BlobContentInfoHeaderType.PageBlobCreate),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1451,63 +1448,67 @@ namespace Azure.Storage.Blobs.Specialized
                         range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
                     }
 
-                    ResponseWithHeaders<PageBlobUploadPagesHeaders> response;
+                    Response response;
+
+                    Argument.AssertNotNull(content, nameof(content));
 
                     if (async)
                     {
                         response = await PageBlobRestClient.UploadPagesAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
-                            body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
-                            transactionalContentMD5: hashResult?.MD5AsArray,
                             range: range.ToString(),
+                            content: RequestContent.Create(content),
+                            transactionalContentMD5: hashResult?.MD5AsArray is { } md5Async
+                                ? BinaryData.FromBytes(md5Async)
+                                : null,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Async
+                                ? BinaryData.FromBytes(crc64Async)
+                                : null,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken)
+                            context: cancellationToken.ToRequestContext())
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = PageBlobRestClient.UploadPages(
                             contentLength: (content?.Length - content?.Position) ?? 0,
-                            body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
-                            transactionalContentMD5: hashResult?.MD5AsArray,
                             range: range.ToString(),
+                            content: RequestContent.Create(content),
+                             transactionalContentMD5: hashResult?.MD5AsArray is { } md5Async
+                                ? BinaryData.FromBytes(md5Async)
+                                : null,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Async
+                                ? BinaryData.FromBytes(crc64Async)
+                                : null,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            cancellationToken: cancellationToken);
+                            context: cancellationToken.ToRequestContext());
                     }
 
                     return Response.FromValue(
-                        response.ToPageInfo(),
-                        response.GetRawResponse());
+                        response.ToPageInfo(PageInfoHeaderType.UploadPages),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1681,12 +1682,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageBlobClearPagesHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await PageBlobRestClient.ClearPagesAsync(
-                            contentLength: 0,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -1695,10 +1695,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1706,7 +1703,6 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.ClearPages(
-                            contentLength: 0,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -1715,17 +1711,14 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToPageInfo(),
-                        response.GetRawResponse());
+                        response.ToPageInfo(PageInfoHeaderType.ClearPages),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1873,7 +1866,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetAllPageRangesInteral(
+        internal async Task<Response<PageList>> GetAllPageRangesInteral(
             string marker,
             int? pageSizeHint,
             HttpRange? range,
@@ -1909,7 +1902,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
+                    Response<PageList> response;
 
                     if (async)
                     {
@@ -1917,10 +1910,7 @@ namespace Azure.Storage.Blobs.Specialized
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -1933,10 +1923,7 @@ namespace Azure.Storage.Blobs.Specialized
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -1946,7 +1933,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
                     {
-                        return response.GetRawResponse().AsNoBodyResponse<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>>();
+                        return response.GetRawResponse().AsNoBodyResponse<Response<PageList>>();
                     }
 
                     return response;
@@ -2135,7 +2122,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
+                    Response<PageList> response;
 
                     if (async)
                     {
@@ -2143,10 +2130,7 @@ namespace Azure.Storage.Blobs.Specialized
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2157,10 +2141,7 @@ namespace Azure.Storage.Blobs.Specialized
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2169,7 +2150,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return response.IsUnavailable()
                         ? response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>()
                         : Response.FromValue(
-                            response.ToPageRangesInfo(),
+                            response.ToPageRangesInfo(PageRangesInfoHeaderType.GetPageRanges),
                             response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -2333,7 +2314,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ResponseWithHeaders{PageList, PageBlobGetPageRangesDiffHeaders}"/> describing the
+        /// A <see cref="Response{PageList}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
@@ -2342,7 +2323,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetAllPageRangesDiffInternal(
+        internal async Task<Response<PageList>> GetAllPageRangesDiffInternal(
             string marker,
             int? pageSizeHint,
             HttpRange? range,
@@ -2384,7 +2365,8 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
+
+                    Response<PageList> response;
 
                     if (async)
                     {
@@ -2394,10 +2376,7 @@ namespace Azure.Storage.Blobs.Specialized
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -2412,10 +2391,7 @@ namespace Azure.Storage.Blobs.Specialized
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -2425,7 +2401,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
                     {
-                        return response.GetRawResponse().AsNoBodyResponse<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>>();
+                        return response.GetRawResponse().AsNoBodyResponse<Response<PageList>>();
                     }
 
                     return response;
@@ -2666,7 +2642,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
+                    Response<PageList> response;
 
                     if (async)
                     {
@@ -2676,10 +2652,7 @@ namespace Azure.Storage.Blobs.Specialized
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2692,10 +2665,7 @@ namespace Azure.Storage.Blobs.Specialized
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2704,7 +2674,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return response.IsUnavailable() ?
                         response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
                         Response.FromValue(
-                            response.ToPageRangesInfo(),
+                            response.ToPageRangesInfo(PageRangesInfoHeaderType.GetPageRangesDiff),
                             response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -3011,20 +2981,17 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageBlobResizeHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await PageBlobRestClient.ResizeAsync(
-                            blobContentLength: size,
+                            size: size,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3032,22 +2999,19 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.Resize(
-                            blobContentLength: size,
+                            size: size,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToPageBlobInfo(),
-                        response.GetRawResponse());
+                        response.ToPageBlobInfo(PageBlobInfoHeaderType.Resize),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -3270,17 +3234,14 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response;
+                    Response response;
 
                     if (async)
                     {
-                        response = await PageBlobRestClient.UpdateSequenceNumberAsync(
+                        response = await PageBlobRestClient.SetSequenceNumberAsync(
                             sequenceNumberAction: action,
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             cancellationToken: cancellationToken)
@@ -3288,21 +3249,18 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = PageBlobRestClient.UpdateSequenceNumber(
+                        response = PageBlobRestClient.SetSequenceNumber(
                             sequenceNumberAction: action,
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToPageBlobInfo(),
-                        response.GetRawResponse());
+                        response.ToPageBlobInfo(PageBlobInfoHeaderType.UpdateSequenceNumber),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -3676,16 +3634,13 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceUri,
                         ClientConfiguration).WithSnapshot(snapshot);
 
-                    ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await PageBlobRestClient.CopyIncrementalAsync(
                             copySource: sourcePageBlobClient.Uri.AbsoluteUri,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3694,17 +3649,14 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = PageBlobRestClient.CopyIncremental(
                             copySource: sourcePageBlobClient.Uri.AbsoluteUri,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlobCopyInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobCopyInfo(BlobCopyInfoHeaderType.PageBlobCopyIncremental),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -4140,16 +4092,18 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response;
+                    Response response;
 
                     if (async)
                     {
-                        response = await PageBlobRestClient.UploadPagesFromURLAsync(
+                        response = await PageBlobRestClient.UploadPagesFromUrlAsync(
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             contentLength: 0,
                             range: range.ToString(),
-                            sourceContentMD5: sourceContentHash,
+                            sourceContentMd5: sourceContentHash != null
+                                ? BinaryData.FromBytes(sourceContentHash)
+                                : null,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -4158,10 +4112,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
@@ -4177,12 +4128,14 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = PageBlobRestClient.UploadPagesFromURL(
+                        response = PageBlobRestClient.UploadPagesFromUrl(
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
                             contentLength: 0,
                             range: range.ToString(),
-                            sourceContentMD5: sourceContentHash,
+                            sourceContentMd5: sourceContentHash != null
+                                ? BinaryData.FromBytes(sourceContentHash)
+                                : null,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -4191,10 +4144,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
@@ -4209,8 +4159,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToPageInfo(),
-                        response.GetRawResponse());
+                        response.ToPageInfo(PageInfoHeaderType.UploadPagesFromUrl),
+                        response);
                 }
                 catch (Exception ex)
                 {

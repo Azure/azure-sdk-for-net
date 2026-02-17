@@ -6,43 +6,47 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
-        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
-        /// <param name="type"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        public ArrowFieldInternal(string type)
-        {
-            Argument.AssertNotNull(type, nameof(type));
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-            Type = type;
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
+        /// <param name="type"> The arrow field type. </param>
+        public ArrowFieldInternal(string @type)
+        {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="precision"></param>
-        /// <param name="scale"></param>
-        internal ArrowFieldInternal(string type, string name, int? precision, int? scale)
+        /// <param name="type"> The arrow field type. </param>
+        /// <param name="name"> The arrow field name. </param>
+        /// <param name="precision"> The arrow field precision. </param>
+        /// <param name="scale"> The arrow field scale. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArrowFieldInternal(string @type, string name, int? precision, int? scale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Name = name;
             Precision = precision;
             Scale = scale;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the type. </summary>
+        /// <summary> The arrow field type. </summary>
         public string Type { get; }
-        /// <summary> Gets or sets the name. </summary>
+
+        /// <summary> The arrow field name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the precision. </summary>
+
+        /// <summary> The arrow field precision. </summary>
         public int? Precision { get; set; }
-        /// <summary> Gets or sets the scale. </summary>
+
+        /// <summary> The arrow field scale. </summary>
         public int? Scale { get; set; }
     }
 }

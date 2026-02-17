@@ -5,35 +5,187 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class PageList
+    /// <summary> Represents a page list. </summary>
+    internal partial class PageList : IPersistableModel<PageList>, IXmlSerializable
     {
-        internal static PageList DeserializePageList(XElement element)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PageList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string nextMarker = default;
-            IReadOnlyList<PageRange> pageRange = default;
-            IReadOnlyList<ClearRange> clearRange = default;
-            if (element.Element("NextMarker") is XElement nextMarkerElement)
+            string format = options.Format == "W" ? ((IPersistableModel<PageList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                nextMarker = (string)nextMarkerElement;
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializePageList(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PageList)} does not support reading '{options.Format}' format.");
             }
-            var array = new List<PageRange>();
-            foreach (var e in element.Elements("PageRange"))
-            {
-                array.Add(Models.PageRange.DeserializePageRange(e));
-            }
-            pageRange = array;
-            var array0 = new List<ClearRange>();
-            foreach (var e in element.Elements("ClearRange"))
-            {
-                array0.Add(Models.ClearRange.DeserializeClearRange(e));
-            }
-            clearRange = array0;
-            return new PageList(pageRange, clearRange, nextMarker);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PageList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "PageList");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PageList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PageList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PageList IPersistableModel<PageList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PageList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PageList"/> from. </param>
+        public static explicit operator PageList(Response response)
+        {
+            using Stream stream = response.ContentStream;
+            if (stream == null)
+            {
+                return default;
+            }
+
+            return DeserializePageList(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PageList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(PageList)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(PageRange))
+            {
+                foreach (PageRange item in PageRange)
+                {
+                    writer.WriteStartElement("PageRange");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(ClearRange))
+            {
+                foreach (ClearRange item in ClearRange)
+                {
+                    writer.WriteStartElement("ClearRange");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PageList DeserializePageList(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
+            IList<PageRange> pageRange = default;
+            IList<ClearRange> clearRange = default;
+            string nextMarker = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
+            {
+                string localName = child.Name.LocalName;
+                if (localName == "PageRange")
+                {
+                    if (pageRange == null)
+                    {
+                        pageRange = new List<PageRange>();
+                    }
+                    pageRange.Add(Models.PageRange.DeserializePageRange(child, options));
+                    continue;
+                }
+                if (localName == "ClearRange")
+                {
+                    if (clearRange == null)
+                    {
+                        clearRange = new List<ClearRange>();
+                    }
+                    clearRange.Add(Models.ClearRange.DeserializeClearRange(child, options));
+                    continue;
+                }
+                if (localName == "NextMarker")
+                {
+                    nextMarker = (string)child;
+                    continue;
+                }
+            }
+            return new PageList(pageRange ?? new ChangeTrackingList<PageRange>(), clearRange ?? new ChangeTrackingList<ClearRange>(), nextMarker, additionalBinaryDataProperties);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

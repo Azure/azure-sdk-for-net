@@ -5,40 +5,189 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobItem
+    /// <summary> The filter blob item. </summary>
+    internal partial class FilterBlobItem : IPersistableModel<FilterBlobItem>, IXmlSerializable
     {
-        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element)
+        /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/> for deserialization. </summary>
+        internal FilterBlobItem()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FilterBlobItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FilterBlobItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeFilterBlobItem(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilterBlobItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FilterBlobItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Blob");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilterBlobItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FilterBlobItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FilterBlobItem IPersistableModel<FilterBlobItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FilterBlobItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FilterBlobItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(FilterBlobItem)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ContainerName");
+            writer.WriteValue(ContainerName);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Tags))
+            {
+                writer.WriteStartElement("Tags");
+                writer.WriteObjectValue(Tags, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(VersionId))
+            {
+                writer.WriteStartElement("VersionId");
+                writer.WriteValue(VersionId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrentVersion))
+            {
+                writer.WriteStartElement("IsCurrentVersion");
+                writer.WriteValue(IsCurrentVersion.Value);
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FilterBlobItem DeserializeFilterBlobItem(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             string name = default;
             string containerName = default;
             BlobTags tags = default;
             string versionId = default;
             bool? isCurrentVersion = default;
-            if (element.Element("Name") is XElement nameElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                name = (string)nameElement;
+                string localName = child.Name.LocalName;
+                if (localName == "Name")
+                {
+                    name = (string)child;
+                    continue;
+                }
+                if (localName == "ContainerName")
+                {
+                    containerName = (string)child;
+                    continue;
+                }
+                if (localName == "Tags")
+                {
+                    tags = BlobTags.DeserializeBlobTags(child, options);
+                    continue;
+                }
+                if (localName == "VersionId")
+                {
+                    versionId = (string)child;
+                    continue;
+                }
+                if (localName == "IsCurrentVersion")
+                {
+                    isCurrentVersion = (bool?)child;
+                    continue;
+                }
             }
-            if (element.Element("ContainerName") is XElement containerNameElement)
-            {
-                containerName = (string)containerNameElement;
-            }
-            if (element.Element("Tags") is XElement tagsElement)
-            {
-                tags = BlobTags.DeserializeBlobTags(tagsElement);
-            }
-            if (element.Element("VersionId") is XElement versionIdElement)
-            {
-                versionId = (string)versionIdElement;
-            }
-            if (element.Element("IsCurrentVersion") is XElement isCurrentVersionElement)
-            {
-                isCurrentVersion = (bool?)isCurrentVersionElement;
-            }
-            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion);
+            return new FilterBlobItem(
+                name,
+                containerName,
+                tags,
+                versionId,
+                isCurrentVersion,
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

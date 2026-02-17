@@ -8,49 +8,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The result of a Filter Blobs API call. </summary>
     internal partial class FilterBlobSegment
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="where"></param>
-        /// <param name="blobs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/> or <paramref name="blobs"/> is null. </exception>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="where"> The filter for the blobs. </param>
+        /// <param name="blobs"> The blob segment. </param>
         internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(@where, nameof(@where));
-            Argument.AssertNotNull(blobs, nameof(blobs));
-
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
             Blobs = blobs.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="where"></param>
-        /// <param name="blobs"></param>
-        /// <param name="nextMarker"></param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IReadOnlyList<FilterBlobItem> blobs, string nextMarker)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="where"> The filter for the blobs. </param>
+        /// <param name="blobs"> The blob segment. </param>
+        /// <param name="nextMarker"> The next marker of the blobs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IList<FilterBlobItem> blobs, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
             Blobs = blobs;
             NextMarker = nextMarker;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the where. </summary>
+
+        /// <summary> The filter for the blobs. </summary>
         public string Where { get; }
-        /// <summary> Gets the blobs. </summary>
-        public IReadOnlyList<FilterBlobItem> Blobs { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The blob segment. </summary>
+        public IList<FilterBlobItem> Blobs { get; }
+
+        /// <summary> The next marker of the blobs. </summary>
         public string NextMarker { get; }
     }
 }

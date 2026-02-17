@@ -755,7 +755,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.UploadPagesAsync(
                         content: stream,
                         offset: 0),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 

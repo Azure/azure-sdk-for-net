@@ -6,15 +6,19 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The QuerySerialization. </summary>
+    /// <summary> The query serialization settings. </summary>
     internal partial class QuerySerialization
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="QuerySerialization"/>. </summary>
-        /// <param name="format"></param>
+        /// <param name="format"> The query format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public QuerySerialization(QueryFormat format)
         {
@@ -23,7 +27,16 @@ namespace Azure.Storage.Blobs.Models
             Format = format;
         }
 
-        /// <summary> Gets the format. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuerySerialization"/>. </summary>
+        /// <param name="format"> The query format. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuerySerialization(QueryFormat format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Format = format;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The query format. </summary>
         public QueryFormat Format { get; }
     }
 }

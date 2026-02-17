@@ -8,36 +8,39 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobHierarchyListSegment. </summary>
+    /// <summary> Represents an array of blobs. </summary>
     internal partial class BlobHierarchyListSegment
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
-        /// <param name="blobItems"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
+        /// <param name="blobItems"> The blob items. </param>
         internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
-            Argument.AssertNotNull(blobItems, nameof(blobItems));
-
-            BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
             BlobItems = blobItems.ToList();
+            BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
-        /// <param name="blobPrefixes"></param>
-        /// <param name="blobItems"></param>
-        internal BlobHierarchyListSegment(IReadOnlyList<BlobPrefix> blobPrefixes, IReadOnlyList<BlobItemInternal> blobItems)
+        /// <param name="blobItems"> The blob items. </param>
+        /// <param name="blobPrefixes"> The blob prefixes. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobHierarchyListSegment(IList<BlobItemInternal> blobItems, IList<BlobPrefix> blobPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobPrefixes = blobPrefixes;
             BlobItems = blobItems;
+            BlobPrefixes = blobPrefixes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the blob prefixes. </summary>
-        public IReadOnlyList<BlobPrefix> BlobPrefixes { get; }
-        /// <summary> Gets the blob items. </summary>
-        public IReadOnlyList<BlobItemInternal> BlobItems { get; }
+        /// <summary> The blob items. </summary>
+        public IList<BlobItemInternal> BlobItems { get; }
+
+        /// <summary> The blob prefixes. </summary>
+        public IList<BlobPrefix> BlobPrefixes { get; }
     }
 }

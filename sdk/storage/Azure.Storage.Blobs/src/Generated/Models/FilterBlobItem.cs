@@ -6,50 +6,55 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Blob info from a Filter Blobs API call. </summary>
+    /// <summary> The filter blob item. </summary>
     internal partial class FilterBlobItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="containerName"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
+        /// <param name="name"> The name of the blob. </param>
+        /// <param name="containerName"> The properties of the blob. </param>
         internal FilterBlobItem(string name, string containerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-
             Name = name;
             ContainerName = containerName;
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="containerName"></param>
-        /// <param name="tags"> Blob tags. </param>
-        /// <param name="versionId"></param>
-        /// <param name="isCurrentVersion"></param>
-        internal FilterBlobItem(string name, string containerName, BlobTags tags, string versionId, bool? isCurrentVersion)
+        /// <param name="name"> The name of the blob. </param>
+        /// <param name="containerName"> The properties of the blob. </param>
+        /// <param name="tags"> The metadata of the blob. </param>
+        /// <param name="versionId"> The version ID of the blob. </param>
+        /// <param name="isCurrentVersion"> Whether it is the current version of the blob. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FilterBlobItem(string name, string containerName, BlobTags tags, string versionId, bool? isCurrentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ContainerName = containerName;
             Tags = tags;
             VersionId = versionId;
             IsCurrentVersion = isCurrentVersion;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The name of the blob. </summary>
         public string Name { get; }
-        /// <summary> Gets the container name. </summary>
+
+        /// <summary> The properties of the blob. </summary>
         public string ContainerName { get; }
-        /// <summary> Blob tags. </summary>
+
+        /// <summary> The metadata of the blob. </summary>
         public BlobTags Tags { get; }
-        /// <summary> Gets the version id. </summary>
+
+        /// <summary> The version ID of the blob. </summary>
         public string VersionId { get; }
-        /// <summary> Gets the is current version. </summary>
+
+        /// <summary> Whether it is the current version of the blob. </summary>
         public bool? IsCurrentVersion { get; }
     }
 }

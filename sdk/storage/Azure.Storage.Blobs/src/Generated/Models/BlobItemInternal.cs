@@ -7,25 +7,22 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="deleted"></param>
-        /// <param name="snapshot"></param>
-        /// <param name="properties"> Properties of a blob. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/> or <paramref name="properties"/> is null. </exception>
+        /// <param name="name"> The name of the blob. </param>
+        /// <param name="deleted"> Whether the blob is deleted. </param>
+        /// <param name="snapshot"> The snapshot of the blob. </param>
+        /// <param name="properties"> The properties of the blob. </param>
         internal BlobItemInternal(BlobName name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(snapshot, nameof(snapshot));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Deleted = deleted;
             Snapshot = snapshot;
@@ -35,17 +32,18 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="deleted"></param>
-        /// <param name="snapshot"></param>
-        /// <param name="versionId"></param>
-        /// <param name="isCurrentVersion"></param>
-        /// <param name="properties"> Properties of a blob. </param>
-        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="blobTags"> Blob tags. </param>
-        /// <param name="hasVersionsOnly"></param>
-        /// <param name="orMetadata"> Dictionary of &lt;string&gt;. </param>
-        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, bool? hasVersionsOnly, IReadOnlyDictionary<string, string> orMetadata)
+        /// <param name="name"> The name of the blob. </param>
+        /// <param name="deleted"> Whether the blob is deleted. </param>
+        /// <param name="snapshot"> The snapshot of the blob. </param>
+        /// <param name="versionId"> The version id of the blob. </param>
+        /// <param name="isCurrentVersion"> Whether the blob is the current version. </param>
+        /// <param name="properties"> The properties of the blob. </param>
+        /// <param name="metadata"> The metadata of the blob. </param>
+        /// <param name="blobTags"> The tags of the blob. </param>
+        /// <param name="orMetadata"> The object replication metadata of the blob. </param>
+        /// <param name="hasVersionsOnly"> Whether the blob has versions only. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IDictionary<string, string> metadata, BlobTags blobTags, IDictionary<string, string> orMetadata, bool? hasVersionsOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Deleted = deleted;
@@ -55,29 +53,39 @@ namespace Azure.Storage.Blobs.Models
             Properties = properties;
             Metadata = metadata;
             BlobTags = blobTags;
-            HasVersionsOnly = hasVersionsOnly;
             OrMetadata = orMetadata;
+            HasVersionsOnly = hasVersionsOnly;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The name of the blob. </summary>
         public BlobName Name { get; }
-        /// <summary> Gets the deleted. </summary>
+
+        /// <summary> Whether the blob is deleted. </summary>
         public bool Deleted { get; }
-        /// <summary> Gets the snapshot. </summary>
+
+        /// <summary> The snapshot of the blob. </summary>
         public string Snapshot { get; }
-        /// <summary> Gets the version id. </summary>
+
+        /// <summary> The version id of the blob. </summary>
         public string VersionId { get; }
-        /// <summary> Gets the is current version. </summary>
+
+        /// <summary> Whether the blob is the current version. </summary>
         public bool? IsCurrentVersion { get; }
-        /// <summary> Properties of a blob. </summary>
+
+        /// <summary> The properties of the blob. </summary>
         public BlobPropertiesInternal Properties { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
-        /// <summary> Blob tags. </summary>
+
+        /// <summary> The metadata of the blob. </summary>
+        public IDictionary<string, string> Metadata { get; }
+
+        /// <summary> The tags of the blob. </summary>
         public BlobTags BlobTags { get; }
-        /// <summary> Gets the has versions only. </summary>
+
+        /// <summary> The object replication metadata of the blob. </summary>
+        public IDictionary<string, string> OrMetadata { get; }
+
+        /// <summary> Whether the blob has versions only. </summary>
         public bool? HasVersionsOnly { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IReadOnlyDictionary<string, string> OrMetadata { get; }
     }
 }

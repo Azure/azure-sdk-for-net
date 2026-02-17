@@ -5,46 +5,198 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ContainerItemInternal
+    internal partial class ContainerItemInternal : IPersistableModel<ContainerItemInternal>, IXmlSerializable
     {
-        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element)
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/> for deserialization. </summary>
+        internal ContainerItemInternal()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerItemInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerItemInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeContainerItemInternal(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerItemInternal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerItemInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Container");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerItemInternal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerItemInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerItemInternal IPersistableModel<ContainerItemInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerItemInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerItemInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(ContainerItemInternal)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Deleted))
+            {
+                writer.WriteStartElement("Deleted");
+                writer.WriteValue(Deleted.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WriteStartElement("Version");
+                writer.WriteValue(Version);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Properties");
+            writer.WriteObjectValue(Properties, options);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WriteStartElement("Metadata");
+                foreach (var pair in Metadata)
+                {
+                    writer.WriteStartElement(pair.Key);
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             string name = default;
             bool? deleted = default;
             string version = default;
             ContainerPropertiesInternal properties = default;
-            IReadOnlyDictionary<string, string> metadata = default;
-            if (element.Element("Name") is XElement nameElement)
+            IDictionary<string, string> metadata = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                name = (string)nameElement;
-            }
-            if (element.Element("Deleted") is XElement deletedElement)
-            {
-                deleted = (bool?)deletedElement;
-            }
-            if (element.Element("Version") is XElement versionElement)
-            {
-                version = (string)versionElement;
-            }
-            if (element.Element("Properties") is XElement propertiesElement)
-            {
-                properties = ContainerPropertiesInternal.DeserializeContainerPropertiesInternal(propertiesElement);
-            }
-            if (element.Element("Metadata") is XElement metadataElement)
-            {
-                var dictionary = new Dictionary<string, string>();
-                foreach (var e in metadataElement.Elements())
+                string localName = child.Name.LocalName;
+                if (localName == "Name")
                 {
-                    dictionary.Add(e.Name.LocalName, (string)e);
+                    name = (string)child;
+                    continue;
                 }
-                metadata = dictionary;
+                if (localName == "Deleted")
+                {
+                    deleted = (bool?)child;
+                    continue;
+                }
+                if (localName == "Version")
+                {
+                    version = (string)child;
+                    continue;
+                }
+                if (localName == "Properties")
+                {
+                    properties = ContainerPropertiesInternal.DeserializeContainerPropertiesInternal(child, options);
+                    continue;
+                }
+                if (localName == "Metadata")
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var e in child.Elements())
+                    {
+                        dictionary.Add(e.Name.LocalName, (string)e);
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
             }
-            return new ContainerItemInternal(name, deleted, version, properties, metadata);
+            return new ContainerItemInternal(
+                name,
+                deleted,
+                version,
+                properties,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

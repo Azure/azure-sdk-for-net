@@ -6,16 +6,20 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobTag. </summary>
+    /// <summary> The blob tags. </summary>
     internal partial class BlobTag
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="key"> The key of the tag. </param>
+        /// <param name="value"> The value of the tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public BlobTag(string key, string value)
         {
@@ -26,9 +30,21 @@ namespace Azure.Storage.Blobs.Models
             Value = value;
         }
 
-        /// <summary> Gets or sets the key. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
+        /// <param name="key"> The key of the tag. </param>
+        /// <param name="value"> The value of the tag. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobTag(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Key = key;
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The key of the tag. </summary>
         public string Key { get; set; }
-        /// <summary> Gets or sets the value. </summary>
+
+        /// <summary> The value of the tag. </summary>
         public string Value { get; set; }
     }
 }

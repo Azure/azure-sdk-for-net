@@ -1,18 +1,27 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Represents a single block in a block blob.  It describes the block's ID and size.
     /// </summary>
-    [CodeGenModel("Block")]
+    // CUSTOM:
+    // - Move SARD field to this file to avoid CS0282 in the generated file
+    // - Suppress parameterless ctor in favor of implicit one
+    [CodeGenType("Block")]
+    [CodeGenSuppress("BlobBlock")]
     public readonly partial struct BlobBlock : IEquatable<BlobBlock>
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         // All properties are rebuilt by hand in this class to avoid compile error CS0282
 
         /// <summary>

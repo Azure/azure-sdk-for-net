@@ -6,26 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An Access policy. </summary>
+    /// <summary> Represents an access policy. </summary>
     public partial class BlobAccessPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
-        public BlobAccessPolicy()
-        {
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
-        /// <param name="policyStartsOn"> the date-time the policy is active. </param>
-        /// <param name="policyExpiresOn"> the date-time the policy expires. </param>
-        /// <param name="permissions"> the permissions for the acl policy. </param>
-        internal BlobAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
+        /// <param name="policyStartsOn"> The date-time the policy is active. </param>
+        /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
+        /// <param name="permissions"> The permissions for acl the policy. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyStartsOn = policyStartsOn;
             PolicyExpiresOn = policyExpiresOn;
             Permissions = permissions;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The date-time the policy is active. </summary>
+        public DateTimeOffset? PolicyStartsOn { get; set; }
+
+        /// <summary> The date-time the policy expires. </summary>
+        public DateTimeOffset? PolicyExpiresOn { get; set; }
+
+        /// <summary> The permissions for acl the policy. </summary>
+        public string Permissions { get; set; }
     }
 }

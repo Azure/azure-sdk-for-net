@@ -6,65 +6,72 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsHierarchySegmentResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="containerName"></param>
-        /// <param name="segment"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="segment"> The blob segment. </param>
         internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyListSegment segment)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(segment, nameof(segment));
-
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             Segment = segment;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="containerName"></param>
-        /// <param name="prefix"></param>
-        /// <param name="marker"></param>
-        /// <param name="maxResults"></param>
-        /// <param name="delimiter"></param>
-        /// <param name="segment"></param>
-        /// <param name="nextMarker"></param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, string delimiter, BlobHierarchyListSegment segment, string nextMarker)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="delimiter"> The delimiter of the blobs. </param>
+        /// <param name="prefix"> The prefix of the blobs. </param>
+        /// <param name="marker"> The marker of the blobs. </param>
+        /// <param name="maxResults"> The max results of the blobs. </param>
+        /// <param name="segment"> The blob segment. </param>
+        /// <param name="nextMarker"> The next marker of the blobs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyListSegment segment, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
+            Delimiter = delimiter;
             Prefix = prefix;
             Marker = marker;
             MaxResults = maxResults;
-            Delimiter = delimiter;
             Segment = segment;
             NextMarker = nextMarker;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the container name. </summary>
+
+        /// <summary> The container name. </summary>
         public string ContainerName { get; }
-        /// <summary> Gets the prefix. </summary>
-        public string Prefix { get; }
-        /// <summary> Gets the marker. </summary>
-        public string Marker { get; }
-        /// <summary> Gets the max results. </summary>
-        public int? MaxResults { get; }
-        /// <summary> Gets the delimiter. </summary>
+
+        /// <summary> The delimiter of the blobs. </summary>
         public string Delimiter { get; }
-        /// <summary> Gets the segment. </summary>
+
+        /// <summary> The prefix of the blobs. </summary>
+        public string Prefix { get; }
+
+        /// <summary> The marker of the blobs. </summary>
+        public string Marker { get; }
+
+        /// <summary> The max results of the blobs. </summary>
+        public int? MaxResults { get; }
+
+        /// <summary> The blob segment. </summary>
         public BlobHierarchyListSegment Segment { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The next marker of the blobs. </summary>
         public string NextMarker { get; }
     }
 }

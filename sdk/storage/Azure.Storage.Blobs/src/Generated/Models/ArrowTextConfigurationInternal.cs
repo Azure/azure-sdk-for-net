@@ -8,31 +8,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
     internal partial class ArrowTextConfigurationInternal
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ArrowTextConfigurationInternal"/>. </summary>
-        /// <param name="schema"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/> is null. </exception>
+        /// <param name="schema"> The Apache Arrow schema. </param>
         public ArrowTextConfigurationInternal(IEnumerable<ArrowFieldInternal> schema)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
-
             Schema = schema.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArrowTextConfigurationInternal"/>. </summary>
-        /// <param name="schema"></param>
-        internal ArrowTextConfigurationInternal(IList<ArrowFieldInternal> schema)
+        /// <param name="schema"> The Apache Arrow schema. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArrowTextConfigurationInternal(IList<ArrowFieldInternal> schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Schema = schema;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the schema. </summary>
+        /// <summary> The Apache Arrow schema. </summary>
         public IList<ArrowFieldInternal> Schema { get; }
     }
 }

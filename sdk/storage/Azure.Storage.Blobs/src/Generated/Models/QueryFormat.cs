@@ -5,42 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The QueryFormat. </summary>
+    /// <summary> The query format settings. </summary>
     internal partial class QueryFormat
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
-        /// <param name="type"> The quick query format type. </param>
-        public QueryFormat(QueryFormatType type)
+        /// <param name="type"> The query type. </param>
+        public QueryFormat(QueryFormatType @type)
         {
-            Type = type;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
-        /// <param name="type"> The quick query format type. </param>
-        /// <param name="delimitedTextConfiguration"> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </param>
-        /// <param name="jsonTextConfiguration"> json text configuration. </param>
-        /// <param name="arrowConfiguration"> Groups the settings used for formatting the response if the response should be Arrow formatted. </param>
-        /// <param name="parquetTextConfiguration"> parquet configuration. </param>
-        internal QueryFormat(QueryFormatType type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, object parquetTextConfiguration)
+        /// <param name="type"> The query type. </param>
+        /// <param name="delimitedTextConfiguration"> The delimited text configuration. </param>
+        /// <param name="jsonTextConfiguration"> The JSON text configuration. </param>
+        /// <param name="arrowConfiguration"> The Apache Arrow configuration. </param>
+        /// <param name="parquetTextConfiguration"> The Parquet configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueryFormat(QueryFormatType @type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, ParquetConfiguration parquetTextConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             DelimitedTextConfiguration = delimitedTextConfiguration;
             JsonTextConfiguration = jsonTextConfiguration;
             ArrowConfiguration = arrowConfiguration;
             ParquetTextConfiguration = parquetTextConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The quick query format type. </summary>
+        /// <summary> The query type. </summary>
         public QueryFormatType Type { get; }
-        /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
+
+        /// <summary> The delimited text configuration. </summary>
         public DelimitedTextConfigurationInternal DelimitedTextConfiguration { get; set; }
-        /// <summary> json text configuration. </summary>
+
+        /// <summary> The JSON text configuration. </summary>
         public JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
-        /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
+
+        /// <summary> The Apache Arrow configuration. </summary>
         public ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
-        /// <summary> parquet configuration. </summary>
-        public object ParquetTextConfiguration { get; set; }
+
+        /// <summary> The Parquet configuration. </summary>
+        public ParquetConfiguration ParquetTextConfiguration { get; set; }
     }
 }

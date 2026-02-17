@@ -5,37 +5,192 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryFormat : IXmlSerializable
+    /// <summary> The query format settings. </summary>
+    internal partial class QueryFormat : IPersistableModel<QueryFormat>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <summary> Initializes a new instance of <see cref="QueryFormat"/> for deserialization. </summary>
+        internal QueryFormat()
         {
-            writer.WriteStartElement(nameHint ?? "QueryFormat");
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueryFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeQueryFormat(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "QueryFormat");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QueryFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QueryFormat IPersistableModel<QueryFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QueryFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueryFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(QueryFormat)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartElement("Type");
             writer.WriteValue(Type.ToSerialString());
             writer.WriteEndElement();
-            if (Common.Optional.IsDefined(DelimitedTextConfiguration))
+            if (Optional.IsDefined(DelimitedTextConfiguration))
             {
-                writer.WriteObjectValue(DelimitedTextConfiguration, "DelimitedTextConfiguration");
+                writer.WriteStartElement("DelimitedTextConfiguration");
+                writer.WriteObjectValue(DelimitedTextConfiguration, options);
+                writer.WriteEndElement();
             }
-            if (Common.Optional.IsDefined(JsonTextConfiguration))
+            if (Optional.IsDefined(JsonTextConfiguration))
             {
-                writer.WriteObjectValue(JsonTextConfiguration, "JsonTextConfiguration");
+                writer.WriteStartElement("JsonTextConfiguration");
+                writer.WriteObjectValue(JsonTextConfiguration, options);
+                writer.WriteEndElement();
             }
-            if (Common.Optional.IsDefined(ArrowConfiguration))
+            if (Optional.IsDefined(ArrowConfiguration))
             {
-                writer.WriteObjectValue(ArrowConfiguration, "ArrowConfiguration");
+                writer.WriteStartElement("ArrowConfiguration");
+                writer.WriteObjectValue(ArrowConfiguration, options);
+                writer.WriteEndElement();
             }
-            if (Common.Optional.IsDefined(ParquetTextConfiguration))
+            if (Optional.IsDefined(ParquetTextConfiguration))
             {
-                writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
+                writer.WriteStartElement("ParquetTextConfiguration");
+                writer.WriteObjectValue(ParquetTextConfiguration, options);
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static QueryFormat DeserializeQueryFormat(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
+            QueryFormatType @type = default;
+            DelimitedTextConfigurationInternal delimitedTextConfiguration = default;
+            JsonTextConfigurationInternal jsonTextConfiguration = default;
+            ArrowTextConfigurationInternal arrowConfiguration = default;
+            ParquetConfiguration parquetTextConfiguration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
+            {
+                string localName = child.Name.LocalName;
+                if (localName == "Type")
+                {
+                    @type = ((string)child).ToQueryFormatType();
+                    continue;
+                }
+                if (localName == "DelimitedTextConfiguration")
+                {
+                    delimitedTextConfiguration = DelimitedTextConfigurationInternal.DeserializeDelimitedTextConfigurationInternal(child, options);
+                    continue;
+                }
+                if (localName == "JsonTextConfiguration")
+                {
+                    jsonTextConfiguration = JsonTextConfigurationInternal.DeserializeJsonTextConfigurationInternal(child, options);
+                    continue;
+                }
+                if (localName == "ArrowConfiguration")
+                {
+                    arrowConfiguration = ArrowTextConfigurationInternal.DeserializeArrowTextConfigurationInternal(child, options);
+                    continue;
+                }
+                if (localName == "ParquetTextConfiguration")
+                {
+                    parquetTextConfiguration = ParquetConfiguration.DeserializeParquetConfiguration(child, options);
+                    continue;
+                }
+            }
+            return new QueryFormat(
+                @type,
+                delimitedTextConfiguration,
+                jsonTextConfiguration,
+                arrowConfiguration,
+                parquetTextConfiguration,
+                additionalBinaryDataProperties);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

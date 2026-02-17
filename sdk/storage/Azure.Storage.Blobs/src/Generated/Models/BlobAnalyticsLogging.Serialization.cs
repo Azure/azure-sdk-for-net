@@ -5,17 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobAnalyticsLogging : IXmlSerializable
+    /// <summary> Azure Analytics Logging settings. </summary>
+    public partial class BlobAnalyticsLogging : IPersistableModel<BlobAnalyticsLogging>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobAnalyticsLogging PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartElement(nameHint ?? "Logging");
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAnalyticsLogging>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeBlobAnalyticsLogging(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobAnalyticsLogging)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAnalyticsLogging>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Logging");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobAnalyticsLogging)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlobAnalyticsLogging>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobAnalyticsLogging IPersistableModel<BlobAnalyticsLogging>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobAnalyticsLogging>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAnalyticsLogging>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(BlobAnalyticsLogging)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartElement("Version");
             writer.WriteValue(Version);
             writer.WriteEndElement();
@@ -28,38 +113,67 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Write");
             writer.WriteValue(Write);
             writer.WriteEndElement();
-            writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
+            writer.WriteStartElement("RetentionPolicy");
+            writer.WriteObjectValue(RetentionPolicy, options);
             writer.WriteEndElement();
         }
 
-        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element)
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element, ModelReaderWriterOptions options)
         {
+            if (element == null)
+            {
+                return null;
+            }
+
             string version = default;
             bool delete = default;
             bool read = default;
             bool write = default;
             BlobRetentionPolicy retentionPolicy = default;
-            if (element.Element("Version") is XElement versionElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                version = (string)versionElement;
+                string localName = child.Name.LocalName;
+                if (localName == "Version")
+                {
+                    version = (string)child;
+                    continue;
+                }
+                if (localName == "Delete")
+                {
+                    delete = (bool)child;
+                    continue;
+                }
+                if (localName == "Read")
+                {
+                    read = (bool)child;
+                    continue;
+                }
+                if (localName == "Write")
+                {
+                    write = (bool)child;
+                    continue;
+                }
+                if (localName == "RetentionPolicy")
+                {
+                    retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(child, options);
+                    continue;
+                }
             }
-            if (element.Element("Delete") is XElement deleteElement)
-            {
-                delete = (bool)deleteElement;
-            }
-            if (element.Element("Read") is XElement readElement)
-            {
-                read = (bool)readElement;
-            }
-            if (element.Element("Write") is XElement writeElement)
-            {
-                write = (bool)writeElement;
-            }
-            if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
-            {
-                retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
-            }
-            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy);
+            return new BlobAnalyticsLogging(
+                version,
+                delete,
+                read,
+                write,
+                retentionPolicy,
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

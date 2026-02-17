@@ -6,26 +6,149 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobGeoReplication
+    /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
+    public partial class BlobGeoReplication : IPersistableModel<BlobGeoReplication>, IXmlSerializable
     {
-        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
+        /// <summary> Initializes a new instance of <see cref="BlobGeoReplication"/> for deserialization. </summary>
+        internal BlobGeoReplication()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobGeoReplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeBlobGeoReplication(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobGeoReplication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "GeoReplication");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobGeoReplication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlobGeoReplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobGeoReplication IPersistableModel<BlobGeoReplication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobGeoReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(BlobGeoReplication)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("Status");
+            writer.WriteValue(Status.ToSerialString());
+            writer.WriteEndElement();
+            if (Optional.IsDefined(LastSyncedOn))
+            {
+                writer.WriteStartElement("LastSyncTime");
+                writer.WriteStringValue(LastSyncedOn.Value, "R");
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             BlobGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
-            if (element.Element("Status") is XElement statusElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                status = statusElement.Value.ToBlobGeoReplicationStatus();
+                string localName = child.Name.LocalName;
+                if (localName == "Status")
+                {
+                    status = ((string)child).ToBlobGeoReplicationStatus();
+                    continue;
+                }
+                if (localName == "LastSyncTime")
+                {
+                    lastSyncedOn = child.GetDateTimeOffset("R");
+                    continue;
+                }
             }
-            if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
-            {
-                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
-            }
-            return new BlobGeoReplication(status, lastSyncedOn);
+            return new BlobGeoReplication(status, lastSyncedOn, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }
