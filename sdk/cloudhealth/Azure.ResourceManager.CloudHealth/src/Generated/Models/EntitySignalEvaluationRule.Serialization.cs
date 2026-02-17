@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
     /// <summary> Evaluation rule for a signal definition. </summary>
     public partial class EntitySignalEvaluationRule : IJsonModel<EntitySignalEvaluationRule>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EntitySignalEvaluationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEntitySignalEvaluationRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EntitySignalEvaluationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -151,23 +168,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EntitySignalEvaluationRule IPersistableModel<EntitySignalEvaluationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntitySignalEvaluationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEntitySignalEvaluationRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EntitySignalEvaluationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

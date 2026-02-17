@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Deallocate(WaitUntil waitUntil, VirtualMachineScaleSetVmInstanceIds vmInstanceIds , CancellationToken cancellationToken)
+        public virtual ArmOperation Deallocate(WaitUntil waitUntil, VirtualMachineScaleSetVmInstanceIds vmInstanceIds, CancellationToken cancellationToken)
             => Deallocate(waitUntil, vmInstanceIds, null, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]

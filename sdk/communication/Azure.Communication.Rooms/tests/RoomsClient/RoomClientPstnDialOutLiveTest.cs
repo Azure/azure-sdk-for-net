@@ -749,7 +749,7 @@ namespace Azure.Communication.Rooms.Test
             };
 
             var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
-            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions(){ };
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions() { };
 
             // Act and Assert
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
@@ -905,7 +905,8 @@ namespace Azure.Communication.Rooms.Test
         [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
         public void UpdateRoomWithPstn_WithInvalidFormatRoomId_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
-            if (authMethod == AuthMethod.KeyCredential){
+            if (authMethod == AuthMethod.KeyCredential)
+            {
                 // TODO: to fix bug before enabling this test for KeyCredential
                 Assert.Ignore();
                 return;

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string privateEndpointConnectionName = $"{iotHubName}.{Guid.NewGuid()}";
             var connectionState = new IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus.Approved, "description");
             var privateEndpointConnectionProperties = new IotHubPrivateEndpointConnectionProperties(connectionState) { };
-            var iotHubPrivateEndpointConnectionData = new IotHubPrivateEndpointConnectionData(privateEndpointConnectionProperties) {};
+            var iotHubPrivateEndpointConnectionData = new IotHubPrivateEndpointConnectionData(privateEndpointConnectionProperties) { };
             var connection = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, iotHubPrivateEndpointConnectionData);
             Assert.IsNotNull(connection);
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             string connectionName = "IotHub-6981.c3c46102-efff-4ced-b7c1-52dbfb1e5111";
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-            var connect  = await iothub.GetIotHubPrivateEndpointConnections().GetAsync(connectionName);
+            var connect = await iothub.GetIotHubPrivateEndpointConnections().GetAsync(connectionName);
             Assert.IsNotNull(connect);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-            var list =  await iothub.GetIotHubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var list = await iothub.GetIotHubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
     }

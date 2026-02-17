@@ -657,7 +657,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         AutoFlushInterval = interval != null ?
-                            (TimeSpan?) TimeSpan.FromMilliseconds(interval.Value) :
+                            (TimeSpan?)TimeSpan.FromMilliseconds(interval.Value) :
                             null
                     });
             AssertNoFailures(indexer);

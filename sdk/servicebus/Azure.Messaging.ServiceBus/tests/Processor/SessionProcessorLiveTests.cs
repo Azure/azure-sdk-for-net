@@ -2481,7 +2481,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 1)
                     {
                         await args.DeferMessageAsync(args.Message);
-                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] { args.Message.SequenceNumber })).Single();
                     }
 
                     // lock renewal should happen for messages received in callback
@@ -2772,7 +2772,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 long lastSequenceNumber = 0;
                 var options = new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentCallsPerSession = 1, MaxConcurrentSessions = 1, PrefetchCount = prefetch ? 5 : 0
+                    MaxConcurrentCallsPerSession = 1,
+                    MaxConcurrentSessions = 1,
+                    PrefetchCount = prefetch ? 5 : 0
                 };
                 if (useSpecificSession)
                 {

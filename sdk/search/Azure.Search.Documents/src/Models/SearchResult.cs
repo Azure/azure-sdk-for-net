@@ -64,7 +64,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SearchResult() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize a SearchResult and its model.
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             Debug.Assert(options != null);
             SearchResult<T> result = DeserializeEnvelope(element);

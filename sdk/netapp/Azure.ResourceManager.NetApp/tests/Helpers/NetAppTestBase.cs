@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using FluentAssertions;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Polly.Contrib.WaitAndRetry;
-using Polly;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
+using FluentAssertions;
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using System.Collections;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
 
 namespace Azure.ResourceManager.NetApp.Tests.Helpers
 {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             if (subnetId == null)
             {
-                subnetId =  DefaultSubnetId;
+                subnetId = DefaultSubnetId;
             }
             usageThreshold ??= _defaultUsageThreshold;
 
@@ -360,13 +360,14 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             if (vnetName == null)
             {
                 vnetName = Recording.GenerateAssetName("vnet-");
-            };
+            }
+            ;
             if (string.IsNullOrWhiteSpace(location))
             {
                 location = DefaultLocationString;
             }
             location ??= DefaultLocationString;
-            ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
+            ServiceDelegation delegation = new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" };
             var vnet = new VirtualNetworkData()
             {
                 Location = location,

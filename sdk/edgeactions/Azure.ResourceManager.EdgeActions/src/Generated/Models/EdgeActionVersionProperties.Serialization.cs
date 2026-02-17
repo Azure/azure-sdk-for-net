@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.EdgeActions.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeActionVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeActionVersionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeActionVersionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeActionVersionProperties"/> from. </param>
+        internal static EdgeActionVersionProperties FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeActionVersionProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeActionVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -42,10 +66,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {
                 writer.WritePropertyName("validationStatus"u8);
-                writer.WriteStringValue(ValidationStatus.ToString());
+                writer.WriteStringValue(ValidationStatus.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -54,10 +78,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
             }
             writer.WritePropertyName("isDefaultVersion"u8);
             writer.WriteStringValue(IsDefaultVersion.ToString());
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(LastPackageUpdatedOn))
             {
                 writer.WritePropertyName("lastPackageUpdateTime"u8);
-                writer.WriteStringValue(LastPackageUpdatedOn, "O");
+                writer.WriteStringValue(LastPackageUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -102,10 +126,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 return null;
             }
             EdgeActionVersionDeploymentType deploymentType = default;
-            EdgeActionVersionValidationStatus validationStatus = default;
+            EdgeActionVersionValidationStatus? validationStatus = default;
             EdgeActionProvisioningState? provisioningState = default;
             EdgeActionIsDefaultVersion isDefaultVersion = default;
-            DateTimeOffset lastPackageUpdatedOn = default;
+            DateTimeOffset? lastPackageUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,6 +140,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 }
                 if (prop.NameEquals("validationStatus"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     validationStatus = new EdgeActionVersionValidationStatus(prop.Value.GetString());
                     continue;
                 }
@@ -135,6 +163,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 }
                 if (prop.NameEquals("lastPackageUpdateTime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lastPackageUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -172,31 +204,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeActionVersionProperties IPersistableModel<EdgeActionVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeActionVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeActionVersionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeActionVersionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeActionVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeActionVersionProperties"/> from. </param>
-        internal static EdgeActionVersionProperties FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEdgeActionVersionProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

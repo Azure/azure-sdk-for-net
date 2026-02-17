@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// List of available object recommendations.
-    /// Serialized Name: ObjectRecommendationList
-    /// </summary>
+    /// <summary> List of available object recommendations. </summary>
     internal partial class ObjectRecommendationList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationList"/>. </summary>
-        /// <param name="value">
-        /// The ObjectRecommendation items on this page
-        /// Serialized Name: ObjectRecommendationList.value
-        /// </param>
+        /// <param name="value"> The ObjectRecommendation items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ObjectRecommendationList(IEnumerable<ObjectRecommendation> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationList"/>. </summary>
-        /// <param name="value">
-        /// The ObjectRecommendation items on this page
-        /// Serialized Name: ObjectRecommendationList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ObjectRecommendationList.nextLink
-        /// </param>
+        /// <param name="value"> The ObjectRecommendation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ObjectRecommendationList(IReadOnlyList<ObjectRecommendation> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The ObjectRecommendation items on this page
-        /// Serialized Name: ObjectRecommendationList.value
-        /// </summary>
+        /// <summary> The ObjectRecommendation items on this page. </summary>
         public IReadOnlyList<ObjectRecommendation> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ObjectRecommendationList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> SearchFields { get; internal set; } = new List<string>();
 
-        #pragma warning disable CA1822 // Only (unused but required) setters are static
+#pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>

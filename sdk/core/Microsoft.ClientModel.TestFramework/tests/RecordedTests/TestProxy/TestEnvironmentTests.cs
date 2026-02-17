@@ -1,20 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.IO;
 using Moq;
-using System.ClientModel;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 
 [TestFixture]
 public class TestEnvironmentTests
 {
+    [TearDown]
+    public void TearDown()
+    {
+        // Clear all static overrides after each test so subsequent tests
+        // can rely on environment variables and default behavior.
+        TestEnvironment.ResetEnvironmentOverrides();
+    }
+
     #region Test Implementation
 
     private class TestableTestEnvironment : TestEnvironment
@@ -199,33 +205,41 @@ public class TestEnvironmentTests
     }
 
     [Test]
+    [NonParallelizable]
     public void GetVariableWithNonExistingVariableThrowsInvalidOperationException()
     {
+        TestEnvironment.DisableBootstrapping = true;
         var environment = new TestableTestEnvironment();
-        // Set a dummy script path to avoid bootstrapping exception and get to the actual variable missing exception
-        environment.PathToTestResourceBootstrappingScript = @"C:\dummy\script.ps1";
 
         var exception = Assert.Throws<InvalidOperationException>(() => environment.GetVariable("MISSING_VAR"));
+
         Assert.That(exception.Message, Does.Contain("Unable to find environment variable MISSING_VAR"));
     }
 
     [Test]
+    [NonParallelizable]
     public void GetVariableWithNonExistingVariableAndNoBootstrapScriptThrowsBootstrapException()
     {
+        TestEnvironment.DisableBootstrapping = false;
         var environment = new TestableTestEnvironment();
         environment.PathToTestResourceBootstrappingScript = null;
 
-        if (!TestEnvironment.DisableBootstrapping)
-        {
-            var exception = Assert.Throws<InvalidOperationException>(() => environment.GetVariable("MISSING_VAR"));
-            Assert.That(exception.Message, Does.Contain("PathToTestResourceBootstrappingScript is null"));
-        }
-        else
-        {
-            // If bootstrapping is disabled, should get the variable not found exception
-            var exception = Assert.Throws<InvalidOperationException>(() => environment.GetVariable("MISSING_VAR"));
-            Assert.That(exception.Message, Does.Contain("Unable to find environment variable MISSING_VAR"));
-        }
+        var exception = Assert.Throws<InvalidOperationException>(() => environment.GetVariable("MISSING_VAR"));
+
+        Assert.That(exception.Message, Does.Contain("PathToTestResourceBootstrappingScript is null"));
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void GetVariableWithNonExistingVariableWhenBootstrappingDisabledThrowsVariableNotFoundException()
+    {
+        TestEnvironment.DisableBootstrapping = true;
+        var environment = new TestableTestEnvironment();
+        environment.PathToTestResourceBootstrappingScript = null;
+
+        var exception = Assert.Throws<InvalidOperationException>(() => environment.GetVariable("MISSING_VAR"));
+
+        Assert.That(exception.Message, Does.Contain("Unable to find environment variable MISSING_VAR"));
     }
 
     #endregion
@@ -319,15 +333,16 @@ public class TestEnvironmentTests
     }
 
     [Test]
+    [NonParallelizable]
     public void GetRecordedVariableWithMissingVariableThrowsInvalidOperationException()
     {
+        TestEnvironment.DisableBootstrapping = true;
         var environment = new TestableTestEnvironment();
         environment.Mode = RecordedTestMode.Live;
-        // Set a dummy script path to avoid bootstrapping exception and get to the actual variable missing exception
-        environment.PathToTestResourceBootstrappingScript = @"C:\dummy\script.ps1";
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
             environment.GetRecordedVariable("MISSING_VAR"));
+
         Assert.That(exception.Message, Does.Contain("Unable to find environment variable MISSING_VAR"));
     }
 
@@ -379,40 +394,41 @@ public class TestEnvironmentTests
     #region BootStrapTestResources Method
 
     [Test]
+    [NonParallelizable]
     public void BootStrapTestResourcesWithNullScriptPathThrowsInvalidOperationException()
     {
+        TestEnvironment.DisableBootstrapping = false;
         var environment = new TestableTestEnvironment();
         environment.PathToTestResourceBootstrappingScript = null;
 
-        if (!TestEnvironment.DisableBootstrapping)
-        {
-            var exception = Assert.Throws<InvalidOperationException>(() => environment.BootStrapTestResources());
-            Assert.That(exception.Message, Does.Contain("PathToTestResourceBootstrappingScript is null"));
-        }
+        var exception = Assert.Throws<InvalidOperationException>(() => environment.BootStrapTestResources());
+
+        Assert.That(exception.Message, Does.Contain("PathToTestResourceBootstrappingScript is null"));
     }
 
     [Test]
-    public void BootStrapTestResourcesWhenBootstrappingDisabledDoesNotThrow()
+    [NonParallelizable]
+    public void BootStrapTestResourcesWhenBootstrappingDisabledReturnsEarly()
     {
+        TestEnvironment.DisableBootstrapping = true;
         var environment = new TestableTestEnvironment();
         environment.PathToTestResourceBootstrappingScript = null;
 
-        // Set environment variable to disable bootstrapping using TestEnvVar
-        using var envVar = new TestEnvVar("CLIENTMODEL_DISABLE_BOOTSTRAPPING", "true");
-
-        // This should not throw regardless of script path if bootstrapping is disabled
-        Assert.DoesNotThrow(() => environment.BootStrapTestResources());
+        // Should return early without throwing when bootstrapping is disabled
+        environment.BootStrapTestResources();
     }
 
     [Test]
-    public void BootStrapTestResourcesInPlaybackModeDoesNotExecute()
+    [NonParallelizable]
+    public void BootStrapTestResourcesInPlaybackModeReturnsEarly()
     {
+        TestEnvironment.DisableBootstrapping = false;
         var environment = new TestableTestEnvironment();
         environment.Mode = RecordedTestMode.Playback;
         environment.PathToTestResourceBootstrappingScript = @"C:\nonexistent\script.ps1";
 
-        // Should not throw even with invalid script path in Playback mode
-        Assert.DoesNotThrow(() => environment.BootStrapTestResources());
+        // Should return early in Playback mode without attempting to execute the script
+        environment.BootStrapTestResources();
     }
 
     #endregion
@@ -445,6 +461,123 @@ public class TestEnvironmentTests
             Assert.That(result, Contains.Key("KEY2"));
         }
         Assert.That(result["KEY2"], Is.EqualTo("VALUE2"));
+    }
+
+    #endregion
+
+    #region Static Environment Properties
+
+    [Test]
+    [NonParallelizable]
+    public void GlobalTestModeCanBeSetAndRetrieved()
+    {
+        TestEnvironment.GlobalTestMode = RecordedTestMode.Live;
+        Assert.That(TestEnvironment.GlobalTestMode, Is.EqualTo(RecordedTestMode.Live));
+
+        TestEnvironment.GlobalTestMode = RecordedTestMode.Record;
+        Assert.That(TestEnvironment.GlobalTestMode, Is.EqualTo(RecordedTestMode.Record));
+
+        TestEnvironment.GlobalTestMode = RecordedTestMode.Playback;
+        Assert.That(TestEnvironment.GlobalTestMode, Is.EqualTo(RecordedTestMode.Playback));
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void GlobalTestModeExplicitValueTakesPrecedenceOverEnvironment()
+    {
+        using var envVar = new TestEnvVar("CLIENTMODEL_TEST_MODE", "Record");
+
+        TestEnvironment.GlobalTestMode = RecordedTestMode.Playback;
+
+        Assert.That(TestEnvironment.GlobalTestMode, Is.EqualTo(RecordedTestMode.Playback));
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void GlobalDisableAutoRecordingCanBeSetAndRetrieved()
+    {
+        TestEnvironment.GlobalDisableAutoRecording = true;
+        Assert.That(TestEnvironment.GlobalDisableAutoRecording, Is.True);
+
+        TestEnvironment.GlobalDisableAutoRecording = false;
+        Assert.That(TestEnvironment.GlobalDisableAutoRecording, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void GlobalDisableAutoRecordingExplicitValueTakesPrecedenceOverEnvironment()
+    {
+        using var envVar = new TestEnvVar("CLIENTMODEL_DISABLE_AUTO_RECORDING", "true");
+
+        TestEnvironment.GlobalDisableAutoRecording = false;
+
+        Assert.That(TestEnvironment.GlobalDisableAutoRecording, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void EnableFiddlerCanBeSetAndRetrieved()
+    {
+        TestEnvironment.EnableFiddler = true;
+        Assert.That(TestEnvironment.EnableFiddler, Is.True);
+
+        TestEnvironment.EnableFiddler = false;
+        Assert.That(TestEnvironment.EnableFiddler, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void EnableFiddlerExplicitValueTakesPrecedenceOverEnvironment()
+    {
+        using var envVar = new TestEnvVar("CLIENTMODEL_ENABLE_FIDDLER", "true");
+
+        TestEnvironment.EnableFiddler = false;
+
+        Assert.That(TestEnvironment.EnableFiddler, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void DisableBootstrappingCanBeSetAndRetrieved()
+    {
+        TestEnvironment.DisableBootstrapping = true;
+        Assert.That(TestEnvironment.DisableBootstrapping, Is.True);
+
+        TestEnvironment.DisableBootstrapping = false;
+        Assert.That(TestEnvironment.DisableBootstrapping, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void DisableBootstrappingExplicitValueTakesPrecedenceOverEnvironment()
+    {
+        using var envVar = new TestEnvVar("CLIENTMODEL_DISABLE_BOOTSTRAPPING", "true");
+
+        TestEnvironment.DisableBootstrapping = false;
+
+        Assert.That(TestEnvironment.DisableBootstrapping, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void EnableTestProxyDebugLogsCanBeSetAndRetrieved()
+    {
+        TestEnvironment.EnableTestProxyDebugLogs = true;
+        Assert.That(TestEnvironment.EnableTestProxyDebugLogs, Is.True);
+
+        TestEnvironment.EnableTestProxyDebugLogs = false;
+        Assert.That(TestEnvironment.EnableTestProxyDebugLogs, Is.False);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void EnableTestProxyDebugLogsExplicitValueTakesPrecedenceOverEnvironment()
+    {
+        using var envVar = new TestEnvVar("CLIENTMODEL_ENABLE_TEST_PROXY_DEBUG_LOGS", "true");
+
+        TestEnvironment.EnableTestProxyDebugLogs = false;
+
+        Assert.That(TestEnvironment.EnableTestProxyDebugLogs, Is.False);
     }
 
     #endregion

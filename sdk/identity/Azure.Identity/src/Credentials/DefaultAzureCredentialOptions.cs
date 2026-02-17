@@ -114,6 +114,11 @@ namespace Azure.Identity
             {
                 Subscription = subscription;
             }
+
+            if (bool.TryParse(section[nameof(WorkloadIdentityCredentialOptions.IsAzureProxyEnabled)], out bool isAzureProxyEnabled))
+            {
+                IsAzureProxyEnabled = isAzureProxyEnabled;
+            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -419,6 +424,8 @@ namespace Azure.Identity
 
         internal bool IsForceRefreshEnabled { get; set; }
 
+        internal bool IsAzureProxyEnabled { get; set; }
+
         internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
             var clone = base.Clone<T>();
@@ -458,6 +465,7 @@ namespace Azure.Identity
                 {
                     dacClone.Subscription = Subscription;
                 }
+                dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
             }
 
             return clone;

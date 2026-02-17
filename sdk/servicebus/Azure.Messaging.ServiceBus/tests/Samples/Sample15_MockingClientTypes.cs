@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // This sets up the mock ServiceBusClient to return the mock of the ServiceBusSender.
 
             mockClient
-                .Setup(client =>client.CreateSender(It.IsAny<string>()))
+                .Setup(client => client.CreateSender(It.IsAny<string>()))
                 .Returns(mockSender.Object);
 
             // This sets up the mock sender to successfully return a completed task when any message is passed to
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 batchOptions: new CreateMessageBatchOptions(),
                 // The model factory allows a custom TryAddMessage callback, allowing control of
                 // what messages the batch accepts.
-                tryAddCallback: _=> backingList.Count < batchCountThreshold);
+                tryAddCallback: _ => backingList.Count < batchCountThreshold);
 
             // This sets up a mock of the CreateMessageBatchAsync method, returning the batch that was previously
             // mocked.
@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
             // method.
 
-            for (int i=0; i < numMessagesToReturn; i++)
+            for (int i = 0; i < numMessagesToReturn; i++)
             {
                 // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
                 // potential outputs from the broker.
@@ -273,7 +273,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
 
             List<ServiceBusReceivedMessage> messagesToReturn = new();
-            int numMessages= 3;
+            int numMessages = 3;
 
             for (int i = 0; i < numMessages; i++)
             {
@@ -599,7 +599,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .ReturnsAsync(() =>
                 {
                     ServiceBusReceivedMessage m = messagesToReturn.FirstOrDefault();
-                    if (m!= null)
+                    if (m != null)
                     {
                         messagesToReturn.RemoveAt(0);
                     }
@@ -842,10 +842,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<ServiceBusMessage>(),
                     It.IsAny<CancellationToken>()))
                 .Callback<ServiceBusMessage, CancellationToken>(
-                (m,ct) => messagesToReturn.Enqueue(ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    body:m.Body,
-                    messageId:m.MessageId,
-                    sessionId:m.SessionId)))
+                (m, ct) => messagesToReturn.Enqueue(ServiceBusModelFactory.ServiceBusReceivedMessage(
+                    body: m.Body,
+                    messageId: m.MessageId,
+                    sessionId: m.SessionId)))
                 .Returns(Task.CompletedTask);
 
             // This sets up the receiver to return a message off of the queue, or return null if there are no messages waiting to be received.
@@ -1063,7 +1063,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #region Snippet:ServiceBus_MockingTopicSubscriptionCrud
             Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
             Mock<Response<TopicProperties>> mockTopicResponse = new();
-            Mock<Response<SubscriptionProperties>> mockSubscriptionResponse= new();
+            Mock<Response<SubscriptionProperties>> mockSubscriptionResponse = new();
 
             // This sets up the mock administration client to return a mocked topic properties using the
             // service bus model factory. It populates each of the arguments using the CreateTopicOptions instance
@@ -1140,7 +1140,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string subscriptionName = "subscription";
             var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
             {
-                UserMetadata= "some metadata"
+                UserMetadata = "some metadata"
             };
             SubscriptionProperties createdSubscription = await adminClient.CreateSubscriptionAsync(subscriptionOptions);
             #endregion

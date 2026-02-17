@@ -98,10 +98,10 @@
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms
+/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms
+# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms @linglingye001
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @Azure/azure-sdk-write-attestation @gkostal
@@ -227,10 +227,10 @@
 # ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @jrjrguo @SG-MS
+/sdk/translation/                                                  @jrjrguo
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @jrjrguo @SG-MS
+# ServiceOwners:                                                   @jrjrguo
 
 # PRLabel: %Communication
 /sdk/communication/                                                @acsdevx-msft
@@ -375,10 +375,10 @@
 # ServiceLabel: %KeyVault
 # ServiceOwners:                                                   @Azure/azure-sdk-write-keyvault
 
-# PRLabel: %Load Test Service
+# PRLabel: %Azure Load Testing
 /sdk/loadtestservice/                                              @azure/testing-services
 
-# ServiceLabel: %Load Test Service
+# ServiceLabel: %Azure Load Testing
 # ServiceOwners:                                                   @azure/testing-services
 
 # PRLabel: %Maps
@@ -492,6 +492,12 @@
 
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @JialinXin @vicancy @Y-Sindo
+
+# PRLabel: %Speech Transcription
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
+
+# ServiceLabel: %Speech Transcription
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
@@ -1199,6 +1205,9 @@
 /eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
+
+# PRLabel: %CodeGen
+/sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
 
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes

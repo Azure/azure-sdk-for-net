@@ -69,9 +69,11 @@ namespace Azure.Search.Documents
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             // Get the invocation list, but return early if there's no work
-            if (eventHandler == null) { return; }
+            if (eventHandler == null)
+            { return; }
             Delegate[] handlers = eventHandler.GetInvocationList();
-            if (handlers == null || handlers.Length == 0) { return; }
+            if (handlers == null || handlers.Length == 0)
+            { return; }
 
             // Wrap handler invocation in a distributed tracing span so it's
             // easy for customers to track and measure

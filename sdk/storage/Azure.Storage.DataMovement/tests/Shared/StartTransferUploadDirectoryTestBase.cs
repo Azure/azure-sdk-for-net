@@ -548,7 +548,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
 
-            List<string> files = [ "file1", "file2", "dir1/file1" ];
+            List<string> files = ["file1", "file2", "dir1/file1"];
 
             using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await SetupDirectoryAsync(

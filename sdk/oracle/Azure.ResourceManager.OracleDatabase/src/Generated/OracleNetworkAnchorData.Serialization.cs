@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.OracleDatabase
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOracleNetworkAnchorData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleNetworkAnchorData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleNetworkAnchorData"/> from. </param>
+        internal static OracleNetworkAnchorData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOracleNetworkAnchorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleNetworkAnchorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -227,23 +251,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="options"> The client options for reading and writing models. </param>
         OracleNetworkAnchorData IPersistableModel<OracleNetworkAnchorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleNetworkAnchorData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OracleNetworkAnchorData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOracleNetworkAnchorData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OracleNetworkAnchorData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OracleNetworkAnchorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -257,13 +264,6 @@ namespace Azure.ResourceManager.OracleDatabase
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(oracleNetworkAnchorData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleNetworkAnchorData"/> from. </param>
-        internal static OracleNetworkAnchorData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOracleNetworkAnchorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> A Quantum Suite Offer that is available to a subscription. </summary>
     public partial class QuantumSuiteOffer : ResourceData, IJsonModel<QuantumSuiteOffer>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuantumSuiteOffer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuantumSuiteOffer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuantumSuiteOffer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuantumSuiteOffer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -152,23 +169,6 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QuantumSuiteOffer IPersistableModel<QuantumSuiteOffer>.Create(BinaryData data, ModelReaderWriterOptions options) => (QuantumSuiteOffer)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumSuiteOffer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuantumSuiteOffer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuantumSuiteOffer)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuantumSuiteOffer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

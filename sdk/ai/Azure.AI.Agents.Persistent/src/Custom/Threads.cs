@@ -143,11 +143,11 @@ namespace Azure.AI.Agents.Persistent
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetThreadsRequest(
-                limit:limit,
+                limit: limit,
                 order: order?.ToString(),
                 after: continuationToken,
                 before: before,
-                context:context);
+                context: context);
             return new ContinuationTokenPageableAsync<PersistentAgentThread>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e),

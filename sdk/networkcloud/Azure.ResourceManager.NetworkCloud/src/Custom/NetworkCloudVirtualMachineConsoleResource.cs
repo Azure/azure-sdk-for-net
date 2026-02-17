@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudVirtualMachineConsoleResource
     {
-                /// <summary>
+        /// <summary>
         /// Patch the properties of the provided virtual machine console, or update the tags associated with the virtual machine console. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>

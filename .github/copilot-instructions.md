@@ -42,3 +42,7 @@ Ask the user for clarification if repository path or configuration file is ambig
 ## SDK release
 
 For detailed workflow instructions, see [SDK Release](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/common/instructions/copilot/sdk-release.instructions.md).
+
+## Pre-Commit Validation
+
+Before committing changes to SDK packages under `sdk/`, always run the pre-commit validation checks described in the `pre-commit-checks` skill. These checks run `dotnet format`, regenerate public API listings, update snippets, and regenerate code as needed. They may produce additional file changes that must be included in the commit.

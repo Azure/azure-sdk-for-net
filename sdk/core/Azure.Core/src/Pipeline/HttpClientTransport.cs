@@ -47,7 +47,8 @@ namespace Azure.Core.Pipeline
                 do
                 {
                     currentCount = _refCount;
-                    if (currentCount == 0) return false; // Already disposed
+                    if (currentCount == 0)
+                        return false; // Already disposed
                 }
                 while (Interlocked.CompareExchange(ref _refCount, currentCount + 1, currentCount) != currentCount);
 
@@ -165,7 +166,8 @@ namespace Azure.Core.Pipeline
                 if (_clientFactory != CreateDefaultClient)
                 {
                     AzureCoreEventSource.Singleton.FailedToUpdateTransport("No factory available to create a new HttpClient instance.");
-                } else
+                }
+                else
                 {
                     AzureCoreEventSource.Singleton.FailedToUpdateTransport("Skipping transport update because no custom factory is available to create a new HttpClient instance.");
                 }

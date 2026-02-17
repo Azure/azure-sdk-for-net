@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.BillingBenefits.Tests.Helper;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.BillingBenefits.Tests
 {

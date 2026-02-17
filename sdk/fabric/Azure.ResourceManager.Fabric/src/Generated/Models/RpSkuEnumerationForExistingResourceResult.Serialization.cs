@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.Fabric.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RpSkuEnumerationForExistingResourceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RpSkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RpSkuEnumerationForExistingResourceResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RpSkuEnumerationForExistingResourceResult"/> from. </param>
+        internal static RpSkuEnumerationForExistingResourceResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RpSkuEnumerationForExistingResourceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,31 +166,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         RpSkuEnumerationForExistingResourceResult IPersistableModel<RpSkuEnumerationForExistingResourceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RpSkuEnumerationForExistingResourceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RpSkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RpSkuEnumerationForExistingResourceResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RpSkuEnumerationForExistingResourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RpSkuEnumerationForExistingResourceResult"/> from. </param>
-        internal static RpSkuEnumerationForExistingResourceResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

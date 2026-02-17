@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns
             TryGetApiVersion(PrivateDnsSoaRecordResource.ResourceType, out string soaRecordInfoRecordSetsApiVersion);
             _soaRecordInfoRecordSetsRestClient = new PrivateDnsSoaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, soaRecordInfoRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

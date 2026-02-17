@@ -1114,7 +1114,7 @@ namespace Azure.Search.Documents.Tests
         {
             SearchResources resource = await SearchResources.GetSharedHotelsIndexAsync(this);
             SearchClient client = resource.GetSearchClient();
-            SearchResults<Hotel> results = await client.SearchAsync<Hotel>("*", querySourceAuthorization: null ,enableElevatedRead: true);
+            SearchResults<Hotel> results = await client.SearchAsync<Hotel>("*", querySourceAuthorization: null, enableElevatedRead: true);
 
             Assert.IsNotNull(results);
             Assert.AreEqual(10, results.Values.Count);

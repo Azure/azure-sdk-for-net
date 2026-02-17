@@ -53,23 +53,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <summary> The SKU of the PowerBI Dedicated capacity resource. </summary>
         public CapacitySku Sku { get; set; }
 
-        /// <summary> A collection of Dedicated capacity administrators. </summary>
-        public DedicatedCapacityAdministrators Administration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Administration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DedicatedCapacityProperties();
-                }
-                Properties.Administration = value;
-            }
-        }
-
         /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
         public Mode? Mode
         {
@@ -102,6 +85,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
             get
             {
                 return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
+        /// <summary> An array of administrator user identities. </summary>
+        public IList<string> AdministrationMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedCapacityProperties();
+                }
+                return Properties.AdministrationMembers;
             }
         }
 

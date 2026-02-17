@@ -303,6 +303,16 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
+
+            // Only fall back to the raw SDK method name when no standard name was generated.
+            // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
+            // standard CRUD method naming patterns.
+            if (methodName == null)
+            {
+                var baseName = resourceMethod.InputMethod.Name;
+                methodName = isAsync ? $"{baseName}Async" : baseName;
+            }
+
             return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
         }
 

@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights.Models;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
-using Azure.Core;
 using System;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
-using NUnit.Framework.Internal;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityInsights.Models;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         {
             return new SecurityInsightsWatchlistItemData()
             {
-                ItemsKeyValueDictionary = { { "ipaddress", BinaryData.FromString("\"1.1.1.2\"")} }
+                ItemsKeyValueDictionary = { { "ipaddress", BinaryData.FromString("\"1.1.1.2\"") } }
             };
         }
         #endregion

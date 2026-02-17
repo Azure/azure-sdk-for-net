@@ -63,7 +63,8 @@ public class ProvisioningVariable : NamedProvisionableConstruct
     {
         // TODO: add the rest of https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters#use-decorators?
         VariableStatement statement = BicepSyntax.Declare.Var(BicepIdentifier, Value.Compile());
-        if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
+        if (Description is not null)
+        { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
         yield return statement;
     }
 }

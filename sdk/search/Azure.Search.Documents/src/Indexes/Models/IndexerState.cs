@@ -17,10 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         internal string AllDocsFinalChangeTrackingState => ChangeTrackingState.AllDocumentsFinalState;
 
         /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
-        internal string ResetDocsInitialChangeTrackingState => ChangeTrackingState.ResetDocumentsInitialState ;
+        internal string ResetDocsInitialChangeTrackingState => ChangeTrackingState.ResetDocumentsInitialState;
 
         /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
-        internal string ResetDocsFinalChangeTrackingState => ChangeTrackingState.ResetDocumentsFinalState ;
+        internal string ResetDocsFinalChangeTrackingState => ChangeTrackingState.ResetDocumentsFinalState;
 
         /// <summary>
         /// Change tracking state for an indexer's execution.

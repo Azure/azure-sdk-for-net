@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
-    public partial class LoadTestingSamples: SamplesBase<LoadTestingClientTestEnvironment>
+    public partial class LoadTestingSamples : SamplesBase<LoadTestingClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -29,9 +29,9 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             // creating LoadTesting Administration Client
             LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
-#endregion
+            #endregion
 
-#region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTest
+            #region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTest
             string testId = "my-test-id";
             Uri keyVaultSecretUrl = new Uri("https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret");
 
@@ -96,7 +96,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             {
                 Console.WriteLine(ex.Message);
             }
-#endregion
+            #endregion
         }
     }
 }

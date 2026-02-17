@@ -8,11 +8,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-   [CodeGenType(nameof(AssociationProperties))]
-   internal partial class AssociationProperties
-   {
-       /// <summary> Association Type. </summary>
-       [CodeGenMember("AssociationType")]
-       public TrafficControllerAssociationType? AssociationType { get; set; }
-   }
+    [CodeGenType(nameof(AssociationProperties))]
+    internal partial class AssociationProperties
+    {
+        /// <summary> Association Type. </summary>
+        [CodeGenMember("AssociationType")]
+        public TrafficControllerAssociationType? AssociationType { get; set; }
+    }
 }

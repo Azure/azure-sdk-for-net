@@ -117,7 +117,7 @@ try
     {
         TextInput = new LanguageDetectionTextInput()
         {
-            LanguageInputs   =
+            LanguageInputs =
             {
                 new LanguageInput("A", textA) { CountryHint = "es" },
                 new LanguageInput("B", textB) { CountryHint = "us" },

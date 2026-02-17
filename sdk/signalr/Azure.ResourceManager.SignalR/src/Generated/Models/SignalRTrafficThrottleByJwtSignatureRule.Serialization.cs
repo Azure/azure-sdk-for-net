@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Throttle the client traffic by the JWT signature. </summary>
     public partial class SignalRTrafficThrottleByJwtSignatureRule : SignalRClientTrafficControlRule, IJsonModel<SignalRTrafficThrottleByJwtSignatureRule>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SignalRClientTrafficControlRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRTrafficThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSignalRTrafficThrottleByJwtSignatureRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignalRTrafficThrottleByJwtSignatureRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRTrafficThrottleByJwtSignatureRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SignalRTrafficThrottleByJwtSignatureRule IPersistableModel<SignalRTrafficThrottleByJwtSignatureRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRTrafficThrottleByJwtSignatureRule)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRClientTrafficControlRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalRTrafficThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSignalRTrafficThrottleByJwtSignatureRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SignalRTrafficThrottleByJwtSignatureRule)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SignalRTrafficThrottleByJwtSignatureRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

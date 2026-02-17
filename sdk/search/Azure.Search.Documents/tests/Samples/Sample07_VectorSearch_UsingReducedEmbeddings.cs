@@ -4,14 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Search.Documents.Indexes.Models;
+using Azure.AI.OpenAI;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.AI.OpenAI;
 using OpenAI.Embeddings;
-using System.ClientModel;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {

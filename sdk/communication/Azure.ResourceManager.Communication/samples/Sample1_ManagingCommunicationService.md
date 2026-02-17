@@ -53,7 +53,7 @@ CommunicationServiceResource communicationService = communicationServiceLro.Valu
 CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
 AsyncPageable<CommunicationServiceResource> list = collection.GetAllAsync();
-await foreach (CommunicationServiceResource communicationService  in list)
+await foreach (CommunicationServiceResource communicationService in list)
 {
     Console.WriteLine(communicationService.Data.Name);
 }

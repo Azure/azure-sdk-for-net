@@ -219,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetTokenDoesNotExtendAnExpiredTokenWhenCreatedWithoutTheKey()
         {
             var expectedExpiration = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(2));
-            var value = $"SharedAccessSignature sr=https%3A%2F%2Ffake-test.servicebus.windows.net%2F&sig=nNBNavJfBiHuXUzWOLhSvI3bVgqbQUzA7Po8%2F4wQQng%3D&se={ ToUnixTime(expectedExpiration) }&skn=fakeKey";
+            var value = $"SharedAccessSignature sr=https%3A%2F%2Ffake-test.servicebus.windows.net%2F&sig=nNBNavJfBiHuXUzWOLhSvI3bVgqbQUzA7Po8%2F4wQQng%3D&se={ToUnixTime(expectedExpiration)}&skn=fakeKey";
             var sourceSignature = new SharedAccessSignature("fake-test", "fakeKey", "ABC123", value, expectedExpiration).Value;
             var signature = new SharedAccessSignature(sourceSignature);
             var credential = new SharedAccessCredential(signature);
@@ -236,7 +236,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetTokenDoesNotExtendATokenCloseToExpiringWhenCreatedWithoutTheKey()
         {
             var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
-            var value = $"SharedAccessSignature sr=https%3A%2F%2Ffake-test.servicebus.windows.net%2F&sig=nNBNavJfBiHuXUzWOLhSvI3bVgqbQUzA7Po8%2F4wQQng%3D&se={ ToUnixTime(tokenExpiration) }&skn=fakeKey";
+            var value = $"SharedAccessSignature sr=https%3A%2F%2Ffake-test.servicebus.windows.net%2F&sig=nNBNavJfBiHuXUzWOLhSvI3bVgqbQUzA7Po8%2F4wQQng%3D&se={ToUnixTime(tokenExpiration)}&skn=fakeKey";
             var sourceSignature = new SharedAccessSignature("fake-test", "fakeKey", "ABC123", value, tokenExpiration).Value;
             var signature = new SharedAccessSignature(sourceSignature);
             var credential = new SharedAccessCredential(signature);
