@@ -296,13 +296,29 @@ namespace Azure.Identity
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
             };
 
-            if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
+            // ManagedIdentityIdKind/ManagedIdentityId (new config properties) take priority
+            if (!string.IsNullOrEmpty(options.ManagedIdentityIdKind))
+            {
+                miOptions.ManagedIdentityId = options.ManagedIdentityIdKind switch
+                {
+                    "SystemAssigned" => ManagedIdentityId.SystemAssigned,
+                    "ClientId" => ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityId),
+                    "ResourceId" => ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(options.ManagedIdentityId)),
+                    "ObjectId" => ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityId),
+                    _ => throw new ArgumentException($"Invalid {nameof(options.ManagedIdentityIdKind)} value: '{options.ManagedIdentityIdKind}'. Valid values are 'SystemAssigned', 'ClientId', 'ResourceId', 'ObjectId'."),
+                };
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityClientId);
             }
             else if (options.ManagedIdentityResourceId != null)
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(options.ManagedIdentityResourceId);
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityObjectId))
+            {
+                miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityObjectId);
             }
             else
             {

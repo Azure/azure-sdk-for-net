@@ -46,6 +46,16 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MultivariateLastDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MultivariateLastDetectionResult IPersistableModel<MultivariateLastDetectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MultivariateLastDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MultivariateLastDetectionResult"/> from. </param>
         public static explicit operator MultivariateLastDetectionResult(Response response)
         {
@@ -173,15 +183,5 @@ namespace Azure.AI.AnomalyDetector
             }
             return new MultivariateLastDetectionResult(variableStates ?? new ChangeTrackingList<VariableState>(), results ?? new ChangeTrackingList<AnomalyState>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultivariateLastDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MultivariateLastDetectionResult IPersistableModel<MultivariateLastDetectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultivariateLastDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

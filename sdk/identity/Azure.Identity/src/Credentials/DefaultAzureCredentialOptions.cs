@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -98,6 +98,21 @@ namespace Azure.Identity
             if (section[nameof(ManagedIdentityResourceId)] is string managedIdentityResourceId)
             {
                 ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
+            }
+
+            if (section[nameof(ManagedIdentityObjectId)] is string managedIdentityObjectId)
+            {
+                ManagedIdentityObjectId = managedIdentityObjectId;
+            }
+
+            if (section[nameof(ManagedIdentityIdKind)] is string managedIdentityIdKind)
+            {
+                ManagedIdentityIdKind = managedIdentityIdKind;
+            }
+
+            if (section[nameof(ManagedIdentityId)] is string managedIdentityId)
+            {
+                ManagedIdentityId = managedIdentityId;
             }
 
             if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
@@ -332,6 +347,23 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
+        /// Specifies the object ID of a user-assigned managed identity. If this value is configured, then
+        /// <see cref="ManagedIdentityClientId"/> and <see cref="ManagedIdentityResourceId"/> should not be configured.
+        /// </summary>
+        internal string ManagedIdentityObjectId { get; set; }
+
+        /// <summary>
+        /// Specifies the type of managed identity to use. Valid values are "SystemAssigned", "ClientId", "ResourceId", and "ObjectId".
+        /// When set to a user-assigned type, <see cref="ManagedIdentityId"/> must also be specified.
+        /// </summary>
+        internal string ManagedIdentityIdKind { get; set; }
+
+        /// <summary>
+        /// Specifies the ID of the managed identity when <see cref="ManagedIdentityIdKind"/> is set to "ClientId", "ResourceId", or "ObjectId".
+        /// </summary>
+        internal string ManagedIdentityId { get; set; }
+
+        /// <summary>
         /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure PowerShell.
         /// </summary>
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
@@ -444,6 +476,9 @@ namespace Azure.Identity
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
+                dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
+                dacClone.ManagedIdentityIdKind = ManagedIdentityIdKind;
+                dacClone.ManagedIdentityId = ManagedIdentityId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
