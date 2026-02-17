@@ -9,8 +9,8 @@ azure-sdk-for-net repository. Every project in the repo resolves its
 
 > **⚠ Overrides require explicit approval from a repository architect.** They
 > exist for cases where a package has a legitimate, documented need for a
-> dependency version that differs from the repo-wide default. Do not create an
-> override file without approval.
+> new dependency or different dependency version that differs from the repo-wide
+> default. Do not create an override file without approval.
 
 When approved, follow these steps to add an override for your package:
 

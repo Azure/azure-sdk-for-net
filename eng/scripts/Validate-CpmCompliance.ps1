@@ -110,10 +110,6 @@ function Get-RelativePath([string]$fullPath) {
 # ─────────────────────────────────────────────────────────────────────────────
 $AllowedCpmOptOutPatterns = @(
     'samples/'
-    'sdk/webpubsub/**/SampleDev/'
-    'sdk/modelsrepository/**/ModelsRepositoryClientSamples/'
-    'sdk/iot/**/IotHubClientSamples/'
-    'sdk/digitaltwins/**/DigitalTwinsClientSample/'
     'doc/ApiDocGeneration/'
 )
 
