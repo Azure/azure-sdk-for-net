@@ -10,14 +10,12 @@ azure-sdk-for-net repository. Every project in the repo resolves its
 > **⚠ Overrides require explicit approval from a repository architect.** They
 > exist for cases where a package has a legitimate, documented need for a
 > dependency version that differs from the repo-wide default. Do not create an
-> override file without approval — the CI compliance checks will flag
-> unapproved changes, and pull requests will be blocked.
+> override file without approval.
 
 When approved, follow these steps to add an override for your package:
 
 1. **Create the override file** in the `overrides/` subdirectory. The filename
-   **must** follow the convention `<PackageName>.Packages.props` (exact casing
-   matters — the `P` in `Packages` and `props` must match):
+   **must** follow the convention `<PackageName>.Packages.props` (case sensitive):
 
    ```
    eng/centralpackagemanagement/overrides/Azure.MyService.Packages.props
@@ -34,6 +32,25 @@ When approved, follow these steps to add an override for your package:
    </Project>
    ```
 
+   If a dependency is only needed for tests, samples, or perf projects, scope
+   it with a condition on the `ItemGroup` so it doesn't leak into the main
+   library:
+
+   ```xml
+   <Project>
+     <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+       <PackageVersion Include="Some.TestOnly.Dependency" Version="2.0.0" />
+     </ItemGroup>
+   </Project>
+   ```
+
+   Available conditions: `IsTestProject`, `IsSamplesProject`, `IsPerfProject`,
+   `IsStressProject`, `IsTestSupportProject`. You can combine them:
+
+   ```xml
+   <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+   ```
+
 3. **That's it.** The build system auto-imports override files by matching on
    `$(MSBuildProjectName)`. If your project is `Azure.MyService`, the file
    `Azure.MyService.Packages.props` is imported automatically — no changes to
@@ -42,7 +59,7 @@ When approved, follow these steps to add an override for your package:
    For test, perf, and sample projects (`Azure.MyService.Tests`,
    `Azure.MyService.Perf`, `Azure.MyService.Samples`), the build system strips
    the suffix and falls back to the base package's override file, so a single
-   override covers the whole project family.
+   override file covers the whole project family.
 
 ---
 
@@ -85,10 +102,6 @@ Do not set ManagePackageVersionsCentrally='false'.
 **Fix:** Remove the `ManagePackageVersionsCentrally` property from your project
 or `Directory.Build.props`. All package versions should come from the central
 `Directory.Packages.props` (or a per-package override file).
-
-If your project has a legitimate reason to opt out (e.g. a standalone sample
-that ships independently), request an allowlist entry in
-`Directory.Build.targets`.
 
 ---
 

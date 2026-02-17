@@ -64,8 +64,6 @@ function Get-RelativePath([string]$fullPath) {
 # ─────────────────────────────────────────────────────────────────────────────
 # Allowlist — paths that legitimately opt out of CPM
 # ─────────────────────────────────────────────────────────────────────────────
-# These must stay in sync with the _CpmEnforcementExempt conditions in
-# Directory.Build.targets at the repo root.
 $AllowedCpmOptOutPatterns = @(
     'samples/'
     'sdk/webpubsub/**/SampleDev/'
