@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// temperature, etc.) is managed in the Foundry portal, not in session code.
     /// </summary>
     /// <remarks>
-    /// This is distinct from <see cref="VoiceLiveFoundryAgentDefinition"/> which represents agent tools
+    /// This is distinct from <see cref="VoiceLiveToolDefinition"/> which represents agent tools
     /// that can be added to model-centric sessions.
     /// </remarks>
     public class AgentSessionConfig

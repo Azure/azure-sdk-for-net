@@ -10,8 +10,6 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
     /// </summary>
     public static class TestAgent
     {
-        private static VoiceLiveFoundryAgentDefinition? _cachedFoundryAgent;
-
         /// <summary>
         /// Gets the project endpoint from environment variables.
         /// </summary>
@@ -118,80 +116,6 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public static SessionTarget CreateModelSessionTarget(string model)
         {
             return SessionTarget.FromModel(model);
-        }
-
-        /// <summary>
-        /// Gets a cached Foundry agent definition, creating it if necessary.
-        /// Reuses the same agent across all tests.
-        /// </summary>
-        /// <param name="testEnvironment">The test environment containing configuration.</param>
-        /// <returns>A cached VoiceLiveFoundryAgentDefinition.</returns>
-        public static VoiceLiveFoundryAgentDefinition GetOrCreateCachedFoundryAgent(
-            VoiceLiveTestEnvironment testEnvironment)
-        {
-            return _cachedFoundryAgent ??= CreateFoundryAgentTool(testEnvironment);
-        }
-
-        /// <summary>
-        /// Creates a VoiceLiveFoundryAgentDefinition tool for use in VoiceLive sessions.
-        /// </summary>
-        /// <param name="testEnvironment">The test environment containing configuration.</param>
-        /// <param name="agentName">Optional override for agent name.</param>
-        /// <param name="projectName">Optional override for project name.</param>
-        /// <param name="description">Optional override for description.</param>
-        /// <returns>A configured VoiceLiveFoundryAgentDefinition.</returns>
-        public static VoiceLiveFoundryAgentDefinition CreateFoundryAgentTool(
-            VoiceLiveTestEnvironment testEnvironment,
-            string? agentName = null,
-            string? projectName = null,
-            string? description = null)
-        {
-            var finalAgentName = agentName
-                ?? (!string.IsNullOrEmpty(testEnvironment.AgentName)
-                    ? testEnvironment.AgentName
-                    : TestConstants.TestAgentName);
-            var finalProjectName = projectName ?? GetProjectName(testEnvironment);
-
-            // Extract region from endpoint if possible
-            var endpoint = GetProjectEndpoint(testEnvironment);
-            if (endpoint.Contains("."))
-            {
-                var parts = endpoint.Split('.');
-                if (parts.Length > 1)
-                {
-                    Console.WriteLine($"  Endpoint Region/Service: {string.Join(".", parts)}");
-                }
-            }
-
-            var agent = new VoiceLiveFoundryAgentDefinition(
-                agentName: finalAgentName,
-                projectName: finalProjectName)
-            {
-                AgentVersion = !string.IsNullOrEmpty(testEnvironment.AgentVersion)
-                                  ? testEnvironment.AgentVersion
-                                  : TestConstants.TestAgentVersion,
-                AgentContextType = FoundryAgentContextType.AgentContext,
-                ReturnAgentResponseDirectly = false
-            };
-
-            if (description != null)
-            {
-                agent.Description = description;
-            }
-            else if (!string.IsNullOrEmpty(TestConstants.TestAgentDescription))
-            {
-                agent.Description = TestConstants.TestAgentDescription;
-            }
-
-            return agent;
-        }
-
-        /// <summary>
-        /// Clears the cached Foundry agent definition.
-        /// </summary>
-        public static void ClearCachedFoundryAgent()
-        {
-            _cachedFoundryAgent = null;
         }
     }
 }
