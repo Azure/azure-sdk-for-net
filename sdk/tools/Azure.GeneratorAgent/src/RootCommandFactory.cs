@@ -115,7 +115,7 @@ public class RootCommandFactory
             {
                 // Step 1: Validate SDK path
                 _logger.LogDebug("Step 1: Validating SDK path");
-                var validatedPath = await _validator.ValidateAsync(sdkPath!, cancellationToken).ConfigureAwait(false);
+                var validatedPath = await _validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
 
                 // Step 2: Validate tsp-location.yaml
                 _logger.LogDebug("Step 2: Validating tsp-location.yaml file");

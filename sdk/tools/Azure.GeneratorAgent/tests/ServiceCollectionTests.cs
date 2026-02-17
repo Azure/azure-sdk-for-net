@@ -301,7 +301,7 @@ public class ServiceCollectionTests
         Assert.That(httpClient.Timeout, Is.EqualTo(TimeSpan.FromSeconds(30)), "HttpClient timeout should be 30 seconds");
 
         // Verify max response content buffer size
-        Assert.That(httpClient.MaxResponseContentBufferSize, Is.EqualTo(10 * 1024 * 1024), "MaxResponseContentBufferSize should be 10MB");
+        Assert.That(httpClient.MaxResponseContentBufferSize, Is.EqualTo(1_000_000), "MaxResponseContentBufferSize should be 10MB");
 
         // Verify User-Agent header
         Assert.That(httpClient.DefaultRequestHeaders.UserAgent.ToString(), Does.Contain("Azure-GeneratorAgent/1.0"));

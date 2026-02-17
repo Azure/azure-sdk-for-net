@@ -127,8 +127,7 @@ public sealed class ValidationService
     {
         if (string.IsNullOrEmpty(path))
         {
-            _logger.LogDebug("Repository path is null or empty - validation skipped");
-            return;
+            throw new ArgumentException("Repository path cannot be null or empty");
         }
 
         _logger.LogDebug("Validating repository path: {Path}", path);
@@ -155,13 +154,6 @@ public sealed class ValidationService
             if (path.Length > 500)
             {
                 var message = $"Repository path exceeds maximum length of 500 characters: {path.Length}";
-                _logger.LogError(message);
-                throw new ArgumentException(message, nameof(path));
-            }
-
-            if (InvalidPathCharsRegex.IsMatch(path))
-            {
-                var message = $"Repository path contains invalid characters: {path}";
                 _logger.LogError(message);
                 throw new ArgumentException(message, nameof(path));
             }

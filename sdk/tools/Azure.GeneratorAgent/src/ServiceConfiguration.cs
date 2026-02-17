@@ -31,7 +31,7 @@ public static class ServiceConfiguration
             client.DefaultRequestHeaders.UserAgent.ParseAdd("Azure-GeneratorAgent/1.0");
             client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
             client.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
-            client.MaxResponseContentBufferSize = 10 * 1024 * 1024;
+            client.MaxResponseContentBufferSize = 1_000_000;
         });
 
         // Services - Azure SDK preferred lifetimes
