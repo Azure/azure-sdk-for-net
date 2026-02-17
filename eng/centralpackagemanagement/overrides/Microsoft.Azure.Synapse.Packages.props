@@ -1,9 +1,0 @@
-<Project>
-  <!--
-    Microsoft.Azure.Synapse is a legacy AutoRest-generated client.
-    It needs direct access to the REST client runtime and serialization
-    packages. These are already defined in the Legacy CPM file for
-    Microsoft.Azure.* projects, so no additional PackageVersion entries
-    are needed here.
-  -->
-</Project>
