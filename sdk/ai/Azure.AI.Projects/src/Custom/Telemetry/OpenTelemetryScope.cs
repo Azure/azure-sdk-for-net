@@ -65,6 +65,9 @@ namespace Azure.AI.Projects.Telemetry
         private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
             EnableOpenTelemetrySwitch,
             EnableOpenTelemetryEnvironmentVariable);
+        private static bool s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(
+            UseMessageEventsSwitch,
+            UseMessageEventsEnvironmentVariable);
         private RecordedResponse _response;
         private string _errorType;
         private Exception _exception;
@@ -80,6 +83,10 @@ namespace Azure.AI.Projects.Telemetry
             s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
                 EnableOpenTelemetrySwitch,
                 EnableOpenTelemetryEnvironmentVariable);
+
+            s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(
+                UseMessageEventsSwitch,
+                UseMessageEventsEnvironmentVariable);
         }
 
         /// <summary>
@@ -223,22 +230,30 @@ namespace Azure.AI.Projects.Telemetry
                     scope.SetTagMaybe(GenAiRequestReasoningSummary, reasoningOptions.ReasoningSummaryVerbosity);
                 }
 
-                // Add instructions event (if instructions exist)
+                // Add instructions event or attribute (if instructions exist)
                 if (!string.IsNullOrEmpty(promptAgentDefinition.Instructions))
                 {
-                    string traceEvent = s_traceContent ? JsonSerializer.Serialize(
-                        new[] { new EventContent(promptAgentDefinition.Instructions) },
+                    string instructionsJson = JsonSerializer.Serialize(
+                        new[] { new EventContent(s_traceContent ? promptAgentDefinition.Instructions : null) },
                         EventsContext.Default.EventContentArray
-                    ) : JsonSerializer.Serialize("", EventsContext.Default.String);
-
-                    ActivityTagsCollection messageTags = new() {
-                        { GenAiProviderNameKey, GenAiProviderNameValue},
-                        { GenAiEventContent, traceEvent }
-                    };
-
-                    scope._activity?.AddEvent(
-                        new ActivityEvent(EventNameSystemMessage, tags: messageTags)
                     );
+
+                    if (s_useMessageEvents)
+                    {
+                        ActivityTagsCollection messageTags = new() {
+                            { GenAiProviderNameKey, GenAiProviderNameValue},
+                            { GenAiEventContent, instructionsJson }
+                        };
+
+                        scope._activity?.AddEvent(
+                            new ActivityEvent(EventNameSystemMessage, tags: messageTags)
+                        );
+                    }
+                    else
+                    {
+                        // Attribute-based: set system instructions as a span attribute
+                        scope._activity?.SetTag(EventNameSystemMessage, instructionsJson);
+                    }
                 }
             }
             else if (agentDefinition is Azure.AI.Projects.OpenAI.WorkflowAgentDefinition workflowAgentDefinition)
@@ -576,6 +591,7 @@ namespace Azure.AI.Projects.Telemetry
         {
             s_traceContent = AppContextSwitchHelper.GetConfigValue(TraceContentsSwitch, TraceContentsEnvironmentVariable);
             s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(EnableOpenTelemetrySwitch, EnableOpenTelemetryEnvironmentVariable);
+            s_useMessageEvents = AppContextSwitchHelper.GetConfigValue(UseMessageEventsSwitch, UseMessageEventsEnvironmentVariable);
         }
     }
 }
