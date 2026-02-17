@@ -105,9 +105,9 @@ namespace Azure.Identity
                 ManagedIdentityObjectId = managedIdentityObjectId;
             }
 
-            if (section[nameof(ManagedIdentityIdType)] is string managedIdentityIdType)
+            if (section[nameof(ManagedIdentityIdKind)] is string managedIdentityIdKind)
             {
-                ManagedIdentityIdType = managedIdentityIdType;
+                ManagedIdentityIdKind = managedIdentityIdKind;
             }
 
             if (section[nameof(ManagedIdentityId)] is string managedIdentityId)
@@ -356,10 +356,10 @@ namespace Azure.Identity
         /// Specifies the type of managed identity to use. Valid values are "SystemAssigned", "ClientId", "ResourceId", and "ObjectId".
         /// When set to a user-assigned type, <see cref="ManagedIdentityId"/> must also be specified.
         /// </summary>
-        internal string ManagedIdentityIdType { get; set; }
+        internal string ManagedIdentityIdKind { get; set; }
 
         /// <summary>
-        /// Specifies the ID of the managed identity when <see cref="ManagedIdentityIdType"/> is set to "ClientId", "ResourceId", or "ObjectId".
+        /// Specifies the ID of the managed identity when <see cref="ManagedIdentityIdKind"/> is set to "ClientId", "ResourceId", or "ObjectId".
         /// </summary>
         internal string ManagedIdentityId { get; set; }
 
@@ -477,7 +477,7 @@ namespace Azure.Identity
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
                 dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
-                dacClone.ManagedIdentityIdType = ManagedIdentityIdType;
+                dacClone.ManagedIdentityIdKind = ManagedIdentityIdKind;
                 dacClone.ManagedIdentityId = ManagedIdentityId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;

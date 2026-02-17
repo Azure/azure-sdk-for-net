@@ -13,7 +13,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
     /// <summary>
     /// Validates that all <see cref="ManagedIdentityCredential"/> related properties can be set
     /// via IConfiguration and that the correct priority order is honoured.
-    /// Tests cover both the new ManagedIdentityIdType/ManagedIdentityId config properties
+    /// Tests cover both the new ManagedIdentityIdKind/ManagedIdentityId config properties
     /// and the legacy ManagedIdentityClientId/ManagedIdentityResourceId/ManagedIdentityObjectId properties.
     /// </summary>
     internal class ManagedIdentityCredentialCreationTests : CredentialCreationTestBase<ManagedIdentityCredential>
@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             Assert.AreEqual(expectedId, ReadField<string>(miId, "_userAssignedId"));
         }
 
-        #region ManagedIdentityIdType / ManagedIdentityId (new config properties)
+        #region ManagedIdentityIdKind / ManagedIdentityId (new config properties)
 
         [Test]
         [NonParallelizable]
@@ -50,7 +50,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "SystemAssigned";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "SystemAssigned";
 
                 AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.SystemAssigned);
             }
@@ -64,7 +64,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ClientId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
                 config["MyClient:Credential:ManagedIdentityId"] = clientId;
 
                 AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ClientId, clientId);
@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ResourceId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ResourceId";
                 config["MyClient:Credential:ManagedIdentityId"] = resourceId;
 
                 AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ResourceId, resourceId);
@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ObjectId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ObjectId";
                 config["MyClient:Credential:ManagedIdentityId"] = objectId;
 
                 AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ObjectId, objectId);
@@ -110,7 +110,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             {
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:ManagedIdentityClientId"] = "legacy-client-id";
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ClientId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
                 config["MyClient:Credential:ManagedIdentityId"] = newId;
 
                 AssertManagedIdentityId(GetManagedIdentityId(config), ManagedIdentityIdType.ClientId, newId);
@@ -124,7 +124,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "BadValue";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "BadValue";
                 config["MyClient:Credential:ManagedIdentityId"] = "some-id";
 
                 Assert.Throws<ArgumentException>(() => CreateFromConfig(config));
@@ -138,7 +138,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ClientId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
                 // ManagedIdentityId intentionally not set
 
                 Assert.Throws<ArgumentNullException>(() => CreateFromConfig(config));
@@ -152,7 +152,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ResourceId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ResourceId";
                 // ManagedIdentityId intentionally not set
 
                 Assert.Throws<ArgumentNullException>(() => CreateFromConfig(config));
@@ -166,7 +166,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ObjectId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ObjectId";
                 // ManagedIdentityId intentionally not set
 
                 Assert.Throws<ArgumentNullException>(() => CreateFromConfig(config));
@@ -312,7 +312,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             }))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:ManagedIdentityIdType"] = "ClientId";
+                config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
                 config["MyClient:Credential:ManagedIdentityId"] = configClientId;
                 config["MyClient:Credential:IsUnsafeSupportLoggingEnabled"] = "true";
 
