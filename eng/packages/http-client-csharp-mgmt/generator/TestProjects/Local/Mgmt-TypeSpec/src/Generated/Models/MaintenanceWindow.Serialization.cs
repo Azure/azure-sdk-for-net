@@ -33,6 +33,29 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MaintenanceWindow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenanceWindow IPersistableModel<MaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,28 +171,5 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             return new MaintenanceWindow(dayOfWeek, startHour, duration, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceWindow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindow IPersistableModel<MaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

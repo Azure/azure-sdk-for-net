@@ -37,6 +37,41 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MultiFlattenTestData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MultiFlattenTestData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MultiFlattenTestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MultiFlattenTestData IPersistableModel<MultiFlattenTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MultiFlattenTestData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MultiFlattenTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="multiFlattenTestData"> The <see cref="MultiFlattenTestData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MultiFlattenTestData multiFlattenTestData)
+        {
+            if (multiFlattenTestData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(multiFlattenTestData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MultiFlattenTestData"/> from. </param>
         internal static MultiFlattenTestData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultiFlattenTestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiFlattenTestData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MultiFlattenTestData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MultiFlattenTestData IPersistableModel<MultiFlattenTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MultiFlattenTestData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultiFlattenTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="multiFlattenTestData"> The <see cref="MultiFlattenTestData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MultiFlattenTestData multiFlattenTestData)
-        {
-            if (multiFlattenTestData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(multiFlattenTestData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }
