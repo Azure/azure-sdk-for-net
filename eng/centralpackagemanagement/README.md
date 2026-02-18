@@ -52,7 +52,7 @@ When approved, follow these steps to add an override for your package:
    ```
 
    Available conditions: `IsTestProject`, `IsSamplesProject`, `IsPerfProject`,
-   `IsStressProject`, `IsTestSupportProject`, `IsToolsProject`. You can combine them:
+   `IsStressProject`, `IsTestSupportProject`, `IsToolProject`. You can combine them:
 
    ```xml
    <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
