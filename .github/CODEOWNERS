@@ -1197,7 +1197,6 @@
 /eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
 /eng/centralpackagemanagement/Directory.Support.Packages.props          @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 /eng/centralpackagemanagement/Directory.Generation.Packages.props       @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
-/eng/centralpackagemanagement/Directory.Integration.Packages.props      @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
