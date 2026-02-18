@@ -343,11 +343,36 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateInteractiveBrowserCredential()
         {
-            var options = Options.Clone<InteractiveBrowserCredentialOptions>();
+            InteractiveBrowserCredentialOptions brokerOptions = null;
+            if (Options.UseDefaultBrokerAccount && !TryCreateDevelopmentBrokerOptions(out brokerOptions))
+            {
+                throw new InvalidOperationException("Must reference the Azure.Identity.Broker package to use broker authentication with InteractiveBrowserCredential.");
+            }
+
+            brokerOptions?.CopyMsalSettableProperties(Options);
+
+            var options = brokerOptions ?? Options.Clone<InteractiveBrowserCredentialOptions>();
 
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
 
             options.TenantId = Options.InteractiveBrowserTenantId;
+
+            options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
+
+            if (!string.IsNullOrEmpty(Options.LoginHint))
+            {
+                options.LoginHint = Options.LoginHint;
+            }
+
+            if (Options.BrowserCustomization != null)
+            {
+                options.BrowserCustomization = Options.BrowserCustomization.Clone();
+            }
+
+            if (Options.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = Options.AuthenticationRecord;
+            }
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,
