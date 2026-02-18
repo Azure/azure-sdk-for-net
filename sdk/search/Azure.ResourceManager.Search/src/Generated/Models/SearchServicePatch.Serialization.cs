@@ -144,6 +144,18 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteNull("semanticSearch");
                 }
             }
+            if (Optional.IsDefined(KnowledgeRetrieval))
+            {
+                if (KnowledgeRetrieval != null)
+                {
+                    writer.WritePropertyName("knowledgeRetrieval"u8);
+                    writer.WriteStringValue(KnowledgeRetrieval.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("knowledgeRetrieval");
+                }
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
@@ -230,6 +242,7 @@ namespace Azure.ResourceManager.Search.Models
             bool? disableLocalAuth = default;
             SearchAadAuthDataPlaneAuthOptions authOptions = default;
             SearchSemanticSearch? semanticSearch = default;
+            KnowledgeRetrievalBillingTier? knowledgeRetrieval = default;
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
@@ -448,6 +461,16 @@ namespace Azure.ResourceManager.Search.Models
                             semanticSearch = new SearchSemanticSearch(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("knowledgeRetrieval"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                knowledgeRetrieval = null;
+                                continue;
+                            }
+                            knowledgeRetrieval = new KnowledgeRetrievalBillingTier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -545,6 +568,7 @@ namespace Azure.ResourceManager.Search.Models
                 disableLocalAuth,
                 authOptions,
                 semanticSearch,
+                knowledgeRetrieval,
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 eTag,
@@ -941,6 +965,21 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     builder.Append("    semanticSearch: ");
                     builder.AppendLine($"'{SemanticSearch.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KnowledgeRetrieval), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    knowledgeRetrieval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KnowledgeRetrieval))
+                {
+                    builder.Append("    knowledgeRetrieval: ");
+                    builder.AppendLine($"'{KnowledgeRetrieval.Value.ToString()}'");
                 }
             }
 

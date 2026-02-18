@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Search.Models
                                      isLocalAuthDisabled,
                                      authOptions,
                                      semanticSearch,
+                                     null,
                                      privateEndpointConnections,
                                      sharedPrivateLinkResources,
                                      null);
@@ -127,6 +128,7 @@ namespace Azure.ResourceManager.Search.Models
                                      isLocalAuthDisabled,
                                      authOptions,
                                      semanticSearch,
+                                     null,
                                      privateEndpointConnections,
                                      sharedPrivateLinkResources,
                                      null);
@@ -191,6 +193,7 @@ namespace Azure.ResourceManager.Search.Models
                                       isLocalAuthDisabled,
                                       authOptions,
                                       semanticSearch,
+                                      null,
                                       privateEndpointConnections,
                                       sharedPrivateLinkResources,
                                       null);
@@ -246,6 +249,7 @@ namespace Azure.ResourceManager.Search.Models
                                       isLocalAuthDisabled,
                                       authOptions,
                                       semanticSearch,
+                                      null,
                                       privateEndpointConnections,
                                       sharedPrivateLinkResources,
                                       null);

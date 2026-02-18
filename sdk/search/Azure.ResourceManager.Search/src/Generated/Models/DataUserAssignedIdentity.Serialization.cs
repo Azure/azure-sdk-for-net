@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Search.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("userAssignedIdentity"u8);
             writer.WriteStringValue(UserAssignedIdentity);
+            if (Optional.IsDefined(FederatedIdentityClientId))
+            {
+                writer.WritePropertyName("federatedIdentityClientId"u8);
+                writer.WriteStringValue(FederatedIdentityClientId);
+            }
         }
 
         DataUserAssignedIdentity IJsonModel<DataUserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -61,6 +66,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             ResourceIdentifier userAssignedIdentity = default;
+            string federatedIdentityClientId = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -69,6 +75,11 @@ namespace Azure.ResourceManager.Search.Models
                 if (property.NameEquals("userAssignedIdentity"u8))
                 {
                     userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("federatedIdentityClientId"u8))
+                {
+                    federatedIdentityClientId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -82,7 +93,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataUserAssignedIdentity(odataType, serializedAdditionalRawData, userAssignedIdentity);
+            return new DataUserAssignedIdentity(odataType, serializedAdditionalRawData, userAssignedIdentity, federatedIdentityClientId);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -108,6 +119,29 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     builder.Append("  userAssignedIdentity: ");
                     builder.AppendLine($"'{UserAssignedIdentity.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FederatedIdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  federatedIdentityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FederatedIdentityClientId))
+                {
+                    builder.Append("  federatedIdentityClientId: ");
+                    if (FederatedIdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FederatedIdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FederatedIdentityClientId}'");
+                    }
                 }
             }
 

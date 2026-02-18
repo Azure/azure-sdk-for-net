@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Result of a list NSP (network security perimeter) configurations request. </summary>
+    /// <summary> The response of a NetworkSecurityPerimeterConfiguration list operation. </summary>
     internal partial class NetworkSecurityPerimeterConfigurationListResult
     {
         /// <summary>
@@ -46,14 +47,18 @@ namespace Azure.ResourceManager.Search.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationListResult()
+        /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkSecurityPerimeterConfigurationListResult(IEnumerable<SearchServiceNetworkSecurityPerimeterConfigurationData> value)
         {
-            Value = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
-        /// <param name="value"> Array of network security perimeter results. </param>
-        /// <param name="nextLink"> The link used to get the next page of results. </param>
+        /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterConfigurationListResult(IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +67,14 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of network security perimeter results. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/> for deserialization. </summary>
+        internal NetworkSecurityPerimeterConfigurationListResult()
+        {
+        }
+
+        /// <summary> The NetworkSecurityPerimeterConfiguration items on this page. </summary>
         public IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> Value { get; }
-        /// <summary> The link used to get the next page of results. </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

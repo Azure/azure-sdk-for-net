@@ -29,9 +29,11 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
-        internal DataUserAssignedIdentity(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier userAssignedIdentity) : base(odataType, serializedAdditionalRawData)
+        /// <param name="federatedIdentityClientId"> Optional for Multi-tenant User-Assigned Managed Identity CMK Support: The client id (as a UUID) of the multi-tenant App Registration that has been configured to federate with the userAssignedIdentity. </param>
+        internal DataUserAssignedIdentity(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier userAssignedIdentity, string federatedIdentityClientId) : base(odataType, serializedAdditionalRawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
+            FederatedIdentityClientId = federatedIdentityClientId;
             OdataType = odataType ?? "#Microsoft.Azure.Search.DataUserAssignedIdentity";
         }
 
@@ -43,5 +45,8 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </summary>
         [WirePath("userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity { get; set; }
+        /// <summary> Optional for Multi-tenant User-Assigned Managed Identity CMK Support: The client id (as a UUID) of the multi-tenant App Registration that has been configured to federate with the userAssignedIdentity. </summary>
+        [WirePath("federatedIdentityClientId")]
+        public string FederatedIdentityClientId { get; set; }
     }
 }

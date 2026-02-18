@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/96014f9a53aa3eea7802fcad4bfb961a424ef340/specification/search/resource-manager/Microsoft.Search/Search/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/e6ceec8ff9d673a4c5829c4dbeb4d43eaa110a11/specification/search/resource-manager/Microsoft.Search/Search/readme.md
 #tag: package-2026-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -56,7 +56,7 @@ rename-mapping:
   QueryKey: SearchServiceQueryKey
   ResourceAssociation: SearchServiceNetworkSecurityPerimeterResourceAssociation
   ResourceAssociationAccessMode: SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode
-  ResourceType: SearchServiceResourceType
+  CheckNameAvailabilityInputType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
   SearchService.properties.publicNetworkAccess: PublicInternetAccess

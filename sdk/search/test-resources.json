@@ -60,6 +60,13 @@
             "metadata": {
                 "description": "The Search service SKU to create."
             }
+        },
+        "deployCognitiveServices": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether to deploy a Cognitive Services account. Set to false for regions that don't support it."
+            }
         }
     },
     "variables": {
@@ -117,6 +124,7 @@
             "name": "[variables('cognitiveServicesAccountName')]",
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "[variables('cognitiveServicesApiVersion')]",
+            "condition": "[parameters('deployCognitiveServices')]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "S0"
@@ -197,7 +205,8 @@
         },
         "SEARCH_COGNITIVE_KEY": {
             "type": "string",
-            "value": "[listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1]"
+            "condition": "[parameters('deployCognitiveServices')]",
+            "value": "[if(parameters('deployCognitiveServices'), listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1, '')]"
         },
         "SEARCH_KEYVAULT_URL": {
             "type": "string",
