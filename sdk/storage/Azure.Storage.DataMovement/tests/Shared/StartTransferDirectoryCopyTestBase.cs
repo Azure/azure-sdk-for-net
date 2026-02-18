@@ -967,10 +967,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase((int) TransferPropertiesTestType.Default)]
-        [TestCase((int) TransferPropertiesTestType.Preserve)]
-        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
-        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        [TestCase((int)TransferPropertiesTestType.Default)]
+        [TestCase((int)TransferPropertiesTestType.Preserve)]
+        [TestCase((int)TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int)TransferPropertiesTestType.NewProperties)]
         public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
         {
             // Arrange
@@ -981,7 +981,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                (TransferPropertiesTestType) propertiesType).ConfigureAwait(false);
+                (TransferPropertiesTestType)propertiesType).ConfigureAwait(false);
         }
         #endregion Properties
 

@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core.TestFramework;
-using Azure.Core;
-using Azure.Storage.Test.Shared;
-using System.Threading.Tasks;
 using System.IO;
-using NUnit.Framework;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -418,7 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(DataMovementTestConstants.KB/2, 10)]
+        [TestCase(DataMovementTestConstants.KB / 2, 10)]
         [TestCase(DataMovementTestConstants.KB, 10)]
         [TestCase(2 * DataMovementTestConstants.KB, 10)]
         public async Task SourceObjectToDestinationObject_SmallSize(long size, int waitTimeInSec)
@@ -459,8 +459,8 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, DataMovementTestConstants.KB/2, 30)]
-        [TestCase(6, DataMovementTestConstants.KB/2, 30)]
+        [TestCase(2, DataMovementTestConstants.KB / 2, 30)]
+        [TestCase(6, DataMovementTestConstants.KB / 2, 30)]
         [TestCase(2, DataMovementTestConstants.KB, 300)]
         [TestCase(6, DataMovementTestConstants.KB, 300)]
         public async Task SourceObjectToDestinationObject_SmallMultiple(int count, long size, int waitTimeInSec)
@@ -958,10 +958,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase((int) TransferPropertiesTestType.Default)]
-        [TestCase((int) TransferPropertiesTestType.Preserve)]
-        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
-        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        [TestCase((int)TransferPropertiesTestType.Default)]
+        [TestCase((int)TransferPropertiesTestType.Preserve)]
+        [TestCase((int)TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int)TransferPropertiesTestType.NewProperties)]
         public virtual async Task SourceObjectToDestinationObject_VerifyProperties_Chunks(int propertiesType)
         {
             // Arrange
@@ -971,7 +971,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                (TransferPropertiesTestType) propertiesType,
+                (TransferPropertiesTestType)propertiesType,
                 size: Constants.KB,
                 chunkSize: Constants.KB / 2);
         }

@@ -199,10 +199,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "19",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "19",
+                    "$id": "20",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -218,7 +238,26 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.body"
+                    "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "21",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "5"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -245,39 +284,10 @@
               },
               "parameters": [
                 {
-                  "$id": "20",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "5"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "21"
                 },
                 {
-                  "$id": "21",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "19"
                 }
               ],
               "response": {},
@@ -361,10 +371,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.contentType"
+                    "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "29",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "29",
+                    "$id": "30",
                     "kind": "body",
                     "name": "simpleRequest",
                     "serializedName": "simpleRequest",
@@ -380,7 +410,30 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.body"
+                    "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "31",
+                        "kind": "method",
+                        "name": "name",
+                        "serializedName": "name",
+                        "type": {
+                          "$id": "32",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -407,43 +460,10 @@
               },
               "parameters": [
                 {
-                  "$id": "30",
-                  "kind": "method",
-                  "name": "name",
-                  "serializedName": "name",
-                  "type": {
-                    "$id": "31",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "31"
                 },
                 {
-                  "$id": "32",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "3"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "29"
                 }
               ],
               "response": {},

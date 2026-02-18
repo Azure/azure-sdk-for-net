@@ -85,9 +85,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                     EventHubsException.FailureReason expectedReason)
         {
             EventHubsException instance = constructor();
-            Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the { constructorDescription }");
-            Assert.That(instance.EventHubName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
-            Assert.That(instance.Reason, Is.EqualTo(expectedReason), $"Reason should be set for the { constructorDescription }");
+            Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the {constructorDescription}");
+            Assert.That(instance.EventHubName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the {constructorDescription}");
+            Assert.That(instance.Reason, Is.EqualTo(expectedReason), $"Reason should be set for the {constructorDescription}");
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                              bool expectedTransient)
         {
             var exception = new EventHubsException("Name", "Message", failureReason);
-            Assert.That(exception.IsTransient, Is.EqualTo(expectedTransient), $"The '{ failureReason }' reason has an incorrect IsTransient value.");
+            Assert.That(exception.IsTransient, Is.EqualTo(expectedTransient), $"The '{failureReason}' reason has an incorrect IsTransient value.");
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(exceptionString, Contains.Substring(typeof(EventHubsException).FullName), "The ToString value should contain the type name.");
             Assert.That(exceptionString, Contains.Substring(reason.ToString()), "The ToString value should contain the failure reason.");
             Assert.That(exceptionString, Contains.Substring(eventHubName), "The ToString value should contain the Event Hub name.");
-            Assert.That(exceptionString, Contains.Substring($"{ Environment.NewLine }{ instance.StackTrace }"), "The ToString value should contain the stack trace on a new line.");
+            Assert.That(exceptionString, Contains.Substring($"{Environment.NewLine}{instance.StackTrace}"), "The ToString value should contain the stack trace on a new line.");
         }
 
         /// <summary>

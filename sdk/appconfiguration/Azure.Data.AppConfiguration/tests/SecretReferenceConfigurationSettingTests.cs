@@ -26,7 +26,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var reference = new SecretReferenceConfigurationSetting("key", new Uri("http://example.com/secret"));
 
             Assert.AreEqual("application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8", reference.ContentType);
-            Assert.AreEqual("key" , reference.Key);
+            Assert.AreEqual("key", reference.Key);
             Assert.AreEqual("http://example.com/secret", reference.SecretId.AbsoluteUri);
         }
 
@@ -63,7 +63,8 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(ReferenceValueWithFormatting);
             using var actual = JsonDocument.Parse(secretSetting.Value);
 
-            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));        }
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+        }
 
         [Test]
         public void NewFeatureReferenceSerialized()

@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CarbonEmission PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionItemDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceGroupCarbonEmissionItemDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionItemDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceGroupCarbonEmissionItemDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -178,23 +195,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResourceGroupCarbonEmissionItemDetail IPersistableModel<ResourceGroupCarbonEmissionItemDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGroupCarbonEmissionItemDetail)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CarbonEmission PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionItemDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceGroupCarbonEmissionItemDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionItemDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceGroupCarbonEmissionItemDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

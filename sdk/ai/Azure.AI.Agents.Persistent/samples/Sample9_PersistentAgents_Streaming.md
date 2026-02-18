@@ -28,7 +28,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "My Friendly Test Agent",
     instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
-    tools: [ new CodeInterpreterToolDefinition() ]
+    tools: [new CodeInterpreterToolDefinition()]
 );
 ```
 

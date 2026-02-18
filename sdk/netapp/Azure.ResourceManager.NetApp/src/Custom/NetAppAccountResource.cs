@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NetAppAccountResource: ArmResource
+    public partial class NetAppAccountResource : ArmResource
     {
         private VaultsRestOperations _vaultsRestClient;
         private ClientDiagnostics _vaultsClientDiagnostics;

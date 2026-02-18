@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch
             string id)
         {
             if (String.IsNullOrEmpty(id))
-               throw new ArgumentNullException("id is not formated correctly");
+                throw new ArgumentNullException("id is not formatted correctly");
             _jobId = id;
             Id = id;
             _value = false;
@@ -152,7 +152,8 @@ namespace Azure.Compute.Batch
                 deleteResponse = async
                     ? await _client.GetJobAsync(_jobId, cancellationToken: cancellationToken).ConfigureAwait(false)
                     : _client.GetJob(_jobId, cancellationToken: cancellationToken);
-            } catch (Azure.RequestFailedException e)
+            }
+            catch (Azure.RequestFailedException e)
             {
                 if (e.Status == 404)
                 {

@@ -7,8 +7,8 @@ using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.VoiceLive.Diagnostics;
+using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {

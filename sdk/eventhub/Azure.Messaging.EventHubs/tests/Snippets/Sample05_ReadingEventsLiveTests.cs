@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                    Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                     eventsRead++;
 
                     if (eventsRead >= maximumEvents)
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 var options = new ReadEventOptions
                 {
-                   MaximumWaitTime = TimeSpan.FromSeconds(1)
+                    MaximumWaitTime = TimeSpan.FromSeconds(1)
                 };
 
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync(options))
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         string readFromPartition = partitionEvent.Partition.PartitionId;
                         byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                        Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                        Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                     }
                     else
                     {
@@ -198,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                    Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                 }
             }
             catch (TaskCanceledException)
@@ -258,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
 
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                    Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                 }
             }
             catch (TaskCanceledException)
@@ -315,7 +315,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 var options = new ReadEventOptions
                 {
-                   MaximumWaitTime = TimeSpan.FromSeconds(1)
+                    MaximumWaitTime = TimeSpan.FromSeconds(1)
                 };
 
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
@@ -328,7 +328,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         string readFromPartition = partitionEvent.Partition.PartitionId;
                         byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                        Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                        Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                     }
                     else
                     {
@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                    Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                 }
             }
             catch (TaskCanceledException)
@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                    Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                 }
             }
             catch (TaskCanceledException)
@@ -524,7 +524,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     byte[] eventBodyBytes = partitionEvent.Data.EventBody.ToArray();
 
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+                    Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
                 }
             }
             catch (TaskCanceledException)
@@ -590,11 +590,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     LastEnqueuedEventProperties properties =
                         partitionEvent.Partition.ReadLastEnqueuedEventProperties();
 
-                    Debug.WriteLine($"Partition: { partitionEvent.Partition.PartitionId }");
-                    Debug.WriteLine($"\tThe last sequence number is: { properties.SequenceNumber }");
-                    Debug.WriteLine($"\tThe last offset is: { properties.OffsetString }");
-                    Debug.WriteLine($"\tThe last enqueued time is: { properties.EnqueuedTime }, in UTC.");
-                    Debug.WriteLine($"\tThe information was updated at: { properties.LastReceivedTime }, in UTC.");
+                    Debug.WriteLine($"Partition: {partitionEvent.Partition.PartitionId}");
+                    Debug.WriteLine($"\tThe last sequence number is: {properties.SequenceNumber}");
+                    Debug.WriteLine($"\tThe last offset is: {properties.OffsetString}");
+                    Debug.WriteLine($"\tThe last enqueued time is: {properties.EnqueuedTime}, in UTC.");
+                    Debug.WriteLine($"\tThe information was updated at: {properties.LastReceivedTime}, in UTC.");
                 }
             }
             catch (TaskCanceledException)
@@ -668,7 +668,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     foreach (EventData eventData in eventBatch)
                     {
                         byte[] eventBodyBytes = eventData.EventBody.ToArray();
-                        Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { firstPartition }");
+                        Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {firstPartition}");
                     }
                 }
             }

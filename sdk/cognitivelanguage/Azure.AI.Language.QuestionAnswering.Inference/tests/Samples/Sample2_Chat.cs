@@ -44,7 +44,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests.Samples
                 Console.WriteLine($"Source: {answer.Source}");
                 Console.WriteLine();
             }
-#endregion
+            #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }

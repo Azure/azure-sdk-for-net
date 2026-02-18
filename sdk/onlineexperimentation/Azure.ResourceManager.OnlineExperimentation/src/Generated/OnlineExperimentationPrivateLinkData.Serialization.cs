@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.OnlineExperimentation
     /// <summary> A private link resource. </summary>
     public partial class OnlineExperimentationPrivateLinkData : ResourceData, IJsonModel<OnlineExperimentationPrivateLinkData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentationPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOnlineExperimentationPrivateLinkData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OnlineExperimentationPrivateLinkData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OnlineExperimentationPrivateLinkData"/> from. </param>
+        internal static OnlineExperimentationPrivateLinkData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOnlineExperimentationPrivateLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OnlineExperimentationPrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         OnlineExperimentationPrivateLinkData IPersistableModel<OnlineExperimentationPrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OnlineExperimentationPrivateLinkData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentationPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOnlineExperimentationPrivateLinkData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OnlineExperimentationPrivateLinkData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OnlineExperimentationPrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OnlineExperimentationPrivateLinkData"/> from. </param>
-        internal static OnlineExperimentationPrivateLinkData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOnlineExperimentationPrivateLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

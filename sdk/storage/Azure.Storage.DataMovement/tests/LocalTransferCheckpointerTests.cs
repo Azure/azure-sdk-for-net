@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Storage.DataMovement.JobPlan;
+using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -759,7 +759,7 @@ namespace Azure.Storage.DataMovement.Tests
                     buffer: bytes,
                     bufferOffset: 0,
                     length: 1));
-            }
+        }
 
         [Test]
         public async Task SetJobTransferStatusAsync()

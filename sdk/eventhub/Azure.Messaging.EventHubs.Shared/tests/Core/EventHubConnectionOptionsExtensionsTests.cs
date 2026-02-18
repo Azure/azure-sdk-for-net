@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of { nameof(EventHubConnectionOptions) } is not being cloned.");
+                Assert.That(knownMembers.Contains(property.Name), $"The property: {property.Name} of {nameof(EventHubConnectionOptions)} is not being cloned.");
             }
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CloneProducesACopy()
         {
-           var options = new EventHubConnectionOptions
+            var options = new EventHubConnectionOptions
             {
                 TransportType = EventHubsTransportType.AmqpWebSockets,
                 ConnectionIdleTimeout = TimeSpan.FromHours(3),

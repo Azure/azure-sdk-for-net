@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using System.Net.Http;
-using Azure.Core;
-using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 
 namespace Azure.Identity
 {

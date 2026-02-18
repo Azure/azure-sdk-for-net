@@ -28,7 +28,8 @@ namespace Azure.Communication
         /// <summary>
         /// The scopes required for the Entra user token. These scopes determine the permissions granted to the token. For example, ["https://communication.azure.com/clients/VoIP"].
         /// </summary>
-        public string[] Scopes {
+        public string[] Scopes
+        {
             get => _scopes;
             set
             {

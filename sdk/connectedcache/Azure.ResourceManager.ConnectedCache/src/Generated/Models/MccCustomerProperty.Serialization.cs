@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Model representing customer for connectedCache resource. </summary>
     public partial class MccCustomerProperty : IJsonModel<MccCustomerProperty>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MccCustomerProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerProperty>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMccCustomerProperty(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MccCustomerProperty)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MccCustomerProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -221,23 +238,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MccCustomerProperty IPersistableModel<MccCustomerProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCustomerProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerProperty>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMccCustomerProperty(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MccCustomerProperty)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MccCustomerProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

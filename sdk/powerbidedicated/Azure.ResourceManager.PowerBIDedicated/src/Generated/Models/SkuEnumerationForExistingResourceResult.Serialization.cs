@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
     internal partial class SkuEnumerationForExistingResourceResult : IJsonModel<SkuEnumerationForExistingResourceResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SkuEnumerationForExistingResourceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSkuEnumerationForExistingResourceResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SkuEnumerationForExistingResourceResult"/> from. </param>
+        internal static SkuEnumerationForExistingResourceResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSkuEnumerationForExistingResourceResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SkuEnumerationForExistingResourceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -133,31 +157,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         SkuEnumerationForExistingResourceResult IPersistableModel<SkuEnumerationForExistingResourceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuEnumerationForExistingResourceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSkuEnumerationForExistingResourceResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SkuEnumerationForExistingResourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SkuEnumerationForExistingResourceResult"/> from. </param>
-        internal static SkuEnumerationForExistingResourceResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSkuEnumerationForExistingResourceResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

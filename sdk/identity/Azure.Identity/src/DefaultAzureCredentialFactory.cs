@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -42,7 +42,7 @@ namespace Azure.Identity
         public TokenCredential[] CreateCredentialChain()
         {
             TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
+            string credentialSelection = Options.CredentialSource ?? EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
 
             if (_customEnvironmentVariableName != null)
             {
@@ -271,6 +271,7 @@ namespace Azure.Identity
             options.ClientId = Options.WorkloadIdentityClientId;
             options.TenantId = Options.TenantId;
             options.Pipeline = Pipeline;
+            options.IsAzureProxyEnabled = Options.IsAzureProxyEnabled;
 
             return new WorkloadIdentityCredential(options);
         }
@@ -295,13 +296,29 @@ namespace Azure.Identity
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
             };
 
-            if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
+            // ManagedIdentityIdKind/ManagedIdentityId (new config properties) take priority
+            if (!string.IsNullOrEmpty(options.ManagedIdentityIdKind))
+            {
+                miOptions.ManagedIdentityId = options.ManagedIdentityIdKind switch
+                {
+                    "SystemAssigned" => ManagedIdentityId.SystemAssigned,
+                    "ClientId" => ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityId),
+                    "ResourceId" => ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(options.ManagedIdentityId)),
+                    "ObjectId" => ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityId),
+                    _ => throw new ArgumentException($"Invalid {nameof(options.ManagedIdentityIdKind)} value: '{options.ManagedIdentityIdKind}'. Valid values are 'SystemAssigned', 'ClientId', 'ResourceId', 'ObjectId'."),
+                };
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityClientId);
             }
             else if (options.ManagedIdentityResourceId != null)
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(options.ManagedIdentityResourceId);
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityObjectId))
+            {
+                miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityObjectId);
             }
             else
             {
@@ -364,6 +381,10 @@ namespace Azure.Identity
             var options = Options.Clone<AzureCliCredentialOptions>();
             options.TenantId = Options.TenantId;
             options.ProcessTimeout = Options.CredentialProcessTimeout;
+            if (!string.IsNullOrEmpty(Options.Subscription))
+            {
+                options.Subscription = Options.Subscription;
+            }
             options.IsChainedCredential = true;
 
             return new AzureCliCredential(Pipeline, default, options);

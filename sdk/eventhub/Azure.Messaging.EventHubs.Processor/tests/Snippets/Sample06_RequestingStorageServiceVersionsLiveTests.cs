@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = eventHubScope.ConsumerGroups.First();
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -122,13 +122,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.  This
-               // is especially important when using lambda expressions or handlers
-               // in any form that may contain closure scopes or hold other references.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.  This
+                // is especially important when using lambda expressions or handlers
+                // in any form that may contain closure scopes or hold other references.
 
-               processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion

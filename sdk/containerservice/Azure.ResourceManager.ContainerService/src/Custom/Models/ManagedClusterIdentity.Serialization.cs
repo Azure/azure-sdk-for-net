@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -205,9 +205,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedServiceIdentityType ToResourceIdentityType(string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ManagedServiceIdentityType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned")) return ManagedServiceIdentityType.SystemAssigned;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned")) return ManagedServiceIdentityType.UserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+                return ManagedServiceIdentityType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned"))
+                return ManagedServiceIdentityType.SystemAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned"))
+                return ManagedServiceIdentityType.UserAssigned;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceIdentityType value.");
         }
 

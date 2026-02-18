@@ -265,8 +265,13 @@ export function postProcessArmResources(
   for (const resource of resources) {
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
-    if (parentResource && validResourceMap.has(parentResource.metadata.resourceIdPattern)) {
-      const parent = validResourceMap.get(parentResource.metadata.resourceIdPattern);
+    if (
+      parentResource &&
+      validResourceMap.has(parentResource.metadata.resourceIdPattern)
+    ) {
+      const parent = validResourceMap.get(
+        parentResource.metadata.resourceIdPattern
+      );
       if (parent) {
         resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
         resource.metadata.parentResourceModelId = parent.resourceModelId;
@@ -322,14 +327,19 @@ export function postProcessArmResources(
       for (const otherResource of validResources) {
         if (
           otherResource.metadata.resourceIdPattern &&
-          isPrefix(otherResource.metadata.resourceIdPattern, method.operationPath)
+          isPrefix(
+            otherResource.metadata.resourceIdPattern,
+            method.operationPath
+          )
         ) {
           candidates.push(otherResource.metadata.resourceIdPattern);
         }
       }
       // Use the longest resource path as the resourceScope
       if (candidates.length > 0) {
-        method.resourceScope = candidates.reduce((a, b) => (a.length > b.length ? a : b));
+        method.resourceScope = candidates.reduce((a, b) =>
+          a.length > b.length ? a : b
+        );
       }
     }
   }
@@ -391,7 +401,8 @@ export function postProcessArmResources(
       if (resource.metadata.parentResourceId) {
         // Find parent resource
         const parent = validResources.find(
-          (r) => r.metadata.resourceIdPattern === resource.metadata.parentResourceId
+          (r) =>
+            r.metadata.resourceIdPattern === resource.metadata.parentResourceId
         );
         if (parent) {
           // When moving operations to parent resource, convert them to Action kind

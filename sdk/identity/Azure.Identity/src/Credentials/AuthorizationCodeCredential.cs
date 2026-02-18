@@ -149,7 +149,7 @@ namespace Azure.Identity
 
                 if (_record is null)
                 {
-                    token = await AcquireTokenWithCode(async, requestContext,tenantId, cancellationToken).ConfigureAwait(false);
+                    token = await AcquireTokenWithCode(async, requestContext, tenantId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {

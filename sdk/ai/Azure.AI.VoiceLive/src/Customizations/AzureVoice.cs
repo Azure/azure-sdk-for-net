@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class AzureVoice: VoiceProvider
+    public partial class AzureVoice : VoiceProvider
     {
     }
 }

@@ -3,11 +3,11 @@
 
 #nullable enable
 
+using System;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using System;
 
 namespace Azure.Provisioning.Dns;
 

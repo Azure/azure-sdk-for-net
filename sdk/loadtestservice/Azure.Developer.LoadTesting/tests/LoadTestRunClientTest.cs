@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    public class LoadTestRunClientTest: LoadTestTestsBase
+    public class LoadTestRunClientTest : LoadTestTestsBase
     {
-        public LoadTestRunClientTest(bool isAsync): base(isAsync) { }
+        public LoadTestRunClientTest(bool isAsync) : base(isAsync) { }
 
         [SetUp]
         public async Task SetUp()
@@ -25,7 +25,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
             if (RequiresTestProfile() || RequiresTestProfileRun())
             {
-               await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
+                await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
             }
 
             if (RequiresTestRun())
