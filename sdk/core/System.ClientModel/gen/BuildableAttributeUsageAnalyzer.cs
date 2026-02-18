@@ -47,23 +47,26 @@ public sealed class BuildableAttributeUsageAnalyzer : DiagnosticAnalyzer
             if (!hasBuildableAttribute)
                 return;
 
-            bool inheritsFromContext = false;
-            for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
+            var current = namedType.BaseType;
+            do
             {
-                if (SymbolEqualityComparer.Default.Equals(baseType, contextType))
+                if (current!.SpecialType == SpecialType.System_Object)
                 {
-                    inheritsFromContext = true;
-                    break;
+                    var diagnostic = Diagnostic.Create(
+                        ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext,
+                        namedType.Locations.FirstOrDefault() ?? Location.None);
+                    symbolContext.ReportDiagnostic(diagnostic);
+                    return;
                 }
-            }
 
-            if (!inheritsFromContext)
-            {
-                var diagnostic = Diagnostic.Create(
-                    ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext,
-                    namedType.Locations.FirstOrDefault() ?? Location.None);
-                symbolContext.ReportDiagnostic(diagnostic);
+                if (SymbolEqualityComparer.Default.Equals(current, contextType))
+                {
+                    return;
+                }
+
+                current = current.BaseType;
             }
+            while (true);
         }, SymbolKind.NamedType);
     }
 }
