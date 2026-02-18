@@ -529,10 +529,10 @@ try {
         Set-Content $azurePackageJson $originalPackageJson -Encoding utf8 -NoNewline
     }
     
-    # Update Directory.Packages.props with local NuGet version
-    $packagesDataPropsPath = Join-Path $sdkRepoPath "eng" "centralpackagemanagement" "Directory.Packages.props"
+    # Update Directory.Generation.Packages.props with local NuGet version
+    $packagesDataPropsPath = Join-Path $sdkRepoPath "eng" "centralpackagemanagement" "Directory.Generation.Packages.props"
     if (-not (Test-Path $packagesDataPropsPath)) {
-        throw "Directory.Packages.props not found at: $packagesDataPropsPath"
+        throw "Directory.Generation.Packages.props not found at: $packagesDataPropsPath"
     }
 
     Update-AzureGeneratorVersion -PackagesDataPropsPath $packagesDataPropsPath -NewVersion $localVersion

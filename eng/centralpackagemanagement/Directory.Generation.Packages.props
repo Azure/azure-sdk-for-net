@@ -1,4 +1,9 @@
 <Project>
+  <PropertyGroup>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260213.16</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260209.2</AzureGeneratorVersion>
+  </PropertyGroup>
+
   <!-- Packages used by the TypeSpec generators -->
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
     <PackageVersion Include="Azure.Generator" Version="[$(AzureGeneratorVersion)]" />

@@ -125,6 +125,6 @@
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageVersion Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <!-- The test proxy is managed as a download for repository and pipeline tests -->
-    <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
+    <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[1.0.0-dev.20260128.1]" />
   </ItemGroup>
 </Project>
