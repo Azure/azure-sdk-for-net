@@ -10,7 +10,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
@@ -44,6 +44,8 @@ Documentation is available to help you learn how to use this package:
 
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+- [Managing Guest Subscriptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/computelimit/Azure.ResourceManager.Computelimit/samples/Sample1_ManagingGuestSubscriptions.md)
+- [Managing Shared Limits](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/computelimit/Azure.ResourceManager.Computelimit/samples/Sample2_ManagingSharedLimits.md)
 
 ## Troubleshooting
 
