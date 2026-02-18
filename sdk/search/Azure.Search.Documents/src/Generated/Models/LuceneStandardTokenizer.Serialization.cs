@@ -38,6 +38,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LuceneStandardTokenizer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LuceneStandardTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LuceneStandardTokenizer IPersistableModel<LuceneStandardTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuceneStandardTokenizer)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LuceneStandardTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LuceneStandardTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,28 +144,5 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new LuceneStandardTokenizer(odataType, name, additionalBinaryDataProperties, maxTokenLength);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LuceneStandardTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LuceneStandardTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LuceneStandardTokenizer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LuceneStandardTokenizer IPersistableModel<LuceneStandardTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (LuceneStandardTokenizer)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LuceneStandardTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,17 +19,14 @@ namespace Azure.Search.Documents.Indexes
     internal partial class SearchIndexClientGetIndexesCollectionResult : Pageable<BinaryData>
     {
         private readonly SearchIndexClient _client;
-        private readonly IEnumerable<string> _select;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of SearchIndexClientGetIndexesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SearchIndexClient client used to send requests. </param>
-        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SearchIndexClientGetIndexesCollectionResult(SearchIndexClient client, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetIndexesCollectionResult(SearchIndexClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _select = @select;
             _context = context;
         }
 
@@ -54,7 +51,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetIndexesRequest(_select, _context);
+            HttpMessage message = _client.CreateGetIndexesRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexes");
             scope.Start();
             try

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
         /// <summary> Passes any extra parameters directly to the model. </summary>
-        private const string PassThroughValue = "pass-through";
+        private const string PassThroughValue = "passThrough";
         /// <summary> Drops all extra parameters. </summary>
         private const string DropValue = "drop";
         /// <summary> Raises an error if any extra parameter is present. </summary>

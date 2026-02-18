@@ -84,7 +84,20 @@ namespace Azure.Search.Documents.Models
         {
             if (FacetType != FacetType.Range)
             { throw new InvalidCastException(); }
-            return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
+            return new RangeFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T>(From), ConvertValue<T>(To));
+        }
+
+        /// <summary>
+        /// Converts a boxed value to a nullable type T, handling numeric type conversions.
+        /// </summary>
+        private static T? ConvertValue<T>(object value) where T : struct
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            return (T)Convert.ChangeType(value, typeof(T));
         }
 
         /// <summary>

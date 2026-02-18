@@ -7,12 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
+        /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.V3.EntityRecognitionSkill", inputs, outputs)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
+
+            Categories = new ChangeTrackingList<string>();
+        }
+
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
@@ -38,5 +51,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }
+
+        /// <summary> The version of the model to use when calling the Text Analytics API. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
+        public string ModelVersion { get; set; }
     }
 }

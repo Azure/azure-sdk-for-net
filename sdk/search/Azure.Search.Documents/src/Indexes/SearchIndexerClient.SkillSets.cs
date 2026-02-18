@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
@@ -95,6 +96,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
@@ -186,6 +188,7 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
@@ -207,6 +210,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteSkillset(
             string skillsetName,
             CancellationToken cancellationToken = default)
@@ -223,6 +227,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
             CancellationToken cancellationToken = default)
@@ -243,6 +248,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response DeleteSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
@@ -266,6 +272,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
@@ -283,6 +290,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
             CancellationToken cancellationToken = default)
         {
@@ -296,6 +304,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
             CancellationToken cancellationToken = default)
         {
@@ -309,6 +318,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
             CancellationToken cancellationToken = default)
         {
@@ -323,6 +333,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
             CancellationToken cancellationToken = default)
         {

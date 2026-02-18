@@ -1753,6 +1753,61 @@ namespace Azure.Search.Documents.Models
             return new BinaryQuantizationCompression(compressionName, rescoringOptions, truncationDimension, VectorSearchCompressionKind.BinaryQuantization, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="description"> The description of the index. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
+        /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
+        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
+        /// <param name="suggesters"> The suggesters for the index. </param>
+        /// <param name="analyzers"> The analyzers for the index. </param>
+        /// <param name="tokenizers"> The tokenizers for the index. </param>
+        /// <param name="tokenFilters"> The token filters for the index. </param>
+        /// <param name="charFilters"> The character filters for the index. </param>
+        /// <param name="normalizers"> The normalizers for the index. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="similarity"> The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used. </param>
+        /// <param name="semantic"> Defines parameters for a search index that influence semantic capabilities. </param>
+        /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
+        /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
+        /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
+        /// <param name="eTag"> The ETag of the index. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexResponse"/> instance for mocking. </returns>
+        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semantic = default, VectorSearch vectorSearch = default, SearchIndexPermissionFilterOption? permissionFilterOption = default, bool? purviewEnabled = default, string eTag = default)
+        {
+            fields ??= new ChangeTrackingList<SearchField>();
+            scoringProfiles ??= new ChangeTrackingList<ScoringProfile>();
+            suggesters ??= new ChangeTrackingList<SearchSuggester>();
+            analyzers ??= new ChangeTrackingList<LexicalAnalyzer>();
+            tokenizers ??= new ChangeTrackingList<LexicalTokenizer>();
+            tokenFilters ??= new ChangeTrackingList<TokenFilter>();
+            charFilters ??= new ChangeTrackingList<CharFilter>();
+            normalizers ??= new ChangeTrackingList<LexicalNormalizer>();
+
+            return new SearchIndexResponse(
+                name,
+                description,
+                fields.ToList(),
+                scoringProfiles.ToList(),
+                defaultScoringProfile,
+                corsOptions,
+                suggesters.ToList(),
+                analyzers.ToList(),
+                tokenizers.ToList(),
+                tokenFilters.ToList(),
+                charFilters.ToList(),
+                normalizers.ToList(),
+                encryptionKey,
+                similarity,
+                semantic,
+                vectorSearch,
+                permissionFilterOption,
+                purviewEnabled,
+                eTag,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Statistics for a given index. Statistics are collected periodically and are not guaranteed to always be up-to-date. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
@@ -3632,23 +3687,23 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Description for what data to store in Azure Tables. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
-        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeStoreTableProjectionSelector"/> instance for mocking. </returns>
-        public static KnowledgeStoreTableProjectionSelector KnowledgeStoreTableProjectionSelector(string referenceKeyName = default, string source = default, string sourceContext = default, IEnumerable<InputFieldMappingEntry> inputs = default, string generatedKeyName = default, string tableName = default)
+        public static KnowledgeStoreTableProjectionSelector KnowledgeStoreTableProjectionSelector(string referenceKeyName = default, string generatedKeyName = default, string source = default, string sourceContext = default, IEnumerable<InputFieldMappingEntry> inputs = default, string tableName = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
 
             return new KnowledgeStoreTableProjectionSelector(
                 referenceKeyName,
+                generatedKeyName,
                 source,
                 sourceContext,
                 inputs.ToList(),
                 additionalBinaryDataProperties: null,
-                generatedKeyName,
                 tableName);
         }
 

@@ -33,6 +33,29 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeRetrievalMediumReasoningEffort)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeRetrievalMediumReasoningEffort IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeRetrievalMediumReasoningEffort)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeRetrievalMediumReasoningEffort>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -95,28 +118,5 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             return new KnowledgeRetrievalMediumReasoningEffort(kind, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeRetrievalMediumReasoningEffort)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeRetrievalMediumReasoningEffort IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeRetrievalMediumReasoningEffort)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeRetrievalMediumReasoningEffort>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

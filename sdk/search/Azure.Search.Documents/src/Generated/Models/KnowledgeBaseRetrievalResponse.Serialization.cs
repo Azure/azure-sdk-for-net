@@ -34,6 +34,29 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeBaseRetrievalResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseRetrievalResponse IPersistableModel<KnowledgeBaseRetrievalResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeBaseRetrievalResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="KnowledgeBaseRetrievalResponse"/> from. </param>
         public static explicit operator KnowledgeBaseRetrievalResponse(Response response)
         {
@@ -186,28 +209,5 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             return new KnowledgeBaseRetrievalResponse(response ?? new ChangeTrackingList<KnowledgeBaseMessage>(), activity ?? new ChangeTrackingList<KnowledgeBaseActivityRecord>(), references ?? new ChangeTrackingList<KnowledgeBaseReference>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseRetrievalResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRetrievalResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalResponse)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseRetrievalResponse IPersistableModel<KnowledgeBaseRetrievalResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseRetrievalResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             private readonly string _value;
 
-            private const string V1Value = "#Microsoft.Skills.Text.EntityRecognitionSkill";
             private const string V3Value = "#Microsoft.Skills.Text.V3.EntityRecognitionSkill";
 
             /// <summary> Creates a new instance of <see cref="SkillVersion"/>. </summary>
@@ -23,10 +22,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 _value = value ?? throw new ArgumentNullException(nameof(value));
             }
-
-            /// <summary> <see cref="SkillVersion.V1"/> version of the <see cref="EntityRecognitionSkill"/> is deprecated. Use the  <see cref="SkillVersion.V3"/> version instead. </summary>
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public static SkillVersion V1 { get; } = new SkillVersion(V1Value);
 
             /// <summary> Version 3 of the <see cref="EntityRecognitionSkill"/>. </summary>
             public static SkillVersion V3 { get; } = new SkillVersion(V3Value);

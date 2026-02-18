@@ -33,6 +33,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlIntegratedChangeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlIntegratedChangeTrackingPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlIntegratedChangeTrackingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlIntegratedChangeTrackingPolicy IPersistableModel<SqlIntegratedChangeTrackingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlIntegratedChangeTrackingPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlIntegratedChangeTrackingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlIntegratedChangeTrackingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -95,28 +118,5 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SqlIntegratedChangeTrackingPolicy(odataType, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlIntegratedChangeTrackingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlIntegratedChangeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlIntegratedChangeTrackingPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SqlIntegratedChangeTrackingPolicy IPersistableModel<SqlIntegratedChangeTrackingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlIntegratedChangeTrackingPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlIntegratedChangeTrackingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

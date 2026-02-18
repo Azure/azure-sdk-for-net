@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,7 +7,15 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal static partial class TokenCharacterKindExtensions
     {
-        public static string ToSerialString(this TokenCharacterKind value) => value.ToString();
+        public static string ToSerialString(this TokenCharacterKind value) => value switch
+        {
+            TokenCharacterKind.Letter => "letter",
+            TokenCharacterKind.Digit => "digit",
+            TokenCharacterKind.Whitespace => "whitespace",
+            TokenCharacterKind.Punctuation => "punctuation",
+            TokenCharacterKind.Symbol => "symbol",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenCharacterKind value.")
+        };
 
         public static TokenCharacterKind ToTokenCharacterKind(this string value)
         {

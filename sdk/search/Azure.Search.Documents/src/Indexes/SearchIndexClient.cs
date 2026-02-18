@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -358,9 +359,9 @@ namespace Azure.Search.Documents.Indexes
                     }
 
                     // Get only names by specifying the select parameter
-                    Pageable<SearchIndex> result = GetIndexes(new[] { Constants.NameKey }, cancellationToken);
-                    IReadOnlyList<string> names = result.Select(value => value.Name).ToArray();
-                    return Page<string>.FromValues(names, null, null);
+                    Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken);
+                    IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
+                    return Page<string>.FromValues(names, continuationToken: null, null);
                 }
                 catch (Exception ex)
                 {
@@ -391,9 +392,9 @@ namespace Azure.Search.Documents.Indexes
                     }
 
                     // Get only names by specifying the select parameter
-                    AsyncPageable<SearchIndex> result = GetIndexesAsync(new[] { Constants.NameKey }, cancellationToken);
+                    AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken);
                     List<string> names = new List<string>();
-                    await foreach (SearchIndex index in result.ConfigureAwait(false))
+                    await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
                     {
                         names.Add(index.Name);
                     }
@@ -407,20 +408,77 @@ namespace Azure.Search.Documents.Indexes
             });
         }
 
-        /// <summary> Lists all indexes available for a search service. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <summary>
+        /// Gets a list of all indexes.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Pageable<SearchIndex> GetIndexes(
-            CancellationToken cancellationToken = default) => GetIndexes([Constants.All], cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+            {
+                using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexes");
+                scope.Start();
+                try
+                {
+                    if (continuationToken != null)
+                    {
+                        throw new NotSupportedException("A continuation token is unsupported.");
+                    }
+
+                    Pageable<BinaryData> result = GetIndexes(cancellationToken.ToRequestContext());
+                    List<SearchIndex> indexes = new List<SearchIndex>();
+                    foreach (BinaryData item in result)
+                    {
+                        indexes.Add(ModelReaderWriter.Read<SearchIndex>(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
+                    }
+                    return Page<SearchIndex>.FromValues(indexes, null, null);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
+        }
 
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            CancellationToken cancellationToken = default) => GetIndexesAsync([Constants.All], cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+            {
+                using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexes");
+                scope.Start();
+                try
+                {
+                    if (continuationToken != null)
+                    {
+                        throw new NotSupportedException("A continuation token is unsupported.");
+                    }
+
+                    AsyncPageable<BinaryData> result = GetIndexesAsync(cancellationToken.ToRequestContext());
+                    List<SearchIndex> indexes = new List<SearchIndex>();
+                    await foreach (BinaryData item in result.ConfigureAwait(false))
+                    {
+                        indexes.Add(ModelReaderWriter.Read<SearchIndex>(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
+                    }
+                    return Page<SearchIndex>.FromValues(indexes, null, null);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
+        }
 
         #endregion
 

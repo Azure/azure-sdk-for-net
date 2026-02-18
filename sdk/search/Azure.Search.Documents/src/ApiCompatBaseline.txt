@@ -1,9 +1,6 @@
 # SearchResults<T> can safely be made abstract because it has no public constructors
 CannotMakeTypeAbstract : Type 'Azure.Search.Documents.Models.SearchResults<T>' is abstract in the implementation but is not abstract in the contract.
 
-# SearchIndexerClient is not being generated in the right namespace - known emitter issue, will be fixed when emitter is updated
-TypesMustExist : Type 'Azure.Search.Documents.Indexes.SearchIndexerClient' does not exist in the implementation but it does exist in the contract.
-
 # EntityRecognitionSkillLanguage and EntityRecognitionSkill are deprecated (V1 skill) - all related errors are expected
 CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage' does not implement interface 'System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage>' in the implementation but it does in the contract.
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage..ctor(System.String)' does not exist in the implementation but it does exist in the contract.
@@ -36,6 +33,9 @@ MembersMustExist : Member 'public System.Boolean Azure.Search.Documents.Indexes.
 MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage.op_Implicit(System.String)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public System.Nullable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage> Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.DefaultLanguageCode.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.DefaultLanguageCode.set(System.Nullable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion.V1.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.IncludeTypelessEntities.set(System.Nullable<System.Boolean>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Nullable<System.Boolean> Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.IncludeTypelessEntities.get()' does not exist in the implementation but it does exist in the contract.
 
 # SentimentSkillLanguage and SentimentSkill are deprecated (V1 skill) - all related errors are expected
 CannotRemoveBaseTypeOrInterface : Type 'Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage' does not implement interface 'System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>' in the implementation but it does in the contract.
@@ -63,6 +63,7 @@ MembersMustExist : Member 'public System.Nullable<Azure.Search.Documents.Indexes
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.SentimentSkill.DefaultLanguageCode.set(System.Nullable<Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>)' does not exist in the implementation but it does exist in the contract.
 TypesMustExist : Type 'Azure.Search.Documents.Indexes.Models.EntityCategory' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.EntityCategory> Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.Categories.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion.V1.get()' does not exist in the implementation but it does exist in the contract.
 
 # Deprecated VectorSearchCompression propertiesMembersMustExist : Member 'public void
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.VectorSearchCompression.RerankWithOriginalVectors.set(System.Nullable<System.Boolean>)' does not exist in the implementation but it does exist in the contract.
@@ -70,7 +71,4 @@ MembersMustExist : Member 'public System.Nullable<System.Boolean> Azure.Search.D
 MembersMustExist : Member 'public void Azure.Search.Documents.Indexes.Models.VectorSearchCompression.DefaultOversampling.set(System.Nullable<System.Double>)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public System.Nullable<System.Double> Azure.Search.Documents.Indexes.Models.VectorSearchCompression.DefaultOversampling.get()' does not exist in the implementation but it does exist in the contract. 
 
-# Incorrect Namespace fix. SearchIndexerClient in incorrect namespace
-MembersMustExist : Member 'public Azure.Search.Documents.Indexes.SearchIndexerClient Azure.Search.Documents.SearchExtensions.GetSearchIndexerClient(System.ClientModel.Primitives.ClientConnectionProvider)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.Indexes.SearchIndexerClient, Azure.Search.Documents.SearchClientOptions> Microsoft.Extensions.Azure.SearchClientBuilderExtensions.AddSearchIndexerClient<TBuilder, TConfiguration>(TBuilder, TConfiguration)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.Indexes.SearchIndexerClient, Azure.Search.Documents.SearchClientOptions> Microsoft.Extensions.Azure.SearchClientBuilderExtensions.AddSearchIndexerClient<TBuilder>(TBuilder, System.Uri, Azure.AzureKeyCredential)' does not exist in the implementation but it does exist in the contract.
+

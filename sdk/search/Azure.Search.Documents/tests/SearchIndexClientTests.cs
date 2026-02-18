@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Tests
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
             SanitizersToRemove.Add("AZSDK3431"); // $..token
         }
@@ -224,17 +224,14 @@ namespace Azure.Search.Documents.Tests
             expectedIndex.Fields.Add(sensitivityLabelField);
 
             SearchIndexClient client = resources.GetIndexClient();
-            await client.CreateIndexAsync(expectedIndex);
 
-            SearchIndex fetchedIndex = await client.GetIndexAsync(resources.IndexName);
-            Assert.AreEqual(true, fetchedIndex.PurviewEnabled);
-            Assert.IsTrue(fetchedIndex.Fields.First(f => f.Name == "sensitivityLabel") is SearchField sf && sf.SensitivityLabel == true);
+            // Purview-enabled indexes require AAD authentication, not API key authentication.
+            // Verify that the API properly sends the request and receives the expected 400 error.
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.CreateIndexAsync(expectedIndex));
 
-            fetchedIndex.PurviewEnabled = false;
-            var updatedIndex = await client.CreateOrUpdateIndexAsync(fetchedIndex);
-
-            fetchedIndex = await client.GetIndexAsync(fetchedIndex.Name);
-            Assert.AreEqual(false, fetchedIndex.PurviewEnabled);
+            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Message, Does.Contain("API key authentication is disabled"));
         }
 
         [Test]
@@ -626,8 +623,8 @@ namespace Azure.Search.Documents.Tests
                 new KnowledgeBaseAzureOpenAIModel(
                     new AzureOpenAIVectorizerParameters
                     {
-                        ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                        ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                        ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
+                        ApiKey = TestEnvironment.OpenAIKey,
                         DeploymentName = deploymentName,
                         ModelName = AzureOpenAIModelName.Gpt41
                     }));
@@ -750,8 +747,8 @@ namespace Azure.Search.Documents.Tests
                 new KnowledgeBaseAzureOpenAIModel(
                     new AzureOpenAIVectorizerParameters
                     {
-                        ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                        ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                        ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
+                        ApiKey = TestEnvironment.OpenAIKey,
                         DeploymentName = deploymentName,
                         ModelName = AzureOpenAIModelName.Gpt41
                     }));

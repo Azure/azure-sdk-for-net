@@ -466,7 +466,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
+                try
+                {
+                    await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Index doesn't exist, which is fine during cleanup
+                }
                 RequiresCleanup = false;
 
                 await WaitForIndexDeletionAsync();
@@ -482,7 +489,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeSourceCleanup && !string.IsNullOrEmpty(KnowledgeSourceName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName, cancellationToken: CancellationToken.None);
+                try
+                {
+                    await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Knowledge source doesn't exist, which is fine during cleanup
+                }
                 RequiresKnowledgeSourceCleanup = false;
 
                 await WaitForKnowledgeSourceDeletionAsync();
@@ -498,7 +512,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeBaseCleanup && !string.IsNullOrEmpty(KnowledgeBaseName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName, cancellationToken: CancellationToken.None);
+                try
+                {
+                    await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Knowledge base doesn't exist, which is fine during cleanup
+                }
                 RequiresKnowledgeBaseCleanup = false;
 
                 await WaitForKnowledgeBaseDeletionAsync();
@@ -622,8 +643,8 @@ namespace Azure.Search.Documents.Tests
                     new KnowledgeBaseAzureOpenAIModel(
                         new AzureOpenAIVectorizerParameters
                         {
-                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                            ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
+                            ApiKey = TestFixture.TestEnvironment.OpenAIKey,
                             DeploymentName = deploymentName,
                             ModelName = AzureOpenAIModelName.Gpt41
                         }));

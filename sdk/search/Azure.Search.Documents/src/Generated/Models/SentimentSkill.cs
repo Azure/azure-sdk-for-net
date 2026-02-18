@@ -7,12 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
+        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.V3.SentimentSkill", inputs, outputs)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
@@ -33,5 +45,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
         public string DefaultLanguageCode { get; set; }
+
+        /// <summary> If set to true, the skill output will include information from Text Analytics for opinion mining, namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is false. </summary>
+        public bool? IncludeOpinionMining { get; set; }
+
+        /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
+        public string ModelVersion { get; set; }
     }
 }

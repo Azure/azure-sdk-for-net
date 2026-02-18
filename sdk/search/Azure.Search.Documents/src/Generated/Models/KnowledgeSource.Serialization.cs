@@ -44,6 +44,41 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeSource IPersistableModel<KnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="knowledgeSource"> The <see cref="KnowledgeSource"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(KnowledgeSource knowledgeSource)
+        {
+            if (knowledgeSource == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(knowledgeSource, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSource"/> from. </param>
         public static explicit operator KnowledgeSource(Response response)
         {
@@ -149,41 +184,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return UnknownKnowledgeSource.DeserializeUnknownKnowledgeSource(element, options);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeSource IPersistableModel<KnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="knowledgeSource"> The <see cref="KnowledgeSource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(KnowledgeSource knowledgeSource)
-        {
-            if (knowledgeSource == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgeSource, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -38,6 +38,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeStoreTableProjectionSelector>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeStoreTableProjectionSelector)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeStoreTableProjectionSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeStoreTableProjectionSelector IPersistableModel<KnowledgeStoreTableProjectionSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeStoreTableProjectionSelector)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeStoreTableProjectionSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeStoreTableProjectionSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -57,8 +80,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(KnowledgeStoreTableProjectionSelector)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("generatedKeyName"u8);
-            writer.WriteStringValue(GeneratedKeyName);
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
         }
@@ -89,17 +110,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string referenceKeyName = default;
+            string generatedKeyName = default;
             string source = default;
             string sourceContext = default;
             IList<InputFieldMappingEntry> inputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string generatedKeyName = default;
             string tableName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("referenceKeyName"u8))
                 {
                     referenceKeyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("generatedKeyName"u8))
+                {
+                    generatedKeyName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -126,11 +152,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
-                if (prop.NameEquals("generatedKeyName"u8))
-                {
-                    generatedKeyName = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("tableName"u8))
                 {
                     tableName = prop.Value.GetString();
@@ -143,35 +164,12 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new KnowledgeStoreTableProjectionSelector(
                 referenceKeyName,
+                generatedKeyName,
                 source,
                 sourceContext,
                 inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
-                generatedKeyName,
                 tableName);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeStoreTableProjectionSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeStoreTableProjectionSelector>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeStoreTableProjectionSelector)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeStoreTableProjectionSelector IPersistableModel<KnowledgeStoreTableProjectionSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeStoreTableProjectionSelector)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeStoreTableProjectionSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

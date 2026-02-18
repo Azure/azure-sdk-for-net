@@ -11,7 +11,7 @@ namespace Azure.Search.Documents.Tests
     public class SearchClientTests : SearchTestBase
     {
         public SearchClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, Core.TestFramework.RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

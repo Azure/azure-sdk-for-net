@@ -21,8 +21,9 @@ namespace Azure.Search.Documents.KnowledgeBases
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/retrieve/", false);
+            uri.AppendPath("/knowledgebases('", false);
             uri.AppendPath(knowledgeBaseName, true);
+            uri.AppendPath("')/retrieve", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;

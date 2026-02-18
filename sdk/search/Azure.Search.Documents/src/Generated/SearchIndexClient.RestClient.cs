@@ -184,7 +184,21 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexesRequest(IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetIndexesRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/indexes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            return message;
+        }
+
+        internal HttpMessage CreateGetIndexesWithSelectedPropertiesRequest(IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

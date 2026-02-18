@@ -2153,4 +2153,8 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebKnowledgeSourceParameters
     {
     }
+
+    /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
+    [CodeGenType("SearchIndexResponse")]
+    public partial class SearchIndexResponse { }
 }

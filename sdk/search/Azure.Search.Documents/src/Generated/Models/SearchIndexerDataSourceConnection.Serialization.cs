@@ -40,6 +40,41 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerDataSourceConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchIndexerDataSourceConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchIndexerDataSourceConnection IPersistableModel<SearchIndexerDataSourceConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SearchIndexerDataSourceConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="searchIndexerDataSourceConnection"> The <see cref="SearchIndexerDataSourceConnection"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SearchIndexerDataSourceConnection searchIndexerDataSourceConnection)
+        {
+            if (searchIndexerDataSourceConnection == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerDataSourceConnection"/> from. </param>
         public static explicit operator SearchIndexerDataSourceConnection(Response response)
         {
@@ -283,41 +318,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 encryptionKey,
                 etag,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchIndexerDataSourceConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerDataSourceConnection>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexerDataSourceConnection)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerDataSourceConnection IPersistableModel<SearchIndexerDataSourceConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchIndexerDataSourceConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="searchIndexerDataSourceConnection"> The <see cref="SearchIndexerDataSourceConnection"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SearchIndexerDataSourceConnection searchIndexerDataSourceConnection)
-        {
-            if (searchIndexerDataSourceConnection == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

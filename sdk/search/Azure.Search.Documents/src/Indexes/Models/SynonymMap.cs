@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -81,52 +80,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The format of the synonym map. Only the "solr" format is currently supported. </summary>
         internal string Format { get; } = "solr";
 
-//        /// <param name="writer"> The JSON writer. </param>
-//        /// <param name="options"> The client options for reading and writing models. </param>
-//        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-//        {
-//            string format = options.Format == "W" ? ((IPersistableModel<SynonymMap>)this).GetFormatFromOptions(options) : options.Format;
-//            if (format != "J")
-//            {
-//                throw new FormatException($"The model {nameof(SynonymMap)} does not support writing '{format}' format.");
-//            }
-//            writer.WritePropertyName("name"u8);
-//            writer.WriteStringValue(Name);
-//            writer.WritePropertyName("format"u8);
-//            writer.WriteStringValue(Format);
-//            writer.WritePropertyName("synonyms"u8);
-//            writer.WriteStartArray();
-//            foreach (var synonym in SynonymsList)
-//            {
-//                writer.WriteStringValue(synonym);
-//            }
-//            writer.WriteEndArray();
-//            if (Optional.IsDefined(EncryptionKey))
-//            {
-//                writer.WritePropertyName("encryptionKey"u8);
-//                writer.WriteObjectValue(EncryptionKey, options);
-//            }
-//            if (Optional.IsDefined(ETag))
-//            {
-//                writer.WritePropertyName("@odata.etag"u8);
-//                writer.WriteStringValue(ETag.ToString());
-//            }
-//            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-//            {
-//                foreach (var item in _additionalBinaryDataProperties)
-//                {
-//                    writer.WritePropertyName(item.Key);
-//#if NET6_0_OR_GREATER
-//                    writer.WriteRawValue(item.Value);
-//#else
-//                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-//                    {
-//                        JsonSerializer.Serialize(writer, document.RootElement);
-//                    }
-//#endif
-//                }
-//            }
-//        }
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SynonymMap>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynonymMap)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("format"u8);
+            writer.WriteStringValue(Format);
+            writer.WritePropertyName("synonyms"u8);
+            // Write synonyms as a newline-delimited string, not as an array
+            writer.WriteStringValue(Synonyms);
+            if (Optional.IsDefined(EncryptionKey))
+            {
+                writer.WritePropertyName("encryptionKey"u8);
+                writer.WriteObjectValue(EncryptionKey, options);
+            }
+            if (Optional.IsDefined(_etag))
+            {
+                writer.WritePropertyName("@odata.etag"u8);
+                writer.WriteStringValue(_etag);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

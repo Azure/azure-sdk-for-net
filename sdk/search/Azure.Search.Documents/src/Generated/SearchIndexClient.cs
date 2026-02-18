@@ -751,13 +751,28 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexes(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexes(RequestContext context)
         {
-            return new SearchIndexClientGetIndexesCollectionResult(this, @select, context);
+            return new SearchIndexClientGetIndexesCollectionResult(this, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all indexes available for a search service.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetIndexesAsync(RequestContext context)
+        {
+            return new SearchIndexClientGetIndexesAsyncCollectionResult(this, context);
         }
 
         /// <summary>
@@ -772,27 +787,44 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesAsync(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesAsyncCollectionResult(this, @select, context);
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(this, @select, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all indexes available for a search service.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, RequestContext context)
+        {
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(this, @select, context);
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SearchIndex> GetIndexes(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesCollectionResultOfT(this, @select, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(this, @select, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SearchIndex> GetIndexesAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesAsyncCollectionResultOfT(this, @select, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(this, @select, cancellationToken.ToRequestContext());
         }
 
         /// <summary>

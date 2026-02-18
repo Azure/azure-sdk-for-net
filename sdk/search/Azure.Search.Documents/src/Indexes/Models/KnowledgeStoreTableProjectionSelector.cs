@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenType("SearchIndexerKnowledgeStoreTableProjectionSelector")]
+    [CodeGenSuppress(nameof(GeneratedKeyName), typeof(string))] // Issue in typespec, where property is defined twice - in base and derived class.
     public partial class KnowledgeStoreTableProjectionSelector
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>

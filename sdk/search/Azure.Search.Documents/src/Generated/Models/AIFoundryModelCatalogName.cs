@@ -16,9 +16,9 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32. </summary>
-        private const string OpenAICLIPImageTextEmbeddingsVitBasePatch32Value = "OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32";
+        private const string OpenAiClipImageTextEmbeddingsVitBasePatch32Value = "OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32";
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336. </summary>
-        private const string OpenAICLIPImageTextEmbeddingsViTLargePatch14336Value = "OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336";
+        private const string OpenAiClipImageTextEmbeddingsViTLargePatch14336Value = "OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336";
         /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Base. </summary>
         private const string FacebookDinoV2ImageEmbeddingsViTBaseValue = "Facebook-DinoV2-Image-Embeddings-ViT-Base";
         /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Giant. </summary>
@@ -41,10 +41,10 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32. </summary>
-        public static AIFoundryModelCatalogName OpenAICLIPImageTextEmbeddingsVitBasePatch32 { get; } = new AIFoundryModelCatalogName(OpenAICLIPImageTextEmbeddingsVitBasePatch32Value);
+        public static AIFoundryModelCatalogName OpenAiClipImageTextEmbeddingsVitBasePatch32 { get; } = new AIFoundryModelCatalogName(OpenAiClipImageTextEmbeddingsVitBasePatch32Value);
 
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-ViT-Large-Patch14-336. </summary>
-        public static AIFoundryModelCatalogName OpenAICLIPImageTextEmbeddingsViTLargePatch14336 { get; } = new AIFoundryModelCatalogName(OpenAICLIPImageTextEmbeddingsViTLargePatch14336Value);
+        public static AIFoundryModelCatalogName OpenAiClipImageTextEmbeddingsViTLargePatch14336 { get; } = new AIFoundryModelCatalogName(OpenAiClipImageTextEmbeddingsViTLargePatch14336Value);
 
         /// <summary> Facebook-DinoV2-Image-Embeddings-ViT-Base. </summary>
         public static AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTBase { get; } = new AIFoundryModelCatalogName(FacebookDinoV2ImageEmbeddingsViTBaseValue);
