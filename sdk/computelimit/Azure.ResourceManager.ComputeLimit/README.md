@@ -44,8 +44,8 @@ Documentation is available to help you learn how to use this package:
 
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
-- [Managing Guest Subscriptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/computelimit/Azure.ResourceManager.Computelimit/samples/Sample1_ManagingGuestSubscriptions.md)
-- [Managing Shared Limits](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/computelimit/Azure.ResourceManager.Computelimit/samples/Sample2_ManagingSharedLimits.md)
+- [Managing Guest Subscriptions](./samples/Sample1_ManagingGuestSubscriptions.md)
+- [Managing Shared Limits](./samples/Sample2_ManagingSharedLimits.md)
 
 ## Troubleshooting
 
