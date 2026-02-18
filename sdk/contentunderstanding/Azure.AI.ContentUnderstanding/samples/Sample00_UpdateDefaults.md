@@ -22,7 +22,7 @@ To get started you'll need:
 
 3. **Important**: Take note of your Microsoft Foundry resource endpoint and, if you plan to use key-based authentication, the API key. In the Azure Portal, navigate to your Microsoft Foundry resource, go to the "Keys and Endpoint" section, and copy the endpoint URL and API key. A typical endpoint looks like: `https://your-foundry.services.ai.azure.com`. You'll use the endpoint (and API key if using key-based auth) in the "Creating a ContentUnderstandingClient" section below.
 
-4. If you plan to use `DefaultAzureCredential` for authentication, you will need to log in to Azure first. Typically, you can do this by running `az login` (Azure CLI) or `azd login` (Azure Developer CLI) in your terminal.
+4. If you plan to use `DefaultAzureCredential` for authentication, you will need to log in to Azure first. Typically, you can do this by running `az login` (Azure CLI) or `azd auth login` (Azure Developer CLI) in your terminal.
 
 5. Deploy the following models in Microsoft Foundry:
    - gpt-4.1
@@ -116,7 +116,7 @@ else
 
 If the call to `UpdateDefaultsAsync()` fails, the most common reason is that the logged-in credential does not have the **Cognitive Services User** role assigned to your Microsoft Foundry resource. Make sure you have completed step 2 in the Prerequisites section to grant yourself this role.
 
-If you are using `DefaultAzureCredential` for authentication, ensure you have logged in to Azure by running `az login` (Azure CLI) or `azd login` (Azure Developer CLI) as mentioned in step 4.
+If you are using `DefaultAzureCredential` for authentication, ensure you have logged in to Azure by running `az login` (Azure CLI) or `azd auth login` (Azure Developer CLI) as mentioned in step 4.
 
 ## Next steps
 
