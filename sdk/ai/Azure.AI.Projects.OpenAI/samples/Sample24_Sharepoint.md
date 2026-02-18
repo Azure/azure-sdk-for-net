@@ -1,18 +1,8 @@
 # Sample for use of an Agent with SharePoint in Azure.AI.Projets.OpenAI.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-To enable your Agent to access SharePoint, use `SharepointAgentTool`.
-=======
 To enable your Agent to access SharePoint, use `SharepointPreviewTool`.
 
 **Note:** This feature is in the preview.
->>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
-=======
-To enable your Agent to access SharePoint, use `SharepointPreviewTool`.
-
-**Note:** This feature is in the preview.
->>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 
 1. First, create an agent client and read the environment variables, which will be used in the next steps.
 
@@ -23,15 +13,7 @@ var sharepointConnectionName = System.Environment.GetEnvironmentVariable("SHAREP
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-2. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointAgentTool`. We will use this tool to create an Agent.
-=======
 2. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`. We will use this tool to create an Agent.
->>>>>>> 1085241eb0993cca1238f632303b54a0a12f2347
-=======
-2. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`. We will use this tool to create an Agent.
->>>>>>> 241a090b53c59bf668ff10bf4ecee8cdb3b0aa5a
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Sync

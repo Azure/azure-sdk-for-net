@@ -546,11 +546,11 @@ public class AgentsTestBase : ProjectsClientTestBase
             }
         }
         // Remove Vector stores
-        VectorStoreClient oaiVctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
-        foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
-        {
-            oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
-        }
+        //VectorStoreClient oaiVctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+        //foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
+        //{
+        //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
+        //}
         // Remove Agents.
         foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
         {
