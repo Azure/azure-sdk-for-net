@@ -20,7 +20,7 @@ public class CopilotService : IAsyncDisposable
     private bool _isInitialized;
     private bool _isDisposed;
 
-    private readonly IReadOnlyList<string> _availableTools = new[] { "view", "grep", "glob" };
+    private readonly IReadOnlyList<string> _availableTools = new[] {"view", "edit", "create", "grep", "glob", "terminal"};
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CopilotService"/> class.
@@ -105,15 +105,14 @@ public class CopilotService : IAsyncDisposable
     }
 
     /// <summary>
-    /// Gets the Typespec specification path for a service in azure-rest-api-specs repository using Copilot.
+    /// Updates the tsp-location.yaml file with the correct Typespec specification path using Copilot analysis.
     /// </summary>
     /// <param name="projectPath">The path to the project directory.</param>
     /// <param name="repoName">Repository name to find the service path for.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Specification path starting with 'specification/' if found, null otherwise.</returns>
     /// <exception cref="InvalidOperationException">Thrown when Copilot is not initialized.</exception>
     /// <exception cref="ObjectDisposedException">Thrown when the service has been disposed.</exception>
-    public async Task<string?> GetTypeSpecSpecificationPath(string projectPath, string repoName, CancellationToken cancellationToken = default)
+    public async Task UpdateTspLocationFileAsync(string projectPath, string repoName, CancellationToken cancellationToken = default)
     {
         ObjectDisposedException.ThrowIf(_isDisposed, this);
 
@@ -126,25 +125,16 @@ public class CopilotService : IAsyncDisposable
 
         if (string.IsNullOrEmpty(repoName))
         {
-            _logger.LogWarning("Repository name is null or empty, cannot determine specification path");
-            return null;
+            _logger.LogWarning("Repository name is null or empty, cannot update tsp-location.yaml");
+            return;
         }
 
-        _logger.LogDebug("Requesting specification path for repository: {RepoName}", repoName);
+        _logger.LogDebug("Requesting Copilot to update tsp-location.yaml for repository: {RepoName}", repoName);
 
         var prompt = CopilotPrompts.TypespecPathAnalysisPrompt(projectPath, repoName);
         var result = await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
 
-        if (!string.IsNullOrEmpty(result))
-        {
-            _logger.LogInformation("Copilot determined specification path for {RepoName}: {Path}", repoName, result);
-        }
-        else
-        {
-            _logger.LogWarning("Copilot could not determine specification path for repository: {RepoName}", repoName);
-        }
-
-        return result;
+        _logger.LogDebug("Copilot has been asked to update tsp-location.yaml: {Response}", result);
     }
 
     /// <summary>

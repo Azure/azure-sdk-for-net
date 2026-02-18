@@ -30,7 +30,7 @@ public class GitServiceTests
     }
 
     [Test]
-    public async Task GetLatestCommitWithPathAsync_WithValidRepository_ReturnsCommitInfo()
+    public async Task TryGetCommitForPath_WithValidRepository_ReturnsCommitSha()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
         var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
@@ -47,15 +47,14 @@ public class GitServiceTests
 
         var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
 
-        var result = await gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "some/path");
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "some/path", CancellationToken.None);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Value.CommitSha, Is.EqualTo("abc123def456789012345678901234567890abcd"));
-        Assert.That(result.Value.ResolvedPath, Is.EqualTo("some/path"));
+        Assert.That(result, Is.EqualTo("abc123def456789012345678901234567890abcd"));
     }
 
     [Test]
-    public async Task GetLatestCommitWithPathAsync_WithPath_ReturnsCommitInfo()
+    public async Task TryGetCommitForPath_WithSpecificPath_ReturnsCommitSha()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
         var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
@@ -72,15 +71,14 @@ public class GitServiceTests
 
         var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
 
-        var result = await gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "sdk/some-service");
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "sdk/some-service", CancellationToken.None);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Value.CommitSha, Is.EqualTo("def456abc789012345678901234567890abcdef1"));
-        Assert.That(result.Value.ResolvedPath, Is.EqualTo("sdk/some-service"));
+        Assert.That(result, Is.EqualTo("def456abc789012345678901234567890abcdef1"));
     }
 
     [Test]
-    public async Task GetLatestCommitWithPathAsync_WithFailedRequest_ThrowsInvalidOperationException()
+    public async Task TryGetCommitForPath_WithFailedRequest_ReturnsNull()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
         var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
@@ -88,14 +86,13 @@ public class GitServiceTests
 
         var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
 
-        var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path"));
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None);
 
-        Assert.That(ex!.Message, Does.Contain("No commits found in repository"));
+        Assert.That(result, Is.Null);
     }
 
     [Test]
-    public async Task GetLatestCommitWithPathAsync_WithEmptyResponse_ThrowsInvalidOperationException()
+    public async Task TryGetCommitForPath_WithEmptyResponse_ReturnsNull()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
         var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
@@ -103,14 +100,13 @@ public class GitServiceTests
 
         var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
 
-        var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "path"));
+        var result = await gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None);
 
-        Assert.That(ex!.Message, Does.Contain("No commits found"));
+        Assert.That(result, Is.Null);
     }
 
     [Test]
-    public void GetLatestCommitWithPathAsync_WithOversizedResponse_ThrowsInvalidOperationException()
+    public void TryGetCommitForPath_WithOversizedResponse_ThrowsInvalidOperationException()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
         var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
@@ -123,7 +119,7 @@ public class GitServiceTests
         var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.GetLatestCommitWithPathAsync("owner", "repo", "/test/project/path", "some/path"));
+            gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None));
 
         Assert.That(ex!.Message, Does.Contain("API response exceeded maximum allowed size"));
     }

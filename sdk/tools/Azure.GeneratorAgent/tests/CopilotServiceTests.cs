@@ -99,13 +99,13 @@ public class CopilotServiceTests
     }
 
     [Test]
-    public async Task GetTypeSpecSpecificationPath_WhenNotInitialized_ShouldThrowInvalidOperationException()
+    public async Task UpdateTspLocationFileAsync_WhenNotInitialized_ShouldThrowInvalidOperationException()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
         var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(
-            () => copilotService.GetTypeSpecSpecificationPath("/project/path", "repo-name"));
+            () => copilotService.UpdateTspLocationFileAsync("/project/path", "repo-name"));
 
         Assert.That(ex!.Message, Does.Contain("Copilot client and session must be initialized"));
 
@@ -182,7 +182,7 @@ public class CopilotServiceTests
     }
 
     [Test]
-    public async Task GetTypeSpecSpecificationPath_WithNullRepoName_ShouldReturnNull()
+    public async Task UpdateTspLocationFileAsync_WithNullRepoName_ShouldCompleteWithoutUpdating()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
         var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
@@ -190,9 +190,8 @@ public class CopilotServiceTests
         // We can't easily test this without initializing, but we can test the argument validation
         try
         {
-            var result = await copilotService.GetTypeSpecSpecificationPath("/project/path", null!);
-            // If we somehow get here without throwing, result should be null
-            Assert.That(result, Is.Null);
+            await copilotService.UpdateTspLocationFileAsync("/project/path", null!);
+            // If we somehow get here without throwing, the method completed without error
         }
         catch (InvalidOperationException)
         {
@@ -201,15 +200,15 @@ public class CopilotServiceTests
     }
 
     [Test]
-    public async Task GetTypeSpecSpecificationPath_WithEmptyRepoName_ShouldReturnNull()
+    public async Task UpdateTspLocationFileAsync_WithEmptyRepoName_ShouldCompleteWithoutUpdating()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
         var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         try
         {
-            var result = await copilotService.GetTypeSpecSpecificationPath("/project/path", "");
-            Assert.That(result, Is.Null);
+            await copilotService.UpdateTspLocationFileAsync("/project/path", "");
+            // If we somehow get here without throwing, the method completed
         }
         catch (InvalidOperationException)
         {
@@ -350,15 +349,15 @@ public class CopilotServiceTests
     }
 
     [Test]
-    public async Task GetTypeSpecSpecificationPath_WithWhitespaceRepoName_ShouldReturnNull()
+    public async Task UpdateTspLocationFileAsync_WithWhitespaceRepoName_ShouldCompleteWithoutUpdating()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
         var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         try
         {
-            var result = await copilotService.GetTypeSpecSpecificationPath("/project/path", "   ");
-            Assert.That(result, Is.Null);
+            await copilotService.UpdateTspLocationFileAsync("/project/path", "   ");
+            // If we somehow get here without throwing, the method completed
         }
         catch (InvalidOperationException)
         {
@@ -473,14 +472,14 @@ public class CopilotServiceTests
     }
 
     [Test]
-    public async Task GetTypeSpecSpecificationPath_ExceptionHandling_ShouldReturnNullOnError()
+    public async Task UpdateTspLocationFileAsync_ExceptionHandling_ShouldThrowOnError()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
         var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
-        // This tests error handling in GetTypeSpecSpecificationPath when not initialized
+        // This tests error handling in UpdateTspLocationFileAsync when not initialized
         var ex = Assert.ThrowsAsync<InvalidOperationException>(
-            () => copilotService.GetTypeSpecSpecificationPath("/project", "repo"));
+            () => copilotService.UpdateTspLocationFileAsync("/project", "repo"));
 
         Assert.That(ex!.Message, Does.Contain("must be initialized"));
 
@@ -502,7 +501,7 @@ public class CopilotServiceTests
         Assert.That(ex.ParamName, Is.EqualTo("projectPath"));
     }
 
-[Test]
+    [Test]
     public async Task CopilotService_StateConsistency_AfterExceptionInInitialization()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
@@ -618,9 +617,9 @@ public class CopilotServiceTests
         Assert.That(initMethod, Is.Not.Null, "InitializeCopilotAsync method should exist");
         Assert.That(initMethod!.IsPublic, Is.True, "InitializeCopilotAsync should be public");
 
-        var getPathMethod = type.GetMethod("GetTypeSpecSpecificationPath");
-        Assert.That(getPathMethod, Is.Not.Null, "GetTypeSpecSpecificationPath method should exist");
-        Assert.That(getPathMethod!.IsPublic, Is.True, "GetTypeSpecSpecificationPath should be public");
+        var updateMethod = type.GetMethod("UpdateTspLocationFileAsync");
+        Assert.That(updateMethod, Is.Not.Null, "UpdateTspLocationFileAsync method should exist");
+        Assert.That(updateMethod!.IsPublic, Is.True, "UpdateTspLocationFileAsync should be public");
 
         var disposeMethod = type.GetMethod("DisposeAsync");
         Assert.That(disposeMethod, Is.Not.Null, "DisposeAsync method should exist");

@@ -139,24 +139,22 @@ public class RootCommandFactory
                 var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
                 _validator.ValidateRepositoryPath(relativeDirectory);
 
-                // Step 5: Get latest commit id and resolved path
-                _logger.LogDebug("Step 5: Getting latest commit information");
-                var commitResult = await _gitService.GetLatestCommitWithPathAsync(DefaultOwner, DefaultSpecsRepository, validatedPath, relativeDirectory, cancellationToken).ConfigureAwait(false);
+                // Step 5: Get valid commit SHA and directory path
+                _logger.LogDebug("Step 5: Resolving commit information and directory path");
+                var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, cancellationToken).ConfigureAwait(false);
 
-                if (!commitResult.HasValue)
+                if (commitSha == null || string.IsNullOrEmpty(finalDirectory))
                 {
-                    _logger.LogError("Unable to retrieve commit information for repository path: {Path}", relativeDirectory);
+                    _logger.LogError("Unable to resolve valid commit and directory path");
                     Environment.ExitCode = 1;
                     return;
                 }
 
-                var (commitSha, resolvedPath) = commitResult.Value;
-                _logger.LogInformation("Retrieved latest commit: {CommitSha} for path: {ResolvedPath}", commitSha, resolvedPath);
+                _logger.LogInformation("Retrieved latest commit: {CommitSha} for path: {Directory}", commitSha, finalDirectory);
 
-                // Step 6: Update the commit ID, directory, and emitterPackageJsonPath in tsp-location.yaml
+                // Step 6: Update the commit ID and emitterPackageJsonPath in tsp-location.yaml (directory already updated by Copilot if needed)
                 _logger.LogDebug("Step 6: Updating tsp-location.yaml fields");
                 await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, cancellationToken).ConfigureAwait(false);
-                await _fileService.WriteFieldAsync(tspLocationPath, DirectoryField, resolvedPath, cancellationToken).ConfigureAwait(false);
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
                 _logger.LogInformation("Successfully completed migration for SDK path: {SdkPath}", sdkPath);
@@ -200,5 +198,52 @@ public class RootCommandFactory
         });
 
         return migrateCommand;
+    }
+
+    /// <summary>
+    /// Resolves a valid commit SHA and directory path, using Copilot to correct the path if needed.
+    /// </summary>
+    /// <param name="validatedPath">The validated SDK path.</param>
+    /// <param name="tspLocationPath">Path to tsp-location.yaml file.</param>
+    /// <param name="initialDirectory">Initial directory path from tsp-location.yaml.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Tuple of (commitSha, finalDirectory) if successful, (null, null) if failed.</returns>
+    private async Task<(string? CommitSha, string? FinalDirectory)> ResolveCommitAndDirectoryAsync(string validatedPath, string tspLocationPath, string? initialDirectory, CancellationToken cancellationToken)
+    {
+        // Try with initial directory first
+        if (!string.IsNullOrEmpty(initialDirectory))
+        {
+            var commitSha = await _gitService.TryGetCommitForPath(DefaultOwner, DefaultSpecsRepository, initialDirectory, cancellationToken).ConfigureAwait(false);
+            if (commitSha != null)
+            {
+                _logger.LogInformation("Found valid commit {CommitSha} for existing directory: {Directory}", commitSha, initialDirectory);
+                return (commitSha, initialDirectory);
+            }
+        }
+
+        // Directory not found or invalid, use Copilot to fix it
+        _logger.LogInformation("Directory path {Path} not found or invalid, using Copilot to find and update correct path", initialDirectory);
+
+        await _copilotService.UpdateTspLocationFileAsync(validatedPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
+
+        var updatedDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
+
+        if (string.IsNullOrEmpty(updatedDirectory))
+        {
+            _logger.LogError("Failed to read updated directory from tsp-location.yaml after Copilot update");
+            return (null, null);
+        }
+
+        // Try with updated directory
+        var updatedCommitSha = await _gitService.TryGetCommitForPath(DefaultOwner, DefaultSpecsRepository, updatedDirectory, cancellationToken).ConfigureAwait(false);
+
+        if (updatedCommitSha != null)
+        {
+            _logger.LogInformation("Found valid commit {CommitSha} for Copilot-updated directory: {Directory}", updatedCommitSha, updatedDirectory);
+            return (updatedCommitSha, updatedDirectory);
+        }
+
+        _logger.LogError("Unable to retrieve commit information even after Copilot updated the directory path: {Path}", updatedDirectory);
+        return (null, null);
     }
 }
