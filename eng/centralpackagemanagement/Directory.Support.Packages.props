@@ -28,7 +28,8 @@
     <!-- Benchmarking infrastructure -->
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-    <!-- Support packages -->
+
+        <!-- Support packages -->
     <PackageVersion Include="Azure.AI.Agents.Persistent" Version="1.1.0" />
     <PackageVersion Update="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
     <PackageVersion Include="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
