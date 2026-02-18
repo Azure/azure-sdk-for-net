@@ -7,10 +7,19 @@ azure-sdk-for-net repository. Every project in the repo resolves its
 
 ## Per-Package Overrides
 
-> **⚠ Overrides require explicit approval from a repository architect.** They
-> exist for cases where a package has a legitimate, documented need for a
-> new dependency or different dependency version that differs from the repo-wide
-> default. Do not create an override file without approval.
+Override files serve two purposes:
+
+- **Library-specific dependencies** — packages conditionally approved by a
+  .NET architect for a single library, not for repo-wide use. Dependencies
+  intended for broad use should instead be added to the appropriate central
+  file (e.g. `Directory.Packages.props`, `Directory.Support.Packages.props`).
+
+  > **⚠ Library-specific dependencies require explicit approval from a .NET architect.**
+
+- **Version overrides of standard dependencies** — a different version of a
+  package already in the central files. Packages should use the standard
+  central version whenever possible. Version overrides are short-lived and must
+  have a corresponding GitHub issue tracking their removal.
 
 When approved, follow these steps to add an override for your package:
 
@@ -21,8 +30,7 @@ When approved, follow these steps to add an override for your package:
    eng/centralpackagemanagement/overrides/Azure.MyService.Packages.props
    ```
 
-2. **Add your `PackageVersion` items** inside the file. Only include the
-   specific packages that need a non-default version:
+2. **Add your `PackageVersion` items** inside the file:
 
    ```xml
    <Project>
@@ -32,9 +40,8 @@ When approved, follow these steps to add an override for your package:
    </Project>
    ```
 
-   If a dependency is only needed for tests, samples, or perf projects, scope
-   it with a condition on the `ItemGroup` so it doesn't leak into the main
-   library:
+   Scope dependencies to tests, samples, or perf projects with a condition so
+   they don't leak into the main library:
 
    ```xml
    <Project>
@@ -45,7 +52,7 @@ When approved, follow these steps to add an override for your package:
    ```
 
    Available conditions: `IsTestProject`, `IsSamplesProject`, `IsPerfProject`,
-   `IsStressProject`, `IsTestSupportProject`. You can combine them:
+   `IsStressProject`, `IsTestSupportProject`, `IsToolsProject`. You can combine them:
 
    ```xml
    <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsSamplesProject)' == 'true'">

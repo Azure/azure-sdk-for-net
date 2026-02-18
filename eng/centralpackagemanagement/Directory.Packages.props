@@ -194,6 +194,7 @@
     <PackageVersion Update="Azure.Storage.Files.Shares" Version="12.21.0" />
     <PackageVersion Update="Azure.Storage.Queues" Version="12.21.0" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'
       and '$(IsTestProject)' != 'true'
       and '$(IsTestSupportProject)' != 'true'

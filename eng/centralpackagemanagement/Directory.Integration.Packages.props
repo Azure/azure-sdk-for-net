@@ -1,10 +1,18 @@
 <Project>
-  <!-- Packages intended for current generation integration libraries only -->
+  <!-- ============================================================== -->
+  <!--             INTEGRATION LIBRARY DEPENDENCIES                   -->
+  <!--                                                                -->
+  <!-- Integration libraries integrate Azure services with specific   -->
+  <!-- hosting platforms such as Azure WebJobs, Azure Functions, and   -->
+  <!-- Azure SignalR. These provide bindings, triggers, and protocol   -->
+  <!-- support for those platforms.                                    -->
+  <!-- ============================================================== -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.44" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.32.0" />
   </ItemGroup>
+
   <ItemGroup Condition ="'$(IsClientLibrary)' == 'true'
       and $(MSBuildProjectName.StartsWith('Microsoft.'))
       and '$(IsTestProject)' != 'true'
