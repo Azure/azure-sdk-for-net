@@ -37,25 +37,21 @@ public sealed class PartialModifierAnalyzer : DiagnosticAnalyzer
             return;
 
         // Check if this class inherits from ModelReaderWriterContext (directly or indirectly)
-        for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
+        if (!namedType.InheritsFrom(contextType))
+            return;
+
+        // Check for partial modifier
+        if (!namedType.DeclaringSyntaxReferences.Any(syntaxRef =>
         {
-            if (SymbolEqualityComparer.Default.Equals(baseType, contextType))
-            {
-                // Check for partial modifier
-                if (!namedType.DeclaringSyntaxReferences.Any(syntaxRef =>
-                {
-                    var syntax = syntaxRef.GetSyntax();
-                    return syntax is Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax classDecl &&
-                           classDecl.Modifiers.Any(m => m.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.PartialKeyword));
-                }))
-                {
-                    var diagnostic = Diagnostic.Create(
-                        ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial,
-                        namedType.Locations.FirstOrDefault() ?? Location.None);
-                    context.ReportDiagnostic(diagnostic);
-                }
-                break;
-            }
+            var syntax = syntaxRef.GetSyntax();
+            return syntax is Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax classDecl &&
+                   classDecl.Modifiers.Any(m => m.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.PartialKeyword));
+        }))
+        {
+            var diagnostic = Diagnostic.Create(
+                ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial,
+                namedType.Locations.FirstOrDefault() ?? Location.None);
+            context.ReportDiagnostic(diagnostic);
         }
     }
 }

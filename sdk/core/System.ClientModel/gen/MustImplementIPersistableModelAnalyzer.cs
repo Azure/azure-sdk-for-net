@@ -43,16 +43,7 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
             if (namedType.TypeKind != TypeKind.Class)
                 return;
 
-            bool isContext = false;
-            for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
-            {
-                if (SymbolEqualityComparer.Default.Equals(baseType, contextBaseType))
-                {
-                    isContext = true;
-                    break;
-                }
-            }
-            if (!isContext)
+            if (!namedType.InheritsFrom(contextBaseType))
                 return;
 
             // For each [ModelReaderWriterBuildable(typeof(T))] attribute, check T
@@ -74,19 +65,25 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
 
                     if (!implements)
                     {
-                        var attributeLocation = attr.ApplicationSyntaxReference?.GetSyntax()?.GetLocation()
-                            ?? namedType.Locations.FirstOrDefault()
-                            ?? Location.None;
-
-                        var diagnostic = Diagnostic.Create(
-                            ModelReaderWriterContextGenerator.DiagnosticDescriptors.MustImplementIPersistableModel,
-                            attributeLocation,
-                            modelType.Name);
-                        symbolContext.ReportDiagnostic(diagnostic);
+                        symbolContext = ReportDiagnostic(symbolContext, namedType, attr, modelType);
                     }
                 }
             }
         }, SymbolKind.NamedType);
+    }
+
+    private static SymbolAnalysisContext ReportDiagnostic(SymbolAnalysisContext symbolContext, INamedTypeSymbol namedType, AttributeData attr, ITypeSymbol modelType)
+    {
+        var attributeLocation = attr.ApplicationSyntaxReference?.GetSyntax()?.GetLocation()
+            ?? namedType.Locations.FirstOrDefault()
+            ?? Location.None;
+
+        var diagnostic = Diagnostic.Create(
+            ModelReaderWriterContextGenerator.DiagnosticDescriptors.MustImplementIPersistableModel,
+            attributeLocation,
+            modelType.Name);
+        symbolContext.ReportDiagnostic(diagnostic);
+        return symbolContext;
     }
 
     private static INamedTypeSymbol? GetModelType(object? value)

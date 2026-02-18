@@ -46,16 +46,7 @@ public sealed class ParameterlessConstructorAnalyzer : DiagnosticAnalyzer
             if (namedType.TypeKind != TypeKind.Class)
                 return;
 
-            bool isContext = false;
-            for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
-            {
-                if (SymbolEqualityComparer.Default.Equals(baseType, contextBaseType))
-                {
-                    isContext = true;
-                    break;
-                }
-            }
-            if (!isContext)
+            if (!namedType.InheritsFrom(contextBaseType))
                 return;
 
             // For each [ModelReaderWriterBuildable(typeof(T))] attribute, check T

@@ -28,4 +28,19 @@ internal static class SymbolExtensions
                 return null;
         }
     }
+
+    /// <summary>
+    /// Checks if the given type inherits from the specified base type.
+    /// </summary>
+    public static bool InheritsFrom(this INamedTypeSymbol type, INamedTypeSymbol baseType)
+    {
+        for (var current = type.BaseType; current != null; current = current.BaseType)
+        {
+            if (SymbolEqualityComparer.Default.Equals(current, baseType))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
