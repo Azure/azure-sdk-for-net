@@ -36,6 +36,8 @@ namespace Azure.Identity.Tests
             StringAssert.Contains("No certificate found in CurrentUser/My store with thumbprint THUMBPRINT", ex.Message);
         }
 
+        #if NET472_OR_GREATER
+        // CertificateRequest introduced in .net4.7.2
         [Test]
         public async ValueTask ValidateCertPathLoad([Values] bool async)
         {
@@ -64,6 +66,7 @@ namespace Azure.Identity.Tests
                 store.Remove(cert);
             }
         }
+        #endif
 
         [Test]
         public async Task ValidatePemCertificateLoad([Values] bool async)
