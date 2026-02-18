@@ -276,10 +276,10 @@ namespace Azure.Identity
             return new WorkloadIdentityCredential(options);
         }
 
-        public virtual TokenCredential CreateManagedIdentityCredential(bool isProbeEnabled = true)
+        public virtual TokenCredential CreateManagedIdentityCredential(bool isChained = true)
         {
             var options = Options.Clone<DefaultAzureCredentialOptions>();
-            options.IsChainedCredential = isProbeEnabled;
+            options.IsChainedCredential = isChained && Options.CredentialSource == null;
 
             if (options.ManagedIdentityClientId != null && options.ManagedIdentityResourceId != null)
             {
@@ -361,7 +361,7 @@ namespace Azure.Identity
             var options = Options.Clone<DevelopmentBrokerOptions>();
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = Options.CredentialSource == null;
 
             return new BrokerCredential(options);
         }
@@ -371,7 +371,7 @@ namespace Azure.Identity
             var options = Options.Clone<AzureDeveloperCliCredentialOptions>();
             options.TenantId = Options.TenantId;
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = Options.CredentialSource == null;
 
             return new AzureDeveloperCliCredential(Pipeline, default, options);
         }
@@ -385,7 +385,7 @@ namespace Azure.Identity
             {
                 options.Subscription = Options.Subscription;
             }
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = Options.CredentialSource == null;
 
             return new AzureCliCredential(Pipeline, default, options);
         }
@@ -395,7 +395,7 @@ namespace Azure.Identity
             var options = Options.Clone<VisualStudioCredentialOptions>();
             options.TenantId = Options.VisualStudioTenantId;
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = Options.CredentialSource == null;
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, default, default, options);
         }
@@ -404,7 +404,7 @@ namespace Azure.Identity
         {
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
             options.TenantId = Options.VisualStudioCodeTenantId;
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = Options.CredentialSource == null;
 
             return new VisualStudioCodeCredential(options);
         }
@@ -414,7 +414,7 @@ namespace Azure.Identity
             var options = Options.Clone<AzurePowerShellCredentialOptions>();
             options.TenantId = Options.TenantId;
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = Options.CredentialSource == null;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
         }
