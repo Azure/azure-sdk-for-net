@@ -49,7 +49,7 @@ namespace TestProject
         }
 
         [Test]
-        public async Task TwoPartsFirstPartialSecondNot_ShouldPass()
+        public async Task TwoPartsBothPartial_AttributeOnFirstPart_ShouldPass()
         {
             string source =
 $$"""
@@ -69,7 +69,7 @@ namespace TestProject
         }
 
         [Test]
-        public async Task TwoPartsSecondPartialFirstNot_ShouldPass()
+        public async Task TwoPartsBothPartial_AttributeOnSecondPart_ShouldPass()
         {
             string source =
 $$"""

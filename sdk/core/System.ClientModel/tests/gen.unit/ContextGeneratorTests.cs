@@ -682,8 +682,8 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNull(result.GenerationSpec);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id, result.Diagnostics[0].Id);
+            // The PartialModifierAnalyzer reports the diagnostic, not the generator
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]
