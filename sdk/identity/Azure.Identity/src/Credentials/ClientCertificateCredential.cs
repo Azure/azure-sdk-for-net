@@ -123,7 +123,7 @@ namespace Azure.Identity
             : this(
                 tenantId,
                 clientId,
-                new X509Certificate2FromFileProvider(certificatePath ?? throw new ArgumentNullException(nameof(certificatePath)), certificatePassword),
+                new X509Certificate2FromPathProvider(certificatePath ?? throw new ArgumentNullException(nameof(certificatePath)), certificatePassword),
                 options,
                 pipeline,
                 client)
