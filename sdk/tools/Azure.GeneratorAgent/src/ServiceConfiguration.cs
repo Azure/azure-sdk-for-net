@@ -34,7 +34,6 @@ public static class ServiceConfiguration
             client.MaxResponseContentBufferSize = 1_000_000;
         });
 
-        // Services - Azure SDK preferred lifetimes
         services.AddSingleton<ValidationService>();
         services.AddSingleton<FileService>();
 
