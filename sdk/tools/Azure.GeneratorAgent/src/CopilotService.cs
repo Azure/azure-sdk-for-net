@@ -20,8 +20,6 @@ public class CopilotService : IAsyncDisposable
     private bool _isInitialized;
     private bool _isDisposed;
 
-    private readonly IReadOnlyList<string> _availableTools = ["view", "edit", "create", "grep", "glob", "terminal"];
-
     /// <summary>
     /// Initializes a new instance of the <see cref="CopilotService"/> class.
     /// </summary>
@@ -88,7 +86,7 @@ public class CopilotService : IAsyncDisposable
                     Mode = SystemMessageMode.Append,
                     Content = CopilotPrompts.BuildMigrationSystemMessage(projectPath)
                 },
-                AvailableTools = _availableTools.ToList(),
+                AvailableTools = ["view", "edit", "create", "grep", "glob", "terminal"],
                 InfiniteSessions = new InfiniteSessionConfig { Enabled = false },
                 Streaming = true
             }).ConfigureAwait(false);
