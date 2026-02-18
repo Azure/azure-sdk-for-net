@@ -89,6 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -111,6 +112,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
                     await UploadPagesAsync(blobClient, originalStream);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetBlobOptions()));
@@ -170,7 +175,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override async Task<IDisposingContainer<ShareClient>> GetSourceSasDisposingContainerAsync(
             ShareServiceClient service = null,
             string containerName = null)
-            => await SourceClientBuilder.GetTestShareAsync(service, containerName);
+            => await SourceClientBuilder.GetAzureSasCredentialTestShareAsync(service, containerName);
 
         protected override async Task<ShareFileClient> GetSourceObjectClientAsync(
             ShareClient container,
@@ -180,6 +185,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             ShareClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -223,6 +229,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     await fileClient.UploadAsync(contents);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return fileClient;
             }
             Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));

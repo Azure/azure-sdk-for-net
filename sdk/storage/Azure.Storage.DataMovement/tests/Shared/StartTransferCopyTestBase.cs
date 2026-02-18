@@ -110,6 +110,7 @@ namespace Azure.Storage.DataMovement.Tests
             TSourceClientOptions options = default,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -171,6 +172,7 @@ namespace Azure.Storage.DataMovement.Tests
             string objectName = default,
             TDestinationClientOptions options = default,
             Stream contents = default,
+            bool usingAzureSasCredential = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -855,20 +857,23 @@ namespace Azure.Storage.DataMovement.Tests
             TDestinationContainerClient destinationContainer,
             TransferPropertiesTestType propertiesType,
             long size = Constants.KB,
-            long? chunkSize = default)
+            long? chunkSize = default,
+            bool usingAzureSasCredential = false)
         {
             // Create blob with properties
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
                 objectLength: size,
-                createResource: true);
+                createResource: true,
+                usingAzureSasCredential: usingAzureSasCredential);
             // Set preserve properties
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
 
             // Destination client - Set Properties
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destinationContainer,
-                createResource: false);
+                createResource: false,
+                usingAzureSasCredential: usingAzureSasCredential);
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(
                 destinationClient,
                 propertiesTestType: propertiesType);
@@ -972,7 +977,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        public virtual async Task SourceObjectToDestinationObject_Sas()
+        public virtual async Task SourceObjectToDestinationObject_AzureSasCredential()
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceSasDisposingContainerAsync();
@@ -983,7 +988,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destination.Container,
                 TransferPropertiesTestType.Default,
                 size: Constants.KB,
-                chunkSize: Constants.KB / 2);
+                chunkSize: Constants.KB / 2,
+                usingAzureSasCredential: true);
         }
     }
 }

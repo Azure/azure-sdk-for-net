@@ -110,6 +110,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -134,6 +135,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                         await UploadPagesAsync(blobClient, stream, cancellationToken: cancellationToken);
                     }
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetBlobOptions()));
@@ -187,6 +192,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = null,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -203,6 +209,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     await fileClient.UploadAsync(contents);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return fileClient;
             }
             Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));

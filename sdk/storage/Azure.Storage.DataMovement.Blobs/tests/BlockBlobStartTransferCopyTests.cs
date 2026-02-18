@@ -86,7 +86,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = false,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
@@ -100,7 +102,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await blobClient.UploadAsync(contents);
+                    await blobClient.UploadAsync(contents, default, cancellationToken);
                 }
                 else
                 {
@@ -119,8 +121,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                                 ContentDisposition = _defaultContentDisposition,
                                 CacheControl = _defaultCacheControl,
                             }
-                        });
+                        },
+                        cancellationToken);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new BlockBlobClient(sourceUri, GetOptions()));
@@ -134,6 +141,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
@@ -141,7 +149,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                propertiesTestType,
+                usingAzureSasCredential,
+                cancellationToken);
 
         protected override StorageResourceItem GetSourceStorageResourceItem(BlockBlobClient objectClient)
             => new BlockBlobStorageResource(objectClient);
@@ -156,6 +167,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
@@ -163,7 +175,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                default,
+                usingAzureSasCredential,
+                cancellationToken);
 
         protected override StorageResourceItem GetDestinationStorageResourceItem(
             BlockBlobClient objectClient,

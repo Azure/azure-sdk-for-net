@@ -1,17 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
-using System.Threading.Tasks;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.DataMovement.Tests;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using BaseBlobs::Azure.Storage.Blobs.Models;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Test.Shared;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Sas;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -41,6 +42,33 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         protected override StorageResourceProvider GetStorageResourceProvider()
             => new BlobsStorageResourceProvider(TestEnvironment.Credential);
+
+        protected override StorageResourceProvider GetContainerSasStorageResourceProvider(BlobContainerClient sourceContainer, BlobContainerClient destinationContainer)
+        {
+            // Create Source Container SAS
+            Uri sourceSasUri = sourceContainer.GenerateSasUri(
+                BlobContainerSasPermissions.All,
+                DateTimeOffset.UtcNow.AddHours(1));
+            string sourceSas = new BlobUriBuilder(sourceSasUri).Sas.ToString();
+
+            // Create Destination Container SAS
+            Uri destinationSasUri = destinationContainer.GenerateSasUri(
+                BlobContainerSasPermissions.All,
+                DateTimeOffset.UtcNow.AddHours(1));
+            string destinationSas = new BlobUriBuilder(destinationSasUri).Sas.ToString();
+
+            // Create the provider with a delegate that returns the right SAS per URI
+            Func<Uri, CancellationToken, ValueTask<AzureSasCredential>> getSasCredential = (uri, ct) =>
+            {
+                var builder = new BlobUriBuilder(uri);
+                if (builder.BlobContainerName == sourceContainer.Name)
+                    return new ValueTask<AzureSasCredential>(new AzureSasCredential(sourceSas));
+                if (builder.BlobContainerName == destinationContainer.Name)
+                    return new ValueTask<AzureSasCredential>(new AzureSasCredential(destinationSas));
+                throw new InvalidOperationException($"Unknown container: {builder.BlobContainerName}");
+            };
+            return new BlobsStorageResourceProvider(getSasCredential);
+        }
 
         protected override async Task<StorageResource> CreateSourceStorageResourceItemAsync(
             long size,
@@ -158,5 +186,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             };
             return BlobsStorageResourceProvider.FromClient(container, options);
         }
+
+        protected override BlobServiceClient GetAzureSasCredentialServiceClient()
+            => ClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
     }
 }

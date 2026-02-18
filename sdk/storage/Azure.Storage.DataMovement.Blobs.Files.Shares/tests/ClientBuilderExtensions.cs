@@ -21,8 +21,6 @@ using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;
-using Azure.Storage.Sas;
-using BaseShares::Azure.Storage.Sas;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -36,7 +34,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
-        public static BlobServiceClient GetServiceClient_AzureSasCredential(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
+        public static BlobServiceClient GetBlobServiceClient_AzureSasCredential(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
+            => clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static ShareServiceClient GetShareServiceClient_AzureSasCredential(this SharesClientBuilder clientBuilder, ShareClientOptions options = default)
             => clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             IDictionary<string, string> metadata = default,
             ShareClientOptions options = default)
         {
-            service ??= clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
+            service ??= clientBuilder.GetShareServiceClient_AzureSasCredential(options);
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
@@ -139,7 +140,12 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             PublicAccessType? publicAccessType = default)
         {
             containerName ??= clientBuilder.GetNewContainerName();
-            service ??= clientBuilder.GetServiceClient_AzureSasCredential();
+            service ??= clientBuilder.GetBlobServiceClient_AzureSasCredential();
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = PublicAccessType.None;
+            }
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);

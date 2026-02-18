@@ -90,6 +90,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -104,20 +105,33 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await UploadPagesAsync(blobClient, contents);
+                    await UploadPagesAsync(
+                        blobClient,
+                        contents,
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadPagesAsync(blobClient, originalStream);
+                    await UploadPagesAsync(
+                        blobClient,
+                        originalStream,
+                        cancellationToken: cancellationToken);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetOptions()));
         }
 
-        private async Task UploadPagesAsync(PageBlobClient blobClient, Stream contents)
+        private async Task UploadPagesAsync(
+            PageBlobClient blobClient,
+            Stream contents,
+            CancellationToken cancellationToken)
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
@@ -131,13 +145,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = _defaultContentDisposition,
                     CacheControl = _defaultCacheControl,
                 }
-            });
+            },
+            cancellationToken);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
             {
                 Stream partStream = WindowStream.GetWindow(contents, blockSize);
-                await blobClient.UploadPagesAsync(partStream, offset);
+                await blobClient.UploadPagesAsync(partStream, offset, cancellationToken: cancellationToken);
                 offset += blockSize;
             }
         }
@@ -155,6 +170,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -177,6 +193,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
                     await UploadAppendBlocksAsync(blobClient, originalStream, cancellationToken);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new AppendBlobClient(sourceUri, GetOptions()));

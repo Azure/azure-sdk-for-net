@@ -89,6 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -111,6 +112,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
                     await UploadAppendBlocksAsync(blobClient, originalStream, cancellationToken);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new AppendBlobClient(sourceUri, GetOptions()));
@@ -156,6 +161,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool usingAzureSasCredential = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -178,6 +184,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
                     await blobClient.UploadAsync(originalStream);
                 }
+            }
+            if (usingAzureSasCredential)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new BlockBlobClient(sourceUri, GetOptions()));
