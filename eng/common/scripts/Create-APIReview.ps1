@@ -10,7 +10,7 @@ Param (
   [string] $BuildId,
   [string] $PackageName = "",
   [string] $ConfigFileDir = "",
-  [string] $APIViewUri = "https://apiview.dev/autoreview",
+  [string] $APIViewUri = "https://apiview.org/autoreview",
   [string] $ArtifactName = "packages",
   [bool] $MarkPackageAsShipped = $false,
   [Parameter(Mandatory=$False)]
