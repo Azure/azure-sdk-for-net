@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using GitHub.Copilot.SDK;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent;
@@ -11,29 +12,30 @@ namespace Azure.GeneratorAgent;
 /// </summary>
 public class CopilotService : IAsyncDisposable
 {
-    private const string CopilotModel = "claude-sonnet-4-20241022";
-    private const string CopilotLogLevel = "warning";
-    private static readonly List<string> AvailableTools = ["view", "grep", "glob"];
-    private static readonly TimeSpan DefaultTimeout = TimeSpan.FromMinutes(2);
-
     private readonly ILogger<CopilotService> _logger;
+    private readonly AppSettings _settings;
     private CopilotClient? _client;
     private CopilotSession? _session;
-    private readonly object _lockObject = new();
+    private bool _isInitialized;
+    private bool _isDisposed;
+
+    private readonly IReadOnlyList<string> _availableTools = new[] { "view", "grep", "glob" };
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CopilotService"/> class.
     /// </summary>
     /// <param name="logger">Logger instance.</param>
-    public CopilotService(ILogger<CopilotService> logger)
+    /// <param name="settings">Copilot configuration settings.</param>
+    public CopilotService(ILogger<CopilotService> logger, AppSettings settings)
     {
         _logger = logger;
+        _settings = settings;
     }
 
     /// <summary>
     /// Gets whether Copilot is fully available for use (both client and session ready).
     /// </summary>
-    public bool IsCopilotAvailable => _client != null && _session != null;
+    public bool IsCopilotAvailable => _isInitialized && !_isDisposed;
 
     /// <summary>
     /// Initializes the Copilot client and creates a session in one operation.
@@ -43,6 +45,7 @@ public class CopilotService : IAsyncDisposable
     /// <returns>A task that represents the asynchronous initialization operation.</returns>
     /// <exception cref="ArgumentException">Thrown when projectPath is null or empty.</exception>
     /// <exception cref="InvalidOperationException">Thrown when initialization fails.</exception>
+    /// <exception cref="ObjectDisposedException">Thrown when the service has been disposed.</exception>
     public async Task InitializeCopilotAsync(string projectPath, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(projectPath))
@@ -52,13 +55,12 @@ public class CopilotService : IAsyncDisposable
             throw new ArgumentException(message, nameof(projectPath));
         }
 
-        lock (_lockObject)
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
+
+        if (_isInitialized)
         {
-            if (_client != null && _session != null)
-            {
-                _logger.LogDebug("Copilot already initialized, skipping");
-                return;
-            }
+            _logger.LogDebug("Copilot already initialized, skipping");
+            return;
         }
 
         try
@@ -70,7 +72,7 @@ public class CopilotService : IAsyncDisposable
             {
                 Cwd = projectPath,
                 AutoStart = true,
-                LogLevel = CopilotLogLevel
+                LogLevel = _settings.LogLevel
             });
 
             await _client.StartAsync().ConfigureAwait(false);
@@ -79,38 +81,30 @@ public class CopilotService : IAsyncDisposable
             // Create session
             _session = await _client.CreateSessionAsync(new SessionConfig
             {
-                Model = CopilotModel,
+                Model = _settings.Model,
                 SystemMessage = new SystemMessageConfig
                 {
                     Mode = SystemMessageMode.Append,
                     Content = CopilotPrompts.BuildMigrationSystemMessage(projectPath)
                 },
-                AvailableTools = AvailableTools,
+                AvailableTools = _availableTools.ToList(),
                 InfiniteSessions = new InfiniteSessionConfig { Enabled = false },
                 Streaming = true
             }).ConfigureAwait(false);
 
-            _logger.LogInformation("Copilot service initialized successfully with model: {Model}", CopilotModel);
+            _isInitialized = true;
+            _logger.LogInformation("Copilot service initialized successfully with model: {Model}", _settings.Model);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             _logger.LogInformation("Copilot initialization was cancelled by user");
-            _client = null;
-            _session = null;
-            throw;
-        }
-        catch (OperationCanceledException)
-        {
-            _logger.LogWarning("Copilot initialization timed out");
-            _client = null;
-            _session = null;
+            await CleanupResourcesAsync().ConfigureAwait(false);
             throw;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to initialize Copilot client and session with project path: {ProjectPath}", projectPath);
-            _client = null;
-            _session = null;
+            await CleanupResourcesAsync().ConfigureAwait(false);
             throw new InvalidOperationException($"Failed to initialize Copilot service: {ex.Message}", ex);
         }
     }
@@ -123,9 +117,12 @@ public class CopilotService : IAsyncDisposable
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Specification path starting with 'specification/' if found, null otherwise.</returns>
     /// <exception cref="InvalidOperationException">Thrown when Copilot is not initialized.</exception>
+    /// <exception cref="ObjectDisposedException">Thrown when the service has been disposed.</exception>
     public async Task<string?> GetTypeSpecSpecificationPath(string projectPath, string repoName, CancellationToken cancellationToken = default)
     {
-        if (!IsCopilotAvailable)
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
+
+        if (!_isInitialized)
         {
             var message = "Copilot client and session must be initialized before getting specification path";
             _logger.LogError(message);
@@ -163,11 +160,18 @@ public class CopilotService : IAsyncDisposable
     /// <returns>The response from Copilot, or null if no response received.</returns>
     private async Task<string?> SendPromptAndGetResponseAsync(string prompt, CancellationToken cancellationToken)
     {
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
+
+        var session = _session;
+        if (session == null)
+        {
+            throw new InvalidOperationException("Session is not initialized");
+        }
         var responseBuilder = new System.Text.StringBuilder();
         var completionTcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
         // Subscribe to events for this request only
-        using var subscription = _session!.On(evt =>
+        using var subscription = session.On(evt =>
         {
             try
             {
@@ -202,10 +206,11 @@ public class CopilotService : IAsyncDisposable
         try
         {
             _logger.LogDebug("Sending prompt to Copilot: {PromptLength} characters", prompt.Length);
-            var messageId = await _session.SendAsync(new MessageOptions { Prompt = prompt }).ConfigureAwait(false);
+            var messageId = await session.SendAsync(new MessageOptions { Prompt = prompt }).ConfigureAwait(false);
             _logger.LogDebug("Sent message to Copilot with ID: {MessageId}", messageId);
 
-            using var timeoutCts = new CancellationTokenSource(DefaultTimeout);
+            var timeout = _settings.DefaultTimeout;
+            using var timeoutCts = new CancellationTokenSource(timeout);
             using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
 
             await completionTcs.Task.WaitAsync(combinedCts.Token).ConfigureAwait(false);
@@ -227,7 +232,7 @@ public class CopilotService : IAsyncDisposable
         }
         catch (OperationCanceledException)
         {
-            _logger.LogWarning("Copilot prompt timed out after {Timeout}", DefaultTimeout);
+            _logger.LogWarning("Copilot prompt timed out after {Timeout}", _settings.DefaultTimeout);
             return null;
         }
         catch (Exception ex)
@@ -242,26 +247,46 @@ public class CopilotService : IAsyncDisposable
     /// </summary>
     public async ValueTask DisposeAsync()
     {
+        if (_isDisposed)
+        {
+            return;
+        }
+
+        _isDisposed = true;
+        await CleanupResourcesAsync().ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Helper method to clean up resources during initialization failures or disposal.
+    /// </summary>
+    private async Task CleanupResourcesAsync()
+    {
+        var session = _session;
+        var client = _client;
+
+        // Clear state first
+        _session = null;
+        _client = null;
+        _isInitialized = false;
+
         try
         {
-            if (_session != null)
+            if (session != null)
             {
                 _logger.LogInformation("Disposing Copilot session");
-                await _session.DisposeAsync().ConfigureAwait(false);
-                _session = null;
+                await session.DisposeAsync().ConfigureAwait(false);
             }
 
-            if (_client != null)
+            if (client != null)
             {
                 _logger.LogInformation("Stopping and disposing Copilot client");
-                await _client.StopAsync().ConfigureAwait(false);
-                await _client.DisposeAsync().ConfigureAwait(false);
-                _client = null;
+                await client.StopAsync().ConfigureAwait(false);
+                await client.DisposeAsync().ConfigureAwait(false);
             }
         }
         catch (Exception ex)
         {
-            _logger.LogWarning(ex, "Error occurred while disposing Copilot service resources");
+            _logger.LogWarning(ex, "Error occurred while cleaning up Copilot resources");
         }
     }
 }

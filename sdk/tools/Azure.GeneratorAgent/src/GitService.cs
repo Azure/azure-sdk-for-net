@@ -14,6 +14,7 @@ public sealed class GitService
     private readonly ILogger<GitService> _logger;
     private readonly HttpClient _httpClient;
     private readonly CopilotService _copilotService;
+    private readonly AppSettings _settings;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GitService"/> class.
@@ -21,11 +22,13 @@ public sealed class GitService
     /// <param name="logger">Logger instance.</param>
     /// <param name="httpClient">HTTP client for making requests to GitHub API.</param>
     /// <param name="copilotService">Copilot service for intelligent path discovery.</param>
-    public GitService(ILogger<GitService> logger, HttpClient httpClient, CopilotService copilotService)
+    /// <param name="settings">Application settings.</param>
+    public GitService(ILogger<GitService> logger, HttpClient httpClient, CopilotService copilotService, AppSettings settings)
     {
         _logger = logger;
         _httpClient = httpClient;
         _copilotService = copilotService;
+        _settings = settings;
     }
 
     /// <summary>
@@ -91,7 +94,7 @@ public sealed class GitService
     /// <returns>Commit SHA if found, null otherwise</returns>
     private async Task<string?> TryGetCommitForPath(string owner, string repoName, string path, CancellationToken cancellationToken)
     {
-        var apiUrl = $"https://api.github.com/repos/{owner}/{repoName}/commits?sha=main&path={Uri.EscapeDataString(path)}&per_page=1";
+        var apiUrl = $"{_settings.GitHubApiUrl}/repos/{owner}/{repoName}/commits?sha=main&path={Uri.EscapeDataString(path)}&per_page=1";
 
         var response = await _httpClient.GetAsync(apiUrl, cancellationToken).ConfigureAwait(false);
 

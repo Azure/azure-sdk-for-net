@@ -122,7 +122,7 @@ public sealed class FileService
     }
 
     /// <summary>
-    /// Updates a YAML field using simple string operations.
+    /// Updates a YAML field using span operations to minimize allocations.
     /// </summary>
     /// <param name="yamlContent">Original YAML content.</param>
     /// <param name="field">Field to update.</param>
@@ -130,34 +130,60 @@ public sealed class FileService
     /// <returns>Updated YAML content.</returns>
     private static string UpdateYamlField(string yamlContent, string field, string newValue)
     {
-        var replacement = $"{field}: {newValue}";
-        var lines = yamlContent.Split('\n');
-        var fieldPattern = $"{field}:";
+        ReadOnlySpan<char> yamlSpan = yamlContent.AsSpan();
+        ReadOnlySpan<char> fieldPattern = $"{field}:".AsSpan();
+
+        var result = new System.Text.StringBuilder(yamlContent.Length + field.Length + newValue.Length + 16);
+        var currentPos = 0;
         var fieldUpdated = false;
 
-        for (int i = 0; i < lines.Length; i++)
+        while (currentPos < yamlSpan.Length)
         {
-            var originalLine = lines[i].TrimEnd('\r');
-            var trimmedLine = originalLine.TrimStart();
+            var lineEnd = yamlSpan[currentPos..].IndexOf('\n');
+            ReadOnlySpan<char> line = lineEnd == -1
+                ? yamlSpan[currentPos..]
+                : yamlSpan.Slice(currentPos, lineEnd);
 
-            if (!string.IsNullOrEmpty(trimmedLine) && trimmedLine.StartsWith(fieldPattern, StringComparison.Ordinal))
+            ReadOnlySpan<char> cleanLine = line.TrimEnd('\r');
+            ReadOnlySpan<char> trimmedLine = cleanLine.TrimStart();
+
+            if (!fieldUpdated && !trimmedLine.IsEmpty && trimmedLine.StartsWith(fieldPattern, StringComparison.Ordinal))
             {
-                // Preserve original indentation
-                var indentLength = originalLine.Length - trimmedLine.Length;
-                var indent = indentLength > 0 ? originalLine.Substring(0, indentLength) : string.Empty;
-                lines[i] = indent + replacement;
+                var indentLength = cleanLine.Length - trimmedLine.Length;
+                if (indentLength > 0)
+                {
+                    result.Append(cleanLine[..indentLength]);
+                }
+                result.Append($"{field}: {newValue}");
                 fieldUpdated = true;
+            }
+            else
+            {
+                result.Append(cleanLine);
+            }
+
+            if (lineEnd != -1)
+            {
+                result.Append('\n');
+                currentPos += lineEnd + 1;
+            }
+            else
+            {
                 break;
             }
         }
 
         if (!fieldUpdated)
         {
-            return yamlContent.TrimEnd() + "\n" + replacement + "\n";
+            if (result.Length > 0 && result[^1] != '\n')
+            {
+                result.Append('\n');
+            }
+            result.Append($"{field}: {newValue}\n");
         }
 
-        var lineEnding = yamlContent.Contains("\r\n") ? "\r\n" : "\n";
-        return string.Join(lineEnding, lines.Select(line => line.TrimEnd('\r'))) + lineEnding;
+        var output = result.ToString();
+        return yamlContent.Contains("\r\n") ? output.Replace("\n", "\r\n") : output;
     }
 
     /// <summary>

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -13,11 +14,26 @@ namespace Azure.GeneratorAgent.Tests;
 
 public class CopilotServiceTests
 {
+    /// <summary>
+    /// Creates a mock AppSettings with default values.
+    /// </summary>
+    /// <returns>Mock AppSettings instance.</returns>
+    private static AppSettings CreateMockSettings()
+    {
+        var mockConfig = new Mock<IConfiguration>();
+        mockConfig.Setup(x => x["Copilot:Model"]).Returns("claude-sonnet-4-20241022");
+        mockConfig.Setup(x => x["Copilot:LogLevel"]).Returns("warning");
+        mockConfig.Setup(x => x["Copilot:DefaultTimeoutMinutes"]).Returns("2");
+        mockConfig.Setup(x => x["GitHub:ApiUrl"]).Returns("https://api.github.com");
+
+        return new AppSettings(mockConfig.Object);
+    }
     [Test]
     public void Constructor_WithValidLogger_ShouldInitializeCorrectly()
     {
         var logger = new Mock<ILogger<CopilotService>>().Object;
-        var service = new CopilotService(logger);
+        var settings = CreateMockSettings();
+        var service = new CopilotService(logger, settings);
 
         Assert.That(service, Is.Not.Null);
         Assert.That(service.IsCopilotAvailable, Is.False, "Should not be available initially");
@@ -27,7 +43,7 @@ public class CopilotServiceTests
     public void IsCopilotAvailable_Initially_ShouldReturnFalse()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         Assert.That(copilotService.IsCopilotAvailable, Is.False,
             "IsCopilotAvailable should return false before initialization");
@@ -37,7 +53,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithNullProjectPath_ShouldThrowArgumentException()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var ex = Assert.ThrowsAsync<ArgumentException>(
             () => copilotService.InitializeCopilotAsync(null!));
@@ -60,7 +76,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithEmptyProjectPath_ShouldThrowArgumentException()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var ex = Assert.ThrowsAsync<ArgumentException>(
             () => copilotService.InitializeCopilotAsync(""));
@@ -73,7 +89,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithWhitespaceProjectPath_ShouldThrowArgumentException()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var ex = Assert.ThrowsAsync<ArgumentException>(
             () => copilotService.InitializeCopilotAsync("   "));
@@ -86,7 +102,7 @@ public class CopilotServiceTests
     public async Task GetTypeSpecSpecificationPath_WhenNotInitialized_ShouldThrowInvalidOperationException()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(
             () => copilotService.GetTypeSpecSpecificationPath("/project/path", "repo-name"));
@@ -108,7 +124,7 @@ public class CopilotServiceTests
     public async Task DisposeAsync_WhenNotInitialized_ShouldCompleteWithoutError()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         Assert.DoesNotThrowAsync(async () => await copilotService.DisposeAsync());
     }
@@ -117,7 +133,7 @@ public class CopilotServiceTests
     public async Task DisposeAsync_MultipleCallsAreSafe()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         await copilotService.DisposeAsync();
 
@@ -129,7 +145,7 @@ public class CopilotServiceTests
     public void IsCopilotAvailable_PropertyAccessMultipleTimes_ShouldBeConsistent()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var result1 = copilotService.IsCopilotAvailable;
         var result2 = copilotService.IsCopilotAvailable;
@@ -142,7 +158,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithValidPath_ShouldLogDebugMessage()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
         var validPath = "/valid/project/path";
 
         try
@@ -169,7 +185,7 @@ public class CopilotServiceTests
     public async Task GetTypeSpecSpecificationPath_WithNullRepoName_ShouldReturnNull()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         // We can't easily test this without initializing, but we can test the argument validation
         try
@@ -188,7 +204,7 @@ public class CopilotServiceTests
     public async Task GetTypeSpecSpecificationPath_WithEmptyRepoName_ShouldReturnNull()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         try
         {
@@ -205,7 +221,7 @@ public class CopilotServiceTests
     public void CopilotService_ImplementsIAsyncDisposable()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         Assert.That(copilotService, Is.InstanceOf<IAsyncDisposable>());
     }
@@ -214,7 +230,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_ConcurrentCalls_ShouldBeThreadSafe()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
         var validPath = "/valid/project/path";
 
         // This tests the lock mechanism even though initialization will likely fail
@@ -247,7 +263,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithTimeout_ShouldHandleTimeoutCorrectly()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1));
 
@@ -265,20 +281,15 @@ public class CopilotServiceTests
     }
 
     [Test]
-    public void CopilotService_Constants_HaveExpectedValues()
+    public void AppSettings_HaveExpectedDefaultValues()
     {
-        // Test through reflection to verify constants exist and have expected values
-        var type = typeof(CopilotService);
+        // Test that AppSettings provides expected default values
+        var settings = CreateMockSettings();
 
-        var modelField = type.GetField("CopilotModel", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var logLevelField = type.GetField("CopilotLogLevel", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var toolsField = type.GetField("AvailableTools", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var timeoutField = type.GetField("DefaultTimeout", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-        Assert.That(modelField?.GetValue(null), Is.EqualTo("claude-sonnet-4-20241022"));
-        Assert.That(logLevelField?.GetValue(null), Is.EqualTo("warning"));
-        Assert.That(toolsField?.GetValue(null), Is.Not.Null);
-        Assert.That(timeoutField?.GetValue(null), Is.EqualTo(TimeSpan.FromMinutes(2)));
+        Assert.That(settings.Model, Is.EqualTo("claude-sonnet-4-20241022"));
+        Assert.That(settings.LogLevel, Is.EqualTo("warning"));
+        Assert.That(settings.DefaultTimeout, Is.EqualTo(TimeSpan.FromMinutes(2)));
+        Assert.That(settings.GitHubApiUrl, Is.EqualTo("https://api.github.com"));
     }
 
     [Test]
@@ -288,7 +299,7 @@ public class CopilotServiceTests
 
         // Test constructor
         var logger = new Mock<ILogger<CopilotService>>().Object;
-        var service = new CopilotService(logger);
+        var service = new CopilotService(logger, CreateMockSettings());
 
         // Test initial state
         Assert.That(service.IsCopilotAvailable, Is.False);
@@ -304,7 +315,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_RepeatedCallsAfterFailure_ShouldRetryInitialization()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
         var validPath = "/valid/project/path";
 
         // First call - should fail due to external dependencies
@@ -342,7 +353,7 @@ public class CopilotServiceTests
     public async Task GetTypeSpecSpecificationPath_WithWhitespaceRepoName_ShouldReturnNull()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         try
         {
@@ -359,7 +370,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithVeryLongPath_ShouldNotThrow()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
         var longPath = new string('a', 1000); // Very long path
 
         try
@@ -382,7 +393,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_WithSpecialCharactersInPath_ShouldNotThrow()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
         var pathWithSpecialChars = "/path/\u4F60\u597D/\u00E9\u00F1\u00FC"; // Unicode characters
 
         try
@@ -405,7 +416,7 @@ public class CopilotServiceTests
     public void CopilotService_ThreadSafety_PropertyAccess()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         // Test that multiple threads can safely access the IsCopilotAvailable property
         var tasks = new Task[10];
@@ -430,7 +441,7 @@ public class CopilotServiceTests
     public async Task DisposeAsync_CalledDuringInitialization_ShouldNotCauseDeadlock()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         var initTask = Task.Run(async () =>
         {
@@ -465,7 +476,7 @@ public class CopilotServiceTests
     public async Task GetTypeSpecSpecificationPath_ExceptionHandling_ShouldReturnNullOnError()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         // This tests error handling in GetTypeSpecSpecificationPath when not initialized
         var ex = Assert.ThrowsAsync<InvalidOperationException>(
@@ -481,7 +492,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_ArgumentValidation_PreservesOriginalMessage()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
         const string expectedMessage = "Project path is required for Copilot initialization";
 
         var ex = Assert.ThrowsAsync<ArgumentException>(
@@ -495,7 +506,7 @@ public class CopilotServiceTests
     public async Task CopilotService_StateConsistency_AfterExceptionInInitialization()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         // Test that service state remains consistent after initialization failure
 
@@ -521,7 +532,7 @@ public class CopilotServiceTests
     public async Task InitializeCopilotAsync_ProjectPathParameterHandling()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         // Test various project path scenarios
 
@@ -548,7 +559,7 @@ public class CopilotServiceTests
     public async Task CopilotService_LoggingBehavior_VerifyAllLogLevels()
     {
         var loggerMock = new Mock<ILogger<CopilotService>>();
-        var copilotService = new CopilotService(loggerMock.Object);
+        var copilotService = new CopilotService(loggerMock.Object, CreateMockSettings());
 
         // Test that appropriate log levels are used for different scenarios
 
@@ -629,7 +640,7 @@ public class CopilotServiceTests
         for (int i = 0; i < 3; i++)
         {
             var logger = new Mock<ILogger<CopilotService>>();
-            var service = new CopilotService(logger.Object);
+            var service = new CopilotService(logger.Object, CreateMockSettings());
 
             Assert.That(service.IsCopilotAvailable, Is.False);
 

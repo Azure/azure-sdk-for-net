@@ -131,7 +131,6 @@
       or '$(IsStressProject)' == 'true'">
 
     <!-- BCL packages -->
-    <PackageReference Update="GitHub.Copilot.SDK" Version="0.1.18" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.2" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
@@ -413,6 +412,7 @@
 
     <!-- Support packages -->
     <PackageReference Update="Azure.AI.Agents.Persistent" Version="1.1.0" />
+    <PackageReference Update="GitHub.Copilot.SDK" Version="0.1.24" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.13.0" />

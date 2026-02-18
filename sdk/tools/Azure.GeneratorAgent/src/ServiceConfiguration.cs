@@ -37,9 +37,12 @@ public static class ServiceConfiguration
         // Services - Azure SDK preferred lifetimes
         services.AddSingleton<ValidationService>();
         services.AddSingleton<FileService>();
-        services.AddSingleton<CopilotService>(); // Thread-safe singleton - no mutable state
-        // GitService is registered by AddHttpClient<GitService> above
-        services.AddTransient<RootCommandFactory>(); // Factory pattern
+
+        services.AddSingleton<AppSettings>();
+
+        services.AddScoped<CopilotService>();
+
+        services.AddTransient<RootCommandFactory>();
 
         return services;
     }
