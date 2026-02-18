@@ -11,30 +11,7 @@
       5. DirectoryPackagesPropsPath redirects outside the root Directory.Build.props
       6. Override files with incorrect casing (must be *.Packages.props)
 
-    Designed to run in CI alongside the MSBuild enforcement target in
-    eng/Directory.Build.Common.targets, providing defense-in-depth.
-
-    When run without parameters, scans the entire repository. Use
-    -ServiceDirectory or -PackagePath to scope checks to a specific area.
-
-.PARAMETER ServiceDirectory
-    Scope checks to a specific service directory under sdk/ (e.g. 'core',
-    'storage'). Checks 1-5 scan only within sdk/<ServiceDirectory>.
-    Check 6 (override casing) always scans the central overrides directory.
-
-.PARAMETER PackagePath
-    Scope checks to a specific package path (e.g. 'sdk/core/Azure.Core').
-    Takes precedence over ServiceDirectory if both are provided.
-
-.PARAMETER RepoRoot
-    Root of the azure-sdk-for-net repository. Defaults to two directories
-    above this script.
-
-.EXAMPLE
-    .\Validate-CpmCompliance.ps1
-    .\Validate-CpmCompliance.ps1 -ServiceDirectory "storage"
-    .\Validate-CpmCompliance.ps1 -PackagePath "sdk/core/Azure.Core"
-    .\Validate-CpmCompliance.ps1 -RepoRoot "C:\repos\azure-sdk-for-net"
+    Requires either -ServiceDirectory or -PackagePath to scope the scan.
 #>
 
 [CmdletBinding()]
@@ -43,43 +20,34 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
-    [string] $PackagePath,
-
-    [Parameter()]
-    [string] $RepoRoot
+    [string] $PackagePath
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
 
-if (-not $RepoRoot) {
-    $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..") | Select-Object -ExpandProperty Path
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path.TrimEnd('\', '/')
+
+if (-not $PackagePath -and -not $ServiceDirectory) {
+    Write-Host -ForegroundColor Red "Either -ServiceDirectory or -PackagePath must be specified."
+    exit 1
 }
 
-$RepoRoot = $RepoRoot.TrimEnd('\', '/')
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Determine scan path based on parameters
-# ─────────────────────────────────────────────────────────────────────────────
 if ($PackagePath) {
     $ScanPath = Join-Path $RepoRoot $PackagePath
     if (-not (Test-Path $ScanPath)) {
         Write-Host -ForegroundColor Red "Package path not found: $ScanPath"
         exit 1
     }
-    Write-Host "Scoping CPM checks to package: $PackagePath"
+    Write-Host "Running checks on package: $PackagePath"
 }
-elseif ($ServiceDirectory) {
+else {
     $ScanPath = Join-Path $RepoRoot "sdk" $ServiceDirectory
     if (-not (Test-Path $ScanPath)) {
         Write-Host -ForegroundColor Red "Service directory not found: $ScanPath"
         exit 1
     }
-    Write-Host "Scoping CPM checks to service: $ServiceDirectory"
-}
-else {
-    $ScanPath = $RepoRoot
-    Write-Host "Running CPM checks across entire repository."
+    Write-Host "Running checks on service directory: $ServiceDirectory"
 }
 
 [string[]] $errors = @()
@@ -100,9 +68,6 @@ function Get-RelativePath([string]$fullPath) {
     return $fullPath.Substring($RepoRoot.Length + 1).Replace('\', '/')
 }
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Allowlist — paths that legitimately opt out of CPM
-# ─────────────────────────────────────────────────────────────────────────────
 $AllowedCpmOptOutPatterns = @(
     'samples/'
     'doc/ApiDocGeneration/'
@@ -129,14 +94,17 @@ $ApprovedPackagesPropsLocations = @(
     'samples/Directory.Packages.props'
 )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Check 1: ManagePackageVersionsCentrally='false' outside allowlist
-# ─────────────────────────────────────────────────────────────────────────────
-LogInfo "Check 1: Scanning for ManagePackageVersionsCentrally='false' outside allowlist..."
+$allFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
+    Where-Object { $_.FullName -notmatch '[\\\\|/](artifacts|node_modules|\.git|bin|obj)[\\|/]' }
+LogInfo "Found $($allFiles.Count) files to scan."
 
-$cpmFalseFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
-    Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
-    Select-String -Pattern 'ManagePackageVersionsCentrally.*false' -SimpleMatch:$false |
+# ─────────────────────────────────────────────────────────────────────────────
+# Check 1: ManagePackageVersionsCentrally='false'
+# ─────────────────────────────────────────────────────────────────────────────
+LogInfo "Checking for ManagePackageVersionsCentrally='false'"
+
+$cpmFalseFiles = $allFiles |
+    Select-String -Pattern 'ManagePackageVersionsCentrally.*false' |
     Select-Object -ExpandProperty Path -Unique
 
 foreach ($file in $cpmFalseFiles) {
@@ -152,11 +120,9 @@ foreach ($file in $cpmFalseFiles) {
 # ─────────────────────────────────────────────────────────────────────────────
 # Check 2: CentralPackageVersionOverrideEnabled='true'
 # ─────────────────────────────────────────────────────────────────────────────
-LogInfo "Check 2: Scanning for CentralPackageVersionOverrideEnabled='true'..."
-
-$overrideEnabledFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
-    Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
-    Select-String -Pattern 'CentralPackageVersionOverrideEnabled.*true' -SimpleMatch:$false |
+LogInfo "Checking for CentralPackageVersionOverrideEnabled='true'"
+$overrideEnabledFiles = $allFiles |
+    Select-String -Pattern 'CentralPackageVersionOverrideEnabled.*true' |
     Select-Object -ExpandProperty Path -Unique
 
 foreach ($file in $overrideEnabledFiles) {
@@ -170,11 +136,10 @@ foreach ($file in $overrideEnabledFiles) {
 # ─────────────────────────────────────────────────────────────────────────────
 # Check 3: VersionOverride on PackageReference
 # ─────────────────────────────────────────────────────────────────────────────
-LogInfo "Check 3: Scanning for VersionOverride attributes on PackageReference..."
+LogInfo "Checking for VersionOverride attributes on PackageReference"
 
-$versionOverrideFiles = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
-    Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
-    Select-String -Pattern 'VersionOverride\s*=' -SimpleMatch:$false |
+$versionOverrideFiles = $allFiles |
+    Select-String -Pattern 'VersionOverride\s*=' |
     Select-Object -ExpandProperty Path -Unique
 
 foreach ($file in $versionOverrideFiles) {
@@ -187,10 +152,9 @@ foreach ($file in $versionOverrideFiles) {
 # ─────────────────────────────────────────────────────────────────────────────
 # Check 4: Rogue Directory.Packages.props files
 # ─────────────────────────────────────────────────────────────────────────────
-LogInfo "Check 4: Scanning for unapproved Directory.Packages.props files..."
+LogInfo "Checking for rogue Directory.Packages.props files"
 
-$allPackagesProps = Get-ChildItem -Path $ScanPath -Recurse -Filter 'Directory.Packages.props' |
-    Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' }
+$allPackagesProps = $allFiles | Where-Object { $_.Name -eq 'Directory.Packages.props' }
 
 foreach ($file in $allPackagesProps) {
     $rel = Get-RelativePath $file.FullName
@@ -204,10 +168,9 @@ foreach ($file in $allPackagesProps) {
 # ─────────────────────────────────────────────────────────────────────────────
 # Check 5: DirectoryPackagesPropsPath redirects outside root Directory.Build.props
 # ─────────────────────────────────────────────────────────────────────────────
-LogInfo "Check 5: Scanning for DirectoryPackagesPropsPath redirects..."
+LogInfo "Checking for DirectoryPackagesPropsPath redirects"
 
-$dppRedirects = Get-ChildItem -Path $ScanPath -Recurse -Include '*.props', '*.targets', '*.csproj' |
-    Where-Object { $_.FullName -notmatch '[\\/](artifacts|node_modules|\.git|bin|obj)[\\/]' } |
+$dppRedirects = $allFiles |
     Select-String -Pattern 'DirectoryPackagesPropsPath' -SimpleMatch |
     Select-Object -ExpandProperty Path -Unique
 
@@ -222,7 +185,7 @@ foreach ($file in $dppRedirects) {
 # ─────────────────────────────────────────────────────────────────────────────
 # Check 6: Override file casing convention (*.Packages.props)
 # ─────────────────────────────────────────────────────────────────────────────
-LogInfo "Check 6: Validating override file casing convention..."
+LogInfo "Checking for override file casing convention"
 
 $overrideDir = Join-Path $RepoRoot "eng\centralpackagemanagement\overrides"
 if (Test-Path $overrideDir) {
