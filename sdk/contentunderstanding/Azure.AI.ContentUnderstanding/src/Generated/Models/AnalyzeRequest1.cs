@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -17,9 +18,10 @@ namespace Azure.AI.ContentUnderstanding
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeRequest1"/>. </summary>
-        internal AnalyzeRequest1()
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        internal AnalyzeRequest1(IEnumerable<AnalyzeInput> inputs)
         {
-            Inputs = new ChangeTrackingList<AnalyzeInput>();
+            Inputs = inputs.ToList();
             ModelDeployments = new ChangeTrackingDictionary<string, string>();
         }
 
