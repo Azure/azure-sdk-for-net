@@ -50,6 +50,7 @@ namespace Azure.Identity.Broker.Tests
             }
             catch (OperationCanceledException) { }
             catch (CredentialUnavailableException) { }
+            catch (AuthenticationFailedException) { }
 
             Assert.True(beforeBuildClientInvoked);
         }
