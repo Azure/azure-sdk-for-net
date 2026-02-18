@@ -56,13 +56,6 @@ public sealed class ValidationService
             var absolutePath = Path.GetFullPath(sdkPath);
             _logger.LogDebug("Resolved absolute path: {AbsolutePath}", absolutePath);
 
-            if (!Directory.Exists(absolutePath))
-            {
-                var message = $"SDK directory not found: {absolutePath}";
-                _logger.LogError(message);
-                throw new DirectoryNotFoundException(message);
-            }
-
             var srcPath = Path.Combine(absolutePath, "src");
             if (!Directory.Exists(srcPath))
             {

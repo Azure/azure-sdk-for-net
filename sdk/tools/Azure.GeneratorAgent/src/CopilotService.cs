@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using GitHub.Copilot.SDK;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -95,12 +96,6 @@ public class CopilotService : IAsyncDisposable
             _isInitialized = true;
             _logger.LogInformation("Copilot service initialized successfully with model: {Model}", _settings.Model);
         }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-        {
-            _logger.LogInformation("Copilot initialization was cancelled by user");
-            await CleanupResourcesAsync().ConfigureAwait(false);
-            throw;
-        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to initialize Copilot client and session with project path: {ProjectPath}", projectPath);
@@ -167,7 +162,7 @@ public class CopilotService : IAsyncDisposable
         {
             throw new InvalidOperationException("Session is not initialized");
         }
-        var responseBuilder = new System.Text.StringBuilder();
+        var responseBuilder = new StringBuilder();
         var completionTcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
         // Subscribe to events for this request only
