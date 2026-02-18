@@ -47,5 +47,45 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task TwoPartsFirstPartialSecondNot_ShouldPass()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(int))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+    public partial class LocalContext { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new PartialModifierAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
+
+        [Test]
+        public async Task TwoPartsSecondPartialFirstNot_ShouldPass()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+namespace TestProject
+{
+    public partial class LocalContext { }
+    [ModelReaderWriterBuildable(typeof(int))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new PartialModifierAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(0, diagnostics.Length);
+        }
     }
 }

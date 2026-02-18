@@ -92,12 +92,17 @@ public sealed class ParameterlessConstructorAnalyzer : DiagnosticAnalyzer
 
     private static SymbolAnalysisContext CheckSymbolForCtor(SymbolAnalysisContext symbolContext, AttributeData attr, INamedTypeSymbol modelType)
     {
+        // Note: private protected (ProtectedAndInternal) is not allowed because the generated code
+        // cannot access it from a different assembly
         bool hasCtor = modelType.Constructors.Any(ctor =>
-            !ctor.IsStatic &&
-            ctor.Parameters.Length == 0 &&
-            (ctor.DeclaredAccessibility == Accessibility.Public ||
-             ctor.DeclaredAccessibility == Accessibility.Internal ||
-             ctor.DeclaredAccessibility == Accessibility.ProtectedOrInternal));
+            ctor is
+            {
+                IsStatic: false,
+                Parameters.Length: 0,
+                DeclaredAccessibility: Accessibility.Public or
+                    Accessibility.Internal or
+                    Accessibility.ProtectedOrInternal
+            });
         if (!hasCtor)
         {
             // Use the attribute's location for the diagnostic

@@ -147,7 +147,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!HasAccessibleParameterlessConstructor(typeSymbol, symbolKindCache) && itemType.IsSameAssembly(contextType))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.ParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
             return null;
         }
 

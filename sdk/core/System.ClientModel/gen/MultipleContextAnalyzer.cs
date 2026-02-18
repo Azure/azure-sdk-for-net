@@ -11,8 +11,11 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace System.ClientModel.SourceGeneration;
 
 /// <summary>
-/// Analzyzer that checks for multiple definitions of ModelReaderWriterContext.
+/// Analyzer that checks for multiple definitions of ModelReaderWriterContext.
 /// </summary>
+/// <remarks>
+/// This analyzer uses CompilationStart/CompilationEnd and will only run on build, not during live editing.
+/// </remarks>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class MultipleContextAnalyzer : DiagnosticAnalyzer
 {

@@ -59,11 +59,14 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
             foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, buildableAttrType)))
             {
                 if (attr.ConstructorArguments.Length == 1 &&
-                    attr.ConstructorArguments[0].Kind == TypedConstantKind.Type)
+                    attr.ConstructorArguments[0] is { Kind: TypedConstantKind.Type, Value: ITypeSymbol outerModel })
                 {
-                    var modelType = GetModelType(attr.ConstructorArguments[0].Value);
+                    var modelType = GetModelType(outerModel);
                     if (modelType is null)
+                    {
+                        ReportDiagnostic(symbolContext, namedType, attr, outerModel);
                         continue;
+                    }
 
                     // Check if modelType implements IPersistableModel<T>
                     bool implements = modelType.AllInterfaces.Any(i =>

@@ -29,8 +29,11 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
     private static void StartAction(CompilationStartAnalysisContext context)
     {
         var buildableAttrType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute");
-        var proxyAttrType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.PersistableModelProxyAttribute");
         if (buildableAttrType == null)
+            return;
+
+        var proxyAttrType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.PersistableModelProxyAttribute");
+        if (proxyAttrType == null)
             return;
 
         var contextBaseType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
@@ -60,22 +63,27 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
             foreach (var attr in namedType.GetAttributes().Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, buildableAttrType)))
             {
                 if (attr.ConstructorArguments.Length == 1 &&
-                    attr.ConstructorArguments[0].Kind == TypedConstantKind.Type &&
-                    attr.ConstructorArguments[0].Value is INamedTypeSymbol modelType)
-                {
-                    if (modelType.TypeKind == TypeKind.Class && modelType.IsAbstract)
+                    attr.ConstructorArguments[0] is
                     {
-                        // Check for [PersistableModelProxy] on the model type
-                        bool hasProxy = modelType.GetAttributes().Any(a =>
-                            proxyAttrType != null && SymbolEqualityComparer.Default.Equals(a.AttributeClass, proxyAttrType));
-                        if (!hasProxy)
+                        Kind: TypedConstantKind.Type,
+                        Value: INamedTypeSymbol
                         {
-                            var diagnostic = Diagnostic.Create(
-                                ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy,
-                                modelType.Locations.FirstOrDefault() ?? namedType.Locations.FirstOrDefault() ?? Location.None,
-                                modelType.Name);
-                            symbolContext.ReportDiagnostic(diagnostic);
+                            TypeKind: TypeKind.Class,
+                            IsAbstract: true
                         }
+                        modelType
+                    })
+                {
+                    // Check for [PersistableModelProxy] on the model type
+                    bool hasProxy = modelType.GetAttributes().Any(a =>
+                        SymbolEqualityComparer.Default.Equals(a.AttributeClass, proxyAttrType));
+                    if (!hasProxy)
+                    {
+                        var diagnostic = Diagnostic.Create(
+                            ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy,
+                            modelType.Locations.FirstOrDefault() ?? namedType.Locations.FirstOrDefault() ?? Location.None,
+                            modelType.Name);
+                        symbolContext.ReportDiagnostic(diagnostic);
                     }
                 }
             }

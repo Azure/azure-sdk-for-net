@@ -34,12 +34,11 @@ public sealed class BuildableAttributeUsageAnalyzer : DiagnosticAnalyzer
 
         var buildableAttrType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute");
         if (buildableAttrType == null)
-                return;
+            return;
 
         context.RegisterSymbolAction(symbolContext =>
         {
-            var namedType = (INamedTypeSymbol)symbolContext.Symbol;
-            if (namedType.TypeKind != TypeKind.Class)
+            if (symbolContext.Symbol is not INamedTypeSymbol { TypeKind: TypeKind.Class } namedType)
                 return;
 
             // Look for ModelReaderWriterBuildableAttribute
