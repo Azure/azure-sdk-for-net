@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using Azure.Core;
 using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -162,6 +163,28 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             }
         }
 
+        [Test]
+        public void DeduplicatesExtensionMethodsWithSameSignature()
+        {
+            var inputClient = InputFactory.Client("TestClient", "Samples", "");
+            var plugin = MockHelpers.LoadMockGenerator(
+                oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
+                clients: () => [inputClient]);
+
+            var client = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().Single();
+            Assert.IsNotNull(client);
+            MockHelpers.SetCustomCodeView(client, new TestCustomCodeViewWithDuplicateSignature(client));
+
+            var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
+
+            Assert.That(builderExtensions, Is.Not.Null);
+            var writer = new TypeProviderWriter(builderExtensions!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
         private class TestCustomCodeView : TypeProvider
         {
             private readonly ClientProvider _clientProvider;
@@ -207,6 +230,50 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
 
             // simulate empty namespace
             protected override string BuildNamespace() => "";
+        }
+
+        private class TestCustomCodeViewWithDuplicateSignature : TypeProvider
+        {
+            private readonly ClientProvider _clientProvider;
+
+            public TestCustomCodeViewWithDuplicateSignature(ClientProvider clientProvider)
+            {
+                _clientProvider = clientProvider;
+            }
+
+            protected override string BuildRelativeFilePath() => _clientProvider.RelativeFilePath;
+
+            protected override string BuildName() => _clientProvider.Name;
+
+            protected override ConstructorProvider[] BuildConstructors()
+                =>
+                [
+                    // Constructor without credential: BlobClient(Uri blobUri, BlobClientOptions options = default)
+                    new ConstructorProvider(
+                        new ConstructorSignature(
+                            Type,
+                            $"",
+                            MethodSignatureModifiers.Public,
+                            [
+                                new ParameterProvider("blobUri", $"", typeof(Uri)),
+                                new ParameterProvider("options", $"", new TestClientOptionsProvider(_clientProvider.ClientOptions!).Type),
+                            ]),
+                        ThrowExpression(Null),
+                        this),
+                    // Constructor with credential: BlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
+                    new ConstructorProvider(
+                        new ConstructorSignature(
+                            Type,
+                            $"",
+                            MethodSignatureModifiers.Public,
+                            [
+                                new ParameterProvider("blobUri", $"", typeof(Uri)),
+                                new ParameterProvider("credential", $"", typeof(TokenCredential)),
+                                new ParameterProvider("options", $"", new TestClientOptionsProvider(_clientProvider.ClientOptions!).Type),
+                            ]),
+                        ThrowExpression(Null),
+                        this)
+                ];
         }
     }
 }

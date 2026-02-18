@@ -47,6 +47,8 @@ namespace Azure.Generator.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
+            var methodsWithCredential = new HashSet<MethodProvider>();
+
             foreach (var client in _publicClients)
             {
                 if (client.ClientOptionsParameter == null)
@@ -109,6 +111,12 @@ namespace Azure.Generator.Providers
                                 typeArgs: [client.Type, client.ClientOptionsParameter.Type])),
                         enclosingType: this);
                     methods.Add(method);
+
+                    // Track methods that use IAzureClientFactoryBuilderWithCredential
+                    if (isTokenCredential)
+                    {
+                        methodsWithCredential.Add(method);
+                    }
                 }
 
                 // Add the configuration overload
@@ -145,7 +153,33 @@ namespace Azure.Generator.Providers
                     enclosingType: this));
             }
 
-            return [.. methods];
+            // Deduplicate methods with the same signature
+            // When multiple methods have the same name and parameters (but different constraints),
+            // keep only the one with IAzureClientFactoryBuilderWithCredential as it's more flexible
+            var deduplicated = methods
+                .GroupBy(m => GetMethodSignatureKey(m.Signature))
+                .Select(group =>
+                {
+                    if (group.Count() == 1)
+                    {
+                        return group.First();
+                    }
+
+                    // Prefer the method with IAzureClientFactoryBuilderWithCredential constraint
+                    var withCredential = group.FirstOrDefault(m => methodsWithCredential.Contains(m));
+
+                    return withCredential ?? group.First();
+                })
+                .ToList();
+
+            return [.. deduplicated];
+        }
+
+        private static string GetMethodSignatureKey(MethodSignature signature)
+        {
+            // Create a unique key based on method name and parameter types (excluding generic constraints)
+            var parameterTypes = string.Join(",", signature.Parameters.Select(p => p.Type.ToString()));
+            return $"{signature.Name}({parameterTypes})";
         }
 
         private static FuncExpression BuildFuncExpression(ClientProvider client, ConstructorSignature constructorSignature, bool isTokenCredential)
