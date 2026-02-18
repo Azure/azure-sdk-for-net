@@ -20,7 +20,7 @@ public class CopilotService : IAsyncDisposable
     private bool _isInitialized;
     private bool _isDisposed;
 
-    private readonly IReadOnlyList<string> _availableTools = new[] {"view", "edit", "create", "grep", "glob", "terminal"};
+    private readonly IReadOnlyList<string> _availableTools = ["view", "edit", "create", "grep", "glob", "terminal"];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CopilotService"/> class.

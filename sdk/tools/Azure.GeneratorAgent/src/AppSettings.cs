@@ -26,7 +26,7 @@ public class AppSettings
     /// <summary>
     /// Gets the Copilot model to use.
     /// </summary>
-    public string Model => _configuration["Copilot:Model"] ?? "claude-sonnet-4-20241022";
+    public string Model => _configuration["Copilot:Model"] ?? "claude-4.6-opus";
 
     /// <summary>
     /// Gets the log level for Copilot operations.
