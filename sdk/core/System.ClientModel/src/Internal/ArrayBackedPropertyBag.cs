@@ -19,14 +19,11 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     private (TKey Key, TValue? Value) _second;
     private (TKey Key, TValue? Value)[]? _rest;
     private int _count;
-    private readonly object _lock = new();
+    private object? _lock;
+    private object Lock => _lock ??= new object();
 #if DEBUG
     private bool _disposed;
 #endif
-
-    public ArrayBackedPropertyBag()
-    {
-    }
 
     public int Count
     {
@@ -269,7 +266,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         _first = default;
         _second = default;
 
-        lock (_lock)
+        lock (Lock)
         {
             if (_rest == default)
             {

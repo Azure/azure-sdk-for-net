@@ -7,7 +7,7 @@ namespace System.ClientModel.Primitives;
 /// Instructs the System.ClientModel source generator to generate source code to help optimize performance
 /// when reading and writing instances of the specified type.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class,  AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class ModelReaderWriterBuildableAttribute : Attribute
 {
     /// <summary>

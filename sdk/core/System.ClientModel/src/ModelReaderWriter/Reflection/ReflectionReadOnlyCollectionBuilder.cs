@@ -23,7 +23,7 @@ internal class ReflectionReadOnlyCollectionBuilder : ModelReaderWriterTypeBuilde
     protected override Type ItemType => _collectionType.GenericTypeArguments[0];
 
     protected override void AddItem(object collection, object? item)
-        => BuilderType.GetMethod("Add", [ ItemType! ])!.Invoke(collection, [ item ]);
+        => BuilderType.GetMethod("Add", [ItemType!])!.Invoke(collection, [item]);
 
     protected override object ConvertCollectionBuilder(object builder) => BuilderType.GetMethod("AsReadOnly")!.Invoke(builder, null)!;
 }

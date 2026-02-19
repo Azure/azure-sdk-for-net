@@ -39,9 +39,9 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     public int GetHashCode(ReadOnlySpan<byte> alternate)
     {
 #if NET8_0_OR_GREATER
-            var hash = new HashCode();
-            hash.AddBytes(alternate);
-            return hash.ToHashCode();
+        var hash = new HashCode();
+        hash.AddBytes(alternate);
+        return hash.ToHashCode();
 #else
         unchecked
         {
