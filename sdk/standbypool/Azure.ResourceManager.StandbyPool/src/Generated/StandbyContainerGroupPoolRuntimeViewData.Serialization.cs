@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.StandbyPool
     /// <summary> Contains information about a standby container group pool as last known by the StandbyPool resource provider. </summary>
     public partial class StandbyContainerGroupPoolRuntimeViewData : ResourceData, IJsonModel<StandbyContainerGroupPoolRuntimeViewData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStandbyContainerGroupPoolRuntimeViewData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StandbyContainerGroupPoolRuntimeViewData"/> from. </param>
+        internal static StandbyContainerGroupPoolRuntimeViewData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStandbyContainerGroupPoolRuntimeViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyContainerGroupPoolRuntimeViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="options"> The client options for reading and writing models. </param>
         StandbyContainerGroupPoolRuntimeViewData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StandbyContainerGroupPoolRuntimeViewData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStandbyContainerGroupPoolRuntimeViewData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StandbyContainerGroupPoolRuntimeViewData"/> from. </param>
-        internal static StandbyContainerGroupPoolRuntimeViewData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStandbyContainerGroupPoolRuntimeViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

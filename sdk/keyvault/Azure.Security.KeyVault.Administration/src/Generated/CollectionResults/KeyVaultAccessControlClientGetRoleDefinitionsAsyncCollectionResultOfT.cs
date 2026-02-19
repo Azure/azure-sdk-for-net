@@ -50,13 +50,13 @@ namespace Azure.Security.KeyVault.Administration
                     yield break;
                 }
                 RoleDefinitionListResult result = (RoleDefinitionListResult)response;
-                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

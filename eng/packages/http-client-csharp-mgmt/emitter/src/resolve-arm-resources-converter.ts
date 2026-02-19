@@ -266,7 +266,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              createOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -284,7 +287,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              updateOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -302,7 +308,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              deleteOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -536,8 +545,7 @@ function getExplicitResourceNameFromOperations(
       ) {
         // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
         // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
-        const argIndex =
-          name === extensionResourceOperationName ? 3 : 2;
+        const argIndex = name === extensionResourceOperationName ? 3 : 2;
         if (
           decorator.args.length > argIndex &&
           decorator.args[argIndex].jsValue &&

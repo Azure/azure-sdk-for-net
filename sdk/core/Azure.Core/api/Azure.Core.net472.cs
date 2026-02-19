@@ -253,7 +253,7 @@ namespace Azure
         public override T Value { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static implicit operator T (Azure.Response<T> response) { throw null; }
+        public static implicit operator T (Azure.Response<T>? response) { throw null; }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {
@@ -370,7 +370,7 @@ namespace Azure.Core
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public static implicit operator string (Azure.Core.AzureLocation location) { throw null; }
-        public static implicit operator Azure.Core.AzureLocation (string location) { throw null; }
+        public static implicit operator Azure.Core.AzureLocation (string? location) { throw null; }
         public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -381,6 +381,7 @@ namespace Azure.Core
         protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section, Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        protected int MaxApplicationIdLength { get { throw null; } set { } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -403,7 +404,7 @@ namespace Azure.Core
         public bool Equals(string? other) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
+        public static implicit operator Azure.Core.ContentType (string? contentType) { throw null; }
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -566,9 +567,9 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public static Azure.Core.RequestContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
-        public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
+        public static implicit operator Azure.Core.RequestContent? (Azure.Core.Serialization.DynamicData? content) { throw null; }
+        public static implicit operator Azure.Core.RequestContent? (System.BinaryData? content) { throw null; }
+        public static implicit operator Azure.Core.RequestContent? (string? content) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
@@ -680,7 +681,7 @@ namespace Azure.Core
         public string GetLastType() { throw null; }
         public static bool operator ==(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public static implicit operator string (Azure.Core.ResourceType resourceType) { throw null; }
-        public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
+        public static implicit operator Azure.Core.ResourceType (string? resourceType) { throw null; }
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1115,19 +1116,19 @@ namespace Azure.Core.Serialization
         public static explicit operator System.DateTime (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static explicit operator System.DateTimeOffset (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static explicit operator System.Guid (Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator bool (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator bool (Azure.Core.Serialization.DynamicData? value) { throw null; }
         public static implicit operator byte (Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator decimal (Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator double (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator decimal (Azure.Core.Serialization.DynamicData? value) { throw null; }
+        public static implicit operator double (Azure.Core.Serialization.DynamicData? value) { throw null; }
         public static implicit operator short (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static implicit operator int (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static implicit operator long (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static implicit operator sbyte (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static implicit operator float (Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator string (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator string? (Azure.Core.Serialization.DynamicData? value) { throw null; }
         public static implicit operator ushort (Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator uint (Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator ulong (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator uint (Azure.Core.Serialization.DynamicData? value) { throw null; }
+        public static implicit operator ulong (Azure.Core.Serialization.DynamicData? value) { throw null; }
         public static bool operator !=(Azure.Core.Serialization.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }

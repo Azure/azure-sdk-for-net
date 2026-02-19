@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> package shipping details. </summary>
     public partial class PackageShippingDetails : IJsonModel<PackageShippingDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PackageShippingDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePackageShippingDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PackageShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,23 +160,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PackageShippingDetails IPersistableModel<PackageShippingDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PackageShippingDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePackageShippingDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PackageShippingDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

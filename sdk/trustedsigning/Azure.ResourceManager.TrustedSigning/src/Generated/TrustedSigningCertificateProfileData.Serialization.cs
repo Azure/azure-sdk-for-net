@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.TrustedSigning
     /// <summary> Certificate profile resource. </summary>
     public partial class TrustedSigningCertificateProfileData : ResourceData, IJsonModel<TrustedSigningCertificateProfileData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrustedSigningCertificateProfileData"/> from. </param>
+        internal static TrustedSigningCertificateProfileData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTrustedSigningCertificateProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrustedSigningCertificateProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="options"> The client options for reading and writing models. </param>
         TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrustedSigningCertificateProfileData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.TrustedSigning
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trustedSigningCertificateProfileData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrustedSigningCertificateProfileData"/> from. </param>
-        internal static TrustedSigningCertificateProfileData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTrustedSigningCertificateProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

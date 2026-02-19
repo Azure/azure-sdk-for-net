@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// <summary> PostgreSQL Version model. </summary>
     public partial class PgVersion : IJsonModel<PgVersion>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PgVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PgVersion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePgVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PgVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PgVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PgVersion IPersistableModel<PgVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PgVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PgVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePgVersion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PgVersion)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PgVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

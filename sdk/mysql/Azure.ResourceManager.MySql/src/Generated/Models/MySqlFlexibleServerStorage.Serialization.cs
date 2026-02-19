@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class MySqlFlexibleServerStorage : IJsonModel<MySqlFlexibleServerStorage>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MySqlFlexibleServerStorage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMySqlFlexibleServerStorage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -216,23 +233,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MySqlFlexibleServerStorage IPersistableModel<MySqlFlexibleServerStorage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MySqlFlexibleServerStorage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMySqlFlexibleServerStorage(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

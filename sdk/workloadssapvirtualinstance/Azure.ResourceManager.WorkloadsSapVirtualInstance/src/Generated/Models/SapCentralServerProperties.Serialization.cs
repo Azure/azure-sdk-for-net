@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     /// <summary> Defines the SAP Central Services Instance properties. </summary>
     internal partial class SapCentralServerProperties : IJsonModel<SapCentralServerProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapCentralServerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapCentralServerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapCentralServerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapCentralServerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapCentralServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -330,23 +347,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SapCentralServerProperties IPersistableModel<SapCentralServerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SapCentralServerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapCentralServerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapCentralServerProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapCentralServerProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SapCentralServerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

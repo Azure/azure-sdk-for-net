@@ -21,6 +21,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary> Workflow Resource. </summary>
     public partial class EdgeWorkflowData : ResourceData, IJsonModel<EdgeWorkflowData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeWorkflowData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeWorkflowData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeWorkflowData"/> from. </param>
+        internal static EdgeWorkflowData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeWorkflowData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeWorkflowData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -187,23 +211,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeWorkflowData IPersistableModel<EdgeWorkflowData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeWorkflowData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeWorkflowData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeWorkflowData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeWorkflowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -217,13 +224,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(edgeWorkflowData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeWorkflowData"/> from. </param>
-        internal static EdgeWorkflowData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEdgeWorkflowData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

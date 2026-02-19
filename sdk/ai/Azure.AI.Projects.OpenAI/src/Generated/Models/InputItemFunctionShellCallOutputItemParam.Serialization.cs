@@ -34,6 +34,29 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InputItemFunctionShellCallOutputItemParam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InputItemFunctionShellCallOutputItemParam)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemFunctionShellCallOutputItemParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemFunctionShellCallOutputItemParam IPersistableModel<InputItemFunctionShellCallOutputItemParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemFunctionShellCallOutputItemParam)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemFunctionShellCallOutputItemParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemFunctionShellCallOutputItemParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,28 +183,5 @@ namespace Azure.AI.Projects.OpenAI
                 output,
                 maxOutputLength);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemFunctionShellCallOutputItemParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InputItemFunctionShellCallOutputItemParam>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InputItemFunctionShellCallOutputItemParam)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemFunctionShellCallOutputItemParam IPersistableModel<InputItemFunctionShellCallOutputItemParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemFunctionShellCallOutputItemParam)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemFunctionShellCallOutputItemParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

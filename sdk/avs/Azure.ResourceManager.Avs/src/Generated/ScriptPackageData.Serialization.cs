@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Avs
     /// <summary> Script Package resources available for execution. </summary>
     public partial class ScriptPackageData : ResourceData, IJsonModel<ScriptPackageData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScriptPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScriptPackageData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScriptPackageData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ScriptPackageData"/> from. </param>
+        internal static ScriptPackageData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeScriptPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScriptPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         ScriptPackageData IPersistableModel<ScriptPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScriptPackageData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScriptPackageData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeScriptPackageData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScriptPackageData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScriptPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ScriptPackageData"/> from. </param>
-        internal static ScriptPackageData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeScriptPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

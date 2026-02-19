@@ -1556,7 +1556,10 @@ interface BestPracticeVersionDetails {
         r.metadata.resourceIdPattern ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
     );
-    ok(bestPracticeVersionDetail, "Should have BestPracticeVersionDetail resource");
+    ok(
+      bestPracticeVersionDetail,
+      "Should have BestPracticeVersionDetail resource"
+    );
 
     // Critical assertion: BestPracticeVersion's parent should be BestPractice
     strictEqual(
@@ -1575,8 +1578,14 @@ interface BestPracticeVersionDetails {
 
     // Validate resource names
     strictEqual(bestPractice.metadata.resourceName, "BestPractice");
-    strictEqual(bestPracticeVersion.metadata.resourceName, "BestPracticeVersion");
-    strictEqual(bestPracticeVersionDetail.metadata.resourceName, "BestPracticeVersionDetail");
+    strictEqual(
+      bestPracticeVersion.metadata.resourceName,
+      "BestPracticeVersion"
+    );
+    strictEqual(
+      bestPracticeVersionDetail.metadata.resourceName,
+      "BestPracticeVersionDetail"
+    );
 
     // Validate using resolveArmResources API and compare
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1840,7 +1849,10 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     };
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
-      normalizeSchemaForComparison(armProviderSchema, normalizeServiceGroupScopes)
+      normalizeSchemaForComparison(
+        armProviderSchema,
+        normalizeServiceGroupScopes
+      )
     );
   });
 });

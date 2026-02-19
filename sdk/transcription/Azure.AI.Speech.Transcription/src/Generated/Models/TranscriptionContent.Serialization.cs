@@ -34,6 +34,39 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TranscriptionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranscriptionContent IPersistableModel<TranscriptionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TranscriptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="transcriptionContent"> The <see cref="TranscriptionContent"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(TranscriptionContent transcriptionContent)
+        {
+            if (transcriptionContent == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(transcriptionContent, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranscriptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,39 +159,6 @@ namespace Azure.AI.Speech.Transcription
                 }
             }
             return new TranscriptionContent(options0, audio, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscriptionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptionContent IPersistableModel<TranscriptionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscriptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="transcriptionContent"> The <see cref="TranscriptionContent"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(TranscriptionContent transcriptionContent)
-        {
-            if (transcriptionContent == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(transcriptionContent, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 ClusterListResult result = ClusterListResult.FromResponse(response);
-                yield return Page<ClusterData>.FromValues((IReadOnlyList<ClusterData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ClusterData>.FromValues((IReadOnlyList<ClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

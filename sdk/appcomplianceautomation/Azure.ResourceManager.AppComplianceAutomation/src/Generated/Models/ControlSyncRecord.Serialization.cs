@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the control record synchronized from app compliance. </summary>
     public partial class ControlSyncRecord : IJsonModel<ControlSyncRecord>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ControlSyncRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ControlSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeControlSyncRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ControlSyncRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ControlSyncRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ControlSyncRecord IPersistableModel<ControlSyncRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ControlSyncRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ControlSyncRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeControlSyncRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ControlSyncRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ControlSyncRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

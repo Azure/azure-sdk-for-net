@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Advisor
     /// <summary> Triage recommendation data structure. </summary>
     public partial class AdvisorTriageRecommendationData : ResourceData, IJsonModel<AdvisorTriageRecommendationData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvisorTriageRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdvisorTriageRecommendationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdvisorTriageRecommendationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorTriageRecommendationData"/> from. </param>
+        internal static AdvisorTriageRecommendationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAdvisorTriageRecommendationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdvisorTriageRecommendationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="options"> The client options for reading and writing models. </param>
         AdvisorTriageRecommendationData IPersistableModel<AdvisorTriageRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdvisorTriageRecommendationData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvisorTriageRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAdvisorTriageRecommendationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AdvisorTriageRecommendationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AdvisorTriageRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorTriageRecommendationData"/> from. </param>
-        internal static AdvisorTriageRecommendationData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAdvisorTriageRecommendationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

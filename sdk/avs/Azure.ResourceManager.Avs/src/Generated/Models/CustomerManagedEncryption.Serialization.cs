@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of customer managed encryption key. </summary>
     public partial class CustomerManagedEncryption : IJsonModel<CustomerManagedEncryption>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomerManagedEncryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomerManagedEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomerManagedEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomerManagedEncryption)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomerManagedEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CustomerManagedEncryption IPersistableModel<CustomerManagedEncryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CustomerManagedEncryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomerManagedEncryption>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCustomerManagedEncryption(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomerManagedEncryption)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomerManagedEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Telemetry
         public const string GenAiResponseVersionKey = "gen_ai.agent.version";
 
         public const string GenAiProviderNameKey = "gen_ai.provider.name";
-        public const string GenAiProviderNameValue = "azure.ai.agents";
+        public const string GenAiProviderNameValue = "microsoft.foundry";
 
         public const string GenAiTokenTypeKey = "gen_ai.token.type";
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.Telemetry
         public const string OperationNameValueSubmitToolOutputs = "submit_tool_outputs";
         public const string OperationNameValueProcessThreadRun = "process_thread_run";
 
-        public const string EventNameSystemMessage = "gen_ai.system.message";
+        public const string EventNameSystemMessage = "gen_ai.system_instructions";
         public const string EventNameUserMessage = "gen_ai.user.message";
         public const string EventNameAssistantMessage = "gen_ai.assistant.message";
 
@@ -94,5 +94,12 @@ namespace Azure.AI.Projects.Telemetry
 
         // Event names
         public const string EventNameAgentWorkflow = "gen_ai.agent.workflow";
+
+        // Configuration for event vs attribute based tracing.
+        // Event-based tracing is not officially supported and may be removed at any point without notice.
+        // The default behavior is attribute-based tracing. These settings exist only for internal
+        // experimentation.
+        public const string UseMessageEventsSwitch = "Azure.Experimental.UseMessageEvents";
+        public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
     }
 }

@@ -318,10 +318,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get queryable properties for a collection
             string collectionId = "naip";
-            Response<IReadOnlyDictionary<string, BinaryData>> response =
+            Response<QueryableDefinitionsResponse> response =
                 await stacClient.GetCollectionQueryablesAsync(collectionId);
 
-            IReadOnlyDictionary<string, BinaryData> queryables = response.Value;
+            IReadOnlyDictionary<string, BinaryData> queryables = response.Value.AdditionalProperties;
 
             // Parse the properties schema
             var propertiesJson = JsonDocument.Parse(queryables["properties"]).RootElement;

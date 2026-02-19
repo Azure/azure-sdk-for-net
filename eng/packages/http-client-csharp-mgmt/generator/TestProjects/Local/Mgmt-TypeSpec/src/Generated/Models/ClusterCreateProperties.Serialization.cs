@@ -21,6 +21,46 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// </summary>
     internal partial class ClusterCreateProperties : ClusterProperties, IJsonModel<ClusterCreateProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClusterCreateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClusterCreateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterCreateProperties IPersistableModel<ClusterCreateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClusterCreateProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClusterCreateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterCreateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -202,45 +242,5 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties,
                 publicNetworkAccess);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterCreateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterCreateProperties IPersistableModel<ClusterCreateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClusterCreateProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterCreateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClusterCreateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterCreateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

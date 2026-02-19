@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// <summary> The private endpoint connection resource. </summary>
     public partial class CloudHsmClusterPrivateEndpointConnectionData : ResourceData, IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CloudHsmClusterPrivateEndpointConnectionData"/> from. </param>
+        internal static CloudHsmClusterPrivateEndpointConnectionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +194,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="options"> The client options for reading and writing models. </param>
         CloudHsmClusterPrivateEndpointConnectionData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudHsmClusterPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -200,13 +207,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cloudHsmClusterPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CloudHsmClusterPrivateEndpointConnectionData"/> from. </param>
-        internal static CloudHsmClusterPrivateEndpointConnectionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

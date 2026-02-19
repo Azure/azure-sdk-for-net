@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch : IJsonModel<CloudHsmClusterPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudHsmClusterPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCloudHsmClusterPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,23 +179,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         CloudHsmClusterPatch IPersistableModel<CloudHsmClusterPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudHsmClusterPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudHsmClusterPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudHsmClusterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

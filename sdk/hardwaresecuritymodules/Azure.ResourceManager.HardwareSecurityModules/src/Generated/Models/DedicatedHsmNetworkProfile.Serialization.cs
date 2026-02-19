@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> The network profile definition. </summary>
     public partial class DedicatedHsmNetworkProfile : IJsonModel<DedicatedHsmNetworkProfile>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DedicatedHsmNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDedicatedHsmNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedHsmNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -146,23 +163,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DedicatedHsmNetworkProfile IPersistableModel<DedicatedHsmNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DedicatedHsmNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDedicatedHsmNetworkProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmNetworkProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DedicatedHsmNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

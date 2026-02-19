@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Key and identity details for Customer Managed Key encryption of load test resource. </summary>
     public partial class LoadTestingCmkEncryptionProperties : IJsonModel<LoadTestingCmkEncryptionProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestingCmkEncryptionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLoadTestingCmkEncryptionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestingCmkEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LoadTestingCmkEncryptionProperties IPersistableModel<LoadTestingCmkEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoadTestingCmkEncryptionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLoadTestingCmkEncryptionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LoadTestingCmkEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

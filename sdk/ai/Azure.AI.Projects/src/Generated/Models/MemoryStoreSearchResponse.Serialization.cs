@@ -35,6 +35,29 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreSearchResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MemoryStoreSearchResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MemoryStoreSearchResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MemoryStoreSearchResponse IPersistableModel<MemoryStoreSearchResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MemoryStoreSearchResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryStoreSearchResponse"/> from. </param>
         public static explicit operator MemoryStoreSearchResponse(ClientResult result)
         {
@@ -147,28 +170,5 @@ namespace Azure.AI.Projects
             }
             return new MemoryStoreSearchResponse(searchId, memories, usage, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryStoreSearchResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreSearchResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MemoryStoreSearchResponse)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreSearchResponse IPersistableModel<MemoryStoreSearchResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryStoreSearchResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

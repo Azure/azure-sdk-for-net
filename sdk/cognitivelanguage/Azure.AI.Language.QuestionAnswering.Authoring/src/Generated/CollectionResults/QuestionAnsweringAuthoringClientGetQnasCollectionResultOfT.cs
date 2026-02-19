@@ -57,7 +57,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedRetrieveQnaRecord result = (PagedRetrieveQnaRecord)response;
-                yield return Page<RetrieveQnaRecord>.FromValues((IReadOnlyList<RetrieveQnaRecord>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RetrieveQnaRecord>.FromValues((IReadOnlyList<RetrieveQnaRecord>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

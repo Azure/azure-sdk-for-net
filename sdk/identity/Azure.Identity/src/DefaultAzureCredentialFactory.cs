@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -271,6 +271,7 @@ namespace Azure.Identity
             options.ClientId = Options.WorkloadIdentityClientId;
             options.TenantId = Options.TenantId;
             options.Pipeline = Pipeline;
+            options.IsAzureProxyEnabled = Options.IsAzureProxyEnabled;
 
             return new WorkloadIdentityCredential(options);
         }
@@ -295,13 +296,29 @@ namespace Azure.Identity
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
             };
 
-            if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
+            // ManagedIdentityIdKind/ManagedIdentityId (new config properties) take priority
+            if (!string.IsNullOrEmpty(options.ManagedIdentityIdKind))
+            {
+                miOptions.ManagedIdentityId = options.ManagedIdentityIdKind switch
+                {
+                    "SystemAssigned" => ManagedIdentityId.SystemAssigned,
+                    "ClientId" => ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityId),
+                    "ResourceId" => ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(options.ManagedIdentityId)),
+                    "ObjectId" => ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityId),
+                    _ => throw new ArgumentException($"Invalid {nameof(options.ManagedIdentityIdKind)} value: '{options.ManagedIdentityIdKind}'. Valid values are 'SystemAssigned', 'ClientId', 'ResourceId', 'ObjectId'."),
+                };
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityClientId))
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityClientId);
             }
             else if (options.ManagedIdentityResourceId != null)
             {
                 miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(options.ManagedIdentityResourceId);
+            }
+            else if (!string.IsNullOrEmpty(options.ManagedIdentityObjectId))
+            {
+                miOptions.ManagedIdentityId = ManagedIdentityId.FromUserAssignedObjectId(options.ManagedIdentityObjectId);
             }
             else
             {
@@ -326,11 +343,36 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateInteractiveBrowserCredential()
         {
-            var options = Options.Clone<InteractiveBrowserCredentialOptions>();
+            InteractiveBrowserCredentialOptions brokerOptions = null;
+            if (Options.UseDefaultBrokerAccount && !TryCreateDevelopmentBrokerOptions(out brokerOptions))
+            {
+                throw new InvalidOperationException("Must reference the Azure.Identity.Broker package to use broker authentication with InteractiveBrowserCredential.");
+            }
+
+            brokerOptions?.CopyMsalSettableProperties(Options);
+
+            var options = brokerOptions ?? Options.Clone<InteractiveBrowserCredentialOptions>();
 
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
 
             options.TenantId = Options.InteractiveBrowserTenantId;
+
+            options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
+
+            if (!string.IsNullOrEmpty(Options.LoginHint))
+            {
+                options.LoginHint = Options.LoginHint;
+            }
+
+            if (Options.BrowserCustomization != null)
+            {
+                options.BrowserCustomization = Options.BrowserCustomization.Clone();
+            }
+
+            if (Options.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = Options.AuthenticationRecord;
+            }
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,

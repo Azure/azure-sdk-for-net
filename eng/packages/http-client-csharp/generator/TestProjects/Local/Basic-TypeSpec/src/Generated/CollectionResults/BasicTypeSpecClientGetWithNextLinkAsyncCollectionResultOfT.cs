@@ -43,7 +43,7 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithNextLinkResponse result = (ListWithNextLinkResponse)response;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.AbsoluteUri, response);
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.Next;
                 if (nextPage == null)
                 {

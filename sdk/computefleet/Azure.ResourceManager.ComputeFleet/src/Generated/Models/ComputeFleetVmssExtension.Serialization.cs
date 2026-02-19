@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
     public partial class ComputeFleetVmssExtension : IJsonModel<ComputeFleetVmssExtension>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVmssExtension PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeComputeFleetVmssExtension(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssExtension)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -159,23 +176,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ComputeFleetVmssExtension IPersistableModel<ComputeFleetVmssExtension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssExtension PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetVmssExtension(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssExtension)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVmssExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

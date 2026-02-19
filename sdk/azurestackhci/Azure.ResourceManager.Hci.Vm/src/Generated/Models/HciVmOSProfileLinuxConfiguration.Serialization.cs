@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> OSProfile update linux configuration. </summary>
     public partial class HciVmOSProfileLinuxConfiguration : IJsonModel<HciVmOSProfileLinuxConfiguration>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmOSProfileLinuxConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmOSProfileLinuxConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmOSProfileLinuxConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmOSProfileLinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,23 +153,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmOSProfileLinuxConfiguration IPersistableModel<HciVmOSProfileLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmOSProfileLinuxConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmOSProfileLinuxConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmOSProfileLinuxConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmOSProfileLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

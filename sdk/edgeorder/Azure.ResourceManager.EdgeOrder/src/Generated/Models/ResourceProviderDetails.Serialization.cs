@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Management RP details. </summary>
     public partial class ResourceProviderDetails : IJsonModel<ResourceProviderDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceProviderDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceProviderDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceProviderDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceProviderDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,23 +134,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResourceProviderDetails IPersistableModel<ResourceProviderDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceProviderDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceProviderDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceProviderDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceProviderDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

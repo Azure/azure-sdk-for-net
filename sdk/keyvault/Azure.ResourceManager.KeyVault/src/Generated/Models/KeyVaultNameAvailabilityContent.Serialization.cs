@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeyVaultNameAvailabilityContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultNameAvailabilityContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KeyVaultNameAvailabilityContent IPersistableModel<KeyVaultNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKeyVaultNameAvailabilityContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultNameAvailabilityContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

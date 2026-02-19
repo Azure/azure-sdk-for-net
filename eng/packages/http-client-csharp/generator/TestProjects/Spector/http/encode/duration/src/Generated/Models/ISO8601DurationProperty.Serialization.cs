@@ -19,6 +19,17 @@ namespace Encode.Duration._Property
 
         protected virtual ISO8601DurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<ISO8601DurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        ISO8601DurationProperty IPersistableModel<ISO8601DurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<ISO8601DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="isO8601DurationProperty"> The <see cref="ISO8601DurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ISO8601DurationProperty isO8601DurationProperty) => throw null;
+
         public static explicit operator ISO8601DurationProperty(Response response) => throw null;
 
         void IJsonModel<ISO8601DurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace Encode.Duration._Property
         ISO8601DurationProperty IJsonModel<ISO8601DurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ISO8601DurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ISO8601DurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        ISO8601DurationProperty IPersistableModel<ISO8601DurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<ISO8601DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="isO8601DurationProperty"> The <see cref="ISO8601DurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ISO8601DurationProperty isO8601DurationProperty) => throw null;
     }
 }

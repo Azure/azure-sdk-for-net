@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrokerAuthenticatorMethods PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethods>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrokerAuthenticatorMethods(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethods)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerAuthenticatorMethods>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -164,23 +181,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BrokerAuthenticatorMethods IPersistableModel<BrokerAuthenticatorMethods>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerAuthenticatorMethods PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethods>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerAuthenticatorMethods(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethods)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BrokerAuthenticatorMethods>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

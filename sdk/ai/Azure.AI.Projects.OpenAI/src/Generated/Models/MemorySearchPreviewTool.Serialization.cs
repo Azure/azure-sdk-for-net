@@ -34,6 +34,29 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MemorySearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MemorySearchPreviewTool IPersistableModel<MemorySearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemorySearchPreviewTool)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MemorySearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MemorySearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,28 +171,5 @@ namespace Azure.AI.Projects.OpenAI
                 searchOptions,
                 updateDelay);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemorySearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MemorySearchPreviewTool IPersistableModel<MemorySearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemorySearchPreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemorySearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

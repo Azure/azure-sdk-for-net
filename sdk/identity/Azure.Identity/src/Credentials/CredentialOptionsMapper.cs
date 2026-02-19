@@ -53,32 +53,32 @@ internal class CredentialOptionsMapper
     /// identifiers (TenantId and HomeAccountId); otherwise <c>null</c>. Any I/O or deserialization errors are swallowed.
     /// </returns>
     internal static AuthenticationRecord GetAuthenticationRecord(IFileSystemService _fileSystem)
+    {
+        var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        var authRecordPathLowerCase = Path.Combine(homeDir, ".azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
+        var authRecordPathUpperCase = Path.Combine(homeDir, ".Azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
+
+        var authRecordPath = _fileSystem.FileExists(authRecordPathLowerCase) ? authRecordPathLowerCase :
+                             _fileSystem.FileExists(authRecordPathUpperCase) ? authRecordPathUpperCase : null;
+
+        if (authRecordPath == null)
         {
-            var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
-            var authRecordPathLowerCase = Path.Combine(homeDir, ".azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
-            var authRecordPathUpperCase = Path.Combine(homeDir, ".Azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
-
-            var authRecordPath = _fileSystem.FileExists(authRecordPathLowerCase) ? authRecordPathLowerCase :
-                                 _fileSystem.FileExists(authRecordPathUpperCase) ? authRecordPathUpperCase : null;
-
-            if (authRecordPath == null)
-            {
-                return null;
-            }
-
-            try
-            {
-                using var authRecordStream = _fileSystem.GetFileStream(authRecordPath);
-                var authRecord = AuthenticationRecord.Deserialize(authRecordStream);
-                if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
-                {
-                    return authRecord;
-                }
-            }
-            catch (Exception) { }
             return null;
         }
+
+        try
+        {
+            using var authRecordStream = _fileSystem.GetFileStream(authRecordPath);
+            var authRecord = AuthenticationRecord.Deserialize(authRecordStream);
+            if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
+            {
+                return authRecord;
+            }
+        }
+        catch (Exception) { }
+        return null;
+    }
 
     /// <summary>
     /// Creates non-broker (interactive browser) fallback options from the provided credential options when broker options are not available.

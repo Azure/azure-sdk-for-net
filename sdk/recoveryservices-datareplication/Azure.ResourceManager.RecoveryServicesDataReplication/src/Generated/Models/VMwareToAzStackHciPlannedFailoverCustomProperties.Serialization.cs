@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PlannedFailoverCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPlannedFailoverCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVMwareToAzStackHciPlannedFailoverCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciPlannedFailoverCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareToAzStackHciPlannedFailoverCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -111,23 +128,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VMwareToAzStackHciPlannedFailoverCustomProperties IPersistableModel<VMwareToAzStackHciPlannedFailoverCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareToAzStackHciPlannedFailoverCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PlannedFailoverCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPlannedFailoverCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVMwareToAzStackHciPlannedFailoverCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciPlannedFailoverCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VMwareToAzStackHciPlannedFailoverCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

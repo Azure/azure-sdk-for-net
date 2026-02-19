@@ -18,17 +18,9 @@ namespace SpecialWords._Models
 
         protected virtual While PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<While>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        While IJsonModel<While>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual While JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<While>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         While IPersistableModel<While>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
@@ -36,5 +28,13 @@ namespace SpecialWords._Models
 
         /// <param name="while"> The <see cref="While"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(While @while) => throw null;
+
+        void IJsonModel<While>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        While IJsonModel<While>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual While JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Issues exposed by managed network fabric. </summary>
     public partial class HciVmFabricIssue : IJsonModel<HciVmFabricIssue>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmFabricIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmFabricIssue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmFabricIssue)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmFabricIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -171,23 +188,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmFabricIssue IPersistableModel<HciVmFabricIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmFabricIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmFabricIssue>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmFabricIssue(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmFabricIssue)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmFabricIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

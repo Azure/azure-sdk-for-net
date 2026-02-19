@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a sync group. </summary>
     public partial class StorageSyncGroupCreateOrUpdateContent : ResourceData, IJsonModel<StorageSyncGroupCreateOrUpdateContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageSyncGroupCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncGroupCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageSyncGroupCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -159,23 +176,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StorageSyncGroupCreateOrUpdateContent IPersistableModel<StorageSyncGroupCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageSyncGroupCreateOrUpdateContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageSyncGroupCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageSyncGroupCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageSyncGroupCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

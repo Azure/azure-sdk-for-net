@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Server version capabilities. </summary>
     public partial class ServerVersionCapabilityV2 : IJsonModel<ServerVersionCapabilityV2>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerVersionCapabilityV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerVersionCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServerVersionCapabilityV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerVersionCapabilityV2)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerVersionCapabilityV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,23 +135,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServerVersionCapabilityV2 IPersistableModel<ServerVersionCapabilityV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServerVersionCapabilityV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerVersionCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServerVersionCapabilityV2(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServerVersionCapabilityV2)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerVersionCapabilityV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

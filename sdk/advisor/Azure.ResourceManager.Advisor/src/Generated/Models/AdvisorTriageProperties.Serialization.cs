@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Triage resource properties. </summary>
     internal partial class AdvisorTriageProperties : IJsonModel<AdvisorTriageProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AdvisorTriageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvisorTriageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdvisorTriageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdvisorTriageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdvisorTriageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,23 +213,6 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AdvisorTriageProperties IPersistableModel<AdvisorTriageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AdvisorTriageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvisorTriageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAdvisorTriageProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AdvisorTriageProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AdvisorTriageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

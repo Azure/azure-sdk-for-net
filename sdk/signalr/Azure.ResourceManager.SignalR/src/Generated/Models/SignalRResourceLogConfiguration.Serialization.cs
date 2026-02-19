@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
     internal partial class SignalRResourceLogConfiguration : IJsonModel<SignalRResourceLogConfiguration>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SignalRResourceLogConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRResourceLogConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSignalRResourceLogConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignalRResourceLogConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRResourceLogConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,23 +148,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SignalRResourceLogConfiguration IPersistableModel<SignalRResourceLogConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SignalRResourceLogConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalRResourceLogConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSignalRResourceLogConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SignalRResourceLogConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SignalRResourceLogConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

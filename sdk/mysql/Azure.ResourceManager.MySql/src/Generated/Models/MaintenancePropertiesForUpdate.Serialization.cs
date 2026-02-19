@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The properties of a maintenance update parameter. </summary>
     internal partial class MaintenancePropertiesForUpdate : IJsonModel<MaintenancePropertiesForUpdate>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MaintenancePropertiesForUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenancePropertiesForUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMaintenancePropertiesForUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaintenancePropertiesForUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenancePropertiesForUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -122,23 +139,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MaintenancePropertiesForUpdate IPersistableModel<MaintenancePropertiesForUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenancePropertiesForUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenancePropertiesForUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMaintenancePropertiesForUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MaintenancePropertiesForUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MaintenancePropertiesForUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

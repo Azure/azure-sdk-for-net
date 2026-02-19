@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Hci.Vm
     /// <summary> Defines the HybridIdentityMetadata. </summary>
     public partial class HciVmHybridIdentityMetadataData : ResourceData, IJsonModel<HciVmHybridIdentityMetadataData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmHybridIdentityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmHybridIdentityMetadataData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmHybridIdentityMetadataData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmHybridIdentityMetadataData"/> from. </param>
+        internal static HciVmHybridIdentityMetadataData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHciVmHybridIdentityMetadataData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmHybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="options"> The client options for reading and writing models. </param>
         HciVmHybridIdentityMetadataData IPersistableModel<HciVmHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciVmHybridIdentityMetadataData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmHybridIdentityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmHybridIdentityMetadataData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmHybridIdentityMetadataData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmHybridIdentityMetadataData"/> from. </param>
-        internal static HciVmHybridIdentityMetadataData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHciVmHybridIdentityMetadataData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

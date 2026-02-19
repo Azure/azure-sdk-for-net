@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Properties for application update request. </summary>
     internal partial class ApplicationUpdateParametersProperties : IJsonModel<ApplicationUpdateParametersProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationUpdateParametersProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationUpdateParametersProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationUpdateParametersProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationUpdateParametersProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationUpdateParametersProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,23 +161,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ApplicationUpdateParametersProperties IPersistableModel<ApplicationUpdateParametersProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationUpdateParametersProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationUpdateParametersProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeApplicationUpdateParametersProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationUpdateParametersProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApplicationUpdateParametersProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

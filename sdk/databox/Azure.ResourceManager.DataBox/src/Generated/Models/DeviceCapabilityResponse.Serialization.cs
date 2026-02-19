@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Device capabilities for given sku in a region. </summary>
     internal partial class DeviceCapabilityResponse : IJsonModel<DeviceCapabilityResponse>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceCapabilityResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeviceCapabilityResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceCapabilityResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceCapabilityResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,23 +148,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DeviceCapabilityResponse IPersistableModel<DeviceCapabilityResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceCapabilityResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeviceCapabilityResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeviceCapabilityResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceCapabilityResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

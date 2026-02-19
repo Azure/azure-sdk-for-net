@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.ResourceManager.Cdn.Models;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {

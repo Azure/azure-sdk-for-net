@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// <summary> User details for an organization. </summary>
     public partial class NeonUserDetails : IJsonModel<NeonUserDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeonUserDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeonUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNeonUserDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NeonUserDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NeonUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -167,23 +184,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NeonUserDetails IPersistableModel<NeonUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NeonUserDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonUserDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNeonUserDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NeonUserDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NeonUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

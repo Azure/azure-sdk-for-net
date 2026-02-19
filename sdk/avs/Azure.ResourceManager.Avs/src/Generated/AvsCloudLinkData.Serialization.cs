@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Avs
     /// <summary> A cloud link resource. </summary>
     public partial class AvsCloudLinkData : ResourceData, IJsonModel<AvsCloudLinkData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsCloudLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsCloudLinkData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsCloudLinkData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsCloudLinkData"/> from. </param>
+        internal static AvsCloudLinkData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAvsCloudLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsCloudLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsCloudLinkData IPersistableModel<AvsCloudLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsCloudLinkData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsCloudLinkData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsCloudLinkData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsCloudLinkData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsCloudLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.Avs
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(avsCloudLinkData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvsCloudLinkData"/> from. </param>
-        internal static AvsCloudLinkData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAvsCloudLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

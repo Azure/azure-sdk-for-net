@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of SKU Information objects. </summary>
     internal partial class ElasticSanSkuInformationList : IJsonModel<ElasticSanSkuInformationList>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticSanSkuInformationList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformationList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeElasticSanSkuInformationList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanSkuInformationList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticSanSkuInformationList"/> from. </param>
+        internal static ElasticSanSkuInformationList FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeElasticSanSkuInformationList(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanSkuInformationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -144,31 +168,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         ElasticSanSkuInformationList IPersistableModel<ElasticSanSkuInformationList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticSanSkuInformationList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformationList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticSanSkuInformationList(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuInformationList)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticSanSkuInformationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticSanSkuInformationList"/> from. </param>
-        internal static ElasticSanSkuInformationList FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeElasticSanSkuInformationList(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

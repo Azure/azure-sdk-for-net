@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Background data download activity object. </summary>
     public partial class ServerEndpointBackgroundDataDownloadActivity : IJsonModel<ServerEndpointBackgroundDataDownloadActivity>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerEndpointBackgroundDataDownloadActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServerEndpointBackgroundDataDownloadActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointBackgroundDataDownloadActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerEndpointBackgroundDataDownloadActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -166,23 +183,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServerEndpointBackgroundDataDownloadActivity IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServerEndpointBackgroundDataDownloadActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServerEndpointBackgroundDataDownloadActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServerEndpointBackgroundDataDownloadActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> X509 for BrokerAuthentication. </summary>
     public partial class BrokerAuthenticatorMethodX509 : IJsonModel<BrokerAuthenticatorMethodX509>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrokerAuthenticatorMethodX509 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodX509>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrokerAuthenticatorMethodX509(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodX509)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerAuthenticatorMethodX509>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -158,23 +175,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BrokerAuthenticatorMethodX509 IPersistableModel<BrokerAuthenticatorMethodX509>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerAuthenticatorMethodX509 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodX509>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerAuthenticatorMethodX509(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodX509)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BrokerAuthenticatorMethodX509>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -37,6 +37,29 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExportedCustomAbstractiveSummarizationDocument)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportedCustomAbstractiveSummarizationDocument IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportedCustomAbstractiveSummarizationDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,28 +171,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExportedCustomAbstractiveSummarizationDocument)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomAbstractiveSummarizationDocument IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

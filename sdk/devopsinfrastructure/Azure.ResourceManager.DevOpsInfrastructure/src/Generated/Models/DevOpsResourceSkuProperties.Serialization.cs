@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevOpsResourceSkuProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevOpsResourceSkuProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsResourceSkuProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsResourceSkuProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -225,23 +242,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DevOpsResourceSkuProperties IPersistableModel<DevOpsResourceSkuProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsResourceSkuProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevOpsResourceSkuProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsResourceSkuProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevOpsResourceSkuProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

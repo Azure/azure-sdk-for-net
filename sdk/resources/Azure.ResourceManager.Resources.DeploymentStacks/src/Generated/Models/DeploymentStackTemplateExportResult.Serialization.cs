@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
     /// <summary> Export Template specific properties of the Deployment stack. </summary>
     public partial class DeploymentStackTemplateExportResult : IJsonModel<DeploymentStackTemplateExportResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentStackTemplateExportResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackTemplateExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentStackTemplateExportResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentStackTemplateExportResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentStackTemplateExportResult"/> from. </param>
+        internal static DeploymentStackTemplateExportResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeploymentStackTemplateExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentStackTemplateExportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,31 +169,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         DeploymentStackTemplateExportResult IPersistableModel<DeploymentStackTemplateExportResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentStackTemplateExportResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackTemplateExportResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeploymentStackTemplateExportResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentStackTemplateExportResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeploymentStackTemplateExportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentStackTemplateExportResult"/> from. </param>
-        internal static DeploymentStackTemplateExportResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeploymentStackTemplateExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

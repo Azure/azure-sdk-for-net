@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> Defines the asset status management group properties. </summary>
     public partial class DeviceRegistryNamespaceAssetStatusManagementGroup : IJsonModel<DeviceRegistryNamespaceAssetStatusManagementGroup>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceRegistryNamespaceAssetStatusManagementGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceAssetStatusManagementGroup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeviceRegistryNamespaceAssetStatusManagementGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceAssetStatusManagementGroup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryNamespaceAssetStatusManagementGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,23 +159,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DeviceRegistryNamespaceAssetStatusManagementGroup IPersistableModel<DeviceRegistryNamespaceAssetStatusManagementGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceRegistryNamespaceAssetStatusManagementGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceAssetStatusManagementGroup>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeviceRegistryNamespaceAssetStatusManagementGroup(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceAssetStatusManagementGroup)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceRegistryNamespaceAssetStatusManagementGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

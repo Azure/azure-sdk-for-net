@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class AvsResourceSkuRestrictionInfo : IJsonModel<AvsResourceSkuRestrictionInfo>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvsResourceSkuRestrictionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsResourceSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsResourceSkuRestrictionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsResourceSkuRestrictionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsResourceSkuRestrictionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -169,23 +186,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsResourceSkuRestrictionInfo IPersistableModel<AvsResourceSkuRestrictionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvsResourceSkuRestrictionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsResourceSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsResourceSkuRestrictionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsResourceSkuRestrictionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsResourceSkuRestrictionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

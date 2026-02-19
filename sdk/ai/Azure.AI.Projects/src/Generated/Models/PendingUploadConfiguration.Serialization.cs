@@ -30,6 +30,39 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PendingUploadConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PendingUploadConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PendingUploadConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PendingUploadConfiguration IPersistableModel<PendingUploadConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PendingUploadConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="pendingUploadConfiguration"> The <see cref="PendingUploadConfiguration"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(PendingUploadConfiguration pendingUploadConfiguration)
+        {
+            if (pendingUploadConfiguration == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(pendingUploadConfiguration, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PendingUploadConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,39 +162,6 @@ namespace Azure.AI.Projects
                 }
             }
             return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PendingUploadConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PendingUploadConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PendingUploadConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PendingUploadConfiguration IPersistableModel<PendingUploadConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PendingUploadConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="pendingUploadConfiguration"> The <see cref="PendingUploadConfiguration"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(PendingUploadConfiguration pendingUploadConfiguration)
-        {
-            if (pendingUploadConfiguration == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(pendingUploadConfiguration, ModelSerializationExtensions.WireOptions);
         }
     }
 }

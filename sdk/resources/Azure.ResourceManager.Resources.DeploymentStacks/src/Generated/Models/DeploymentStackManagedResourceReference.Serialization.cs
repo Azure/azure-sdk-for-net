@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
     /// <summary> The managed resource model. </summary>
     public partial class DeploymentStackManagedResourceReference : DeploymentStackResourceReference, IJsonModel<DeploymentStackManagedResourceReference>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DeploymentStackResourceReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackManagedResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentStackManagedResourceReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentStackManagedResourceReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentStackManagedResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -177,23 +194,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DeploymentStackManagedResourceReference IPersistableModel<DeploymentStackManagedResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentStackManagedResourceReference)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeploymentStackResourceReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackManagedResourceReference>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeploymentStackManagedResourceReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentStackManagedResourceReference)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeploymentStackManagedResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

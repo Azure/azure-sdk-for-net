@@ -47,7 +47,14 @@ namespace Azure.AI.Projects
         internal PipelineMessage CreateNextGetVersionsRequest(Uri nextPage, string name, string @type, int? limit, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
@@ -80,7 +87,14 @@ namespace Azure.AI.Projects
         internal PipelineMessage CreateNextGetLatestVersionsRequest(Uri nextPage, string @type, int? limit, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
             uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;

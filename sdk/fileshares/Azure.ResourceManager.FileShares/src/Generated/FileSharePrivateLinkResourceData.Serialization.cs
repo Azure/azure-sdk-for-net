@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.FileShares
     /// <summary> A private link resource. </summary>
     public partial class FileSharePrivateLinkResourceData : ResourceData, IJsonModel<FileSharePrivateLinkResourceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFileSharePrivateLinkResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileSharePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FileSharePrivateLinkResourceData"/> from. </param>
+        internal static FileSharePrivateLinkResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFileSharePrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileSharePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,31 +178,7 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="options"> The client options for reading and writing models. </param>
         FileSharePrivateLinkResourceData IPersistableModel<FileSharePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FileSharePrivateLinkResourceData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFileSharePrivateLinkResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FileSharePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FileSharePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FileSharePrivateLinkResourceData"/> from. </param>
-        internal static FileSharePrivateLinkResourceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFileSharePrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

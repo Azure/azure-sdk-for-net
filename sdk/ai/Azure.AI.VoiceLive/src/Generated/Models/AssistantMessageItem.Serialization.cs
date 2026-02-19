@@ -37,6 +37,29 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssistantMessageItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AssistantMessageItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssistantMessageItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssistantMessageItem IPersistableModel<AssistantMessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AssistantMessageItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AssistantMessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssistantMessageItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,28 +161,5 @@ namespace Azure.AI.VoiceLive
                 content,
                 status);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssistantMessageItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AssistantMessageItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AssistantMessageItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AssistantMessageItem IPersistableModel<AssistantMessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AssistantMessageItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssistantMessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

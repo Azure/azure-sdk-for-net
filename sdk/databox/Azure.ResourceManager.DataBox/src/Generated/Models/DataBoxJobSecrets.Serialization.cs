@@ -18,6 +18,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The secrets related to a databox job. </summary>
     public partial class DataBoxJobSecrets : JobSecrets, IJsonModel<DataBoxJobSecrets>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override JobSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxJobSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,23 +162,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DataBoxJobSecrets IPersistableModel<DataBoxJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxJobSecrets)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override JobSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxJobSecrets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

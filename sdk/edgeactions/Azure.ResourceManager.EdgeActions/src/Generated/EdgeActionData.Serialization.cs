@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.EdgeActions
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeActionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeActionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeActionData"/> from. </param>
+        internal static EdgeActionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeActionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -198,23 +222,6 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="options"> The client options for reading and writing models. </param>
         EdgeActionData IPersistableModel<EdgeActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeActionData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeActionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeActionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -228,13 +235,6 @@ namespace Azure.ResourceManager.EdgeActions
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(edgeActionData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeActionData"/> from. </param>
-        internal static EdgeActionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEdgeActionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

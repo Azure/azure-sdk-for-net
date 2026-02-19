@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Error details. </summary>
     public partial class ServiceErrorDetail : IJsonModel<ServiceErrorDetail>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceErrorDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceErrorDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceErrorDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceErrorDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,23 +145,6 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServiceErrorDetail IPersistableModel<ServiceErrorDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceErrorDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServiceErrorDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceErrorDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceErrorDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -33,6 +33,29 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalItemResourceMcpApprovalRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InternalItemResourceMcpApprovalRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalItemResourceMcpApprovalRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalItemResourceMcpApprovalRequest IPersistableModel<InternalItemResourceMcpApprovalRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalItemResourceMcpApprovalRequest)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalItemResourceMcpApprovalRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalItemResourceMcpApprovalRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,28 +183,5 @@ namespace Azure.AI.Projects.OpenAI
                 name,
                 arguments);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalItemResourceMcpApprovalRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalItemResourceMcpApprovalRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InternalItemResourceMcpApprovalRequest)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InternalItemResourceMcpApprovalRequest IPersistableModel<InternalItemResourceMcpApprovalRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalItemResourceMcpApprovalRequest)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalItemResourceMcpApprovalRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

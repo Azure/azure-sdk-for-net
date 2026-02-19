@@ -20,6 +20,30 @@ namespace Azure.ResourceManager.Quota
     /// <summary> Quota limit. </summary>
     public partial class CurrentQuotaLimitBaseData : ResourceData, IJsonModel<CurrentQuotaLimitBaseData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CurrentQuotaLimitBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCurrentQuotaLimitBaseData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CurrentQuotaLimitBaseData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CurrentQuotaLimitBaseData"/> from. </param>
+        internal static CurrentQuotaLimitBaseData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCurrentQuotaLimitBaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CurrentQuotaLimitBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,23 +178,6 @@ namespace Azure.ResourceManager.Quota
         /// <param name="options"> The client options for reading and writing models. </param>
         CurrentQuotaLimitBaseData IPersistableModel<CurrentQuotaLimitBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CurrentQuotaLimitBaseData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CurrentQuotaLimitBaseData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCurrentQuotaLimitBaseData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CurrentQuotaLimitBaseData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CurrentQuotaLimitBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -184,13 +191,6 @@ namespace Azure.ResourceManager.Quota
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(currentQuotaLimitBaseData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CurrentQuotaLimitBaseData"/> from. </param>
-        internal static CurrentQuotaLimitBaseData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCurrentQuotaLimitBaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

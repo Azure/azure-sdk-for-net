@@ -34,6 +34,29 @@ namespace Azure.AI.Projects.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InputItemFileSearchToolCall)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InputItemFileSearchToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InputItemFileSearchToolCall IPersistableModel<InputItemFileSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemFileSearchToolCall)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InputItemFileSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemFileSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -173,28 +196,5 @@ namespace Azure.AI.Projects.OpenAI
                 queries,
                 results ?? new ChangeTrackingList<FileSearchToolCallResults>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputItemFileSearchToolCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InputItemFileSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InputItemFileSearchToolCall)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InputItemFileSearchToolCall IPersistableModel<InputItemFileSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemFileSearchToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputItemFileSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

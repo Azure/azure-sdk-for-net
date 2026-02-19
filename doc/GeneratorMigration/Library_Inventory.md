@@ -13,25 +13,25 @@
 
 ## Summary
 
-- Total libraries: 400
-- Management Plane (MPG): 226
+- Total libraries: 402
+- Management Plane (MPG): 227
   - Autorest/Swagger: 140
-  - New Emitter (TypeSpec): 86
+  - New Emitter (TypeSpec): 87
   - Old TypeSpec: 0
-- Data Plane (DPG): 143
+- Data Plane (DPG): 144
   - Autorest/Swagger: 55
-  - New Emitter (TypeSpec): 33
-  - Old TypeSpec: 7
+  - New Emitter (TypeSpec): 34
+  - Old TypeSpec: 6
 - Provisioning: 31
   - Custom reflection-based generator: 31
-- No generator: 48
+- No generator: 49
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 33 / 40 (82.5%)
+**Migration Status**: 34 / 40 (85%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -39,7 +39,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | ai | Azure.AI.Projects | ✅ | ✅ |
 | ai | Azure.AI.Projects.OpenAI | ✅ | ✅ |
 | ai | Azure.AI.VoiceLive | ✅ |  |
-| anomalydetector | Azure.AI.AnomalyDetector |  |  |
+| anomalydetector | Azure.AI.AnomalyDetector | ✅ |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |  |
 | batch | Azure.Compute.Batch | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Conversations | ✅ |  |
@@ -144,7 +144,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 86 / 86 (100%)
+**Migration Status**: 87 / 87 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -152,6 +152,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
+| artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
 | astronomer | Azure.ResourceManager.Astro | ✅ |
 | avs | Azure.ResourceManager.Avs | ✅ |
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
@@ -429,7 +430,7 @@ Total: 31
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 48
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 49
 
 | Service | Library |
 | ------- | ------- |
@@ -479,5 +480,6 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | storage | Azure.Storage.DataMovement.Files.Shares |
 | storage | Azure.Storage.Internal.Avro |
 | synapse | Azure.Analytics.Synapse.Shared |
+| tools | Azure.GeneratorAgent |
 | tools | Azure.SdkAnalyzers |
 | webpubsub | Azure.Messaging.WebPubSub.Client |
