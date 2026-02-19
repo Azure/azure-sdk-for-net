@@ -124,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Gets or sets a value indicating whether standard metrics should be collected.
         /// Default is true.
         /// </summary>
-        internal bool EnableStandardMetrics { get; set; } = true;
+        public bool EnableStandardMetrics { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether performance counters should be collected.
