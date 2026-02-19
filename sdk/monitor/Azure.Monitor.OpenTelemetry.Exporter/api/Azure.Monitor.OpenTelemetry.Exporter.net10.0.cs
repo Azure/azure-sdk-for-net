@@ -26,29 +26,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             v2_1 = 1,
         }
     }
-    public partial class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    public sealed partial class AzureMonitorLogExporter : OpenTelemetry.BaseExporter<OpenTelemetry.Logs.LogRecord>
     {
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) { }
-
-        public override ExportResult Export(in Batch<LogRecord> batch) { throw null; }
-        protected override void Dispose(bool disposing) { throw null; }
+        public AzureMonitorLogExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
+        protected override void Dispose(bool disposing) { }
+        public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<OpenTelemetry.Logs.LogRecord> batch) { throw null; }
     }
-    public partial class AzureMonitorMetricExporter : BaseExporter<Metric>
+    public sealed partial class AzureMonitorMetricExporter : OpenTelemetry.BaseExporter<OpenTelemetry.Metrics.Metric>
     {
-        public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) { }
-        public override ExportResult Export(in Batch<Metric> batch) { throw null; }
-        protected override void Dispose(bool disposing) { throw null; }
-    }
-    public partial class AzureMonitorTraceExporter : BaseExporter<Activity>
-    {
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) { }
-        public override ExportResult Export(in Batch<Activity> batch) { throw null; }
-        protected override void Dispose(bool disposing) { throw null; }
+        public AzureMonitorMetricExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
+        protected override void Dispose(bool disposing) { }
+        public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<OpenTelemetry.Metrics.Metric> batch) { throw null; }
     }
     public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureMonitorOpenTelemetryExporterContext() { }
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
+    }
+    public sealed partial class AzureMonitorTraceExporter : OpenTelemetry.BaseExporter<System.Diagnostics.Activity>
+    {
+        public AzureMonitorTraceExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
+        protected override void Dispose(bool disposing) { }
+        public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
     }
     public static partial class OpenTelemetryBuilderExtensions
     {
