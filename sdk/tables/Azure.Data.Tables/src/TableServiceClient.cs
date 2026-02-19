@@ -241,7 +241,7 @@ namespace Azure.Data.Tables
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint ?? endpointString, _version);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Azure.Data.Tables
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint ?? endpointString, _version);
         }
 
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -327,7 +327,7 @@ namespace Azure.Data.Tables
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint ?? endpointString, _version);
         }
 
         /// <summary>

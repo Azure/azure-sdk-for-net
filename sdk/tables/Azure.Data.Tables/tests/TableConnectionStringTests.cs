@@ -227,6 +227,16 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual("localhost", result._accountName);
         }
 
+        [Test]
+        public void GetSecondaryUriFromPrimaryCosmosEmulatorWithoutPath()
+        {
+            // CosmosDB emulator endpoint without an account name in the path
+            // Should return null since there's no account name to append '-secondary' to
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri("http://localhost:8902/"));
+
+            Assert.That(secondaryEndpoint, Is.Null, "Secondary endpoint should be null for localhost endpoint without path");
+        }
+
         public static IEnumerable<object[]> UriInputs()
         {
             yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}"), AccountName, TableName };
