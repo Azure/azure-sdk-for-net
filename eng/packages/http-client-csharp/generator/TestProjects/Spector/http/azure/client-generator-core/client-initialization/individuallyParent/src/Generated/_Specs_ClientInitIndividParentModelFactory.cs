@@ -8,9 +8,9 @@
 using System;
 using Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient;
 
-namespace Specs.ClientInit.IndividuallyParent
+namespace Specs.ClientInit.IndividParent
 {
-    public static partial class _Specs_ClientInitIndividuallyParentModelFactory
+    public static partial class _Specs_ClientInitIndividParentModelFactory
     {
         public static BlobProperties BlobProperties(string name = default, long size = default, string contentType = default, DateTimeOffset createdOn = default) => throw null;
     }
