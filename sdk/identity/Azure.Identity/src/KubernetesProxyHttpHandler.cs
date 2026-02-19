@@ -232,27 +232,34 @@ namespace Azure.Identity
                         return false;
                     }
 
-                    // Configure chain to trust our custom CA
-                    chain.ChainPolicy.ExtraStore.Add(caCertificate);
-                    chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-                    chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-
-                    if (!chain.Build(cert))
+                    // Create a new X509Chain for custom validation instead of reusing the one
+                    // passed from SSL validation. On Linux with OpenSSL, the passed-in chain
+                    // is already in a partially built state and calling Build() on it again
+                    // causes a NullReferenceException in OpenSslX509ChainProcessor.FindFirstChain.
+                    using (var customChain = new X509Chain())
                     {
-                        return false;
-                    }
+                        // Configure chain to trust our custom CA
+                        customChain.ChainPolicy.ExtraStore.Add(caCertificate);
+                        customChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+                        customChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
 
-                    // Verify the root certificate matches our custom CA
-                    if (chain.ChainElements.Count > 0)
-                    {
-                        var rootCert = chain.ChainElements[chain.ChainElements.Count - 1].Certificate;
-                        if (!rootCert.Thumbprint.Equals(caCertificate.Thumbprint, StringComparison.OrdinalIgnoreCase))
+                        if (!customChain.Build(cert))
                         {
                             return false;
                         }
-                    }
 
-                    return true;
+                        // Verify the root certificate matches our custom CA
+                        if (customChain.ChainElements.Count > 0)
+                        {
+                            var rootCert = customChain.ChainElements[customChain.ChainElements.Count - 1].Certificate;
+                            if (rootCert.Thumbprint.Equals(caCertificate.Thumbprint, StringComparison.OrdinalIgnoreCase))
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
                 };
             }
             catch (Exception ex)
