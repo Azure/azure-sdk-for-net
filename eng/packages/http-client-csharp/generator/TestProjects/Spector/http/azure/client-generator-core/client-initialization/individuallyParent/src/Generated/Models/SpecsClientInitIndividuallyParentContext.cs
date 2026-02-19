@@ -8,10 +8,10 @@
 using System.ClientModel.Primitives;
 using Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient;
 
-namespace Specs.ClientInitialization.IndividuallyParent
+namespace Specs.ClientInit.IndividuallyParent
 {
     [ModelReaderWriterBuildable(typeof(BlobProperties))]
-    public partial class SpecsClientInitializationIndividuallyParentContext : ModelReaderWriterContext
+    public partial class SpecsClientInitIndividuallyParentContext : ModelReaderWriterContext
     {
     }
 }

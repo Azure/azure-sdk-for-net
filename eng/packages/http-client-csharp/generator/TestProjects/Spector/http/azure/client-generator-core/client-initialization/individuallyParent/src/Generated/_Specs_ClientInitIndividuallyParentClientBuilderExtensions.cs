@@ -12,7 +12,7 @@ using Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentC
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _Specs_ClientInitializationIndividuallyParentClientBuilderExtensions
+    public static partial class _Specs_ClientInitIndividuallyParentClientBuilderExtensions
     {
         public static IAzureClientBuilder<IndividuallyParentClient, IndividuallyParentClientOptions> AddIndividuallyParentClient<TBuilder>(this TBuilder builder, string blobName, string name, string region, string blob)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
