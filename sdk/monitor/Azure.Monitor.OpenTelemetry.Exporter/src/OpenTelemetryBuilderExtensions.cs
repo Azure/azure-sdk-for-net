@@ -116,9 +116,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 .Configure<IConfiguration>((options, config) =>
                 {
                     // If connection string is not set in the options, try to get it from configuration.
-                    if (string.IsNullOrWhiteSpace(options.ConnectionString) && config["AzureMonitor:ConnectionString"] != null)
+                    if (string.IsNullOrWhiteSpace(options.ConnectionString) && config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING] != null)
                     {
-                        options.ConnectionString = config["AzureMonitor:ConnectionString"];
+                        options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
                     }
                 });
 
