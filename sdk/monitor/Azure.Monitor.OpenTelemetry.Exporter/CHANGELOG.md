@@ -10,8 +10,10 @@
 
 ### Other Changes
 
-* Made AzureMonitorLogExporter, AzureMonitorMetricExporter, AzureMonitorTraceExporter.
-* Made options EnablePerfCounters and EnableStandardMetrics public in AzureMonitorExporterOptions.
+* Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, `AzureMonitorTraceExporter`.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+* Made options `EnablePerfCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
 
 ## 1.6.0 (2026-01-28)
 
