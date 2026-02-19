@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient;
 
-namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
+namespace Specs.ClientInitialization.Default
 {
-    public static partial class _Specs_AzureClientGeneratorCoreClientInitializationDefaultClientModelFactory
+    public static partial class _Specs_ClientInitializationDefaultModelFactory
     {
         public static Input Input(string name = default) => throw null;
 

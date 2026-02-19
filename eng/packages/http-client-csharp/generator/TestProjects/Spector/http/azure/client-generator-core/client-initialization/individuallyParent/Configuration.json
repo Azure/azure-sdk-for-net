@@ -1,5 +1,5 @@
 {
-  "package-name": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyParentClient",
+  "package-name": "_Specs_.ClientInitialization.IndividuallyParent",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",
