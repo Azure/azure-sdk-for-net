@@ -15,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLiveMetrics { get { throw null; } set { } }
+        public bool EnablePerfCounters { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
         public double? TracesPerSecond { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
@@ -23,6 +24,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             v2_1 = 1,
         }
+    }
+    public partial class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    {
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) { }
+
+        public override ExportResult Export(in Batch<LogRecord> batch) { throw null; }
+        protected override void Dispose(bool disposing) { throw null; }
+    }
+    public partial class AzureMonitorMetricExporter : BaseExporter<Metric>
+    {
+        public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) { }
+        public override ExportResult Export(in Batch<Metric> batch) { throw null; }
+        protected override void Dispose(bool disposing) { throw null; }
+    }
+    public partial class AzureMonitorTraceExporter : BaseExporter<Activity>
+    {
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) { }
+        public override ExportResult Export(in Batch<Activity> batch) { throw null; }
+        protected override void Dispose(bool disposing) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
