@@ -20,8 +20,6 @@ namespace Azure.Core
         private (TKey Key, TValue Value) _second;
         private (TKey Key, TValue Value)[]? _rest;
         private int _count;
-        private object? _lock;
-        private object Lock => _lock ??= new object();
 #if DEBUG
         private bool _disposed;
 #endif
@@ -267,17 +265,14 @@ namespace Azure.Core
             _first = default;
             _second = default;
 
-            lock (Lock)
+            if (_rest == default)
             {
-                if (_rest == default)
-                {
-                    return;
-                }
-
-                var rest = _rest;
-                _rest = default;
-                ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
+                return;
             }
+
+            var rest = _rest;
+            _rest = default;
+            ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
         }
 
         private (TKey Key, TValue Value)[] GetRest() => _rest ??
