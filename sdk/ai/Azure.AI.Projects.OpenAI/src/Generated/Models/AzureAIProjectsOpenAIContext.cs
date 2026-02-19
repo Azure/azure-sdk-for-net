@@ -52,7 +52,9 @@ namespace Azure.AI.Projects.OpenAI
     [ModelReaderWriterBuildable(typeof(CompactResponseMethodPublicBody))]
     [ModelReaderWriterBuildable(typeof(ComputerCallSafetyCheckParam))]
     [ModelReaderWriterBuildable(typeof(ComputerScreenshotImage))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.OpenAI.ContainerApplicationAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerApplicationAgentDefinition))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.OpenAI.ContainerApplicationAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerFileCitationBody))]
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
     [ModelReaderWriterBuildable(typeof(CustomGrammarFormatParam))]
@@ -79,7 +81,9 @@ namespace Azure.AI.Projects.OpenAI
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcome))]
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcomeParam))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.OpenAI.HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.OpenAI.HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InputContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputFileContent))]
@@ -248,7 +252,9 @@ namespace Azure.AI.Projects.OpenAI
     [ModelReaderWriterBuildable(typeof(WebSearchActionSearchSources))]
     [ModelReaderWriterBuildable(typeof(WebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.OpenAI.WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.OpenAI.WorkflowAgentDefinition is experimental and may change in future versions.
     public partial class AzureAIProjectsOpenAIContext : ModelReaderWriterContext
     {
     }
