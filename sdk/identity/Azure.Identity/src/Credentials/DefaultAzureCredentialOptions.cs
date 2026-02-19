@@ -169,7 +169,7 @@ namespace Azure.Identity
             "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
             "Broker" => Constants.BrokerCredential,
             "ApiKey" => Constants.ApiKeyCredential,
-            _ => value,
+            _ => throw new InvalidOperationException($"Unsupported CredentialSource found in configuration: {value}."),
         };
 
         /// <summary>
