@@ -30,6 +30,23 @@ internal class CredentialOptionsMapper
                 options.AuthorityHost = credentialOptions.AuthorityHost;
                 options.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
                 options.IsChainedCredential = credentialOptions.IsChainedCredential;
+
+                if (credentialOptions is InteractiveBrowserCredentialOptions ibcOptions)
+                {
+                    options.ClientId = ibcOptions.ClientId;
+                    options.DisableAutomaticAuthentication = ibcOptions.DisableAutomaticAuthentication;
+                    options.LoginHint = ibcOptions.LoginHint;
+
+                    if (ibcOptions.BrowserCustomization != null)
+                    {
+                        options.BrowserCustomization = ibcOptions.BrowserCustomization;
+                    }
+
+                    if (ibcOptions.AuthenticationRecord != null)
+                    {
+                        options.AuthenticationRecord = ibcOptions.AuthenticationRecord;
+                    }
+                }
             }
 
             if (fileSystem is not null)
@@ -96,6 +113,23 @@ internal class CredentialOptionsMapper
             fallbackOptions.AuthorityHost = credentialOptions.AuthorityHost;
             fallbackOptions.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
             fallbackOptions.IsChainedCredential = credentialOptions.IsChainedCredential;
+
+            if (credentialOptions is InteractiveBrowserCredentialOptions ibcOptions)
+            {
+                fallbackOptions.ClientId = ibcOptions.ClientId;
+                fallbackOptions.DisableAutomaticAuthentication = ibcOptions.DisableAutomaticAuthentication;
+                fallbackOptions.LoginHint = ibcOptions.LoginHint;
+
+                if (ibcOptions.BrowserCustomization != null)
+                {
+                    fallbackOptions.BrowserCustomization = ibcOptions.BrowserCustomization;
+                }
+
+                if (ibcOptions.AuthenticationRecord != null)
+                {
+                    fallbackOptions.AuthenticationRecord = ibcOptions.AuthenticationRecord;
+                }
+            }
         }
 
         return fallbackOptions;

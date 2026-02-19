@@ -387,6 +387,23 @@ namespace Azure.Identity
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
             options.IsChainedCredential = Options.CredentialSource == null;
+            options.ClientId = Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId;
+            options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
+
+            if (!string.IsNullOrEmpty(Options.LoginHint))
+            {
+                options.LoginHint = Options.LoginHint;
+            }
+
+            if (Options.BrowserCustomization != null)
+            {
+                options.BrowserCustomization = Options.BrowserCustomization.Clone();
+            }
+
+            if (Options.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = Options.AuthenticationRecord;
+            }
 
             return new BrokerCredential(options);
         }
