@@ -33,7 +33,7 @@ curl --request PUT \
 
 ```bash
 git clone https://github.com/azure-ai-foundry/foundry-samples.git
-cd foundry-samples/samples/python/hosted-agents/agent_framework/agents_in_workflow/
+cd foundry-samples/samples/python/hosted-agents/agent-framework/agents-in-workflow/
 ```
 
 5. Build the docker image and push it to the Azure Container registry you have created.
