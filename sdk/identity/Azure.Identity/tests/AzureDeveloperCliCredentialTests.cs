@@ -347,7 +347,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = rawJsonError };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             // Should extract and trim the message, not show raw JSON
@@ -362,7 +362,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = jsonWithWhitespace };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             Assert.That(ex.Message, Does.Contain("ERROR: token expired"));
@@ -377,7 +377,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = malformedJson };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             // Should include raw text when JSON parsing fails
@@ -391,7 +391,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = jsonWithoutMessage };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             Assert.That(ex.Message, Does.Contain(jsonWithoutMessage));
@@ -404,7 +404,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = jsonWithEmptyMessage };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             Assert.That(ex.Message, Does.Contain(jsonWithEmptyMessage));
@@ -417,7 +417,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = plainError };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             Assert.That(ex.Message, Does.Contain(plainError));
@@ -431,7 +431,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = jsonLoginError };
             var credential = CreateCredential(new TestProcessService(testProcess));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
             // Should use azd's parsed message, not substitute with our own, and not show raw JSON
