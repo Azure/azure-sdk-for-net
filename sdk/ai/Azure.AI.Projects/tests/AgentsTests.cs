@@ -755,7 +755,7 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(Regex.Match(response.GetOutputText().ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
-        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
+        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType ==ToolType.MicrosoftFabric)
         {
             bool isUriCitationFound = false;
 
@@ -834,7 +834,7 @@ public class AgentsTests : AgentsTestBase
                             }
                         }
                     }
-                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
+                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric)
                     {
                         annotationMet = ContainsAnnotation(itemDoneUpdate.Item, toolType);
                     }
