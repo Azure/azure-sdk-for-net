@@ -255,13 +255,13 @@ namespace Azure.Core
 
         public void Dispose()
         {
-        #if DEBUG
+#if DEBUG
             if (_disposed)
             {
                 return;
             }
             _disposed = true;
-        #endif
+#endif
             _count = 0;
             _first = default;
             _second = default;
