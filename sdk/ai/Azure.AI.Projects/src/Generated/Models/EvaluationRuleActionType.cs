@@ -13,8 +13,6 @@ namespace Azure.AI.Projects
         private readonly string _value;
         /// <summary> Continuous evaluation. </summary>
         private const string ContinuousEvaluationValue = "continuousEvaluation";
-        /// <summary> Human evaluation. </summary>
-        private const string HumanEvaluationValue = "humanEvaluation";
         /// <summary> Human evaluation preview. </summary>
         private const string HumanEvaluationPreviewValue = "humanEvaluationPreview";
 
@@ -30,9 +28,6 @@ namespace Azure.AI.Projects
 
         /// <summary> Continuous evaluation. </summary>
         public static EvaluationRuleActionType ContinuousEvaluation { get; } = new EvaluationRuleActionType(ContinuousEvaluationValue);
-
-        /// <summary> Human evaluation. </summary>
-        public static EvaluationRuleActionType HumanEvaluation { get; } = new EvaluationRuleActionType(HumanEvaluationValue);
 
         /// <summary> Human evaluation preview. </summary>
         public static EvaluationRuleActionType HumanEvaluationPreview { get; } = new EvaluationRuleActionType(HumanEvaluationPreviewValue);

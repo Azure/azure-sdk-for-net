@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return FoundryOpenAIError.DeserializeFoundryOpenAIError(document.RootElement, options);
+                        return DeserializeFoundryOpenAIError(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FoundryOpenAIError)} does not support reading '{options.Format}' format.");
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects
         void IJsonModel<FoundryOpenAIError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FoundryOpenAIError IJsonModel<FoundryOpenAIError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
+        FoundryOpenAIError IJsonModel<FoundryOpenAIError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -172,7 +172,7 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(FoundryOpenAIError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return FoundryOpenAIError.DeserializeFoundryOpenAIError(document.RootElement, options);
+            return DeserializeFoundryOpenAIError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
@@ -232,7 +232,7 @@ namespace Azure.AI.Projects
                     List<FoundryOpenAIError> array = new List<FoundryOpenAIError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FoundryOpenAIError.DeserializeFoundryOpenAIError(item, options));
+                        array.Add(DeserializeFoundryOpenAIError(item, options));
                     }
                     details = array;
                     continue;
@@ -296,11 +296,11 @@ namespace Azure.AI.Projects
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FoundryOpenAIError>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FoundryOpenAIError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FoundryOpenAIError IPersistableModel<FoundryOpenAIError>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
+        FoundryOpenAIError IPersistableModel<FoundryOpenAIError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FoundryOpenAIError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
