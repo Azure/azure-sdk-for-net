@@ -44,17 +44,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string id, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Get(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, options);
+            using PipelineMessage message = CreateGetRequest(id, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -67,47 +66,44 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string id, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, options);
+            using PipelineMessage message = CreateGetRequest(id, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationRule> Get(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<EvaluationRule> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = Get(id, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = Get(id, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
         /// <summary> Get an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationRule>> GetAsync(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<EvaluationRule>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetAsync(id, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
@@ -120,17 +116,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Delete(string id, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Delete(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, foundryFeatures, options);
+            using PipelineMessage message = CreateDeleteRequest(id, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -143,46 +138,43 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteAsync(string id, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteAsync(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, foundryFeatures, options);
+            using PipelineMessage message = CreateDeleteRequest(id, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult Delete(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult Delete(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return Delete(id, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return Delete(id, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete an evaluation rule. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteAsync(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await DeleteAsync(id, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await DeleteAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -280,19 +272,12 @@ namespace Azure.AI.Projects
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(string actionType, string agentName, bool? enabled, string foundryFeatures, RequestOptions options)
+        public virtual CollectionResult GetAll(string actionType, string agentName, bool? enabled, RequestOptions options)
         {
-            return new EvaluationRulesGetAllCollectionResult(
-                this,
-                actionType,
-                agentName,
-                enabled,
-                foundryFeatures,
-                options);
+            return new EvaluationRulesGetAllCollectionResult(this, actionType, agentName, enabled, options);
         }
 
         /// <summary>
@@ -306,55 +291,34 @@ namespace Azure.AI.Projects
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(string actionType, string agentName, bool? enabled, string foundryFeatures, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string actionType, string agentName, bool? enabled, RequestOptions options)
         {
-            return new EvaluationRulesGetAllAsyncCollectionResult(
-                this,
-                actionType,
-                agentName,
-                enabled,
-                foundryFeatures,
-                options);
+            return new EvaluationRulesGetAllAsyncCollectionResult(this, actionType, agentName, enabled, options);
         }
 
         /// <summary> List all evaluation rules. </summary>
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<EvaluationRule> GetAll(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<EvaluationRule> GetAll(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationRulesGetAllCollectionResultOfT(
-                this,
-                actionType?.ToString(),
-                agentName,
-                enabled,
-                foundryFeatures?.ToSerialString(),
-                cancellationToken.ToRequestOptions());
+            return new EvaluationRulesGetAllCollectionResultOfT(this, actionType?.ToString(), agentName, enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all evaluation rules. </summary>
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<EvaluationRule> GetAllAsync(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<EvaluationRule> GetAllAsync(EvaluationRuleActionType? actionType = default, string agentName = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationRulesGetAllAsyncCollectionResultOfT(
-                this,
-                actionType?.ToString(),
-                agentName,
-                enabled,
-                foundryFeatures?.ToSerialString(),
-                cancellationToken.ToRequestOptions());
+            return new EvaluationRulesGetAllAsyncCollectionResultOfT(this, actionType?.ToString(), agentName, enabled, cancellationToken.ToRequestOptions());
         }
     }
 }

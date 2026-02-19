@@ -129,7 +129,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
-    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(InputContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputFileContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputImageContent))]
@@ -220,9 +219,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(MemorySearchItem))]
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(MemorySearchResultOptions))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.MemoryStore is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryStore))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.MemoryStore is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryStoreDefaultDefinition))]
     [ModelReaderWriterBuildable(typeof(MemoryStoreDefaultOptions))]
     [ModelReaderWriterBuildable(typeof(MemoryStoreDefinition))]
