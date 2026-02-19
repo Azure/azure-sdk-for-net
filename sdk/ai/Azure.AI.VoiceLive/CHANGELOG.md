@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2026-02-19)
 
 ### Features Added
 
@@ -69,11 +69,37 @@
     - `OAIVoice.Cedar` - Additional voice option
     - `OAIVoice.Marin` - Additional voice option
 
-### Breaking Changes
+- **Foundry Agent Support**: Added support for agent-centric sessions using Azure AI Foundry agents
 
-### Bugs Fixed
+    - Added `AgentSessionConfig` class for configuring Foundry agent sessions:
+        - `AgentName` - The name of the Foundry agent to use
+        - `ProjectName` - The name of the Azure AI project which the agent belongs to
+        - `AgentVersion` - Optional version of the agent to use
+        - `ConversationId` - Optional conversation ID to continue
+        - `AuthenticationIdentityClientId` - Optional client ID for user-assigned managed identity
+        - `FoundryResourceOverride` - Optional Foundry resource name for cross-resource agent mode
+    - Added `SessionTarget` class for specifying session targets (model or agent):
+        - `SessionTarget.FromModel(string model)` - Creates a model-centric session target
+        - `SessionTarget.FromAgent(AgentSessionConfig agentConfig)` - Creates an agent-centric session target
+        - Implicit conversions from `string` and `AgentSessionConfig`
 
-### Other Changes
+- **Interim Response Configuration**: Added support for interim responses during latency or tool execution delays
+
+    - Added `InterimResponseConfigBase` abstract base class with `Triggers` and `LatencyThresholdMs` properties
+    - Added `InterimResponseTrigger` extensible enum (`Latency`, `Tool`)
+    - Added `LlmInterimResponseConfig` for AI-generated interim responses with `Model`, `Instructions`, and `MaxCompletionTokens` properties
+    - Added `StaticInterimResponseConfig` for predefined static text interim responses with `Texts` collection
+
+- **New `VoiceLiveClient` Session Methods**: Added new overloads for creating and starting sessions
+
+    - `CreateSession(string model)` - Creates an unconnected session for a model
+    - `CreateSession(SessionTarget target)` - Creates an unconnected session from a model or agent target
+    - `CreateSession(VoiceLiveSessionOptions sessionConfig)` - Creates an unconnected session from session configuration
+    - `StartSessionAsync(AgentSessionConfig agentConfig, ...)` - Starts a connected session with a Foundry agent
+    - `StartSessionAsync(SessionTarget target, ...)` - Starts a connected session from a model or agent target
+    - `StartSessionAsync(SessionTarget target, VoiceLiveSessionOptions sessionConfig, ...)` - Starts a connected session from a target with additional configuration
+
+- **New Service Version**: Added `ServiceVersion.V2026_01_01_PREVIEW` to `VoiceLiveClientOptions`
 
 ## 1.1.0-beta.1 (2025-11-14)
 
