@@ -130,8 +130,8 @@ public sealed class FileService
     /// <returns>Updated YAML content.</returns>
     private static string UpdateYamlField(string yamlContent, string field, string newValue)
     {
-        ReadOnlySpan<char> yamlSpan = yamlContent.AsSpan();
-        ReadOnlySpan<char> fieldPattern = $"{field}:".AsSpan();
+        var yamlSpan = yamlContent.AsSpan();
+        var fieldPattern = $"{field}:".AsSpan();
 
         var result = new System.Text.StringBuilder(yamlContent.Length + field.Length + newValue.Length + 16);
         var currentPos = 0;
@@ -140,12 +140,12 @@ public sealed class FileService
         while (currentPos < yamlSpan.Length)
         {
             var lineEnd = yamlSpan[currentPos..].IndexOf('\n');
-            ReadOnlySpan<char> line = lineEnd == -1
+            var line = lineEnd == -1
                 ? yamlSpan[currentPos..]
                 : yamlSpan.Slice(currentPos, lineEnd);
 
-            ReadOnlySpan<char> cleanLine = line.TrimEnd('\r');
-            ReadOnlySpan<char> trimmedLine = cleanLine.TrimStart();
+            var cleanLine = line.TrimEnd('\r');
+            var trimmedLine = cleanLine.TrimStart();
 
             if (!fieldUpdated && !trimmedLine.IsEmpty && trimmedLine.StartsWith(fieldPattern, StringComparison.Ordinal))
             {
@@ -182,8 +182,12 @@ public sealed class FileService
             result.Append($"{field}: {newValue}\n");
         }
 
-        var output = result.ToString();
-        return yamlContent.Contains("\r\n") ? output.Replace("\n", "\r\n") : output;
+        if (yamlContent.Contains("\r\n"))
+        {
+            result.Replace("\n", "\r\n");
+        }
+
+        return result.ToString();
     }
 
     /// <summary>
@@ -193,12 +197,17 @@ public sealed class FileService
     /// <returns>Value without quotes, or original if no quotes or empty.</returns>
     private static string? RemoveYamlQuotes(string value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length < 2)
+        if (string.IsNullOrEmpty(value))
         {
-            return string.IsNullOrEmpty(value) ? null : value;
+            return null;
         }
 
-        ReadOnlySpan<char> span = value.AsSpan();
+        if (value.Length < 2)
+        {
+            return value;
+        }
+
+        var span = value.AsSpan();
 
         if ((span[0] == DoubleQuote && span[^1] == DoubleQuote) ||
             (span[0] == SingleQuote && span[^1] == SingleQuote))

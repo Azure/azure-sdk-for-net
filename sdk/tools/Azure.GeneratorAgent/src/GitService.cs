@@ -13,7 +13,6 @@ public sealed class GitService
 {
     private readonly ILogger<GitService> _logger;
     private readonly HttpClient _httpClient;
-    private readonly CopilotService _copilotService;
     private readonly AppSettings _settings;
 
     /// <summary>
@@ -21,13 +20,11 @@ public sealed class GitService
     /// </summary>
     /// <param name="logger">Logger instance.</param>
     /// <param name="httpClient">HTTP client for making requests to GitHub API.</param>
-    /// <param name="copilotService">Copilot service for intelligent path discovery.</param>
     /// <param name="settings">Application settings.</param>
-    public GitService(ILogger<GitService> logger, HttpClient httpClient, CopilotService copilotService, AppSettings settings)
+    public GitService(ILogger<GitService> logger, HttpClient httpClient, AppSettings settings)
     {
         _logger = logger;
         _httpClient = httpClient;
-        _copilotService = copilotService;
         _settings = settings;
     }
 
@@ -41,7 +38,9 @@ public sealed class GitService
     /// <returns>Commit SHA if found, null otherwise</returns>
     public async Task<string?> TryGetCommitForPath(string owner, string repoName, string path, CancellationToken cancellationToken)
     {
-        var apiUrl = $"{_settings.GitHubApiUrl}/repos/{owner}/{repoName}/commits?sha=main&path={Uri.EscapeDataString(path)}&per_page=1";
+        var builder = new UriBuilder($"{_settings.GitHubApiUrl}/repos/{Uri.EscapeDataString(owner)}/{Uri.EscapeDataString(repoName)}/commits");
+        builder.Query = $"sha=main&path={Uri.EscapeDataString(path)}&per_page=1";
+        var apiUrl = builder.Uri;
 
         var response = await _httpClient.GetAsync(apiUrl, cancellationToken).ConfigureAwait(false);
 
@@ -52,11 +51,6 @@ public sealed class GitService
         }
 
         var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
-        if (json.Length > 1_000_000)
-        {
-            throw new InvalidOperationException("API response exceeded maximum allowed size");
-        }
 
         using var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;

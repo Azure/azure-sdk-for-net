@@ -33,7 +33,7 @@ public class ServiceCollectionTests
         var configuration = CreateTestConfiguration();
         var services = new ServiceCollection();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
         var config = serviceProvider.GetRequiredService<IConfiguration>();
 
@@ -49,7 +49,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
         var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
 
@@ -65,7 +65,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
         var gitService = serviceProvider.GetRequiredService<GitService>();
 
@@ -79,7 +79,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var validationService1 = serviceProvider.GetRequiredService<ValidationService>();
@@ -98,7 +98,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var fileService1 = serviceProvider.GetRequiredService<FileService>();
@@ -117,7 +117,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var commandFactory1 = serviceProvider.GetRequiredService<RootCommandFactory>();
@@ -136,7 +136,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<IConfiguration>());
@@ -153,7 +153,7 @@ public class ServiceCollectionTests
         var configuration = CreateTestConfiguration();
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var rootCommandFactory = serviceProvider.GetRequiredService<RootCommandFactory>();
@@ -178,7 +178,7 @@ public class ServiceCollectionTests
 
         Assert.DoesNotThrow(() =>
         {
-            services.AddApplicationServices(configuration);
+            services.AddApplicationServices(configuration, null);
             var serviceProvider = services.BuildServiceProvider();
         });
     }
@@ -189,7 +189,7 @@ public class ServiceCollectionTests
         var configuration = CreateTestConfiguration();
         var services = new ServiceCollection();
 
-        var result = services.AddApplicationServices(configuration);
+        var result = services.AddApplicationServices(configuration, null);
 
         Assert.That(result, Is.SameAs(services), "AddApplicationServices should return the same service collection for chaining");
     }
@@ -199,7 +199,7 @@ public class ServiceCollectionTests
     {
         var services = new ServiceCollection();
 
-        Assert.Throws<ArgumentNullException>(() => services.AddApplicationServices(null!));
+        Assert.Throws<ArgumentNullException>(() => services.AddApplicationServices(null!, null));
     }
 
     [Test]
@@ -208,7 +208,7 @@ public class ServiceCollectionTests
         var configuration = CreateTestConfiguration();
         ServiceCollection services = null!;
 
-        Assert.Throws<ArgumentNullException>(() => services.AddApplicationServices(configuration));
+        Assert.Throws<ArgumentNullException>(() => services.AddApplicationServices(configuration, null));
     }
 
     [Test]
@@ -218,7 +218,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var configFromFactory = serviceProvider.GetRequiredService<RootCommandFactory>();
@@ -236,7 +236,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(emptyConfig);
+        services.AddApplicationServices(emptyConfig, null);
         var serviceProvider = services.BuildServiceProvider();
 
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<ValidationService>());
@@ -252,8 +252,8 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<ValidationService>());
@@ -267,22 +267,36 @@ public class ServiceCollectionTests
     }
 
     [Test]
-    public void AddApplicationServices_Should_RegisterCopilotServiceAsSingleton()
+    public void AddApplicationServices_WithProjectPath_Should_RegisterCopilotTaskAsSingleton()
     {
         var configuration = CreateTestConfiguration();
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, "/some/path");
         var serviceProvider = services.BuildServiceProvider();
 
-        var copilotService1 = serviceProvider.GetRequiredService<CopilotService>();
-        var copilotService2 = serviceProvider.GetRequiredService<CopilotService>();
+        var task1 = serviceProvider.GetService<Task<CopilotService>>();
+        var task2 = serviceProvider.GetService<Task<CopilotService>>();
 
-        Assert.That(copilotService1, Is.Not.Null);
-        Assert.That(copilotService2, Is.Not.Null);
-        Assert.That(ReferenceEquals(copilotService1, copilotService2), Is.True,
-            "CopilotService should be registered as Singleton");
+        Assert.That(task1, Is.Not.Null);
+        Assert.That(task2, Is.Not.Null);
+        Assert.That(ReferenceEquals(task1, task2), Is.True,
+            "Task<CopilotService> should be registered as Singleton");
+    }
+
+    [Test]
+    public void AddApplicationServices_WithNullProjectPath_Should_NotRegisterCopilotTask()
+    {
+        var configuration = CreateTestConfiguration();
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        services.AddApplicationServices(configuration, null);
+        var serviceProvider = services.BuildServiceProvider();
+
+        var task = serviceProvider.GetService<Task<CopilotService>>();
+        Assert.That(task, Is.Null, "Task<CopilotService> should not be registered when projectPath is null");
     }
 
     [Test]
@@ -292,7 +306,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
         var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
         var httpClient = httpClientFactory.CreateClient("GitService");
@@ -323,7 +337,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
         var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
 
@@ -346,7 +360,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var gitService1 = serviceProvider.GetRequiredService<GitService>();
@@ -368,7 +382,7 @@ public class ServiceCollectionTests
 
         var result = services
             .AddLogging()
-            .AddApplicationServices(configuration)
+            .AddApplicationServices(configuration, null)
             .AddSingleton<string>("test");
 
         Assert.That(result, Is.SameAs(services), "Service collection methods should support chaining");
@@ -397,7 +411,7 @@ public class ServiceCollectionTests
         var services = new ServiceCollection();
         services.AddLogging();
 
-        services.AddApplicationServices(complexConfig);
+        services.AddApplicationServices(complexConfig, null);
         var serviceProvider = services.BuildServiceProvider();
 
         var retrievedConfig = serviceProvider.GetRequiredService<IConfiguration>();
@@ -418,14 +432,13 @@ public class ServiceCollectionTests
         // Add only the minimum required services
         services.AddLogging(builder => builder.SetMinimumLevel(LogLevel.None));
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         // Should still be able to resolve all services
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<ValidationService>());
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<GitService>());
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<FileService>());
-        Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<CopilotService>());
         Assert.DoesNotThrow(() => serviceProvider.GetRequiredService<RootCommandFactory>());
     }
 
@@ -440,7 +453,7 @@ public class ServiceCollectionTests
         services.AddScoped<object>(_ => new { Value = 42 });
         services.AddLogging();
 
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration, null);
         var serviceProvider = services.BuildServiceProvider();
 
         // Existing services should still be available

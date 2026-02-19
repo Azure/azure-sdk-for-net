@@ -33,7 +33,6 @@ public class GitServiceTests
     public async Task TryGetCommitForPath_WithValidRepository_ReturnsCommitSha()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
-        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
         var httpClientMock = CreateMockHttpClient("""
             [
                 {
@@ -45,7 +44,7 @@ public class GitServiceTests
             ]
             """);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
 
         var result = await gitService.TryGetCommitForPath("owner", "repo", "some/path", CancellationToken.None);
 
@@ -57,7 +56,6 @@ public class GitServiceTests
     public async Task TryGetCommitForPath_WithSpecificPath_ReturnsCommitSha()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
-        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
         var httpClientMock = CreateMockHttpClient("""
             [
                 {
@@ -69,7 +67,7 @@ public class GitServiceTests
             ]
             """);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
 
         var result = await gitService.TryGetCommitForPath("owner", "repo", "sdk/some-service", CancellationToken.None);
 
@@ -81,10 +79,9 @@ public class GitServiceTests
     public async Task TryGetCommitForPath_WithFailedRequest_ReturnsNull()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
-        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
         var httpClientMock = CreateMockHttpClient("", HttpStatusCode.NotFound);
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
 
         var result = await gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None);
 
@@ -95,33 +92,13 @@ public class GitServiceTests
     public async Task TryGetCommitForPath_WithEmptyResponse_ReturnsNull()
     {
         var loggerMock = new Mock<ILogger<GitService>>();
-        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
         var httpClientMock = CreateMockHttpClient("[]");
 
-        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
+        var gitService = new GitService(loggerMock.Object, httpClientMock, CreateMockSettings());
 
         var result = await gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None);
 
         Assert.That(result, Is.Null);
-    }
-
-    [Test]
-    public void TryGetCommitForPath_WithOversizedResponse_ThrowsInvalidOperationException()
-    {
-        var loggerMock = new Mock<ILogger<GitService>>();
-        var copilotServiceMock = new Mock<CopilotService>(new Mock<ILogger<CopilotService>>().Object, CreateMockSettings());
-
-        // Create a large valid JSON response that exceeds 1MB limit
-        var largeResponse = '[' + new string(' ', 1_000_000) + ']'; // Creates a 1,000,002 character response
-
-        var httpClientMock = CreateMockHttpClient(largeResponse);
-
-        var gitService = new GitService(loggerMock.Object, httpClientMock, copilotServiceMock.Object, CreateMockSettings());
-
-        var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
-            gitService.TryGetCommitForPath("owner", "repo", "/test/project/path", CancellationToken.None));
-
-        Assert.That(ex!.Message, Does.Contain("API response exceeded maximum allowed size"));
     }
 
     private static HttpClient CreateMockHttpClient(string responseContent, HttpStatusCode statusCode = HttpStatusCode.OK)

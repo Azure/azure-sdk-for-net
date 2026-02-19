@@ -18,13 +18,12 @@ public static class ServiceConfiguration
     /// </summary>
     /// <param name="services">Service collection to configure.</param>
     /// <param name="configuration">Application configuration.</param>
+    /// <param name="projectPath">SDK project path from CLI args. Null when no subcommand requires Copilot (e.g. --help).</param>
     /// <returns>Configured service collection.</returns>
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, string? projectPath)
     {
-        // Configuration
         services.AddSingleton(configuration);
 
-        // HTTP Client with Azure SDK patterns
         services.AddHttpClient<GitService>("GitService", (serviceProvider, client) =>
         {
             client.Timeout = TimeSpan.FromSeconds(30);
@@ -39,7 +38,16 @@ public static class ServiceConfiguration
 
         services.AddSingleton<AppSettings>();
 
-        services.AddScoped<CopilotService>();
+        if (!string.IsNullOrEmpty(projectPath))
+        {
+            services.AddSingleton(provider =>
+            {
+                var logger = provider.GetRequiredService<ILoggerFactory>().CreateLogger<CopilotService>();
+                var settings = provider.GetRequiredService<AppSettings>();
+
+                return CopilotService.CreateAsync(projectPath, logger, settings);
+            });
+        }
 
         services.AddTransient<RootCommandFactory>();
 

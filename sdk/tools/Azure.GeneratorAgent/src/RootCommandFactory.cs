@@ -23,7 +23,7 @@ public class RootCommandFactory
     private readonly ValidationService _validator;
     private readonly GitService _gitService;
     private readonly FileService _fileService;
-    private readonly CopilotService _copilotService;
+    private readonly Task<CopilotService>? _copilotServiceTask;
     private readonly ILogger<RootCommandFactory> _logger;
 
     /// <summary>
@@ -32,14 +32,14 @@ public class RootCommandFactory
     /// <param name="validator">Validation service.</param>
     /// <param name="gitService">Git service.</param>
     /// <param name="fileService">File service.</param>
-    /// <param name="copilotService">Copilot service.</param>
     /// <param name="logger">Logger instance.</param>
-    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, CopilotService copilotService, ILogger<RootCommandFactory> logger)
+    /// <param name="copilotServiceTask">Optional task that resolves to the initialized CopilotService singleton.</param>
+    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
     {
         _validator = validator;
         _gitService = gitService;
         _fileService = fileService;
-        _copilotService = copilotService;
+        _copilotServiceTask = copilotServiceTask;
         _logger = logger;
     }
 
@@ -69,27 +69,8 @@ public class RootCommandFactory
             var sdkPath = parseResult.GetValue(sdkPathArgument);
             _logger.LogInformation("Starting generate command for SDK path: {SdkPath}", sdkPath);
 
-            try
-            {
-                // TODO: Implement generate workflow
-                _logger.LogInformation("Generate workflow - TODO: Implementation pending");
-                Environment.ExitCode = 0;
-            }
-            catch (OperationCanceledException) when (appCancellationToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Generate command was cancelled by user (Ctrl+C)");
-                Environment.ExitCode = 1;
-            }
-            catch (OperationCanceledException)
-            {
-                _logger.LogInformation("Generate command was cancelled");
-                Environment.ExitCode = 1;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Generate command failed for SDK path: {SdkPath}", sdkPath);
-                Environment.ExitCode = 1;
-            }
+            // TODO: Implement generate workflow
+            _logger.LogInformation("Generate workflow - TODO: Implementation pending");
         });
 
         return generateCommand;
@@ -107,9 +88,7 @@ public class RootCommandFactory
 
             if (string.IsNullOrEmpty(sdkPath))
             {
-                _logger.LogError("SDK path argument is required but was not provided");
-                Environment.ExitCode = 1;
-                return;
+                throw new ArgumentException("SDK path argument is required but was not provided", nameof(sdkPath));
             }
 
             _logger.LogInformation("Starting migrate command for SDK path: {SdkPath}", sdkPath);
@@ -130,70 +109,63 @@ public class RootCommandFactory
                 var tspLocationPath = Path.Combine(validatedPath, TspLocationFileName);
                 _validator.ValidateTspLocationFile(tspLocationPath);
 
-                // Step 3: Initialize Copilot
-                _logger.LogDebug("Step 3: Initializing Copilot service");
-                await _copilotService.InitializeCopilotAsync(validatedPath, cancellationToken).ConfigureAwait(false);
-
-                // Step 4: Get directory from tsp-location.yaml and validate it
-                _logger.LogDebug("Step 4: Reading and validating directory field");
+                // Step 3: Get directory from tsp-location.yaml and validate it
+                _logger.LogDebug("Step 3: Reading and validating directory field");
                 var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
                 _validator.ValidateRepositoryPath(relativeDirectory);
 
-                // Step 5: Get valid commit SHA and directory path
-                _logger.LogDebug("Step 5: Resolving commit information and directory path");
+                // Step 4: Resolve valid commit SHA and directory path
+                _logger.LogDebug("Step 4: Resolving commit information and directory path");
                 var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, cancellationToken).ConfigureAwait(false);
 
                 if (commitSha == null || string.IsNullOrEmpty(finalDirectory))
                 {
-                    _logger.LogError("Unable to resolve valid commit and directory path");
-                    Environment.ExitCode = 1;
-                    return;
+                    throw new InvalidOperationException("Unable to resolve valid commit and directory path");
                 }
 
                 _logger.LogInformation("Retrieved latest commit: {CommitSha} for path: {Directory}", commitSha, finalDirectory);
 
-                // Step 6: Update the commit ID and emitterPackageJsonPath in tsp-location.yaml (directory already updated by Copilot if needed)
-                _logger.LogDebug("Step 6: Updating tsp-location.yaml fields");
+                // Step 5: Update tsp-location.yaml
+                _logger.LogDebug("Step 5: Updating tsp-location.yaml fields");
                 await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, cancellationToken).ConfigureAwait(false);
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
                 _logger.LogInformation("Successfully completed migration for SDK path: {SdkPath}", sdkPath);
-                Environment.ExitCode = 0;
             }
             catch (OperationCanceledException) when (appCancellationToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Migrate command was cancelled by user (Ctrl+C)");
-                Environment.ExitCode = 1;
+                throw;
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
                 _logger.LogWarning("Migrate command timed out after 10 minutes");
-                Environment.ExitCode = 1;
+                throw;
             }
             catch (ArgumentException ex)
             {
                 _logger.LogError("Invalid argument provided to migrate command: {Message}", ex.Message);
-                Environment.ExitCode = 1;
+                throw;
             }
             catch (DirectoryNotFoundException ex)
             {
                 _logger.LogError("Directory not found: {Message}", ex.Message);
-                Environment.ExitCode = 1;
+                throw;
             }
             catch (FileNotFoundException ex)
             {
                 _logger.LogError("Required file not found: {Message}", ex.Message);
-                Environment.ExitCode = 1;
+                throw;
             }
             catch (InvalidOperationException ex)
             {
                 _logger.LogError("Migration operation failed: {Message}", ex.Message);
-                Environment.ExitCode = 1;
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unexpected error during migration for SDK path: {SdkPath}", sdkPath);
-                Environment.ExitCode = 1;
+                throw;
             }
         });
 
@@ -203,11 +175,6 @@ public class RootCommandFactory
     /// <summary>
     /// Resolves a valid commit SHA and directory path, using Copilot to correct the path if needed.
     /// </summary>
-    /// <param name="validatedPath">The validated SDK path.</param>
-    /// <param name="tspLocationPath">Path to tsp-location.yaml file.</param>
-    /// <param name="initialDirectory">Initial directory path from tsp-location.yaml.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Tuple of (commitSha, finalDirectory) if successful, (null, null) if failed.</returns>
     private async Task<(string? CommitSha, string? FinalDirectory)> ResolveCommitAndDirectoryAsync(string validatedPath, string tspLocationPath, string? initialDirectory, CancellationToken cancellationToken)
     {
         // Try with initial directory first
@@ -224,7 +191,14 @@ public class RootCommandFactory
         // Directory not found or invalid, use Copilot to fix it
         _logger.LogInformation("Directory path {Path} not found or invalid, using Copilot to find and update correct path", initialDirectory);
 
-        await _copilotService.UpdateTspLocationFileAsync(validatedPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
+        if (_copilotServiceTask == null)
+        {
+            _logger.LogError("Copilot service is not available. Ensure the migrate command is invoked with a valid sdk-path argument.");
+            return (null, null);
+        }
+
+        var copilotService = await _copilotServiceTask.ConfigureAwait(false);
+        await copilotService.UpdateTspLocationFileAsync(validatedPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
 
         var updatedDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
 

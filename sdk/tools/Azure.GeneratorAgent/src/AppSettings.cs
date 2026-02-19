@@ -8,30 +8,20 @@ namespace Azure.GeneratorAgent;
 /// <summary>
 /// Configuration settings for the application.
 /// </summary>
-public class AppSettings
+/// <param name="configuration">The configuration instance.</param>
+public class AppSettings(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AppSettings"/> class.
-    /// </summary>
-    /// <param name="configuration">The configuration instance.</param>
-    public AppSettings(IConfiguration configuration)
-    {
-        ArgumentNullException.ThrowIfNull(configuration);
-
-        _configuration = configuration;
-    }
+    private TimeSpan? _defaultTimeout;
 
     /// <summary>
     /// Gets the Copilot model to use.
     /// </summary>
-    public string Model => _configuration["Copilot:Model"] ?? "claude-4.6-opus";
+    public string Model { get; } = configuration["Copilot:Model"] ?? "claude-4.6-opus";
 
     /// <summary>
     /// Gets the log level for Copilot operations.
     /// </summary>
-    public string LogLevel => _configuration["Copilot:LogLevel"] ?? "warning";
+    public string LogLevel { get; } = configuration["Copilot:LogLevel"] ?? "warning";
 
     /// <summary>
     /// Gets the default timeout for Copilot operations.
@@ -40,13 +30,17 @@ public class AppSettings
     {
         get
         {
-            var minutes = int.Parse(_configuration["Copilot:DefaultTimeoutMinutes"] ?? "2");
-            return TimeSpan.FromMinutes(minutes);
+            _defaultTimeout ??= configuration["Copilot:DefaultTimeoutMinutes"] switch
+            {
+                string config when int.TryParse(config, out var minutes) => TimeSpan.FromMinutes(minutes),
+                _ => TimeSpan.FromMinutes(2)
+            };
+            return _defaultTimeout.Value;
         }
     }
 
     /// <summary>
     /// Gets the GitHub API base URL.
     /// </summary>
-    public string GitHubApiUrl => _configuration["GitHub:ApiUrl"] ?? "https://api.github.com";
+    public string GitHubApiUrl { get; } = configuration["GitHub:ApiUrl"] ?? "https://api.github.com";
 }
