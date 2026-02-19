@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
@@ -22,15 +21,23 @@ namespace Azure.Core.Pipeline
 
             try
             {
+                // The response content is buffered at this point.
+                string? content = response.Content.ToString();
+
                 // Optimistic check for JSON object we expect
-                if (response.Content.Length <= 0 || response.Content.ToMemory().Span[0] != (byte)'{')
+                if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
                 // Try the ErrorResponse format and fallback to the ResponseError format.
 
-                error = ModelReaderWriter.Read<RequestFailedException.ErrorResponse>(response.Content, ModelReaderWriterOptions.Json, AzureCoreContext.Default)?.Error;
-                error ??= ModelReaderWriter.Read<ResponseError>(response.Content, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
+#if NET6_0_OR_GREATER
+                error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
+                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
+#else
+                error = System.Text.Json.JsonSerializer.Deserialize<RequestFailedException.ErrorResponse>(content)?.Error;
+                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
+#endif
             }
             catch (Exception)
             {

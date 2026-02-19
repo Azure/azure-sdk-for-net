@@ -3,6 +3,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -18,7 +20,7 @@ namespace Azure
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 var element = document.RootElement;
-                return ReadFromJson(element, ModelReaderWriterOptions.Json);
+                return ReadFromJson(element);
             }
 
             public override void Write(Utf8JsonWriter writer, ResponseInnerError? value, JsonSerializerOptions options)
@@ -67,7 +69,7 @@ namespace Azure
 
             using var document = JsonDocument.ParseValue(ref reader);
             var element = document.RootElement;
-            return ReadFromJson(element, options) ?? new ResponseInnerError(null, null, default);
+            return ReadFromJson(element) ?? new ResponseInnerError(null, null, default);
         }
 
         public BinaryData Write(ModelReaderWriterOptions options)
@@ -91,14 +93,14 @@ namespace Azure
 
             using var document = JsonDocument.Parse(data);
             var element = document.RootElement;
-            return ReadFromJson(element, options) ?? new ResponseInnerError(null, null, default);
+            return ReadFromJson(element) ?? new ResponseInnerError(null, null, default);
         }
 
         string IPersistableModel<ResponseInnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         private string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static ResponseInnerError? ReadFromJson(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResponseInnerError? ReadFromJson(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +116,7 @@ namespace Azure
             ResponseInnerError? innererror = null;
             if (element.TryGetProperty("innererror", out property))
             {
-                innererror = ReadFromJson(property, options);
+                innererror = ReadFromJson(property);
             }
 
             return new ResponseInnerError(code, innererror, element.Clone());
