@@ -20,7 +20,10 @@ namespace Azure.AI.Speech.Transcription
             uri.Reset(_endpoint);
             uri.AppendPath("/speechtotext", false);
             uri.AppendPath("/transcriptions:transcribe", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", contentType);
