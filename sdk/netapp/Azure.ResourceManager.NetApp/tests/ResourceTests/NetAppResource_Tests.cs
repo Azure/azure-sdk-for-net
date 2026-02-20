@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             AsyncPageable<QuotaItemResource> quotaLimitsResponse = DefaultSubscription.GetNetAppQuotaLimitsAsync(DefaultLocation);
             Assert.IsNotNull(quotaLimitsResponse);
-            List<QuotaItemResource> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
-            Assert.IsNotEmpty(qutoaItemlist);
+            List<QuotaItemResource> quotaItemList = await quotaLimitsResponse.ToListAsync();
+            Assert.IsNotEmpty(quotaItemList);
         }
 
         [RecordedTest]
