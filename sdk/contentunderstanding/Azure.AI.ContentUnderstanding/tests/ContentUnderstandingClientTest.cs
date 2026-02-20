@@ -422,7 +422,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
@@ -469,7 +469,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+                inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
@@ -513,10 +513,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     Assert.IsTrue(customerNameField is StringField, "CustomerName should be a StringField");
                     if (customerNameField is StringField customerNameStr)
                     {
-                        Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.ValueString),
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.Value),
                             "CustomerName value should not be empty");
                         // Accept multiple possible values as LLM can return different variations
-                        var customerName = customerNameStr.ValueString;
+                        var customerName = customerNameStr.Value;
                         var acceptedValues = new[] { "MICROSOFT CORPORATION", "Microsoft Corp" };
                         Assert.IsTrue(acceptedValues.Contains(customerName),
                             $"CustomerName should be one of the accepted values: {string.Join(", ", acceptedValues)}, but was '{customerName}'");
@@ -533,14 +533,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Verify InvoiceDate field with expected value
                 if (docContent.Fields.TryGetValue("InvoiceDate", out var invoiceDateField))
                 {
-                    Assert.IsTrue(invoiceDateField is DateField, "InvoiceDate should be a DateField");
-                    if (invoiceDateField is DateField invoiceDate)
+                    Assert.IsTrue(invoiceDateField is DateTimeOffsetField, "InvoiceDate should be a DateField");
+                    if (invoiceDateField is DateTimeOffsetField invoiceDate)
                     {
-                        Assert.IsTrue(invoiceDate.ValueDate.HasValue,
+                        Assert.IsTrue(invoiceDate.Value.HasValue,
                             "InvoiceDate should have a date value");
                         // Expected value from recording: "2019-11-15"
                         var expectedDate = new DateTime(2019, 11, 15);
-                        Assert.AreEqual(expectedDate, invoiceDate.ValueDate!.Value.Date,
+                        Assert.AreEqual(expectedDate, invoiceDate.Value!.Value.Date,
                             "InvoiceDate should match expected value");
                         Assert.IsTrue(invoiceDate.Confidence.HasValue,
                             "InvoiceDate should have confidence value");
@@ -564,10 +564,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         Assert.IsTrue(amountField is NumberField, "TotalAmount.Amount should be a NumberField");
                         if (amountField is NumberField amountNum)
                         {
-                            Assert.IsTrue(amountNum.ValueNumber.HasValue,
+                            Assert.IsTrue(amountNum.Value.HasValue,
                                 "TotalAmount.Amount should have a numeric value");
                             // Expected value from recording: 110
-                            Assert.AreEqual(110.0, amountNum.ValueNumber!.Value,
+                            Assert.AreEqual(110.0, amountNum.Value!.Value,
                                 "TotalAmount.Amount should match expected value");
                         }
 
@@ -579,7 +579,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         if (currencyField is StringField currencyStr)
                         {
                             // Accept both "USD" and null/empty as valid values since LLM may not always extract it
-                            var currencyValue = currencyStr.ValueString;
+                            var currencyValue = currencyStr.Value;
                             if (!string.IsNullOrWhiteSpace(currencyValue))
                             {
                                 // If value is present, it should be "USD"
@@ -611,27 +611,27 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             if (desc1 is StringField desc1Str)
                             {
                                 // Expected value from recording: "Consulting Services"
-                                Assert.AreEqual("Consulting Services", desc1Str.ValueString,
+                                Assert.AreEqual("Consulting Services", desc1Str.Value,
                                     "Item 1 Description should match expected value");
                             }
 
                             var qty1 = item1["Quantity"];
                             Assert.IsNotNull(qty1, "Item 1 Quantity should not be null");
-                            if (qty1 is NumberField qty1Num && qty1Num.ValueNumber.HasValue)
+                            if (qty1 is NumberField qty1Num && qty1Num.Value.HasValue)
                             {
                                 // Expected value from recording: 2
-                                Assert.AreEqual(2.0, qty1Num.ValueNumber.Value,
+                                Assert.AreEqual(2.0, qty1Num.Value.Value,
                                     "Item 1 Quantity should match expected value");
                             }
 
                             // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item1.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice1Obj)
+                            if (item1.Value?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice1Obj)
                             {
-                                var unitPrice1Amount = unitPrice1Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.ValueNumber.HasValue)
+                                var unitPrice1Amount = unitPrice1Obj.Value?.GetFieldOrDefault("Amount");
+                                if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 30
-                                    Assert.AreEqual(30.0, unitPrice1Num.ValueNumber.Value,
+                                    Assert.AreEqual(30.0, unitPrice1Num.Value.Value,
                                         "Item 1 UnitPrice.Amount should match expected value");
                                 }
                             }
@@ -646,27 +646,27 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             if (desc2 is StringField desc2Str)
                             {
                                 // Expected value from recording: "Document Fee"
-                                Assert.AreEqual("Document Fee", desc2Str.ValueString,
+                                Assert.AreEqual("Document Fee", desc2Str.Value,
                                     "Item 2 Description should match expected value");
                             }
 
                             var qty2 = item2["Quantity"];
                             Assert.IsNotNull(qty2, "Item 2 Quantity should not be null");
-                            if (qty2 is NumberField qty2Num && qty2Num.ValueNumber.HasValue)
+                            if (qty2 is NumberField qty2Num && qty2Num.Value.HasValue)
                             {
                                 // Expected value from recording: 3
-                                Assert.AreEqual(3.0, qty2Num.ValueNumber.Value,
+                                Assert.AreEqual(3.0, qty2Num.Value.Value,
                                     "Item 2 Quantity should match expected value");
                             }
 
                             // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item2.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount2Obj)
+                            if (item2.Value?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount2Obj)
                             {
-                                var totalAmount2Amount = totalAmount2Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.ValueNumber.HasValue)
+                                var totalAmount2Amount = totalAmount2Obj.Value?.GetFieldOrDefault("Amount");
+                                if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 30
-                                    Assert.AreEqual(30.0, totalAmount2Num.ValueNumber.Value,
+                                    Assert.AreEqual(30.0, totalAmount2Num.Value.Value,
                                         "Item 2 TotalAmount.Amount should match expected value");
                                 }
                             }
@@ -681,39 +681,39 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             if (desc3 is StringField desc3Str)
                             {
                                 // Expected value from recording: "Printing Fee"
-                                Assert.AreEqual("Printing Fee", desc3Str.ValueString,
+                                Assert.AreEqual("Printing Fee", desc3Str.Value,
                                     "Item 3 Description should match expected value");
                             }
 
                             var qty3 = item3["Quantity"];
                             Assert.IsNotNull(qty3, "Item 3 Quantity should not be null");
-                            if (qty3 is NumberField qty3Num && qty3Num.ValueNumber.HasValue)
+                            if (qty3 is NumberField qty3Num && qty3Num.Value.HasValue)
                             {
                                 // Expected value from recording: 10
-                                Assert.AreEqual(10.0, qty3Num.ValueNumber.Value,
+                                Assert.AreEqual(10.0, qty3Num.Value.Value,
                                     "Item 3 Quantity should match expected value");
                             }
 
                             // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item3.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice3Obj)
+                            if (item3.Value?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice3Obj)
                             {
-                                var unitPrice3Amount = unitPrice3Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.ValueNumber.HasValue)
+                                var unitPrice3Amount = unitPrice3Obj.Value?.GetFieldOrDefault("Amount");
+                                if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 1
-                                    Assert.AreEqual(1.0, unitPrice3Num.ValueNumber.Value,
+                                    Assert.AreEqual(1.0, unitPrice3Num.Value.Value,
                                         "Item 3 UnitPrice.Amount should match expected value");
                                 }
                             }
 
                             // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item3.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount3Obj)
+                            if (item3.Value?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount3Obj)
                             {
-                                var totalAmount3Amount = totalAmount3Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.ValueNumber.HasValue)
+                                var totalAmount3Amount = totalAmount3Obj.Value?.GetFieldOrDefault("Amount");
+                                if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 10
-                                    Assert.AreEqual(10.0, totalAmount3Num.ValueNumber.Value,
+                                    Assert.AreEqual(10.0, totalAmount3Num.Value.Value,
                                         "Item 3 TotalAmount.Amount should match expected value");
                                 }
                             }
@@ -768,7 +768,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 EnableFormula = true,
                 EnableLayout = true,
                 EnableOcr = true,
-                ReturnDetails = true
+                ShouldReturnDetails = true
             };
 
             // Create the custom analyzer
@@ -854,7 +854,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true
             };
 
@@ -1134,7 +1134,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Description = "Initial description",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
             initialAnalyzer.Models.Add("completion", "gpt-4.1");
@@ -1222,7 +1222,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Description = "Simple analyzer for deletion example",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
             analyzer.Models.Add("completion", "gpt-4.1");
@@ -1362,7 +1362,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+                inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
             // Get the operation ID from the operation
             string operationId = analyzeOperation.Id;
@@ -1405,7 +1405,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
                 "prebuilt-videoSearch",
-                inputs: new[] { new AnalyzeInput { Url = videoUrl } });
+                inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
             // Get the operation ID from the operation
             string operationId = analyzeOperation.Id;

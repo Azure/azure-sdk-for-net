@@ -117,8 +117,8 @@ if (invoiceDateField?.Spans?.Count > 0)
 // Extract object fields (nested structures)
 if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
 {
-    var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
-    var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value;
+    var amount = totalAmountObj.Value?.GetFieldOrDefault("Amount")?.Value as double?;
+    var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value;
     Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
     Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
     Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
@@ -132,8 +132,8 @@ if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItem
     {
         if (lineItems[i] is ObjectField item)
         {
-            var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value;
-            var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
+            var description = item.Value?.GetFieldOrDefault("Description")?.Value;
+            var quantity = item.Value?.GetFieldOrDefault("Quantity")?.Value as double?;
             Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
             Console.WriteLine($"    Confidence: {item.Confidence?.ToString("F2") ?? "N/A"}");
         }
@@ -148,32 +148,32 @@ if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItem
 Fields are organized into three categories that can be combined to form complex data structures:
 
 - **Simple fields** - Single values of primitive types. Access values using type-specific properties:
-  - `StringField.ValueString` - Returns `string` (non-nullable)
-  - `NumberField.ValueNumber` - Returns `double?` (nullable)
-  - `IntegerField.ValueInteger` - Returns `long?` (nullable)
-  - `DateField.ValueDate` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
-  - `TimeField.ValueTime` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
-  - `BooleanField.ValueBoolean` - Returns `bool?` (nullable)
-  - `JsonField.ValueJson` - Returns `BinaryData` (non-nullable)
+  - `StringField.Value` - Returns `string` (non-nullable)
+  - `NumberField.Value` - Returns `double?` (nullable)
+  - `IntegerField.Value` - Returns `long?` (nullable)
+  - `DateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+  - `TimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+  - `BooleanField.Value` - Returns `bool?` (nullable)
+  - `JsonField.Value` - Returns `BinaryData` (non-nullable)
 
   Alternatively, use the convenience property `ContentField.Value` which returns the value as an `object` (automatically converts to the appropriate type).
-- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ObjectField.ValueObject`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `StringField`, `NumberField`), object fields (`ObjectField`), or array fields (`ArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
-- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ArrayField.ValueArray`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
+- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ObjectField.Value`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `StringField`, `NumberField`), object fields (`ObjectField`), or array fields (`ArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
+- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ArrayField.Value`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
 
 ### Accessing field values
 
 For **simple fields**, use the `ContentField.Value` convenience property to get the value without needing to know the specific field type. Alternatively, you can access type-specific properties directly for each field type:
-- `StringField.ValueString` - Returns `string` (non-nullable)
-- `NumberField.ValueNumber` - Returns `double?` (nullable)
-- `IntegerField.ValueInteger` - Returns `long?` (nullable)
-- `DateField.ValueDate` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
-- `TimeField.ValueTime` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
-- `BooleanField.ValueBoolean` - Returns `bool?` (nullable)
-- `JsonField.ValueJson` - Returns `BinaryData` (non-nullable)
+- `StringField.Value` - Returns `string` (non-nullable)
+- `NumberField.Value` - Returns `double?` (nullable)
+- `IntegerField.Value` - Returns `long?` (nullable)
+- `DateTimeOffsetField.Value` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+- `TimeField.Value` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+- `BooleanField.Value` - Returns `bool?` (nullable)
+- `JsonField.Value` - Returns `BinaryData` (non-nullable)
 
-For **object fields**, access nested fields through `ValueObject` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
+For **object fields**, access nested fields through `ObjectField.Value` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
 
-For **array fields**, access elements via `ValueArray` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
+For **array fields**, access elements via `ArrayField.Value` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
 
 ### Understanding field metadata
 

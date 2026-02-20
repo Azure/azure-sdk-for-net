@@ -13,7 +13,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Field extracted from the content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StringField"/>, <see cref="DateField"/>, <see cref="TimeField"/>, <see cref="NumberField"/>, <see cref="IntegerField"/>, <see cref="BooleanField"/>, <see cref="ArrayField"/>, <see cref="ObjectField"/>, and <see cref="JsonField"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StringField"/>, <see cref="DateTimeOffsetField"/>, <see cref="TimeField"/>, <see cref="NumberField"/>, <see cref="IntegerField"/>, <see cref="BooleanField"/>, <see cref="ArrayField"/>, <see cref="ObjectField"/>, and <see cref="JsonField"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContentField))]
     public abstract partial class ContentField : IJsonModel<ContentField>
@@ -152,7 +152,7 @@ namespace Azure.AI.ContentUnderstanding
                     case "string":
                         return StringField.DeserializeStringField(element, options);
                     case "date":
-                        return DateField.DeserializeDateField(element, options);
+                        return DateTimeOffsetField.DeserializeDateTimeOffsetField(element, options);
                     case "time":
                         return TimeField.DeserializeTimeField(element, options);
                     case "number":
