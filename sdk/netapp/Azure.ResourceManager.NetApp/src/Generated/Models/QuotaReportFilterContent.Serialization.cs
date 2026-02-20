@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            QuotaType? quotaType = default;
+            NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
             int? usageThresholdPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    quotaType = new QuotaType(property.Value.GetString());
+                    quotaType = new NetAppVolumeQuotaType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("quotaTarget"u8))

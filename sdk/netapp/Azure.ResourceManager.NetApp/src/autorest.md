@@ -226,7 +226,7 @@ rename-mapping:
   SecurityStyle: NetAppVolumeSecurityStyle
   SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
   SubvolumeModel: NetAppSubvolumeMetadata
-  Type: NetAppVolumeQuotaType
+  QuotaType: NetAppVolumeQuotaType
   VolumePatchPropertiesDataProtection: NetAppVolumePatchDataProtection
   VolumePropertiesDataProtection: NetAppVolumeDataProtection
   VolumeRevert: NetAppVolumeRevertContent

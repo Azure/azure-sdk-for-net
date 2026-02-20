@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="percentageUsed"> Percentage of used size compared to total size. </param>
         /// <param name="isDerivedQuota"> Flag to indicate whether the quota is derived from default quota. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeQuotaReport"/> instance for mocking. </returns>
-        public static NetAppVolumeQuotaReport NetAppVolumeQuotaReport(QuotaType? quotaType = null, string quotaTarget = null, long? quotaLimitUsedInKiBs = null, long? quotaLimitTotalInKiBs = null, float? percentageUsed = null, bool? isDerivedQuota = null)
+        public static NetAppVolumeQuotaReport NetAppVolumeQuotaReport(NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null, long? quotaLimitUsedInKiBs = null, long? quotaLimitTotalInKiBs = null, float? percentageUsed = null, bool? isDerivedQuota = null)
         {
             return new NetAppVolumeQuotaReport(
                 quotaType,
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeQuotaRuleData"/> instance for mocking. </returns>
-        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, QuotaType? quotaType = null, string quotaTarget = null)
+        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeQuotaRulePatch"/> instance for mocking. </returns>
-        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = null, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, QuotaType? quotaType = null, string quotaTarget = null)
+        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = null, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null)
         {
             tags ??= new Dictionary<string, string>();
 

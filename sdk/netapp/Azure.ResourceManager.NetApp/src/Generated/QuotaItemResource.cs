@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceType && !string.Equals(id.ResourceType.ToString(), "Microsoft.NetApp/locations/quotaLimits", StringComparison.OrdinalIgnoreCase))
+            if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. If provided, quotaType must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota target, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </param>
         /// <param name="usageThresholdPercentage"> The usageThresholdPercentage filter takes the usage threshold percentage and returns records where the usage is greater than or equal to the input value. This is an optional property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaReportFilterContent(QuotaType? quotaType, string quotaTarget, int? usageThresholdPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaReportFilterContent(NetAppVolumeQuotaType? quotaType, string quotaTarget, int? usageThresholdPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuotaType = quotaType;
             QuotaTarget = quotaTarget;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Type of quota. If provided, quotaTarget must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota type, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </summary>
-        public QuotaType? QuotaType { get; set; }
+        public NetAppVolumeQuotaType? QuotaType { get; set; }
         /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. If provided, quotaType must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota target, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </summary>
         public string QuotaTarget { get; set; }
         /// <summary> The usageThresholdPercentage filter takes the usage threshold percentage and returns records where the usage is greater than or equal to the input value. This is an optional property. </summary>

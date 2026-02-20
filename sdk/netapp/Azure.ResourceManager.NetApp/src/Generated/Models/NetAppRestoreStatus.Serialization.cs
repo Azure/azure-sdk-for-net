@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeRestoreRelationshipStatus))
+            if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
-                writer.WriteStringValue(VolumeRestoreRelationshipStatus.Value.ToString());
+                writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(MirrorState))
             {

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeQuotaRuleData data = new NetAppVolumeQuotaRuleData(new AzureLocation("westus"))
             {
                 QuotaSizeInKiBs = 100005L,
-                QuotaType = QuotaType.IndividualUserQuota,
+                QuotaType = NetAppVolumeQuotaType.IndividualUserQuota,
                 QuotaTarget = "1821",
             };
             ArmOperation<NetAppVolumeQuotaRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeQuotaRuleName, data);

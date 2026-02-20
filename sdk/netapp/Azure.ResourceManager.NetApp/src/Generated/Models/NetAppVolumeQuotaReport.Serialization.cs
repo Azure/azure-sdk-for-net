@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            QuotaType? quotaType = default;
+            NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
             long? quotaLimitUsedInKiBs = default;
             long? quotaLimitTotalInKiBs = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    quotaType = new QuotaType(property.Value.GetString());
+                    quotaType = new NetAppVolumeQuotaType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("quotaTarget"u8))
