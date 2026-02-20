@@ -93,9 +93,8 @@ public class RootCommandFactory
 
             _logger.LogInformation("Migrating: {SdkPath}", sdkPath);
 
-            // Create command-specific timeout linked to app cancellation
             using var commandCts = CancellationTokenSource.CreateLinkedTokenSource(appCancellationToken);
-            commandCts.CancelAfter(TimeSpan.FromMinutes(10));
+            commandCts.CancelAfter(TimeSpan.FromMinutes(30));
             var cancellationToken = commandCts.Token;
 
             try

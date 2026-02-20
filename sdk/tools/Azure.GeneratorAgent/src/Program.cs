@@ -38,8 +38,7 @@ public static class GeneratorAgentProgram
 
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
-            builder.Logging.SetMinimumLevel(LogLevel.Warning);
-            builder.Logging.AddFilter("System.Net.Http", LogLevel.None);
+            builder.Logging.AddFilter("System.Net.Http", LogLevel.Debug);
 
             builder.Services.AddApplicationServices(builder.Configuration, projectPath);
 
@@ -85,6 +84,11 @@ public static class GeneratorAgentProgram
             if (logger != null)
             {
                 logger.LogError(ex, "Fatal error during application startup");
+            }
+            else
+            {
+                Console.Error.WriteLine("Fatal error during application startup:");
+                Console.Error.WriteLine(ex.ToString());
             }
         }
 
