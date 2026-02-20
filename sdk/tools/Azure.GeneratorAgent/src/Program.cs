@@ -40,7 +40,6 @@ public static class GeneratorAgentProgram
             builder.Logging.AddConsole();
             builder.Logging.SetMinimumLevel(LogLevel.Warning);
             builder.Logging.AddFilter("System.Net.Http", LogLevel.None);
-            builder.Logging.AddFilter("Azure.GeneratorAgent.CopilotService", LogLevel.Information);
 
             builder.Services.AddApplicationServices(builder.Configuration, projectPath);
 
@@ -48,7 +47,7 @@ public static class GeneratorAgentProgram
             var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
             logger = loggerFactory.CreateLogger(typeof(GeneratorAgentProgram).FullName!);
 
-            logger.LogInformation("Azure SDK Code Generation CLI");
+            logger.LogInformation("Starting Azure Generator Agent...");
 
             var commandFactory = host.Services.GetRequiredService<RootCommandFactory>();
             var rootCommand = commandFactory.CreateRootCommand(appCts.Token);

@@ -158,11 +158,12 @@ internal static class CopilotPrompts
             17. Read and analyze test failures, update test files to work with new generated code
             18. REPEAT step 14-17 until tests succeed
             19. Find azure-sdk-for-net repository root (navigate up from project path until you find 'eng' folder)
-            20. ANNOUNCE: "Running Export-API.ps1 script from repository root"
-            21. Run: eng/scripts/Export-API.ps1 (from repository root)
-            22. ANNOUNCE: "Running Update-Snippets.ps1 script from repository root"  
-            23. Run: eng/scripts/Update-Snippets.ps1 (from repository root)
-            24. ANNOUNCE: "Migration completed successfully - all steps finished"
+            20. Extract service directory name from project path (the folder name after 'sdk/' in the path)
+            21. ANNOUNCE: "Running Export-API.ps1 script from repository root with ServiceDirectory parameter"
+            22. Run: .\eng\scripts\Export-API.ps1 -ServiceDirectory <service_directory_name> (from repository root)
+            23. ANNOUNCE: "Running Update-Snippets.ps1 script from repository root with ServiceDirectory parameter"  
+            24. Run: .\eng\scripts\Update-Snippets.ps1 -ServiceDirectory <service_directory_name> (from repository root)
+            25. ANNOUNCE: "Migration completed successfully - all steps finished"
 
             CRITICAL RULES:
             - NEVER modify files in 'Generated' or 'generated' folders

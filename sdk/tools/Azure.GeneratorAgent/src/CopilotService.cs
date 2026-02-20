@@ -71,12 +71,7 @@ public sealed class CopilotService : IAsyncDisposable
                     Mode = SystemMessageMode.Append,
                     Content = CopilotPrompts.BuildMigrationSystemMessage(projectPath)
                 },
-                AvailableTools = [
-                    "powershell", "read_powershell",
-                    "view", "edit", "create",
-                    "grep", "glob",
-                    "report_intent", "task_complete"
-                ],
+                AvailableTools = ["powershell", "read_powershell", "view", "edit", "create", "grep", "glob"],
                 InfiniteSessions = new InfiniteSessionConfig { Enabled = false },
                 Streaming = true,
                 OnPermissionRequest = async (request, invocation) =>
@@ -129,12 +124,12 @@ public sealed class CopilotService : IAsyncDisposable
             return;
         }
 
-        _logger.LogInformation("Starting TypeSpec path analysis for repo: {RepoName}", repoName);
+        _logger.LogInformation("Requesting Copilot to update tsp-location.yaml for repository: {RepoName}", repoName);
 
         var prompt = CopilotPrompts.TypespecPathAnalysisPrompt(projectPath, repoName);
         var result = await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
 
-        _logger.LogInformation("Completed TypeSpec path analysis");
+        _logger.LogInformation("Copilot has completed TypeSpec path analysis and updated tsp-location.yaml");
     }
 
     /// <summary>
@@ -167,7 +162,6 @@ public sealed class CopilotService : IAsyncDisposable
                 {
                     case AssistantMessageEvent assistantMsg:
                         responseBuilder.Append(assistantMsg.Data.Content);
-                        // Only log non-empty response content to keep output clean
                         if (!string.IsNullOrWhiteSpace(assistantMsg.Data.Content))
                         {
                             _logger.LogInformation("\n{Content}\n", assistantMsg.Data.Content);
