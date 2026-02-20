@@ -27,7 +27,7 @@
 
     <!-- Internal tooling from the Azure Development Feed -->
     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260219.2</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260219.3</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20260213.2</AzureGeneratorVersion>
 
     <!-- Legacy package use only -->
