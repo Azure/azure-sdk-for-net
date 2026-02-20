@@ -21,6 +21,8 @@ namespace Azure.Core.TestFramework
 
         public bool? ExpectSyncPipeline { get; set; }
 
+        public List<HttpPipelineTransportOptions> TransportUpdates { get; } = [];
+
         public MockTransport()
         {
             RequestGate = new AsyncGate<MockRequest, MockResponse>();
@@ -38,7 +40,7 @@ namespace Azure.Core.TestFramework
             };
         }
 
-        public MockTransport(Func<MockRequest, MockResponse> responseFactory): this(req => responseFactory((MockRequest)req.Request))
+        public MockTransport(Func<MockRequest, MockResponse> responseFactory) : this(req => responseFactory((MockRequest)req.Request))
         {
         }
 
@@ -70,6 +72,11 @@ namespace Azure.Core.TestFramework
             }
 
             await ProcessCore(message);
+        }
+
+        public override void Update(HttpPipelineTransportOptions options)
+        {
+            TransportUpdates.Add(options);
         }
 
         private async Task ProcessCore(HttpMessage message)

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Agents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies runtime parameters for a search index knowledge source. </summary>
     public partial class SearchIndexKnowledgeSourceParams : KnowledgeSourceParams
@@ -26,10 +26,14 @@ namespace Azure.Search.Documents.Agents.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
+        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
-        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string filterAddOn) : base(knowledgeSourceName, kind, serializedAdditionalRawData)
+        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string filterAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, serializedAdditionalRawData)
         {
             FilterAddOn = filterAddOn;
             Kind = kind;

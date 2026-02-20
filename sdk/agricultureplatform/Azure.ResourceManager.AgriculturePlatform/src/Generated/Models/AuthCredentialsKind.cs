@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AgriculturePlatform;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
@@ -16,33 +17,51 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="AuthCredentialsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthCredentialsKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
         /// <summary> OAuth Client Credential type. </summary>
         public static AuthCredentialsKind OAuthClientCredentials { get; } = new AuthCredentialsKind(OAuthClientCredentialsValue);
+
         /// <summary> API Key Auth Credential type. </summary>
         public static AuthCredentialsKind ApiKeyAuthCredentials { get; } = new AuthCredentialsKind(ApiKeyAuthCredentialsValue);
+
         /// <summary> Determines if two <see cref="AuthCredentialsKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthCredentialsKind left, AuthCredentialsKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthCredentialsKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthCredentialsKind left, AuthCredentialsKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthCredentialsKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthCredentialsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthCredentialsKind(string value) => new AuthCredentialsKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthCredentialsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthCredentialsKind?(string value) => value == null ? null : new AuthCredentialsKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthCredentialsKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthCredentialsKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

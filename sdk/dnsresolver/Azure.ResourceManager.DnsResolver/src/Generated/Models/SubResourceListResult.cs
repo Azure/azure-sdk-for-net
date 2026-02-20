@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -47,25 +48,34 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/>. </summary>
-        internal SubResourceListResult()
+        /// <param name="value"> The SubResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SubResourceListResult(IEnumerable<WritableSubResource> value)
         {
-            Value = new ChangeTrackingList<WritableSubResource>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/>. </summary>
-        /// <param name="value"> Enumeration of the sub-resources. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value"> The SubResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubResourceListResult(IReadOnlyList<WritableSubResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubResourceListResult(IReadOnlyList<WritableSubResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enumeration of the sub-resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/> for deserialization. </summary>
+        internal SubResourceListResult()
+        {
+        }
+
+        /// <summary> The SubResource items on this page. </summary>
         public IReadOnlyList<WritableSubResource> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

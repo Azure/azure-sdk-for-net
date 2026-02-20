@@ -1,23 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.ResourceManager.SelfHelp.Models;
+using System;
 using System.ComponentModel;
 using System.Threading;
-using System;
 using Autorest.CSharp.Core;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Mocking
 {
     public partial class MockableSelfHelpArmClient : ArmResource
     {
         private ClientDiagnostics _discoverySolutionClientDiagnostics;
-        private DiscoverySolutionRestOperations _discoverySolutionRestClient;
+        private DiscoverySolution _discoverySolutionRestClient;
 
         private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DiscoverySolutionRestOperations DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private DiscoverySolution DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolution(DiscoverySolutionClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
 
         /// <summary>
         /// Lists the relevant Azure diagnostics and solutions using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. We will do our best to return the most effective solutions based on the type of inputs, in the request URL  &lt;br/&gt;&lt;br/&gt; Mandatory input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DiscoverySolutionDiscoverSolutionsCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
         }
     }
 }

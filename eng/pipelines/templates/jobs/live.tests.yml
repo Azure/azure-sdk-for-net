@@ -161,7 +161,7 @@ jobs:
             azurePowerShellVersion: LatestVersion
             pwsh: true
             ScriptType: InlineScript
-            Inline: >-
+            Inline: >
               . ./eng/common/TestResources/SubConfig-Helpers.ps1
               $serviceDirectoryPrefix = BuildServiceDirectoryPrefix ${{ parameters.ServiceDirectory }};
               $account = (Get-AzContext).Account;
@@ -170,11 +170,12 @@ jobs:
               [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id);
               [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants);
 
+              ./eng/scripts/runwithdevopslogging.ps1
               dotnet test eng/service.proj
               --framework $(TestTargetFramework)
-              --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-              --logger "trx"
-              --logger:"console;verbosity=normal"
+              --filter '"TestCategory!=Manually & ($(AdditionalTestFilters))"'
+              --logger trx
+              --logger:'"console;verbosity=normal"'
               --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
               /p:SDKType=${{ parameters.SDKType }}
               /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -187,6 +188,7 @@ jobs:
               /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
               /p:EnableSourceLink=false
               $(AdditionalTestArguments);
+
               Write-Host "Last exit code: $LASTEXITCODE";
               exit $LASTEXITCODE;
           env:
@@ -198,12 +200,13 @@ jobs:
               ${{ var.key }}: ${{ var.value }}
 
       - ${{ else }}:
-        - script: >-
+        - pwsh: >
+            ./eng/scripts/runwithdevopslogging.ps1
             dotnet test eng/service.proj
             --framework $(TestTargetFramework)
-            --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-            --logger "trx"
-            --logger:"console;verbosity=normal"
+            --filter '"TestCategory!=Manually & ($(AdditionalTestFilters))"'
+            --logger trx
+            --logger:'"console;verbosity=normal"'
             --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
             /p:SDKType=${{ parameters.SDKType }}
             /p:ServiceDirectory=${{ parameters.ServiceDirectory }}

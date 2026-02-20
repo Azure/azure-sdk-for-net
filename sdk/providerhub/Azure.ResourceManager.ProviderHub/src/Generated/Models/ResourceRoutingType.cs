@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceRoutingType. </summary>
+    /// <summary> The routing type. </summary>
     public readonly partial struct ResourceRoutingType : IEquatable<ResourceRoutingType>
     {
         private readonly string _value;
@@ -31,25 +31,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string LocationBasedValue = "LocationBased";
         private const string FailoverValue = "Failover";
         private const string CascadeExtensionValue = "CascadeExtension";
+        private const string ChildFanoutValue = "ChildFanout";
+        private const string CascadeAuthorizedExtensionValue = "CascadeAuthorizedExtension";
+        private const string BypassEndpointSelectionOptimizationValue = "BypassEndpointSelectionOptimization";
+        private const string LocationMappingValue = "LocationMapping";
+        private const string ServiceFanoutValue = "ServiceFanout";
 
-        /// <summary> Default. </summary>
+        /// <summary> The resource routing type is default. </summary>
         public static ResourceRoutingType Default { get; } = new ResourceRoutingType(DefaultValue);
-        /// <summary> ProxyOnly. </summary>
+        /// <summary> The resource routing type is proxy only. </summary>
         public static ResourceRoutingType ProxyOnly { get; } = new ResourceRoutingType(ProxyOnlyValue);
-        /// <summary> HostBased. </summary>
+        /// <summary> The resource routing type is host based. </summary>
         public static ResourceRoutingType HostBased { get; } = new ResourceRoutingType(HostBasedValue);
-        /// <summary> Extension. </summary>
+        /// <summary> The resource routing type is extension. </summary>
         public static ResourceRoutingType Extension { get; } = new ResourceRoutingType(ExtensionValue);
-        /// <summary> Tenant. </summary>
+        /// <summary> The resource routing type is tenant. </summary>
         public static ResourceRoutingType Tenant { get; } = new ResourceRoutingType(TenantValue);
-        /// <summary> Fanout. </summary>
+        /// <summary> The resource routing type is fanout. </summary>
         public static ResourceRoutingType Fanout { get; } = new ResourceRoutingType(FanoutValue);
-        /// <summary> LocationBased. </summary>
+        /// <summary> The resource routing type is location based. </summary>
         public static ResourceRoutingType LocationBased { get; } = new ResourceRoutingType(LocationBasedValue);
-        /// <summary> Failover. </summary>
+        /// <summary> The resource routing type is failover. </summary>
         public static ResourceRoutingType Failover { get; } = new ResourceRoutingType(FailoverValue);
-        /// <summary> CascadeExtension. </summary>
+        /// <summary> The resource routing type is cascade extension. </summary>
         public static ResourceRoutingType CascadeExtension { get; } = new ResourceRoutingType(CascadeExtensionValue);
+        /// <summary> The resource routing type is child fanout. </summary>
+        public static ResourceRoutingType ChildFanout { get; } = new ResourceRoutingType(ChildFanoutValue);
+        /// <summary> The resource routing type is cascade authorized extension. </summary>
+        public static ResourceRoutingType CascadeAuthorizedExtension { get; } = new ResourceRoutingType(CascadeAuthorizedExtensionValue);
+        /// <summary> The resource routing type is bypass endpoint selection optimization. </summary>
+        public static ResourceRoutingType BypassEndpointSelectionOptimization { get; } = new ResourceRoutingType(BypassEndpointSelectionOptimizationValue);
+        /// <summary> The resource routing type is location mapping. </summary>
+        public static ResourceRoutingType LocationMapping { get; } = new ResourceRoutingType(LocationMappingValue);
+        /// <summary> The resource routing type is service fanout. </summary>
+        public static ResourceRoutingType ServiceFanout { get; } = new ResourceRoutingType(ServiceFanoutValue);
         /// <summary> Determines if two <see cref="ResourceRoutingType"/> values are the same. </summary>
         public static bool operator ==(ResourceRoutingType left, ResourceRoutingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceRoutingType"/> values are not the same. </summary>

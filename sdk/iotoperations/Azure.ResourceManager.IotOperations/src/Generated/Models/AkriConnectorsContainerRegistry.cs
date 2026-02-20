@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsContainerRegistry"/>. </summary>
         /// <param name="containerRegistrySettings"> The registry settings for the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerRegistrySettings"/> is null. </exception>
-        public AkriConnectorsContainerRegistry(AkriConnectorsContainerRegistrySettings containerRegistrySettings)
+        public AkriConnectorsContainerRegistry(AkriConnectorsContainerRegistrySettings containerRegistrySettings) : base(AkriConnectorsRegistrySettingsType.ContainerRegistry)
         {
             Argument.AssertNotNull(containerRegistrySettings, nameof(containerRegistrySettings));
 
             ContainerRegistrySettings = containerRegistrySettings;
-            RegistrySettingsType = AkriConnectorsRegistrySettingsType.ContainerRegistry;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsContainerRegistry"/>. </summary>
         /// <param name="registrySettingsType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerRegistrySettings"> The registry settings for the container registry. </param>
-        internal AkriConnectorsContainerRegistry(AkriConnectorsRegistrySettingsType registrySettingsType, IDictionary<string, BinaryData> serializedAdditionalRawData, AkriConnectorsContainerRegistrySettings containerRegistrySettings) : base(registrySettingsType, serializedAdditionalRawData)
+        internal AkriConnectorsContainerRegistry(AkriConnectorsRegistrySettingsType registrySettingsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AkriConnectorsContainerRegistrySettings containerRegistrySettings) : base(registrySettingsType, additionalBinaryDataProperties)
         {
             ContainerRegistrySettings = containerRegistrySettings;
-            RegistrySettingsType = registrySettingsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorsContainerRegistry"/> for deserialization. </summary>
-        internal AkriConnectorsContainerRegistry()
-        {
         }
 
         /// <summary> The registry settings for the container registry. </summary>

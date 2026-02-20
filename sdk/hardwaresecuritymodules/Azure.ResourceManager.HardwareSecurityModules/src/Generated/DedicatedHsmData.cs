@@ -13,100 +13,67 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    /// <summary>
-    /// A class representing the DedicatedHsm data model.
-    /// Resource information with extended details.
-    /// </summary>
+    /// <summary> Resource information with extended details. </summary>
     public partial class DedicatedHsmData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> SKU details. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the dedicated HSM. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="properties"/> is null. </exception>
-        public DedicatedHsmData(AzureLocation location, DedicatedHsmSku sku, DedicatedHsmProperties properties) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DedicatedHsmData(AzureLocation location, DedicatedHsmProperties properties) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
             Argument.AssertNotNull(properties, nameof(properties));
 
-            Sku = sku;
-            Zones = new ChangeTrackingList<string>();
             Properties = properties;
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> Properties of the dedicated HSM. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedHsmSku sku, IList<string> zones, DedicatedHsmProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHsmProperties properties, DedicatedHsmSku sku, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Zones = zones;
-            Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/> for deserialization. </summary>
-        internal DedicatedHsmData()
-        {
-        }
+        /// <summary> Properties of the dedicated HSM. </summary>
+        public DedicatedHsmProperties Properties { get; set; }
 
         /// <summary> SKU details. </summary>
         internal DedicatedHsmSku Sku { get; set; }
-        /// <summary> SKU of the dedicated HSM. </summary>
-        public DedicatedHsmSkuName? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new DedicatedHsmSku();
-                Sku.Name = value;
-            }
-        }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
-        /// <summary> Properties of the dedicated HSM. </summary>
-        public DedicatedHsmProperties Properties { get; set; }
+
+        /// <summary> SKU of the dedicated HSM. </summary>
+        public DedicatedHsmSkuName? SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new DedicatedHsmSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

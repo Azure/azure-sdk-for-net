@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceAccessPolicy. </summary>
+    /// <summary> The resource access policy. </summary>
     public enum ResourceAccessPolicy
     {
         /// <summary> NotSpecified. </summary>

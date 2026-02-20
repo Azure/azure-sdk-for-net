@@ -647,7 +647,7 @@ public class BasicKustoTests
                     Location = location,
                     DependsOn = { kustoScript },
                     BlobStorageEventType = BlobStorageEventType.MicrosoftStorageBlobCreated,
-                    ConsumerGroup = kustoConsumerGroup.Name,
+                    ConsumerGroup = kustoConsumerGroup.Name.ToBicepExpression(),
                     DataFormat = KustoEventGridDataFormat.Csv,
                     EventGridResourceId = newBlobSubscription.Id,
                     EventHubResourceId = eventHub.Id,

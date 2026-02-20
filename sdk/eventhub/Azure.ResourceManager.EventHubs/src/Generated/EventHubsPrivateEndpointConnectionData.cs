@@ -62,20 +62,23 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, EventHubsPrivateLinkServiceConnectionState connectionState, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, WritableSubResource privateEndpoint, EventHubsPrivateLinkServiceConnectionState connectionState, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Location = location;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> The Private Endpoint resource for this Connection. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -97,8 +100,5 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
         [WirePath("properties.provisioningState")]
         public EventHubsPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
     }
 }

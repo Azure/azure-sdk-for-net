@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Profile for Linux VMs in the container service cluster. </summary>
+    /// <summary>
+    /// Profile for Linux VMs in the container service cluster.
+    /// Serialized Name: ContainerServiceLinuxProfile
+    /// </summary>
     public partial class ContainerServiceLinuxProfile
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
-        /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
-        /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
+        /// <param name="adminUsername">
+        /// The administrator username to use for Linux VMs.
+        /// Serialized Name: ContainerServiceLinuxProfile.adminUsername
+        /// </param>
+        /// <param name="ssh">
+        /// The SSH configuration for Linux-based VMs running on Azure.
+        /// Serialized Name: ContainerServiceLinuxProfile.ssh
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
         public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
-        /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
-        /// <param name="ssh"> The SSH configuration for Linux-based VMs running on Azure. </param>
+        /// <param name="adminUsername">
+        /// The administrator username to use for Linux VMs.
+        /// Serialized Name: ContainerServiceLinuxProfile.adminUsername
+        /// </param>
+        /// <param name="ssh">
+        /// The SSH configuration for Linux-based VMs running on Azure.
+        /// Serialized Name: ContainerServiceLinuxProfile.ssh
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,12 +89,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> The administrator username to use for Linux VMs. </summary>
+        /// <summary>
+        /// The administrator username to use for Linux VMs.
+        /// Serialized Name: ContainerServiceLinuxProfile.adminUsername
+        /// </summary>
         [WirePath("adminUsername")]
         public string AdminUsername { get; set; }
-        /// <summary> The SSH configuration for Linux-based VMs running on Azure. </summary>
+        /// <summary>
+        /// The SSH configuration for Linux-based VMs running on Azure.
+        /// Serialized Name: ContainerServiceLinuxProfile.ssh
+        /// </summary>
         internal ContainerServiceSshConfiguration Ssh { get; set; }
-        /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
+        /// <summary>
+        /// The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified.
+        /// Serialized Name: ContainerServiceSshConfiguration.publicKeys
+        /// </summary>
         [WirePath("ssh.publicKeys")]
         public IList<ContainerServiceSshPublicKey> SshPublicKeys
         {

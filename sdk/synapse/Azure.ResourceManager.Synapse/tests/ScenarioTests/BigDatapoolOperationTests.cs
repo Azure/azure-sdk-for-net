@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Synapse.Models;
-using Azure.ResourceManager.Synapse.Tests;
+using System;
 using System.Collections.Generic;
-using NUnit;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Synapse.Tests.Helpers;
 using Azure.Core.TestFramework;
-using System;
-using System.Linq;
+using Azure.ResourceManager.Synapse.Models;
+using Azure.ResourceManager.Synapse.Tests;
+using Azure.ResourceManager.Synapse.Tests.Helpers;
+using NUnit;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Tests
 
             // create BigDatapool unable autoscale
             string bigDatapoolName = Recording.GenerateAssetName("BigDatapool");
-            var createBigDatapoolParams = CommonData.PrepareBigDatapoolCreateParams(enableAutoScale:false, enableAutoPause:false);
+            var createBigDatapoolParams = CommonData.PrepareBigDatapoolCreateParams(enableAutoScale: false, enableAutoPause: false);
             SynapseBigDataPoolInfoCollection bigdatapoolCollection = WorkspaceResource.GetSynapseBigDataPoolInfos();
             var bigDatapoolUnableAutoScale = (await bigdatapoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, bigDatapoolName, createBigDatapoolParams)).Value;
             Assert.AreEqual(CommonTestFixture.SparkpoolType, bigDatapoolUnableAutoScale.Data.ResourceType);

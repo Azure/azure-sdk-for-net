@@ -72,63 +72,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource"/> object. </returns>
-        public static ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceBusArmClient(client).GetServiceBusPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusDisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusDisasterRecoveryResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource"/> object. </returns>
-        public static ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MigrationConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetMigrationConfigurationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationConfigurationResource"/> object. </returns>
-        public static MigrationConfigurationResource GetMigrationConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceBusArmClient(client).GetMigrationConfigurationResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceBusNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -145,6 +88,25 @@ namespace Azure.ResourceManager.ServiceBus
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceBusArmClient(client).GetServiceBusNamespaceAuthorizationRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
+        public static ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -186,22 +148,60 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusDisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusDisasterRecoveryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public static ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource"/> object. </returns>
+        public static ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryAuthorizationRuleResource(id);
+            return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MigrationConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetMigrationConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MigrationConfigurationResource"/> object. </returns>
+        public static MigrationConfigurationResource GetMigrationConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceBusArmClient(client).GetMigrationConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource"/> object. </returns>
+        public static ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceBusArmClient(client).GetServiceBusPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -243,25 +243,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBusRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBusRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceBusRuleResource"/> object. </returns>
-        public static ServiceBusRuleResource GetServiceBusRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceBusArmClient(client).GetServiceBusRuleResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ServiceBusSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceBusSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -278,6 +259,25 @@ namespace Azure.ResourceManager.ServiceBus
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceBusArmClient(client).GetServiceBusSubscriptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusArmClient.GetServiceBusRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusRuleResource"/> object. </returns>
+        public static ServiceBusRuleResource GetServiceBusRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceBusArmClient(client).GetServiceBusRuleResource(id);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -374,6 +374,78 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
+        /// Check the give namespace name availability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusNamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability(ServiceBusNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceBusNameAvailabilityResult>> CheckServiceBusNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableServiceBusSubscriptionResource(subscriptionResource).CheckServiceBusNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusNamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability(ServiceBusNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ServiceBusNameAvailabilityResult> CheckServiceBusNamespaceNameAvailability(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceBusSubscriptionResource(subscriptionResource).CheckServiceBusNamespaceNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
         /// <list type="bullet">
         /// <item>
@@ -386,7 +458,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +494,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,78 +515,6 @@ namespace Azure.ResourceManager.ServiceBus
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceBusSubscriptionResource(subscriptionResource).GetServiceBusNamespaces(cancellationToken);
-        }
-
-        /// <summary>
-        /// Check the give namespace name availability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceBusNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability(ServiceBusNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ServiceBusNameAvailabilityResult>> CheckServiceBusNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableServiceBusSubscriptionResource(subscriptionResource).CheckServiceBusNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check the give namespace name availability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceBusNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability(ServiceBusNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<ServiceBusNameAvailabilityResult> CheckServiceBusNamespaceNameAvailability(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableServiceBusSubscriptionResource(subscriptionResource).CheckServiceBusNamespaceNameAvailability(content, cancellationToken);
         }
     }
 }

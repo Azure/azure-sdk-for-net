@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageDiscoveryScope PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryScope>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageDiscoveryScope(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageDiscoveryScope)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageDiscoveryScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -43,7 +60,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("resourceTypes"u8);
             writer.WriteStartArray();
-            foreach (StorageDiscoveryResourceType item in ResourceTypes)
+            foreach (StorageDiscoveryResourceKind item in ResourceTypes)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -122,7 +139,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 return null;
             }
             string displayName = default;
-            IList<StorageDiscoveryResourceType> resourceTypes = default;
+            IList<StorageDiscoveryResourceKind> resourceTypes = default;
             IList<string> tagKeysOnly = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,10 +152,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 }
                 if (prop.NameEquals("resourceTypes"u8))
                 {
-                    List<StorageDiscoveryResourceType> array = new List<StorageDiscoveryResourceType>();
+                    List<StorageDiscoveryResourceKind> array = new List<StorageDiscoveryResourceKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new StorageDiscoveryResourceType(item.GetString()));
+                        array.Add(new StorageDiscoveryResourceKind(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;
@@ -212,23 +229,6 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StorageDiscoveryScope IPersistableModel<StorageDiscoveryScope>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageDiscoveryScope PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryScope>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeStorageDiscoveryScope(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageDiscoveryScope)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageDiscoveryScope>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

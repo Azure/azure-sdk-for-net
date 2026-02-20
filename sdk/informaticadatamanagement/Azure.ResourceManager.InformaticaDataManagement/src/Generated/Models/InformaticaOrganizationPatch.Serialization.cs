@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> The template for adding optional properties. </summary>
     public partial class InformaticaOrganizationPatch : IJsonModel<InformaticaOrganizationPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaOrganizationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInformaticaOrganizationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaOrganizationPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaOrganizationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -161,35 +178,18 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         InformaticaOrganizationPatch IPersistableModel<InformaticaOrganizationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InformaticaOrganizationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeInformaticaOrganizationPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaOrganizationPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="InformaticaOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(InformaticaOrganizationPatch patch)
+        /// <param name="informaticaOrganizationPatch"> The <see cref="InformaticaOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(InformaticaOrganizationPatch informaticaOrganizationPatch)
         {
-            if (patch == null)
+            if (informaticaOrganizationPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(informaticaOrganizationPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

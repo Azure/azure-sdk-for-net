@@ -59,10 +59,10 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             VectorSearchCompressionKind kind = default;
-            bool? rerankWithOriginalVectors = default;
-            double? defaultOversampling = default;
             RescoringOptions rescoringOptions = default;
             int? truncationDimension = default;
+            bool? rerankWithOriginalVectors = default;
+            double? defaultOversampling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -75,26 +75,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new VectorSearchCompressionKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("rerankWithOriginalVectors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        rerankWithOriginalVectors = null;
-                        continue;
-                    }
-                    rerankWithOriginalVectors = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("defaultOversampling"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        defaultOversampling = null;
-                        continue;
-                    }
-                    defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("rescoringOptions"u8))
@@ -117,6 +97,26 @@ namespace Azure.Search.Documents.Indexes.Models
                     truncationDimension = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("rerankWithOriginalVectors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        rerankWithOriginalVectors = null;
+                        continue;
+                    }
+                    rerankWithOriginalVectors = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("defaultOversampling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultOversampling = null;
+                        continue;
+                    }
+                    defaultOversampling = property.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -126,10 +126,10 @@ namespace Azure.Search.Documents.Indexes.Models
             return new BinaryQuantizationCompression(
                 name,
                 kind,
-                rerankWithOriginalVectors,
-                defaultOversampling,
                 rescoringOptions,
                 truncationDimension,
+                rerankWithOriginalVectors,
+                defaultOversampling,
                 serializedAdditionalRawData);
         }
 

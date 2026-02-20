@@ -6,18 +6,16 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
-#pragma warning disable SA1649 // File name should match first type name
-    internal class TrustedSigningArmOperation : ArmOperation
-#pragma warning restore SA1649 // File name should match first type name
+    internal partial class TrustedSigningArmOperation : ArmOperation
     {
         private readonly OperationInternal _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
@@ -29,6 +27,9 @@ namespace Azure.ResourceManager.TrustedSigning
         {
         }
 
+        /// <summary></summary>
+        /// <param name="response"> The operation response. </param>
+        /// <param name="rehydrationToken"> The token to rehydrate the operation. </param>
         internal TrustedSigningArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal.Succeeded(response);
@@ -36,12 +37,20 @@ namespace Azure.ResourceManager.TrustedSigning
             _operationId = GetOperationId(rehydrationToken);
         }
 
+        /// <summary></summary>
+        /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
+        /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
+        /// <param name="request"> The operation request. </param>
+        /// <param name="response"> The operation response. </param>
+        /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
+        /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
+        /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
         internal TrustedSigningArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
+            IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
             {
-                _nextLinkOperation = nextLinkOperationValue;
+                _nextLinkOperation = nextLinkOperationImplementation;
                 _operationId = _nextLinkOperation.OperationId;
             }
             else
@@ -49,48 +58,49 @@ namespace Azure.ResourceManager.TrustedSigning
                 _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
                 _operationId = GetOperationId(_completeRehydrationToken);
             }
-            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "TrustedSigningArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal(
+                nextLinkOperation,
+                clientDiagnostics,
+                response,
+                "TrustedSigningArmOperation",
+                null,
+                new SequentialDelayStrategy());
         }
 
-        private string GetOperationId(RehydrationToken? rehydrationToken)
-        {
-            if (rehydrationToken is null)
-            {
-                return null;
-            }
-            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
-            using var document = JsonDocument.Parse(data);
-            var lroDetails = document.RootElement;
-            return lroDetails.GetProperty("id").GetString();
-        }
-        /// <inheritdoc />
+        /// <summary> Gets the Id. </summary>
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
 
-        /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
-
-        /// <inheritdoc />
+        /// <summary> Gets the HasCompleted. </summary>
         public override bool HasCompleted => _operation.HasCompleted;
 
-        /// <inheritdoc />
+        /// <param name="rehydrationToken"> The token to rehydrate a long-running operation. </param>
+        private string GetOperationId(RehydrationToken? rehydrationToken)
+        {
+            return rehydrationToken?.Id;
+        }
+
+        /// <inheritdoc/>
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
+
+        /// <inheritdoc/>
         public override Response GetRawResponse() => _operation.RawResponse;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

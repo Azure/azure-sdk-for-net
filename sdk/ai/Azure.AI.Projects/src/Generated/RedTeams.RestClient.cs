@@ -14,11 +14,11 @@ namespace Azure.AI.Projects
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
-        internal PipelineMessage CreateGetRequest(string name, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -27,16 +27,13 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal PipelineMessage CreateGetAllRequest(string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -44,23 +41,29 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 

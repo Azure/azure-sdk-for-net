@@ -260,6 +260,24 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.AreEqual(expected, Encoding.UTF8.GetString(first.ToArray()));
         }
 
+        [TestCase("{\"a\":1,\"b\":2}", "$.b", "100", "{\"a\":1,\"b\":100}")]
+        [TestCase("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true}}}", "$.a.new", "\"stringValue\"", "{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true},\"new\":\"stringValue\"}}")]
+        [TestCase("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true}}}", "$.a.new", "100", "{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true},\"new\":100}}")]
+        [TestCase("{\"a\":{\"b\":[\"1\",\"2\",\"3\"]}}", "$.a.b[0]", "\"new\"", "{\"a\":{\"b\":[\"new\",\"2\",\"3\"]}}")]
+        [TestCase("{\"a\":{\"b\":[\"1\",\"2\",\"3\"]}}", "$.a.b[1]", "\"new\"", "{\"a\":{\"b\":[\"1\",\"new\",\"3\"]}}")]
+        [TestCase("{\"a\":{\"b\":[\"1\",\"2\",\"3\"]}}", "$.a.b[2]", "\"new\"", "{\"a\":{\"b\":[\"1\",\"2\",\"new\"]}}")]
+        [TestCase("{\"a\":{\"b\":[1,2,3]}}", "$.a.b[0]", "10", "{\"a\":{\"b\":[10,2,3]}}")]
+        [TestCase("{\"a\":{\"b\":[1,2,3]}}", "$.a.b[1]", "10", "{\"a\":{\"b\":[1,10,3]}}")]
+        [TestCase("{\"a\":{\"b\":[1,2,3]}}", "$.a.b[2]", "10", "{\"a\":{\"b\":[1,2,10]}}")]
+        public void Set(string jsonStr, string jsonPathStr, string newValue, string expected)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
+            var result = json.Set(jsonPath, value);
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+        }
+
         [TestCase("{\"a\":1,\"b\":2}", "$.c", "3", false, "{\"a\":1,\"b\":2,\"c\":3}")]
         [TestCase("{\"a\":1}", "$.a", "2", true, "{\"a\":2}")]
         [TestCase("{\"arr\":[1,2]}", "$.arr[1]", "10", true, "{\"arr\":[1,10]}")]

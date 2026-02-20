@@ -285,13 +285,13 @@ namespace Azure.Messaging.EventHubs.Tests
                                   CheckpointPosition startingPosition,
                                   string lastModified)
             {
-               FullyQualifiedNamespace = fullyQualifiedNamespace;
-               EventHubName = eventHubName;
-               ConsumerGroup = consumerGroup;
-               PartitionId = partitionId;
-               StartingPosition = startingPosition;
-               LastModified = lastModified;
-               ClientIdentifier = clientIdentifier;
+                FullyQualifiedNamespace = fullyQualifiedNamespace;
+                EventHubName = eventHubName;
+                ConsumerGroup = consumerGroup;
+                PartitionId = partitionId;
+                StartingPosition = startingPosition;
+                LastModified = lastModified;
+                ClientIdentifier = clientIdentifier;
             }
         }
     }

@@ -47,7 +47,7 @@ namespace Azure.Identity
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
                 .Create(ClientId)
                 .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? Constants.OrganizationsTenantId, false)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
             if (!string.IsNullOrEmpty(RedirectUrl))
@@ -286,10 +286,12 @@ namespace Azure.Identity
             }
             if (browserOptions != null)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (browserOptions.UseEmbeddedWebView.HasValue)
                 {
                     builder.WithUseEmbeddedWebView(browserOptions.UseEmbeddedWebView.Value);
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
                 if (browserOptions.SystemBrowserOptions != null)
                 {
                     builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2025-10-13)
+
+### Features Added
+
+- First stable (GA) release of Azure Storage Discovery client library.
+- API surface is now considered stable; no breaking changes since 1.0.0-beta.1.
+- Core features now generally available:
+    - Out-of-the-box support for MSAL.NET authentication via Azure.Identity.
+    - Distributed tracing with OpenTelemetry.
+    - Customizable HTTP pipeline with custom policies.
+    - Improved error handling.
+    - Uniform telemetry support across all languages.
+- For feedback or issues, please visit our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 ## 1.0.0-beta.1 (2025-07-31)
 

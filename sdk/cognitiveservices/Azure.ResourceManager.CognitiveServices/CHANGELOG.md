@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+## 1.5.2 (2025-11-11)
+
+### Breaking Changes
+
+- `CognitiveServicesAccountProperties.NetworkInjections` is now a list of `AINetworkInjection` instead of a single `AINetworkInjection` instance.
+
+### Bugs Fixed
+
+- Fixed mismatched property type for `CognitiveServicesAccountProperties.NetworkInjections`.  
+
 ## 1.5.1 (2025-07-28)
 
 ### Features Added

@@ -6,5 +6,7 @@
     <PackageId>Azure.ResourceManager.Dns</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Network Dns.</Description>
     <PackageTags>azure;management;arm;resource manager;dns</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
+            // Generated from example definition: 2025-09-01/MongoClusters_PrivateEndpointConnectionGet.json
             // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPrivateEndpointConnectionOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionDelete.json
+            // Generated from example definition: 2025-09-01/MongoClusters_PrivateEndpointConnectionDelete.json
             // this example is just showing the usage of "PrivateEndpointConnectionResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApprovesAPrivateEndpointConnectionOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionPut.json
+            // Generated from example definition: 2025-09-01/MongoClusters_PrivateEndpointConnectionPut.json
             // this example is just showing the usage of "PrivateEndpointConnectionResource_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

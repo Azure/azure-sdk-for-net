@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Azure.Search.Documents.Indexes.Models;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
-using System.Linq;
-using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_08_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_11_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public partial class SemanticSearch : SearchTestBase
     {
         public SemanticSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)

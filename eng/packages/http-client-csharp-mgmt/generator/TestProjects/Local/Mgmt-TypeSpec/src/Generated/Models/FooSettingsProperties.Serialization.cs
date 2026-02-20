@@ -9,13 +9,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The FooSettingsProperties. </summary>
+    /// <summary> Base resource properties that can be extended for arm resources. </summary>
     public partial class FooSettingsProperties : IJsonModel<FooSettingsProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="FooSettingsProperties"/> for deserialization. </summary>
+        internal FooSettingsProperties()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FooSettingsProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFooSettingsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FooSettingsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FooSettingsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FooSettingsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FooSettingsProperties IPersistableModel<FooSettingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FooSettingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooSettingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,15 +79,19 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(FooSettingsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AccessControlEnabled))
-            {
-                writer.WritePropertyName("accessControlEnabled"u8);
-                writer.WriteBooleanValue(AccessControlEnabled.Value);
-            }
+            writer.WritePropertyName("marketplace"u8);
+            writer.WriteObjectValue(Marketplace, options);
+            writer.WritePropertyName("user"u8);
+            writer.WriteObjectValue(User, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(AccessControlEnabled))
+            {
+                writer.WritePropertyName("accessControlEnabled"u8);
+                writer.WriteBooleanValue(AccessControlEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MetaData))
             {
@@ -91,19 +140,22 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            bool? accessControlEnabled = default;
+            MarketplaceDetails marketplace = default;
+            UserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
+            bool? accessControlEnabled = default;
             FooSettingsPropertiesMetaData metaData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("accessControlEnabled"u8))
+                if (prop.NameEquals("marketplace"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accessControlEnabled = prop.Value.GetBoolean();
+                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("user"u8))
+                {
+                    user = UserDetails.DeserializeUserDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -113,6 +165,15 @@ namespace MgmtTypeSpec.Models
                         continue;
                     }
                     provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("accessControlEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessControlEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("metaData"u8))
@@ -129,47 +190,13 @@ namespace MgmtTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaData, additionalBinaryDataProperties);
+            return new FooSettingsProperties(
+                marketplace,
+                user,
+                provisioningState,
+                accessControlEnabled,
+                metaData,
+                additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooSettingsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FooSettingsProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FooSettingsProperties IPersistableModel<FooSettingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooSettingsProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeFooSettingsProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FooSettingsProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooSettingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

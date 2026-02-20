@@ -177,10 +177,20 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
+            if (Optional.IsDefined(DeviceStreams))
+            {
+                writer.WritePropertyName("deviceStreams"u8);
+                writer.WriteObjectValue(DeviceStreams, options);
+            }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -196,6 +206,21 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(EnableDataResidency.Value);
+            }
+            if (Optional.IsDefined(RootCertificate))
+            {
+                writer.WritePropertyName("rootCertificate"u8);
+                writer.WriteObjectValue(RootCertificate, options);
+            }
+            if (Optional.IsDefined(IPVersion))
+            {
+                writer.WritePropertyName("ipVersion"u8);
+                writer.WriteStringValue(IPVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(DeviceRegistry))
+            {
+                writer.WritePropertyName("deviceRegistry"u8);
+                writer.WriteObjectValue(DeviceRegistry, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -255,9 +280,14 @@ namespace Azure.ResourceManager.IotHub.Models
             bool? enableFileUploadNotifications = default;
             CloudToDeviceProperties cloudToDevice = default;
             string comments = default;
+            IotHubPropertiesDeviceStreams deviceStreams = default;
             IotHubCapability? features = default;
+            IotHubEncryptionProperties encryption = default;
             IReadOnlyList<IotHubLocationDescription> locations = default;
             bool? enableDataResidency = default;
+            IotHubRootCertificateProperties rootCertificate = default;
+            IotHubIPVersion? ipVersion = default;
+            IotHubDeviceRegistry deviceRegistry = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -466,6 +496,15 @@ namespace Azure.ResourceManager.IotHub.Models
                     comments = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("deviceStreams"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceStreams = IotHubPropertiesDeviceStreams.DeserializeIotHubPropertiesDeviceStreams(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -473,6 +512,15 @@ namespace Azure.ResourceManager.IotHub.Models
                         continue;
                     }
                     features = new IotHubCapability(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("encryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = IotHubEncryptionProperties.DeserializeIotHubEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -496,6 +544,33 @@ namespace Azure.ResourceManager.IotHub.Models
                         continue;
                     }
                     enableDataResidency = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("rootCertificate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rootCertificate = IotHubRootCertificateProperties.DeserializeIotHubRootCertificateProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("ipVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipVersion = new IotHubIPVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deviceRegistry"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceRegistry = IotHubDeviceRegistry.DeserializeIotHubDeviceRegistry(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -526,9 +601,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 enableFileUploadNotifications,
                 cloudToDevice,
                 comments,
+                deviceStreams,
                 features,
+                encryption,
                 locations ?? new ChangeTrackingList<IotHubLocationDescription>(),
                 enableDataResidency,
+                rootCertificate,
+                ipVersion,
+                deviceRegistry,
                 serializedAdditionalRawData);
         }
 

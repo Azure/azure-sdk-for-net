@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 
@@ -25,9 +26,7 @@ namespace Azure.Health.Deidentification
         /// <param name="error"> Error when job fails in it's entirety. </param>
         /// <param name="lastUpdatedAt">
         /// Date and time when the job was completed.
-        /// 
         /// If the job is canceled, this is the time when the job was canceled.
-        /// 
         /// If the job failed, this is the time when the job failed.
         /// </param>
         /// <param name="createdAt"> Date and time when the job was created. </param>
@@ -67,12 +66,10 @@ namespace Azure.Health.Deidentification
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix">
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
-        /// 
         /// Example:
         /// File full path: documents/user/note.txt
         /// Input Prefix: "documents/user/"
         /// Output Prefix: "output_docs/"
-        /// 
         /// Output file: "output_docs/note.txt"
         /// </param>
         /// <param name="overwrite"> When set to true during a job, the service will overwrite the output location if it already exists. </param>
@@ -227,18 +224,27 @@ namespace Azure.Health.Deidentification
         /// <param name="utf8"> The offset or length of the substring in UTF-8 encoding. </param>
         /// <param name="utf16">
         /// The offset or length of the substring in UTF-16 encoding.
-        /// 
         /// Primary encoding used by .NET, Java, and JavaScript.
         /// </param>
         /// <param name="codePoint">
         /// The offset or length of the substring in CodePoint encoding.
-        /// 
         /// Primary encoding used by Python.
         /// </param>
         /// <returns> A new <see cref="Deidentification.StringIndex"/> instance for mocking. </returns>
         public static StringIndex StringIndex(int utf8 = default, int utf16 = default, int codePoint = default)
         {
             return new StringIndex(utf8, utf16, codePoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
+        /// <param name="inputText"> Input text to de-identify. </param>
+        /// <param name="operationType"> Operation to perform on the input documents. </param>
+        /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
+        /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
+        {
+            return DeidentificationContent(inputText, operationType, taggedEntities: default, customizations);
         }
     }
 }

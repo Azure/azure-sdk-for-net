@@ -97,10 +97,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return ChangeFeed.Empty();
             }
 
-                // Get year paths
-                years = await GetYearPathsInternal(
-                    async,
-                    cancellationToken).ConfigureAwait(false);
+            // Get year paths
+            years = await GetYearPathsInternal(
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             // Dequeue any years that occur before start time
             if (startTime.HasValue)
@@ -174,11 +174,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             List<string> list = new List<string>();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Prefix = Constants.ChangeFeed.SegmentPrefix,
+                Delimiter = "/",
+            };
+
             if (async)
             {
                 await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
-                    prefix: Constants.ChangeFeed.SegmentPrefix,
-                    delimiter: "/",
+                    options: options,
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     if (blobHierarchyItem.Prefix.Contains(Constants.ChangeFeed.InitalizationSegment))
@@ -190,8 +195,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             else
             {
                 foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
-                prefix: Constants.ChangeFeed.SegmentPrefix,
-                delimiter: "/",
+                options: options,
                 cancellationToken: cancellationToken))
                 {
                     if (blobHierarchyItem.Prefix.Contains(Constants.ChangeFeed.InitalizationSegment))

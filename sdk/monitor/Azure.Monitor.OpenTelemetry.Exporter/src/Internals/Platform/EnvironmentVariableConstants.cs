@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         {
             APPLICATIONINSIGHTS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
-            APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW,
+            APPLICATIONINSIGHTS_SDKSTATS_DISABLED,
             APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
             FUNCTIONS_WORKER_RUNTIME,
             LOCALAPPDATA,
@@ -28,6 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             EXPORT_RESOURCE_METRIC,
             ASPNETCORE_DISABLE_URL_QUERY_REDACTION,
             HTTPCLIENT_DISABLE_URL_QUERY_REDACTION,
+            OTEL_TRACES_SAMPLER,
+            OTEL_TRACES_SAMPLER_ARG,
         };
 
         /// <summary>
@@ -47,12 +49,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
 
         /// <summary>
-        /// Available for users to enable customer SDK stats preview feature.
+        /// Available for users to enable customer SDK stats.
         /// </summary>
         /// <remarks>
         /// Customer SDK stats provide insights into SDK success/failure/retry counts.
+        /// Set to "false" to enable this feature.
         /// </remarks>
-        public const string APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW = "APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW";
+        public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED";
 
         /// <summary>
         /// Available for users to configure customer SDK stats export interval in seconds.
@@ -124,5 +127,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/CHANGELOG.md#181"/>.
         /// </remarks>
         public const string HTTPCLIENT_DISABLE_URL_QUERY_REDACTION = "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION";
+
+        /// <summary>
+        /// OpenTelemetry environment variable to specify the sampler to use for traces.
+        /// Supported values: microsoft.rate_limited, microsoft.fixed_percentage
+        /// </summary>
+        public const string OTEL_TRACES_SAMPLER = "OTEL_TRACES_SAMPLER";
+
+        /// <summary>
+        /// OpenTelemetry environment variable to specify the sampler argument.
+        /// For microsoft.rate_limited sampler: traces per second (double).
+        /// For microsoft.fixed_percentage sampler: sampling ratio (double from 0 to 1).
+        /// </summary>
+        public const string OTEL_TRACES_SAMPLER_ARG = "OTEL_TRACES_SAMPLER_ARG";
     }
 }

@@ -10,12 +10,52 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Azure AI Search Index Definition. </summary>
-    public partial class AzureAISearchIndex : SearchIndex, IJsonModel<AzureAISearchIndex>
+    public partial class AzureAISearchIndex : AIProjectIndex, IJsonModel<AzureAISearchIndex>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/> for deserialization. </summary>
         internal AzureAISearchIndex()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AIProjectIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureAISearchIndex(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureAISearchIndex)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureAISearchIndex)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureAISearchIndex>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureAISearchIndex IPersistableModel<AzureAISearchIndex>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAISearchIndex)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureAISearchIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -53,7 +93,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AIProjectIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -81,7 +121,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string connectionName = default;
             string indexName = default;
-            FieldMapping fieldMapping = default;
+            AIProjectIndexFieldMapping fieldMapping = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -146,7 +186,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    fieldMapping = FieldMapping.DeserializeFieldMapping(prop.Value, options);
+                    fieldMapping = AIProjectIndexFieldMapping.DeserializeAIProjectIndexFieldMapping(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,45 +206,5 @@ namespace Azure.AI.Projects
                 indexName,
                 fieldMapping);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAISearchIndex>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureAISearchIndex)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAISearchIndex IPersistableModel<AzureAISearchIndex>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAISearchIndex)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeAzureAISearchIndex(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureAISearchIndex)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAISearchIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Basic
+namespace Specs.Azure.Core.Basic
 {
     public partial class BasicClientOptions : ClientOptions
     {

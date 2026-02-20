@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-03";
+            _apiVersion = apiVersion ?? "2025-03-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -201,8 +201,6 @@ namespace Azure.ResourceManager.Compute
                         value = SharedGalleryImageData.DeserializeSharedGalleryImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SharedGalleryImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -233,8 +231,6 @@ namespace Azure.ResourceManager.Compute
                         value = SharedGalleryImageData.DeserializeSharedGalleryImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SharedGalleryImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

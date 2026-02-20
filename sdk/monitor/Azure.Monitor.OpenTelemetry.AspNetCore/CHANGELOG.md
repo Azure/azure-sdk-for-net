@@ -1,14 +1,86 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+*  **Default Sampler Changed**: The default sampling behavior has been changed from
+  `ApplicationInsightsSampler` with 100% sampling (all traces sampled) to
+  `RateLimitedSampler` with 5.0 traces per second. This change significantly
+  reduces telemetry volume for high-traffic applications and provides better
+  cost optimization out of the box.
+  **Impact**: Applications with more than 5 requests per second will see fewer
+  traces exported by default.
+  **Migration**: To maintain the previous behavior (100% sampling), explicitly
+  configure the sampler:
+  
+  ```csharp
+  // Option 1: Set SamplingRatio and clear TracesPerSecond
+  builder.Services.AddOpenTelemetry()
+      .UseAzureMonitor(options =>
+      {
+          options.SamplingRatio = 1.0f;
+          options.TracesPerSecond = null;
+      });
+  // Option 2: Use environment variables
+  // OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+  // OTEL_TRACES_SAMPLER_ARG=1.0
+  ```
 ### Bugs Fixed
 
+* Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
+  instead of replica names in the Role Instance field.
+  ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
+
 ### Other Changes
+
+## 1.4.0 (2025-11-14)
+
+### Features Added
+
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorOptions` to enable
+  filtering logs based on trace sampling decisions, reducing log volume while
+  maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
+* Update OpenTelemetry dependencies
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
+  - OpenTelemetry 1.14.0
+  - OpenTelemetry.Extensions.Hosting 1.14.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.14.0
+  - OpenTelemetry.Instrumentation.Http 1.14.0
+
+## 1.4.0-beta.1 (2025-10-21)
+
+### Features Added
+
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`).
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
+* Added new performance monitoring capabilities to help track application health and resource usage. Newly added metrics:
+  - `\.NET CLR Exceptions(??APP_CLR_PROC??)\# of Exceps Thrown / sec`
+  - `\ASP.NET Applications(??APP_W3SVC_PROC??)\Requests/Sec`;
+  - `\Process(??APP_WIN32_PROC??)\% Processor Time"`
+  - `\Process(??APP_WIN32_PROC??)\% Processor Time Normalized`
+  - `\Process(??APP_WIN32_PROC??)\Private Bytes`
+  ([#52705](https://github.com/Azure/azure-sdk-for-net/pull/52705))
+* Added built-in monitoring to track SDK performance and health. Emitted metrics:
+  - `preview.item.success.count`
+  - `preview.item.dropped.count`
+  - `preview.item.retry.count`
+  ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
+* Add `enduser.pseudo.id` as ai.user.id 
+([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
+* Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 
 ## 1.3.0 (2025-05-09)
 
@@ -260,7 +332,6 @@
 - Update OpenTelemetry dependencies
   ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
   - OpenTelemetry 1.7.0
-  - OpenTelemetry.Extensions.Hosting 1.7.0
   - NEW: OpenTelemetry.Instrumentation.AspNetCore 1.7.0
   - NEW: OpenTelemetry.Instrumentation.Http 1.7.0
 

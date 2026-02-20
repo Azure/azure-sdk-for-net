@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-                [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_DefaultAudience()
         {
             // Arrange
@@ -816,6 +816,144 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
+
+        //[RecordedTest]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateAsync_FilePropertySemantics()
+        //{
+        //    // Arrange
+        //    List<FilePropertySemantics?> filePropertySemanticsList = new List<FilePropertySemantics?>
+        //    {
+        //        null,
+        //        FilePropertySemantics.New,
+        //        FilePropertySemantics.Restore
+        //    };
+
+        //    foreach (FilePropertySemantics? filePropertySemantics in filePropertySemanticsList)
+        //    {
+        //        await using DisposingShare test = await GetTestShareAsync();
+        //        ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+        //        ShareFileCreateOptions options = new ShareFileCreateOptions
+        //        {
+        //            PropertySemantics = filePropertySemantics
+        //        };
+
+        //        if (filePropertySemantics == FilePropertySemantics.Restore)
+        //        {
+        //            options.FilePermission = new ShareFilePermission
+        //            {
+        //                Permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)"
+        //            };
+        //        }
+
+        //        Response<ShareFileInfo> response;
+
+        //        // Act
+        //        response = await fileClient.CreateAsync(Constants.KB, options);
+
+        //        // Assert
+        //        if (filePropertySemantics == FilePropertySemantics.New || filePropertySemantics == null)
+        //        {
+        //            Assert.AreEqual(NtfsFileAttributes.Archive, response.Value.SmbProperties.FileAttributes.Value);
+        //        }
+        //        else
+        //        {
+        //            Assert.AreEqual(NtfsFileAttributes.None, response.Value.SmbProperties.FileAttributes.Value);
+        //        }
+        //    }
+        //}
+
+        //// TODO figure out why we can't record this.
+        //[LiveOnly]
+        //[RecordedTest]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateFile_Data()
+        //{
+        //    // Arrange
+        //    await using DisposingShare test = await GetTestShareAsync();
+        //    ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+        //    byte[] data = GetRandomBuffer(Constants.KB);
+        //    using Stream stream = new MemoryStream(data);
+
+        //    ShareFileCreateOptions options = new ShareFileCreateOptions
+        //    {
+        //        Content = stream,
+        //    };
+
+        //    // Act
+        //    await fileClient.CreateAsync(
+        //        maxSize: Constants.KB,
+        //        options: options);
+
+        //    Response<ShareFileDownloadInfo> downloadResponse = await fileClient.DownloadAsync();
+        //    using MemoryStream resultStream = new MemoryStream();
+        //    await downloadResponse.Value.Content.CopyToAsync(resultStream);
+
+        //    // Assert
+        //    Assert.AreEqual(data.Length, resultStream.Length);
+        //    TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+        //}
+
+        //[RecordedTest]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateFile_Data_ProgressReporting()
+        //{
+        //    // Arrange
+        //    await using DisposingShare test = await GetTestShareAsync();
+        //    ShareFileClient fileClientClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+        //    byte[] data = GetRandomBuffer(Constants.KB);
+        //    using Stream stream = new MemoryStream(data);
+        //    TestProgress progress = new TestProgress();
+
+        //    ShareFileCreateOptions options = new ShareFileCreateOptions
+        //    {
+        //        Content = stream,
+        //        ProgressHandler = progress
+        //    };
+
+        //    // Act
+        //    await fileClientClient.CreateAsync(
+        //        maxSize: Constants.KB,
+        //        options: options);
+
+        //    // Assert
+        //    Assert.IsFalse(progress.List.Count == 0);
+        //    Assert.AreEqual(data.Length, progress.List[progress.List.Count - 1]);
+        //}
+
+        //[RecordedTest]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateFile_Data_PrecalculatedChecksum()
+        //{
+        //    // Arrange
+        //    await using DisposingShare test = await GetTestShareAsync();
+        //    ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+        //    byte[] data = GetRandomBuffer(Constants.KB);
+        //    using Stream stream = new MemoryStream(data);
+        //    byte[] md5 = MD5.Create().ComputeHash(data);
+
+        //    ShareFileCreateOptions options = new ShareFileCreateOptions
+        //    {
+        //        Content = stream,
+        //        TransferValidation = new UploadTransferValidationOptions
+        //        {
+        //            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+        //            PrecalculatedChecksum = md5
+        //        }
+        //    };
+
+        //    // Act
+        //    Response<ShareFileInfo> response = await fileClient.CreateAsync(
+        //        maxSize: Constants.KB,
+        //        options: options);
+
+        //    // Assert
+        //    Assert.AreEqual(md5, response.Value.ContentHash);
+        //}
 
         [RecordedTest]
         public async Task ExistsAsync_Exists()
@@ -2622,7 +2760,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             });
 
-            Response<ShareFileProperties> sourceProperties =  await source.File.GetPropertiesAsync();
+            Response<ShareFileProperties> sourceProperties = await source.File.GetPropertiesAsync();
 
             string owner;
             string group;
@@ -3255,7 +3393,8 @@ namespace Azure.Storage.Files.Shares.Tests
             var actual = new MemoryStream();
             await TestHelper.AssertExpectedExceptionAsync<ShareFileModifiedException>(
                 downloadInfo.Content.CopyToAsync(actual, 4 * Constants.KB),
-                e => {
+                e =>
+                {
                     Assert.AreEqual(e.ResourceUri, file.Uri);
                     Assert.AreNotEqual(e.ExpectedETag, e.ActualETag);
                     Assert.IsNotNull(e.Range);
@@ -4681,7 +4820,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 .GetFileClient(fileName));
 
             // Act
-            Response<ShareFileUploadInfo> response =  await destFile.UploadRangeFromUriAsync(
+            Response<ShareFileUploadInfo> response = await destFile.UploadRangeFromUriAsync(
                 sourceUri: sasFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange);

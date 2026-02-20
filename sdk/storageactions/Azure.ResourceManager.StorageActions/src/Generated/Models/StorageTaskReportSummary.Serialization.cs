@@ -17,6 +17,30 @@ namespace Azure.ResourceManager.StorageActions.Models
     /// <summary> Fetch Storage Tasks Run Summary. </summary>
     internal partial class StorageTaskReportSummary : IJsonModel<StorageTaskReportSummary>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageTaskReportSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageTaskReportSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageTaskReportSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskReportSummary"/> from. </param>
+        internal static StorageTaskReportSummary FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStorageTaskReportSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTaskReportSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -113,7 +137,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,32 +168,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         StorageTaskReportSummary IPersistableModel<StorageTaskReportSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageTaskReportSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeStorageTaskReportSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageTaskReportSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageTaskReportSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskReportSummary"/> from. </param>
-        internal static StorageTaskReportSummary FromResponse(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeStorageTaskReportSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

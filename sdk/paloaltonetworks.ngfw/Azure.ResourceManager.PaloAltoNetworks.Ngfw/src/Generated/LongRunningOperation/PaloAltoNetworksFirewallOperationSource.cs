@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class PaloAltoNetworksFirewallOperationSource : IOperationSource<PaloAltoNetworksFirewallResource>
+    /// <summary></summary>
+    internal partial class PaloAltoNetworksFirewallOperationSource : IOperationSource<PaloAltoNetworksFirewallResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PaloAltoNetworksFirewallOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PaloAltoNetworksFirewallResource IOperationSource<PaloAltoNetworksFirewallResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PaloAltoNetworksFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PaloAltoNetworksFirewallData data = PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PaloAltoNetworksFirewallResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PaloAltoNetworksFirewallResource> IOperationSource<PaloAltoNetworksFirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PaloAltoNetworksFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-            return await Task.FromResult(new PaloAltoNetworksFirewallResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PaloAltoNetworksFirewallData data = PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PaloAltoNetworksFirewallResource(_client, data);
         }
     }
 }

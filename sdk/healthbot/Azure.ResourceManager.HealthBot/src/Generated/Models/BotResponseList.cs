@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HealthBot;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
     /// <summary> The list of Azure Health Bot operation response. </summary>
     internal partial class BotResponseList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
         internal BotResponseList()
@@ -52,19 +24,20 @@ namespace Azure.ResourceManager.HealthBot.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of bot service resources. </param>
-        /// <param name="value"> Gets the list of Azure Health Bot results and their properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotResponseList(string nextLink, IReadOnlyList<HealthBotData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The HealthBot items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BotResponseList(IReadOnlyList<HealthBotData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The link used to get the next page of bot service resources. </summary>
-        public string NextLink { get; }
-        /// <summary> Gets the list of Azure Health Bot results and their properties. </summary>
+        /// <summary> The HealthBot items on this page. </summary>
         public IReadOnlyList<HealthBotData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

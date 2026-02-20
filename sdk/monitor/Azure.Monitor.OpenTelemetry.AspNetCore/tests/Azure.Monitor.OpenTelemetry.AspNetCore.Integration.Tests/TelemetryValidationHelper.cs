@@ -6,7 +6,7 @@ using System.Reflection;
 #if NET
 using System.Text.Json.Nodes;
 #endif
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests

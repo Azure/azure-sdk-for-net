@@ -3,6 +3,7 @@
 
 #if !AZURE_OPENAI_GA
 
+using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI.Assistants;
@@ -31,6 +32,30 @@ internal partial class AzureAssistantClient : AssistantClient
 
     protected AzureAssistantClient()
     { }
+
+    public override async Task<ClientResult<ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
+    {
+        ClientResult protocolResult = await GetRunAsync(threadId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue(ModelReaderWriter.Read<ThreadRun>(protocolResult.GetRawResponse().Content, ModelReaderWriterOptions.Json, OpenAIContext.Default), protocolResult.GetRawResponse());
+    }
+
+    public override ClientResult<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
+    {
+        ClientResult protocolResult = GetRun(threadId, runId, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue(ModelReaderWriter.Read<ThreadRun>(protocolResult.GetRawResponse().Content, ModelReaderWriterOptions.Json, OpenAIContext.Default), protocolResult.GetRawResponse());
+    }
+
+    public override async Task<ClientResult<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
+    {
+        ClientResult protocolResult = await GetRunStepAsync(threadId, runId, stepId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue(ModelReaderWriter.Read<RunStep>(protocolResult.GetRawResponse().Content, ModelReaderWriterOptions.Json, OpenAIContext.Default), protocolResult.GetRawResponse());
+    }
+
+    public override ClientResult<RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
+    {
+        ClientResult protocolResult = GetRunStep(threadId, runId, stepId, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue(ModelReaderWriter.Read<RunStep>(protocolResult.GetRawResponse().Content, ModelReaderWriterOptions.Json, OpenAIContext.Default), protocolResult.GetRawResponse());
+    }
 }
 
 #endif

@@ -5,8 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using Azure.Storage.Blobs.Batch;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -15,9 +18,6 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
-using System.Text.RegularExpressions;
-using Azure.Core.TestFramework.Models;
-using Azure.Storage.Blobs.Batch;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -1183,7 +1183,7 @@ namespace Azure.Storage.Blobs.Test
                 return test.Container;
             }
 
-            public async Task<BlobClient[]> CreateBlobsAsync(BlobContainerClient container, int count, string prefix="blob")
+            public async Task<BlobClient[]> CreateBlobsAsync(BlobContainerClient container, int count, string prefix = "blob")
             {
                 BlobClient[] blobs = new BlobClient[count];
                 for (int i = 0; i < count; i++)
@@ -1205,7 +1205,7 @@ namespace Azure.Storage.Blobs.Test
                 return blobs;
             }
 
-            public async Task<BlobClient[]> CreateBlobsAsync(int count, string prefix="blob") =>
+            public async Task<BlobClient[]> CreateBlobsAsync(int count, string prefix = "blob") =>
                 await CreateBlobsAsync(await CreateContainerAsync(), count, prefix);
 
             public async Task<BlockBlobClient[]> CreateBlockBlobsAsync(int count) =>

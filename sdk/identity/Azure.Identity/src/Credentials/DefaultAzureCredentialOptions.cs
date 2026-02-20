@@ -1,11 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
 {
@@ -38,11 +41,163 @@ namespace Azure.Identity
             public bool Updated => _updated;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultAzureCredentialOptions"/> class.
+        /// </summary>
+        public DefaultAzureCredentialOptions()
+        {
+        }
+
+        [Experimental("SCME0002")]
+        internal DefaultAzureCredentialOptions(CredentialSettings settings, IConfigurationSection section)
+            : base(section)
+        {
+            if (settings is null)
+            {
+                return;
+            }
+
+            CredentialSource = settings.CredentialSource;
+            ApiKey = settings.Key;
+
+            if (section is null)
+            {
+                return;
+            }
+
+            if (section[nameof(TenantId)] is string tenantId)
+            {
+                TenantId = tenantId;
+            }
+
+            IConfigurationSection additionallyAllowedTenantsSection = section.GetSection(nameof(AdditionallyAllowedTenants));
+            if (additionallyAllowedTenantsSection.Exists())
+            {
+                AdditionallyAllowedTenants = additionallyAllowedTenantsSection
+                    .GetChildren()
+                    .Where(c => c.Value is not null)
+                    .Select(c => c.Value!)
+                    .ToList();
+            }
+
+            if (section[nameof(InteractiveBrowserCredentialClientId)] is string interactiveBrowserCredentialClientId)
+            {
+                InteractiveBrowserCredentialClientId = interactiveBrowserCredentialClientId;
+            }
+
+            if (section[nameof(WorkloadIdentityClientId)] is string workloadIdentityClientId)
+            {
+                WorkloadIdentityClientId = workloadIdentityClientId;
+            }
+
+            if (section[nameof(ManagedIdentityClientId)] is string managedIdentityClientId)
+            {
+                ManagedIdentityClientId = managedIdentityClientId;
+            }
+
+            if (section[nameof(ManagedIdentityResourceId)] is string managedIdentityResourceId)
+            {
+                ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
+            }
+
+            if (section[nameof(ManagedIdentityObjectId)] is string managedIdentityObjectId)
+            {
+                ManagedIdentityObjectId = managedIdentityObjectId;
+            }
+
+            if (section[nameof(ManagedIdentityIdKind)] is string managedIdentityIdKind)
+            {
+                ManagedIdentityIdKind = managedIdentityIdKind;
+            }
+
+            if (section[nameof(ManagedIdentityId)] is string managedIdentityId)
+            {
+                ManagedIdentityId = managedIdentityId;
+            }
+
+            if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
+            {
+                CredentialProcessTimeout = credentialProcessTimeout;
+            }
+
+            if (bool.TryParse(section[nameof(DisableInstanceDiscovery)], out bool disableInstanceDiscovery))
+            {
+                DisableInstanceDiscovery = disableInstanceDiscovery;
+            }
+
+            if (section[nameof(AzureCliCredentialOptions.Subscription)] is string subscription)
+            {
+                Subscription = subscription;
+            }
+
+            if (bool.TryParse(section[nameof(WorkloadIdentityCredentialOptions.IsAzureProxyEnabled)], out bool isAzureProxyEnabled))
+            {
+                IsAzureProxyEnabled = isAzureProxyEnabled;
+            }
+
+            if (bool.TryParse(section[nameof(DisableAutomaticAuthentication)], out bool disableAutomaticAuthentication))
+            {
+                DisableAutomaticAuthentication = disableAutomaticAuthentication;
+            }
+
+            if (section[nameof(LoginHint)] is string loginHint)
+            {
+                LoginHint = loginHint;
+            }
+
+            var browserSection = section.GetSection(nameof(BrowserCustomization));
+            if (browserSection.Exists())
+            {
+                BrowserCustomization = new BrowserCustomizationOptions(browserSection);
+            }
+
+            var authRecordSection = section.GetSection(nameof(AuthenticationRecord));
+            if (authRecordSection.Exists())
+            {
+                AuthenticationRecord = new AuthenticationRecord(authRecordSection);
+            }
+
+            if (bool.TryParse(section[nameof(UseDefaultBrokerAccount)], out bool useDefaultBrokerAccount))
+            {
+                UseDefaultBrokerAccount = useDefaultBrokerAccount;
+            }
+        }
+
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _interactiveBrowserTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _sharedTokenCacheTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
+
+        /// <summary>
+        /// Gets or sets the kind of credential to use.
+        /// </summary>
+        internal string CredentialSource
+        {
+            get => field;
+            set
+            {
+                field = ConvertCredentialSource(value);
+            }
+        }
+
+        internal string ApiKey { get; private set; }
+
+        private static string ConvertCredentialSource(string value) => value switch
+        {
+            "VisualStudio" => Constants.VisualStudioCredential,
+            "VisualStudioCode" => Constants.VisualStudioCodeCredential,
+            "AzureCli" => Constants.AzureCliCredential,
+            "AzurePowerShell" => Constants.AzurePowerShellCredential,
+            "AzureDeveloperCli" => Constants.AzureDeveloperCliCredential,
+            "Environment" => Constants.EnvironmentCredential,
+            "WorkloadIdentity" => Constants.WorkloadIdentityCredential,
+            "ManagedIdentity" => Constants.ManagedIdentityCredential,
+            "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
+            "Broker" => Constants.BrokerCredential,
+            "ApiKey" => Constants.ApiKeyCredential,
+            _ => value,
+        };
 
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
@@ -219,6 +374,23 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
+        /// Specifies the object ID of a user-assigned managed identity. If this value is configured, then
+        /// <see cref="ManagedIdentityClientId"/> and <see cref="ManagedIdentityResourceId"/> should not be configured.
+        /// </summary>
+        internal string ManagedIdentityObjectId { get; set; }
+
+        /// <summary>
+        /// Specifies the type of managed identity to use. Valid values are "SystemAssigned", "ClientId", "ResourceId", and "ObjectId".
+        /// When set to a user-assigned type, <see cref="ManagedIdentityId"/> must also be specified.
+        /// </summary>
+        internal string ManagedIdentityIdKind { get; set; }
+
+        /// <summary>
+        /// Specifies the ID of the managed identity when <see cref="ManagedIdentityIdKind"/> is set to "ClientId", "ResourceId", or "ObjectId".
+        /// </summary>
+        internal string ManagedIdentityId { get; set; }
+
+        /// <summary>
         /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure PowerShell.
         /// </summary>
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
@@ -292,7 +464,36 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
+        /// <summary>
+        /// The subscription name or Id to use for authentication. This equates to the --subscription parameter in the Azure CLI.
+        /// </summary>
+        internal string Subscription
+        {
+            get => field;
+            set
+            {
+                if (!Validations.IsValidateSubscriptionNameOrId(value))
+                {
+                    throw new ArgumentException("The provided subscription contains invalid characters. If this is the name of a subscription, use its ID instead.");
+                }
+
+                field = value;
+            }
+        }
+
         internal bool IsForceRefreshEnabled { get; set; }
+
+        internal bool IsAzureProxyEnabled { get; set; }
+
+        internal bool DisableAutomaticAuthentication { get; set; }
+
+        internal string LoginHint { get; set; }
+
+        internal BrowserCustomizationOptions BrowserCustomization { get; set; }
+
+        internal AuthenticationRecord AuthenticationRecord { get; set; }
+
+        internal bool UseDefaultBrokerAccount { get; set; }
 
         internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
@@ -312,6 +513,9 @@ namespace Azure.Identity
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
+                dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
+                dacClone.ManagedIdentityIdKind = ManagedIdentityIdKind;
+                dacClone.ManagedIdentityId = ManagedIdentityId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
@@ -327,6 +531,21 @@ namespace Azure.Identity
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
+                dacClone.CredentialSource = CredentialSource;
+                dacClone.ApiKey = ApiKey;
+                if (!string.IsNullOrEmpty(Subscription))
+                {
+                    dacClone.Subscription = Subscription;
+                }
+                dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
+                dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
+                dacClone.LoginHint = LoginHint;
+                if (BrowserCustomization != null)
+                {
+                    dacClone.BrowserCustomization = BrowserCustomization.Clone();
+                }
+                dacClone.AuthenticationRecord = AuthenticationRecord;
+                dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
             }
 
             return clone;

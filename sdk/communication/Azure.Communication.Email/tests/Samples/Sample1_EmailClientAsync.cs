@@ -25,24 +25,24 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
             //@@ try
             //@@ {
-                var emailSendOperation = await emailClient.SendAsync(
-                    wait: WaitUntil.Completed,
-                    //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                    //@@ recipientAddress: "<recipient email address>"
-                    /*@@*/ senderAddress: TestEnvironment.SenderAddress,
-                    /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
-                    subject: "This is the subject",
-                    htmlContent: "<html><body>This is the html body</body></html>");
-                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            var emailSendOperation = await emailClient.SendAsync(
+                wait: WaitUntil.Completed,
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ recipientAddress: "<recipient email address>"
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
+                /*@@*/ recipientAddress: TestEnvironment.RecipientAddress,
+                subject: "This is the subject",
+                htmlContent: "<html><body>This is the html body</body></html>");
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-                string operationId = emailSendOperation.Id;
-                Console.WriteLine($"Email operation id = {operationId}");
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
 
@@ -120,19 +120,19 @@ namespace Azure.Communication.Email.Tests.Samples
 
             //@@ try
             //@@ {
-                var emailSendOperation = await emailClient.SendAsync(
-                    wait: WaitUntil.Completed,
-                    message: emailMessage);
-                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            var emailSendOperation = await emailClient.SendAsync(
+                wait: WaitUntil.Completed,
+                message: emailMessage);
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-                string operationId = emailSendOperation.Id;
-                Console.WriteLine($"Email operation id = {operationId}");
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
 
@@ -209,17 +209,17 @@ namespace Azure.Communication.Email.Tests.Samples
 
             //@@ try
             //@@ {
-                EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
-                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-                string operationId = emailSendOperation.Id;
-                Console.WriteLine($"Email operation id = {operationId}");
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
 
@@ -267,17 +267,17 @@ namespace Azure.Communication.Email.Tests.Samples
 
             //@@ try
             //@@ {
-                EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
-                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-                string operationId = emailSendOperation.Id;
-                Console.WriteLine($"Email operation id = {operationId}");
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_Attachments_Async
         }
@@ -316,7 +316,13 @@ namespace Azure.Communication.Email.Tests.Samples
 #else
             string attachmentName = "InlineImage.jpg";
             string contentType = MediaTypeNames.Image.Jpeg;
-            var content = new BinaryData("This is image file content.");
+
+            string base64String = "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAFAAUDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAb/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCfAAf/2Q==";
+
+            // Convert Base64 to byte array
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+
+            var content = new BinaryData(imageBytes);
             var contentId = "myInlineAttachmentContentId";
 #endif
             var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
@@ -326,17 +332,17 @@ namespace Azure.Communication.Email.Tests.Samples
 
             //@@ try
             //@@ {
-                EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
-                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-                /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-                string operationId = emailSendOperation.Id;
-                Console.WriteLine($"Email operation id = {operationId}");
+            /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+            string operationId = emailSendOperation.Id;
+            Console.WriteLine($"Email operation id = {operationId}");
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_Inline_Attachments_Async
         }

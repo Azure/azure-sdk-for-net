@@ -52,17 +52,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
-        /// <param name="canary"></param>
-        /// <param name="lowTraffic"></param>
-        /// <param name="mediumTraffic"></param>
-        /// <param name="highTraffic"></param>
-        /// <param name="restOfTheWorldGroupOne"></param>
-        /// <param name="restOfTheWorldGroupTwo"></param>
-        /// <param name="providerRegistration"></param>
-        /// <param name="resourceTypeRegistrations"></param>
+        /// <param name="expeditedRollout"> The expedited rollout definition. </param>
+        /// <param name="canary"> The canary traffic region configuration. </param>
+        /// <param name="lowTraffic"> The low traffic region configuration. </param>
+        /// <param name="mediumTraffic"> The medium traffic region configuration. </param>
+        /// <param name="highTraffic"> The high traffic region configuration. </param>
+        /// <param name="restOfTheWorldGroupOne"> The rest of the world group one region configuration. </param>
+        /// <param name="restOfTheWorldGroupTwo"> The rest of the world group two region configuration. </param>
+        /// <param name="providerRegistration"> The provider registration. </param>
+        /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
+        /// <param name="autoProvisionConfig"> The auto provisioning config. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultRolloutSpecification(CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, DefaultRolloutAutoProvisionConfig autoProvisionConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ExpeditedRollout = expeditedRollout;
             Canary = canary;
             LowTraffic = lowTraffic;
             MediumTraffic = mediumTraffic;
@@ -71,24 +74,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RestOfTheWorldGroupTwo = restOfTheWorldGroupTwo;
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
+            AutoProvisionConfig = autoProvisionConfig;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the canary. </summary>
+        /// <summary> The expedited rollout definition. </summary>
+        internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
+        /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
+        public bool? IsExpeditedRolloutEnabled
+        {
+            get => ExpeditedRollout is null ? default : ExpeditedRollout.IsExpeditedRolloutEnabled;
+            set
+            {
+                if (ExpeditedRollout is null)
+                    ExpeditedRollout = new DefaultRolloutSpecificationExpeditedRollout();
+                ExpeditedRollout.IsExpeditedRolloutEnabled = value;
+            }
+        }
+
+        /// <summary> The canary traffic region configuration. </summary>
         public CanaryTrafficRegionRolloutConfiguration Canary { get; set; }
-        /// <summary> Gets or sets the low traffic. </summary>
+        /// <summary> The low traffic region configuration. </summary>
         public TrafficRegionRolloutConfiguration LowTraffic { get; set; }
-        /// <summary> Gets or sets the medium traffic. </summary>
+        /// <summary> The medium traffic region configuration. </summary>
         public TrafficRegionRolloutConfiguration MediumTraffic { get; set; }
-        /// <summary> Gets or sets the high traffic. </summary>
+        /// <summary> The high traffic region configuration. </summary>
         public TrafficRegionRolloutConfiguration HighTraffic { get; set; }
-        /// <summary> Gets or sets the rest of the world group one. </summary>
+        /// <summary> The rest of the world group one region configuration. </summary>
         public TrafficRegionRolloutConfiguration RestOfTheWorldGroupOne { get; set; }
-        /// <summary> Gets or sets the rest of the world group two. </summary>
+        /// <summary> The rest of the world group two region configuration. </summary>
         public TrafficRegionRolloutConfiguration RestOfTheWorldGroupTwo { get; set; }
-        /// <summary> Gets or sets the provider registration. </summary>
+        /// <summary> The provider registration. </summary>
         public ProviderRegistrationData ProviderRegistration { get; set; }
-        /// <summary> Gets the resource type registrations. </summary>
+        /// <summary> The resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
+        /// <summary> The auto provisioning config. </summary>
+        public DefaultRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
     }
 }

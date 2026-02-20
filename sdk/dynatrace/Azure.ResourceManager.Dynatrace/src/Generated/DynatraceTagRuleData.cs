@@ -13,82 +13,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    /// <summary>
-    /// A class representing the DynatraceTagRule data model.
-    /// Tag rules for a monitor resource
-    /// </summary>
+    /// <summary> Tag rules for a monitor resource. </summary>
     public partial class DynatraceTagRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleData"/>. </summary>
-        public DynatraceTagRuleData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DynatraceTagRuleProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            LogRules = logRules;
-            MetricRules = metricRules;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal DynatraceTagRuleProperties Properties { get; set; }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
-        public DynatraceMonitorResourceLogRules LogRules { get; set; }
-        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
-        internal DynatraceMonitorResourceMetricRules MetricRules { get; set; }
-        /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
-        public IList<DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags
+        public DynatraceMonitorResourceLogRules LogRules
         {
             get
             {
-                if (MetricRules is null)
-                    MetricRules = new DynatraceMonitorResourceMetricRules();
-                return MetricRules.FilteringTags;
+                return Properties is null ? default : Properties.LogRules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DynatraceTagRuleProperties();
+                }
+                Properties.LogRules = value;
+            }
+        }
+
+        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        public DynatraceMonitorResourceMetricRules MetricRules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricRules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DynatraceTagRuleProperties();
+                }
+                Properties.MetricRules = value;
             }
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public DynatraceProvisioningState? ProvisioningState { get; }
+        public DynatraceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

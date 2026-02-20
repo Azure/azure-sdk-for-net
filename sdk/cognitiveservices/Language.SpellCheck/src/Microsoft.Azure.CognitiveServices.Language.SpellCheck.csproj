@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services SpellCheck Client Library</AssemblyTitle>
     <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services SpellCheck API.</Description>
@@ -10,8 +10,23 @@
     1. Support overriding the default endpoint.
     ]]>
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
 </Project>

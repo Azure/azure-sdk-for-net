@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Model
+namespace Specs.Azure.Core.Model
 {
     public partial class AzureCoreEmbeddingVector
     {

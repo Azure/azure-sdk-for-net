@@ -88,9 +88,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Assert.That(
                     async () =>
-                    await CreateNoRetryClient().AcceptSessionAsync(
-                        scope.QueueName,
-                        sessionId),
+                    {
+                        await using var noRetryClient = CreateNoRetryClient();
+                        await noRetryClient.AcceptSessionAsync(
+                            scope.QueueName,
+                            sessionId);
+                    },
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
             }
         }
@@ -244,7 +247,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
                 var stop = DateTime.UtcNow;
 
-                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(5)));
+                Assert.That(stop - start, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(5)));
             }
         }
 

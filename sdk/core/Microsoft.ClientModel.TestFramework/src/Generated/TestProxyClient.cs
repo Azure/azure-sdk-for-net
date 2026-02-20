@@ -38,7 +38,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             options ??= new TestProxyClientOptions();
 
             _endpoint = endpoint;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>());
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TestProxyClient).Assembly) }, Array.Empty<PipelinePolicy>());
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -95,7 +95,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return StartRecord(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return StartRecord(body, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Start recording for a test. </summary>
@@ -107,7 +107,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await StartRecordAsync(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await StartRecordAsync(body, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             Argument.AssertNotNull(variables, nameof(variables));
 
             using BinaryContent content = BinaryContentHelper.FromDictionary(variables);
-            return StopRecord(recordingId, content, recordingSkip, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return StopRecord(recordingId, content, recordingSkip, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Stop recording for a test. </summary>
@@ -191,7 +191,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             Argument.AssertNotNull(variables, nameof(variables));
 
             using BinaryContent content = BinaryContentHelper.FromDictionary(variables);
-            return await StopRecordAsync(recordingId, content, recordingSkip, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await StopRecordAsync(recordingId, content, recordingSkip, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = StartPlayback(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = StartPlayback(body, recordingId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content.ToObjectFromJson<IReadOnlyDictionary<string, string>>(), result.GetRawResponse());
         }
 
@@ -262,7 +262,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = await StartPlaybackAsync(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await StartPlaybackAsync(body, recordingId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content.ToObjectFromJson<IReadOnlyDictionary<string, string>>(), result.GetRawResponse());
         }
 
@@ -320,7 +320,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
 
-            return StopPlayback(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return StopPlayback(recordingId, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Stop playback for a test recording. </summary>
@@ -333,7 +333,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
 
-            return await StopPlaybackAsync(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await StopPlaybackAsync(recordingId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary> Initializes a new instance of TestProxyAdminClient. </summary>

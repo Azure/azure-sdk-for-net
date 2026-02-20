@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Agents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     public partial class SearchIndexKnowledgeSourceParams : IUtf8JsonSerializable, IJsonModel<SearchIndexKnowledgeSourceParams>
     {
@@ -65,6 +65,10 @@ namespace Azure.Search.Documents.Agents.Models
             }
             string filterAddOn = default;
             string knowledgeSourceName = default;
+            bool? includeReferences = default;
+            bool? includeReferenceSourceData = default;
+            bool? alwaysQuerySource = default;
+            float? rerankerThreshold = default;
             KnowledgeSourceKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -80,6 +84,42 @@ namespace Azure.Search.Documents.Agents.Models
                     knowledgeSourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("includeReferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeReferences = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("includeReferenceSourceData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeReferenceSourceData = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("alwaysQuerySource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alwaysQuerySource = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("rerankerThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankerThreshold = property.Value.GetSingle();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(property.Value.GetString());
@@ -91,7 +131,15 @@ namespace Azure.Search.Documents.Agents.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SearchIndexKnowledgeSourceParams(knowledgeSourceName, kind, serializedAdditionalRawData, filterAddOn);
+            return new SearchIndexKnowledgeSourceParams(
+                knowledgeSourceName,
+                includeReferences,
+                includeReferenceSourceData,
+                alwaysQuerySource,
+                rerankerThreshold,
+                kind,
+                serializedAdditionalRawData,
+                filterAddOn);
         }
 
         BinaryData IPersistableModel<SearchIndexKnowledgeSourceParams>.Write(ModelReaderWriterOptions options)

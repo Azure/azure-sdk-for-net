@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The type of the Security policy to create.
-    /// Serialized Name: SecurityPolicyType
-    /// </summary>
+    /// <summary> The type of the Security policy to create. </summary>
     internal readonly partial struct SecurityPolicyType : IEquatable<SecurityPolicyType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string WebApplicationFirewallValue = "WebApplicationFirewall";
 
-        /// <summary>
-        /// WebApplicationFirewall
-        /// Serialized Name: SecurityPolicyType.WebApplicationFirewall
-        /// </summary>
+        /// <summary> WebApplicationFirewall. </summary>
         public static SecurityPolicyType WebApplicationFirewall { get; } = new SecurityPolicyType(WebApplicationFirewallValue);
         /// <summary> Determines if two <see cref="SecurityPolicyType"/> values are the same. </summary>
         public static bool operator ==(SecurityPolicyType left, SecurityPolicyType right) => left.Equals(right);

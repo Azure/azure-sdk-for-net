@@ -1,4 +1,5 @@
 directory: specification/ai/ImageAnalysis/
 additionalDirectories: []
 repo: Azure/azure-rest-api-specs
-commit: 462574dbd02088c209bb1da3eef0d93f699e8de2
+commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.InformaticaDataManagement;
 using Azure.ResourceManager.Models;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 marketplaceDetails,
                 userDetails,
                 companyDetails,
-                linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, new Dictionary<string, BinaryData>()),
+                linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -280,12 +281,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 computeUnits,
                 executionTimeout,
                 serverlessAccountLocation,
-                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, new Dictionary<string, BinaryData>()),
+                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, null),
                 advancedCustomProperties.ToList(),
                 supplementaryFileLocation,
                 serverlessRuntimeConfig,
                 serverlessRuntimeTags.ToList(),
-                userContextToken is null ? default : new ServerlessRuntimeUserContextProperties(userContextToken, new Dictionary<string, BinaryData>()),
+                userContextToken is null ? default : new ServerlessRuntimeUserContextProperties(userContextToken, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -314,12 +315,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 computeUnits,
                 executionTimeout,
                 serverlessAccountLocation,
-                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfileUpdate(networkInterfaceConfiguration, new Dictionary<string, BinaryData>()),
+                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfileUpdate(networkInterfaceConfiguration, null),
                 advancedCustomProperties.ToList(),
                 supplementaryFileLocation,
                 serverlessRuntimeConfig,
                 serverlessRuntimeTags.ToList(),
-                userContextToken is null ? default : new ServerlessRuntimeUserContextPropertiesUpdate(userContextToken, new Dictionary<string, BinaryData>()),
+                userContextToken is null ? default : new ServerlessRuntimeUserContextPropertiesUpdate(userContextToken, null),
                 additionalBinaryDataProperties: null);
         }
 

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NotificationHubResource>> UpdateAsync(NotificationHubPatch patch, CancellationToken cancellationToken = default)
             => await UpdateAsync(
-                new NotificationHubUpdateContent (
+                new NotificationHubUpdateContent(
                 patch.Sku,
                 patch.Tags,
                 patch.NotificationHubName,
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NotificationHubResource> Update(NotificationHubPatch patch, CancellationToken cancellationToken = default)
             => Update(
-                new NotificationHubUpdateContent (
+                new NotificationHubUpdateContent(
                 patch.Sku,
                 patch.Tags,
                 patch.NotificationHubName,

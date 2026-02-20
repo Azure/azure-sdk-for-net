@@ -19,6 +19,54 @@ namespace Azure.Core
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PagedDatasetVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePagedDatasetVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedDatasetVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PagedDatasetVersion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PagedDatasetVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PagedDatasetVersion IPersistableModel<PagedDatasetVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PagedDatasetVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedDatasetVersion"/> from. </param>
+        public static explicit operator PagedDatasetVersion(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedDatasetVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PagedDatasetVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -39,7 +87,7 @@ namespace Azure.Core
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DatasetVersion item in Value)
+            foreach (AIProjectDataset item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -91,17 +139,17 @@ namespace Azure.Core
             {
                 return null;
             }
-            IList<DatasetVersion> value = default;
+            IList<AIProjectDataset> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DatasetVersion> array = new List<DatasetVersion>();
+                    List<AIProjectDataset> array = new List<AIProjectDataset>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatasetVersion.DeserializeDatasetVersion(item, options));
+                        array.Add(AIProjectDataset.DeserializeAIProjectDataset(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +160,7 @@ namespace Azure.Core
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,54 +169,6 @@ namespace Azure.Core
                 }
             }
             return new PagedDatasetVersion(value, nextLink, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedDatasetVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PagedDatasetVersion)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PagedDatasetVersion IPersistableModel<PagedDatasetVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedDatasetVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedDatasetVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializePagedDatasetVersion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PagedDatasetVersion)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedDatasetVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedDatasetVersion"/> from. </param>
-        public static explicit operator PagedDatasetVersion(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePagedDatasetVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

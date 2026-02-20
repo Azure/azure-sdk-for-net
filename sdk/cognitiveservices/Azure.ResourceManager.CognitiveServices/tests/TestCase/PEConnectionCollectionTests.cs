@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input);
-            var account =  lro.Value;
+            var account = lro.Value;
             return account.GetCognitiveServicesPrivateEndpointConnections();
         }
 

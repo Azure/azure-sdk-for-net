@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Available plugins of grafana. </summary>
     public partial class GrafanaAvailablePlugin
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePlugin"/>. </summary>
         internal GrafanaAvailablePlugin()
@@ -53,17 +24,28 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePlugin"/>. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <param name="name"> Grafana plugin display name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaAvailablePlugin(string pluginId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> Grafana plugin type. </param>
+        /// <param name="author"> Grafana plugin author/publisher name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaAvailablePlugin(string pluginId, string name, string @type, string author, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PluginId = pluginId;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            Author = author;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Grafana plugin id. </summary>
         public string PluginId { get; }
+
         /// <summary> Grafana plugin display name. </summary>
         public string Name { get; }
+
+        /// <summary> Grafana plugin type. </summary>
+        public string Type { get; }
+
+        /// <summary> Grafana plugin author/publisher name. </summary>
+        public string Author { get; }
     }
 }

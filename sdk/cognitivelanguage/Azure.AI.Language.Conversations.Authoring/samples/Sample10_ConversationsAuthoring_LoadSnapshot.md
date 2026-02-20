@@ -9,7 +9,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -29,7 +29,7 @@ Operation operation = trainedModelClient.LoadSnapshot(
     waitUntil: WaitUntil.Completed
 );
 
- // Extract the operation-location header
+// Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

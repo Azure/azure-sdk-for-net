@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct DataflowGraphNodeType : IEquatable<DataflowGraphNodeType>
     {
         private readonly string _value;
+        /// <summary> Dataflow source node. </summary>
+        private const string SourceValue = "Source";
+        /// <summary> Dataflow graph node. </summary>
+        private const string GraphValue = "Graph";
+        /// <summary> Dataflow destination node. </summary>
+        private const string DestinationValue = "Destination";
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphNodeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowGraphNodeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SourceValue = "Source";
-        private const string GraphValue = "Graph";
-        private const string DestinationValue = "Destination";
+            _value = value;
+        }
 
         /// <summary> Dataflow source node. </summary>
         public static DataflowGraphNodeType Source { get; } = new DataflowGraphNodeType(SourceValue);
+
         /// <summary> Dataflow graph node. </summary>
         public static DataflowGraphNodeType Graph { get; } = new DataflowGraphNodeType(GraphValue);
+
         /// <summary> Dataflow destination node. </summary>
         public static DataflowGraphNodeType Destination { get; } = new DataflowGraphNodeType(DestinationValue);
+
         /// <summary> Determines if two <see cref="DataflowGraphNodeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowGraphNodeType left, DataflowGraphNodeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowGraphNodeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowGraphNodeType left, DataflowGraphNodeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowGraphNodeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowGraphNodeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowGraphNodeType(string value) => new DataflowGraphNodeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowGraphNodeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowGraphNodeType?(string value) => value == null ? null : new DataflowGraphNodeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowGraphNodeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowGraphNodeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

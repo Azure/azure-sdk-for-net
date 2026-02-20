@@ -125,7 +125,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -162,7 +163,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -199,7 +201,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.RenamedOperation"
           },
           "parameters": [],
           "response": {},
@@ -229,7 +232,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.endpoint"
         },
         {
           "$id": "17",
@@ -247,9 +250,10 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.Service.client"
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.RenamedOperation",
       "apiVersions": [],
@@ -288,7 +292,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedTwo",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -325,7 +330,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedFour",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -362,7 +368,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.renamedSix",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.RenamedOperation"
               },
               "parameters": [],
               "response": {},
@@ -392,7 +399,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.endpoint"
             },
             {
               "$id": "27",
@@ -410,17 +417,20 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

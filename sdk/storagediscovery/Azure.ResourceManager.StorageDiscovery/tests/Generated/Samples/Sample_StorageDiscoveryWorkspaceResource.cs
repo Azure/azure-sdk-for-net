@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.StorageDiscovery.Samples
             // invoke the operation
             StorageDiscoveryWorkspacePatch patch = new StorageDiscoveryWorkspacePatch
             {
-                Properties = new StorageDiscoveryWorkspacePropertiesUpdate
+                Properties = new StorageDiscoveryWorkspacePatchProperties
                 {
                     Sku = StorageDiscoverySku.Free,
                     Description = "Updated Sample Storage Discovery Workspace",
                     WorkspaceRoots = { new ResourceIdentifier("/subscriptions/b79cb3ba-745e-5d9a-8903-4a02327a7e09") },
-                    Scopes = {new StorageDiscoveryScope("Updated-Sample-Collection", new StorageDiscoveryResourceType[]{new StorageDiscoveryResourceType("/subscriptions/b79cb3ba-745e-5d9a-8903-4a02327a7e09/resourceGroups/sample-rg/providers/Microsoft.Storage/storageAccounts/updated-sample-storageAccount")})
+                    Scopes = {new StorageDiscoveryScope("Updated-Sample-Collection", new StorageDiscoveryResourceKind[]{new StorageDiscoveryResourceKind("/subscriptions/b79cb3ba-745e-5d9a-8903-4a02327a7e09/resourceGroups/sample-rg/providers/Microsoft.Storage/storageAccounts/updated-sample-storageAccount")})
 {
 TagKeysOnly = {"updated-filtertag1", "updated-filtertag2"},
 Tags =

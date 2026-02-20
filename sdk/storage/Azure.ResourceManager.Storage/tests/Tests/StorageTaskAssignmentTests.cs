@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Storage.Models;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using System;
+using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 //using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Azure.ResourceManager.Storage.Tests
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Storage.Tests
                         null),
                     new ExecutionTrigger(
                         ExecutionTriggerType.RunOnce,
-                        new ExecutionTriggerParameters(null,null,null,null,
+                        new ExecutionTriggerParameters(null, null, null, null,
                             startOn: new DateTimeOffset(2026, 10, 1, 1, 1, 1, new TimeSpan()),
                             null)),
                     null),
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             // list TaskAssignmentInstancesReport
-            var assignments = await _storageTaskAssignmentCollection.GetAllAsync(top:1).ToEnumerableAsync();
+            var assignments = await _storageTaskAssignmentCollection.GetAllAsync(top: 1).ToEnumerableAsync();
             Assert.IsTrue(assignments.Count >= 2);
         }
 

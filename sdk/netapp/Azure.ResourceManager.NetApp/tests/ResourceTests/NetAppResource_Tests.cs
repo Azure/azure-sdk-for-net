@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
-    public class NetAppResource_Tests: NetAppTestBase
+    public class NetAppResource_Tests : NetAppTestBase
     {
         public NetAppResource_Tests(bool isAsync) : base(isAsync)
         {

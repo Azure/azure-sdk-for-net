@@ -24,5 +24,6 @@ namespace Azure.AI.Agents.Persistent.Tests
         public string BING_CONFIGURATION_NAME => GetRecordedOptionalVariable("BING_CONFIGURATION_NAME");
         public string PLAYWRIGHT_CONNECTION_ID => GetRecordedOptionalVariable("AZURE_PLAYWRIGHT_CONNECTION_ID");
         public string UPLOADED_IMAGE_ID => GetRecordedOptionalVariable("UPLOADED_IMAGE_ID");
+        public string COMPUTER_USE_ENVIRONMENT => GetRecordedOptionalVariable("COMPUTER_USE_ENVIRONMENT");
     }
 }

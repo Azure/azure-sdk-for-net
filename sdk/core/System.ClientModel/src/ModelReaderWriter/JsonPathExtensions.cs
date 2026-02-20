@@ -428,7 +428,9 @@ internal static class JsonPathExtensions
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
         bool found = TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader);
-        return jsonReader.SetCurrentValue(found, jsonPath.GetPropertyName(), json, jsonReplacement);
+        return !found && jsonPath.IsArrayIndex()
+            ? json.InsertAt(jsonPath, jsonReplacement)
+            : jsonReader.SetCurrentValue(found, jsonPath.GetPropertyName(), json, jsonReplacement);
     }
 
     /// <summary>
@@ -828,12 +830,6 @@ internal static class JsonPathExtensions
         long start = jsonReader.TokenStartIndex;
         jsonReader.Skip();
         long end = jsonReader.BytesConsumed;
-        // drop wrapping quotes for strings
-        if (json.Span[(int)start] == (byte)'"' && json.Span[(int)(end - 1)] == (byte)'"')
-        {
-            start++;
-            end--;
-        }
         target = json.Slice((int)start, (int)(end - start));
         return true;
     }

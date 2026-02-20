@@ -2,6 +2,12 @@
 
 ## 7.21.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
 ### Features Added
 
 ### Breaking Changes
@@ -9,6 +15,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Several areas of the AMQP transport integration have been cleaned up, modernized, and made more efficient.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 7.20.1 (2025-06-12)
 
@@ -246,6 +254,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.13.0 (2023-03-08)
 
 ### Acknowledgments
+
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_

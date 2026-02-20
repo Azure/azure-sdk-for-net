@@ -10,6 +10,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
     <ItemGroup>

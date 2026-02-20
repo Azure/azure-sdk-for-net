@@ -18,7 +18,7 @@ jobs:
       contains(github.event.check_run.name, 'Build Analyze') )
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: 'eng/common'
     

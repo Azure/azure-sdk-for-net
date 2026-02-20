@@ -20,7 +20,7 @@ namespace Azure.Identity
             try
             {
                 WindowsNativeMethods.CredentialData credData = Marshal.PtrToStructure<WindowsNativeMethods.CredentialData>(credentials);
-                return Marshal.PtrToStringAnsi(credData.CredentialBlob, (int) credData.CredentialBlobSize);
+                return Marshal.PtrToStringAnsi(credData.CredentialBlob, (int)credData.CredentialBlobSize);
             }
             finally
             {

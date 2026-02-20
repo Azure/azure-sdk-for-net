@@ -10,7 +10,7 @@ using System.Threading;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Page
+namespace Specs.Azure.Core.Page
 {
     public partial class TwoModelsAsPageItem
     {

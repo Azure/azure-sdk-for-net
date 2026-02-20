@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkedAccessCheck"/>. </summary>
-        /// <param name="actionName"></param>
-        /// <param name="linkedProperty"></param>
-        /// <param name="linkedAction"></param>
-        /// <param name="linkedActionVerb"></param>
-        /// <param name="linkedType"></param>
+        /// <param name="actionName"> The action name. </param>
+        /// <param name="linkedProperty"> The linked property. </param>
+        /// <param name="linkedAction"> The linked action. </param>
+        /// <param name="linkedActionVerb"> The linked action verb. </param>
+        /// <param name="linkedType"> The linked type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LinkedAccessCheck(string actionName, string linkedProperty, string linkedAction, string linkedActionVerb, string linkedType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the action name. </summary>
+        /// <summary> The action name. </summary>
         public string ActionName { get; set; }
-        /// <summary> Gets or sets the linked property. </summary>
+        /// <summary> The linked property. </summary>
         public string LinkedProperty { get; set; }
-        /// <summary> Gets or sets the linked action. </summary>
+        /// <summary> The linked action. </summary>
         public string LinkedAction { get; set; }
-        /// <summary> Gets or sets the linked action verb. </summary>
+        /// <summary> The linked action verb. </summary>
         public string LinkedActionVerb { get; set; }
-        /// <summary> Gets or sets the linked type. </summary>
+        /// <summary> The linked type. </summary>
         public string LinkedType { get; set; }
     }
 }

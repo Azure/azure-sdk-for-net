@@ -231,8 +231,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                     TypeHandlerVersion = "2.16",
                     AutoUpgradeMinorVersion = true,
                     EnableAutomaticUpgrade = true,
-                    ProtectedSettings = {},
-                    Settings = {},
+                    ProtectedSettings = { },
+                    Settings = { },
                 };
                 batchPoolCreateOptions.VirtualMachineConfiguration.Extensions.Add(vMExtension);
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
@@ -281,7 +281,11 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 batchPoolCreateOptions.NetworkConfiguration = new NetworkConfiguration()
                 {
-                    EndpointConfiguration  = batchPoolEndpointConfiguration
+                    EndpointConfiguration = batchPoolEndpointConfiguration,
+                    PublicIpAddressConfiguration = new BatchPublicIpAddressConfiguration
+                    {
+                        IpFamilies = { IPFamily.IPv4, IPFamily.IPv6 },
+                    }
                 };
 
                 // create a pool to verify we have something to query for
@@ -298,6 +302,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
                 Assert.NotNull(batchNodeRemoteLoginSettings);
                 Assert.NotNull(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
+                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginPort);
+                Assert.NotNull(batchNodeRemoteLoginSettings.Ipv6RemoteLoginIpAddress);
             }
             finally
             {
@@ -325,7 +331,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
                 BatchNodeDisableSchedulingOptions batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingOptions()
                 {
-                    NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.TaskCompletion,
+                    NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.Terminate,
                 };
                 Response response = await client.DisableNodeSchedulingAsync(poolID, batchNodeID, batchNodeDisableSchedulingContent);
                 Assert.AreEqual(200, response.Status);
@@ -335,7 +341,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 UploadBatchServiceLogsOptions uploadBatchServiceLogsContent = new UploadBatchServiceLogsOptions(new Uri("http://contoso.com"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
-                UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
+                UploadBatchServiceLogsResult uploadBatchServiceLogsResult = await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
                 Assert.NotNull(uploadBatchServiceLogsResult);
                 Assert.IsNotEmpty(uploadBatchServiceLogsResult.VirtualDirectoryName);
             }

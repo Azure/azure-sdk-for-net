@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.4 (2025-12-16)
+
+### Features Added
+
+- Upgraded api-version 2025-03-01-preview.
+- Make `Azure.ResourceManager.Nginx` AOT compatible.
 
 ## 1.1.0-beta.3 (2025-02-14)
 

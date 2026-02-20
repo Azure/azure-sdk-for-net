@@ -92,6 +92,13 @@ namespace Azure.Storage.Files.Shares.Models
         private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
         private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
         private const string ShareSnapshotNotFoundValue = "ShareSnapshotNotFound";
+        private const string FileShareProvisionedIopsInvalidValue = "FileShareProvisionedIopsInvalid";
+        private const string FileShareProvisionedBandwidthInvalidValue = "FileShareProvisionedBandwidthInvalid";
+        private const string FileShareProvisionedStorageInvalidValue = "FileShareProvisionedStorageInvalid";
+        private const string TotalSharesProvisionedCapacityExceedsAccountLimitValue = "TotalSharesProvisionedCapacityExceedsAccountLimit";
+        private const string TotalSharesProvisionedIopsExceedsAccountLimitValue = "TotalSharesProvisionedIopsExceedsAccountLimit";
+        private const string TotalSharesProvisionedBandwidthExceedsAccountLimitValue = "TotalSharesProvisionedBandwidthExceedsAccountLimit";
+        private const string TotalSharesCountExceedsAccountLimitValue = "TotalSharesCountExceedsAccountLimit";
 
         /// <summary> AccountAlreadyExists. </summary>
         public static ShareErrorCode AccountAlreadyExists { get; } = new ShareErrorCode(AccountAlreadyExistsValue);
@@ -233,6 +240,20 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareErrorCode FeatureVersionMismatch { get; } = new ShareErrorCode(FeatureVersionMismatchValue);
         /// <summary> ShareSnapshotNotFound. </summary>
         public static ShareErrorCode ShareSnapshotNotFound { get; } = new ShareErrorCode(ShareSnapshotNotFoundValue);
+        /// <summary> FileShareProvisionedIopsInvalid. </summary>
+        public static ShareErrorCode FileShareProvisionedIopsInvalid { get; } = new ShareErrorCode(FileShareProvisionedIopsInvalidValue);
+        /// <summary> FileShareProvisionedBandwidthInvalid. </summary>
+        public static ShareErrorCode FileShareProvisionedBandwidthInvalid { get; } = new ShareErrorCode(FileShareProvisionedBandwidthInvalidValue);
+        /// <summary> FileShareProvisionedStorageInvalid. </summary>
+        public static ShareErrorCode FileShareProvisionedStorageInvalid { get; } = new ShareErrorCode(FileShareProvisionedStorageInvalidValue);
+        /// <summary> TotalSharesProvisionedCapacityExceedsAccountLimit. </summary>
+        public static ShareErrorCode TotalSharesProvisionedCapacityExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesProvisionedCapacityExceedsAccountLimitValue);
+        /// <summary> TotalSharesProvisionedIopsExceedsAccountLimit. </summary>
+        public static ShareErrorCode TotalSharesProvisionedIopsExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesProvisionedIopsExceedsAccountLimitValue);
+        /// <summary> TotalSharesProvisionedBandwidthExceedsAccountLimit. </summary>
+        public static ShareErrorCode TotalSharesProvisionedBandwidthExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesProvisionedBandwidthExceedsAccountLimitValue);
+        /// <summary> TotalSharesCountExceedsAccountLimit. </summary>
+        public static ShareErrorCode TotalSharesCountExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesCountExceedsAccountLimitValue);
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are the same. </summary>
         public static bool operator ==(ShareErrorCode left, ShareErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are not the same. </summary>

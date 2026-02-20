@@ -8,7 +8,7 @@
 using System;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Override
+namespace Specs.Azure.ClientGenerator.Core.Override
 {
     public partial class OverrideClient
     {
@@ -21,5 +21,9 @@ namespace _Specs_.Azure.ClientGenerator.Core.Override
         public virtual ReorderParameters GetReorderParametersClient() => throw null;
 
         public virtual GroupParameters GetGroupParametersClient() => throw null;
+
+        public virtual RequireOptionalParameter GetRequireOptionalParameterClient() => throw null;
+
+        public virtual RemoveOptionalParameter GetRemoveOptionalParameterClient() => throw null;
     }
 }

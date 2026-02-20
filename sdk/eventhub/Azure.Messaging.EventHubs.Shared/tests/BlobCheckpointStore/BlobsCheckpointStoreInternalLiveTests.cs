@@ -459,7 +459,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 foreach (EventProcessorPartitionOwnership ownership in storedOwnershipList.OrderBy(ownership => ownership.PartitionId))
                 {
-                    Assert.That(ownership.IsEquivalentTo(ownershipList[index]), Is.True, $"Ownership of partition '{ ownership.PartitionId }' should be equivalent.");
+                    Assert.That(ownership.IsEquivalentTo(ownershipList[index]), Is.True, $"Ownership of partition '{ownership.PartitionId}' should be equivalent.");
                     ++index;
                 }
             }
@@ -530,7 +530,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 foreach (EventProcessorPartitionOwnership ownership in claimedOwnershipList.OrderBy(ownership => ownership.PartitionId))
                 {
-                    Assert.That(ownership.IsEquivalentTo(expectedOwnership.ElementAt(index)), Is.True, $"Ownership of partition '{ ownership.PartitionId }' should be equivalent.");
+                    Assert.That(ownership.IsEquivalentTo(expectedOwnership.ElementAt(index)), Is.True, $"Ownership of partition '{ownership.PartitionId}' should be equivalent.");
                     ++index;
                 }
             }

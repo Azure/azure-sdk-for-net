@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal class SaasSubscriptionDetailsOperationSource : IOperationSource<SaasSubscriptionDetails>
+    /// <summary></summary>
+    internal partial class SaasSubscriptionDetailsOperationSource : IOperationSource<SaasSubscriptionDetails>
     {
-        SaasSubscriptionDetails IOperationSource<SaasSubscriptionDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal SaasSubscriptionDetailsOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        SaasSubscriptionDetails IOperationSource<SaasSubscriptionDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SaasSubscriptionDetails result = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SaasSubscriptionDetails> IOperationSource<SaasSubscriptionDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SaasSubscriptionDetails result = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -5,7 +5,7 @@
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>CS1998;xUnit2002</NoWarn>
+    <NoWarn>CS1998;xUnit2002;NU1510</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT' ">
@@ -15,6 +15,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Server.WebListener" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -30,7 +33,7 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.csproj" />
     <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.csproj" />

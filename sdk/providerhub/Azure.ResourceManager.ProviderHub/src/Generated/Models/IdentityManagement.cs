@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IdentityManagement"/>. </summary>
-        /// <param name="managementType"></param>
+        /// <param name="managementType"> The type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IdentityManagement(IdentityManagementType? managementType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the management type. </summary>
+        /// <summary> The type. </summary>
         public IdentityManagementType? ManagementType { get; }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.Data.SchemaRegistry
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateGetSchemaGroupsRequest(RequestContext context)
         {
@@ -38,7 +38,15 @@ namespace Azure.Data.SchemaRegistry
         internal HttpMessage CreateNextGetSchemaGroupsRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -68,7 +76,15 @@ namespace Azure.Data.SchemaRegistry
         internal HttpMessage CreateNextGetSchemaVersionsRequest(Uri nextPage, string groupName, string schemaName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

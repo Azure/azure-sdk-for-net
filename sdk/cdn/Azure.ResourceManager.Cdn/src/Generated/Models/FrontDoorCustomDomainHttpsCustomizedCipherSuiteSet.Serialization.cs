@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -134,6 +136,67 @@ namespace Azure.ResourceManager.Cdn.Models
             return new FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(cipherSuiteSetForTls12 ?? new ChangeTrackingList<AfdCustomizedCipherSuiteForTls12>(), cipherSuiteSetForTls13 ?? new ChangeTrackingList<AfdCustomizedCipherSuiteForTls13>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuiteSetForTls12), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cipherSuiteSetForTls12: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CipherSuiteSetForTls12))
+                {
+                    if (CipherSuiteSetForTls12.Any())
+                    {
+                        builder.Append("  cipherSuiteSetForTls12: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CipherSuiteSetForTls12)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuiteSetForTls13), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cipherSuiteSetForTls13: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CipherSuiteSetForTls13))
+                {
+                    if (CipherSuiteSetForTls13.Any())
+                    {
+                        builder.Append("  cipherSuiteSetForTls13: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CipherSuiteSetForTls13)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,6 +205,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet)} does not support writing '{options.Format}' format.");
             }

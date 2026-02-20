@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReRegisterSubscriptionMetadata"/>. </summary>
-        /// <param name="isEnabled"></param>
+        /// <param name="isEnabled"> Whether it's enabled or not. </param>
         internal ReRegisterSubscriptionMetadata(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ReRegisterSubscriptionMetadata"/>. </summary>
-        /// <param name="isEnabled"></param>
-        /// <param name="concurrencyLimit"></param>
+        /// <param name="isEnabled"> Whether it's enabled or not. </param>
+        /// <param name="concurrencyLimit"> The concurrency limit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReRegisterSubscriptionMetadata(bool isEnabled, int? concurrencyLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets the is enabled. </summary>
+        /// <summary> Whether it's enabled or not. </summary>
         public bool IsEnabled { get; }
-        /// <summary> Gets the concurrency limit. </summary>
+        /// <summary> The concurrency limit. </summary>
         public int? ConcurrencyLimit { get; }
     }
 }

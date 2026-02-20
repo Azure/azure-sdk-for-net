@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Autorest.CSharp.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -91,6 +91,7 @@ namespace Azure.Communication.JobRouter
         private JobRouterClient(string endpoint, TokenCredential tokenCredential, JobRouterClientOptions options)
             : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(tokenCredential), options)
         {
+            _tokenCredential = tokenCredential;
         }
 
         private JobRouterClient(string endpoint, AzureKeyCredential keyCredential, JobRouterClientOptions options)

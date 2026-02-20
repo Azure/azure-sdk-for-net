@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The virtual machine instance resource definition. </summary>
     public partial class HciVmInstanceData : ResourceData
@@ -38,9 +38,11 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal HciVmInstanceProperties Properties { get; }
 
         /// <summary> Gets the Sku. </summary>
+        [WirePath("properties.sku")]
         public string HciVmInstanceSku
         {
             get

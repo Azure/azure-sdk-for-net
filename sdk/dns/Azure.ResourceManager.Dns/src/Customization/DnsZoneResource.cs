@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Dns
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _recordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

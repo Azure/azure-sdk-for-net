@@ -229,5 +229,63 @@ namespace Azure.ResourceManager.NetApp
                 throw;
             }
         }
+
+        /// <summary>
+        /// List all replications for a specified volume
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/listReplications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Volumes_ListReplications</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetAppVolumeReplication"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetAppVolumeReplication> GetReplicationsAsync(CancellationToken cancellationToken)
+        {
+            return GetReplicationsAsync(content: null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all replications for a specified volume
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/listReplications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Volumes_ListReplications</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetAppVolumeReplication"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppVolumeReplication> GetReplications(CancellationToken cancellationToken = default)
+        {
+            return GetReplications(content: null, cancellationToken);
+        }
     }
 }

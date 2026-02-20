@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public readonly partial struct AuthenticationMethod : IEquatable<AuthenticationMethod>
     {
         private readonly string _value;
+        /// <summary> The user authentication method is anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> The user authentication method is an x509 certificate. </summary>
+        private const string CertificateValue = "Certificate";
+        /// <summary> The user authentication method is a username and password. </summary>
+        private const string UsernamePasswordValue = "UsernamePassword";
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnonymousValue = "Anonymous";
-        private const string CertificateValue = "Certificate";
-        private const string UsernamePasswordValue = "UsernamePassword";
+            _value = value;
+        }
 
         /// <summary> The user authentication method is anonymous. </summary>
         public static AuthenticationMethod Anonymous { get; } = new AuthenticationMethod(AnonymousValue);
+
         /// <summary> The user authentication method is an x509 certificate. </summary>
         public static AuthenticationMethod Certificate { get; } = new AuthenticationMethod(CertificateValue);
+
         /// <summary> The user authentication method is a username and password. </summary>
         public static AuthenticationMethod UsernamePassword { get; } = new AuthenticationMethod(UsernamePasswordValue);
+
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthenticationMethod left, AuthenticationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthenticationMethod left, AuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthenticationMethod(string value) => new AuthenticationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthenticationMethod?(string value) => value == null ? null : new AuthenticationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthenticationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

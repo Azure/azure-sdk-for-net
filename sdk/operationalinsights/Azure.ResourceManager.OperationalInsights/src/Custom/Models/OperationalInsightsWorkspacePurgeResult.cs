@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> ID of the operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property has been replaced by ResourceUriString", false)]
-        public Guid OperationId { get;}
+        public Guid OperationId { get; }
     }
 }

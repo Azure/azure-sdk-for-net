@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The KeyVaultSigningKeyType.
-    /// Serialized Name: KeyVaultSigningKeyParametersType
-    /// </summary>
+    /// <summary> The KeyVaultSigningKeyType. </summary>
     public readonly partial struct KeyVaultSigningKeyType : IEquatable<KeyVaultSigningKeyType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string KeyVaultSigningKeyValue = "KeyVaultSigningKeyParameters";
 
-        /// <summary>
-        /// KeyVaultSigningKeyParameters
-        /// Serialized Name: KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters
-        /// </summary>
+        /// <summary> KeyVaultSigningKeyParameters. </summary>
         public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => left.Equals(right);

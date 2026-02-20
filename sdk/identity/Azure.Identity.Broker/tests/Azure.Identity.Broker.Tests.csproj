@@ -4,6 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);SCME0002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Identity\tests\ConfigurableCredentials\ConfigurableCredentialTestHelper.cs" LinkBase="ConfigurableCredentials" />
     <Compile Include="*.cs" Exclude="*Manual*.cs" />
+    <Compile Include="ConfigurableCredentials\*.cs" />
     <Compile Include="ManualInteractiveBrowserCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
     <Compile Include="ManualSharedTokenCacheCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
     <Compile Include="ManualInteractiveBrowserCredentialBrokerTestsLinux.cs" Condition="$([MSBuild]::IsOsPlatform('Linux'))" />

@@ -49,5 +49,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal Uri Endpoint { get => _endpoint; }
     }
 }

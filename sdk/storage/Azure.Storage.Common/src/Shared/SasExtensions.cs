@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Azure.Storage.Sas
@@ -187,6 +188,56 @@ namespace Azure.Storage.Sas
             // "yyyy-MM-ddTHH:mm:ssZ"
             (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
+        internal static string FormatRequestHeadersForSasSigning(Dictionary<string, string> requestHeaders)
+        {
+            if (requestHeaders == null || requestHeaders.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in requestHeaders)
+            {
+                sb
+                .Append(entry.Key)
+                .Append(':')
+                .Append(entry.Value)
+                .Append('\n');
+            }
+            return sb.ToString();
+        }
+
+        internal static string FormatRequestQueryParametersForSasSigning(Dictionary<string, string> requestQueryParameters)
+        {
+            if (requestQueryParameters == null || requestQueryParameters.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in requestQueryParameters)
+            {
+                sb
+                .Append('\n')
+                .Append(entry.Key)
+                .Append(':')
+                .Append(entry.Value);
+            }
+            return sb.ToString();
+        }
+
+        internal static List<string> ConvertRequestDictToKeyList(Dictionary<string, string> dict)
+        {
+            if (dict == null)
+            {
+                return null;
+            }
+            List<string> list = new List<string>();
+            foreach (var kvp in dict)
+            {
+                list.Add(kvp.Key);
+            }
+            return list;
+        }
+
         /// <summary>
         /// Helper method to add query param key value pairs to StringBuilder
         /// </summary>
@@ -238,5 +289,21 @@ namespace Azure.Storage.Sas
 
             return stringBuilder.ToString();
         }
+
+        /// <summary>
+        /// ComputeHMACSHA256 generates a base-64 hash signature string for an
+        /// HTTP request or for a SAS.
+        /// </summary>
+        /// <param name="userDelegationKeyValue">
+        /// A UserDelegationKey.Value used to sign with a key
+        /// representing AD credentials.
+        /// </param>
+        /// <param name="message">The message to sign.</param>
+        /// <returns>The signed message.</returns>
+        internal static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+            Convert.ToBase64String(
+                new HMACSHA256(
+                    Convert.FromBase64String(userDelegationKeyValue))
+                .ComputeHash(Encoding.UTF8.GetBytes(message)));
     }
 }

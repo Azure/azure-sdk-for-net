@@ -19,6 +19,18 @@ namespace Azure.AI.Projects
         private const string SexualValue = "Sexual";
         /// <summary> Represents content related to self-harm. </summary>
         private const string SelfHarmValue = "SelfHarm";
+        /// <summary> Represents content that involves illegal activities. </summary>
+        private const string ProtectedMaterialValue = "ProtectedMaterial";
+        /// <summary> Represents content that contains vulnerabilities in code. </summary>
+        private const string CodeVulnerabilityValue = "CodeVulnerability";
+        /// <summary> Represents content that lacks a solid grounding in fact. </summary>
+        private const string UngroundedAttributesValue = "UngroundedAttributes";
+        /// <summary> Represents content that involves prohibited actions. </summary>
+        private const string ProhibitedActionsValue = "ProhibitedActions";
+        /// <summary> Represents content that involves sensitive data leakage. </summary>
+        private const string SensitiveDataLeakageValue = "SensitiveDataLeakage";
+        /// <summary> Represents content that involves task adherence. </summary>
+        private const string TaskAdherenceValue = "TaskAdherence";
 
         /// <summary> Initializes a new instance of <see cref="RiskCategory"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,6 +53,24 @@ namespace Azure.AI.Projects
 
         /// <summary> Represents content related to self-harm. </summary>
         public static RiskCategory SelfHarm { get; } = new RiskCategory(SelfHarmValue);
+
+        /// <summary> Represents content that involves illegal activities. </summary>
+        public static RiskCategory ProtectedMaterial { get; } = new RiskCategory(ProtectedMaterialValue);
+
+        /// <summary> Represents content that contains vulnerabilities in code. </summary>
+        public static RiskCategory CodeVulnerability { get; } = new RiskCategory(CodeVulnerabilityValue);
+
+        /// <summary> Represents content that lacks a solid grounding in fact. </summary>
+        public static RiskCategory UngroundedAttributes { get; } = new RiskCategory(UngroundedAttributesValue);
+
+        /// <summary> Represents content that involves prohibited actions. </summary>
+        public static RiskCategory ProhibitedActions { get; } = new RiskCategory(ProhibitedActionsValue);
+
+        /// <summary> Represents content that involves sensitive data leakage. </summary>
+        public static RiskCategory SensitiveDataLeakage { get; } = new RiskCategory(SensitiveDataLeakageValue);
+
+        /// <summary> Represents content that involves task adherence. </summary>
+        public static RiskCategory TaskAdherence { get; } = new RiskCategory(TaskAdherenceValue);
 
         /// <summary> Determines if two <see cref="RiskCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

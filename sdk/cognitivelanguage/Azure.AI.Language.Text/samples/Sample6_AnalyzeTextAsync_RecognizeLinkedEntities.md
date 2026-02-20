@@ -17,7 +17,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Recognizing linked entities in multiple documents
 
-To recognize linked entities in multiple documents, call `AnalyzeText` on an TextEntityLinkingInput.  The results are returned as a `AnalyzeTextEntityLinkingResult`.
+To recognize linked entities in multiple documents, call `AnalyzeTextAsync` on an TextEntityLinkingInput.  The results are returned as a `AnalyzeTextEntityLinkingResult`.
 
 ```C# Snippet:Sample6_AnalyzeTextAsync_RecognizeLinkedEntities
 string textA =

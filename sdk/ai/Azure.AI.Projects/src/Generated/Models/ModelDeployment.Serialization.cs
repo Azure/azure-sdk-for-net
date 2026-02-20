@@ -10,8 +10,48 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Deployment Definition. </summary>
-    public partial class ModelDeployment : AssetDeployment, IJsonModel<ModelDeployment>
+    public partial class ModelDeployment : AIProjectDeployment, IJsonModel<ModelDeployment>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AIProjectDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeModelDeployment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ModelDeployment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ModelDeployment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ModelDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelDeployment IPersistableModel<ModelDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => (ModelDeployment)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ModelDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ModelDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -80,7 +120,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AssetDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AIProjectDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -99,7 +139,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            DeploymentType @type = default;
+            AIProjectDeploymentType @type = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string modelName = default;
@@ -112,7 +152,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DeploymentType(prop.Value.GetString());
+                    @type = new AIProjectDeploymentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -178,45 +218,5 @@ namespace Azure.AI.Projects
                 sku,
                 connectionName);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ModelDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ModelDeployment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ModelDeployment IPersistableModel<ModelDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => (ModelDeployment)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AssetDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeModelDeployment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ModelDeployment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ModelDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
 {

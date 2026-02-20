@@ -123,7 +123,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             scope.SetTagMaybe(GenAiRequestTopPKey, createAgentRequest.TopP);
 
             string evnt = s_traceContent ? JsonSerializer.Serialize(
-                new EventContent (createAgentRequest.Instructions),
+                new EventContent(createAgentRequest.Instructions),
                 EventsContext.Default.EventContent
             ) : JsonSerializer.Serialize("", EventsContext.Default.String);
             ActivityTagsCollection messageTags = new() {
@@ -185,7 +185,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             {
                 string message = createMessageRequest.Content.ToString().Trim('"');
                 evnt = JsonSerializer.Serialize(
-                    new EventContentRole(content: message, role:createMessageRequest.Role.ToString()),
+                    new EventContentRole(content: message, role: createMessageRequest.Role.ToString()),
                     EventsContext.Default.EventContentRole
                 );
             }
@@ -371,9 +371,12 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             // Log tool outputs as events
             if (submitToolOutputsRequest.ToolOutputs != null)
             {
-                foreach (var toolOutput in submitToolOutputsRequest.ToolOutputs)
+                foreach (var structuredToolOutput in submitToolOutputsRequest.ToolOutputs)
                 {
-                    scope.RecordToolOutputEvent(toolOutput);
+                    if (structuredToolOutput is ToolOutput toolOutput)
+                    {
+                        scope.RecordToolOutputEvent(toolOutput);
+                    }
                 }
             }
 
@@ -466,7 +469,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             return SubmitToolOutputsToRunRequest.DeserializeSubmitToolOutputsToRunRequest(document.RootElement);
         }
 
-        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName=null)
+        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null)
         {
             _scopeType = activityName switch
             {

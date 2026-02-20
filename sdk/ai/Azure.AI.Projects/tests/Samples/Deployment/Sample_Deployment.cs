@@ -4,16 +4,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_Deployment : SamplesBase
 {
     private void EnableSystemClientModelDebugging()
     {
@@ -73,7 +74,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
@@ -85,13 +86,13 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 #endif
 
         Console.WriteLine("List all deployments:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
+        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
@@ -114,7 +115,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
@@ -126,13 +127,13 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 #endif
 
         Console.WriteLine("List all deployments:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+        await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+        await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
@@ -142,4 +143,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(deploymentDetails);
         #endregion
     }
+
+    public Sample_Deployment(bool isAsync) : base(isAsync)
+    { }
 }

@@ -131,14 +131,16 @@ namespace Azure.Core.TestFramework.Tests
             string exceptionPrefix = IsAsync ? "async" : "sync";
 
             // Static schema
-            try { await client.GetFailureAsync<string>(); }
+            try
+            { await client.GetFailureAsync<string>(); }
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual($"{exceptionPrefix} - static", ex.Message);
             }
 
             // Dynamic schema
-            try { await client.GetFailureAsync(); }
+            try
+            { await client.GetFailureAsync(); }
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual($"{exceptionPrefix} - dynamic", ex.Message);
@@ -157,6 +159,28 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task SubClientPropertyWithoutClientSuffixIsAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            AnotherType subClient = client.SubClientProperty;
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
+        public async Task SubClientWithoutClientSuffixIsAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            AnotherType subClient = client.GetAnotherType();
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
         public async Task SubClientPropertyCallsAreAutoInstrumented()
         {
             TestClient client = InstrumentClient(new TestClient());
@@ -165,6 +189,17 @@ namespace Azure.Core.TestFramework.Tests
             var result = await subClient.MethodAsync(123);
 
             Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
+        public void NonPublicSubClientPropertyCallsAreNotAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            InternalType subClient = client.GetInternalType();
+            // should not throw
+            var result = subClient.Method(123);
+            Assert.AreEqual("Sync 123 False", result);
         }
 
         [Test]

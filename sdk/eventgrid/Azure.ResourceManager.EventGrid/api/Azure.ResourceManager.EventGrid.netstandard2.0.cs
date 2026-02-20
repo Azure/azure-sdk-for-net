@@ -2042,9 +2042,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateSubject { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource left, Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource (string value) { throw null; }
@@ -2056,7 +2054,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.CaCertificateData CaCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string encodedCertificate = null, System.DateTimeOffset? issueTimeInUtc = default(System.DateTimeOffset?), System.DateTimeOffset? expiryTimeInUtc = default(System.DateTimeOffset?), Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.CustomDomainOwnershipValidationResult CustomDomainOwnershipValidationResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomainsForTopicsConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomainsForTopicSpacesConfiguration = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.DomainTopicData DomainTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventGrid.EventGridDomainData EventGridDomainData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState? provisioningState, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed, System.Uri endpoint, Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? inputSchema, Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo eventTypeInfo, Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? dataResidencyBoundary) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridDomainData EventGridDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.EventGridSku? skuName = default(Azure.ResourceManager.EventGrid.Models.EventGridSku?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState?), Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?), System.Uri endpoint = null, Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? inputSchema = default(Azure.ResourceManager.EventGrid.Models.EventGridInputSchema?), Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo eventTypeInfo = null, Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping inputSchemaMapping = null, string metricResourceId = null, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules = null, bool? isLocalAuthDisabled = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? dataResidencyBoundary = default(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventGridDomainSharedAccessKeys EventGridDomainSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
@@ -2067,7 +2064,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData EventGridPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointConnectionState connectionState = null, Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData EventGridPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, string displayName = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridSubscriptionData EventGridSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string topic = null, Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState?), Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination destination = null, Azure.ResourceManager.EventGrid.Models.DeliveryWithResourceIdentity deliveryWithResourceIdentity = null, Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter filter = null, System.Collections.Generic.IEnumerable<string> labels = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.EventGrid.Models.EventDeliverySchema? eventDeliverySchema = default(Azure.ResourceManager.EventGrid.Models.EventDeliverySchema?), Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy retryPolicy = null, Azure.ResourceManager.EventGrid.Models.DeadLetterDestination deadLetterDestination = null, Azure.ResourceManager.EventGrid.Models.DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventGrid.EventGridTopicData EventGridTopicData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState? provisioningState, System.Uri endpoint, Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo eventTypeInfo, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed, Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? inputSchema, Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? dataResidencyBoundary) { throw null; }
         public static Azure.ResourceManager.EventGrid.EventGridTopicData EventGridTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.EventGridSku? skuName = default(Azure.ResourceManager.EventGrid.Models.EventGridSku?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.EventGrid.Models.ResourceKind? kind = default(Azure.ResourceManager.EventGrid.Models.ResourceKind?), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState?), System.Uri endpoint = null, Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo eventTypeInfo = null, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?), Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? inputSchema = default(Azure.ResourceManager.EventGrid.Models.EventGridInputSchema?), Azure.ResourceManager.EventGrid.Models.EventGridInputSchemaMapping inputSchemaMapping = null, string metricResourceId = null, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? dataResidencyBoundary = default(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri EventSubscriptionFullUri(System.Uri endpoint = null) { throw null; }
@@ -2075,14 +2071,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.ExtensionTopicData ExtensionTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string systemTopic = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.NamespaceSharedAccessKeys NamespaceSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.NamespaceTopicData NamespaceTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState?), Azure.ResourceManager.EventGrid.Models.PublisherType? publisherType = default(Azure.ResourceManager.EventGrid.Models.PublisherType?), Azure.ResourceManager.EventGrid.Models.EventInputSchema? inputSchema = default(Azure.ResourceManager.EventGrid.Models.EventInputSchema?), int? eventRetentionInDays = default(int?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState? provisioningState, Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration deliveryConfiguration, Azure.ResourceManager.EventGrid.Models.DeliverySchema? eventDeliverySchema, Azure.ResourceManager.EventGrid.Models.FiltersConfiguration filtersConfiguration, System.DateTimeOffset? expireOn) { throw null; }
         public static Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState?), Azure.ResourceManager.EventGrid.Models.DeliveryConfiguration deliveryConfiguration = null, Azure.ResourceManager.EventGrid.Models.DeliverySchema? eventDeliverySchema = default(Azure.ResourceManager.EventGrid.Models.DeliverySchema?), Azure.ResourceManager.EventGrid.Models.FiltersConfiguration filtersConfiguration = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssues> provisioningIssues = null, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterInfo networkSecurityPerimeter = null, Azure.ResourceManager.EventGrid.Models.ResourceAssociation resourceAssociation = null, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationProfile profile = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerConfigurationData PartnerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventGrid.Models.PartnerAuthorization partnerAuthorization = null, Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerDestinationData PartnerDestinationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string endpointServiceContext = null, System.DateTimeOffset? expirationTimeIfNotActivatedUtc = default(System.DateTimeOffset?), Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState?), Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState? activationState = default(Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState?), System.Uri endpointBaseUri = null, string messageForActivation = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData PartnerNamespaceChannelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType? channelType = default(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType?), Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo partnerTopicInfo = null, Azure.ResourceManager.EventGrid.Models.PartnerDestinationInfo partnerDestinationInfo = null, string messageForActivation = null, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState?), Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState? readinessState = default(Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState?), System.DateTimeOffset? expireOnIfNotActivated = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventGrid.PartnerNamespaceChannelData PartnerNamespaceChannelData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType? channelType, Azure.ResourceManager.EventGrid.Models.PartnerTopicInfo partnerTopicInfo, string messageForActivation, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState? provisioningState, Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState? readinessState, System.DateTimeOffset? expireOnIfNotActivated) { throw null; }
         public static Azure.ResourceManager.EventGrid.PartnerNamespaceData PartnerNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState?), Azure.Core.ResourceIdentifier partnerRegistrationFullyQualifiedId = null, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?), System.Uri endpoint = null, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> inboundIPRules = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode? partnerTopicRoutingMode = default(Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceSharedAccessKeys PartnerNamespaceSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
@@ -2094,11 +2088,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TopicSharedAccessKeys TopicSharedAccessKeys(string key1 = null, string key2 = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.TopicSpaceData TopicSpaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> topicTemplates = null, Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration TopicSpacesConfiguration(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState? state = default(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState?), string routeTopicResourceId = null, string hostname = null, Azure.ResourceManager.EventGrid.Models.RoutingEnrichments routingEnrichments = null, Azure.ResourceManager.EventGrid.Models.ClientAuthenticationSettings clientAuthentication = null, int? maximumSessionExpiryInHours = default(int?), int? maximumClientSessionsPerAuthenticationName = default(int?), Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo routingIdentityInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomains = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventGrid.Models.TopicSpacesConfiguration TopicSpacesConfiguration(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, Azure.ResourceManager.EventGrid.Models.RoutingEnrichments routingEnrichments, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, Azure.ResourceManager.EventGrid.Models.RoutingIdentityInfo routingIdentityInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.CustomDomainConfiguration> customDomains) { throw null; }
         public static Azure.ResourceManager.EventGrid.TopicTypeData TopicTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provider = null, string displayName = null, string description = null, Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType? resourceRegionType = default(Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType?), Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState?), System.Collections.Generic.IEnumerable<string> supportedLocations = null, string sourceResourceFormat = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope> supportedScopesForSource = null, bool? areRegionalAndGlobalSourcesSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.VerifiedPartnerData VerifiedPartnerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string organizationName = null, string partnerDisplayName = null, Azure.ResourceManager.EventGrid.Models.PartnerDetails partnerTopicDetails = null, Azure.ResourceManager.EventGrid.Models.PartnerDetails partnerDestinationDetails = null, Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState? provisioningState = default(Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventGrid.VerifiedPartnerData VerifiedPartnerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, Azure.ResourceManager.EventGrid.Models.PartnerDetails partnerTopicDetails, Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(System.Uri endpoint = null, System.Uri baseEndpoint = null, int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), System.Guid? azureActiveDirectoryTenantId = default(System.Guid?), string uriOrAzureActiveDirectoryApplicationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> deliveryAttributeMappings = null, Azure.ResourceManager.EventGrid.Models.TlsVersion? minimumTlsVersionAllowed = default(Azure.ResourceManager.EventGrid.Models.TlsVersion?)) { throw null; }
     }
@@ -2164,9 +2156,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState left, Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.CaCertificateProvisioningState (string value) { throw null; }
@@ -2211,9 +2201,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme ThumbprintMatch { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme UriMatchesAuthenticationName { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme left, Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.ClientCertificateValidationScheme (string value) { throw null; }
@@ -2234,9 +2222,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState left, Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.ClientGroupProvisioningState (string value) { throw null; }
@@ -2280,9 +2266,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomDomainIdentityType (string value) { throw null; }
@@ -2311,9 +2295,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState ErrorRetrievingDnsRecord { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState left, Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomDomainValidationState (string value) { throw null; }
@@ -2341,9 +2323,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomJwtAuthenticationManagedIdentityType (string value) { throw null; }
@@ -2384,9 +2364,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.CustomWebhookAuthenticationManagedIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.CustomWebhookAuthenticationManagedIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.CustomWebhookAuthenticationManagedIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.CustomWebhookAuthenticationManagedIdentityType left, Azure.ResourceManager.EventGrid.Models.CustomWebhookAuthenticationManagedIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.CustomWebhookAuthenticationManagedIdentityType (string value) { throw null; }
@@ -2402,9 +2380,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary WithinGeopair { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary WithinRegion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary left, Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary (string value) { throw null; }
@@ -2466,9 +2442,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.DeliveryMode Push { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.DeliveryMode Queue { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.DeliveryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.DeliveryMode left, Azure.ResourceManager.EventGrid.Models.DeliveryMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.DeliveryMode (string value) { throw null; }
@@ -2483,9 +2457,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public DeliverySchema(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.DeliverySchema CloudEventSchemaV10 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.DeliverySchema other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.DeliverySchema left, Azure.ResourceManager.EventGrid.Models.DeliverySchema right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.DeliverySchema (string value) { throw null; }
@@ -2517,9 +2489,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState left, Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.DomainTopicProvisioningState (string value) { throw null; }
@@ -2569,9 +2539,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public EventDefinitionKind(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventDefinitionKind Inline { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventDefinitionKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventDefinitionKind left, Azure.ResourceManager.EventGrid.Models.EventDefinitionKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventDefinitionKind (string value) { throw null; }
@@ -2588,9 +2556,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventDeliverySchema CustomInputSchema { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventDeliverySchema EventGridSchema { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventDeliverySchema other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventDeliverySchema left, Azure.ResourceManager.EventGrid.Models.EventDeliverySchema right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventDeliverySchema (string value) { throw null; }
@@ -2631,9 +2597,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridDomainProvisioningState (string value) { throw null; }
@@ -2696,9 +2660,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridInputSchema CustomEventSchema { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridInputSchema EventGridSchema { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridInputSchema other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridInputSchema left, Azure.ResourceManager.EventGrid.Models.EventGridInputSchema right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridInputSchema (string value) { throw null; }
@@ -2723,9 +2685,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public EventGridIPActionType(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventGridIPActionType Allow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridIPActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridIPActionType left, Azure.ResourceManager.EventGrid.Models.EventGridIPActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridIPActionType (string value) { throw null; }
@@ -2762,9 +2722,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientProvisioningState (string value) { throw null; }
@@ -2780,9 +2738,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState Disabled { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState left, Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridNamespaceClientState (string value) { throw null; }
@@ -2843,9 +2799,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus left, Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridPrivateEndpointPersistedConnectionStatus (string value) { throw null; }
@@ -2862,9 +2816,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess left, Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridPublicNetworkAccess (string value) { throw null; }
@@ -2884,9 +2836,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState (string value) { throw null; }
@@ -2902,9 +2852,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType GlobalResource { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType RegionalResource { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType left, Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridResourceRegionType (string value) { throw null; }
@@ -2920,9 +2868,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridSku Basic { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridSku Premium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridSku left, Azure.ResourceManager.EventGrid.Models.EventGridSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridSku (string value) { throw null; }
@@ -2937,9 +2883,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public EventGridSkuName(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventGridSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridSkuName left, Azure.ResourceManager.EventGrid.Models.EventGridSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridSkuName (string value) { throw null; }
@@ -2997,9 +2941,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventGridTopicProvisioningState (string value) { throw null; }
@@ -3026,9 +2968,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public EventInputSchema(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventInputSchema CloudEventSchemaV10 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventInputSchema other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventInputSchema left, Azure.ResourceManager.EventGrid.Models.EventInputSchema right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventInputSchema (string value) { throw null; }
@@ -3094,9 +3034,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType left, Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType (string value) { throw null; }
@@ -3117,9 +3055,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState left, Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.EventSubscriptionProvisioningState (string value) { throw null; }
@@ -3279,9 +3215,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity Sev3 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity Sev4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity left, Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.MonitorAlertSeverity (string value) { throw null; }
@@ -3305,9 +3239,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState UpdatedFailed { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState left, Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NamespaceProvisioningState (string value) { throw null; }
@@ -3403,9 +3335,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState UpdatedFailed { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState left, Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NamespaceTopicProvisioningState (string value) { throw null; }
@@ -3422,9 +3352,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode Enforced { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode Learning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterAssociationAccessMode (string value) { throw null; }
@@ -3446,9 +3374,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigProvisioningState (string value) { throw null; }
@@ -3480,9 +3406,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity Error { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueSeverity (string value) { throw null; }
@@ -3500,9 +3424,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType MissingPerimeterConfiguration { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterConfigurationIssueType (string value) { throw null; }
@@ -3566,9 +3488,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection left, Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.NetworkSecurityPerimeterProfileAccessRuleDirection (string value) { throw null; }
@@ -3798,9 +3718,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState (string value) { throw null; }
@@ -3816,9 +3734,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState Activated { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState NeverActivated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState left, Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState (string value) { throw null; }
@@ -3865,9 +3781,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerDestinationProvisioningState (string value) { throw null; }
@@ -3926,9 +3840,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelProvisioningState (string value) { throw null; }
@@ -3944,9 +3856,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType PartnerDestination { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType PartnerTopic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType left, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerNamespaceChannelType (string value) { throw null; }
@@ -3981,9 +3891,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerNamespaceProvisioningState (string value) { throw null; }
@@ -4037,9 +3945,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState (string value) { throw null; }
@@ -4056,9 +3962,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState Deactivated { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState NeverActivated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState left, Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState (string value) { throw null; }
@@ -4118,9 +4022,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState left, Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerTopicProvisioningState (string value) { throw null; }
@@ -4136,9 +4038,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState Activated { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState NeverActivated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState left, Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerTopicReadinessState (string value) { throw null; }
@@ -4154,9 +4054,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode ChannelNameHeader { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode SourceEventAttribute { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode left, Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PartnerTopicRoutingMode (string value) { throw null; }
@@ -4187,9 +4085,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState left, Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PermissionBindingProvisioningState (string value) { throw null; }
@@ -4205,9 +4101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.PermissionType Publisher { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.PermissionType Subscriber { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PermissionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PermissionType left, Azure.ResourceManager.EventGrid.Models.PermissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PermissionType (string value) { throw null; }
@@ -4222,9 +4116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public PublisherType(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.PublisherType Custom { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.PublisherType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.PublisherType left, Azure.ResourceManager.EventGrid.Models.PublisherType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.PublisherType (string value) { throw null; }
@@ -4281,9 +4173,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.ResourceKind Azure { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.ResourceKind AzureArc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.ResourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.ResourceKind left, Azure.ResourceManager.EventGrid.Models.ResourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.ResourceKind (string value) { throw null; }
@@ -4337,9 +4227,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.RoutingIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.RoutingIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.RoutingIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.RoutingIdentityType left, Azure.ResourceManager.EventGrid.Models.RoutingIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.RoutingIdentityType (string value) { throw null; }
@@ -4634,9 +4522,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState UpdatedFailed { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState left, Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.SubscriptionProvisioningState (string value) { throw null; }
@@ -4665,9 +4551,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TlsVersion One1 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TlsVersion One2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.TlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.TlsVersion left, Azure.ResourceManager.EventGrid.Models.TlsVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.TlsVersion (string value) { throw null; }
@@ -4723,9 +4607,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState left, Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.TopicSpaceProvisioningState (string value) { throw null; }
@@ -4760,9 +4642,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState Disabled { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState left, Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.TopicSpacesConfigurationState (string value) { throw null; }
@@ -4794,9 +4674,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState left, Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.TopicTypeProvisioningState (string value) { throw null; }
@@ -4814,9 +4692,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope Resource { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope ResourceGroup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope left, Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.TopicTypeSourceScope (string value) { throw null; }
@@ -4854,9 +4730,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState left, Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventGrid.Models.VerifiedPartnerProvisioningState (string value) { throw null; }

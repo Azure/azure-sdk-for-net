@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <summary> Injects specially crafted prompts to bypass AI safeguards, known as User Injected Prompt Attacks (UPIA). </summary>
         private const string JailbreakValue = "jailbreak";
         /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
-        private const string AnsiiAttackValue = "ansii_attack";
+        private const string AnsiAttackValue = "ansi_attack";
         /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
         private const string CharacterSwapValue = "character_swap";
         /// <summary> Appends an adversarial suffix to the prompt. </summary>
@@ -59,6 +59,14 @@ namespace Azure.AI.Projects
         private const string UrlValue = "url";
         /// <summary> Represents the baseline direct adversarial probing, which is used by attack strategies as the attack objective. </summary>
         private const string BaselineValue = "baseline";
+        /// <summary> Represents indirect jailbreak attacks that use complex methods to bypass AI safeguards. </summary>
+        private const string IndirectJailbreakValue = "indirect_jailbreak";
+        /// <summary> Alters the tense of the text, changing its temporal context. </summary>
+        private const string TenseValue = "tense";
+        /// <summary> Creates multi-turn conversations to simulate extended interactions. </summary>
+        private const string MultiTurnValue = "multi_turn";
+        /// <summary> Gradually increases the intensity or complexity of the attack over time. </summary>
+        private const string CrescendoValue = "crescendo";
 
         /// <summary> Initializes a new instance of <see cref="AttackStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -104,7 +112,7 @@ namespace Azure.AI.Projects
         public static AttackStrategy Jailbreak { get; } = new AttackStrategy(JailbreakValue);
 
         /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
-        public static AttackStrategy AnsiiAttack { get; } = new AttackStrategy(AnsiiAttackValue);
+        public static AttackStrategy AnsiAttack { get; } = new AttackStrategy(AnsiAttackValue);
 
         /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
         public static AttackStrategy CharacterSwap { get; } = new AttackStrategy(CharacterSwapValue);
@@ -141,6 +149,18 @@ namespace Azure.AI.Projects
 
         /// <summary> Represents the baseline direct adversarial probing, which is used by attack strategies as the attack objective. </summary>
         public static AttackStrategy Baseline { get; } = new AttackStrategy(BaselineValue);
+
+        /// <summary> Represents indirect jailbreak attacks that use complex methods to bypass AI safeguards. </summary>
+        public static AttackStrategy IndirectJailbreak { get; } = new AttackStrategy(IndirectJailbreakValue);
+
+        /// <summary> Alters the tense of the text, changing its temporal context. </summary>
+        public static AttackStrategy Tense { get; } = new AttackStrategy(TenseValue);
+
+        /// <summary> Creates multi-turn conversations to simulate extended interactions. </summary>
+        public static AttackStrategy MultiTurn { get; } = new AttackStrategy(MultiTurnValue);
+
+        /// <summary> Gradually increases the intensity or complexity of the attack over time. </summary>
+        public static AttackStrategy Crescendo { get; } = new AttackStrategy(CrescendoValue);
 
         /// <summary> Determines if two <see cref="AttackStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

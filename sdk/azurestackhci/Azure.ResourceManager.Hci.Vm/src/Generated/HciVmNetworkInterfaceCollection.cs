@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Hci.Vm
     /// </summary>
     public partial class HciVmNetworkInterfaceCollection : ArmCollection, IEnumerable<HciVmNetworkInterfaceResource>, IAsyncEnumerable<HciVmNetworkInterfaceResource>
     {
-        private readonly ClientDiagnostics _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics;
-        private readonly NetworkInterfacesRestOperations _hciVmNetworkInterfaceNetworkInterfacesRestClient;
+        private readonly ClientDiagnostics _networkInterfacesClientDiagnostics;
+        private readonly NetworkInterfaces _networkInterfacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmNetworkInterfaceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmNetworkInterfaceCollection for mocking. </summary>
         protected HciVmNetworkInterfaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmNetworkInterfaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmNetworkInterfaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmNetworkInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciVmNetworkInterfaceResource.ResourceType, out string hciVmNetworkInterfaceNetworkInterfacesApiVersion);
-            _hciVmNetworkInterfaceNetworkInterfacesRestClient = new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkInterfaceNetworkInterfacesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciVmNetworkInterfaceResource.ResourceType, out string hciVmNetworkInterfaceApiVersion);
+            _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
+            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Endpoint, hciVmNetworkInterfaceApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create or update a network interface. Please note some properties can be set only during network interface creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciVmNetworkInterfaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkInterfaceName, HciVmNetworkInterfaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmNetworkInterfaceResource>(new HciVmNetworkInterfaceOperationSource(Client), _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
+                    new HciVmNetworkInterfaceOperationSource(Client),
+                    _networkInterfacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Hci.Vm
         /// The operation to create or update a network interface. Please note some properties can be set only during network interface creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciVmNetworkInterfaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkInterfaceName, HciVmNetworkInterfaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmNetworkInterfaceResource>(new HciVmNetworkInterfaceOperationSource(Client), _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
+                    new HciVmNetworkInterfaceOperationSource(Client),
+                    _networkInterfacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a network interface
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciVmNetworkInterfaceResource>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Get");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkInterfaceNetworkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmNetworkInterfaceData> response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a network interface
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciVmNetworkInterfaceResource> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Get");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkInterfaceNetworkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmNetworkInterfaceData> response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Lists all of the network interfaces in the specified resource group. Use the nextLink property in the response to get the next page of network interfaces.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmNetworkInterfaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkInterfaceResource(Client, HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(e)), _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "HciVmNetworkInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetByResourceGroupAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the network interfaces in the specified resource group. Use the nextLink property in the response to get the next page of network interfaces.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <returns> A collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmNetworkInterfaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkInterfaceResource(Client, HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(e)), _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "HciVmNetworkInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetByResourceGroupCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Exists");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkInterfaceNetworkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmNetworkInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Exists");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkInterfaceNetworkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmNetworkInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciVmNetworkInterfaceResource>> GetIfExistsAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciVmNetworkInterfaceNetworkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmNetworkInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmNetworkInterfaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciVmNetworkInterfaceResource> GetIfExists(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkInterfacesClientDiagnostics.CreateScope("HciVmNetworkInterfaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciVmNetworkInterfaceNetworkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmNetworkInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmNetworkInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmNetworkInterfaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmNetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciVmNetworkInterfaceResource> IAsyncEnumerable<HciVmNetworkInterfaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

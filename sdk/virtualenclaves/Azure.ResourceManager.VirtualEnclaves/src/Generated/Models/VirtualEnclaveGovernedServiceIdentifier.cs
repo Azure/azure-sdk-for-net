@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
@@ -14,77 +15,122 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     public readonly partial struct VirtualEnclaveGovernedServiceIdentifier : IEquatable<VirtualEnclaveGovernedServiceIdentifier>
     {
         private readonly string _value;
+        /// <summary> Service identifier for AKS. </summary>
+        private const string AksValue = "AKS";
+        /// <summary> Service identifier for App Service. </summary>
+        private const string AppServiceValue = "AppService";
+        /// <summary> Service identifier for Azure Firewalls. </summary>
+        private const string AzureFirewallsValue = "AzureFirewalls";
+        /// <summary> Service identifier for Container Registry. </summary>
+        private const string ContainerRegistryValue = "ContainerRegistry";
+        /// <summary> Service identifier for CosmosDB. </summary>
+        private const string CosmosDBValue = "CosmosDB";
+        /// <summary> Service identifier for Data Connectors. </summary>
+        private const string DataConnectorsValue = "DataConnectors";
+        /// <summary> Service identifier for Insights. </summary>
+        private const string InsightsValue = "Insights";
+        /// <summary> Service identifier for Key Vault. </summary>
+        private const string KeyVaultValue = "KeyVault";
+        /// <summary> Service identifier for Logic. </summary>
+        private const string LogicValue = "Logic";
+        /// <summary> Service identifier for Microsoft SQL. </summary>
+        private const string MicrosoftSqlValue = "MicrosoftSQL";
+        /// <summary> Service identifier for Monitoring. </summary>
+        private const string MonitoringValue = "Monitoring";
+        /// <summary> Service identifier for PostgreSQL. </summary>
+        private const string PostgreSqlValue = "PostgreSQL";
+        /// <summary> Service identifier for Private DNS Zones. </summary>
+        private const string PrivateDnsZonesValue = "PrivateDNSZones";
+        /// <summary> Service identifier for Service Bus. </summary>
+        private const string ServiceBusValue = "ServiceBus";
+        /// <summary> Service identifier for Storage. </summary>
+        private const string StorageValue = "Storage";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedServiceIdentifier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEnclaveGovernedServiceIdentifier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AksValue = "AKS";
-        private const string AppServiceValue = "AppService";
-        private const string AzureFirewallsValue = "AzureFirewalls";
-        private const string ContainerRegistryValue = "ContainerRegistry";
-        private const string CosmosDBValue = "CosmosDB";
-        private const string DataConnectorsValue = "DataConnectors";
-        private const string InsightsValue = "Insights";
-        private const string KeyVaultValue = "KeyVault";
-        private const string LogicValue = "Logic";
-        private const string MicrosoftSqlValue = "MicrosoftSQL";
-        private const string MonitoringValue = "Monitoring";
-        private const string PostgreSqlValue = "PostgreSQL";
-        private const string PrivateDnsZonesValue = "PrivateDNSZones";
-        private const string ServiceBusValue = "ServiceBus";
-        private const string StorageValue = "Storage";
+            _value = value;
+        }
 
         /// <summary> Service identifier for AKS. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier Aks { get; } = new VirtualEnclaveGovernedServiceIdentifier(AksValue);
+
         /// <summary> Service identifier for App Service. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier AppService { get; } = new VirtualEnclaveGovernedServiceIdentifier(AppServiceValue);
+
         /// <summary> Service identifier for Azure Firewalls. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier AzureFirewalls { get; } = new VirtualEnclaveGovernedServiceIdentifier(AzureFirewallsValue);
+
         /// <summary> Service identifier for Container Registry. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier ContainerRegistry { get; } = new VirtualEnclaveGovernedServiceIdentifier(ContainerRegistryValue);
+
         /// <summary> Service identifier for CosmosDB. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier CosmosDB { get; } = new VirtualEnclaveGovernedServiceIdentifier(CosmosDBValue);
+
         /// <summary> Service identifier for Data Connectors. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier DataConnectors { get; } = new VirtualEnclaveGovernedServiceIdentifier(DataConnectorsValue);
+
         /// <summary> Service identifier for Insights. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier Insights { get; } = new VirtualEnclaveGovernedServiceIdentifier(InsightsValue);
+
         /// <summary> Service identifier for Key Vault. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier KeyVault { get; } = new VirtualEnclaveGovernedServiceIdentifier(KeyVaultValue);
+
         /// <summary> Service identifier for Logic. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier Logic { get; } = new VirtualEnclaveGovernedServiceIdentifier(LogicValue);
+
         /// <summary> Service identifier for Microsoft SQL. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier MicrosoftSql { get; } = new VirtualEnclaveGovernedServiceIdentifier(MicrosoftSqlValue);
+
         /// <summary> Service identifier for Monitoring. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier Monitoring { get; } = new VirtualEnclaveGovernedServiceIdentifier(MonitoringValue);
+
         /// <summary> Service identifier for PostgreSQL. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier PostgreSql { get; } = new VirtualEnclaveGovernedServiceIdentifier(PostgreSqlValue);
+
         /// <summary> Service identifier for Private DNS Zones. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier PrivateDnsZones { get; } = new VirtualEnclaveGovernedServiceIdentifier(PrivateDnsZonesValue);
+
         /// <summary> Service identifier for Service Bus. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier ServiceBus { get; } = new VirtualEnclaveGovernedServiceIdentifier(ServiceBusValue);
+
         /// <summary> Service identifier for Storage. </summary>
         public static VirtualEnclaveGovernedServiceIdentifier Storage { get; } = new VirtualEnclaveGovernedServiceIdentifier(StorageValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveGovernedServiceIdentifier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveGovernedServiceIdentifier left, VirtualEnclaveGovernedServiceIdentifier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveGovernedServiceIdentifier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveGovernedServiceIdentifier left, VirtualEnclaveGovernedServiceIdentifier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveGovernedServiceIdentifier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveGovernedServiceIdentifier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveGovernedServiceIdentifier(string value) => new VirtualEnclaveGovernedServiceIdentifier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveGovernedServiceIdentifier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveGovernedServiceIdentifier?(string value) => value == null ? null : new VirtualEnclaveGovernedServiceIdentifier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveGovernedServiceIdentifier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveGovernedServiceIdentifier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

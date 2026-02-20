@@ -88,15 +88,23 @@ namespace Azure.Identity
                 ibcoClone.DisableInstanceDiscovery = DisableInstanceDiscovery;
                 if (BrowserCustomization != null)
                 {
-                    ibcoClone.BrowserCustomization = new BrowserCustomizationOptions
-                    {
-                        ErrorMessage = BrowserCustomization.ErrorMessage,
-                        SuccessMessage = BrowserCustomization.SuccessMessage,
-                        UseEmbeddedWebView = BrowserCustomization.UseEmbeddedWebView ?? false
-                    };
+                    ibcoClone.BrowserCustomization = BrowserCustomization.Clone();
                 }
             }
+            if (clone is IMsalSettablePublicClientInitializerOptions msalSettableClone && this is IMsalSettablePublicClientInitializerOptions thisAsInterface)
+            {
+                msalSettableClone.BeforeBuildClient = thisAsInterface.BeforeBuildClient;
+                msalSettableClone.UseDefaultBrokerAccount = thisAsInterface.UseDefaultBrokerAccount;
+            }
             return clone;
+        }
+
+        internal void CopyMsalSettableProperties(DefaultAzureCredentialOptions options)
+        {
+            if (this is IMsalSettablePublicClientInitializerOptions thisAsInterface)
+            {
+                thisAsInterface.UseDefaultBrokerAccount = options.UseDefaultBrokerAccount;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerRetainMessagesCustomPolicy"/>. </summary>
         /// <param name="retainSettings"> Settings for the policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retainSettings"/> is null. </exception>
-        public BrokerRetainMessagesCustomPolicy(BrokerRetainMessagesSettings retainSettings)
+        public BrokerRetainMessagesCustomPolicy(BrokerRetainMessagesSettings retainSettings) : base(BrokerPersistencePolicyMode.Custom)
         {
             Argument.AssertNotNull(retainSettings, nameof(retainSettings));
 
             RetainSettings = retainSettings;
-            Mode = BrokerPersistencePolicyMode.Custom;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrokerRetainMessagesCustomPolicy"/>. </summary>
         /// <param name="mode"> 'All' to persist all retain messages, 'None' to not persist any, 'Custom' to persist only the specified topics. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="retainSettings"> Settings for the policy. </param>
-        internal BrokerRetainMessagesCustomPolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, BrokerRetainMessagesSettings retainSettings) : base(mode, serializedAdditionalRawData)
+        internal BrokerRetainMessagesCustomPolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrokerRetainMessagesSettings retainSettings) : base(mode, additionalBinaryDataProperties)
         {
             RetainSettings = retainSettings;
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BrokerRetainMessagesCustomPolicy"/> for deserialization. </summary>
-        internal BrokerRetainMessagesCustomPolicy()
-        {
         }
 
         /// <summary> Settings for the policy. </summary>

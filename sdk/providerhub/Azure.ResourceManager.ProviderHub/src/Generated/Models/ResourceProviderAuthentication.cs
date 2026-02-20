@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/>. </summary>
-        /// <param name="allowedAudiences"></param>
+        /// <param name="allowedAudiences"> The allowed audiences. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ResourceProviderAuthentication(IEnumerable<string> allowedAudiences)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/>. </summary>
-        /// <param name="allowedAudiences"></param>
+        /// <param name="allowedAudiences"> The allowed audiences. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceProviderAuthentication(IList<string> allowedAudiences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets the allowed audiences. </summary>
+        /// <summary> The allowed audiences. </summary>
         public IList<string> AllowedAudiences { get; }
     }
 }

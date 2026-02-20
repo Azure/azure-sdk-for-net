@@ -12,19 +12,6 @@ trigger:
     - common/ManagementTestShared
     - common/ManagementCoreShared
 
-pr:
-  branches:
-    include:
-      - main
-      - feature/*
-      - hotfix/*
-      - release/*
-  paths:
-    include:
-    - sdk/resourcemanager
-    - common/ManagementTestShared
-    - common/ManagementCoreShared
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -34,10 +21,6 @@ extends:
     Artifacts:
       - name: Azure.ResourceManager
         safeName: AzureResourceManager
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager
-      ExpectedWarningsFilepath: None
     TestSetupSteps:
       - template: /sdk/storage/tests-install-azurite.yml
     TestDependsOnDependency: Azure.ResourceManager

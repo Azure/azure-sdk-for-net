@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAFirewallRuleOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
+            // Generated from example definition: 2025-09-01/MongoClusters_FirewallRuleCreate.json
             // this example is just showing the usage of "FirewallRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFirewallRuleOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
+            // Generated from example definition: 2025-09-01/MongoClusters_FirewallRuleGet.json
             // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListTheFirewallRulesOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleList.json
+            // Generated from example definition: 2025-09-01/MongoClusters_FirewallRuleList.json
             // this example is just showing the usage of "FirewallRule_ListByMongoCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAFirewallRuleOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
+            // Generated from example definition: 2025-09-01/MongoClusters_FirewallRuleGet.json
             // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAFirewallRuleOnAMongoClusterResource()
         {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
+            // Generated from example definition: 2025-09-01/MongoClusters_FirewallRuleGet.json
             // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

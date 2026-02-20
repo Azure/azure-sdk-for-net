@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuCapability"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name"> The name. </param>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public ResourceSkuCapability(string name, string value)
         {
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuCapability"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name"> The name. </param>
+        /// <param name="value"> The value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceSkuCapability(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> The name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the value. </summary>
+        /// <summary> The value. </summary>
         public string Value { get; set; }
     }
 }

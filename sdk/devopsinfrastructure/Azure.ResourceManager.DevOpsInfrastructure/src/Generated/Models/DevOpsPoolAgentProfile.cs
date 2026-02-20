@@ -12,74 +12,40 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// The agent profile of the machines in the pool.
-    /// Please note <see cref="DevOpsPoolAgentProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DevOpsStateful"/> and <see cref="DevOpsStatelessAgentProfile"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsStatelessAgentProfile"/> and <see cref="DevOpsStateful"/>.
     /// </summary>
     public abstract partial class DevOpsPoolAgentProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsPoolAgentProfile"/>. </summary>
-        protected DevOpsPoolAgentProfile()
+        /// <param name="kind"> Discriminator property for DevOpsPoolAgentProfile. </param>
+        private protected DevOpsPoolAgentProfile(string kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsPoolAgentProfile"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsPoolAgentProfile. </param>
         /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
-        /// <param name="resourcePredictionsProfile">
-        /// Defines how the pool buffer/stand-by agents is provided.
-        /// Please note <see cref="Models.ResourcePredictionsProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsPoolAgentProfile(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="resourcePredictionsProfile"> Defines how the pool buffer/stand-by agents is provided. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsPoolAgentProfile(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ResourcePredictions = resourcePredictions;
             ResourcePredictionsProfile = resourcePredictionsProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Discriminator property for DevOpsPoolAgentProfile. </summary>
         internal string Kind { get; set; }
+
         /// <summary> Defines pool buffer/stand-by agents. </summary>
         public ResourcePredictions ResourcePredictions { get; set; }
-        /// <summary>
-        /// Defines how the pool buffer/stand-by agents is provided.
-        /// Please note <see cref="Models.ResourcePredictionsProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
-        /// </summary>
+
+        /// <summary> Defines how the pool buffer/stand-by agents is provided. </summary>
         public ResourcePredictionsProfile ResourcePredictionsProfile { get; set; }
     }
 }

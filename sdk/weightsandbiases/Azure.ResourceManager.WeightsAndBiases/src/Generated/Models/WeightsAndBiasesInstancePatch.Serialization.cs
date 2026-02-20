@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     /// <summary> The type used for update operations of the Instance Resource. </summary>
     public partial class WeightsAndBiasesInstancePatch : IJsonModel<WeightsAndBiasesInstancePatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WeightsAndBiasesInstancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWeightsAndBiasesInstancePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstancePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WeightsAndBiasesInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -163,35 +180,18 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         WeightsAndBiasesInstancePatch IPersistableModel<WeightsAndBiasesInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WeightsAndBiasesInstancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeWeightsAndBiasesInstancePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstancePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WeightsAndBiasesInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="WeightsAndBiasesInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WeightsAndBiasesInstancePatch patch)
+        /// <param name="weightsAndBiasesInstancePatch"> The <see cref="WeightsAndBiasesInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WeightsAndBiasesInstancePatch weightsAndBiasesInstancePatch)
         {
-            if (patch == null)
+            if (weightsAndBiasesInstancePatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(weightsAndBiasesInstancePatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -47,35 +47,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutSpecification"/>. </summary>
-        /// <param name="canary"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
-        public CustomRolloutSpecification(TrafficRegions canary)
+        public CustomRolloutSpecification()
         {
-            Argument.AssertNotNull(canary, nameof(canary));
-
-            Canary = canary;
+            ReleaseScopes = new ChangeTrackingList<string>();
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutSpecification"/>. </summary>
-        /// <param name="canary"></param>
-        /// <param name="providerRegistration"></param>
-        /// <param name="resourceTypeRegistrations"></param>
+        /// <param name="autoProvisionConfig"> The auto provisioning configuration. </param>
+        /// <param name="canary"> The canary region configuration. </param>
+        /// <param name="releaseScopes"> The list of ARM regions scoped for the release. </param>
+        /// <param name="refreshSubscriptionRegistration"> Whether refreshing subscription registration is enabled or disabled. </param>
+        /// <param name="skipReleaseScopeValidation"> Whether release scope validation should be skipped. </param>
+        /// <param name="providerRegistration"> The provider registration. </param>
+        /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutSpecification(TrafficRegions canary, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            AutoProvisionConfig = autoProvisionConfig;
             Canary = canary;
+            ReleaseScopes = releaseScopes;
+            RefreshSubscriptionRegistration = refreshSubscriptionRegistration;
+            SkipReleaseScopeValidation = skipReleaseScopeValidation;
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomRolloutSpecification"/> for deserialization. </summary>
-        internal CustomRolloutSpecification()
-        {
-        }
-
-        /// <summary> Gets or sets the canary. </summary>
+        /// <summary> The auto provisioning configuration. </summary>
+        public CustomRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
+        /// <summary> The canary region configuration. </summary>
         internal TrafficRegions Canary { get; set; }
         /// <summary> Gets the canary regions. </summary>
         public IList<AzureLocation> CanaryRegions
@@ -88,9 +89,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Gets or sets the provider registration. </summary>
+        /// <summary> The list of ARM regions scoped for the release. </summary>
+        public IList<string> ReleaseScopes { get; }
+        /// <summary> Whether refreshing subscription registration is enabled or disabled. </summary>
+        public bool? RefreshSubscriptionRegistration { get; set; }
+        /// <summary> Whether release scope validation should be skipped. </summary>
+        public bool? SkipReleaseScopeValidation { get; set; }
+        /// <summary> The provider registration. </summary>
         public ProviderRegistrationData ProviderRegistration { get; set; }
-        /// <summary> Gets the resource type registrations. </summary>
+        /// <summary> The resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }
 }

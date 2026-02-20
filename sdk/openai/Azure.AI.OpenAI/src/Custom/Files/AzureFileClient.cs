@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.Files;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using OpenAI.Files;
 
 namespace Azure.AI.OpenAI.Files;
 
@@ -127,7 +127,7 @@ internal partial class AzureFileClient : OpenAIFileClient
 
         if (expirationOptions is not null)
         {
-            multipartFormDataBinaryContent.Add(ModelReaderWriter.Write(expirationOptions), "expires_after");
+            multipartFormDataBinaryContent.Add(ModelReaderWriter.Write(expirationOptions, ModelReaderWriterOptions.Json, AzureAIOpenAIContext.Default), "expires_after");
         }
 
         return multipartFormDataBinaryContent;

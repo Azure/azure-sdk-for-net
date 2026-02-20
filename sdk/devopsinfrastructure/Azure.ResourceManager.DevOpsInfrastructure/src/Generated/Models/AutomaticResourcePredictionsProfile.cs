@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class AutomaticResourcePredictionsProfile : ResourcePredictionsProfile
     {
         /// <summary> Initializes a new instance of <see cref="AutomaticResourcePredictionsProfile"/>. </summary>
-        public AutomaticResourcePredictionsProfile()
+        public AutomaticResourcePredictionsProfile() : base(ResourcePredictionsProfileType.Automatic)
         {
-            Kind = ResourcePredictionsProfileType.Automatic;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomaticResourcePredictionsProfile"/>. </summary>
         /// <param name="kind"> Determines how the stand-by scheme should be provided. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="predictionPreference"> Determines the balance between cost and performance. </param>
-        internal AutomaticResourcePredictionsProfile(ResourcePredictionsProfileType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, PredictionPreference? predictionPreference) : base(kind, serializedAdditionalRawData)
+        internal AutomaticResourcePredictionsProfile(ResourcePredictionsProfileType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, PredictionPreference? predictionPreference) : base(kind, additionalBinaryDataProperties)
         {
             PredictionPreference = predictionPreference;
-            Kind = kind;
         }
 
         /// <summary> Determines the balance between cost and performance. </summary>

@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
         }
 
         [RecordedTest]
+        [Ignore("HealthBot subscription limit")]
         public async Task HealthBotApiTests()
         {
             //1.CreateOrUpdate

@@ -16,17 +16,71 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSupportModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.SupportNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
+        /// <param name="reason"> The reason why the name is not available. </param>
+        /// <param name="message"> The detailed error message describing why the name is not available. </param>
+        /// <returns> A new <see cref="Models.SupportNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        {
+            return new SupportNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Support.FileWorkspaceDetailData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
+        /// <param name="expireOn"> Time in UTC (ISO 8601 format) when file workspace is going to expire. </param>
+        /// <returns> A new <see cref="Support.FileWorkspaceDetailData"/> instance for mocking. </returns>
+        public static FileWorkspaceDetailData FileWorkspaceDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null)
+        {
+            return new FileWorkspaceDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                expireOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Support.SupportFileDetailData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
+        /// <param name="chunkSize"> Size of each chunk. The size of each chunk should be provided in bytes and must not exceed 2.5 megabytes (MB). </param>
+        /// <param name="fileSize"> Size of the file to be uploaded. The file size must not exceed 5 MB and should be provided in bytes. </param>
+        /// <param name="numberOfChunks"> Number of chunks to be uploaded. The maximum number of allowed chunks is 2. </param>
+        /// <returns> A new <see cref="Support.SupportFileDetailData"/> instance for mocking. </returns>
+        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, int? chunkSize = null, int? fileSize = null, int? numberOfChunks = null)
+        {
+            return new SupportFileDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                chunkSize,
+                fileSize,
+                numberOfChunks,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Support.SupportAzureServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of the Azure service. </param>
-        /// <param name="resourceTypes"> ARM Resource types. </param>
+        /// <param name="armResourceTypes"> ARM Resource types. </param>
         /// <returns> A new <see cref="Support.SupportAzureServiceData"/> instance for mocking. </returns>
-        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> resourceTypes = null)
+        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> armResourceTypes = null)
         {
-            resourceTypes ??= new List<string>();
+            armResourceTypes ??= new List<string>();
 
             return new SupportAzureServiceData(
                 id,
@@ -34,7 +88,7 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 displayName,
-                resourceTypes?.ToList(),
+                armResourceTypes?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -44,11 +98,11 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of problem classification. </param>
-        /// <param name="secondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
+        /// <param name="secondaryConsentEnabledInfo"> This property indicates whether secondary consent is present for problem classification. </param>
         /// <returns> A new <see cref="Support.ProblemClassificationData"/> instance for mocking. </returns>
-        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabled = null)
+        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabledInfo = null)
         {
-            secondaryConsentEnabled ??= new List<SecondaryConsentEnabled>();
+            secondaryConsentEnabledInfo ??= new List<SecondaryConsentEnabled>();
 
             return new ProblemClassificationData(
                 id,
@@ -56,27 +110,8 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 displayName,
-                secondaryConsentEnabled?.ToList(),
+                secondaryConsentEnabledInfo?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
-        /// <param name="description"> User consent description. </param>
-        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
-        /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
-        public static SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null)
-        {
-            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SupportNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
-        /// <param name="reason"> The reason why the name is not available. </param>
-        /// <param name="message"> The detailed error message describing why the name is not available. </param>
-        /// <returns> A new <see cref="Models.SupportNameAvailabilityResult"/> instance for mocking. </returns>
-        public static SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
-        {
-            return new SupportNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.SupportTicketData"/>. </summary>
@@ -161,34 +196,6 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Support.SupportTicketCommunicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="communicationType"> Communication type. </param>
-        /// <param name="communicationDirection"> Direction of communication. </param>
-        /// <param name="sender"> Email address of the sender. This property is required if called by a service principal. </param>
-        /// <param name="subject"> Subject of the communication. </param>
-        /// <param name="body"> Body of the communication. </param>
-        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
-        /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
-        public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportTicketCommunicationType? communicationType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string subject = null, string body = null, DateTimeOffset? createdOn = null)
-        {
-            return new SupportTicketCommunicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                communicationType,
-                communicationDirection,
-                sender,
-                subject,
-                body,
-                createdOn,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Support.ChatTranscriptDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -229,47 +236,31 @@ namespace Azure.ResourceManager.Support.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Support.FileWorkspaceDetailData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Support.SupportTicketCommunicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
-        /// <param name="expireOn"> Time in UTC (ISO 8601 format) when file workspace is going to expire. </param>
-        /// <returns> A new <see cref="Support.FileWorkspaceDetailData"/> instance for mocking. </returns>
-        public static FileWorkspaceDetailData FileWorkspaceDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null)
+        /// <param name="communicationType"> Communication type. </param>
+        /// <param name="communicationDirection"> Direction of communication. </param>
+        /// <param name="sender"> Email address of the sender. This property is required if called by a service principal. </param>
+        /// <param name="subject"> Subject of the communication. </param>
+        /// <param name="body"> Body of the communication. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
+        /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
+        public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportTicketCommunicationType? communicationType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string subject = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new FileWorkspaceDetailData(
+            return new SupportTicketCommunicationData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                communicationType,
+                communicationDirection,
+                sender,
+                subject,
+                body,
                 createdOn,
-                expireOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Support.SupportFileDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
-        /// <param name="chunkSize"> Size of each chunk. The size of each chunk should be provided in bytes and must not exceed 2.5 megabytes (MB). </param>
-        /// <param name="fileSize"> Size of the file to be uploaded. The file size must not exceed 5 MB and should be provided in bytes. </param>
-        /// <param name="numberOfChunks"> Number of chunks to be uploaded. The maximum number of allowed chunks is 2. </param>
-        /// <returns> A new <see cref="Support.SupportFileDetailData"/> instance for mocking. </returns>
-        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, int? chunkSize = null, int? fileSize = null, int? numberOfChunks = null)
-        {
-            return new SupportFileDetailData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                createdOn,
-                chunkSize,
-                fileSize,
-                numberOfChunks,
                 serializedAdditionalRawData: null);
         }
     }

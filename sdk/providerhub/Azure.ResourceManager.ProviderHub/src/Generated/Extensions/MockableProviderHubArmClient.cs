@@ -59,6 +59,18 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RegistrationNewRegionFrontloadReleaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistrationNewRegionFrontloadReleaseResource.CreateResourceIdentifier" /> to create a <see cref="RegistrationNewRegionFrontloadReleaseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistrationNewRegionFrontloadReleaseResource"/> object. </returns>
+        public virtual RegistrationNewRegionFrontloadReleaseResource GetRegistrationNewRegionFrontloadReleaseResource(ResourceIdentifier id)
+        {
+            RegistrationNewRegionFrontloadReleaseResource.ValidateResourceId(id);
+            return new RegistrationNewRegionFrontloadReleaseResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NotificationRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NotificationRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="NotificationRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -140,6 +152,30 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         {
             NestedResourceTypeThirdSkuResource.ValidateResourceId(id);
             return new NestedResourceTypeThirdSkuResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ProviderAuthorizedApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderAuthorizedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ProviderAuthorizedApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProviderAuthorizedApplicationResource"/> object. </returns>
+        public virtual ProviderAuthorizedApplicationResource GetProviderAuthorizedApplicationResource(ResourceIdentifier id)
+        {
+            ProviderAuthorizedApplicationResource.ValidateResourceId(id);
+            return new ProviderAuthorizedApplicationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ProviderMonitorSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderMonitorSettingResource.CreateResourceIdentifier" /> to create a <see cref="ProviderMonitorSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProviderMonitorSettingResource"/> object. </returns>
+        public virtual ProviderMonitorSettingResource GetProviderMonitorSettingResource(ResourceIdentifier id)
+        {
+            ProviderMonitorSettingResource.ValidateResourceId(id);
+            return new ProviderMonitorSettingResource(Client, id);
         }
     }
 }

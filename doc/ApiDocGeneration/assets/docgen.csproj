@@ -1,6 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    We don't want to inherit all settings, but we do want common properties defined
+    in the central props so that we don't need to hardcode frameworks.
+  -->
+  <Import Project="$(RepoEngPath)\Directory.Build.Common.props" />
+
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
     <Description>This is a dummy project used to restore nuget packages used for doc generation</Description>
     <AssemblyTitle>Doc generation Packages</AssemblyTitle>
   </PropertyGroup>

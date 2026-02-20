@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -17,29 +18,22 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="name"> Name of the node. </param>
         /// <param name="graphSettings"> Graph configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="graphSettings"/> is null. </exception>
-        public DataflowGraphGraphNode(string name, DataflowGraphNodeGraphSettings graphSettings) : base(name)
+        public DataflowGraphGraphNode(string name, DataflowGraphNodeGraphSettings graphSettings) : base(name, DataflowGraphNodeType.Graph)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(graphSettings, nameof(graphSettings));
 
             GraphSettings = graphSettings;
-            NodeType = DataflowGraphNodeType.Graph;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphGraphNode"/>. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="graphSettings"> Graph configuration. </param>
-        internal DataflowGraphGraphNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataflowGraphNodeGraphSettings graphSettings) : base(name, nodeType, serializedAdditionalRawData)
+        internal DataflowGraphGraphNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataflowGraphNodeGraphSettings graphSettings) : base(name, nodeType, additionalBinaryDataProperties)
         {
             GraphSettings = graphSettings;
-            NodeType = nodeType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowGraphGraphNode"/> for deserialization. </summary>
-        internal DataflowGraphGraphNode()
-        {
         }
 
         /// <summary> Graph configuration. </summary>

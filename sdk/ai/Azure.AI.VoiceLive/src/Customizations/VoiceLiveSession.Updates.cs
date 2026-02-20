@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
@@ -9,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using System.ClientModel.Primitives;
 
 namespace Azure.AI.VoiceLive
 {
@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
                     throw new InvalidOperationException("Only one update enumeration can be active at a time.");
                 }
 
-                _receiveCollectionResult = new AsyncVoiceLiveMessageCollectionResult(WebSocket, cancellationToken);
+                _receiveCollectionResult = new AsyncVoiceLiveMessageCollectionResult(WebSocket, _contentLogger, _connectionId, cancellationToken);
             }
 
             try

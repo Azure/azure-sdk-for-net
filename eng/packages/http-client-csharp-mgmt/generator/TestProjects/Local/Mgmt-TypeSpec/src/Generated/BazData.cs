@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BazData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,16 +31,17 @@ namespace MgmtTypeSpec
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal BazData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BazProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="tags"></param>
+        internal BazData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, BazProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public BazProperties Properties { get; set; }
     }
 }

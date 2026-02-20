@@ -303,6 +303,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isFreeTierEnabled"> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </param>
         /// <param name="isPaidEnabled"> True if this version of the Oracle Database software has payments enabled. </param>
         /// <returns> A new <see cref="Models.AutonomousDBVersionProperties"/> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AutonomousDBVersionProperties AutonomousDBVersionProperties(string version, AutonomousDatabaseWorkloadType? dbWorkload, bool? isDefaultForFree, bool? isDefaultForPaid, bool? isFreeTierEnabled, bool? isPaidEnabled)
         {
             throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
@@ -344,6 +346,50 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CloudExadataInfrastructureProperties CloudExadataInfrastructureProperties(ResourceIdentifier ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IEnumerable<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, ResourceIdentifier lastMaintenanceRunId, ResourceIdentifier nextMaintenanceRunId, string monthlyDBServerVersion, string monthlyStorageServerVersion)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties" />. </summary>
+        /// <param name="definedFileSystemConfiguration"> Defined file system configurations. </param>
+        /// <param name="exadataInfraOcid"> Exadata infra ocid. </param>
+        /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
+        /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
+        /// <param name="totalStorageSizeInGbs"> The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
+        /// <param name="availableStorageSizeInGbs"> The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
+        /// <param name="createdOn"> The date and time the cloud Exadata infrastructure resource was created. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
+        /// <param name="estimatedPatchingTime"> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </param>
+        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </param>
+        /// <param name="provisioningState"> CloudExadataInfrastructure provisioning state. </param>
+        /// <param name="lifecycleState"> CloudExadataInfrastructure lifecycle state. </param>
+        /// <param name="shape"> The model name of the cloud Exadata infrastructure resource. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="cpuCount"> The total number of CPU cores allocated. </param>
+        /// <param name="maxCpuCount"> The total number of CPU cores available. </param>
+        /// <param name="memorySizeInGbs"> The memory allocated in GBs. </param>
+        /// <param name="maxMemoryInGbs"> The total memory available in GBs. </param>
+        /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
+        /// <param name="maxDBNodeStorageSizeInGbs"> The total local node storage available in GBs. </param>
+        /// <param name="dataStorageSizeInTbs"> The quantity of data in the database, in terabytes. </param>
+        /// <param name="maxDataStorageInTbs"> The total available DATA disk group size. </param>
+        /// <param name="dbServerVersion"> The software version of the database servers (dom0) in the Exadata infrastructure. </param>
+        /// <param name="storageServerVersion"> The software version of the storage servers (cells) in the Exadata infrastructure. </param>
+        /// <param name="activatedStorageCount"> The requested number of additional storage servers activated for the Exadata infrastructure. </param>
+        /// <param name="additionalStorageCount"> The requested number of additional storage servers for the Exadata infrastructure. </param>
+        /// <param name="displayName"> The name for the Exadata infrastructure. </param>
+        /// <param name="lastMaintenanceRunOcid"> The OCID of the last maintenance run. </param>
+        /// <param name="nextMaintenanceRunOcid"> The OCID of the next maintenance run. </param>
+        /// <param name="monthlyDBServerVersion"> Monthly Db Server version. </param>
+        /// <param name="monthlyStorageServerVersion"> Monthly Storage Server version. </param>
+        /// <param name="databaseServerType"> The database server model type of the cloud Exadata infrastructure resource. </param>
+        /// <param name="storageServerType"> The storage server model type of the cloud Exadata infrastructure resource. </param>
+        /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.OracleDatabase.Models.CloudExadataInfrastructureProperties" /> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CloudExadataInfrastructureProperties CloudExadataInfrastructureProperties(IEnumerable<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string exadataInfraOcid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IEnumerable<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunOcid, string nextMaintenanceRunOcid, string monthlyDBServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, OracleDatabaseComputeModel? computeModel)
         {
             throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
         }
@@ -433,6 +479,65 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CloudVmClusterProperties CloudVmClusterProperties(ResourceIdentifier ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, ResourceIdentifier zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IEnumerable<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IEnumerable<string> scanIPIds, IEnumerable<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, ResourceIdentifier scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IEnumerable<ResourceIdentifier> computeNodes, ExadataIormConfig iormConfigCache, ResourceIdentifier lastUpdateHistoryEntryId, IEnumerable<ResourceIdentifier> dbServers, ResourceIdentifier compartmentId, ResourceIdentifier subnetOcid)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties" />. </summary>
+        /// <param name="cloudVmClusterOcid"> Cloud VM Cluster ocid. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the cloud VM cluster. </param>
+        /// <param name="nodeCount"> The number of nodes in the cloud VM cluster. </param>
+        /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
+        /// <param name="fileSystemConfigurationDetails"> Array of mount path and size. </param>
+        /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
+        /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
+        /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
+        /// <param name="createdOn"> The date and time that the cloud VM cluster was created. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="timeZone"> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
+        /// <param name="zoneOcid"> The OCID of the zone the cloud VM cluster is associated with. </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
+        /// <param name="domain"> The domain name for the cloud VM cluster. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
+        /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
+        /// <param name="clusterName"> The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="dataStoragePercentage"> The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage. </param>
+        /// <param name="isLocalBackupEnabled"> If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster. </param>
+        /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
+        /// <param name="isSparseDiskgroupEnabled"> If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created. </param>
+        /// <param name="systemVersion"> Operating system version of the image. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
+        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </param>
+        /// <param name="scanListenerPortTcp"> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </param>
+        /// <param name="scanListenerPortTcpSsl"> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </param>
+        /// <param name="scanDnsRecordOcid"> The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </param>
+        /// <param name="shape"> The model name of the Exadata hardware running the cloud VM cluster. </param>
+        /// <param name="provisioningState"> CloudVmCluster provisioning state. </param>
+        /// <param name="lifecycleState"> CloudVmCluster lifecycle state. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="nsgUri"> HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="backupSubnetCidr"> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </param>
+        /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="displayName"> Display Name. </param>
+        /// <param name="computeNodeOcids"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <param name="iormConfigCache"> iormConfigCache details for cloud VM cluster. </param>
+        /// <param name="lastUpdateHistoryEntryOcid"> The OCID of the last maintenance update history entry. </param>
+        /// <param name="dbServerOcids"> The list of DB servers. </param>
+        /// <param name="compartmentOcid"> Cluster compartmentId. </param>
+        /// <param name="clusterSubnetOcid"> Cluster subnet ocid. </param>
+        /// <param name="computeModel"> The compute model of the VM Cluster. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.OracleDatabase.Models.CloudVmClusterProperties" /> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CloudVmClusterProperties CloudVmClusterProperties(string cloudVmClusterOcid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IEnumerable<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, string zoneOcid, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IEnumerable<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IEnumerable<string> scanIPIds, IEnumerable<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordOcid, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IEnumerable<string> computeNodeOcids, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryOcid, IEnumerable<string> dbServerOcids, string compartmentOcid, string clusterSubnetOcid, OracleDatabaseComputeModel? computeModel)
         {
             throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
         }
@@ -1019,6 +1124,293 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AutonomousDatabaseProperties AutonomousDatabaseProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, OracleDatabaseComputeModel? databaseComputeModel, int? cpuCoreCount, IEnumerable<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, AutonomousDatabaseWorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IEnumerable<string> peerDBIds, string peerDBId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, DateTimeOffset? disasterRecoveryRoleChangedOn, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration, AutonomousDatabaseStandbySummary localStandbyDB, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, OracleLicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, ScheduledOperationsType scheduledOperations, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? createdOn, DateTimeOffset? maintenanceBeginOn, DateTimeOffset? maintenanceEndOn, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, OracleApexDetailsType apexDetails, IEnumerable<string> availableUpgradeVersions, AutonomousDatabaseConnectionStrings connectionStrings, AutonomousDatabaseConnectionUrls connectionUrls, DataSafeStatusType? dataSafeStatus, OracleDatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupCreatedOn, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, AutonomousDatabaseModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, AutonomousDatabasePermissionLevelType? permissionLevel, string privateEndpoint, IEnumerable<int> provisionableCpus, DataGuardRoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IEnumerable<string> supportedRegionsToCloneTo, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? freeAutonomousDatabaseDeletedOn, string timeLocalDataGuardEnabled, DateTimeOffset? lastFailoverHappenedOn, DateTimeOffset? lastRefreshHappenedOn, DateTimeOffset? lastRefreshPointTimestamp, DateTimeOffset? lastSwitchoverHappenedOn, DateTimeOffset? freeAutonomousDatabaseStoppedOn, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, string databaseOcid, int? backupRetentionPeriodInDays, IEnumerable<string> whitelistedIPs)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/>. </summary>
+        /// <param name="adminPassword"> Admin password. </param>
+        /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
+        /// <param name="characterSet"> The character set for the autonomous database. </param>
+        /// <param name="computeCount"> The compute amount (CPUs) available to the database. </param>
+        /// <param name="databaseComputeModel"> The compute model of the Autonomous Database. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores to be made available to the database. </param>
+        /// <param name="customerContacts"> Customer Contacts. </param>
+        /// <param name="dataStorageSizeInTbs"> The quantity of data in the database, in terabytes. </param>
+        /// <param name="dataStorageSizeInGbs"> The size, in gigabytes, of the data volume that will be created and attached to the database. </param>
+        /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
+        /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
+        /// <param name="displayName"> The user-friendly name for the Autonomous Database. </param>
+        /// <param name="isAutoScalingEnabled"> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </param>
+        /// <param name="isAutoScalingForStorageEnabled"> Indicates if auto scaling is enabled for the Autonomous Database storage. </param>
+        /// <param name="peerDBIds"> The list of Azure resource IDs of standby databases located in Autonomous Data Guard remote regions that are associated with the source database. Note that for Autonomous Database Serverless instances, standby databases located in the same region as the source primary database do not have Azure IDs. </param>
+        /// <param name="peerDBId"> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
+        /// <param name="isRemoteDataGuardEnabled"> Indicates whether the Autonomous Database has Cross Region Data Guard enabled. </param>
+        /// <param name="localDisasterRecoveryType"> Indicates the local disaster recovery (DR) type of the Autonomous Database Serverless instance.Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover.Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </param>
+        /// <param name="disasterRecoveryRoleChangedOn"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
+        /// <param name="remoteDisasterRecoveryConfiguration"> Indicates remote disaster recovery configuration. </param>
+        /// <param name="localStandbyDB"> Local Autonomous Disaster Recovery standby database details. </param>
+        /// <param name="failedDataRecoveryInSeconds"> Indicates the number of seconds of data loss for a Data Guard failover. </param>
+        /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
+        /// <param name="isPreviewVersionWithServiceTermsAccepted"> Specifies if the Autonomous Database preview version is being provisioned. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
+        /// <param name="ncharacterSet"> The character set for the Autonomous Database. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="lifecycleState"> Views lifecycleState. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="createdOn"> The date and time that the database was created. </param>
+        /// <param name="maintenanceBeginOn"> The date and time when maintenance will begin. </param>
+        /// <param name="maintenanceEndOn"> The date and time when maintenance will end. </param>
+        /// <param name="actualUsedDataStorageSizeInTbs"> The current amount of storage in use for user and system data, in terabytes (TB). </param>
+        /// <param name="allocatedStorageSizeInTbs"> The amount of storage currently allocated for the database tables and billed for, rounded up. </param>
+        /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
+        /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
+        /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
+        /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
+        /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
+        /// <param name="inMemoryAreaInGbs"> The area assigned to In-Memory tables in Autonomous Database. </param>
+        /// <param name="nextLongTermBackupCreatedOn"> The date and time when the next long-term backup would be created. </param>
+        /// <param name="longTermBackupSchedule"> Details for the long-term backup schedule. </param>
+        /// <param name="isPreview"> Indicates if the Autonomous Database version is a preview version. </param>
+        /// <param name="localAdgAutoFailoverMaxDataLossLimit"> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </param>
+        /// <param name="memoryPerOracleComputeUnitInGbs"> The amount of memory (in GBs) enabled per ECPU or OCPU. </param>
+        /// <param name="openMode"> Indicates the Autonomous Database mode. </param>
+        /// <param name="operationsInsightsStatus"> Status of Operations Insights for this Autonomous Database. </param>
+        /// <param name="permissionLevel"> The Autonomous Database permission level. </param>
+        /// <param name="privateEndpoint"> The private endpoint for the resource. </param>
+        /// <param name="provisionableCpus"> An array of CPU values that an Autonomous Database can be scaled to. </param>
+        /// <param name="role"> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </param>
+        /// <param name="serviceConsoleUri"> The URL of the Service Console for the Autonomous Database. </param>
+        /// <param name="sqlWebDeveloperUri"> The SQL Web Developer URL for the Oracle Autonomous Database. </param>
+        /// <param name="supportedRegionsToCloneTo"> The list of regions that support the creation of an Autonomous Database clone or an Autonomous Data Guard standby database. </param>
+        /// <param name="dataGuardRoleChangedOn"> The date and time the Autonomous Data Guard role was switched for the Autonomous Database. </param>
+        /// <param name="freeAutonomousDatabaseDeletedOn"> The date and time the Always Free database will be automatically deleted because of inactivity. </param>
+        /// <param name="timeLocalDataGuardEnabled"> The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database. </param>
+        /// <param name="lastFailoverHappenedOn"> The timestamp of the last failover operation. </param>
+        /// <param name="lastRefreshHappenedOn"> The date and time when last refresh happened. </param>
+        /// <param name="lastRefreshPointTimestamp"> The refresh point timestamp (UTC). </param>
+        /// <param name="lastSwitchoverHappenedOn"> The timestamp of the last switchover operation for the Autonomous Database. </param>
+        /// <param name="freeAutonomousDatabaseStoppedOn"> The date and time the Always Free database will be stopped because of inactivity. </param>
+        /// <param name="usedDataStorageSizeInGbs"> The storage space consumed by Autonomous Database in GBs. </param>
+        /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
+        /// <param name="databaseOcid"> Database ocid. </param>
+        /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="source"> The source of the database. </param>
+        /// <param name="sourceId"> The ID of the source Autonomous Database that you will clone to create a new Autonomous Database. </param>
+        /// <param name="cloneType"> The Autonomous Database clone type. </param>
+        /// <param name="timestamp"> The timestamp specified for the point-in-time clone of the source Autonomous Database. The timestamp must be in the past. </param>
+        /// <param name="useLatestAvailableBackupTimeStamp"> Clone from latest available backup timestamp. </param>
+        /// <returns> A new <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutonomousDatabaseFromBackupTimestampProperties AutonomousDatabaseFromBackupTimestampProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, OracleDatabaseComputeModel? databaseComputeModel, int? cpuCoreCount, IEnumerable<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, AutonomousDatabaseWorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IEnumerable<string> peerDBIds, string peerDBId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, DateTimeOffset? disasterRecoveryRoleChangedOn, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration, AutonomousDatabaseStandbySummary localStandbyDB, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, OracleLicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, IEnumerable<ScheduledOperationsType> scheduledOperationsList, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? createdOn, DateTimeOffset? maintenanceBeginOn, DateTimeOffset? maintenanceEndOn, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, OracleApexDetailsType apexDetails, IEnumerable<string> availableUpgradeVersions, AutonomousDatabaseConnectionStrings connectionStrings, AutonomousDatabaseConnectionUrls connectionUrls, DataSafeStatusType? dataSafeStatus, OracleDatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupCreatedOn, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, AutonomousDatabaseModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, AutonomousDatabasePermissionLevelType? permissionLevel, string privateEndpoint, IEnumerable<int> provisionableCpus, DataGuardRoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IEnumerable<string> supportedRegionsToCloneTo, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? freeAutonomousDatabaseDeletedOn, string timeLocalDataGuardEnabled, DateTimeOffset? lastFailoverHappenedOn, DateTimeOffset? lastRefreshHappenedOn, DateTimeOffset? lastRefreshPointTimestamp, DateTimeOffset? lastSwitchoverHappenedOn, DateTimeOffset? freeAutonomousDatabaseStoppedOn, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, string databaseOcid, int? backupRetentionPeriodInDays, IEnumerable<string> whitelistedIPs, AutonomousDatabaseSourceType source, ResourceIdentifier sourceId, AutonomousDatabaseCloneType cloneType, DateTimeOffset? timestamp, bool? useLatestAvailableBackupTimeStamp)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties" />. </summary>
+        /// <param name="shapeFamily"> The family of the shape used for the DB system. </param>
+        /// <param name="shapeName"> The shape used for the DB system. </param>
+        /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB system for this shape. </param>
+        /// <param name="minimumCoreCount"> The minimum number of CPU cores that can be enabled on the DB system for this shape. </param>
+        /// <param name="runtimeMinimumCoreCount"> The runtime minimum number of CPU cores that can be enabled on the DB system for this shape. </param>
+        /// <param name="coreCountIncrement"> The discrete number by which the CPU core count for this shape can be increased or decreased. </param>
+        /// <param name="minStorageCount"> The minimum number of Exadata storage servers available for the Exadata infrastructure. </param>
+        /// <param name="maxStorageCount"> The maximum number of Exadata storage servers available for the Exadata infrastructure. </param>
+        /// <param name="availableDataStoragePerServerInTbs"> The maximum data storage available per storage server for this shape. Only applicable to ExaCC Elastic shapes. </param>
+        /// <param name="availableMemoryPerNodeInGbs"> The maximum memory available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
+        /// <param name="availableDBNodePerNodeInGbs"> The maximum Db Node storage available per database node for this shape. Only applicable to ExaCC Elastic shapes. </param>
+        /// <param name="minCoreCountPerNode"> The minimum number of CPU cores that can be enabled per node for this shape. </param>
+        /// <param name="availableMemoryInGbs"> The maximum memory that can be enabled for this shape. </param>
+        /// <param name="minMemoryPerNodeInGbs"> The minimum memory that need be allocated per node for this shape. </param>
+        /// <param name="availableDBNodeStorageInGbs"> The maximum Db Node storage that can be enabled for this shape. </param>
+        /// <param name="minDBNodeStoragePerNodeInGbs"> The minimum Db Node storage that need be allocated per node for this shape. </param>
+        /// <param name="availableDataStorageInTbs"> The maximum DATA storage that can be enabled for this shape. </param>
+        /// <param name="minDataStorageInTbs"> The minimum data storage that need be allocated for this shape. </param>
+        /// <param name="minimumNodeCount"> The minimum number of database nodes available for this shape. </param>
+        /// <param name="maximumNodeCount"> The maximum number of database nodes available for this shape. </param>
+        /// <param name="availableCoreCountPerNode"> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </param>
+        /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
+        /// <param name="areServerTypesSupported"> Indicates if the shape supports database and storage server types. </param>
+        /// <param name="displayName"> The display name of the shape used for the DB system. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.OracleDatabase.Models.OracleDBSystemShapeProperties" /> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OracleDBSystemShapeProperties OracleDBSystemShapeProperties(string shapeFamily, string shapeName, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, OracleDatabaseComputeModel? computeModel, bool? areServerTypesSupported, string displayName)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>. </summary>
+        /// <param name="adminPassword"> Admin password. </param>
+        /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
+        /// <param name="characterSet"> The character set for the autonomous database. </param>
+        /// <param name="computeCount"> The compute amount (CPUs) available to the database. </param>
+        /// <param name="databaseComputeModel"> The compute model of the Autonomous Database. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores to be made available to the database. </param>
+        /// <param name="customerContacts"> Customer Contacts. </param>
+        /// <param name="dataStorageSizeInTbs"> The quantity of data in the database, in terabytes. </param>
+        /// <param name="dataStorageSizeInGbs"> The size, in gigabytes, of the data volume that will be created and attached to the database. </param>
+        /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
+        /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
+        /// <param name="displayName"> The user-friendly name for the Autonomous Database. </param>
+        /// <param name="isAutoScalingEnabled"> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </param>
+        /// <param name="isAutoScalingForStorageEnabled"> Indicates if auto scaling is enabled for the Autonomous Database storage. </param>
+        /// <param name="peerDBIds"> The list of Azure resource IDs of standby databases located in Autonomous Data Guard remote regions that are associated with the source database. Note that for Autonomous Database Serverless instances, standby databases located in the same region as the source primary database do not have Azure IDs. </param>
+        /// <param name="peerDBId"> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
+        /// <param name="isRemoteDataGuardEnabled"> Indicates whether the Autonomous Database has Cross Region Data Guard enabled. </param>
+        /// <param name="localDisasterRecoveryType"> Indicates the local disaster recovery (DR) type of the Autonomous Database Serverless instance.Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover.Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </param>
+        /// <param name="disasterRecoveryRoleChangedOn"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
+        /// <param name="remoteDisasterRecoveryConfiguration"> Indicates remote disaster recovery configuration. </param>
+        /// <param name="localStandbyDB"> Local Autonomous Disaster Recovery standby database details. </param>
+        /// <param name="failedDataRecoveryInSeconds"> Indicates the number of seconds of data loss for a Data Guard failover. </param>
+        /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
+        /// <param name="isPreviewVersionWithServiceTermsAccepted"> Specifies if the Autonomous Database preview version is being provisioned. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
+        /// <param name="ncharacterSet"> The character set for the Autonomous Database. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="lifecycleState"> Views lifecycleState. </param>
+        /// <param name="scheduledOperationsList"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="createdOn"> The date and time that the database was created. </param>
+        /// <param name="maintenanceBeginOn"> The date and time when maintenance will begin. </param>
+        /// <param name="maintenanceEndOn"> The date and time when maintenance will end. </param>
+        /// <param name="actualUsedDataStorageSizeInTbs"> The current amount of storage in use for user and system data, in terabytes (TB). </param>
+        /// <param name="allocatedStorageSizeInTbs"> The amount of storage currently allocated for the database tables and billed for, rounded up. </param>
+        /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
+        /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
+        /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
+        /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
+        /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
+        /// <param name="inMemoryAreaInGbs"> The area assigned to In-Memory tables in Autonomous Database. </param>
+        /// <param name="nextLongTermBackupCreatedOn"> The date and time when the next long-term backup would be created. </param>
+        /// <param name="longTermBackupSchedule"> Details for the long-term backup schedule. </param>
+        /// <param name="isPreview"> Indicates if the Autonomous Database version is a preview version. </param>
+        /// <param name="localAdgAutoFailoverMaxDataLossLimit"> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </param>
+        /// <param name="memoryPerOracleComputeUnitInGbs"> The amount of memory (in GBs) enabled per ECPU or OCPU. </param>
+        /// <param name="openMode"> Indicates the Autonomous Database mode. </param>
+        /// <param name="operationsInsightsStatus"> Status of Operations Insights for this Autonomous Database. </param>
+        /// <param name="permissionLevel"> The Autonomous Database permission level. </param>
+        /// <param name="privateEndpoint"> The private endpoint for the resource. </param>
+        /// <param name="provisionableCpus"> An array of CPU values that an Autonomous Database can be scaled to. </param>
+        /// <param name="role"> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </param>
+        /// <param name="serviceConsoleUri"> The URL of the Service Console for the Autonomous Database. </param>
+        /// <param name="sqlWebDeveloperUri"> The SQL Web Developer URL for the Oracle Autonomous Database. </param>
+        /// <param name="supportedRegionsToCloneTo"> The list of regions that support the creation of an Autonomous Database clone or an Autonomous Data Guard standby database. </param>
+        /// <param name="dataGuardRoleChangedOn"> The date and time the Autonomous Data Guard role was switched for the Autonomous Database. </param>
+        /// <param name="freeAutonomousDatabaseDeletedOn"> The date and time the Always Free database will be automatically deleted because of inactivity. </param>
+        /// <param name="timeLocalDataGuardEnabled"> The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database. </param>
+        /// <param name="lastFailoverHappenedOn"> The timestamp of the last failover operation. </param>
+        /// <param name="lastRefreshHappenedOn"> The date and time when last refresh happened. </param>
+        /// <param name="lastRefreshPointTimestamp"> The refresh point timestamp (UTC). </param>
+        /// <param name="lastSwitchoverHappenedOn"> The timestamp of the last switchover operation for the Autonomous Database. </param>
+        /// <param name="freeAutonomousDatabaseStoppedOn"> The date and time the Always Free database will be stopped because of inactivity. </param>
+        /// <param name="usedDataStorageSizeInGbs"> The storage space consumed by Autonomous Database in GBs. </param>
+        /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
+        /// <param name="databaseOcid"> Database ocid. </param>
+        /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
+        /// <param name="source"> The source of the database. </param>
+        /// <param name="sourceId"> The Azure ID of the source Autonomous Database that will be used to create a new peer database for the DR association. </param>
+        /// <param name="sourceLocation"> The name of the region where source Autonomous Database exists. </param>
+        /// <param name="sourceOcid"> The source database ocid. </param>
+        /// <param name="remoteDisasterRecoveryType"> Indicates the cross-region disaster recovery (DR) type of the standby Autonomous Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </param>
+        /// <param name="isReplicateAutomaticBackups"> If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database. </param>
+        /// <returns> A new <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutonomousDatabaseCrossRegionDisasterRecoveryProperties AutonomousDatabaseCrossRegionDisasterRecoveryProperties(string adminPassword, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, OracleDatabaseComputeModel? databaseComputeModel, int? cpuCoreCount, IEnumerable<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, AutonomousDatabaseWorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IEnumerable<string> peerDBIds, string peerDBId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, DateTimeOffset? disasterRecoveryRoleChangedOn, DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration, AutonomousDatabaseStandbySummary localStandbyDB, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, OracleLicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, IEnumerable<ScheduledOperationsType> scheduledOperationsList, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? createdOn, DateTimeOffset? maintenanceBeginOn, DateTimeOffset? maintenanceEndOn, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, OracleApexDetailsType apexDetails, IEnumerable<string> availableUpgradeVersions, AutonomousDatabaseConnectionStrings connectionStrings, AutonomousDatabaseConnectionUrls connectionUrls, DataSafeStatusType? dataSafeStatus, OracleDatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupCreatedOn, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, AutonomousDatabaseModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, AutonomousDatabasePermissionLevelType? permissionLevel, string privateEndpoint, IEnumerable<int> provisionableCpus, DataGuardRoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IEnumerable<string> supportedRegionsToCloneTo, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? freeAutonomousDatabaseDeletedOn, string timeLocalDataGuardEnabled, DateTimeOffset? lastFailoverHappenedOn, DateTimeOffset? lastRefreshHappenedOn, DateTimeOffset? lastRefreshPointTimestamp, DateTimeOffset? lastSwitchoverHappenedOn, DateTimeOffset? freeAutonomousDatabaseStoppedOn, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, string databaseOcid, int? backupRetentionPeriodInDays, IEnumerable<string> whitelistedIPs, AutonomousDatabaseSourceType source, ResourceIdentifier sourceId, string sourceLocation, string sourceOcid, DisasterRecoveryType remoteDisasterRecoveryType, bool? isReplicateAutomaticBackups)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.ExadbVmClusterProperties" />. </summary>
+        /// <param name="ocid"> ExadbVmCluster ocid. </param>
+        /// <param name="clusterName"> The cluster name for Exadata VM cluster on Exascale Infrastructure. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="backupSubnetCidr"> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </param>
+        /// <param name="nsgUri"> HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface. </param>
+        /// <param name="provisioningState"> Exadata VM cluster on Exascale Infrastructure provisioning state. </param>
+        /// <param name="lifecycleState"> CloudVmCluster lifecycle state. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="displayName"> Display Name. </param>
+        /// <param name="domain"> A domain name used for the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="enabledEcpuCount"> The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="exascaleDBStorageVaultId"> The Azure Resource ID of the Exadata Database Storage Vault. </param>
+        /// <param name="gridImageOcid"> Grid Setup will be done using this Grid Image OCID. Can be obtained using giMinorVersions API. </param>
+        /// <param name="gridImageType"> The type of Grid Image. </param>
+        /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. </param>
+        /// <param name="memorySizeInGbs"> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </param>
+        /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
+        /// <param name="zoneOcid"> The OCID of the zone the Exadata VM cluster on Exascale Infrastructure is associated with. </param>
+        /// <param name="privateZoneOcid"> The OCID of the zone the Exadata VM cluster on Exascale Infrastructure is associated with. </param>
+        /// <param name="scanListenerPortTcp"> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </param>
+        /// <param name="scanListenerPortTcpSsl"> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="shape"> The shape of the Exadata VM cluster on Exascale Infrastructure resource. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="systemVersion"> Operating system version of the image. </param>
+        /// <param name="timeZone"> The time zone of the Exadata VM cluster on Exascale Infrastructure. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
+        /// <param name="totalEcpuCount"> The number of Total ECPUs for an Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="vmFileSystemStorageTotalSizeInGbs"> Filesystem storage details. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="scanDnsRecordId"> The OCID of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="snapshotFileSystemStorageTotalSizeInGbs"> Snapshot filesystem storage details. </param>
+        /// <param name="totalSizeInGbs"> Total file system storage details. </param>
+        /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the Exadata VM cluster on Exascale Infrastructure. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="iormConfigCache"> iormConfigCache details for Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="backupSubnetOcid"> Cluster backup subnet ocid. </param>
+        /// <param name="subnetOcid"> Cluster subnet ocid. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.OracleDatabase.Models.ExadbVmClusterProperties" /> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExadbVmClusterProperties ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IEnumerable<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, int? vmFileSystemStorageTotalSizeInGbs, string lifecycleDetails, string scanDnsName, IEnumerable<string> scanIPIds, string scanDnsRecordId, int? snapshotFileSystemStorageTotalSizeInGbs, int? totalSizeInGbs, IEnumerable<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid)
+        {
+            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.ExascaleDBStorageVaultProperties" />. </summary>
+        /// <param name="additionalFlashCacheInPercent"> The size of additional Flash Cache in percentage of High Capacity database storage. </param>
+        /// <param name="description"> Exadata Database Storage Vault description. </param>
+        /// <param name="displayName"> The user-friendly name for the Exadata Database Storage Vault. The name does not need to be unique. </param>
+        /// <param name="highCapacityDatabaseStorageInputTotalSizeInGbs"> Create exadata Database Storage Details. </param>
+        /// <param name="highCapacityDatabaseStorage"> Response exadata Database Storage Details. </param>
+        /// <param name="timeZone"> The time zone that you want to use for the Exadata Database Storage Vault. </param>
+        /// <param name="provisioningState"> Exadata Database Storage Vault provisioning state. </param>
+        /// <param name="lifecycleState"> Exadata Database Storage Vault lifecycle state. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="vmClusterCount"> The number of Exadata VM clusters used the Exadata Database Storage Vault. </param>
+        /// <param name="ocid"> The OCID of the Exadata Database Storage Vault. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.OracleDatabase.Models.ExascaleDBStorageVaultProperties" /> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExascaleDBStorageVaultProperties ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, int? highCapacityDatabaseStorageInputTotalSizeInGbs, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri)
         {
             throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
         }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The updatable properties of the FileSystemResource. </summary>
     public partial class FileSystemResourceUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
         public FileSystemResourceUpdateProperties()
@@ -56,40 +28,39 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
-        /// <param name="clusterLoginUri"> File system Id of the resource. </param>
-        /// <param name="privateIPs"> Private IPs of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="clusterLoginUri"></param>
+        /// <param name="privateIPs"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
             ClusterLoginUri = clusterLoginUri;
             PrivateIPs = privateIPs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace details. </summary>
         public MarketplaceDetails MarketplaceDetails { get; set; }
+
         /// <summary> User Details. </summary>
         internal QumuloUserDetails UserDetails { get; set; }
-        /// <summary> User Email. </summary>
-        public string UserDetailsEmail
-        {
-            get => UserDetails is null ? default : UserDetails.Email;
-            set
-            {
-                if (UserDetails is null)
-                    UserDetails = new QumuloUserDetails();
-                UserDetails.Email = value;
-            }
-        }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
         public ResourceIdentifier DelegatedSubnetId { get; set; }
-        /// <summary> File system Id of the resource. </summary>
-        public Uri ClusterLoginUri { get; set; }
-        /// <summary> Private IPs of the resource. </summary>
-        public IList<string> PrivateIPs { get; }
+
+        /// <summary> User Email. </summary>
+        public string UserDetailsEmail
+        {
+            get
+            {
+                return UserDetails is null ? default : UserDetails.Email;
+            }
+            set
+            {
+                UserDetails = new QumuloUserDetails(value);
+            }
+        }
     }
 }

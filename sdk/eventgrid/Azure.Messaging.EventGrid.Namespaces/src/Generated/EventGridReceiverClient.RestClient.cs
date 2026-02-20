@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateReceiveRequest(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
@@ -30,11 +30,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxEvents != null)
             {
-                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents, null), true);
+                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents), true);
             }
             if (maxWaitTime != null)
             {
-                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, "%s"), true);
+                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

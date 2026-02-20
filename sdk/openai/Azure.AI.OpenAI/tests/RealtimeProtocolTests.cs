@@ -1,12 +1,12 @@
-﻿using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI.Realtime;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Realtime;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -29,7 +29,7 @@ public class RealtimeProtocolTests : RealtimeTestFixtureBase
     public async Task ProtocolCanConfigureSession(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         RealtimeClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), new RealtimeSessionOptions(), CancellationToken);
 
         BinaryData configureSessionCommand = BinaryData.FromString("""
             {

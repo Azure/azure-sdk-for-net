@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AutomaticResourcePredictionsProfile))]
+    [ModelReaderWriterBuildable(typeof(CheckNameAvailability))]
     [ModelReaderWriterBuildable(typeof(DevOpsAzureOrganizationProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsAzurePermissionProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsAzureSku))]
+    [ModelReaderWriterBuildable(typeof(DevOpsCheckNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(DevOpsDataDisk))]
+    [ModelReaderWriterBuildable(typeof(DevOpsDeleteResourcesDetails))]
     [ModelReaderWriterBuildable(typeof(DevOpsFabricProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsGitHubOrganization))]
     [ModelReaderWriterBuildable(typeof(DevOpsGitHubOrganizationProfile))]
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuZoneDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RuntimeConfiguration))]
     [ModelReaderWriterBuildable(typeof(SecretsManagementSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsFabricProfile))]

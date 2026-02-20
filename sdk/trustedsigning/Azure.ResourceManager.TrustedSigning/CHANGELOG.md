@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (Unreleased)
+
+This release is the first stable release of the Trusted Signing Management client library.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version to 2025-10-13.
+- Make `Azure.ResourceManager.TrustedSigning` AOT-compatible.
 
 ## 1.0.0-beta.2 (2025-03-11)
 

@@ -3,8 +3,8 @@
 
 #if !AZURE_OPENAI_GA
 
-using Azure.Core;
 using System.ClientModel;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Realtime;
 
@@ -39,7 +39,7 @@ internal partial class AzureRealtimeClient : RealtimeClient
     }
 
     public AzureRealtimeClient(Uri endpoint, TokenCredential credential, AzureOpenAIClientOptions options = null)
-        : base(credential: new("placeholder") , new OpenAIClientOptions() { Endpoint = endpoint })
+        : base(credential: new("placeholder"), new OpenAIClientOptions() { Endpoint = endpoint })
     {
         options ??= new();
         _baseEndpoint = GetEndpoint(endpoint);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TemplateDeploymentCapability. </summary>
+    /// <summary> The capabilities. </summary>
     public readonly partial struct TemplateDeploymentCapability : IEquatable<TemplateDeploymentCapability>
     {
         private readonly string _value;

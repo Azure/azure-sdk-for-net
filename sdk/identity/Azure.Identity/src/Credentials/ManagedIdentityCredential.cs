@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
-using System.ComponentModel;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -44,6 +44,7 @@ namespace Azure.Identity
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = string.IsNullOrEmpty(clientId) ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
         {
@@ -58,6 +59,7 @@ namespace Azure.Identity
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(ResourceIdentifier resourceId, TokenCredentialOptions options = null)
             : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(resourceId), Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
         {

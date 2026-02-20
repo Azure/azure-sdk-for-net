@@ -764,9 +764,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode Full { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode Monitor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode left, Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.AgentConfigurationMode (string value) { throw null; }
@@ -809,9 +807,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public ArcGatewayType(string value) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.ArcGatewayType Public { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.ArcGatewayType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.ArcGatewayType left, Azure.ResourceManager.HybridCompute.Models.ArcGatewayType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.ArcGatewayType (string value) { throw null; }
@@ -832,9 +828,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum ScVmm { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.ArcKindEnum VMware { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum left, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.ArcKindEnum (string value) { throw null; }
@@ -875,10 +869,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.HybridComputeLicenseProfileData HybridComputeLicenseProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState? provisioningState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus?), Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? productType = default(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType?), System.DateTimeOffset? enrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? disenrollmentOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature> productFeatures = null, System.Guid? assignedLicenseImmutableId = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.EsuKey> esuKeys = null, Azure.ResourceManager.HybridCompute.Models.EsuServerType? serverType = default(Azure.ResourceManager.HybridCompute.Models.EsuServerType?), Azure.ResourceManager.HybridCompute.Models.EsuEligibility? esuEligibility = default(Azure.ResourceManager.HybridCompute.Models.EsuEligibility?), Azure.ResourceManager.HybridCompute.Models.EsuKeyState? esuKeyState = default(Azure.ResourceManager.HybridCompute.Models.EsuKeyState?), string assignedLicense = null, bool? softwareAssuranceCustomer = default(bool?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType? assessmentMode = default(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType?), Azure.ResourceManager.HybridCompute.Models.PatchModeType? patchMode = default(Azure.ResourceManager.HybridCompute.Models.PatchModeType?), bool? isHotpatchingEnabled = default(bool?), Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus status = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineData HybridComputeMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData> resources = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? kind = default(Azure.ResourceManager.HybridCompute.Models.ArcKindEnum?), Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation locationData = null, Azure.ResourceManager.HybridCompute.Models.AgentConfiguration agentConfiguration = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses serviceStatuses = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile hardwareProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk> storageDisks = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeFirmwareProfile firmwareProfile = null, string cloudMetadataProvider = null, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile osProfile = null, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? status = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType?), System.DateTimeOffset? lastStatusChange = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails = null, string agentVersion = null, System.Guid? vmId = default(System.Guid?), string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, System.Guid? vmUuid = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, Azure.Core.ResourceIdentifier privateLinkScopeResourceId = null, Azure.Core.ResourceIdentifier parentClusterResourceId = null, string msSqlDiscovered = null, System.Collections.Generic.IReadOnlyDictionary<string, string> detectedProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineData HybridComputeMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData> resources, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.HybridCompute.Models.ArcKindEnum? kind, Azure.ResourceManager.HybridCompute.Models.HybridComputeLocation locationData, Azure.ResourceManager.HybridCompute.Models.AgentConfiguration agentConfiguration, Azure.ResourceManager.HybridCompute.Models.HybridComputeServiceStatuses serviceStatuses, string cloudMetadataProvider, Azure.ResourceManager.HybridCompute.Models.AgentUpgrade agentUpgrade, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile osProfile, Azure.ResourceManager.HybridCompute.Models.LicenseProfileMachineInstanceView licenseProfile, string provisioningState, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType? status, System.DateTimeOffset? lastStatusChange, System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails, string agentVersion, System.Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, System.Guid? vmUuid, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, Azure.Core.ResourceIdentifier privateLinkScopeResourceId, Azure.Core.ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, System.Collections.Generic.IReadOnlyDictionary<string, string> detectedProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData HybridComputeMachineExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, Azure.Core.ResourceIdentifier id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile HybridComputeNetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces = null) { throw null; }
@@ -922,9 +914,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.AssessmentModeType AutomaticByPlatform { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.AssessmentModeType ImageDefault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.AssessmentModeType left, Azure.ResourceManager.HybridCompute.Models.AssessmentModeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.AssessmentModeType (string value) { throw null; }
@@ -960,9 +950,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.EsuEligibility Ineligible { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.EsuEligibility Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.EsuEligibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.EsuEligibility left, Azure.ResourceManager.HybridCompute.Models.EsuEligibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuEligibility (string value) { throw null; }
@@ -990,9 +978,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.EsuKeyState Active { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.EsuKeyState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.EsuKeyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.EsuKeyState left, Azure.ResourceManager.HybridCompute.Models.EsuKeyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuKeyState (string value) { throw null; }
@@ -1008,9 +994,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.EsuServerType DataCenter { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.EsuServerType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.EsuServerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.EsuServerType left, Azure.ResourceManager.HybridCompute.Models.EsuServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuServerType (string value) { throw null; }
@@ -1061,9 +1045,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus PendingEvaluation { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus left, Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus (string value) { throw null; }
@@ -1080,9 +1062,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode Enforced { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode Learning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode left, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessMode (string value) { throw null; }
@@ -1111,9 +1091,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection left, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection (string value) { throw null; }
@@ -1178,9 +1156,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState TimedOut { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState (string value) { throw null; }
@@ -1252,9 +1228,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition DataCenter { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseEdition (string value) { throw null; }
@@ -1285,9 +1259,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState Activated { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState Deactivated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseState (string value) { throw null; }
@@ -1308,9 +1280,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus OotGrace { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus Unlicensed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseStatus (string value) { throw null; }
@@ -1326,9 +1296,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget WindowsServer2012 { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget WindowsServer2012R2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseTarget (string value) { throw null; }
@@ -1343,9 +1311,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public HybridComputeLicenseType(string value) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType Esu { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeLicenseType (string value) { throw null; }
@@ -1476,9 +1442,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType Linux { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType (string value) { throw null; }
@@ -1613,9 +1577,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear Year2 { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear Year3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear (string value) { throw null; }
@@ -1647,9 +1609,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity Error { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueSeverity (string value) { throw null; }
@@ -1667,9 +1627,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType MissingPerimeterConfiguration { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssueType (string value) { throw null; }
@@ -1691,9 +1649,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState left, Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningState (string value) { throw null; }
@@ -1710,9 +1666,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType Enabled { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType left, Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputePublicNetworkAccessType (string value) { throw null; }
@@ -1776,9 +1730,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType Info { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusLevelType (string value) { throw null; }
@@ -1795,9 +1747,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType Disconnected { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType Error { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType left, Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.HybridComputeStatusType (string value) { throw null; }
@@ -1842,9 +1792,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum Failed { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum Success { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum left, Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LastAttemptStatusEnum (string value) { throw null; }
@@ -1860,9 +1808,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState Assigned { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState NotAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState left, Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseAssignmentState (string value) { throw null; }
@@ -1878,9 +1824,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.LicenseCoreType PCore { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseCoreType VCore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LicenseCoreType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseCoreType left, Azure.ResourceManager.HybridCompute.Models.LicenseCoreType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseCoreType (string value) { throw null; }
@@ -1943,9 +1887,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType WindowsIotEnterprise { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType WindowsServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType (string value) { throw null; }
@@ -1977,9 +1919,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatus (string value) { throw null; }
@@ -1995,9 +1935,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate Disable { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate Enable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate left, Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate (string value) { throw null; }
@@ -2135,9 +2073,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus left, Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus (string value) { throw null; }
@@ -2226,9 +2162,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.PatchModeType ImageDefault { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.PatchModeType Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.PatchModeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.PatchModeType left, Azure.ResourceManager.HybridCompute.Models.PatchModeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchModeType (string value) { throw null; }
@@ -2244,9 +2178,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy Platform { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy left, Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy (string value) { throw null; }
@@ -2266,9 +2198,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed Yum { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed Zypper { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed left, Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed (string value) { throw null; }
@@ -2333,9 +2263,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux Other { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux Security { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux (string value) { throw null; }
@@ -2357,9 +2285,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow UpdateRollUp { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow Updates { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationWindow (string value) { throw null; }
@@ -2376,9 +2302,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting IfRequired { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting Never { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting (string value) { throw null; }
@@ -2398,9 +2322,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Started { get { throw null; } }
         public static Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus (string value) { throw null; }

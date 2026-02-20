@@ -17,11 +17,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override string ProviderId { get { throw null; } }
         public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareFileClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromDirectoryAsync(System.Uri directoryUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromFileAsync(System.Uri fileUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class ShareFileStorageResourceOptions

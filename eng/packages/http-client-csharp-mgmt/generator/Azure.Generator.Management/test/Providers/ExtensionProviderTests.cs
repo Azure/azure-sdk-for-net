@@ -70,5 +70,24 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.IsNotNull(getMethod);
             Assert.AreEqual(resource!.Type, getMethod!.Signature.ReturnType);
         }
+
+        [TestCase]
+        public void Verify_MockableResourcesWithNoMethods_AreNotGenerated()
+        {
+            // Verify that all MockableResourceProvider instances in the output have at least one method
+            // This ensures that mockable resources without methods are filtered out
+            var mockableResources = _plugin.OutputLibrary.TypeProviders
+                .OfType<MockableResourceProvider>().ToList();
+
+            // With resources defined, there should be mockable resources
+            Assert.That(mockableResources.Count, Is.GreaterThan(0), "There should be at least one mockable resource when resources are defined");
+
+            // All mockable resources in the output should have at least one method
+            foreach (var mockableResource in mockableResources)
+            {
+                Assert.That(mockableResource.Methods.Count, Is.GreaterThan(0),
+                    $"MockableResourceProvider '{mockableResource.Name}' should have at least one method to be included in the output.");
+            }
+        }
     }
 }

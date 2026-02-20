@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
         }
 
         [Test]
-       // [Ignore("Tested in dog food environment and its working with record and playback mode. But disabling this for now as test framework does not seems to support dog food officialy. Will activate this test at the time of GA release.")]
+        // [Ignore("Tested in dog food environment and its working with record and playback mode. But disabling this for now as test framework does not seems to support dog food officialy. Will activate this test at the time of GA release.")]
         public async Task AuthenticationTestAccessPolicyAssingment()
         {
             await SetCollectionsAsync();
@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
         }
 
         [Test]
-       // [Ignore("Tested in dog food environment and its working with record and playback mode. But disabling this for now as test framework does not seems to support dog food officialy. Will activate this test at the time of GA release.")]
+        // [Ignore("Tested in dog food environment and its working with record and playback mode. But disabling this for now as test framework does not seems to support dog food officialy. Will activate this test at the time of GA release.")]
         public async Task AuthenticationTestAuthenticationKeyAccess()
         {
             await SetCollectionsAsync();
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
