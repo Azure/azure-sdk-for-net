@@ -1,5 +1,15 @@
 # Release History
 
+## 1.18.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.18.0-beta.3 (2026-02-20)
 
 ### Breaking Changes
