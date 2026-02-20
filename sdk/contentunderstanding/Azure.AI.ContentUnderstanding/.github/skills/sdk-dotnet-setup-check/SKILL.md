@@ -29,7 +29,7 @@ Each check reports pass / fail with actionable fix instructions.
 - An Azure subscription with a Microsoft Foundry resource
 - Credentials:
   - **Recommended:** Run `az login` for `DefaultAzureCredential`
-  - **Alternative:** Set `CONTENTUNDERSTANDING_API_KEY` in `appsettings.json` or env var
+  - **Alternative:** Set `AZURE_CONTENT_UNDERSTANDING_KEY` in `appsettings.json` or env var
 
 > **[ASK USER] Prerequisites Check:**
 > Before proceeding, ask the user to confirm their prerequisites:
@@ -37,7 +37,7 @@ Each check reports pass / fail with actionable fix instructions.
 > 2. "Do you already have a **Microsoft Foundry resource** set up in Azure?" — If no, direct them to create one in a [supported region](https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support) before continuing.
 > 3. "How are you **authenticating**?" with options:
 >    - **DefaultAzureCredential (recommended)** — Have they run `az login`?
->    - **API Key** — Do they have `CONTENTUNDERSTANDING_API_KEY` ready?
+>    - **API Key** — Do they have `AZURE_CONTENT_UNDERSTANDING_KEY` ready?
 
 ## Package Directory
 
@@ -67,7 +67,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 The setup check script reads configuration from three sources (in priority order):
 
 1. **Command-line flags** (`--endpoint`, `--api-key`)
-2. **Environment variables** (`CONTENTUNDERSTANDING_ENDPOINT`, `CONTENTUNDERSTANDING_API_KEY`)
+2. **Environment variables** (`CONTENTUNDERSTANDING_ENDPOINT`, `AZURE_CONTENT_UNDERSTANDING_KEY`)
 3. **`appsettings.json`** in the package root directory
 
 > **[ASK USER] Provide endpoint:**
@@ -77,7 +77,7 @@ The setup check script reads configuration from three sources (in priority order
 > - If the user does not know where to find it: direct them to Azure Portal → Their Foundry resource → Keys and Endpoint.
 
 > **[ASK USER] Provide API key (if applicable):**
-> If the user chose API Key authentication in the prerequisites check, ask: "Please provide your **API key** (`CONTENTUNDERSTANDING_API_KEY`)."
+> If the user chose API Key authentication in the prerequisites check, ask: "Please provide your **API key** (`AZURE_CONTENT_UNDERSTANDING_KEY`)."
 > - Found at: Azure Portal → Your Foundry resource → Keys and Endpoint → Key1 or Key2.
 >
 > If the user chose DefaultAzureCredential, remind them: "Make sure you have run `az login` to authenticate."
@@ -95,7 +95,7 @@ Create or edit `appsettings.json` in the package root directory:
 ```json
 {
   "CONTENTUNDERSTANDING_ENDPOINT": "https://<your-resource-name>.services.ai.azure.com/",
-  "CONTENTUNDERSTANDING_API_KEY": "<your-api-key-if-not-using-DefaultAzureCredential>"
+  "AZURE_CONTENT_UNDERSTANDING_KEY": "<your-api-key-if-not-using-DefaultAzureCredential>"
 }
 ```
 
@@ -107,7 +107,7 @@ Create or edit `appsettings.json` in the package root directory:
 
 ```bash
 export CONTENTUNDERSTANDING_ENDPOINT="https://<your-resource-name>.services.ai.azure.com/"
-export CONTENTUNDERSTANDING_API_KEY="<your-api-key>"  # omit if using DefaultAzureCredential
+export AZURE_CONTENT_UNDERSTANDING_KEY="<your-api-key>"  # omit if using DefaultAzureCredential
 ```
 
 **Option C: Command-line flags**

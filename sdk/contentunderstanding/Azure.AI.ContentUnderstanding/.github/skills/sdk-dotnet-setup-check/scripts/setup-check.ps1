@@ -42,7 +42,7 @@ if ($Help) {
     Write-Host ""
     Write-Host "Reads credentials from (in priority order):"
     Write-Host "  1. Command-line parameters"
-    Write-Host "  2. Environment variables (CONTENTUNDERSTANDING_ENDPOINT, CONTENTUNDERSTANDING_API_KEY)"
+    Write-Host "  2. Environment variables (CONTENTUNDERSTANDING_ENDPOINT, AZURE_CONTENT_UNDERSTANDING_KEY)"
     Write-Host "  3. appsettings.json in the package root"
     exit 0
 }
@@ -133,8 +133,8 @@ $script:ResolvedEndpoint = if ($Endpoint) { $Endpoint }
     else { Read-AppSetting "CONTENTUNDERSTANDING_ENDPOINT" "" }
 
 $script:ResolvedApiKey = if ($ApiKey) { $ApiKey }
-    elseif ($env:CONTENTUNDERSTANDING_API_KEY) { $env:CONTENTUNDERSTANDING_API_KEY }
-    else { Read-AppSetting "CONTENTUNDERSTANDING_API_KEY" "" }
+    elseif ($env:AZURE_CONTENT_UNDERSTANDING_KEY) { $env:AZURE_CONTENT_UNDERSTANDING_KEY }
+    else { Read-AppSetting "AZURE_CONTENT_UNDERSTANDING_KEY" "" }
 
 # Strip trailing slash
 $script:ResolvedEndpoint = $script:ResolvedEndpoint.TrimEnd('/')
@@ -174,7 +174,7 @@ if ($script:ResolvedApiKey) {
     } else {
         $script:AuthMethod = ""
         Write-Fail "No credentials available (no API key, az/azd login failed)"
-        Write-Fix "Run 'az login' or 'azd login', or set CONTENTUNDERSTANDING_API_KEY"
+        Write-Fix "Run 'az login' or 'azd login', or set AZURE_CONTENT_UNDERSTANDING_KEY"
         $check1Passed = $false
     }
 }

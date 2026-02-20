@@ -179,47 +179,47 @@ fi
 
 # ─── Read configuration ──────────────────────────────────────────────────────
 ENDPOINT="${CONTENTUNDERSTANDING_ENDPOINT:-}"
-API_KEY="${CONTENTUNDERSTANDING_API_KEY:-}"
+API_KEY="${AZURE_CONTENT_UNDERSTANDING_KEY:-}"
 TARGET_ENDPOINT="${CONTENTUNDERSTANDING_TARGET_ENDPOINT:-}"
-TARGET_RESOURCE_ID="${CONTENTUNDERSTANDING_TARGET_RESOURCE_ID:-}"
+TARGET_RESOURCE_ID="${AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID:-}"
 SOURCE_ENDPOINT="${CONTENTUNDERSTANDING_SOURCE_ENDPOINT:-}"
-SOURCE_RESOURCE_ID="${CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID:-}"
-SOURCE_REGION="${CONTENTUNDERSTANDING_SOURCE_REGION:-}"
-TARGET_REGION="${CONTENTUNDERSTANDING_TARGET_REGION:-}"
-GPT41_DEPLOYMENT="${CONTENTUNDERSTANDING_GPT41_DEPLOYMENT:-gpt-4.1}"
-GPT41_MINI_DEPLOYMENT="${CONTENTUNDERSTANDING_GPT41_MINI_DEPLOYMENT:-gpt-4.1-mini}"
-EMBEDDING_DEPLOYMENT="${CONTENTUNDERSTANDING_EMBEDDING_DEPLOYMENT:-text-embedding-3-large}"
+SOURCE_RESOURCE_ID="${AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID:-}"
+SOURCE_REGION="${AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION:-}"
+TARGET_REGION="${AZURE_CONTENT_UNDERSTANDING_TARGET_REGION:-}"
+GPT41_DEPLOYMENT="${GPT_4_1_DEPLOYMENT:-gpt-4.1}"
+GPT41_MINI_DEPLOYMENT="${GPT_4_1_MINI_DEPLOYMENT:-gpt-4.1-mini}"
+EMBEDDING_DEPLOYMENT="${TEXT_EMBEDDING_3_LARGE_DEPLOYMENT:-text-embedding-3-large}"
 
 # Try loading from appsettings.json
 if [ -f "$APPSETTINGS" ]; then
     print_info "Loading settings from appsettings.json..."
     if command -v python3 &>/dev/null; then
         ENDPOINT="${ENDPOINT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_ENDPOINT',''))" 2>/dev/null)}"
-        API_KEY="${API_KEY:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_API_KEY',''))" 2>/dev/null)}"
+        API_KEY="${API_KEY:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('AZURE_CONTENT_UNDERSTANDING_KEY',''))" 2>/dev/null)}"
         TARGET_ENDPOINT="${TARGET_ENDPOINT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_TARGET_ENDPOINT',''))" 2>/dev/null)}"
-        TARGET_RESOURCE_ID="${TARGET_RESOURCE_ID:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_TARGET_RESOURCE_ID',''))" 2>/dev/null)}"
+        TARGET_RESOURCE_ID="${TARGET_RESOURCE_ID:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID',''))" 2>/dev/null)}"
         SOURCE_ENDPOINT="${SOURCE_ENDPOINT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_SOURCE_ENDPOINT',''))" 2>/dev/null)}"
-        SOURCE_RESOURCE_ID="${SOURCE_RESOURCE_ID:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID',''))" 2>/dev/null)}"
-        SOURCE_REGION="${SOURCE_REGION:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_SOURCE_REGION',''))" 2>/dev/null)}"
-        TARGET_REGION="${TARGET_REGION:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_TARGET_REGION',''))" 2>/dev/null)}"
-        GPT41_DEPLOYMENT="${GPT41_DEPLOYMENT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_GPT41_DEPLOYMENT','gpt-4.1'))" 2>/dev/null)}"
-        GPT41_MINI_DEPLOYMENT="${GPT41_MINI_DEPLOYMENT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_GPT41_MINI_DEPLOYMENT','gpt-4.1-mini'))" 2>/dev/null)}"
-        EMBEDDING_DEPLOYMENT="${EMBEDDING_DEPLOYMENT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('CONTENTUNDERSTANDING_EMBEDDING_DEPLOYMENT','text-embedding-3-large'))" 2>/dev/null)}"
+        SOURCE_RESOURCE_ID="${SOURCE_RESOURCE_ID:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID',''))" 2>/dev/null)}"
+        SOURCE_REGION="${SOURCE_REGION:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION',''))" 2>/dev/null)}"
+        TARGET_REGION="${TARGET_REGION:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('AZURE_CONTENT_UNDERSTANDING_TARGET_REGION',''))" 2>/dev/null)}"
+        GPT41_DEPLOYMENT="${GPT41_DEPLOYMENT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('GPT_4_1_DEPLOYMENT','gpt-4.1'))" 2>/dev/null)}"
+        GPT41_MINI_DEPLOYMENT="${GPT41_MINI_DEPLOYMENT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('GPT_4_1_MINI_DEPLOYMENT','gpt-4.1-mini'))" 2>/dev/null)}"
+        EMBEDDING_DEPLOYMENT="${EMBEDDING_DEPLOYMENT:-$(python3 -c "import json; d=json.load(open('$APPSETTINGS')); print(d.get('TEXT_EMBEDDING_3_LARGE_DEPLOYMENT','text-embedding-3-large'))" 2>/dev/null)}"
     elif command -v jq &>/dev/null; then
         ENDPOINT="${ENDPOINT:-$(jq -r '.CONTENTUNDERSTANDING_ENDPOINT // empty' "$APPSETTINGS" 2>/dev/null)}"
-        API_KEY="${API_KEY:-$(jq -r '.CONTENTUNDERSTANDING_API_KEY // empty' "$APPSETTINGS" 2>/dev/null)}"
+        API_KEY="${API_KEY:-$(jq -r '.AZURE_CONTENT_UNDERSTANDING_KEY // empty' "$APPSETTINGS" 2>/dev/null)}"
         TARGET_ENDPOINT="${TARGET_ENDPOINT:-$(jq -r '.CONTENTUNDERSTANDING_TARGET_ENDPOINT // empty' "$APPSETTINGS" 2>/dev/null)}"
-        TARGET_RESOURCE_ID="${TARGET_RESOURCE_ID:-$(jq -r '.CONTENTUNDERSTANDING_TARGET_RESOURCE_ID // empty' "$APPSETTINGS" 2>/dev/null)}"
+        TARGET_RESOURCE_ID="${TARGET_RESOURCE_ID:-$(jq -r '.AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID // empty' "$APPSETTINGS" 2>/dev/null)}"
         SOURCE_ENDPOINT="${SOURCE_ENDPOINT:-$(jq -r '.CONTENTUNDERSTANDING_SOURCE_ENDPOINT // empty' "$APPSETTINGS" 2>/dev/null)}"
-        SOURCE_RESOURCE_ID="${SOURCE_RESOURCE_ID:-$(jq -r '.CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID // empty' "$APPSETTINGS" 2>/dev/null)}"
-        SOURCE_REGION="${SOURCE_REGION:-$(jq -r '.CONTENTUNDERSTANDING_SOURCE_REGION // empty' "$APPSETTINGS" 2>/dev/null)}"
-        TARGET_REGION="${TARGET_REGION:-$(jq -r '.CONTENTUNDERSTANDING_TARGET_REGION // empty' "$APPSETTINGS" 2>/dev/null)}"
-        GPT41_DEPLOYMENT="${GPT41_DEPLOYMENT:-$(jq -r '.CONTENTUNDERSTANDING_GPT41_DEPLOYMENT // "gpt-4.1"' "$APPSETTINGS" 2>/dev/null)}"
-        GPT41_MINI_DEPLOYMENT="${GPT41_MINI_DEPLOYMENT:-$(jq -r '.CONTENTUNDERSTANDING_GPT41_MINI_DEPLOYMENT // "gpt-4.1-mini"' "$APPSETTINGS" 2>/dev/null)}"
-        EMBEDDING_DEPLOYMENT="${EMBEDDING_DEPLOYMENT:-$(jq -r '.CONTENTUNDERSTANDING_EMBEDDING_DEPLOYMENT // "text-embedding-3-large"' "$APPSETTINGS" 2>/dev/null)}"
+        SOURCE_RESOURCE_ID="${SOURCE_RESOURCE_ID:-$(jq -r '.AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID // empty' "$APPSETTINGS" 2>/dev/null)}"
+        SOURCE_REGION="${SOURCE_REGION:-$(jq -r '.AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION // empty' "$APPSETTINGS" 2>/dev/null)}"
+        TARGET_REGION="${TARGET_REGION:-$(jq -r '.AZURE_CONTENT_UNDERSTANDING_TARGET_REGION // empty' "$APPSETTINGS" 2>/dev/null)}"
+        GPT41_DEPLOYMENT="${GPT41_DEPLOYMENT:-$(jq -r '.GPT_4_1_DEPLOYMENT // "gpt-4.1"' "$APPSETTINGS" 2>/dev/null)}"
+        GPT41_MINI_DEPLOYMENT="${GPT41_MINI_DEPLOYMENT:-$(jq -r '.GPT_4_1_MINI_DEPLOYMENT // "gpt-4.1-mini"' "$APPSETTINGS" 2>/dev/null)}"
+        EMBEDDING_DEPLOYMENT="${EMBEDDING_DEPLOYMENT:-$(jq -r '.TEXT_EMBEDDING_3_LARGE_DEPLOYMENT // "text-embedding-3-large"' "$APPSETTINGS" 2>/dev/null)}"
     else
         print_warning "⚠ Neither python3 nor jq found. Cannot parse appsettings.json."
-        print_warning "  Set environment variables instead: CONTENTUNDERSTANDING_ENDPOINT, CONTENTUNDERSTANDING_API_KEY"
+        print_warning "  Set environment variables instead: CONTENTUNDERSTANDING_ENDPOINT, AZURE_CONTENT_UNDERSTANDING_KEY"
     fi
 elif [ -z "$ENDPOINT" ]; then
     echo ""
@@ -243,7 +243,7 @@ elif [ -z "$ENDPOINT" ]; then
         cat > "$APPSETTINGS" << APPSETTINGSJSON
 {
   "CONTENTUNDERSTANDING_ENDPOINT": "$ENDPOINT",
-  "CONTENTUNDERSTANDING_API_KEY": "$API_KEY"
+  "AZURE_CONTENT_UNDERSTANDING_KEY": "$API_KEY"
 }
 APPSETTINGSJSON
     else
@@ -515,16 +515,16 @@ var _appConfig = new ConfigurationBuilder()
     .Build();
 
 string _endpoint = _appConfig["CONTENTUNDERSTANDING_ENDPOINT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_ENDPOINT") ?? "";
-string _apiKey = _appConfig["CONTENTUNDERSTANDING_API_KEY"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_API_KEY") ?? "";
+string _apiKey = _appConfig["AZURE_CONTENT_UNDERSTANDING_KEY"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_KEY") ?? "";
 string _targetEndpoint = _appConfig["CONTENTUNDERSTANDING_TARGET_ENDPOINT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TARGET_ENDPOINT") ?? "";
-string _targetResourceId = _appConfig["CONTENTUNDERSTANDING_TARGET_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TARGET_RESOURCE_ID") ?? "";
+string _targetResourceId = _appConfig["AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID") ?? "";
 string _sourceEndpoint = _appConfig["CONTENTUNDERSTANDING_SOURCE_ENDPOINT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_SOURCE_ENDPOINT") ?? "";
-string _sourceResourceId = _appConfig["CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID") ?? "";
-string _sourceRegion = _appConfig["CONTENTUNDERSTANDING_SOURCE_REGION"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_SOURCE_REGION") ?? "";
-string _targetRegion = _appConfig["CONTENTUNDERSTANDING_TARGET_REGION"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TARGET_REGION") ?? "";
-string _gpt41Deployment = _appConfig["CONTENTUNDERSTANDING_GPT41_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_GPT41_DEPLOYMENT") ?? "gpt-4.1";
-string _gpt41MiniDeployment = _appConfig["CONTENTUNDERSTANDING_GPT41_MINI_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_GPT41_MINI_DEPLOYMENT") ?? "gpt-4.1-mini";
-string _embeddingDeployment = _appConfig["CONTENTUNDERSTANDING_EMBEDDING_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_EMBEDDING_DEPLOYMENT") ?? "text-embedding-3-large";
+string _sourceResourceId = _appConfig["AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID") ?? "";
+string _sourceRegion = _appConfig["AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION") ?? "";
+string _targetRegion = _appConfig["AZURE_CONTENT_UNDERSTANDING_TARGET_REGION"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION") ?? "";
+string _gpt41Deployment = _appConfig["GPT_4_1_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("GPT_4_1_DEPLOYMENT") ?? "gpt-4.1";
+string _gpt41MiniDeployment = _appConfig["GPT_4_1_MINI_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("GPT_4_1_MINI_DEPLOYMENT") ?? "gpt-4.1-mini";
+string _embeddingDeployment = _appConfig["TEXT_EMBEDDING_3_LARGE_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT") ?? "text-embedding-3-large";
 
 if (string.IsNullOrEmpty(_endpoint))
 {

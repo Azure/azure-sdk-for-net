@@ -48,7 +48,7 @@ show_help() {
     echo ""
     echo "Reads credentials from (in priority order):"
     echo "  1. Command-line flags"
-    echo "  2. Environment variables (CONTENTUNDERSTANDING_ENDPOINT, CONTENTUNDERSTANDING_API_KEY)"
+    echo "  2. Environment variables (CONTENTUNDERSTANDING_ENDPOINT, AZURE_CONTENT_UNDERSTANDING_KEY)"
     echo "  3. appsettings.json in the package root"
 }
 
@@ -156,7 +156,7 @@ http_get() {
 # ─── Resolve credentials ─────────────────────────────────────────────────────
 # Priority: flags > env > appsettings.json
 ENDPOINT="${ENDPOINT_OVERRIDE:-${CONTENTUNDERSTANDING_ENDPOINT:-$(read_appsetting CONTENTUNDERSTANDING_ENDPOINT "")}}"
-API_KEY="${APIKEY_OVERRIDE:-${CONTENTUNDERSTANDING_API_KEY:-$(read_appsetting CONTENTUNDERSTANDING_API_KEY "")}}"
+API_KEY="${APIKEY_OVERRIDE:-${AZURE_CONTENT_UNDERSTANDING_KEY:-$(read_appsetting AZURE_CONTENT_UNDERSTANDING_KEY "")}}"
 
 # Ensure trailing slash is stripped for consistent URL building
 ENDPOINT="${ENDPOINT%/}"
@@ -196,7 +196,7 @@ else
     else
         AUTH_METHOD=""
         fail "No credentials available (no API key, az/azd login failed)"
-        fix "Run 'az login' or 'azd login', or set CONTENTUNDERSTANDING_API_KEY"
+        fix "Run 'az login' or 'azd login', or set AZURE_CONTENT_UNDERSTANDING_KEY"
         check1_passed=false
     fi
 fi
