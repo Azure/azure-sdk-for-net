@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Tests;
 public partial class AgentsTelemetryTests : AgentsTestBase
 {
     public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
-    public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
+    public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
     public const string UseMessageEventsEnvironmentVariable = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
@@ -100,6 +100,36 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests1";
+
+        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName,
+            new AgentVersionCreationOptions(agentDefinition));
+
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Null);
+    }
+
+    [RecordedTest]
+    public async Task TestAgentCreateWithTracingVariableNotSet()
+    {
+        // Test that no spans are emitted when the env var is completely absent (null),
+        // as opposed to explicitly set to "false".
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, null, EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var modelDeploymentName = GetModelDeploymentName();
+        var agentName = "agentsTelemetryTests1b";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
