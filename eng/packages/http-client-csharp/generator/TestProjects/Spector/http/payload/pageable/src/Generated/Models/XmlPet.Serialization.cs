@@ -28,6 +28,6 @@ namespace Payload.Pageable
 
         protected virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        void IXmlSerializable.WriteXml(XmlWriter writer, string nameHint) => throw null;
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => throw null;
     }
 }

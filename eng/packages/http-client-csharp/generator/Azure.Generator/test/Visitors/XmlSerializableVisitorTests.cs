@@ -79,13 +79,13 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitType(serializationProvider);
 
             var writeMethod = serializationProvider.Methods
-                .FirstOrDefault(m => m.Signature.Name == "WriteXml" &&
+                .FirstOrDefault(m => m.Signature.Name == "Write" &&
                                     m.Signature.ExplicitInterface?.Name == nameof(IXmlSerializable));
-            Assert.IsNotNull(writeMethod, "IXmlSerializable.WriteXml method should be added");
-            Assert.AreEqual(2, writeMethod!.Signature.Parameters.Count, "WriteXml method should have 2 parameters");
+            Assert.IsNotNull(writeMethod, "IXmlSerializable.Write method should be added");
+            Assert.AreEqual(2, writeMethod!.Signature.Parameters.Count, "Write method should have 2 parameters");
             Assert.AreEqual("writer", writeMethod.Signature.Parameters[0].Name);
             Assert.AreEqual("nameHint", writeMethod.Signature.Parameters[1].Name);
-            Assert.IsNotNull(writeMethod.BodyExpression, "WriteXml method should have expression body");
+            Assert.IsNotNull(writeMethod.BodyExpression, "Write method should have expression body");
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitType(serializationProvider);
 
             var writeMethod = serializationProvider.Methods
-                .FirstOrDefault(m => m.Signature.Name == "WriteXml" &&
+                .FirstOrDefault(m => m.Signature.Name == "Write" &&
                                     m.Signature.ExplicitInterface?.Name == nameof(IXmlSerializable));
             Assert.IsNotNull(writeMethod);
 
@@ -174,9 +174,9 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(ixmlSerializableInterface, "IXmlSerializable interface should be added for models with both Xml and Json usage");
 
             var writeMethod = serializationProvider.Methods
-                .FirstOrDefault(m => m.Signature.Name == "WriteXml" &&
+                .FirstOrDefault(m => m.Signature.Name == "Write" &&
                                     m.Signature.ExplicitInterface?.Name == nameof(IXmlSerializable));
-            Assert.IsNotNull(writeMethod, "IXmlSerializable.WriteXml method should be added");
+            Assert.IsNotNull(writeMethod, "IXmlSerializable.Write method should be added");
         }
 
         [Test]

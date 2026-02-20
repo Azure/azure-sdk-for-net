@@ -26,7 +26,7 @@ namespace Azure.Generator.Visitors
     ///   <item>
     ///     <description>
     ///       For models with <see cref="InputModelTypeUsage.Xml"/> usage, adds the <see cref="IXmlSerializable"/> interface
-    ///       and implements the explicit <c>void IXmlSerializable.WriteXml(XmlWriter writer, string nameHint)</c> method.
+    ///       and implements the explicit <c>void IXmlSerializable.Write(XmlWriter writer, string nameHint)</c> method.
     ///     </description>
     ///   </item>
     ///   <item>
@@ -45,6 +45,7 @@ namespace Azure.Generator.Visitors
     /// </remarks>
     internal class XmlSerializableVisitor : ScmLibraryVisitor
     {
+        private const string WriteMethodName = "Write";
         private const string WriteXmlMethodName = "WriteXml";
         private const string WriteObjectValueMethodName = "WriteObjectValue";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
@@ -97,7 +98,7 @@ namespace Azure.Generator.Visitors
             var nameHintParameter = new ParameterProvider("nameHint", $"An optional name hint.", new CSharpType(typeof(string)));
 
             var methodSignature = new MethodSignature(
-                WriteXmlMethodName,
+                WriteMethodName,
                 null,
                 MethodSignatureModifiers.None,
                 null,
@@ -151,7 +152,7 @@ namespace Azure.Generator.Visitors
             var caseMatch = new DeclarationExpression(IXmlSerializableType, "xmlSerializable", out var xmlSerializableVar);
             var caseBody = new MethodBodyStatements(
             [
-                xmlSerializableVar.Invoke(WriteXmlMethodName, [writerParam, nameHintParam]).Terminate(),
+                xmlSerializableVar.Invoke(WriteMethodName, [writerParam, nameHintParam]).Terminate(),
                 Break
             ]);
             var ixmlSerializableCase = new SwitchCaseStatement(

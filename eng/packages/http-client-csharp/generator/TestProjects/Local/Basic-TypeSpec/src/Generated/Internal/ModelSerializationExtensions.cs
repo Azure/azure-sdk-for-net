@@ -317,7 +317,7 @@ namespace BasicTypeSpec
             switch (value)
             {
                 case IXmlSerializable xmlSerializable:
-                    xmlSerializable.WriteXml(writer, nameHint);
+                    xmlSerializable.Write(writer, nameHint);
                     break;
                 case IPersistableModel<T> persistableModel:
                     BinaryData data = ModelReaderWriter.Write(persistableModel, options ?? WireOptions, BasicTypeSpecContext.Default);
