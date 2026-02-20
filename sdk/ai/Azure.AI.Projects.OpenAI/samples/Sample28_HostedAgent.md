@@ -1,5 +1,11 @@
 # Sample on getting the responses from hosted Agent in Azure.AI.Projects.OpenAI.
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `ImageBasedHostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Projects.OpenAI`.
 
 ## Hosted Agent Deployment prerequisites
