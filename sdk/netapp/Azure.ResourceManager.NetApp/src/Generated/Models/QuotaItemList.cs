@@ -7,13 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Information regarding Subscription Quota Item. </summary>
-    public partial class NetAppSubscriptionQuotaItem : ResourceData
+    /// <summary> List of Quota Items. </summary>
+    internal partial class QuotaItemList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,29 +46,35 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItem"/>. </summary>
-        public NetAppSubscriptionQuotaItem()
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
+        /// <param name="value"> The QuotaItem items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal QuotaItemList(IEnumerable<QuotaItemData> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItem"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="current"> The current quota value. </param>
-        /// <param name="default"> The default quota value. </param>
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
+        /// <param name="value"> The QuotaItem items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal QuotaItemList(IReadOnlyList<QuotaItemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Current = current;
-            Default = @default;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The current quota value. </summary>
-        public int? Current { get; }
-        /// <summary> The default quota value. </summary>
-        public int? Default { get; }
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/> for deserialization. </summary>
+        internal QuotaItemList()
+        {
+        }
+
+        /// <summary> The QuotaItem items on this page. </summary>
+        public IReadOnlyList<QuotaItemData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

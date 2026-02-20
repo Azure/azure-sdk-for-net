@@ -3,10 +3,14 @@
 ## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
+- Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-12-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b0af9ea3ddad4d6fc0c08572e00ee68679a213c/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
 
 ### Breaking Changes
+- Updated generated quota APIs to use `QuotaItemResource` in place of `NetAppSubscriptionQuotaItem`.
+- Updated backup relationship status enum usage to `VolumeBackupRelationshipStatus`.
 
 ### Bugs Fixed
+- Fixed debug-time quota resource validation to accept both account-scoped and location-scoped quota resource IDs.
 
 ### Other Changes
 

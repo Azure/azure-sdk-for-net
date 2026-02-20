@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(QuotaSizeInKiBs))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp
             SystemData systemData = default;
             NetAppProvisioningState? provisioningState = default;
             long? quotaSizeInKiBs = default;
-            NetAppVolumeQuotaType? quotaType = default;
+            QuotaType? quotaType = default;
             string quotaTarget = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
+                            provisioningState = new NetAppProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("quotaSizeInKiBs"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            quotaType = new NetAppVolumeQuotaType(property0.Value.GetString());
+                            quotaType = new QuotaType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("quotaTarget"u8))

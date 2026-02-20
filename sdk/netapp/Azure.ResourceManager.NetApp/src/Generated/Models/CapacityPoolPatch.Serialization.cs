@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
-            float? customThroughputMibps = default;
+            int? customThroughputMibps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Models
                                 customThroughputMibps = null;
                                 continue;
                             }
-                            customThroughputMibps = property0.Value.GetSingle();
+                            customThroughputMibps = property0.Value.GetInt32();
                             continue;
                         }
                     }

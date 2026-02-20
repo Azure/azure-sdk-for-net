@@ -13,13 +13,13 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppSubscriptionQuotaItem : IUtf8JsonSerializable, IJsonModel<NetAppSubscriptionQuotaItem>
+    public partial class QuotaItemData : IUtf8JsonSerializable, IJsonModel<QuotaItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSubscriptionQuotaItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetAppSubscriptionQuotaItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubscriptionQuotaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaItemData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -49,22 +49,34 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(Usage))
+            {
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteNumberValue(Usage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("usage");
+                }
+            }
             writer.WriteEndObject();
         }
 
-        NetAppSubscriptionQuotaItem IJsonModel<NetAppSubscriptionQuotaItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuotaItemData IJsonModel<QuotaItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubscriptionQuotaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaItemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppSubscriptionQuotaItem(document.RootElement, options);
+            return DeserializeQuotaItemData(document.RootElement, options);
         }
 
-        internal static NetAppSubscriptionQuotaItem DeserializeNetAppSubscriptionQuotaItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuotaItemData DeserializeQuotaItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,6 +90,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SystemData systemData = default;
             int? current = default;
             int? @default = default;
+            int? usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,6 +146,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             @default = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("usage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                usage = null;
+                                continue;
+                            }
+                            usage = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -142,45 +165,46 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppSubscriptionQuotaItem(
+            return new QuotaItemData(
                 id,
                 name,
                 type,
                 systemData,
                 current,
                 @default,
+                usage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetAppSubscriptionQuotaItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuotaItemData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubscriptionQuotaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaItemData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetAppSubscriptionQuotaItem IPersistableModel<NetAppSubscriptionQuotaItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuotaItemData IPersistableModel<QuotaItemData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubscriptionQuotaItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaItemData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetAppSubscriptionQuotaItem(document.RootElement, options);
+                        return DeserializeQuotaItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaItemData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetAppSubscriptionQuotaItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
