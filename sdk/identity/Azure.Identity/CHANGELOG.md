@@ -10,6 +10,7 @@
 
 ### Bugs Fixed
 
+- `AzureDeveloperCliCredential` now parses JSON error output from `azd auth token` to extract clean error messages instead of including raw JSON in exceptions. Error messages like `{"type":"consoleMessage","data":{"message":"ERROR: fetching token: ..."}}` are now displayed as `ERROR: fetching token: ...`.
 - Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
 
 ### Other Changes
