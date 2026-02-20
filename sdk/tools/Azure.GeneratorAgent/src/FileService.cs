@@ -111,8 +111,7 @@ public sealed class FileService
 
             await File.WriteAllTextAsync(tspLocationPath, updatedYaml, cancellationToken).ConfigureAwait(false);
 
-            _logger.LogInformation("Successfully updated field {Field} to {NewValue} in {FilePath}",
-                field, value, tspLocationPath);
+            _logger.LogDebug("Updated field {Field} in {FilePath}", field, tspLocationPath);
         }
         catch (Exception ex)
         {

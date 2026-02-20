@@ -17,23 +17,70 @@ internal static class CopilotPrompts
     public static string BuildMigrationSystemMessage(string projectPath)
     {
         return $"""
-            You are an expert C# developer helping with Azure SDK code migration.
+            You are an expert C# developer helping fix build errors in Azure SDK libraries.
 
-            CRITICAL RULES:
-            1. NEVER modify files in 'Generated' folders - these are auto-generated
-            2. Create customization files for Generated file errors instead
-            3. Focus on migration patterns for Azure SDK modernization
+            CRITICAL RULES - YOU MUST FOLLOW THESE:
+            1. NEVER modify, edit, or create files under any "Generated" folder or path containing "Generated".
+            2. If an error is in a Generated file, you must fix it by creating/editing a CUSTOMIZATION file instead.
+            3. Do not expect all errors to be fixed simply by modifying custom files - you will need to regenerate code after making fixes. You 
+               are being run in a loop where after you make fixes, code generation will be re-run. When you are finished fixing errors, and require
+               a regeneration, end your current fix iteration.
+            4. Common fix patterns for Generated file errors:
+               - Create a partial class in the non-Generated folder to extend the generated type
+               - Add missing interface implementations in customization files
+               - Create wrapper methods or extension methods
 
             MIGRATION PATTERNS TO APPLY:
-            1. Replace GeneratorPageableHelpers with CollectionResult patterns
-            2. Remove ToRequestContent() calls (use implicit cast instead)
-            3. Replace FromCancellationToken with ToRequestContext()
-            4. Update factory method and ClientBuilderExtensions type names
-            5. Replace LRO Fetch methods with FromLroResponse static methods
-            6. Replace FromResponse methods with explicit cast operators
+            1. GeneratorPageableHelpers -> CollectionResult pattern:
+               - If you see code using GeneratorPageableHelpers.CreatePageable or similar, it needs to be replaced
+               - Look in the Generated folder for types ending in "CollectionResult" or "PageableCollection"
+               - Replace the helper call with instantiating the corresponding generated CollectionResult type
+               - IMPORTANT: If you cannot find a CollectionResult type in the Generated folder:
+                 a. The custom method is likely suppressing generation of the internal method that would create the CollectionResult
+                 b. Find the [CodeGenSuppress] attribute that suppresses the generated method
+                 c. Comment out or remove that attribute
+                 d. re-run code generation to generate the CollectionResult type (in order to regenerate end your current build fix iteration)
+                 e. After regeneration, the CollectionResult type will exist and can be used
+               - Do NOT try to create the CollectionResult type manually - it must be generated
 
-            Project location: {projectPath}
-            """;
+            2. ToRequestContent() removal:
+               - Input models now have an implicit cast to RequestContent
+               - Replace `foo.ToRequestContent()` with just `foo`
+               - Example: `using RequestContent content = details.ToRequestContent();` becomes `using RequestContent content = details;`
+               - IMPORTANT: do not remove the using statement - only remove the ToRequestContent() call
+
+            3. FromCancellationToken replacement:
+               - Replace `RequestContext context = FromCancellationToken(cancellationToken);`
+               - With `RequestContext context = cancellationToken.ToRequestContext();`
+                
+            4. Mismatched factory method type names:
+               - If there is a custom type ending in ModelFactory that has a different name than the 
+                 generated type ending in ModelFactory, update the CodeGenType attribute in the custom type to match the generated type name. 
+
+            5. Mismatched ClientBuilderExtensions type names. 
+                - If there is a custom type ending in ClientBuilderExtensions that has a different name than the 
+                  generated type ending in ClientBuilderExtensions, update the CodeGenType attribute in the custom type to match the generated type name.
+            
+            6. Fetch methods in custom LRO methods:
+                - In the new generator, the Fetch methods are replaced by static methods called FromLroResponse on the Response models.
+                - Update custom LRO methods to use ResponseModel.FromLroResponse(response) instead of calling Fetch methods.
+                - Do NOT create Fetch methods manually - call the generated FromLroResponse method.
+                
+            7. FromResponse method removal:    
+                - The FromResponse methods have been removed from models.
+                - Instead, use the explicit cast from Response to the model type.
+                - Example: `var model = ModelType.FromResponse(response);` becomes `var model = (ModelType)response;`
+            The project is located at: {projectPath}
+
+            When fixing errors:
+            1. Use grep/glob to explore the codebase structure
+            2. Use view to read files and understand the error context
+            3. Determine if the error is in a Generated file (path contains "Generated")
+            4. If in Generated file: create/edit a customization file in the parallel non-Generated location
+            5. Use edit or create to make your fixes
+            6. Only fix files that are NOT in Generated folders
+            """
+;
     }
 
     /// <summary>
@@ -76,6 +123,57 @@ internal static class CopilotPrompts
 
             RESPONSE:
             Based on your analysis of the project files at {projectPath}, update the tsp-location.yaml file with the correct specification path.
+            """;
+    }
+
+    /// <summary>
+    /// Builds the comprehensive prompt for handling the complete build-fix cycle during Azure SDK migration.
+    /// </summary>
+    /// <param name="projectPath">Path to the project being built.</param>
+    /// <returns>Complete build-fix cycle prompt for Copilot to handle autonomously.</returns>
+    public static string BuildAndFixCyclePrompt(string projectPath)
+    {
+        return $"""
+            Your task is to run build commands, tests, and finalization scripts, fixing any errors. BE EXTREMELY VERBOSE about what you're doing.
+
+            PROJECT DIRECTORY: {projectPath}
+
+            STEPS:
+            1. ANNOUNCE: "I'm about to run: dotnet build /t:generateCode"
+            2. Run: dotnet build /t:generateCode  
+            3. If successful, ANNOUNCE: "Code generation successful, now running regular build"
+            4. If it fails, ANNOUNCE: "Code generation failed, analyzing errors to create fixes"
+            5. Read and analyze any error output, create/edit custom files to fix issues
+            6. REPEAT step 2-5 until code generation succeeds
+            7. ANNOUNCE: "I'm about to run: dotnet build"
+            8. Run: dotnet build
+            9. If successful, ANNOUNCE: "Build completed successfully, now running tests"
+            10. If it fails, ANNOUNCE: "Build failed, analyzing errors to create fixes"
+            11. Read and analyze any error output, create/edit custom files to fix issues
+            12. REPEAT step 8-11 until build succeeds
+            13. ANNOUNCE: "I'm about to run: dotnet test"
+            14. Run: dotnet test
+            15. If successful, ANNOUNCE: "Tests completed successfully, running finalization scripts"
+            16. If it fails, ANNOUNCE: "Tests failed, analyzing failures and updating tests based on new generated classes"
+            17. Read and analyze test failures, update test files to work with new generated code
+            18. REPEAT step 14-17 until tests succeed
+            19. Find azure-sdk-for-net repository root (navigate up from project path until you find 'eng' folder)
+            20. ANNOUNCE: "Running Export-API.ps1 script from repository root"
+            21. Run: eng/scripts/Export-API.ps1 (from repository root)
+            22. ANNOUNCE: "Running Update-Snippets.ps1 script from repository root"  
+            23. Run: eng/scripts/Update-Snippets.ps1 (from repository root)
+            24. ANNOUNCE: "Migration completed successfully - all steps finished"
+
+            CRITICAL RULES:
+            - NEVER modify files in 'Generated' or 'generated' folders
+            - Only create/modify custom files outside Generated folders  
+            - ALWAYS ANNOUNCE what command you're about to run before running it
+            - ALWAYS ANNOUNCE the result after running commands
+            - For PowerShell scripts, find the azure-sdk-for-net root directory first (contains 'eng' folder and 'global.json')
+            - Run PowerShell scripts from the repository root, not the project directory
+            - Be extremely verbose about your reasoning and actions
+
+            Start now. Remember to announce every command before you run it!
             """;
     }
 }

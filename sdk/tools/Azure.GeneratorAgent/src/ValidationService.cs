@@ -72,7 +72,7 @@ public sealed class ValidationService
                 throw new FileNotFoundException(message);
             }
 
-            _logger.LogInformation("SDK path validation successful: {Path} (found {ProjectCount} .csproj files)",
+            _logger.LogDebug("SDK path validation successful: {Path} (found {ProjectCount} .csproj files)",
                 absolutePath, csprojFiles.Length);
             return Task.FromResult(absolutePath);
         }

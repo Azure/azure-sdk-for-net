@@ -62,6 +62,7 @@ public sealed class CopilotService : IAsyncDisposable
             });
 
             await client.StartAsync().ConfigureAwait(false);
+
             session = await client.CreateSessionAsync(new SessionConfig
             {
                 Model = settings.Model,
@@ -70,12 +71,22 @@ public sealed class CopilotService : IAsyncDisposable
                     Mode = SystemMessageMode.Append,
                     Content = CopilotPrompts.BuildMigrationSystemMessage(projectPath)
                 },
-                AvailableTools = ["view", "edit", "create", "grep", "glob", "terminal"],
+                AvailableTools = [
+                    "powershell", "read_powershell",
+                    "view", "edit", "create",
+                    "grep", "glob",
+                    "report_intent", "task_complete"
+                ],
                 InfiniteSessions = new InfiniteSessionConfig { Enabled = false },
-                Streaming = true
+                Streaming = true,
+                OnPermissionRequest = async (request, invocation) =>
+                {
+                    logger.LogDebug("Approving permission request: Kind={Kind}", request.Kind);
+                    return new PermissionRequestResult { Kind = "approved" };
+                }
             }).ConfigureAwait(false);
 
-            logger.LogInformation("Copilot service created successfully with model: {Model}", settings.Model);
+            logger.LogInformation("Using model: {Model}", settings.Model);
 
             return new CopilotService(logger, settings, client, session);
         }
@@ -118,12 +129,27 @@ public sealed class CopilotService : IAsyncDisposable
             return;
         }
 
-        _logger.LogDebug("Requesting Copilot to update tsp-location.yaml for repository: {RepoName}", repoName);
+        _logger.LogInformation("Starting TypeSpec path analysis for repo: {RepoName}", repoName);
 
         var prompt = CopilotPrompts.TypespecPathAnalysisPrompt(projectPath, repoName);
         var result = await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
 
-        _logger.LogDebug("Copilot has been asked to update tsp-location.yaml: {Response}", result);
+        _logger.LogInformation("Completed TypeSpec path analysis");
+    }
+
+    /// <summary>
+    /// Executes a build-fix cycle using Copilot to analyze build errors and suggest fixes until the project builds successfully.
+    /// </summary>
+    public async Task HandleBuildFixCycleAsync(string projectPath, CancellationToken cancellationToken = default)
+    {
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
+
+        _logger.LogInformation("Starting build-fix cycle for project: {ProjectPath}", projectPath);
+
+        var prompt = CopilotPrompts.BuildAndFixCyclePrompt(projectPath);
+        var result = await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
+
+        _logger.LogInformation("Build-fix cycle completed");
     }
 
     private async Task<string?> SendPromptAndGetResponseAsync(string prompt, CancellationToken cancellationToken)
@@ -141,7 +167,11 @@ public sealed class CopilotService : IAsyncDisposable
                 {
                     case AssistantMessageEvent assistantMsg:
                         responseBuilder.Append(assistantMsg.Data.Content);
-                        _logger.LogTrace("Received assistant message content: {ContentLength} characters", assistantMsg.Data.Content.Length);
+                        // Only log non-empty response content to keep output clean
+                        if (!string.IsNullOrWhiteSpace(assistantMsg.Data.Content))
+                        {
+                            _logger.LogInformation("\n{Content}\n", assistantMsg.Data.Content);
+                        }
                         break;
                     case SessionErrorEvent errorEvt:
                         _logger.LogError("Copilot session error: {Error}", errorEvt.Data.Message);
@@ -151,11 +181,8 @@ public sealed class CopilotService : IAsyncDisposable
                         _logger.LogTrace("Copilot session became idle, completing response");
                         completionTcs.TrySetResult();
                         break;
-                    case ToolExecutionStartEvent:
-                        _logger.LogTrace("Copilot tool execution started");
-                        break;
-                    case ToolExecutionCompleteEvent:
-                        _logger.LogTrace("Copilot tool execution completed");
+                    default:
+                        _logger.LogTrace("Copilot session event: {EventType}", evt.GetType().Name);
                         break;
                 }
             }
@@ -178,33 +205,35 @@ public sealed class CopilotService : IAsyncDisposable
             await completionTcs.Task.WaitAsync(combinedCts.Token).ConfigureAwait(false);
 
             var response = responseBuilder.ToString().Trim();
+
             if (string.IsNullOrWhiteSpace(response))
             {
                 _logger.LogWarning("Copilot returned empty or whitespace-only response");
                 return null;
             }
 
-            _logger.LogDebug("Received response from Copilot: {ResponseLength} characters", response.Length);
             return response;
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Copilot prompt was cancelled by user");
+            _logger.LogWarning("Copilot request was cancelled by user");
             return null;
         }
         catch (OperationCanceledException)
         {
-            _logger.LogWarning("Copilot prompt timed out after {Timeout}", _settings.DefaultTimeout);
+            _logger.LogWarning("Copilot request timed out after {Timeout}", _settings.DefaultTimeout);
             return null;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to get response from Copilot for prompt (length: {PromptLength})", prompt.Length);
+            _logger.LogError(ex, "Failed to get response from Copilot");
             return null;
         }
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Disposes of the Copilot client and session resources.
+    /// </summary>
     public async ValueTask DisposeAsync()
     {
         if (_isDisposed)

@@ -91,7 +91,7 @@ public class RootCommandFactory
                 throw new ArgumentException("SDK path argument is required but was not provided", nameof(sdkPath));
             }
 
-            _logger.LogInformation("Starting migrate command for SDK path: {SdkPath}", sdkPath);
+            _logger.LogInformation("Migrating: {SdkPath}", sdkPath);
 
             // Create command-specific timeout linked to app cancellation
             using var commandCts = CancellationTokenSource.CreateLinkedTokenSource(appCancellationToken);
@@ -123,14 +123,24 @@ public class RootCommandFactory
                     throw new InvalidOperationException("Unable to resolve valid commit and directory path");
                 }
 
-                _logger.LogInformation("Retrieved latest commit: {CommitSha} for path: {Directory}", commitSha, finalDirectory);
+                _logger.LogInformation("Commit: {CommitSha}", commitSha);
+                _logger.LogInformation("Spec: {FinalDirectory}", finalDirectory);
 
                 // Step 5: Update tsp-location.yaml
                 _logger.LogDebug("Step 5: Updating tsp-location.yaml fields");
                 await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, cancellationToken).ConfigureAwait(false);
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
-                _logger.LogInformation("Successfully completed migration for SDK path: {SdkPath}", sdkPath);
+                // Step 6: Run code generation, fix errors, then build and fix errors
+                _logger.LogDebug("Step 6: Delegating build-fix cycle to Copilot");
+                if (_copilotServiceTask is null)
+                {
+                    throw new InvalidOperationException("Copilot service task was not initialized");
+                }
+                var copilotService = await _copilotServiceTask.ConfigureAwait(false);
+                await copilotService.HandleBuildFixCycleAsync(validatedPath, cancellationToken).ConfigureAwait(false);
+
+                _logger.LogInformation("Migration completed: {SdkPath}", sdkPath);
             }
             catch (OperationCanceledException) when (appCancellationToken.IsCancellationRequested)
             {
@@ -183,13 +193,13 @@ public class RootCommandFactory
             var commitSha = await _gitService.TryGetCommitForPath(DefaultOwner, DefaultSpecsRepository, initialDirectory, cancellationToken).ConfigureAwait(false);
             if (commitSha != null)
             {
-                _logger.LogInformation("Found valid commit {CommitSha} for existing directory: {Directory}", commitSha, initialDirectory);
+                _logger.LogDebug("Found valid commit {CommitSha} for existing directory: {Directory}", commitSha, initialDirectory);
                 return (commitSha, initialDirectory);
             }
         }
 
         // Directory not found or invalid, use Copilot to fix it
-        _logger.LogInformation("Directory path {Path} not found or invalid, using Copilot to find and update correct path", initialDirectory);
+        _logger.LogDebug("Directory path {Path} not found or invalid, using Copilot to find correct path", initialDirectory);
 
         if (_copilotServiceTask == null)
         {
@@ -213,7 +223,7 @@ public class RootCommandFactory
 
         if (updatedCommitSha != null)
         {
-            _logger.LogInformation("Found valid commit {CommitSha} for Copilot-updated directory: {Directory}", updatedCommitSha, updatedDirectory);
+            _logger.LogDebug("Found valid commit {CommitSha} for Copilot-updated directory: {Directory}", updatedCommitSha, updatedDirectory);
             return (updatedCommitSha, updatedDirectory);
         }
 
