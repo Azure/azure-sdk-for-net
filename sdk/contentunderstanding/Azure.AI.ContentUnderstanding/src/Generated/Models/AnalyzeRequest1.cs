@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -17,9 +18,10 @@ namespace Azure.AI.ContentUnderstanding
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeRequest1"/>. </summary>
-        internal AnalyzeRequest1()
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        internal AnalyzeRequest1(IEnumerable<AnalysisInput> inputs)
         {
-            Inputs = new ChangeTrackingList<AnalyzeInput>();
+            Inputs = inputs.ToList();
             ModelDeployments = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -33,7 +35,7 @@ namespace Azure.AI.ContentUnderstanding
         /// Example: { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeRequest1(IList<AnalyzeInput> inputs, IDictionary<string, string> modelDeployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeRequest1(IList<AnalysisInput> inputs, IDictionary<string, string> modelDeployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Inputs = inputs;
             ModelDeployments = modelDeployments;
@@ -41,7 +43,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </summary>
-        public IList<AnalyzeInput> Inputs { get; }
+        public IList<AnalysisInput> Inputs { get; }
 
         /// <summary>
         /// Override the resource-level default mapping of supported large language model (LLM) names to model deployment names in Microsoft Foundry. Dictionary of string to string

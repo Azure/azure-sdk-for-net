@@ -13,28 +13,28 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Additional input to analyze. </summary>
-    public partial class AnalyzeInput : IJsonModel<AnalyzeInput>
+    public partial class AnalysisInput : IJsonModel<AnalysisInput>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AnalyzeInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AnalysisInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeInput(document.RootElement, options);
+                        return DeserializeAnalysisInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisInput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AnalysisInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -45,15 +45,15 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisInput)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Data))
             {
@@ -94,30 +94,30 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeInput IJsonModel<AnalyzeInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalysisInput IJsonModel<AnalysisInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AnalyzeInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AnalysisInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisInput)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeInput(document.RootElement, options);
+            return DeserializeAnalysisInput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AnalyzeInput DeserializeAnalyzeInput(JsonElement element, ModelReaderWriterOptions options)
+        internal static AnalysisInput DeserializeAnalysisInput(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri url = default;
+            Uri uri = default;
             BinaryData data = default;
             string name = default;
             string mimeType = default;
@@ -131,7 +131,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("data"u8))
@@ -163,8 +163,8 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnalyzeInput(
-                url,
+            return new AnalysisInput(
+                uri,
                 data,
                 name,
                 mimeType,
@@ -173,26 +173,26 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AnalysisInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisInput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeInput IPersistableModel<AnalyzeInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalysisInput IPersistableModel<AnalysisInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AnalysisInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

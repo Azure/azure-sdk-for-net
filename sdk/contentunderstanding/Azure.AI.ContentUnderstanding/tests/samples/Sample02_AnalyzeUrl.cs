@@ -31,7 +31,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             AnalyzeResult result = operation.Value;
             MediaContent content = result.Contents!.First();
@@ -179,7 +179,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-videoSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             AnalyzeResult result = operation.Value;
 
@@ -231,7 +231,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-audioSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             AnalyzeResult result = operation.Value;
 
@@ -282,7 +282,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-imageSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             AnalyzeResult result = operation.Value;
 

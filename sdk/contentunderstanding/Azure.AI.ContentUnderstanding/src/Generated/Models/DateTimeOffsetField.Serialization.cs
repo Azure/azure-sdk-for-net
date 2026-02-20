@@ -13,28 +13,28 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Date field extracted from the content. </summary>
-    public partial class DateField : ContentField, IJsonModel<DateField>
+    public partial class DateTimeOffsetField : ContentField, IJsonModel<DateTimeOffsetField>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeOffsetField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDateField(document.RootElement, options);
+                        return DeserializeDateTimeOffsetField(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DateField)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateTimeOffsetField)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DateField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DateTimeOffsetField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -45,10 +45,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeOffsetField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateField)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DateTimeOffsetField)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ValueDate))
@@ -60,24 +60,24 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DateField IJsonModel<DateField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DateField)JsonModelCreateCore(ref reader, options);
+        DateTimeOffsetField IJsonModel<DateTimeOffsetField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DateTimeOffsetField)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ContentField JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeOffsetField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateField)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DateTimeOffsetField)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDateField(document.RootElement, options);
+            return DeserializeDateTimeOffsetField(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DateField DeserializeDateField(JsonElement element, ModelReaderWriterOptions options)
+        internal static DateTimeOffsetField DeserializeDateTimeOffsetField(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DateField(
+            return new DateTimeOffsetField(
                 @type,
                 spans ?? new ChangeTrackingList<ContentSpan>(),
                 confidence,
@@ -148,26 +148,26 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DateField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DateTimeOffsetField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DateField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeOffsetField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DateField)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateTimeOffsetField)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DateField IPersistableModel<DateField>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateField)PersistableModelCreateCore(data, options);
+        DateTimeOffsetField IPersistableModel<DateTimeOffsetField>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateTimeOffsetField)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DateField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DateTimeOffsetField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

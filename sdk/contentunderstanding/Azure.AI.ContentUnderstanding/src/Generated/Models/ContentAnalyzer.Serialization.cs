@@ -131,10 +131,10 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("fieldSchema"u8);
                 writer.WriteObjectValue(FieldSchema, options);
             }
-            if (Optional.IsDefined(DynamicFieldSchema))
+            if (Optional.IsDefined(HasDynamicFieldSchema))
             {
                 writer.WritePropertyName("dynamicFieldSchema"u8);
-                writer.WriteBooleanValue(DynamicFieldSchema.Value);
+                writer.WriteBooleanValue(HasDynamicFieldSchema.Value);
             }
             if (Optional.IsDefined(ProcessingLocation))
             {
@@ -224,7 +224,7 @@ namespace Azure.AI.ContentUnderstanding
             string baseAnalyzerId = default;
             ContentAnalyzerConfig config = default;
             ContentFieldSchema fieldSchema = default;
-            bool? dynamicFieldSchema = default;
+            bool? hasDynamicFieldSchema = default;
             ProcessingLocation? processingLocation = default;
             IList<KnowledgeSource> knowledgeSources = default;
             IDictionary<string, string> models = default;
@@ -328,7 +328,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    dynamicFieldSchema = prop.Value.GetBoolean();
+                    hasDynamicFieldSchema = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("processingLocation"u8))
@@ -400,7 +400,7 @@ namespace Azure.AI.ContentUnderstanding
                 baseAnalyzerId,
                 config,
                 fieldSchema,
-                dynamicFieldSchema,
+                hasDynamicFieldSchema,
                 processingLocation,
                 knowledgeSources ?? new ChangeTrackingList<KnowledgeSource>(),
                 models ?? new ChangeTrackingDictionary<string, string>(),

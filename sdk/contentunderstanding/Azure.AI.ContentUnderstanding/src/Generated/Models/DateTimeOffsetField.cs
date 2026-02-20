@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Date field extracted from the content. </summary>
-    public partial class DateField : ContentField
+    public partial class DateTimeOffsetField : ContentField
     {
-        /// <summary> Initializes a new instance of <see cref="DateField"/>. </summary>
-        internal DateField() : base(ContentFieldType.Date)
+        /// <summary> Initializes a new instance of <see cref="DateTimeOffsetField"/>. </summary>
+        internal DateTimeOffsetField() : base(ContentFieldType.Date)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DateField"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DateTimeOffsetField"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueDate"> Date field value, in ISO 8601 (YYYY-MM-DD) format. </param>
-        internal DateField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? valueDate) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
+        internal DateTimeOffsetField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? valueDate) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
         {
             ValueDate = valueDate;
         }

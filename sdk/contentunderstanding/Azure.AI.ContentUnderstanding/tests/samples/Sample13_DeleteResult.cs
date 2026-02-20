@@ -32,7 +32,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+                inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
             // Get the operation ID - this is needed to delete the result later
             string operationId = analyzeOperation.Id;
@@ -107,9 +107,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     fieldsFound.Add(fieldName);
                     var field = docContent.Fields[fieldName];
 
-                    if (field is StringField sf && !string.IsNullOrWhiteSpace(sf.ValueString))
+                    if (field is StringField sf && !string.IsNullOrWhiteSpace(sf.Value))
                     {
-                        Console.WriteLine($"  {fieldName}: {sf.ValueString}");
+                        Console.WriteLine($"  {fieldName}: {sf.Value}");
                     }
                     else if (field is ObjectField of)
                     {
