@@ -7,19 +7,19 @@ This document provides guidelines for AI agents (e.g., GitHub Copilot, MCP-based
 ### Purpose and Scope
 
 The Azure SDK for .NET repository contains:
-- **Client Libraries**: SDKs for interacting with Azure services at application runtime
-- **Management Libraries**: SDKs for provisioning and managing Azure resources
+- **Data plane Client Libraries**: SDKs for interacting with Azure services at application runtime
+- **Management plane Libraries**: SDKs for provisioning and managing Azure resources
 - **Code Generators**: Tools that generate Azure Data Plane and Management Plane SDKs
 - **Build Infrastructure**: Common engineering systems and tooling for SDK development
 
 ### Repository Structure
 
 ```
-/sdk                          # Individual Azure service SDKs
-/eng/packages/http-client-csharp      # Azure Data Plane SDK generator
+/sdk                                                           # Individual Azure service SDKs
+/eng/packages/http-client-csharp            # Azure Data Plane SDK generator
 /eng/packages/http-client-csharp-mgmt # Azure Management Plane SDK generator
-/eng                          # Build, test, and automation infrastructure
-/doc                          # Documentation
+/eng                                                           # Build, test, and automation infrastructure
+/doc                                                           # Documentation
 ```
 
 For detailed developer instructions, see [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
@@ -56,13 +56,13 @@ AI agents **must not**:
 - **Bypass Security**: Skip security checks or modify security-critical code without human review
 - **Auto-merge PRs**: Merge pull requests without proper human approval
 - **Modify CI/CD Pipelines**: Change GitHub Actions workflows without explicit permission
-- **Delete Test Coverage**: Remove or disable existing tests
+- **Delete Test Coverage**: Remove or disable existing tests unless explicitly instructed
 - **Break API Compatibility**: Introduce breaking changes in GA libraries without explicit design approval
 
 AI agents **should be cautious** when:
 
-- Modifying generated code (prefer updating code generators instead)
-- Making changes to shared infrastructure in `/eng`
+- Modifying generated code — **never** update generated code without running the generator to regenerate it
+- Making changes to shared infrastructure in `/eng` — **never** do this unless explicitly asked
 - Updating package dependencies (requires dependency management approval)
 - Changing public APIs (requires API review)
 
@@ -77,7 +77,10 @@ AI agents **should be cautious** when:
 cd sdk/eventhub
 dotnet build
 
-# Run tests (skip live tests)
+# Run tests (live tests are excluded by default)
+dotnet test
+
+# Run tests (explicitly skip live tests)
 dotnet test --filter TestCategory!=Live
 
 # Build and test via service.proj
@@ -115,7 +118,7 @@ dotnet build build.proj /p:Scope=servicebus
 ```powershell
 # Generate code for a data plane SDK
 cd sdk/<service>/<project>/src
-dotnet build /t:GenerateCode
+dotnet build /t:GenerateCode -v d
 ```
 
 #### Azure Generator (TypeSpec)
@@ -192,11 +195,10 @@ ReleasePackage -PackageName <package-name> -Language dotnet
 
 ### Required Tools
 
-- **Visual Studio 2022** (Community or higher) with latest updates
 - **.NET 9.0.102 SDK** (or higher within 9.0.* band)
 - **PowerShell 7+** for scripts and code generation
 - **Node.js 22.x.x** for TypeSpec and code generation
-- **Git** with proper line ending configuration
+- **Git** with proper line ending configuration (see Configuration section below)
 
 ### Configuration
 
@@ -211,7 +213,7 @@ Clone to short paths (e.g., `C:\git`) to avoid 260-character path limit. Paths i
 
 ### Package Naming
 
-- **Client Libraries**: `Azure.<ServiceCategory>.<ServiceName>` (e.g., `Azure.Storage.Blobs`)
+- **Client Libraries**: `Azure.<NamespaceGroup>.<ServiceName>` (e.g., `Azure.Storage.Blobs`. See [the guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) for approved group names)
 - **Management Libraries**: `Azure.ResourceManager.<ResourceProvider>` (e.g., `Azure.ResourceManager.Compute`)
 - **Legacy Libraries**: `Microsoft.Azure.*` (previous generation)
 
@@ -230,7 +232,7 @@ Package versions are centrally managed in `eng/Packages.Data.props`. When adding
 ### Testing Standards
 
 - **Unit Tests**: Required for all code changes
-- **Live Tests**: Should be recorded using Azure.Core.TestFramework
+- **Live Tests**: Should be recorded using [Azure.Core.TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md)
 - **Test Categories**: Use `TestCategory!=Live` filter to skip live tests
 - **Code Coverage**: Run with `/p:CollectCoverage=true`
 
