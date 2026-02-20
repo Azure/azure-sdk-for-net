@@ -45,6 +45,16 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportedCustomMultiLabelClassificationProjectAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportedCustomMultiLabelClassificationProjectAsset IPersistableModel<ExportedCustomMultiLabelClassificationProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportedCustomMultiLabelClassificationProjectAsset)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExportedCustomMultiLabelClassificationProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportedCustomMultiLabelClassificationProjectAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -157,15 +167,5 @@ namespace Azure.AI.Language.Text.Authoring
             }
             return new ExportedCustomMultiLabelClassificationProjectAsset(projectKind, additionalBinaryDataProperties, classes ?? new ChangeTrackingList<TextAuthoringExportedClass>(), documents ?? new ChangeTrackingList<ExportedCustomMultiLabelClassificationDocument>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportedCustomMultiLabelClassificationProjectAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExportedCustomMultiLabelClassificationProjectAsset IPersistableModel<ExportedCustomMultiLabelClassificationProjectAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportedCustomMultiLabelClassificationProjectAsset)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportedCustomMultiLabelClassificationProjectAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

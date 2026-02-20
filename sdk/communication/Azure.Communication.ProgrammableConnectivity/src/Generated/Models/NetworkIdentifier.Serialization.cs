@@ -51,6 +51,28 @@ namespace Azure.Communication.ProgrammableConnectivity
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkIdentifier>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkIdentifier IPersistableModel<NetworkIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkIdentifier"> The <see cref="NetworkIdentifier"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(NetworkIdentifier networkIdentifier)
+        {
+            if (networkIdentifier == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(networkIdentifier, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -136,28 +158,6 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
             }
             return new NetworkIdentifier(identifierType, identifier, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkIdentifier>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkIdentifier IPersistableModel<NetworkIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="networkIdentifier"> The <see cref="NetworkIdentifier"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(NetworkIdentifier networkIdentifier)
-        {
-            if (networkIdentifier == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkIdentifier, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

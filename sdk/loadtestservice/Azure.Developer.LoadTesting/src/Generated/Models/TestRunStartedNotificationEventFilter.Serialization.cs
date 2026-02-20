@@ -45,6 +45,16 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestRunStartedNotificationEventFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunStartedNotificationEventFilter IPersistableModel<TestRunStartedNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (TestRunStartedNotificationEventFilter)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TestRunStartedNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestRunStartedNotificationEventFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,15 +117,5 @@ namespace Azure.Developer.LoadTesting
             }
             return new TestRunStartedNotificationEventFilter(kind, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestRunStartedNotificationEventFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunStartedNotificationEventFilter IPersistableModel<TestRunStartedNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (TestRunStartedNotificationEventFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestRunStartedNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

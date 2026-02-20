@@ -50,6 +50,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionResponseMcpApprovalResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionResponseMcpApprovalResponseItem IPersistableModel<SessionResponseMcpApprovalResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionResponseMcpApprovalResponseItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionResponseMcpApprovalResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionResponseMcpApprovalResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -158,15 +168,5 @@ namespace Azure.AI.VoiceLive
                 approve,
                 reason);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionResponseMcpApprovalResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionResponseMcpApprovalResponseItem IPersistableModel<SessionResponseMcpApprovalResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionResponseMcpApprovalResponseItem)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionResponseMcpApprovalResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

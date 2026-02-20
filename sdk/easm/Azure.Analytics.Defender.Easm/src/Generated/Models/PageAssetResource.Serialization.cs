@@ -50,6 +50,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PageAssetResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PageAssetResource IPersistableModel<PageAssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PageAssetResource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PageAssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PageAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -259,15 +269,5 @@ namespace Azure.Analytics.Defender.Easm
                 additionalBinaryDataProperties,
                 asset);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PageAssetResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PageAssetResource IPersistableModel<PageAssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PageAssetResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PageAssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

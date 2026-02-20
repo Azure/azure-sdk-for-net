@@ -51,6 +51,28 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CopyProjectAuthorizationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CopyProjectAuthorizationRequest IPersistableModel<CopyProjectAuthorizationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CopyProjectAuthorizationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="copyProjectAuthorizationRequest"> The <see cref="CopyProjectAuthorizationRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CopyProjectAuthorizationRequest copyProjectAuthorizationRequest)
+        {
+            if (copyProjectAuthorizationRequest == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(copyProjectAuthorizationRequest, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CopyProjectAuthorizationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -154,28 +176,6 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CopyProjectAuthorizationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CopyProjectAuthorizationRequest IPersistableModel<CopyProjectAuthorizationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CopyProjectAuthorizationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="copyProjectAuthorizationRequest"> The <see cref="CopyProjectAuthorizationRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CopyProjectAuthorizationRequest copyProjectAuthorizationRequest)
-        {
-            if (copyProjectAuthorizationRequest == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(copyProjectAuthorizationRequest, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -44,6 +44,16 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventConversationItemCreate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemCreate IPersistableModel<ClientEventConversationItemCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemCreate)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClientEventConversationItemCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventConversationItemCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,15 +153,5 @@ namespace Azure.AI.VoiceLive
             }
             return new ClientEventConversationItemCreate(@type, additionalBinaryDataProperties, eventId, previousItemId, item);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientEventConversationItemCreate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClientEventConversationItemCreate IPersistableModel<ClientEventConversationItemCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemCreate)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientEventConversationItemCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

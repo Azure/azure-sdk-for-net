@@ -46,6 +46,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnswersFromTextResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnswersFromTextResult IPersistableModel<AnswersFromTextResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnswersFromTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnswersFromTextResult"/> from. </param>
         public static explicit operator AnswersFromTextResult(Response response)
         {
@@ -148,15 +158,5 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
             return new AnswersFromTextResult(answers ?? new ChangeTrackingList<TextAnswer>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnswersFromTextResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnswersFromTextResult IPersistableModel<AnswersFromTextResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnswersFromTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -45,6 +45,16 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ObjectField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ObjectField IPersistableModel<ObjectField>.Create(BinaryData data, ModelReaderWriterOptions options) => (ObjectField)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ObjectField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ObjectField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,15 +180,5 @@ namespace Azure.AI.ContentUnderstanding
                 additionalBinaryDataProperties,
                 valueObject ?? new ChangeTrackingDictionary<string, ContentField>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ObjectField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ObjectField IPersistableModel<ObjectField>.Create(BinaryData data, ModelReaderWriterOptions options) => (ObjectField)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ObjectField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

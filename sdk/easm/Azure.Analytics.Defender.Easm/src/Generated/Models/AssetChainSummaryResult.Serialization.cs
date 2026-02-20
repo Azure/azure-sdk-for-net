@@ -51,6 +51,16 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssetChainSummaryResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetChainSummaryResult IPersistableModel<AssetChainSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AssetChainSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AssetChainSummaryResult"/> from. </param>
         public static explicit operator AssetChainSummaryResult(Response response)
         {
@@ -189,15 +199,5 @@ namespace Azure.Analytics.Defender.Easm
             }
             return new AssetChainSummaryResult(affectedAssetsSummary, affectedGroupsSummary, errors ?? new ChangeTrackingList<ErrorResponse>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetChainSummaryResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AssetChainSummaryResult IPersistableModel<AssetChainSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetChainSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

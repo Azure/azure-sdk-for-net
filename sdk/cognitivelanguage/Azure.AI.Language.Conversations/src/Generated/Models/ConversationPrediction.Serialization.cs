@@ -51,6 +51,16 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConversationPrediction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationPrediction IPersistableModel<ConversationPrediction>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationPrediction)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConversationPrediction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConversationPrediction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -155,15 +165,5 @@ namespace Azure.AI.Language.Conversations.Models
             }
             return new ConversationPrediction(projectKind, topIntent, additionalBinaryDataProperties, intents, entities);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConversationPrediction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConversationPrediction IPersistableModel<ConversationPrediction>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConversationPrediction)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConversationPrediction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
