@@ -8,15 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/SuspectFile.cs
     /// <summary> Suspect file information. </summary>
     public partial class SuspectFile
-========
-    /// <summary> Response for ListServiceGateways API service call. </summary>
-    internal partial class ServiceGatewayListResult
->>>>>>>> origin/main:sdk/network/Azure.ResourceManager.Network/src/Generated/Models/ServiceGatewayListResult.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,7 +45,6 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/SuspectFile.cs
         /// <summary> Initializes a new instance of <see cref="SuspectFile"/>. </summary>
         internal SuspectFile()
         {
@@ -61,35 +55,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="fileTimestamp"> The creation date and time of the file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SuspectFile(string suspectFileName, DateTimeOffset? fileTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
-========
-        /// <summary> Initializes a new instance of <see cref="ServiceGatewayListResult"/>. </summary>
-        internal ServiceGatewayListResult()
-        {
-            Value = new ChangeTrackingList<ServiceGatewayData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceGatewayListResult"/>. </summary>
-        /// <param name="value"> A list of service gateway in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayListResult(IReadOnlyList<ServiceGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
->>>>>>>> origin/main:sdk/network/Azure.ResourceManager.Network/src/Generated/Models/ServiceGatewayListResult.cs
         {
             SuspectFileName = suspectFileName;
             FileTimestamp = fileTimestamp;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/SuspectFile.cs
         /// <summary> Suspect filename. </summary>
         public string SuspectFileName { get; }
         /// <summary> The creation date and time of the file. </summary>
         public DateTimeOffset? FileTimestamp { get; }
-========
-        /// <summary> A list of service gateway in a resource group. </summary>
-        public IReadOnlyList<ServiceGatewayData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
->>>>>>>> origin/main:sdk/network/Azure.ResourceManager.Network/src/Generated/Models/ServiceGatewayListResult.cs
     }
 }

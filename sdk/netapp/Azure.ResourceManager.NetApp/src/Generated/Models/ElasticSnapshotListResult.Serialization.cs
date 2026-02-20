@@ -13,19 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-    public partial class NetAppVolumeQuotaReportListResult : IUtf8JsonSerializable, IJsonModel<NetAppVolumeQuotaReportListResult>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeQuotaReportListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<NetAppVolumeQuotaReportListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
     internal partial class ElasticSnapshotListResult : IUtf8JsonSerializable, IJsonModel<ElasticSnapshotListResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSnapshotListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSnapshotListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,17 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support writing '{format}' format.");
-========
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSnapshotListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSnapshotListResult)} does not support writing '{format}' format.");
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
             }
 
             writer.WritePropertyName("value"u8);
@@ -55,15 +40,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WriteObjectValue(item, options);
             }
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-========
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
             }
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,21 +63,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-        NetAppVolumeQuotaReportListResult IJsonModel<NetAppVolumeQuotaReportListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppVolumeQuotaReportListResult(document.RootElement, options);
-        }
-
-        internal static NetAppVolumeQuotaReportListResult DeserializeNetAppVolumeQuotaReportListResult(JsonElement element, ModelReaderWriterOptions options = null)
-========
         ElasticSnapshotListResult IJsonModel<ElasticSnapshotListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSnapshotListResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,7 +76,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         internal static ElasticSnapshotListResult DeserializeElasticSnapshotListResult(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,39 +83,22 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-            IReadOnlyList<NetAppVolumeQuotaReport> value = default;
-========
             IReadOnlyList<ElasticSnapshotData> value = default;
             Uri nextLink = default;
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<NetAppVolumeQuotaReport> array = new List<NetAppVolumeQuotaReport>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NetAppVolumeQuotaReport.DeserializeNetAppVolumeQuotaReport(item, options));
-========
                     List<ElasticSnapshotData> array = new List<ElasticSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ElasticSnapshotData.DeserializeElasticSnapshotData(item, options));
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
                     }
                     value = array;
                     continue;
                 }
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-========
                 if (property.NameEquals("nextLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -159,43 +108,24 @@ namespace Azure.ResourceManager.NetApp.Models
                     nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-            return new NetAppVolumeQuotaReportListResult(value ?? new ChangeTrackingList<NetAppVolumeQuotaReport>(), serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<NetAppVolumeQuotaReportListResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new ElasticSnapshotListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSnapshotListResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSnapshotListResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetAppVolumeQuotaReportListResult IPersistableModel<NetAppVolumeQuotaReportListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReportListResult>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(ElasticSnapshotListResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -203,23 +133,12 @@ namespace Azure.ResourceManager.NetApp.Models
         ElasticSnapshotListResult IPersistableModel<ElasticSnapshotListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSnapshotListResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-<<<<<<<< HEAD:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppVolumeQuotaReportListResult.Serialization.cs
-                        return DeserializeNetAppVolumeQuotaReportListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetAppVolumeQuotaReportListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-========
                         return DeserializeElasticSnapshotListResult(document.RootElement, options);
                     }
                 default:
@@ -228,6 +147,5 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         string IPersistableModel<ElasticSnapshotListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
->>>>>>>> origin/main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/ElasticSnapshotListResult.Serialization.cs
     }
 }
