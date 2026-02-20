@@ -98,7 +98,14 @@ namespace Azure.Core.Pipeline
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
             string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
 
-            return ActivitySources.GetOrAdd(clientName, static n => new ActivitySource(n));
+            return ActivitySources.GetOrAdd(clientName, static n =>
+            {
+#if NET10_0_OR_GREATER
+                return new ActivitySource(new ActivitySourceOptions(n) { TelemetrySchemaUrl = DiagnosticScope.OpenTelemetrySchemaVersion });
+#else
+                return new ActivitySource(n);
+#endif
+            });
         }
     }
 }

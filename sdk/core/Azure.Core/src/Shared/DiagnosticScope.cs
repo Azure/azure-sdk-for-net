@@ -284,7 +284,9 @@ namespace Azure.Core.Pipeline
                         return null;
                     }
 
+#if !NET10_0_OR_GREATER
                     _currentActivity.SetTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
+#endif
                 }
                 else
                 {

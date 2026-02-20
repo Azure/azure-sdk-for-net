@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- On .NET 10+, the OpenTelemetry schema URL is now communicated via the official `ActivitySource.TelemetrySchemaUrl` mechanism instead of the custom `az.schema_url` activity tag. On older target frameworks, the existing behavior (setting the `az.schema_url` tag) is preserved. ([#48535](https://github.com/Azure/azure-sdk-for-net/issues/48535))
+
 ### Bugs Fixed
 
 - Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
