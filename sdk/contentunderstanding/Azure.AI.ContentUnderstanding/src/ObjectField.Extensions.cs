@@ -41,7 +41,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
 
-                if (ValueObject != null && ValueObject.TryGetValue(fieldName, out var field))
+                if (Value != null && Value.TryGetValue(fieldName, out var field))
                 {
                     return field;
                 }
