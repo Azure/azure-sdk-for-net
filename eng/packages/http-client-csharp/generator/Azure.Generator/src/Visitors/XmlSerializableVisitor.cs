@@ -45,7 +45,8 @@ namespace Azure.Generator.Visitors
     /// </remarks>
     internal class XmlSerializableVisitor : ScmLibraryVisitor
     {
-        private const string WriteMethodName = "Write";
+        private const string IXmlSerializableWriteMethodName = nameof(IXmlSerializable.Write);
+        private const string WriteMethodName = "WriteXml";
         private const string WriteObjectValueMethodName = "WriteObjectValue";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
         private static readonly CSharpType RequestContentType = typeof(RequestContent);
@@ -97,7 +98,7 @@ namespace Azure.Generator.Visitors
             var nameHintParameter = new ParameterProvider("nameHint", $"An optional name hint.", new CSharpType(typeof(string)));
 
             var methodSignature = new MethodSignature(
-                WriteMethodName,
+                IXmlSerializableWriteMethodName,
                 null,
                 MethodSignatureModifiers.None,
                 null,
@@ -151,7 +152,7 @@ namespace Azure.Generator.Visitors
             var caseMatch = new DeclarationExpression(IXmlSerializableType, "xmlSerializable", out var xmlSerializableVar);
             var caseBody = new MethodBodyStatements(
             [
-                xmlSerializableVar.Invoke(WriteMethodName, [writerParam, nameHintParam]).Terminate(),
+                xmlSerializableVar.Invoke(IXmlSerializableWriteMethodName, [writerParam, nameHintParam]).Terminate(),
                 Break
             ]);
             var ixmlSerializableCase = new SwitchCaseStatement(
