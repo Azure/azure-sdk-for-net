@@ -26,7 +26,7 @@ namespace Azure.Generator.Visitors
     ///   <item>
     ///     <description>
     ///       For models with <see cref="InputModelTypeUsage.Xml"/> usage, adds the <see cref="IXmlSerializable"/> interface
-    ///       and implements the explicit <c>void IXmlSerializable.Write(XmlWriter writer, string nameHint)</c> method.
+    ///       and implements the explicit <c>void IXmlSerializable.WriteXml(XmlWriter writer, string nameHint)</c> method.
     ///     </description>
     ///   </item>
     ///   <item>
@@ -45,7 +45,7 @@ namespace Azure.Generator.Visitors
     /// </remarks>
     internal class XmlSerializableVisitor : ScmLibraryVisitor
     {
-        private const string WriteMethodName = "Write";
+        private const string WriteXmlMethodName = "WriteXml";
         private const string WriteObjectValueMethodName = "WriteObjectValue";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
         private static readonly CSharpType RequestContentType = typeof(RequestContent);
@@ -97,7 +97,7 @@ namespace Azure.Generator.Visitors
             var nameHintParameter = new ParameterProvider("nameHint", $"An optional name hint.", new CSharpType(typeof(string)));
 
             var methodSignature = new MethodSignature(
-                WriteMethodName,
+                WriteXmlMethodName,
                 null,
                 MethodSignatureModifiers.None,
                 null,
@@ -106,7 +106,7 @@ namespace Azure.Generator.Visitors
                 ExplicitInterface: IXmlSerializableType);
 
             var bodyExpression = This.Invoke(
-                WriteMethodName,
+                WriteXmlMethodName,
                 [writerParameter, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), nameHintParameter]);
 
             var ixmlSerializableWriteMethod = new MethodProvider(methodSignature, bodyExpression, serializationProvider);
@@ -151,7 +151,7 @@ namespace Azure.Generator.Visitors
             var caseMatch = new DeclarationExpression(IXmlSerializableType, "xmlSerializable", out var xmlSerializableVar);
             var caseBody = new MethodBodyStatements(
             [
-                xmlSerializableVar.Invoke(WriteMethodName, [writerParam, nameHintParam]).Terminate(),
+                xmlSerializableVar.Invoke(WriteXmlMethodName, [writerParam, nameHintParam]).Terminate(),
                 Break
             ]);
             var ixmlSerializableCase = new SwitchCaseStatement(

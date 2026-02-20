@@ -9,6 +9,6 @@ namespace Azure.Core
 {
     internal interface IXmlSerializable
     {
-        void Write(XmlWriter writer, string? nameHint);
+        void WriteXml(XmlWriter writer, string? nameHint);
     }
 }
