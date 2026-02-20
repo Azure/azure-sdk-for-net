@@ -26,7 +26,7 @@ description: Samples for the Azure.AI.Projects client library.
 
 | Sample | Description |
 | ------ | ----------- |
-| [Sample6_Agents](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample6_Agents.md) | Sample for `Azure.AI.Agents.Persistent` extensions. |
+| [Sample6_Agents](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample6_ClassicAgents.md) | Sample for `Azure.AI.Agents.Persistent` extensions. |
 | [Sample13_DatasetsAsVectorStoreSource](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample13_DatasetsAsVectorStoreSource.md) | Using a Dataset as a source for a vector store search tool in an Agent. |
 | [Sample14_IndexCreationForAISearch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample14_IndexCreationForAISearch.md) | Azure AI Search Index creation sample, for usage as an Agent tool. |
 | [Sample7_AzureOpenAI_Chat](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample7_AzureOpenAI_Chat.md) | Sample for `Azure.AI.OpenAI` Chat extensions. |
