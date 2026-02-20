@@ -114,9 +114,17 @@ public class RootCommandFactory
                 var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
                 _validator.ValidateRepositoryPath(relativeDirectory);
 
-                // Step 4: Resolve valid commit SHA and directory path
-                _logger.LogDebug("Step 4: Resolving commit information and directory path");
-                var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, cancellationToken).ConfigureAwait(false);
+                // Step 4: Get Copilot service once for reuse
+                _logger.LogDebug("Step 4: Initializing Copilot service");
+                if (_copilotServiceTask is null)
+                {
+                    throw new InvalidOperationException("Copilot service task was not initialized");
+                }
+                var copilotService = await _copilotServiceTask.ConfigureAwait(false);
+
+                // Step 5: Resolve valid commit SHA and directory path
+                _logger.LogDebug("Step 5: Resolving commit information and directory path");
+                var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, copilotService, cancellationToken).ConfigureAwait(false);
 
                 if (commitSha == null || string.IsNullOrEmpty(finalDirectory))
                 {
@@ -126,18 +134,13 @@ public class RootCommandFactory
                 _logger.LogInformation("Commit: {CommitSha}", commitSha);
                 _logger.LogInformation("Spec: {FinalDirectory}", finalDirectory);
 
-                // Step 5: Update tsp-location.yaml
-                _logger.LogDebug("Step 5: Updating tsp-location.yaml fields");
+                // Step 6: Update tsp-location.yaml
+                _logger.LogDebug("Step 6: Updating tsp-location.yaml fields");
                 await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, cancellationToken).ConfigureAwait(false);
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
-                // Step 6: Run code generation, fix errors, then build and fix errors
-                _logger.LogDebug("Step 6: Delegating build-fix cycle to Copilot");
-                if (_copilotServiceTask is null)
-                {
-                    throw new InvalidOperationException("Copilot service task was not initialized");
-                }
-                var copilotService = await _copilotServiceTask.ConfigureAwait(false);
+                // Step 7: Run code generation, fix errors, then build and fix errors
+                _logger.LogDebug("Step 7: Delegating build-fix cycle to Copilot");
                 await copilotService.HandleBuildFixCycleAsync(validatedPath, cancellationToken).ConfigureAwait(false);
 
                 _logger.LogInformation("Migration completed: {SdkPath}", sdkPath);
@@ -185,7 +188,7 @@ public class RootCommandFactory
     /// <summary>
     /// Resolves a valid commit SHA and directory path, using Copilot to correct the path if needed.
     /// </summary>
-    private async Task<(string? CommitSha, string? FinalDirectory)> ResolveCommitAndDirectoryAsync(string validatedPath, string tspLocationPath, string? initialDirectory, CancellationToken cancellationToken)
+    private async Task<(string? CommitSha, string? FinalDirectory)> ResolveCommitAndDirectoryAsync(string validatedPath, string tspLocationPath, string? initialDirectory, CopilotService copilotService, CancellationToken cancellationToken)
     {
         // Try with initial directory first
         if (!string.IsNullOrEmpty(initialDirectory))
@@ -201,13 +204,6 @@ public class RootCommandFactory
         // Directory not found or invalid, use Copilot to fix it
         _logger.LogDebug("Directory path {Path} not found or invalid, using Copilot to find correct path", initialDirectory);
 
-        if (_copilotServiceTask == null)
-        {
-            _logger.LogError("Copilot service is not available. Ensure the migrate command is invoked with a valid sdk-path argument.");
-            return (null, null);
-        }
-
-        var copilotService = await _copilotServiceTask.ConfigureAwait(false);
         await copilotService.UpdateTspLocationFileAsync(validatedPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
 
         var updatedDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
