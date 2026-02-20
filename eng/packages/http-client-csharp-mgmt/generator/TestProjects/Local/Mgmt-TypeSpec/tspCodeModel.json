@@ -511,7 +511,7 @@
     {
       "$id": "41",
       "kind": "enum",
-      "name": "ManagedServiceIdentityType",
+      "name": "ManagedServiceIdentityTypeV4",
       "crossLanguageDefinitionId": "Azure.ResourceManager.Legacy.ManagedServiceIdentityType",
       "valueType": {
         "$id": "42",
