@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Azure.Core;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -353,7 +354,7 @@ namespace Azure.Identity
 
             var options = brokerOptions ?? Options.Clone<InteractiveBrowserCredentialOptions>();
 
-            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+            options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions?.Clone() ?? new TokenCachePersistenceOptions();
 
             options.TenantId = Options.InteractiveBrowserTenantId;
 
@@ -372,6 +373,11 @@ namespace Azure.Identity
             if (Options.AuthenticationRecord != null)
             {
                 options.AuthenticationRecord = Options.AuthenticationRecord;
+            }
+
+            if (Options.RedirectUri != null)
+            {
+                options.RedirectUri = Options.RedirectUri;
             }
 
             return new InteractiveBrowserCredential(
@@ -384,11 +390,13 @@ namespace Azure.Identity
         internal TokenCredential CreateBrokerCredential()
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
-            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+            options.TokenCachePersistenceOptions = Options.TokenCachePersistenceOptions?.Clone() ?? new TokenCachePersistenceOptions();
             options.TenantId = Options.InteractiveBrowserTenantId;
             options.IsChainedCredential = Options.CredentialSource == null;
             options.ClientId = Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId;
             options.DisableAutomaticAuthentication = Options.DisableAutomaticAuthentication;
+
+            options.CopyMsalSettableProperties(Options);
 
             if (!string.IsNullOrEmpty(Options.LoginHint))
             {
@@ -403,6 +411,16 @@ namespace Azure.Identity
             if (Options.AuthenticationRecord != null)
             {
                 options.AuthenticationRecord = Options.AuthenticationRecord;
+            }
+
+            if (Options.RedirectUri != null)
+            {
+                options.RedirectUri = Options.RedirectUri;
+            }
+
+            if (Options.IsLegacyMsaPassthroughEnabled.HasValue)
+            {
+                options.IsLegacyMsaPassthroughEnabled = Options.IsLegacyMsaPassthroughEnabled;
             }
 
             return new BrokerCredential(options);

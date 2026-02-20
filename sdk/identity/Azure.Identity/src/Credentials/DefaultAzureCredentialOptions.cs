@@ -151,15 +151,31 @@ namespace Azure.Identity
                 BrowserCustomization = new BrowserCustomizationOptions(browserSection);
             }
 
+            if (Uri.TryCreate(section[nameof(RedirectUri)], UriKind.Absolute, out Uri redirectUri))
+            {
+                RedirectUri = redirectUri;
+            }
+
             var authRecordSection = section.GetSection(nameof(AuthenticationRecord));
             if (authRecordSection.Exists())
             {
                 AuthenticationRecord = new AuthenticationRecord(authRecordSection);
             }
 
+            var cacheSection = section.GetSection(nameof(TokenCachePersistenceOptions));
+            if (cacheSection.Exists())
+            {
+                TokenCachePersistenceOptions = new TokenCachePersistenceOptions(cacheSection);
+            }
+
             if (bool.TryParse(section[nameof(UseDefaultBrokerAccount)], out bool useDefaultBrokerAccount))
             {
                 UseDefaultBrokerAccount = useDefaultBrokerAccount;
+            }
+
+            if (bool.TryParse(section[nameof(IsLegacyMsaPassthroughEnabled)], out bool isLegacyMsaPassthroughEnabled))
+            {
+                IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
             }
         }
 
@@ -506,7 +522,13 @@ namespace Azure.Identity
 
         internal AuthenticationRecord AuthenticationRecord { get; set; }
 
+        internal Uri RedirectUri { get; set; }
+
+        internal TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
         internal bool UseDefaultBrokerAccount { get; set; }
+
+        internal bool? IsLegacyMsaPassthroughEnabled { get; set; }
 
         internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
@@ -561,7 +583,10 @@ namespace Azure.Identity
                     dacClone.BrowserCustomization = BrowserCustomization.Clone();
                 }
                 dacClone.AuthenticationRecord = AuthenticationRecord;
+                dacClone.RedirectUri = RedirectUri;
+                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
                 dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
+                dacClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
             }
 
             return clone;

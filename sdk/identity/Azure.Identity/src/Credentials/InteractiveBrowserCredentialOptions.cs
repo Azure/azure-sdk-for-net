@@ -99,11 +99,18 @@ namespace Azure.Identity
             return clone;
         }
 
-        internal void CopyMsalSettableProperties(DefaultAzureCredentialOptions options)
+        internal virtual void CopyMsalSettableProperties(TokenCredentialOptions source)
         {
-            if (this is IMsalSettablePublicClientInitializerOptions thisAsInterface)
+            if (source != null && this is IMsalSettablePublicClientInitializerOptions target)
             {
-                thisAsInterface.UseDefaultBrokerAccount = options.UseDefaultBrokerAccount;
+                if (source is DefaultAzureCredentialOptions dacOptions)
+                {
+                    target.UseDefaultBrokerAccount = dacOptions.UseDefaultBrokerAccount;
+                }
+                else if (source is IMsalPublicClientInitializerOptions msalSource)
+                {
+                    target.UseDefaultBrokerAccount = msalSource.UseDefaultBrokerAccount;
+                }
             }
         }
     }

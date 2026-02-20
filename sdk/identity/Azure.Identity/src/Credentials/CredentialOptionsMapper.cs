@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using Microsoft.Extensions.Options;
 
 namespace Azure.Identity;
 
@@ -23,31 +24,7 @@ internal class CredentialOptionsMapper
 
         if (isBrokerEnabled && options != null)
         {
-            if (credentialOptions != null)
-            {
-                options.TenantId = (credentialOptions as ISupportsTenantId)?.TenantId;
-                options.AdditionallyAllowedTenants = (credentialOptions as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants;
-                options.AuthorityHost = credentialOptions.AuthorityHost;
-                options.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
-                options.IsChainedCredential = credentialOptions.IsChainedCredential;
-
-                if (credentialOptions is InteractiveBrowserCredentialOptions ibcOptions)
-                {
-                    options.ClientId = ibcOptions.ClientId;
-                    options.DisableAutomaticAuthentication = ibcOptions.DisableAutomaticAuthentication;
-                    options.LoginHint = ibcOptions.LoginHint;
-
-                    if (ibcOptions.BrowserCustomization != null)
-                    {
-                        options.BrowserCustomization = ibcOptions.BrowserCustomization;
-                    }
-
-                    if (ibcOptions.AuthenticationRecord != null)
-                    {
-                        options.AuthenticationRecord = ibcOptions.AuthenticationRecord;
-                    }
-                }
-            }
+            CopySharedProperties(options, credentialOptions);
 
             if (fileSystem is not null)
                 options.AuthenticationRecord = GetAuthenticationRecord(fileSystem);
@@ -105,33 +82,57 @@ internal class CredentialOptionsMapper
     internal static InteractiveBrowserCredentialOptions CreateFallbackOptions(TokenCredentialOptions credentialOptions = null)
     {
         var fallbackOptions = new InteractiveBrowserCredentialOptions();
+        CopySharedProperties(fallbackOptions, credentialOptions);
+        return fallbackOptions;
+    }
 
-        if (credentialOptions != null)
+    /// <summary>
+    /// Copies common credential properties from <paramref name="source"/> onto <paramref name="target"/>.
+    /// Used by both the broker and fallback option creation paths.
+    /// </summary>
+    private static void CopySharedProperties(InteractiveBrowserCredentialOptions target, TokenCredentialOptions source)
+    {
+        if (source == null)
         {
-            fallbackOptions.TenantId = (credentialOptions as ISupportsTenantId)?.TenantId;
-            fallbackOptions.AdditionallyAllowedTenants = (credentialOptions as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants;
-            fallbackOptions.AuthorityHost = credentialOptions.AuthorityHost;
-            fallbackOptions.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
-            fallbackOptions.IsChainedCredential = credentialOptions.IsChainedCredential;
-
-            if (credentialOptions is InteractiveBrowserCredentialOptions ibcOptions)
-            {
-                fallbackOptions.ClientId = ibcOptions.ClientId;
-                fallbackOptions.DisableAutomaticAuthentication = ibcOptions.DisableAutomaticAuthentication;
-                fallbackOptions.LoginHint = ibcOptions.LoginHint;
-
-                if (ibcOptions.BrowserCustomization != null)
-                {
-                    fallbackOptions.BrowserCustomization = ibcOptions.BrowserCustomization;
-                }
-
-                if (ibcOptions.AuthenticationRecord != null)
-                {
-                    fallbackOptions.AuthenticationRecord = ibcOptions.AuthenticationRecord;
-                }
-            }
+            return;
         }
 
-        return fallbackOptions;
+        target.TenantId = (source as ISupportsTenantId)?.TenantId;
+        target.AdditionallyAllowedTenants = (source as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants;
+        target.AuthorityHost = source.AuthorityHost;
+        target.IsUnsafeSupportLoggingEnabled = source.IsUnsafeSupportLoggingEnabled;
+        target.IsChainedCredential = source.IsChainedCredential;
+
+        if (source is ISupportsDisableInstanceDiscovery disableInstanceDiscoverySource)
+        {
+            target.DisableInstanceDiscovery = disableInstanceDiscoverySource.DisableInstanceDiscovery;
+        }
+
+        target.CopyMsalSettableProperties(source);
+
+        if (source is InteractiveBrowserCredentialOptions ibcOptions)
+        {
+            target.ClientId = ibcOptions.ClientId;
+            target.DisableAutomaticAuthentication = ibcOptions.DisableAutomaticAuthentication;
+            target.LoginHint = ibcOptions.LoginHint;
+
+            if (ibcOptions.BrowserCustomization != null)
+            {
+                target.BrowserCustomization = ibcOptions.BrowserCustomization.Clone();
+            }
+
+            if (ibcOptions.AuthenticationRecord != null)
+            {
+                target.AuthenticationRecord = ibcOptions.AuthenticationRecord;
+            }
+
+            if (ibcOptions.RedirectUri != null)
+            {
+                target.RedirectUri = ibcOptions.RedirectUri;
+            }
+
+            target.TokenCachePersistenceOptions = ibcOptions.TokenCachePersistenceOptions?.Clone()
+                ?? new TokenCachePersistenceOptions();
+        }
     }
 }
