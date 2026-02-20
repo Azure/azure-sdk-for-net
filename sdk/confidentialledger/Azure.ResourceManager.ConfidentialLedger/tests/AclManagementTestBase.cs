@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
             Subscription = armClient.GetSubscriptionResource(
                 new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
             ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
-            _resourceGroup =  resourceGroups.GetAsync(_resourceGroupName).Result;
+            _resourceGroup = resourceGroups.GetAsync(_resourceGroupName).Result;
             LedgerName = TestEnvironment.TestLedgerNamePrefix + _testFixtureName;
         }
 

@@ -65,7 +65,8 @@ namespace Azure.Communication.CallingServer
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
-            finally {
+            finally
+            {
                 await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
             }

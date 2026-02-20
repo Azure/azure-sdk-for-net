@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests

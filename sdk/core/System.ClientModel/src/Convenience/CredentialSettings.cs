@@ -20,7 +20,7 @@ public sealed class CredentialSettings
     {
         if (section is null)
         {
-            throw new ArgumentNullException(nameof(section));
+            return;
         }
 
         CredentialSource = section["CredentialSource"];

@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.Models
 {

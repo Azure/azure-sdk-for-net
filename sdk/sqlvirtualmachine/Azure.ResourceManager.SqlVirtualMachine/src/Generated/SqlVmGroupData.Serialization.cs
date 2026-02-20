@@ -25,6 +25,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlVmGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmGroupData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmGroupData"/> from. </param>
+        internal static SqlVmGroupData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSqlVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -191,23 +215,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="options"> The client options for reading and writing models. </param>
         SqlVmGroupData IPersistableModel<SqlVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlVmGroupData)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlVmGroupData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlVmGroupData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -221,13 +228,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sqlVmGroupData, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmGroupData"/> from. </param>
-        internal static SqlVmGroupData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSqlVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

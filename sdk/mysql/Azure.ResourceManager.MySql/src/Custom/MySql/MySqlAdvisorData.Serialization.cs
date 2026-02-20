@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MySql
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Properties);
+                writer.WriteRawValue(Properties);
 #else
                 using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
                 {

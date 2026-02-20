@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
     public partial class ServicePlacementNonPartiallyPlaceServicePolicy : ManagedServicePlacementPolicy, IJsonModel<ServicePlacementNonPartiallyPlaceServicePolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServicePlacementPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementNonPartiallyPlaceServicePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServicePlacementNonPartiallyPlaceServicePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServicePlacementNonPartiallyPlaceServicePolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServicePlacementNonPartiallyPlaceServicePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -98,23 +115,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ServicePlacementNonPartiallyPlaceServicePolicy IPersistableModel<ServicePlacementNonPartiallyPlaceServicePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServicePlacementNonPartiallyPlaceServicePolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedServicePlacementPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementNonPartiallyPlaceServicePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServicePlacementNonPartiallyPlaceServicePolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServicePlacementNonPartiallyPlaceServicePolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServicePlacementNonPartiallyPlaceServicePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

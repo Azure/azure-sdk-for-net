@@ -3,8 +3,8 @@
 
 #nullable enable
 
-using Azure.Provisioning.Primitives;
 using System;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 

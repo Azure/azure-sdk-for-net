@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             private readonly LinkedServiceClient _client;
             public LinkedServiceResource Resource;
 
-            private DisposableLinkedService (LinkedServiceClient client, LinkedServiceResource resource)
+            private DisposableLinkedService(LinkedServiceClient client, LinkedServiceResource resource)
             {
                 _client = client;
                 Resource = resource;
@@ -34,10 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             public string Name => Resource.Name;
 
-            public static async ValueTask<DisposableLinkedService> Create (LinkedServiceClient client, TestRecording recording) =>
-                new DisposableLinkedService (client, await CreateResource(client, recording));
+            public static async ValueTask<DisposableLinkedService> Create(LinkedServiceClient client, TestRecording recording) =>
+                new DisposableLinkedService(client, await CreateResource(client, recording));
 
-            public static async ValueTask<LinkedServiceResource> CreateResource (LinkedServiceClient client, TestRecording recording)
+            public static async ValueTask<LinkedServiceResource> CreateResource(LinkedServiceClient client, TestRecording recording)
             {
                 string linkedServiceName = recording.GenerateId("LinkedService", 16);
                 LinkedServiceResource resource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/"));
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             public async ValueTask DisposeAsync()
             {
-                LinkedServiceDeleteLinkedServiceOperation operation = await _client.StartDeleteLinkedServiceAsync (Name);
+                LinkedServiceDeleteLinkedServiceOperation operation = await _client.StartDeleteLinkedServiceAsync(Name);
                 await operation.WaitForCompletionResponseAsync();
             }
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             LinkedServiceClient client = CreateClient();
 
-            await using DisposableLinkedService service = await DisposableLinkedService.Create (client, this.Recording);
+            await using DisposableLinkedService service = await DisposableLinkedService.Create(client, this.Recording);
 
             IList<LinkedServiceResource> services = await client.GetLinkedServicesByWorkspaceAsync().ToListAsync();
             Assert.GreaterOrEqual(services.Count, 1);
@@ -88,9 +88,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             LinkedServiceClient client = CreateClient();
 
-            LinkedServiceResource resource = await DisposableLinkedService.CreateResource (client, this.Recording);
+            LinkedServiceResource resource = await DisposableLinkedService.CreateResource(client, this.Recording);
 
-            LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (resource.Name);
+            LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync(resource.Name);
             await operation.WaitAndAssertSuccessfulCompletion();
         }
 
@@ -99,17 +99,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             LinkedServiceClient client = CreateClient();
 
-            LinkedServiceResource resource = await DisposableLinkedService.CreateResource (client, Recording);
+            LinkedServiceResource resource = await DisposableLinkedService.CreateResource(client, Recording);
 
             string newLinkedServiceName = Recording.GenerateId("LinkedService2", 16);
 
-            LinkedServiceRenameLinkedServiceOperation renameOperation = await client.StartRenameLinkedServiceAsync (resource.Name, new ArtifactRenameRequest () { NewName = newLinkedServiceName } );
+            LinkedServiceRenameLinkedServiceOperation renameOperation = await client.StartRenameLinkedServiceAsync(resource.Name, new ArtifactRenameRequest() { NewName = newLinkedServiceName });
             await renameOperation.WaitForCompletionResponseAsync();
 
-            LinkedServiceResource service = await client.GetLinkedServiceAsync (newLinkedServiceName);
-            Assert.AreEqual (newLinkedServiceName, service.Name);
+            LinkedServiceResource service = await client.GetLinkedServiceAsync(newLinkedServiceName);
+            Assert.AreEqual(newLinkedServiceName, service.Name);
 
-            LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (newLinkedServiceName);
+            LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync(newLinkedServiceName);
             await operation.WaitForCompletionResponseAsync();
         }
     }

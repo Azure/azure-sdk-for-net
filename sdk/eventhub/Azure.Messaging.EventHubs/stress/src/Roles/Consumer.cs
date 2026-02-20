@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
-using System.Collections.Concurrent;
-using System.Security.Cryptography;
 
 namespace Azure.Messaging.EventHubs.Stress;
 

@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.AlertsManagement.Models;
-using System.Collections.Generic;
-using System;
-using Azure.ResourceManager.Models;
-using NUnit.Framework.Constraints;
 using Azure.ResourceManager.AlertsManagement.Tests.Helpers;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 
             await foreach (AlertProcessingRuleResource alertProcessingRule in alertProcessingRules)
             {
-              Console.WriteLine(alertProcessingRule.Data.Name);
+                Console.WriteLine(alertProcessingRule.Data.Name);
             }
 
             Assert.NotNull(alertProcessingRules);

@@ -33,11 +33,11 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             return GetRunSteps(
-                threadId:run.ThreadId,
+                threadId: run.ThreadId,
                 runId: run.Id,
                 limit: limit,
                 order: order,
-                after:after,
+                after: after,
                 before: before,
                 cancellationToken: cancellationToken);
         }

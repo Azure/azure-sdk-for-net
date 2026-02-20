@@ -33,7 +33,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <returns>The merged JSON string.</returns>
         public static string BuildServerEvent(string type, object anonymousPayloadExtra)
         {
-            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
 
             using var ms = new MemoryStream();
             using (var writer = new Utf8JsonWriter(ms, new JsonWriterOptions { Indented = false }))
@@ -77,7 +78,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <param name="sessionId">The session identifier (defaults to "session-123").</param>
         public static string BuildSessionCreatedEvent(string sessionId = "session-123")
         {
-            if (sessionId == null) throw new ArgumentNullException(nameof(sessionId));
+            if (sessionId == null)
+                throw new ArgumentNullException(nameof(sessionId));
             return "{\"type\":\"session.created\",\"session\":{\"id\":\"{EscapeString(sessionId)}\"}}";
         }
 
@@ -87,7 +89,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// </summary>
         public static string BuildResponseAudioDeltaEvent(string base64Audio = "AAAA")
         {
-            if (base64Audio == null) throw new ArgumentNullException(nameof(base64Audio));
+            if (base64Audio == null)
+                throw new ArgumentNullException(nameof(base64Audio));
             return "{\"type\":\"response.audio.delta\",\"delta\":\"{EscapeString(base64Audio)}\"}";
         }
 
@@ -100,9 +103,12 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <param name="argumentsJson">The raw JSON string (kept as a literal string value in the payload).</param>
         public static string BuildResponseFunctionCallArgumentsDoneEvent(string name, string callId, string argumentsJson)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (callId == null) throw new ArgumentNullException(nameof(callId));
-            if (argumentsJson == null) throw new ArgumentNullException(nameof(argumentsJson));
+            if (name == null)
+                throw new ArgumentNullException(nameof(name));
+            if (callId == null)
+                throw new ArgumentNullException(nameof(callId));
+            if (argumentsJson == null)
+                throw new ArgumentNullException(nameof(argumentsJson));
             return $"{{\"type\":\"response.function_call_arguments.done\",\"name\":\"{EscapeString(name)}\",\"call_id\":\"{EscapeString(callId)}\",\"arguments\":\"{EscapeString(argumentsJson)}\"}}";
         }
 
@@ -124,8 +130,10 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <param name="responseId">The response id to associate.</param>
         public static string BuildResponseOutputItemAdded_AssistantMessage(string itemId, string responseId)
         {
-            if (itemId == null) throw new ArgumentNullException(nameof(itemId));
-            if (responseId == null) throw new ArgumentNullException(nameof(responseId));
+            if (itemId == null)
+                throw new ArgumentNullException(nameof(itemId));
+            if (responseId == null)
+                throw new ArgumentNullException(nameof(responseId));
             return "{\"type\":\"response.output_item.added\",\"response_id\":\"{EscapeString(responseId)}\",\"item\":{\"id\":\"{EscapeString(itemId)}\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[]}}";
         }
 
@@ -136,7 +144,8 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <param name="messages">Enumerable of JSON strings.</param>
         public static List<JsonDocument> ParseSentPayloads(IEnumerable<string> messages)
         {
-            if (messages == null) throw new ArgumentNullException(nameof(messages));
+            if (messages == null)
+                throw new ArgumentNullException(nameof(messages));
             var docs = new List<JsonDocument>();
             foreach (var m in messages)
             {
@@ -157,8 +166,9 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <param name="dottedPath">Dot-delimited property path.</param>
         public static void AssertJsonHasProperty(JsonElement root, string dottedPath)
         {
-            if (dottedPath == null) throw new ArgumentNullException(nameof(dottedPath));
-            var segments = dottedPath.Split(new char[] {'.'},StringSplitOptions.RemoveEmptyEntries );
+            if (dottedPath == null)
+                throw new ArgumentNullException(nameof(dottedPath));
+            var segments = dottedPath.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
             if (segments.Length == 0)
             {
                 Assert.Fail("Path must contain at least one segment.");
@@ -203,13 +213,16 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <returns>A list of <see cref="JsonDocument"/> instances matching the specified type.</returns>
         internal static List<JsonDocument> GetMessagesOfType(FakeWebSocket socket, string type)
         {
-            if (socket == null) throw new ArgumentNullException(nameof(socket));
-            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (socket == null)
+                throw new ArgumentNullException(nameof(socket));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
 
             var list = new List<JsonDocument>();
             foreach (var msg in socket.GetSentTextMessages())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(msg);
@@ -240,12 +253,15 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <returns>The last <see cref="JsonDocument"/> matching the specified type, or null if none found.</returns>
         internal static JsonDocument? GetLastMessageOfType(FakeWebSocket socket, string type)
         {
-            if (socket == null) throw new ArgumentNullException(nameof(socket));
-            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (socket == null)
+                throw new ArgumentNullException(nameof(socket));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
 
             foreach (var msg in socket.GetSentTextMessages().Reverse())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(msg);
@@ -272,11 +288,13 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <returns>The last valid <see cref="JsonDocument"/>, or null if none found.</returns>
         internal static JsonDocument? GetLastJsonMessage(FakeWebSocket socket)
         {
-            if (socket == null) throw new ArgumentNullException(nameof(socket));
+            if (socket == null)
+                throw new ArgumentNullException(nameof(socket));
 
             foreach (var msg in socket.GetSentTextMessages().Reverse())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     return JsonDocument.Parse(msg);
@@ -297,8 +315,10 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// <returns>The number of messages matching the specified type.</returns>
         internal static int CountMessagesOfType(FakeWebSocket socket, string type)
         {
-            if (socket == null) throw new ArgumentNullException(nameof(socket));
-            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (socket == null)
+                throw new ArgumentNullException(nameof(socket));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
 
             return socket.GetSentTextMessages().Count(m =>
             {

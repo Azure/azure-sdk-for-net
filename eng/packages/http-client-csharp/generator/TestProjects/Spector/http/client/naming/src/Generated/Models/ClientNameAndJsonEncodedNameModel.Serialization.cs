@@ -18,17 +18,9 @@ namespace Client.Naming.Property
 
         protected virtual ClientNameAndJsonEncodedNameModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<ClientNameAndJsonEncodedNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        ClientNameAndJsonEncodedNameModel IJsonModel<ClientNameAndJsonEncodedNameModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ClientNameAndJsonEncodedNameModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<ClientNameAndJsonEncodedNameModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         ClientNameAndJsonEncodedNameModel IPersistableModel<ClientNameAndJsonEncodedNameModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
@@ -36,5 +28,13 @@ namespace Client.Naming.Property
 
         /// <param name="clientNameAndJsonEncodedNameModel"> The <see cref="ClientNameAndJsonEncodedNameModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ClientNameAndJsonEncodedNameModel clientNameAndJsonEncodedNameModel) => throw null;
+
+        void IJsonModel<ClientNameAndJsonEncodedNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        ClientNameAndJsonEncodedNameModel IJsonModel<ClientNameAndJsonEncodedNameModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual ClientNameAndJsonEncodedNameModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

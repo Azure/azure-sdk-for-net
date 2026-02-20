@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxAnalysisResultDetails. </summary>
     public partial class NginxAnalysisResultDetails : IJsonModel<NginxAnalysisResultDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NginxAnalysisResultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNginxAnalysisResultDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NginxAnalysisResultDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxAnalysisResultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,23 +173,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NginxAnalysisResultDetails IPersistableModel<NginxAnalysisResultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxAnalysisResultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisResultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNginxAnalysisResultDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NginxAnalysisResultDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NginxAnalysisResultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

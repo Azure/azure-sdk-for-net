@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
             TryGetApiVersion(DnsSoaRecordResource.ResourceType, out string soaRecordInfoRecordSetsApiVersion);
             _soaRecordInfoRecordSetsRestClient = new DnsSoaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, soaRecordInfoRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

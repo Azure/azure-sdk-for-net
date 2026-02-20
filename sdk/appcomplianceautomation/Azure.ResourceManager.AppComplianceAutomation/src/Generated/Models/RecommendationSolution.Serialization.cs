@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the recommendation solution. </summary>
     public partial class RecommendationSolution : IJsonModel<RecommendationSolution>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecommendationSolution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecommendationSolution>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecommendationSolution(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecommendationSolution)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecommendationSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,23 +160,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RecommendationSolution IPersistableModel<RecommendationSolution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecommendationSolution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RecommendationSolution>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRecommendationSolution(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecommendationSolution)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecommendationSolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

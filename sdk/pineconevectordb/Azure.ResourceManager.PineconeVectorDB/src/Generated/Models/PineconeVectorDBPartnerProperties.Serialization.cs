@@ -21,6 +21,23 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PineconeVectorDBPartnerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePineconeVectorDBPartnerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PineconeVectorDBPartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,23 +136,6 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         PineconeVectorDBPartnerProperties IPersistableModel<PineconeVectorDBPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PineconeVectorDBPartnerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePineconeVectorDBPartnerProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PineconeVectorDBPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

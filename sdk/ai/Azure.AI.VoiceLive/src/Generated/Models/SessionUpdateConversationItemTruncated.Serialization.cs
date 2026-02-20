@@ -43,6 +43,29 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemTruncated>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemTruncated)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionUpdateConversationItemTruncated>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionUpdateConversationItemTruncated IPersistableModel<SessionUpdateConversationItemTruncated>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemTruncated)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionUpdateConversationItemTruncated>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionUpdateConversationItemTruncated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -141,28 +164,5 @@ namespace Azure.AI.VoiceLive
                 contentIndex,
                 audioEndMs);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionUpdateConversationItemTruncated>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionUpdateConversationItemTruncated>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SessionUpdateConversationItemTruncated)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SessionUpdateConversationItemTruncated IPersistableModel<SessionUpdateConversationItemTruncated>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionUpdateConversationItemTruncated)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionUpdateConversationItemTruncated>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

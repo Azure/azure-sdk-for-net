@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Autorest.CSharp.Core;
 
 namespace Azure.Communication.JobRouter
 {

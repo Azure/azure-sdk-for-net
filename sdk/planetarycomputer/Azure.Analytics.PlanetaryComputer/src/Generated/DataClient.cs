@@ -348,27 +348,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<AssetStatisticsResponse> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((AssetStatisticsResponse)result, result);
         }
 
         /// <summary> Per Asset statistics. </summary>
@@ -405,27 +391,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssetStatisticsResponse>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((AssetStatisticsResponse)result, result);
         }
 
         /// <summary>
@@ -1374,20 +1346,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, TilerInfo>> GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerInfoMapResponse> GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.ToRequestContext());
-            IDictionary<string, TilerInfo> value = new Dictionary<string, TilerInfo>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                value.Add(item.Name, TilerInfo.DeserializeTilerInfo(item.Value, ModelSerializationExtensions.WireOptions));
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, TilerInfo>)value, result);
+            return Response.FromValue((TilerInfoMapResponse)result, result);
         }
 
         /// <summary> Return dataset's basic info. </summary>
@@ -1398,20 +1363,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, TilerInfo>>> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerInfoMapResponse>> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = await GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, TilerInfo> value = new Dictionary<string, TilerInfo>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                value.Add(item.Name, TilerInfo.DeserializeTilerInfo(item.Value, ModelSerializationExtensions.WireOptions));
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, TilerInfo>)value, result);
+            return Response.FromValue((TilerInfoMapResponse)result, result);
         }
 
         /// <summary>
@@ -3458,26 +3416,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetClassMapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual Response<ClassMapLegendResponse> GetClassMapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = GetClassMapLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((ClassMapLegendResponse)result, result);
         }
 
         /// <summary> Generate values and color swatches mapping for a given classmap. </summary>
@@ -3488,26 +3432,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetClassMapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClassMapLegendResponse>> GetClassMapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = await GetClassMapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((ClassMapLegendResponse)result, result);
         }
 
         /// <summary>
@@ -3639,26 +3569,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<IList<IList<long>>>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
+            List<IList<IList<long>>> value = new List<IList<IList<long>>>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((IReadOnlyList<IList<IList<long>>>)value, result);
         }
 
         /// <summary>
@@ -3688,26 +3606,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<IList<IList<long>>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
+            List<IList<IList<long>>> value = new List<IList<IList<long>>>();
             BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((IReadOnlyList<IList<IList<long>>>)value, result);
         }
 
         /// <summary>
@@ -4124,28 +4030,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<BinaryData>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TilerAssetGeoJson>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext());
-            List<BinaryData> value = new List<BinaryData>();
+            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(null);
-                }
-                else
-                {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
-                }
+                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
         }
 
         /// <summary> Return a list of assets which overlap a given tile. </summary>
@@ -4176,28 +4075,21 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<TilerAssetGeoJson>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<BinaryData> value = new List<BinaryData>();
+            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(null);
-                }
-                else
-                {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
-                }
+                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
         }
 
         /// <summary>

@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CarbonEmissionQueryFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonthlySummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMonthlySummaryReportQueryFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonthlySummaryReportQueryFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MonthlySummaryReportQueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -190,23 +207,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MonthlySummaryReportQueryFilter IPersistableModel<MonthlySummaryReportQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonthlySummaryReportQueryFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CarbonEmissionQueryFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MonthlySummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMonthlySummaryReportQueryFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MonthlySummaryReportQueryFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MonthlySummaryReportQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

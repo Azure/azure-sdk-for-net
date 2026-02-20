@@ -19,6 +19,17 @@ namespace Versioning.Added
 
         protected virtual ModelV1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<ModelV1>.Write(ModelReaderWriterOptions options) => throw null;
+
+        ModelV1 IPersistableModel<ModelV1>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<ModelV1>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="modelV1"> The <see cref="ModelV1"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ModelV1 modelV1) => throw null;
+
         public static explicit operator ModelV1(Response response) => throw null;
 
         void IJsonModel<ModelV1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace Versioning.Added
         ModelV1 IJsonModel<ModelV1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ModelV1 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ModelV1>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        ModelV1 IPersistableModel<ModelV1>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<ModelV1>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="modelV1"> The <see cref="ModelV1"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ModelV1 modelV1) => throw null;
     }
 }

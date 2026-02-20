@@ -2,5 +2,5 @@
 // Licensed under the MIT License.
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ClearRange {}
+    internal partial class ClearRange { }
 }

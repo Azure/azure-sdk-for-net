@@ -18,17 +18,9 @@ namespace Service
 
         protected virtual Input PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<Input>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        Input IJsonModel<Input>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Input JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Input>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Input IPersistableModel<Input>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
@@ -36,5 +28,13 @@ namespace Service
 
         /// <param name="input"> The <see cref="Input"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Input input) => throw null;
+
+        void IJsonModel<Input>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        Input IJsonModel<Input>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual Input JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.CodeAnalysis;
 using System;
+using Microsoft.CodeAnalysis;
 
 namespace Azure.SdkAnalyzers
 {

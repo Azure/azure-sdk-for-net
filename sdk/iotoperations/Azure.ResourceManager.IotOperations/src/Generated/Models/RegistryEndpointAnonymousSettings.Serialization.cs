@@ -16,6 +16,23 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> RegistryEndpoint Anonymous authentication properties. </summary>
     public partial class RegistryEndpointAnonymousSettings : IJsonModel<RegistryEndpointAnonymousSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RegistryEndpointAnonymousSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAnonymousSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRegistryEndpointAnonymousSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegistryEndpointAnonymousSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegistryEndpointAnonymousSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -106,23 +123,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RegistryEndpointAnonymousSettings IPersistableModel<RegistryEndpointAnonymousSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryEndpointAnonymousSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAnonymousSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRegistryEndpointAnonymousSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RegistryEndpointAnonymousSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RegistryEndpointAnonymousSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

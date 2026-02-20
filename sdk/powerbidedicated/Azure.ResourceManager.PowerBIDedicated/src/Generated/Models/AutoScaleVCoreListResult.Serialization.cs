@@ -22,6 +22,30 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoScaleVCoreListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoScaleVCoreListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutoScaleVCoreListResult"/> from. </param>
+        internal static AutoScaleVCoreListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAutoScaleVCoreListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoScaleVCoreListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -142,31 +166,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         AutoScaleVCoreListResult IPersistableModel<AutoScaleVCoreListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutoScaleVCoreListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutoScaleVCoreListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutoScaleVCoreListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutoScaleVCoreListResult"/> from. </param>
-        internal static AutoScaleVCoreListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAutoScaleVCoreListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Reference to the policy within the evaluation. </summary>
     [CodeGenModel("PolicyReferenceContract")]
-    public partial class PersonalizerPolicyReferenceOptions {}
+    public partial class PersonalizerPolicyReferenceOptions { }
 }

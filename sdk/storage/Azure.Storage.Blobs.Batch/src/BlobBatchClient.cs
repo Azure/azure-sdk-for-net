@@ -434,7 +434,7 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             content: RequestContent.Create(content),
-                            context: new RequestContext{ CancellationToken = cancellationToken })
+                            context: new RequestContext { CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
                     }
                     else
@@ -444,7 +444,7 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             content: RequestContent.Create(content),
-                            context: new RequestContext{ CancellationToken = cancellationToken });
+                            context: new RequestContext { CancellationToken = cancellationToken });
                     }
                 }
                 else
@@ -455,7 +455,7 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             content: RequestContent.Create(content),
-                            context: new RequestContext{ CancellationToken = cancellationToken })
+                            context: new RequestContext { CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
                     }
                     else
@@ -464,7 +464,7 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             content: RequestContent.Create(content),
-                            context: new RequestContext{ CancellationToken = cancellationToken });
+                            context: new RequestContext { CancellationToken = cancellationToken });
                     }
                 }
 
